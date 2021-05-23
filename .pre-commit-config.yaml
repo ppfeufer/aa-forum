@@ -1,0 +1,59 @@
+# Apply to all files without committing:
+#   pre-commit run --all-files
+# Update this file:
+#   pre-commit autoupdate
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-case-conflict
+      - id: check-json
+      - id: check-xml
+      - id: check-yaml
+      - id: fix-byte-order-marker
+      - id: trailing-whitespace
+        exclude: \.(min\.css|min\.js|po|mo)$
+      - id: end-of-file-fixer
+        exclude: \.(min\.css|min\.js|po|mo)$
+      - id: mixed-line-ending
+        args: [ '--fix=lf' ]
+      - id: fix-encoding-pragma
+        args: [ '--remove' ]
+      - id: detect-private-key
+      - id: check-added-large-files
+      - id: check-ast  # Is it valid Python?
+      - id: debug-statements  # Check for debugger imports and py37+ breakpoint() calls
+
+  - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
+    rev: 2.3.5
+    hooks:
+      - id: editorconfig-checker
+        exclude: ^(LICENSE)
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.18.1
+    hooks:
+      - id: pyupgrade
+        args: [ --py37-plus ]
+
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.8.0
+    hooks:
+      - id: isort
+
+  - repo: https://github.com/psf/black
+    rev: 21.5b1
+    hooks:
+      - id: black
+
+  - repo: https://github.com/asottile/blacken-docs
+    rev: v1.10.0
+    hooks:
+      - id: blacken-docs
+        additional_dependencies: [ black==21.5b1 ]

@@ -1,0 +1,10 @@
+/build/
+/dist/
+/*.egg-info/
+.idea/
+
+*.log
+*.tmp
+*.bak
+*.old
+__pycache__

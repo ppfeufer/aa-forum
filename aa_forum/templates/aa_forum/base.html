@@ -1,0 +1,18 @@
+{% extends 'allianceauth/base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block page_title %}{% translate 'Forum' %}{% endblock %}
+
+{% block content %}
+    <div class="aa-forum">
+        <div class="aa-forum-header">
+            {% block aa_forum_header %}{% endblock %}
+        </div>
+
+        <div class="aa-forum-body">
+            {% block aa_forum_body %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
