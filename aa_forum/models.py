@@ -235,6 +235,8 @@ class Topics(models.Model):
         verbose_name = _("Topic")
         verbose_name_plural = _("Topics")
 
+        ordering = ["last_message__time_posted"]
+
 
 class Messages(models.Model):
     """

@@ -1,0 +1,14 @@
+{% load static %}
+{% load i18n %}
+
+{{ board.name }}
+
+{% if board.topics.all %}
+    {% for topic in board.topics.all %}
+        {{ topic.first_message.subject }}
+    {% endfor %}
+{% else %}
+    <div class="alert alert-info">
+        <p>{% translate "No topics have been started in this board ..." %}</p>
+    </div>
+{% endif %}

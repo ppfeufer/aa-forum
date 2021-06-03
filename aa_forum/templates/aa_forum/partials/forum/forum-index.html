@@ -16,7 +16,9 @@
                         </div>
 
                         <div class="aa-forum-category-name">
-                            <p>{{ board.name }}</p>
+                            <p>
+                                <a href="{% url 'aa_forum:forum_board' category.slug board.slug %}">{{ board.name }}</a>
+                            </p>
 
                             {% if board.description %}
                                 <p class="text-muted">{{ board.description }}</p>
