@@ -1,0 +1,25 @@
+{% extends 'aa_forum/base.html' %}
+
+{% load evelinks %}
+{% load static %}
+{% load i18n %}
+
+{% block page_title %}{% translate 'Forum (Administration)' %}{% endblock %}
+
+{% block aa_forum_header %}
+    <br>
+{#    <h2>{% translate "Forum" %}</h2>#}
+
+    {% include "aa_forum/partials/menu.html" %}
+{% endblock %}
+
+{% block aa_forum_body %}
+
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
+{% endblock %}
+
+{% block extra_javascript %}
+{% endblock %}

@@ -11,8 +11,8 @@
                 </li>
 
                 {% if perms.aa_forum.manage_forum %}
-                    <li>
-                        <a href="#">{% translate "Administration" %}</a>
+                    <li class="{% navactive request 'aa_forum:admin_index' %}">
+                        <a href="{% url 'aa_forum:admin_index' %}">{% translate "Administration" %}</a>
                     </li>
                 {% endif %}
             </ul>
