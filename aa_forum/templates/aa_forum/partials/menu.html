@@ -1,0 +1,21 @@
+{% load static %}
+{% load i18n %}
+{% load navactive %}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="{% navactive request 'aa_forum:forum_index' %}">
+                    <a href="{% url 'aa_forum:forum_index' %}">{% translate "Forum" %}</a>
+                </li>
+
+                {% if perms.aa_forum.manage_forum %}
+                    <li>
+                        <a href="#">{% translate "Administration" %}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

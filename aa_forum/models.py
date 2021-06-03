@@ -5,17 +5,41 @@ Models
 from django.contrib.auth.models import Group, User
 from django.db import models
 from django.utils import timezone
+from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
 
 def get_sentinel_user() -> User:
     """
-    get user or create one
+    Get user or create one
     :return:
     :rtype:
     """
 
     return User.objects.get_or_create(username="deleted")[0]
+
+
+def get_slug_on_save(subject: str) -> str:
+    """
+    Get the slug
+    :param subject:
+    :type subject:
+    :return:
+    :rtype:
+    """
+
+    run = 0
+    subject_slug = slugify(subject, allow_unicode=True)
+
+    while Slugs.objects.filter(slug=subject_slug).exists():
+        run += 1
+        subject_slug = slugify(subject + "-" + str(run), allow_unicode=True)
+
+    Slugs(slug=subject_slug).save()
+
+    slug_to_return = Slugs.objects.get(slug=subject_slug)
+
+    return slug_to_return
 
 
 class General(models.Model):
@@ -32,9 +56,32 @@ class General(models.Model):
         managed = False
         default_permissions = ()
         permissions = (
-            ("basic_access", "Can access the AA-SRP module"),
-            ("manage_forum", "Can manage the forum (Categories, topics and messages)"),
+            ("basic_access", _("Can access the AA-Forum module")),
+            (
+                "manage_forum",
+                _("Can manage the forum (Categories, topics and messages)"),
+            ),
         )
+
+
+class Slugs(models.Model):
+    """
+    Slugs
+    """
+
+    slug = models.CharField(max_length=255)
+
+    class Meta:
+        """
+        Meta definitions
+        """
+
+        default_permissions = ()
+        verbose_name = _("Slug")
+        verbose_name_plural = _("Slugs")
+
+    def __str__(self) -> str:
+        return str(self.slug)
 
 
 class Categories(models.Model):
@@ -43,6 +90,13 @@ class Categories(models.Model):
     """
 
     name = models.CharField(max_length=254, default="")
+    slug = models.ForeignKey(
+        Slugs,
+        blank=True,
+        null=True,
+        related_name="+",
+        on_delete=models.CASCADE,
+    )
     order = models.IntegerField(default=0)
     collapsible = models.BooleanField(default=False)
 
@@ -54,6 +108,22 @@ class Categories(models.Model):
         default_permissions = ()
         verbose_name = _("Category")
         verbose_name_plural = _("Categories")
+
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
+        """
+        Add the slug on save
+        """
+
+        if self.slug is None or self.slug == "":
+            slug = get_slug_on_save(subject=self.name)
+            self.slug = slug
+
+        super().save()
+
+    def __str__(self) -> str:
+        return str(self.name)
 
 
 class Boards(models.Model):
@@ -68,6 +138,13 @@ class Boards(models.Model):
     )
     name = models.CharField(max_length=254, default="")
     description = models.TextField(null=True, blank=True)
+    slug = models.ForeignKey(
+        Slugs,
+        blank=True,
+        null=True,
+        related_name="+",
+        on_delete=models.CASCADE,
+    )
     order = models.IntegerField(default=0)
     parent_board = models.ForeignKey(
         "self",
@@ -90,6 +167,22 @@ class Boards(models.Model):
         default_permissions = ()
         verbose_name = _("Board")
         verbose_name_plural = _("Boards")
+
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
+        """
+        Add the slug on save
+        """
+
+        if self.slug is None or self.slug == "":
+            slug = get_slug_on_save(subject=self.name)
+            self.slug = slug
+
+        super().save()
+
+    def __str__(self) -> str:
+        return str(self.name)
 
 
 class Topics(models.Model):
@@ -171,6 +264,13 @@ class Messages(models.Model):
         on_delete=models.SET(get_sentinel_user),
     )
     subject = models.CharField(max_length=254, default="")
+    slug = models.ForeignKey(
+        Slugs,
+        blank=True,
+        null=True,
+        related_name="+",
+        on_delete=models.CASCADE,
+    )
     message = models.TextField(null=True, blank=True)
 
     class Meta:
@@ -182,10 +282,26 @@ class Messages(models.Model):
         verbose_name = _("Message")
         verbose_name_plural = _("Messages")
 
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
+        """
+        Add the slug on save
+        """
+
+        if self.slug is None or self.slug == "":
+            slug = get_slug_on_save(subject=self.subject)
+            self.slug = slug
+
+        super().save()
+
+    def __str__(self) -> str:
+        return str(self.subject)
+
 
 class PersonalMessages(models.Model):
     """
-    PersonalMessages
+    Personal messages
     """
 
     sender = models.ForeignKey(
@@ -200,6 +316,13 @@ class PersonalMessages(models.Model):
     )
     time_sent = models.DateTimeField(default=timezone.now)
     subject = models.CharField(max_length=254, default="")
+    slug = models.ForeignKey(
+        Slugs,
+        blank=True,
+        null=True,
+        related_name="+",
+        on_delete=models.CASCADE,
+    )
     message = models.TextField(null=True, blank=True)
 
     class Meta:
@@ -210,3 +333,19 @@ class PersonalMessages(models.Model):
         default_permissions = ()
         verbose_name = _("Personal Message")
         verbose_name_plural = _("Personal Messages")
+
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
+        """
+        Add the slug on save
+        """
+
+        if self.slug is None or self.slug == "":
+            slug = get_slug_on_save(subject=self.subject)
+            self.slug = slug
+
+        super().save()
+
+    def __str__(self) -> str:
+        return str(self.subject)

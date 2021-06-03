@@ -1,0 +1,39 @@
+{% load static %}
+{% load i18n %}
+
+{% for category in categories %}
+    {% if category.boards.all %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">{{ category.name }}</div>
+            </div>
+
+            <div class="panel-body">
+                {% for board in category.boards %}
+                    <div style="margin-bottom: 1rem; width: 100%; display: flex; flex-direction: row; align-content: center; align-items: baseline;">
+                        <div style="margin-right: 1rem;">
+                            <img src="{% static 'aa_forum/images/off.png' %}" alt="Board">
+                        </div>
+
+                        <div style="width: 60%;">
+                            <p>{{ board.name }}</p>
+
+                            {% if board.description %}
+                                <p class="text-muted">{{ board.description }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div style="width: 25%;">
+                            {{ board.num_posts }} {% translate "Posts" %}<br>
+                            {{ board.num_topics }} {% translate "Topics" %}
+                        </div>
+
+                        <div style="width: 15%;">
+                            Last Post by:
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}

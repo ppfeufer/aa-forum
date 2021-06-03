@@ -8,13 +8,13 @@
 
 {% block aa_forum_header %}
     <br>
-    <h2>{% translate "Forum" %}</h2>
+{#    <h2>{% translate "Forum" %}</h2>#}
 
-{#    {% include "aa_forum/partials/menu.html" %}#}
+    {% include "aa_forum/partials/menu.html" %}
 {% endblock %}
 
 {% block aa_forum_body %}
-    <p>Here be dragons</p>
+    {% include 'aa_forum/partials/forum/forum-index.html' %}
 {% endblock %}
 
 {% block extra_css %}
