@@ -37,4 +37,14 @@
     .panel-aa-forum-category .aa-forum-category-last-post {
         width: 15%;
     }
+
+    .aa-forum-text-board-group-restrictions {
+        margin: 0;
+    }
+
+    .aa-forum-board-group-restrictions {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
 }

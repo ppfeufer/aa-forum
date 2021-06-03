@@ -156,7 +156,7 @@ class Boards(models.Model):
     groups = models.ManyToManyField(
         Group,
         blank=True,
-        related_name="aa_forum_boards",
+        related_name="aa_forum_boards_group_restriction",
     )
 
     class Meta:

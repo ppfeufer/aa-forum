@@ -23,6 +23,13 @@
                             {% if board.description %}
                                 <p class="text-muted">{{ board.description }}</p>
                             {% endif %}
+
+                            {% if board.groups.all %}
+                                <p class="aa-forum-text-board-group-restrictions text-muted small">
+                                    {% translate "This board is restricted to the following group(s):" %}<br>
+                                    {{ board.groups.all|join:", "  }}
+                                </p>
+                            {% endif %}
                         </div>
 
                         <div class="aa-forum-category-stats">

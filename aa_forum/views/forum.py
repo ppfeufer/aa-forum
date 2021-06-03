@@ -61,11 +61,16 @@ def forum_board(
     """
 
     try:
-        board = Boards.objects.get(
-            Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-            category__slug__slug=category_slug,
-            slug__slug=board_slug,
+        board = (
+            Boards.objects.filter(
+                Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
+                category__slug__slug__exact=category_slug,
+                slug__slug__exact=board_slug,
+            )
+            .distinct()
+            .get()
         )
+
     except Boards.DoesNotExist:
         board = None
 
