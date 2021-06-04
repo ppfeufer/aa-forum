@@ -1,6 +1,7 @@
 {% load static %}
 {% load i18n %}
 {% load evelinks %}
+{% load aa_forum_user %}
 
 {% for category in categories %}
     {% if category.boards.all %}
@@ -49,10 +50,12 @@
 
                         <div class="aa-forum-category-last-post hidden-xs">
                             {% if board.messages.all %}
-                                <img class="img img-rounded img-last-post-avatar" src="{{ board.latest_topic.last_message.user_created.profile.main_character.character_id|character_portrait_url:64 }}" alt="{{ board.latest_topic.last_message.user_created.profile.main_character.character_name }}">
+                                {% with user_maincharacter_id=board.latest_topic.last_message.user_created|main_character_id %}
+                                    <img class="img img-rounded img-last-post-avatar" src="{{ user_maincharacter_id|character_portrait_url:64 }}" alt="{{ board.latest_topic.last_message.user_created|main_character_name }}">
+                                {% endwith %}
                                 <p class="last-post-information small">
                                     <b>{% translate "Last post:" %}</b> {{ board.latest_topic.last_message.subject|truncatechars:25 }}<br>
-                                    <b>{% translate "posted by:" %}</b> {{ board.latest_topic.last_message.user_created.profile.main_character.character_name }}<br>
+                                    <b>{% translate "posted by:" %}</b> {{ board.latest_topic.last_message.user_created|main_character_name }}<br>
                                     <b>{% translate "posted at:" %}</b> {{ board.latest_topic.last_message.time_posted }}
                                 </p>
                             {% endif %}
