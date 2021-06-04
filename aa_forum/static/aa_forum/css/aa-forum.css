@@ -8,8 +8,6 @@
         align-items: baseline;
         display: flex;
         flex-direction: row;
-        /*margin-left: -15px;*/
-        /*margin-right: -15px;*/
         padding: 1rem;
         transition: var(--bg-hover-transition);
     }
@@ -53,9 +51,9 @@
 
     .aa-forum .aa-forum-category-last-post .last-post-information {
         overflow: hidden;
+        text-overflow: ellipsis;
         white-space: nowrap;
         word-wrap: normal;
-        text-overflow: ellipsis;
     }
 }
 
@@ -67,14 +65,14 @@
     }
 
     .aa-forum .aa-forum-breadcrumb ul {
-        padding: 0;
-        list-style-type: none;
+        align-content: center;
+        align-items: baseline;
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-        align-content: center;
         justify-content: flex-start;
-        align-items: baseline;
+        list-style-type: none;
+        padding: 0;
     }
 
     .aa-forum .aa-forum-breadcrumb ul li {
