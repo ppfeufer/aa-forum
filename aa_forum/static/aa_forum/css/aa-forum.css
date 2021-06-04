@@ -55,6 +55,44 @@
         white-space: nowrap;
         word-wrap: normal;
     }
+
+    .aa-forum img {
+        height: auto !important; /* to override inline style added by CKeditor */
+        max-width: 100%;
+    }
+}
+
+/* Messages
+------------------------------------------------------------------------------------- */
+@media all {
+    .aa-forum .aa-forum-message {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+    }
+
+    .aa-forum .aa-forum-message-author {
+        width: 150px;
+        min-width: 150px;
+        margin: 2rem;
+    }
+
+    .aa-forum .aa-forum-message-author .img-author-avatar {
+        margin-bottom: 1rem;
+    }
+
+    .aa-forum .aa-forum-message-wrapper {
+        margin: 2rem;
+    }
+
+    .aa-forum .aa-forum-message-header {
+        margin-bottom: 1rem;
+    }
+
+    .aa-forum .aa-forum-message-body {
+        border-top: 1px solid rgb(236, 240, 241);
+        padding: 1em 0 0 0;
+    }
 }
 
 /* Breadcrumb

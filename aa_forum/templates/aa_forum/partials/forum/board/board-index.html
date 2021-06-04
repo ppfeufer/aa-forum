@@ -16,7 +16,9 @@
     <div class="panel-body">
         {% if board.topics.all %}
             {% for topic in board.topics.all %}
-                {{ topic.first_message.subject }}<br>
+                <a href="{% url 'aa_forum:forum_topic' topic.board.category.slug topic.board.slug topic.first_message.slug %}">
+                    {{ topic.first_message.subject }}
+                </a><br>
             {% endfor %}
         {% else %}
             <div class="alert alert-info">

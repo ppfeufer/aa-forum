@@ -22,7 +22,7 @@ urlpatterns = [
         name="forum_board_new_topic",
     ),
     path(
-        "<str:category_slug>/<str:board_slug>/<str:topic_slug>/$",
+        "<str:category_slug>/<str:board_slug>/<str:topic_slug>/",
         forum.forum_topic,
         name="forum_topic",
     ),

@@ -5,6 +5,7 @@ Forum related views
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
+from django.core.paginator import Paginator
 from django.db.models import Count, Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -236,3 +237,15 @@ def forum_topic(
         )
 
         return redirect("aa_forum:forum_index")
+
+    first_message = Messages.objects.get(slug__slug__exact=topic_slug)
+    topic = Topics.objects.get(id=first_message.topic_id)
+    topic_messages = Messages.objects.filter(topic=topic)
+
+    paginator = Paginator(topic_messages, 25)  # Show 25 messages per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {"first_message": first_message, "page_obj": page_obj}
+
+    return render(request, "aa_forum/view/forum/topic.html", context)

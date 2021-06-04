@@ -42,3 +42,77 @@ def main_character_id(user: User) -> int:
         return_value = 1
 
     return return_value
+
+
+@register.filter
+def main_character_corporation_name(user: User) -> str:
+    """
+    Get the users main character corporation name,
+    or an empty string if no main character
+    :param user:
+    :type user:
+    :return:
+    :rtype:
+    """
+
+    try:
+        return_value = user.profile.main_character.corporation_name
+    except AttributeError:
+        return_value = ""
+
+    return return_value
+
+
+@register.filter
+def main_character_corporation_id(user: User) -> int:
+    """
+    Get the users main character corporation id, or None if no main character
+    :param user:
+    :type user:
+    :return:
+    :rtype:
+    """
+
+    try:
+        return_value = user.profile.main_character.corporation_id
+    except AttributeError:
+        return_value = None
+
+    return return_value
+
+
+@register.filter
+def main_character_alliance_name(user: User) -> str:
+    """
+    Get the users main character alliance name,
+    or an empty string if no main character
+    :param user:
+    :type user:
+    :return:
+    :rtype:
+    """
+
+    try:
+        return_value = user.profile.main_character.alliance_name
+    except AttributeError:
+        return_value = ""
+
+    return return_value
+
+
+@register.filter
+def main_character_alliance_id(user: User) -> int:
+    """
+    Get the users main character alliance id, or None if no main character
+    :param user:
+    :type user:
+    :return:
+    :rtype:
+    """
+
+    try:
+        return_value = user.profile.main_character.alliance_id
+    except AttributeError:
+        return_value = None
+
+    return return_value
