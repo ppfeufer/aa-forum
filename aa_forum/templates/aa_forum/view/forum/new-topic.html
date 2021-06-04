@@ -1,0 +1,49 @@
+{% extends 'aa_forum/base.html' %}
+{% load bootstrap %}
+
+{% load evelinks %}
+{% load static %}
+{% load i18n %}
+
+{% block page_title %}{% translate 'Forum' %}{% endblock %}
+
+{% block aa_forum_header %}
+    <br>
+
+    {% include "aa_forum/partials/menu.html" %}
+{% endblock %}
+
+{% block aa_forum_body %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                {% translate "Start new topic in" %}
+                "<a href="{% url 'aa_forum:forum_board' board.category.slug board.slug %}">{{ board.name }}</a>"
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <form autocomplete="off" action="{% url "aa_forum:forum_board_new_topic" board.category.slug.slug board.slug.slug %}" method="post">
+                {% csrf_token %}
+
+                {{ form|bootstrap }}
+
+                {% include "aasrp/partials/form/required_field_hint.html" %}
+
+                <div class="form-group text-right clearfix">
+                    <button class="btn btn-success" type="submit">{% translate "Start Topic" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'aa_forum/css/aa-forum.min.css' %}">
+{% endblock %}
+
+{% block extra_javascript %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="application/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}
