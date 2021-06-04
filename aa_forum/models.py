@@ -185,6 +185,12 @@ class Boards(models.Model):
         return str(self.name)
 
     def latest_topic(self):
+        """
+        Get the latest topic for this board
+        :return:
+        :rtype:
+        """
+
         topic = Topics.objects.filter(board=self).order_by("time_modified").last()
 
         return topic
@@ -250,11 +256,23 @@ class Topics(models.Model):
         ordering = ["-time_modified"]
 
     def first_message(self):
+        """
+        Get the first message for this topic
+        :return:
+        :rtype:
+        """
+
         message = Messages.objects.filter(topic=self).first()
 
         return message
 
     def last_message(self):
+        """
+        Get the latest message for this topic
+        :return:
+        :rtype:
+        """
+
         message = Messages.objects.filter(topic=self).last()
 
         return message

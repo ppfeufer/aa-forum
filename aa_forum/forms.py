@@ -1,6 +1,7 @@
 """
 Forms
 """
+
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 from django import forms
@@ -52,7 +53,7 @@ class NewTopicForm(ModelForm):
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
-        meta definitions
+        Meta definitions
         """
 
         model = Messages
