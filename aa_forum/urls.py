@@ -16,10 +16,15 @@ urlpatterns = [
         forum.forum_board,
         name="forum_board",
     ),
-    # url(
-    #     r"^<str:category_slug>/<str:board_slug>/<str:topic_slug>/$",
-    #     forum.forum_topic,
-    #     name="forum_topic",
-    # ),
+    path(
+        "<str:category_slug>/<str:board_slug>/new-topic/",
+        forum.forum_board_new_topic,
+        name="forum_board_new_topic",
+    ),
+    path(
+        "<str:category_slug>/<str:board_slug>/<str:topic_slug>/$",
+        forum.forum_topic,
+        name="forum_topic",
+    ),
     url(r"^admin/$", administration.admin_index, name="admin_index"),
 ]

@@ -1,14 +1,32 @@
 {% load static %}
 {% load i18n %}
 
-{{ board.name }}
-
-{% if board.topics.all %}
-    {% for topic in board.topics.all %}
-        {{ topic.first_message.subject }}
-    {% endfor %}
-{% else %}
-    <div class="alert alert-info">
-        <p>{% translate "No topics have been started in this board ..." %}</p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">{{ board.name }}</div>
     </div>
-{% endif %}
+</div>
+
+<a class="btn btn-default btn-sm" href="{% url "aa_forum:forum_board_new_topic" board.category.slug.slug board.slug.slug %}">
+    <i class="fas fa-pencil-alt"></i>
+    <span class="hidden-xs">New Topic</span>
+</a>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        {% if board.topics.all %}
+            {% for topic in board.topics.all %}
+                {{ topic.first_message.subject }}<br>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">
+                <p>{% translate "No topics have been started in this board ..." %}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<a class="btn btn-default btn-sm" href="">
+    <i class="fas fa-pencil-alt"></i>
+    <span class="hidden-xs">New Topic</span>
+</a>
