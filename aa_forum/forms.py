@@ -32,8 +32,7 @@ def get_mandatory_form_label_text(text):
 
 class NewTopicForm(ModelForm):
     """
-    Fat link form
-    used to create ESI fatlinks
+    New topic form
     """
 
     subject = forms.CharField(
