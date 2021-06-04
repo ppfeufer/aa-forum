@@ -13,6 +13,7 @@ from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
+from aa_forum.constants import MESSAGES_PER_PAGE
 from aa_forum.forms import NewTopicForm
 from aa_forum.models import Boards, Categories, Messages, Topics
 
@@ -242,7 +243,7 @@ def forum_topic(
     topic = Topics.objects.get(id=first_message.topic_id)
     topic_messages = Messages.objects.filter(topic=topic)
 
-    paginator = Paginator(topic_messages, 25)  # Show 25 messages per page.
+    paginator = Paginator(topic_messages, MESSAGES_PER_PAGE)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
