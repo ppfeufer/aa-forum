@@ -192,7 +192,7 @@ def forum_board_new_topic(
                 board_slug=board.slug.slug,
             )
 
-    # If no GET (or any other method) we'll create a blank form
+    # If not, we'll create a blank form
     else:
         # logger.debug(f"Returning blank SRP request form for {request.user}")
 
