@@ -184,6 +184,11 @@ class Boards(models.Model):
     def __str__(self) -> str:
         return str(self.name)
 
+    def latest_topic(self):
+        topic = Topics.objects.filter(board=self).order_by("time_modified").last()
+
+        return topic
+
 
 class Topics(models.Model):
     """
@@ -215,15 +220,22 @@ class Topics(models.Model):
     )
     num_views = models.IntegerField(default=0)
     num_replies = models.IntegerField(default=0)
-    first_message = models.ForeignKey(
-        "Messages",
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
-    last_message = models.ForeignKey(
-        "Messages",
-        related_name="+",
-        on_delete=models.CASCADE,
+    time_modified = models.DateTimeField(default=timezone.now)
+    # first_message = models.ForeignKey(
+    #     "Messages",
+    #     related_name="+",
+    #     on_delete=models.CASCADE,
+    # )
+    # last_message = models.ForeignKey(
+    #     "Messages",
+    #     related_name="+",
+    #     on_delete=models.CASCADE,
+    # )
+
+    read_by = models.ManyToManyField(
+        User,
+        blank=True,
+        related_name="aa_forum_read_topics",
     )
 
     class Meta:
@@ -235,7 +247,17 @@ class Topics(models.Model):
         verbose_name = _("Topic")
         verbose_name_plural = _("Topics")
 
-        ordering = ["last_message__time_posted"]
+        ordering = ["-time_modified"]
+
+    def first_message(self):
+        message = Messages.objects.filter(topic=self).first()
+
+        return message
+
+    def last_message(self):
+        message = Messages.objects.filter(topic=self).last()
+
+        return message
 
 
 class Messages(models.Model):
@@ -262,6 +284,8 @@ class Messages(models.Model):
     )
     user_updated = models.ForeignKey(
         User,
+        blank=True,
+        null=True,
         related_name="+",
         on_delete=models.SET(get_sentinel_user),
     )
@@ -274,6 +298,11 @@ class Messages(models.Model):
         on_delete=models.CASCADE,
     )
     message = models.TextField(null=True, blank=True)
+    # read_by = models.ManyToManyField(
+    #     User,
+    #     blank=True,
+    #     related_name="aa_forum_read_messages",
+    # )
 
     class Meta:
         """
