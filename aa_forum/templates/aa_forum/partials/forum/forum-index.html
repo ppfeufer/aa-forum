@@ -5,7 +5,7 @@
 
 {% for category in categories %}
     {% if category.boards.all %}
-        <div class="panel panel-default panel-aa-forum-category">
+        <div id="category-{{ category.id }}" class="panel panel-default panel-aa-forum-category">
             <div class="panel-heading">
                 <div class="panel-title">{{ category.name }}</div>
             </div>

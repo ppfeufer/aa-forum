@@ -59,6 +59,29 @@
     }
 }
 
+/* Breadcrumb
+------------------------------------------------------------------------------------- */
+@media all {
+    .aa-forum .aa-forum-breadcrumb {
+        padding: 1rem;
+    }
+
+    .aa-forum .aa-forum-breadcrumb ul {
+        padding: 0;
+        list-style-type: none;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: flex-start;
+        align-items: baseline;
+    }
+
+    .aa-forum .aa-forum-breadcrumb ul li {
+        padding: .5rem 0 0.5rem 0.5rem;
+    }
+}
+
 @media all and (min-width: 768px) {
     .panel-aa-forum-category .aa-forum-category-name {
         width: 60%;

@@ -48,6 +48,7 @@ def forum_index(request: WSGIRequest) -> HttpResponse:
                 categories_for_user.append(
                     {
                         "name": category.name,
+                        "id": category.id,
                         "slug": category.slug.slug,
                         "boards": boards,
                     }

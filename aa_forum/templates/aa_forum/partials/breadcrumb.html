@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<div class="aa-forum-breadcrumb">
+    <ul>
+        <li><a href="{% url 'aa_forum:forum_index' %}">{% translate "Forum Index" %}</a></li>
+
+        {% if category %}
+            <li>» <a href="{% url 'aa_forum:forum_index' %}#category-{{ category.id }}">{{ category.name }}</a></li>
+        {% endif %}
+
+        {% if board %}
+            <li>» <a href="{% url 'aa_forum:forum_board' board.category.slug board.slug %}">{{ board.name }}</a></li>
+        {% endif %}
+
+        {% if topic %}
+            <li>» <a href="{% url 'aa_forum:forum_board' board.category.slug board.slug topic.first_message.slug %}">{{ topic.first_message.name }}</a></li>
+        {% endif %}
+    </ul>
+</div>
