@@ -12,8 +12,8 @@
             <li>» <a href="{% url 'aa_forum:forum_board' board.category.slug board.slug %}">{{ board.name }}</a></li>
         {% endif %}
 
-        {% if topic %}
-            <li>» <a href="{% url 'aa_forum:forum_board' board.category.slug board.slug topic.first_message.slug %}">{{ topic.first_message.name }}</a></li>
+        {% if first_message %}
+            <li>» <a href="{% url 'aa_forum:forum_topic' board.category.slug board.slug first_message.slug %}">{{ first_message.subject }}</a></li>
         {% endif %}
     </ul>
 </div>
