@@ -54,7 +54,7 @@
                                     <img class="img img-rounded img-last-post-avatar" src="{{ user_maincharacter_id|character_portrait_url:64 }}" alt="{{ board.latest_topic.last_message.user_created|main_character_name }}">
                                 {% endwith %}
                                 <p class="last-post-information small">
-                                    <b>{% translate "Last post:" %}</b> {{ board.latest_topic.last_message.subject|truncatechars:25 }}<br>
+                                    <b>{% translate "Last post:" %}</b> {{ board.latest_topic.subject|truncatechars:25 }}<br>
                                     <b>{% translate "posted by:" %}</b> {{ board.latest_topic.last_message.user_created|main_character_name }}<br>
                                     <b>{% translate "posted at:" %}</b> {{ board.latest_topic.last_message.time_posted }}
                                 </p>

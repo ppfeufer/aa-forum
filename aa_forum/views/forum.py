@@ -111,7 +111,7 @@ def forum_board_new_topic(
     request: WSGIRequest, category_slug: str, board_slug: str
 ) -> HttpResponse:
     """
-    Start a  new topic
+    Start a new topic
     :param request:
     :type request:
     :param category_slug:
@@ -174,6 +174,7 @@ def forum_board_new_topic(
             topic.user_started = user_started
             topic.user_updated = user_updated
             topic.time_modified = post_time
+            topic.subject = form.cleaned_data["subject"]
             topic.save()
 
             topic.read_by.add(user_updated)
@@ -182,7 +183,6 @@ def forum_board_new_topic(
             message.topic = topic
             message.board = board
             message.user_created = user_started
-            message.subject = form.cleaned_data["subject"]
             message.message = form.cleaned_data["message"]
             message.save()
 
