@@ -1,5 +1,5 @@
 """
-aasrp url config
+AA-Forum url config
 """
 
 from django.conf.urls import url
@@ -12,19 +12,24 @@ app_name: str = "aa_forum"
 urlpatterns = [
     url(r"^$", forum.forum_index, name="forum_index"),
     path(
-        "<str:category_slug>/<str:board_slug>/",
+        "<slug:category_slug>/<slug:board_slug>/",
         forum.forum_board,
         name="forum_board",
     ),
     path(
-        "<str:category_slug>/<str:board_slug>/new-topic/",
+        "<slug:category_slug>/<slug:board_slug>/new-topic/",
         forum.forum_board_new_topic,
         name="forum_board_new_topic",
     ),
     path(
-        "<str:category_slug>/<str:board_slug>/<str:topic_slug>/",
+        "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/",
         forum.forum_topic,
         name="forum_topic",
     ),
+    # path(
+    #     "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/response/",
+    #     forum.forum_topic_response,
+    #     name="forum_topic_response",
+    # ),
     url(r"^admin/$", administration.admin_index, name="admin_index"),
 ]
