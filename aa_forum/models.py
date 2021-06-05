@@ -59,7 +59,7 @@ class General(models.Model):
             ("basic_access", _("Can access the AA-Forum module")),
             (
                 "manage_forum",
-                _("Can manage the forum (Categories, topics and messages)"),
+                _("Can manage the AA-Forum module (Categories, topics and messages)"),
             ),
         )
 
@@ -69,7 +69,7 @@ class Slugs(models.Model):
     Slugs
     """
 
-    slug = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, allow_unicode=True)
 
     class Meta:
         """
@@ -97,8 +97,8 @@ class Categories(models.Model):
         related_name="+",
         on_delete=models.CASCADE,
     )
+    is_collapsible = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
-    collapsible = models.BooleanField(default=False)
 
     class Meta:
         """
@@ -137,7 +137,6 @@ class Boards(models.Model):
         on_delete=models.CASCADE,
     )
     name = models.CharField(max_length=254, default="")
-    description = models.TextField(null=True, blank=True)
     slug = models.ForeignKey(
         Slugs,
         blank=True,
@@ -145,7 +144,7 @@ class Boards(models.Model):
         related_name="+",
         on_delete=models.CASCADE,
     )
-    order = models.IntegerField(default=0)
+    description = models.TextField(null=True, blank=True)
     parent_board = models.ForeignKey(
         "self",
         blank=True,
@@ -158,6 +157,7 @@ class Boards(models.Model):
         blank=True,
         related_name="aa_forum_boards_group_restriction",
     )
+    order = models.IntegerField(default=0)
 
     class Meta:
         """
@@ -201,11 +201,19 @@ class Topics(models.Model):
     Topics
     """
 
-    sticky = models.BooleanField(
+    subject = models.CharField(max_length=254, default="")
+    slug = models.ForeignKey(
+        Slugs,
+        blank=True,
+        null=True,
+        related_name="+",
+        on_delete=models.CASCADE,
+    )
+    is_sticky = models.BooleanField(
         default=False,
         db_index=True,
     )
-    locked = models.BooleanField(
+    is_locked = models.BooleanField(
         default=False,
         db_index=True,
     )
@@ -227,17 +235,6 @@ class Topics(models.Model):
     num_views = models.IntegerField(default=0)
     num_replies = models.IntegerField(default=0)
     time_modified = models.DateTimeField(default=timezone.now)
-    # first_message = models.ForeignKey(
-    #     "Messages",
-    #     related_name="+",
-    #     on_delete=models.CASCADE,
-    # )
-    # last_message = models.ForeignKey(
-    #     "Messages",
-    #     related_name="+",
-    #     on_delete=models.CASCADE,
-    # )
-
     read_by = models.ManyToManyField(
         User,
         blank=True,
@@ -254,6 +251,19 @@ class Topics(models.Model):
         verbose_name_plural = _("Topics")
 
         ordering = ["-time_modified"]
+
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
+        """
+        Add the slug on save
+        """
+
+        if self.slug is None or self.slug == "":
+            slug = get_slug_on_save(subject=self.subject)
+            self.slug = slug
+
+        super().save()
 
     def first_message(self):
         """
@@ -283,13 +293,13 @@ class Messages(models.Model):
     Messages
     """
 
-    topic = models.ForeignKey(
-        Topics,
+    board = models.ForeignKey(
+        Boards,
         related_name="messages",
         on_delete=models.CASCADE,
     )
-    board = models.ForeignKey(
-        Boards,
+    topic = models.ForeignKey(
+        Topics,
         related_name="messages",
         on_delete=models.CASCADE,
     )
@@ -307,20 +317,12 @@ class Messages(models.Model):
         related_name="+",
         on_delete=models.SET(get_sentinel_user),
     )
-    subject = models.CharField(max_length=254, default="")
-    slug = models.ForeignKey(
-        Slugs,
-        blank=True,
-        null=True,
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
     message = models.TextField(null=True, blank=True)
-    # read_by = models.ManyToManyField(
-    #     User,
-    #     blank=True,
-    #     related_name="aa_forum_read_messages",
-    # )
+    read_by = models.ManyToManyField(
+        User,
+        blank=True,
+        related_name="aa_forum_read_messages",
+    )
 
     class Meta:
         """
@@ -331,21 +333,8 @@ class Messages(models.Model):
         verbose_name = _("Message")
         verbose_name_plural = _("Messages")
 
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        """
-        Add the slug on save
-        """
-
-        if self.slug is None or self.slug == "":
-            slug = get_slug_on_save(subject=self.subject)
-            self.slug = slug
-
-        super().save()
-
     def __str__(self) -> str:
-        return str(self.subject)
+        return str(self.pk)
 
 
 class PersonalMessages(models.Model):
@@ -373,6 +362,7 @@ class PersonalMessages(models.Model):
         on_delete=models.CASCADE,
     )
     message = models.TextField(null=True, blank=True)
+    is_read = models.BooleanField(default=False)
 
     class Meta:
         """
