@@ -27,6 +27,7 @@
                 <div class="aa-forum-message-header">
                     <div class="aa-forum-message-keyinfo">
                         <a href="{{ request.path }}#message-{{ message.id }}">
+                            {% if not forloop.first %}Re:{% endif %}
                             {{ message.topic.subject }}
                         </a><br>
                         <small>« <b>on:</b> {{ message.time_posted }} »</small>
