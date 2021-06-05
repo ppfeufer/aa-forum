@@ -239,14 +239,13 @@ def forum_topic(
 
         return redirect("aa_forum:forum_index")
 
-    first_message = Messages.objects.get(slug__slug__exact=topic_slug)
-    topic = Topics.objects.get(id=first_message.topic_id)
+    topic = Topics.objects.get(slug__slug__exact=topic_slug)
     topic_messages = Messages.objects.filter(topic=topic)
 
     paginator = Paginator(topic_messages, MESSAGES_PER_PAGE)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    context = {"first_message": first_message, "page_obj": page_obj}
+    context = {"topic": topic, "page_obj": page_obj}
 
     return render(request, "aa_forum/view/forum/topic.html", context)

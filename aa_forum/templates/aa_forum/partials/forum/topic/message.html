@@ -26,8 +26,8 @@
             <div class="aa-forum-message-wrapper">
                 <div class="aa-forum-message-header">
                     <div class="aa-forum-message-keyinfo">
-                        <a href="{% url 'aa_forum:forum_topic' message.board.category.slug message.board.slug message.slug %}#message-{{ message.id }}">
-                            {{ message.subject }}
+                        <a href="{% url 'aa_forum:forum_topic' message.board.category.slug message.board.slug message.topic.slug %}#message-{{ message.id }}">
+                            {{ message.topic.subject }}
                         </a><br>
                         <small>« <b>on:</b> {{ message.time_posted }} »</small>
                     </div>

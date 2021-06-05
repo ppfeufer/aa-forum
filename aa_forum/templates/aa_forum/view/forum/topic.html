@@ -11,14 +11,14 @@
     <br>
 
     {% include "aa_forum/partials/menu.html" %}
-    {% include "aa_forum/partials/breadcrumb.html" with category=first_message.board.category board=first_message.board first_message=first_message %}
+    {% include "aa_forum/partials/breadcrumb.html" with category=topic.board.category board=topic.board topic=topic %}
 {% endblock %}
 
 {% block aa_forum_body %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
-                {{ first_message.subject }}
+                {{ topic.subject }}
             </div>
         </div>
     </div>
