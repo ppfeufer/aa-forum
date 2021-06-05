@@ -206,7 +206,11 @@ def forum_board_new_topic(
 @login_required
 @permission_required("aa_forum.basic_access")
 def forum_topic(
-    request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
+    request: WSGIRequest,
+    category_slug: str,
+    board_slug: str,
+    topic_slug: str,
+    page_number: int = None,
 ) -> HttpResponse:
     """
     View a topic
@@ -243,7 +247,7 @@ def forum_topic(
     topic_messages = Messages.objects.filter(topic=topic)
 
     paginator = Paginator(topic_messages, MESSAGES_PER_PAGE)
-    page_number = request.GET.get("page")
+    # page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     context = {"topic": topic, "page_obj": page_obj}

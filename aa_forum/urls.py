@@ -26,6 +26,11 @@ urlpatterns = [
         forum.forum_topic,
         name="forum_topic",
     ),
+    path(
+        "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/<int:page_number>/",
+        forum.forum_topic,
+        name="forum_topic",
+    ),
     # path(
     #     "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/response/",
     #     forum.forum_topic_response,
