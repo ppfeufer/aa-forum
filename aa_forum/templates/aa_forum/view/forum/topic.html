@@ -27,24 +27,7 @@
         {% include "aa_forum/partials/forum/topic/message.html" %}
     {% endfor %}
 
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="{% url 'aa_forum:forum_topic' topic.first_message.board.category.slug topic.first_message.board.slug topic.first_message.topic.slug %}">&laquo; first</a>
-                <a href="{% url 'aa_forum:forum_topic' topic.first_message.board.category.slug topic.first_message.board.slug topic.first_message.topic.slug page_obj.previous_page_number %}">previous</a>
-            {% endif %}
-
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-            </span>
-
-            {% if page_obj.has_next %}
-                <a href="{% url 'aa_forum:forum_topic' topic.first_message.board.category.slug topic.first_message.board.slug topic.first_message.topic.slug page_obj.next_page_number%}">next</a>
-                <a href="{% url 'aa_forum:forum_topic' topic.first_message.board.category.slug topic.first_message.board.slug topic.first_message.topic.slug page_obj.paginator.num_pages %}">last &raquo;</a>
-            {% endif %}
-        </span>
-    </div>
-
+    {% include "aa_forum/partials/forum/topic/pagination.html" %}
     {% include "aa_forum/partials/forum/topic/reply.html" %}
 {% endblock %}
 

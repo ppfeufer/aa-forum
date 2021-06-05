@@ -1,5 +1,6 @@
 {% load aa_forum_user %}
 {% load evelinks %}
+{% load i18n %}
 
 <div id="message-{{ message.id }}" class="panel panel-default">
     <div class="panel-body">
@@ -27,10 +28,10 @@
                 <div class="aa-forum-message-header">
                     <div class="aa-forum-message-keyinfo">
                         <a href="{{ request.path }}#message-{{ message.id }}">
-                            {% if not forloop.first %}Re:{% endif %}
+                            {% if not forloop.first %}{% translate "Re:" %}{% endif %}
                             {{ message.topic.subject }}
                         </a><br>
-                        <small>« <b>on:</b> {{ message.time_posted }} »</small>
+                        <small>« <b>{% translate "on:" %}</b> {{ message.time_posted }} »</small>
                     </div>
                 </div>
 
