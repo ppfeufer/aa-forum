@@ -9,7 +9,7 @@
 
 <a class="btn btn-default btn-sm" href="{% url "aa_forum:forum_board_new_topic" board.category.slug.slug board.slug.slug %}">
     <i class="fas fa-pencil-alt"></i>
-    <span class="hidden-xs">New Topic</span>
+    <span class="hidden-xs">{% translate "New Topic" %}</span>
 </a>
 
 <div class="panel panel-default">
@@ -30,5 +30,5 @@
 
 <a class="btn btn-default btn-sm" href="">
     <i class="fas fa-pencil-alt"></i>
-    <span class="hidden-xs">New Topic</span>
+    <span class="hidden-xs">{% translate "New Topic" %}</span>
 </a>
