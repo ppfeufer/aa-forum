@@ -25,6 +25,8 @@ def forum_index(request: WSGIRequest) -> HttpResponse:
     Forum index view
     :param request:
     :type request:
+    :return:
+    :rtype:
     """
 
     categories_for_user = []
@@ -74,6 +76,8 @@ def forum_board(
     :type category_slug:
     :param board_slug:
     :type board_slug:
+    :return:
+    :rtype:
     """
 
     try:
@@ -111,13 +115,15 @@ def forum_board_new_topic(
     request: WSGIRequest, category_slug: str, board_slug: str
 ) -> HttpResponse:
     """
-    Start a new topic
+    Beginn a new topic
     :param request:
     :type request:
     :param category_slug:
     :type category_slug:
     :param board_slug:
     :type board_slug:
+    :return:
+    :rtype:
     """
 
     try:
@@ -222,6 +228,10 @@ def forum_topic(
     :type board_slug:
     :param topic_slug:
     :type topic_slug:
+    :param page_number:
+    :type page_number:
+    :return:
+    :rtype:
     """
 
     try:
@@ -247,7 +257,6 @@ def forum_topic(
     topic_messages = Messages.objects.filter(topic=topic)
 
     paginator = Paginator(topic_messages, MESSAGES_PER_PAGE)
-    # page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     context = {"topic": topic, "page_obj": page_obj}
