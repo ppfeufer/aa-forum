@@ -4,7 +4,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block page_title %}{% translate 'Forum' %}{% endblock %}
+{% block page_title %}{{ board.name }} » {% translate 'Forum' %}{% endblock %}
 
 {% block aa_forum_header %}
     <br>
