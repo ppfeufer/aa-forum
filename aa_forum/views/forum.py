@@ -200,8 +200,6 @@ def forum_board_new_topic(
 
     # If not, we'll create a blank form
     else:
-        # logger.debug(f"Returning blank SRP request form for {request.user}")
-
         form = NewTopicForm()
 
     context = {"board": board, "form": form}
