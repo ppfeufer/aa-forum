@@ -6,14 +6,16 @@
 
         {% if category %}
             <li>» <a href="{% url 'aa_forum:forum_index' %}#category-{{ category.id }}">{{ category.name }}</a></li>
-        {% endif %}
 
-        {% if board %}
-            <li>» <a href="{% url 'aa_forum:forum_board' board.category.slug board.slug %}">{{ board.name }}</a></li>
-        {% endif %}
+            {% if board %}
+                {% with category_slug=board.category.slug board_slug=board.slug %}
+                    <li>» <a href="{% url 'aa_forum:forum_board' category_slug board_slug %}">{{ board.name }}</a></li>
 
-        {% if topic %}
-            <li>» <a href="{% url 'aa_forum:forum_topic' board.category.slug board.slug topic.slug %}">{{ topic.subject }}</a></li>
+                    {% if topic %}
+                        <li>» <a href="{% url 'aa_forum:forum_topic' category_slug board_slug topic.slug %}">{{ topic.subject }}</a></li>
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
         {% endif %}
     </ul>
 </div>

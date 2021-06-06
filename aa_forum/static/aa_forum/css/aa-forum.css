@@ -3,7 +3,7 @@
 }
 
 @media all {
-    .panel-aa-forum-category .aa-forum-category {
+    .panel-aa-forum-category .aa-forum-board {
         align-content: center;
         align-items: baseline;
         display: flex;
@@ -12,23 +12,23 @@
         transition: var(--bg-hover-transition);
     }
 
-    .panel-aa-forum-category .aa-forum-category:last-child {
+    .panel-aa-forum-category .aa-forum-board:last-child {
         margin-bottom: 0;
     }
 
-    .panel-aa-forum-category .aa-forum-category:hover {
+    .panel-aa-forum-category .aa-forum-board:hover {
         background: rgba(0, 0, 0, 0.05);
     }
 
-    .panel-aa-forum-category .aa-forum-category-image {
+    .panel-aa-forum-category .aa-forum-board-image {
         margin-right: 1rem;
     }
 
-    .panel-aa-forum-category .aa-forum-category-name {
+    .panel-aa-forum-category .aa-forum-board-name {
         width: 100%;
     }
 
-    .aa-forum-category-name p:last-child {
+    .aa-forum-board-name p:last-child {
         margin: 0;
     }
 
@@ -42,14 +42,14 @@
         display: initial !important;
     }
 
-    .aa-forum .aa-forum-category-last-post .img-last-post-avatar {
+    .aa-forum .aa-forum-board-last-post .img-last-post-avatar {
         float: left;
         height: 55px;
         margin-right: 1rem;
         width: 55px;
     }
 
-    .aa-forum .aa-forum-category-last-post .last-post-information {
+    .aa-forum .aa-forum-board-last-post .last-post-information {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -120,16 +120,16 @@
 }
 
 @media all and (min-width: 768px) {
-    .panel-aa-forum-category .aa-forum-category-name {
+    .panel-aa-forum-category .aa-forum-board-name {
         width: 60%;
     }
 
-    .panel-aa-forum-category .aa-forum-category-stats {
+    .panel-aa-forum-category .aa-forum-board-stats {
         text-align: center;
         width: 15%;
     }
 
-    .panel-aa-forum-category .aa-forum-category-last-post {
+    .panel-aa-forum-category .aa-forum-board-last-post {
         width: 25%;
     }
 }

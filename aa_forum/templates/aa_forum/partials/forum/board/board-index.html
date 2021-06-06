@@ -1,10 +1,18 @@
 {% load static %}
 {% load i18n %}
 
-<div class="panel panel-default">
+<div id="category-{{ category.id }}" class="panel panel-default panel-aa-forum-category">
     <div class="panel-heading">
         <div class="panel-title">{{ board.name }}</div>
     </div>
+
+    {% if board.child_boards.all %}
+        <div class="panel-body">
+            {% for board in board.child_boards.all %}
+                {% include "aa_forum/partials/forum/board/board.html" %}
+            {% endfor %}
+        </div>
+    {% endif %}
 </div>
 
 <a class="btn btn-default btn-sm" href="{% url "aa_forum:forum_board_new_topic" board.category.slug.slug board.slug.slug %}">
@@ -16,9 +24,7 @@
     <div class="panel-body">
         {% if board.topics.all %}
             {% for topic in board.topics.all %}
-                <a href="{% url 'aa_forum:forum_topic' topic.board.category.slug topic.board.slug topic.slug %}">
-                    {{ topic.subject }}
-                </a><br>
+                {% include "aa_forum/partials/forum/board/topic.html" %}
             {% endfor %}
         {% else %}
             <div class="alert alert-info">
