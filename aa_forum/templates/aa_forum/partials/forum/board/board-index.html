@@ -15,7 +15,7 @@
     {% endif %}
 </div>
 
-<a class="btn btn-default btn-sm" href="{% url "aa_forum:forum_board_new_topic" board.category.slug.slug board.slug.slug %}">
+<a class="btn btn-default btn-sm" href="{% url "aa_forum:forum_board_new_topic" board.category.slug board.slug %}">
     <i class="fas fa-pencil-alt"></i>
     <span class="hidden-xs">{% translate "New Topic" %}</span>
 </a>
