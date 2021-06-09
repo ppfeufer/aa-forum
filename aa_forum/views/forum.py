@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
-from django.db.models import Count, Q
+from django.db.models import Count, Prefetch, Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -29,15 +29,13 @@ def forum_index(request: WSGIRequest) -> HttpResponse:
     :rtype:
     """
 
-    categories_for_user = []
-    categories = Categories.objects.all().distinct().order_by("order")
-
-    if categories:
-        for category in categories:
-            boards = (
-                Boards.objects.filter(
+    categories = (
+        Categories.objects.prefetch_related(
+            Prefetch(
+                "boards",
+                queryset=Boards.objects.prefetch_related("messages")
+                .filter(
                     Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-                    category=category,
                     parent_board__isnull=True,
                 )
                 .distinct()
@@ -45,20 +43,14 @@ def forum_index(request: WSGIRequest) -> HttpResponse:
                     num_posts=Count("messages", distinct=True),
                     num_topics=Count("topics", distinct=True),
                 )
-                .order_by("order")
+                .order_by("order"),
             )
+        )
+        .all()
+        .order_by("order")
+    )
 
-            if boards:
-                categories_for_user.append(
-                    {
-                        "name": category.name,
-                        "id": category.id,
-                        "slug": category.slug.slug,
-                        "boards": boards,
-                    }
-                )
-
-    context = {"categories": categories_for_user}
+    context = {"categories": categories}
 
     return render(request, "aa_forum/view/forum/index.html", context)
 
@@ -82,10 +74,16 @@ def forum_board(
 
     try:
         board = (
-            Boards.objects.filter(
+            Boards.objects.prefetch_related("messages")
+            .prefetch_related("child_boards")
+            .prefetch_related("topics")
+            .filter(
                 Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
                 category__slug__slug__exact=category_slug,
                 slug__slug__exact=board_slug,
+            )
+            .annotate(
+                num_posts=Count("messages", distinct=True),
             )
             .distinct()
             .get()
@@ -107,6 +105,61 @@ def forum_board(
     context = {"board": board}
 
     return render(request, "aa_forum/view/forum/board.html", context)
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def forum_topic(
+    request: WSGIRequest,
+    category_slug: str,
+    board_slug: str,
+    topic_slug: str,
+    page_number: int = None,
+) -> HttpResponse:
+    """
+    View a topic
+    :param request:
+    :type request:
+    :param category_slug:
+    :type category_slug:
+    :param board_slug:
+    :type board_slug:
+    :param topic_slug:
+    :type topic_slug:
+    :param page_number:
+    :type page_number:
+    :return:
+    :rtype:
+    """
+
+    try:
+        Boards.objects.prefetch_related("messages").filter(
+            Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
+            category__slug__slug__exact=category_slug,
+            slug__slug__exact=board_slug,
+        ).distinct().get()
+    except Boards.DoesNotExist:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The topic you were trying to view does "
+                    "either not exist, or you don't have access to it ...</p> "
+                )
+            ),
+        )
+
+        return redirect("aa_forum:forum_index")
+
+    topic = Topics.objects.get(slug__slug__exact=topic_slug)
+    topic_messages = Messages.objects.filter(topic=topic)
+
+    paginator = Paginator(topic_messages, MESSAGES_PER_PAGE)
+    page_obj = paginator.get_page(page_number)
+
+    context = {"topic": topic, "page_obj": page_obj}
+
+    return render(request, "aa_forum/view/forum/topic.html", context)
 
 
 @login_required
@@ -205,58 +258,3 @@ def forum_board_new_topic(
     context = {"board": board, "form": form}
 
     return render(request, "aa_forum/view/forum/new-topic.html", context)
-
-
-@login_required
-@permission_required("aa_forum.basic_access")
-def forum_topic(
-    request: WSGIRequest,
-    category_slug: str,
-    board_slug: str,
-    topic_slug: str,
-    page_number: int = None,
-) -> HttpResponse:
-    """
-    View a topic
-    :param request:
-    :type request:
-    :param category_slug:
-    :type category_slug:
-    :param board_slug:
-    :type board_slug:
-    :param topic_slug:
-    :type topic_slug:
-    :param page_number:
-    :type page_number:
-    :return:
-    :rtype:
-    """
-
-    try:
-        Boards.objects.filter(
-            Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-            category__slug__slug__exact=category_slug,
-            slug__slug__exact=board_slug,
-        ).distinct().get()
-    except Boards.DoesNotExist:
-        messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The topic you were trying to view does "
-                    "either not exist, or you don't have access to it ...</p> "
-                )
-            ),
-        )
-
-        return redirect("aa_forum:forum_index")
-
-    topic = Topics.objects.get(slug__slug__exact=topic_slug)
-    topic_messages = Messages.objects.filter(topic=topic)
-
-    paginator = Paginator(topic_messages, MESSAGES_PER_PAGE)
-    page_obj = paginator.get_page(page_number)
-
-    context = {"topic": topic, "page_obj": page_obj}
-
-    return render(request, "aa_forum/view/forum/topic.html", context)
