@@ -1,6 +1,7 @@
 """
 AA-Forum url config
 """
+
 from django.conf.urls import url
 
 from aa_forum.views import admin, forum

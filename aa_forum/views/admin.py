@@ -29,7 +29,6 @@ def admin_index(request: WSGIRequest) -> HttpResponse:
                 queryset=Boards.objects.filter(parent_board__isnull=True).order_by(
                     "order"
                 ),
-                # to_attr="category_boards",
             )
         )
         .all()
