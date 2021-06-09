@@ -140,7 +140,7 @@
         padding: 1rem;
     }
 
-    .aa-forum .categories-sortable > li, .aa-forum .boards-sortable > li:first-child {
+    .aa-forum .boards-sortable > li:first-child {
         margin-top: 1rem;
     }
 }
