@@ -13,15 +13,60 @@
 {% endblock %}
 
 {% block aa_forum_body %}
-    <ul id="sortable">
-        <li class="ui-state-default ui-sortable" data-position="">Item 1</li>
-        <li class="ui-state-default ui-sortable" data-position="">Item 2</li>
-        <li class="ui-state-default ui-sortable" data-position="">Item 3</li>
-        <li class="ui-state-default ui-sortable" data-position="">Item 4</li>
-        <li class="ui-state-default ui-sortable" data-position="">Item 5</li>
-        <li class="ui-state-default ui-sortable" data-position="">Item 6</li>
-        <li class="ui-state-default ui-sortable" data-position="">Item 7</li>
-    </ul>
+    {% if categories %}
+        <div class="row">
+            <div class="col-md-6 col-md-push-6">
+                <p>
+                    {% blocktranslate %}
+                        Here you can create, modify and delete categories and boards. You also can change their order via drag and drop.
+                    {% endblocktranslate %}
+                </p>
+
+                <p>Create Category</p>
+            </div>
+
+            <div class="col-md-6 col-md-pull-6">
+                <script type="application/javascript">
+                    // categoriesWithBoards = ( typeof categoriesWithBoards != 'undefined' && categoriesWithBoards instanceof Array ) ? categoriesWithBoards : []
+                    let categoriesWithBoards = []
+                </script>
+
+                <ul id="categories-sortable" class="categories-sortable">
+                    {% for category in categories %}
+                        <li class="category-sortable ui-state-default ui-sortable" data-category-id="{{ category.pk }}" data-position="{{ category.order }}">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        {{ category.name }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div>
+                                    <p>
+                                        Create Board
+                                    </p>
+                                </div>
+
+                                {% if category.boards.all %}
+                                    <ul id="boards-sortable-category-{{ category.pk }}" class="boards-sortable">
+                                        {% for board in category.boards.all %}
+                                            <li class="board-sortable ui-state-default ui-sortable" data-board-id="{{ board.pk }}" data-position="{{ board.order }}">{{ board.name }}</li>
+                                        {% endfor %}
+                                    </ul>
+
+                                    <script type="application/javascript">
+                                        categoriesWithBoards.push('#boards-sortable-category-{{ category.pk }}')
+                                    </script>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block extra_css %}
@@ -34,18 +79,56 @@
     <script type="application/javascript" src="{% static 'aa_forum/libs/jquery/ui/1.12.1/jquery-ui.min.js' %}"></script>
     <script type="application/javascript">
         $(function() {
-            let wrapperSortable = $("#sortable");
-            let elementSortable = $("#sortable li");
-
-            wrapperSortable.sortable({
-                placeholder: "ui-state-highlight",
+            $(".categories-sortable").sortable({
+                placeholder: "aa-forum-ui-placeholder",
+                connectWith: ".categories_sortable",
+                axis: "y",
+                start: function(e, ui){
+                    // this makes the placeholder fit with the row that's being dragged
+                    ui.placeholder.height(ui.helper.height());
+                },
                 update: function (event, ui) {
-                    elementSortable.each(function (index) {
+                    $(".categories-sortable .category-sortable").each(function (index) {
                         $(this).attr('data-position', index);
                     });
-                }
-            });
-            wrapperSortable.disableSelection();
+                },
+            }).disableSelection();
+
+            if (categoriesWithBoards.length > 0) {
+                $(categoriesWithBoards).each(function (key) {
+                    $(categoriesWithBoards[key]).sortable({
+                        placeholder: "aa-forum-ui-placeholder",
+                        connectWith: categoriesWithBoards[key],
+                        containment: "parent",
+                        start: function (e, ui) {
+                            // get the instance of the sortable.
+                            // instance method is new to jquery ui 1.11, for previous versions
+                            // you can use $(this).data()['ui-sortable'];
+                            let sort = $(this).sortable('instance');
+
+                            // this makes the placeholder fit with the row that's being dragged
+                            ui.placeholder.height(ui.helper.height());
+
+                            // containment property of the sortable instance is different
+                            // as the containment option. The property is calculated
+                            // from the option. You need to adjust bottom coordinates
+                            // to take into account the row you just removed from it, and the click offset.
+                            sort.containment[3] += ui.helper.height() * 2.5;
+
+                            // Since your handle is centered, and pointer coordinates are used
+                            // for sortable, but top coordinates are used for containment
+                            // you can have issues with top row. Adjusting with the click offset
+                            // will resolve the issue.
+                            sort.containment[1] -= sort.offset.click.top;
+                        },
+                        update: function (event, ui) {
+                            $(categoriesWithBoards[key] + " li.board-sortable").each(function (index) {
+                                $(this).attr('data-position', index);
+                            });
+                        },
+                    }).disableSelection();
+                });
+            }
         });
     </script>
 {% endblock %}

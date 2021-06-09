@@ -119,6 +119,32 @@
     }
 }
 
+/* Sortable categories and boards
+------------------------------------------------------------------------------------- */
+@media all {
+    .aa-forum .aa-forum-ui-placeholder {
+        outline: 1px dashed rgb(0, 0, 0);
+    }
+
+    .aa-forum .categories-sortable, .aa-forum .boards-sortable {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .aa-forum .categories-sortable > li, .aa-forum .boards-sortable > li {
+        /*padding: 1rem;*/
+        margin-bottom: 1rem;
+    }
+
+    .aa-forum .boards-sortable > li {
+        padding: 1rem;
+    }
+
+    .aa-forum .categories-sortable > li, .aa-forum .boards-sortable > li:first-child {
+        margin-top: 1rem;
+    }
+}
+
 @media all and (min-width: 768px) {
     .panel-aa-forum-category .aa-forum-board-name {
         width: 60%;
