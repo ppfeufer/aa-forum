@@ -13,13 +13,39 @@
 {% endblock %}
 
 {% block aa_forum_body %}
-
+    <ul id="sortable">
+        <li class="ui-state-default ui-sortable" data-position="">Item 1</li>
+        <li class="ui-state-default ui-sortable" data-position="">Item 2</li>
+        <li class="ui-state-default ui-sortable" data-position="">Item 3</li>
+        <li class="ui-state-default ui-sortable" data-position="">Item 4</li>
+        <li class="ui-state-default ui-sortable" data-position="">Item 5</li>
+        <li class="ui-state-default ui-sortable" data-position="">Item 6</li>
+        <li class="ui-state-default ui-sortable" data-position="">Item 7</li>
+    </ul>
 {% endblock %}
 
 {% block extra_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'aa_forum/libs/jquery/ui/1.12.1/jquery-ui.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'aa_forum/css/aa-forum.min.css' %}">
 {% endblock %}
 
 {% block extra_javascript %}
+    <script type="application/javascript" src="{% static 'aa_forum/libs/jquery/ui/1.12.1/jquery-ui.min.js' %}"></script>
+    <script type="application/javascript">
+        $(function() {
+            let wrapperSortable = $("#sortable");
+            let elementSortable = $("#sortable li");
+
+            wrapperSortable.sortable({
+                placeholder: "ui-state-highlight",
+                update: function (event, ui) {
+                    elementSortable.each(function (index) {
+                        $(this).attr('data-position', index);
+                    });
+                }
+            });
+            wrapperSortable.disableSelection();
+        });
+    </script>
 {% endblock %}
