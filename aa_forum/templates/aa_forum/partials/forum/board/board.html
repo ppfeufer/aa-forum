@@ -64,7 +64,7 @@
                 </a>
                 <br>
                 <b>{% translate "posted by:" %}</b> {{ board_last_message_author|main_character_name }}<br>
-                <b>{% translate "posted at:" %}</b> {{ board_last_message.time_posted }}
+                <b>{% translate "posted at:" %}</b> {{ board_last_message.time_posted|date }}, {{ board_last_message.time_posted|time:"G:i:s" }}
             </p>
         {% endif %}
     </div>
