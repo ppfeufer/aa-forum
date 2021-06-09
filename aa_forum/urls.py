@@ -36,5 +36,16 @@ urlpatterns = [
     #     forum.forum_topic_response,
     #     name="forum_topic_response",
     # ),
-    url(r"^admin/$", administration.admin_index, name="admin_index"),
+    url(r"^administration/$", administration.admin_index, name="admin_index"),
+    # Ajax
+    url(
+        r"^ajax/administration/category-order/$",
+        administration.ajax_category_order,
+        name="admin_ajax_category_order",
+    ),
+    url(
+        r"^ajax/administration/board-order/$",
+        administration.ajax_board_order,
+        name="admin_ajax_board_order",
+    ),
 ]

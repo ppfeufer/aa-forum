@@ -5,7 +5,7 @@ Administration related views
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Prefetch
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 from aa_forum.models import Boards, Categories
@@ -14,6 +14,13 @@ from aa_forum.models import Boards, Categories
 @login_required
 @permission_required("aa_forum.manage_forum")
 def admin_index(request: WSGIRequest) -> HttpResponse:
+    """
+    Administration index view
+    :param request:
+    :type request:
+    :return:
+    :rtype:
+    """
 
     categories = (
         Categories.objects.prefetch_related(
@@ -32,3 +39,23 @@ def admin_index(request: WSGIRequest) -> HttpResponse:
     context = {"categories": categories}
 
     return render(request, "aa_forum/view/administration/index.html", context)
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def ajax_category_order(request: WSGIRequest) -> JsonResponse:
+    """
+    Ajax call :: Save the category order
+    :param request:
+    :type request:
+    """
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def ajax_board_order(request: WSGIRequest) -> JsonResponse:
+    """
+    Ajax call :: Save the category order
+    :param request:
+    :type request:
+    """
