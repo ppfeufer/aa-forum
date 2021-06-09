@@ -388,3 +388,23 @@ class PersonalMessages(models.Model):
 
     def __str__(self) -> str:
         return str(self.subject)
+
+
+class Settings(models.Model):
+    """
+    Settings
+    """
+
+    variable = models.CharField(
+        max_length=254, blank=False, primary_key=True, unique=True
+    )
+    value = models.TextField(blank=False)
+
+    class Meta:
+        """
+        Meta definitions
+        """
+
+        default_permissions = ()
+        verbose_name = _("Setting")
+        verbose_name_plural = _("Settings")
