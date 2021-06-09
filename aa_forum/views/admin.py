@@ -50,12 +50,46 @@ def ajax_category_order(request: WSGIRequest) -> JsonResponse:
     :type request:
     """
 
+    data = list()
+
+    if request.method == "POST":
+        import simplejson
+
+        categories = simplejson.loads(request.POST.get("categories"))
+
+        for category in categories:
+            Categories.objects.update_or_create(
+                pk=category["catId"],
+                defaults={"order": category["catOrder"]},
+            )
+
+        data.append({"success": True})
+
+    return JsonResponse(data, safe=False)
+
 
 @login_required
 @permission_required("aa_forum.manage_forum")
 def ajax_board_order(request: WSGIRequest) -> JsonResponse:
     """
-    Ajax call :: Save the category order
+    Ajax call :: Save the board order
     :param request:
     :type request:
     """
+
+    data = list()
+
+    if request.method == "POST":
+        import simplejson
+
+        boards = simplejson.loads(request.POST.get("boards"))
+
+        for board in boards:
+            Boards.objects.update_or_create(
+                pk=board["boardId"],
+                defaults={"order": board["boardOrder"]},
+            )
+
+        data.append({"success": True})
+
+    return JsonResponse(data, safe=False)

@@ -79,27 +79,43 @@
     <script type="application/javascript" src="{% static 'aa_forum/libs/jquery/ui/1.12.1/jquery-ui.min.js' %}"></script>
     <script type="application/javascript">
         $(function() {
-            $(".categories-sortable").sortable({
-                placeholder: "aa-forum-ui-placeholder",
-                connectWith: ".categories_sortable",
-                axis: "y",
+            $('.categories-sortable').sortable({
+                placeholder: 'aa-forum-ui-placeholder',
+                connectWith: '.categories_sortable',
+                axis: 'y',
                 start: function(e, ui){
                     // this makes the placeholder fit with the row that's being dragged
                     ui.placeholder.height(ui.helper.height());
                 },
                 update: function (event, ui) {
-                    $(".categories-sortable .category-sortable").each(function (index) {
+                    let categories = [];
+
+                    $('.categories-sortable .category-sortable').each(function (index) {
                         $(this).attr('data-position', index);
+
+                        categories.push({
+                            catId: $(this).data('category-id'),
+                            catOrder: index,
+                        })
                     });
+
+                    // Update DB
+                    let posting = $.post(
+                        '{% url "aa_forum:admin_ajax_category_order" %}',
+                        {
+                            categories: JSON.stringify(categories),
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        }
+                    );
                 },
             }).disableSelection();
 
             if (categoriesWithBoards.length > 0) {
                 $(categoriesWithBoards).each(function (key) {
                     $(categoriesWithBoards[key]).sortable({
-                        placeholder: "aa-forum-ui-placeholder",
+                        placeholder: 'aa-forum-ui-placeholder',
                         connectWith: categoriesWithBoards[key],
-                        containment: "parent",
+                        containment: 'parent',
                         start: function (e, ui) {
                             // get the instance of the sortable.
                             // instance method is new to jquery ui 1.11, for previous versions
@@ -122,9 +138,25 @@
                             sort.containment[1] -= sort.offset.click.top;
                         },
                         update: function (event, ui) {
-                            $(categoriesWithBoards[key] + " li.board-sortable").each(function (index) {
+                            let boards = [];
+
+                            $(categoriesWithBoards[key] + ' li.board-sortable').each(function (index) {
                                 $(this).attr('data-position', index);
+
+                                boards.push({
+                                    boardId: $(this).data('board-id'),
+                                    boardOrder: index,
+                                })
                             });
+
+                            // Update DB
+                            let posting = $.post(
+                                '{% url "aa_forum:admin_ajax_board_order" %}',
+                                {
+                                    boards: JSON.stringify(boards),
+                                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                                }
+                            );
                         },
                     }).disableSelection();
                 });
