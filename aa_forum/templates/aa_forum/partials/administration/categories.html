@@ -23,7 +23,7 @@
                     <fieldset>
                         {% csrf_token %}
 
-                        {{ forms.new_category|bootstrap }}
+                        {{ new_category_form|bootstrap }}
 
                         <div class="form-group aa-forum-form-new-category text-right clearfix">
                             <button class="btn btn-primary" type="submit">{% translate 'Create Category' %}</button>
@@ -34,7 +34,9 @@
         </div>
     </div>
 
-    {% if categories %}
+    {% if category_loop %}
+        <div class="col-md-6 col-md-pull-6">
+        </div>
         <div class="col-md-6 col-md-pull-6">
             <script type="application/javascript">
                 // categoriesWithBoards = (typeof categoriesWithBoards != 'undefined' && categoriesWithBoards instanceof Array) ? categoriesWithBoards : []
@@ -51,33 +53,34 @@
             </script>
 
             <ul id="categories-sortable" class="categories-sortable">
-                {% for category in categories %}
-                    <li class="category-sortable ui-state-default ui-sortable" data-category-id="{{ category.pk }}" data-position="{{ category.order }}">
+                {% for category in category_loop %}
+                    <li class="category-sortable ui-state-default ui-sortable" data-category-id="{{ category.category_obj.pk }}" data-position="{{ category.category_obj.order }}">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="panel-title">
-                                    {{ category.name }}
+                                    {{ category.category_obj.name }}
                                 </div>
                             </div>
+
                             <div class="panel-body">
                                 <div>
                                     <p>
-                                        <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseNewBoardForm-{{ category.pk }}" aria-expanded="false" aria-controls="collapseNewBoardForm-{{ category.pk }}">
+                                        <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseNewBoardForm-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseNewBoardForm-{{ category.category_obj.pk }}">
                                             {% translate "Create New Board" %}
                                         </button>
                                     </p>
 
-                                    <div class="collapse" id="collapseNewBoardForm-{{ category.pk }}">
+                                    <div class="collapse" id="collapseNewBoardForm-{{ category.category_obj.pk }}">
                                         <div class="well">
                                             <p>
                                                 {% translate "New boards will be added at the bottom of the board list for this category. You can move them via drag and drop to a position of your liking." %}
                                             </p>
 
-                                            <form action="{% url 'aa_forum:admin_board_create' category.pk %}" method="post">
+                                            <form action="{% url 'aa_forum:admin_board_create' category.category_obj.pk %}" method="post">
                                                 <fieldset>
                                                     {% csrf_token %}
 
-                                                    {{ forms.new_board|bootstrap }}
+                                                    {{ category.category_form|bootstrap }}
 
                                                     <div class="form-group aa-forum-form-new-category text-right clearfix">
                                                         <button class="btn btn-primary" type="submit">{% translate 'Create Board' %}</button>
@@ -88,15 +91,15 @@
                                     </div>
                                 </div>
 
-                                {% if category.boards.all %}
-                                    <ul id="boards-sortable-category-{{ category.pk }}" class="boards-sortable">
-                                        {% for board in category.boards.all %}
-                                            <li class="board-sortable ui-state-default ui-sortable" data-board-id="{{ board.pk }}" data-position="{{ board.order }}">{{ board.name }}</li>
+                                {% if category.boards %}
+                                    <ul id="boards-sortable-category-{{ category.category_obj.pk }}" class="boards-sortable">
+                                        {% for board in category.boards %}
+                                            <li class="board-sortable ui-state-default ui-sortable" data-board-id="{{ board.board_obj.pk }}" data-position="{{ board.board_obj.order }}">{{ board.board_obj.name }}</li>
                                         {% endfor %}
                                     </ul>
 
                                     <script type="application/javascript">
-                                        categoriesWithBoards.push('#boards-sortable-category-{{ category.pk }}')
+                                        categoriesWithBoards.push('#boards-sortable-category-{{ category.category_obj.pk }}')
                                     </script>
                                 {% endif %}
                             </div>
@@ -104,6 +107,6 @@
                     </li>
                 {% endfor %}
             </ul>
-        </div>
+{#        </div>#}
     {% endif %}
 </div>

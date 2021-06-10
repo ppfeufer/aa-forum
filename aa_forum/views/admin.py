@@ -36,13 +36,25 @@ def admin_index(request: WSGIRequest) -> HttpResponse:
         .order_by("order")
     )
 
+    category_loop = list()
+    for category in categories:
+        boards_data = [
+            {"board_obj": board, "board_form": EditBoardForm(prefix=board.id)}
+            for board in category.boards.all()
+        ]
+        category_data = {
+            "category_obj": category,
+            "category_form": EditBoardForm(prefix=category.id),
+            "boards": boards_data,
+        }
+        category_loop.append(category_data)
+
     # Forms
     form_new_category = EditCategoryForm()
-    form_new_board = EditBoardForm()
 
     context = {
-        "categories": categories,
-        "forms": {"new_category": form_new_category, "new_board": form_new_board},
+        "new_category_form": form_new_category,
+        "category_loop": category_loop,
     }
 
     return render(request, "aa_forum/view/administration/index.html", context)
@@ -73,7 +85,7 @@ def admin_category_create(request: WSGIRequest) -> HttpResponse:
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def admin_board_create(request: WSGIRequest, category: Categories) -> HttpResponse:
+def admin_board_create(request: WSGIRequest, category_id: int) -> HttpResponse:
     """
     Create a new board
     :param request:
@@ -84,9 +96,9 @@ def admin_board_create(request: WSGIRequest, category: Categories) -> HttpRespon
 
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = EditBoardForm(request.POST)
+        form = EditBoardForm(request.POST, prefix=category_id)
 
-        board_category = Categories.objects.get(pk=category)
+        board_category = Categories.objects.get(pk=category_id)
 
         # Check whether it's valid:
         if form.is_valid():
