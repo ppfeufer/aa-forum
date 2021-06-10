@@ -6,13 +6,13 @@
         <div class="panel-title">{{ board.name }}</div>
     </div>
 
-    {% if board.child_boards.all %}
-        <div class="panel-body">
-            {% for board in board.child_boards.all %}
-                {% include "aa_forum/partials/forum/board/board.html" %}
-            {% endfor %}
-        </div>
-    {% endif %}
+{#    {% if board.child_boards.all %}#}
+{#        <div class="panel-body">#}
+{#            {% for board in board.child_boards.all %}#}
+{#                {% include "aa_forum/partials/forum/board/board.html" %}#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    {% endif %}#}
 </div>
 
 <a class="btn btn-default btn-sm" href="{% url "aa_forum:forum_board_new_topic" board.category.slug board.slug %}">

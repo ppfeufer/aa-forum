@@ -29,17 +29,17 @@
             </p>
         {% endif %}
 
-        {% if board_child_boards %}
-            <p class="aa-forum-child-boards text-muted small">
-                <b>{% translate "Child Boards:" %}</b>
-
-                {% for child_board in board_child_boards %}
-                    <a href="{% url 'aa_forum:forum_board' category_slug child_board.slug %}">
-                        {{ child_board.name }}
-                    </a>{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </p>
-        {% endif %}
+{#        {% if board_child_boards %}#}
+{#            <p class="aa-forum-child-boards text-muted small">#}
+{#                <b>{% translate "Child Boards:" %}</b>#}
+{##}
+{#                {% for child_board in board_child_boards %}#}
+{#                    <a href="{% url 'aa_forum:forum_board' category_slug child_board.slug %}">#}
+{#                        {{ child_board.name }}#}
+{#                    </a>{% if not forloop.last %}, {% endif %}#}
+{#                {% endfor %}#}
+{#            </p>#}
+{#        {% endif %}#}
     </div>
 
     <div class="aa-forum-board-stats hidden-sm hidden-xs">

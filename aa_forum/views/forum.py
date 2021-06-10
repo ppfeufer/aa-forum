@@ -75,7 +75,7 @@ def forum_board(
     try:
         board = (
             Boards.objects.prefetch_related("messages")
-            .prefetch_related("child_boards")
+            # .prefetch_related("child_boards")
             .prefetch_related("topics")
             .filter(
                 Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
@@ -88,7 +88,6 @@ def forum_board(
             .distinct()
             .get()
         )
-
     except Boards.DoesNotExist:
         messages.error(
             request,
