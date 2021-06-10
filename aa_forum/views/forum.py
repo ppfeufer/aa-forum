@@ -254,6 +254,9 @@ def forum_topic(
     topic_messages = Messages.objects.filter(topic=topic)
     settings = Settings.objects.all()
 
+    # Set this topic as "read by" by the current user
+    topic.read_by.add(request.user)
+
     paginator = Paginator(
         topic_messages,
         settings.values_list("value", flat=True).get(
@@ -305,6 +308,11 @@ def forum_topic_reply(
             # Update the modified timestamp on the topic
             topic.time_modified = timezone.now()
             topic.save()
+
+            # Remove all users from "read by" list and set the current user again.
+            # This way we mark this topic as unread for all but the current user.
+            topic.read_by.clear()
+            topic.read_by.add(request.user)
 
             return redirect(
                 "aa_forum:forum_message_entry_point_in_topic", new_message.id
