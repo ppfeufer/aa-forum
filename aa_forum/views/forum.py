@@ -361,7 +361,7 @@ def message_entry_point_in_topic(
 
         return redirect("aa_forum:forum_index")
 
-    messages_in_topic = Messages.objects.filter(pk__lte=message.pk)
+    messages_in_topic = Messages.objects.filter(pk__lte=message.pk, topic=message.topic)
     number_of_messages_in_topic = messages_in_topic.count()
     settings = Settings.objects.all()
     messages_per_topic = settings.values_list("value", flat=True).get(
