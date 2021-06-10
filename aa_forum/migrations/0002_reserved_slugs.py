@@ -49,7 +49,7 @@ def remove_reserved_slugs(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("aa_forum", "0002_settings"),
+        ("aa_forum", "0001_initial"),
     ]
 
     operations = [

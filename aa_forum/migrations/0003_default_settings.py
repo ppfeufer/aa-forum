@@ -56,7 +56,7 @@ def remove_default_settings(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("aa_forum", "0003_reserved_slugs"),
+        ("aa_forum", "0002_reserved_slugs"),
     ]
 
     operations = [
