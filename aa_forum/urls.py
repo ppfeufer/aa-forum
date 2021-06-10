@@ -32,6 +32,12 @@ urlpatterns = [
         admin.ajax_board_order,
         name="admin_ajax_board_order",
     ),
+    # Service URLs (These have to be before the forum URLs!)
+    url(
+        r"^message/(?P<message_id>[0-9]+)/$",
+        forum.message_entry_point_in_topic,
+        name="forum_message_entry_point_in_topic",
+    ),
     # Forum URLs
     url(
         r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/$",
@@ -53,5 +59,11 @@ urlpatterns = [
         r"(?P<topic_slug>[\w-]+)/(?P<page_number>[0-9]+)/$",
         forum.forum_topic,
         name="forum_topic",
+    ),
+    url(
+        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/"
+        r"(?P<topic_slug>[\w-]+)/reply/$",
+        forum.forum_topic_reply,
+        name="forum_topic_reply",
     ),
 ]

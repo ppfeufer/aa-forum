@@ -2,20 +2,22 @@
 Forum related views
 """
 
+import math
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
 from django.db.models import Count, Prefetch, Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
-from aa_forum.constants import MESSAGES_PER_PAGE
-from aa_forum.forms import NewTopicForm
-from aa_forum.models import Boards, Categories, Messages, Topics
+from aa_forum.forms import NewTopicForm, ReplyForm
+from aa_forum.models import Boards, Categories, Messages, Settings, Topics
 
 
 @login_required
@@ -104,61 +106,6 @@ def forum_board(
     context = {"board": board}
 
     return render(request, "aa_forum/view/forum/board.html", context)
-
-
-@login_required
-@permission_required("aa_forum.basic_access")
-def forum_topic(
-    request: WSGIRequest,
-    category_slug: str,
-    board_slug: str,
-    topic_slug: str,
-    page_number: int = None,
-) -> HttpResponse:
-    """
-    View a topic
-    :param request:
-    :type request:
-    :param category_slug:
-    :type category_slug:
-    :param board_slug:
-    :type board_slug:
-    :param topic_slug:
-    :type topic_slug:
-    :param page_number:
-    :type page_number:
-    :return:
-    :rtype:
-    """
-
-    try:
-        Boards.objects.prefetch_related("messages").filter(
-            Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-            category__slug__slug__exact=category_slug,
-            slug__slug__exact=board_slug,
-        ).distinct().get()
-    except Boards.DoesNotExist:
-        messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The topic you were trying to view does "
-                    "either not exist, or you don't have access to it ...</p> "
-                )
-            ),
-        )
-
-        return redirect("aa_forum:forum_index")
-
-    topic = Topics.objects.get(slug__slug__exact=topic_slug)
-    topic_messages = Messages.objects.filter(topic=topic)
-
-    paginator = Paginator(topic_messages, MESSAGES_PER_PAGE)
-    page_obj = paginator.get_page(page_number)
-
-    context = {"topic": topic, "page_obj": page_obj}
-
-    return render(request, "aa_forum/view/forum/topic.html", context)
 
 
 @login_required
@@ -257,3 +204,179 @@ def forum_board_new_topic(
     context = {"board": board, "form": form}
 
     return render(request, "aa_forum/view/forum/new-topic.html", context)
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def forum_topic(
+    request: WSGIRequest,
+    category_slug: str,
+    board_slug: str,
+    topic_slug: str,
+    page_number: int = None,
+) -> HttpResponse:
+    """
+    View a topic
+    :param request:
+    :type request:
+    :param category_slug:
+    :type category_slug:
+    :param board_slug:
+    :type board_slug:
+    :param topic_slug:
+    :type topic_slug:
+    :param page_number:
+    :type page_number:
+    :return:
+    :rtype:
+    """
+
+    try:
+        Boards.objects.prefetch_related("messages").filter(
+            Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
+            category__slug__slug__exact=category_slug,
+            slug__slug__exact=board_slug,
+        ).distinct().get()
+    except Boards.DoesNotExist:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The topic you were trying to view does "
+                    "either not exist, or you don't have access to it ...</p> "
+                )
+            ),
+        )
+
+        return redirect("aa_forum:forum_index")
+
+    topic = Topics.objects.get(slug__slug__exact=topic_slug)
+    topic_messages = Messages.objects.filter(topic=topic)
+    settings = Settings.objects.all()
+
+    paginator = Paginator(
+        topic_messages,
+        settings.values_list("value", flat=True).get(
+            variable__exact="defaultMaxMessages"
+        ),
+    )
+    page_obj = paginator.get_page(page_number)
+
+    reply_form = ReplyForm()
+
+    context = {"topic": topic, "page_obj": page_obj, "reply_form": reply_form}
+
+    return render(request, "aa_forum/view/forum/topic.html", context)
+
+
+def forum_topic_reply(
+    request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
+) -> HttpResponse:
+    """
+    Reply to posts in a topic
+    :param request:
+    :type request:
+    :param category_slug:
+    :type category_slug:
+    :param board_slug:
+    :type board_slug:
+    :param topic_slug:
+    :type topic_slug:
+    :return:
+    :rtype:
+    """
+
+    if request.method == "POST":
+        # Create a form instance and populate it with data from the request
+        form = ReplyForm(request.POST)
+
+        # Check whether it's valid:
+        if form.is_valid():
+            board = Boards.objects.get(slug__slug__exact=board_slug)
+            topic = Topics.objects.get(slug__slug__exact=topic_slug)
+
+            new_message = Messages()
+            new_message.topic = topic
+            new_message.board = board
+            new_message.user_created = request.user
+            new_message.message = form.cleaned_data["message"]
+            new_message.save()
+
+            # Update the modified timestamp on the topic
+            topic.time_modified = timezone.now()
+            topic.save()
+
+    return redirect("aa_forum:forum_topic", category_slug, board_slug, topic_slug)
+
+
+def message_entry_point_in_topic(
+    request: WSGIRequest, message_id: int
+) -> HttpResponseRedirect:
+    """
+    Get a messages antry point in a topic, so we end up on the right page with it
+    :param request:
+    :type request:
+    :param message_id:
+    :type message_id:
+    """
+
+    try:
+        message = Messages.objects.get(pk=message_id)
+    except Messages.DoesNotExist:
+        messages.error(
+            request,
+            mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p> ")),
+        )
+
+        return redirect("aa_forum:forum_index")
+
+    try:
+        board = (
+            Boards.objects.filter(
+                Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
+                pk=message.board.pk,
+            )
+            .distinct()
+            .get()
+        )
+    except Boards.DoesNotExist:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The topic you were trying to view does "
+                    "either not exist, or you don't have access to it ...</p> "
+                )
+            ),
+        )
+
+        return redirect("aa_forum:forum_index")
+
+    messages_in_topic = Messages.objects.filter(pk__lte=message.pk)
+    number_of_messages_in_topic = messages_in_topic.count()
+    settings = Settings.objects.all()
+    messages_per_topic = settings.values_list("value", flat=True).get(
+        variable__exact="defaultMaxMessages"
+    )
+
+    page = int(math.ceil(int(number_of_messages_in_topic) / int(messages_per_topic)))
+
+    if page > 1:
+        redirect_path = reverse(
+            "aa_forum:forum_topic",
+            args=(
+                board.category.slug,
+                board.slug,
+                message.topic.slug,
+                page,
+            ),
+        )
+        redirect_url = f"{redirect_path}#message-{message.pk}"
+    else:
+        redirect_path = reverse(
+            "aa_forum:forum_topic",
+            args=(board.category.slug, board.slug, message.topic.slug),
+        )
+        redirect_url = f"{redirect_path}#message-{message.pk}"
+
+    return HttpResponseRedirect(redirect_url)

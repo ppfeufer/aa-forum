@@ -9,7 +9,7 @@ from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from aa_forum.models import Boards, Categories
+from aa_forum.models import Boards, Categories, Messages
 
 
 def get_mandatory_form_label_text(text):
@@ -104,3 +104,25 @@ class NewBoardForm(ModelForm):
 
         model = Boards
         fields = ["name", "description"]
+
+
+class ReplyForm(ModelForm):
+    """
+    Reply form
+    """
+
+    message = forms.CharField(
+        widget=CKEditorUploadingWidget(
+            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"}
+        ),
+        required=True,
+        label=get_mandatory_form_label_text(_("Message")),
+    )
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        """
+        Meta definitions
+        """
+
+        model = Messages
+        fields = ["message"]

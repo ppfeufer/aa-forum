@@ -59,7 +59,7 @@
 
             <p class="last-post-information small">
                 <b>{% translate "Last post:" %}</b>
-                <a href="{% url 'aa_forum:forum_topic' category_slug board_slug board_latest_topic.slug %}#message-{{ board_last_message.id }}">
+                <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' board_last_message.id %}">
                     {{ board_latest_topic.subject|truncatechars:25 }}
                 </a>
                 <br>
