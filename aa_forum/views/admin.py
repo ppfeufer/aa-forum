@@ -6,8 +6,9 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Prefetch
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
+from aa_forum.forms import NewCategoryForm
 from aa_forum.models import Boards, Categories
 
 
@@ -35,9 +36,47 @@ def admin_index(request: WSGIRequest) -> HttpResponse:
         .order_by("order")
     )
 
-    context = {"categories": categories}
+    # New category form
+    form_new_category = NewCategoryForm()
+
+    context = {"categories": categories, "forms": {"new_category": form_new_category}}
 
     return render(request, "aa_forum/view/administration/index.html", context)
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def admin_category_create(request: WSGIRequest) -> HttpResponse:
+    """
+    Create a new category
+    :param request:
+    :type request:
+    """
+
+    if request.method == "POST":
+        # Create a form instance and populate it with data from the request
+        form = NewCategoryForm(request.POST)
+
+        # Check whether it's valid:
+        if form.is_valid():
+            new_category = Categories()
+            new_category.name = form.cleaned_data["name"]
+            new_category.order = 999999
+            new_category.save()
+
+    return redirect("aa_forum:admin_index")
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def admin_board_create(request: WSGIRequest, category_slug: str) -> HttpResponse:
+    """
+    Create a new board
+    :param request:
+    :type request:
+    :param category_slug:
+    :type category_slug:
+    """
 
 
 @login_required

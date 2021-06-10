@@ -4,6 +4,7 @@ Models
 
 from django.contrib.auth.models import Group, User
 from django.db import models
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
@@ -80,6 +81,42 @@ class Slugs(models.Model):
         verbose_name = _("Slug")
         verbose_name_plural = _("Slugs")
 
+    @receiver(models.signals.post_delete, sender="aa_forum.Categories")
+    def handle_deleted_category(sender, instance, **kwargs):
+        """
+        Delete category slug, when category is deleted
+        :param instance:
+        :type instance:
+        :param kwargs:
+        :type kwargs:
+        """
+
+        instance.slug.delete()
+
+    @receiver(models.signals.post_delete, sender="aa_forum.Boards")
+    def handle_deleted_board(sender, instance, **kwargs):
+        """
+        Delete board slug, when board is deleted
+        :param instance:
+        :type instance:
+        :param kwargs:
+        :type kwargs:
+        """
+
+        instance.slug.delete()
+
+    @receiver(models.signals.post_delete, sender="aa_forum.Topics")
+    def handle_deleted_topic(sender, instance, **kwargs):
+        """
+        Delete topic slug, when topic is deleted
+        :param instance:
+        :type instance:
+        :param kwargs:
+        :type kwargs:
+        """
+
+        instance.slug.delete()
+
     def __str__(self) -> str:
         return str(self.slug)
 
@@ -114,6 +151,14 @@ class Categories(models.Model):
     ):
         """
         Add the slug on save
+        :param force_insert:
+        :type force_insert:
+        :param force_update:
+        :type force_update:
+        :param using:
+        :type using:
+        :param update_fields:
+        :type update_fields:
         """
 
         if self.slug is None or self.slug == "":

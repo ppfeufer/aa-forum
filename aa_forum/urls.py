@@ -13,6 +13,11 @@ urlpatterns = [
     # Admin URLs (These need to be first!)
     url(r"^admin/$", admin.admin_index, name="admin_index"),
     url(
+        r"^admin/category/create/$",
+        admin.admin_category_create,
+        name="admin_category_create",
+    ),
+    url(
         r"^ajax/admin/category-order/$",
         admin.ajax_category_order,
         name="admin_ajax_category_order",

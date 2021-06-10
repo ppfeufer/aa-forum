@@ -5,8 +5,11 @@ Forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 from django import forms
+from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+
+from aa_forum.models import Categories
 
 
 def get_mandatory_form_label_text(text):
@@ -47,3 +50,24 @@ class NewTopicForm(forms.Form):
         required=True,
         label=get_mandatory_form_label_text(_("Message")),
     )
+
+
+class NewCategoryForm(ModelForm):
+    """
+    New Category
+    """
+
+    name = forms.CharField(
+        required=True,
+        label=get_mandatory_form_label_text(_("Category Name")),
+        max_length=255,
+        widget=forms.TextInput(attrs={"placeholder": _("Category Name")}),
+    )
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        """
+        meta definitions
+        """
+
+        model = Categories
+        fields = ["name"]

@@ -1,0 +1,88 @@
+{% load bootstrap %}
+{% load i18n %}
+
+{% if categories %}
+    <div class="row">
+        <div class="col-md-6 col-md-push-6">
+            <p>
+                {% translate "Here you can create, modify and delete categories and boards. You also can change their order via drag and drop." %}
+            </p>
+
+            <p>
+                <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseNewCategoryForm" aria-expanded="false" aria-controls="collapseNewCategoryForm">
+                    {% translate "Create New Category" %}
+                </button>
+            </p>
+
+            <div class="collapse" id="collapseNewCategoryForm">
+                <div class="well">
+                    <p>
+                        {% translate "New categories will be added at the bottom of the category list. You can move them via drag and drop to a position of your liking." %}
+                    </p>
+
+                    <form action="{% url 'aa_forum:admin_category_create' %}" method="post">
+                        <fieldset>
+                            {% csrf_token %}
+
+                            {{ forms.new_category|bootstrap }}
+
+                            <div class="form-group aa-forum-form-new-category text-right clearfix">
+                                <button class="btn btn-primary" type="submit">{% translate 'Create Category' %}</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-md-pull-6">
+            <script type="application/javascript">
+                // categoriesWithBoards = (typeof categoriesWithBoards != 'undefined' && categoriesWithBoards instanceof Array) ? categoriesWithBoards : []
+                let categoriesWithBoards = []
+
+                aaForumAdminSettings['urls'] = {
+                    categoryOrder: '{% url "aa_forum:admin_ajax_category_order" %}',
+                    boardOrder: '{% url "aa_forum:admin_ajax_board_order" %}'
+                }
+
+                aaForumAdminSettings['form'] = {
+                    csrfToken: '{{ csrf_token }}'
+                }
+            </script>
+
+            <ul id="categories-sortable" class="categories-sortable">
+                {% for category in categories %}
+                    <li class="category-sortable ui-state-default ui-sortable" data-category-id="{{ category.pk }}" data-position="{{ category.order }}">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    {{ category.name }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+                            <div>
+                                <p>
+                                    {% translate "Create New Board" %}
+                                </p>
+                            </div>
+
+                            {% if category.boards.all %}
+                                <ul id="boards-sortable-category-{{ category.pk }}" class="boards-sortable">
+                                    {% for board in category.boards.all %}
+                                        <li class="board-sortable ui-state-default ui-sortable" data-board-id="{{ board.pk }}" data-position="{{ board.order }}">{{ board.name }}</li>
+                                    {% endfor %}
+                                </ul>
+
+                                <script type="application/javascript">
+                                    categoriesWithBoards.push('#boards-sortable-category-{{ category.pk }}')
+                                </script>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endif %}
