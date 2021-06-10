@@ -8,7 +8,7 @@ from django.db.models import Prefetch
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 
-from aa_forum.forms import NewCategoryForm
+from aa_forum.forms import NewBoardForm, NewCategoryForm
 from aa_forum.models import Boards, Categories
 
 
@@ -36,10 +36,14 @@ def admin_index(request: WSGIRequest) -> HttpResponse:
         .order_by("order")
     )
 
-    # New category form
+    # Forms
     form_new_category = NewCategoryForm()
+    form_new_board = NewBoardForm()
 
-    context = {"categories": categories, "forms": {"new_category": form_new_category}}
+    context = {
+        "categories": categories,
+        "forms": {"new_category": form_new_category, "new_board": form_new_board},
+    }
 
     return render(request, "aa_forum/view/administration/index.html", context)
 
@@ -69,7 +73,7 @@ def admin_category_create(request: WSGIRequest) -> HttpResponse:
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def admin_board_create(request: WSGIRequest, category_slug: str) -> HttpResponse:
+def admin_board_create(request: WSGIRequest, category: Categories) -> HttpResponse:
     """
     Create a new board
     :param request:
@@ -77,6 +81,23 @@ def admin_board_create(request: WSGIRequest, category_slug: str) -> HttpResponse
     :param category_slug:
     :type category_slug:
     """
+
+    if request.method == "POST":
+        # Create a form instance and populate it with data from the request
+        form = NewBoardForm(request.POST)
+
+        board_category = Categories.objects.get(pk=category)
+
+        # Check whether it's valid:
+        if form.is_valid():
+            new_board = Boards()
+            new_board.name = form.cleaned_data["name"]
+            new_board.description = form.cleaned_data["description"]
+            new_board.category = board_category
+            new_board.order = 999999
+            new_board.save()
+
+    return redirect("aa_forum:admin_index")
 
 
 @login_required

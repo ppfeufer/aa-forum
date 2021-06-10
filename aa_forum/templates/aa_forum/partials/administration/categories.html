@@ -64,8 +64,30 @@
                         <div class="panel-body">
                             <div>
                                 <p>
-                                    {% translate "Create New Board" %}
+                                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseNewBoardForm-{{ category.pk }}" aria-expanded="false" aria-controls="collapseNewBoardForm-{{ category.pk }}">
+                                        {% translate "Create New Board" %}
+                                    </button>
                                 </p>
+
+                                <div class="collapse" id="collapseNewBoardForm-{{ category.pk }}">
+                                    <div class="well">
+                                        <p>
+                                            {% translate "New boards will be added at the bottom of the board list for this category. You can move them via drag and drop to a position of your liking." %}
+                                        </p>
+
+                                        <form action="{% url 'aa_forum:admin_board_create' category.pk %}" method="post">
+                                            <fieldset>
+                                                {% csrf_token %}
+
+                                                {{ forms.new_board|bootstrap }}
+
+                                                <div class="form-group aa-forum-form-new-category text-right clearfix">
+                                                    <button class="btn btn-primary" type="submit">{% translate 'Create Board' %}</button>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
 
                             {% if category.boards.all %}
