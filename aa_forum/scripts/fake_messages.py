@@ -4,7 +4,7 @@ Fake some messages
 
 from faker import Faker
 
-from aa_forum.models import Messages
+from aa_forum.models import Messages, Topics
 
 
 def run():
@@ -14,9 +14,18 @@ def run():
 
     fake = Faker()
 
-    Messages.objects.bulk_create(
-        [
-            Messages(message=fake.sentence(), board_id=1, topic_id=1, user_created_id=2)
-            for _ in range(100)
-        ]
-    )
+    topics = Topics.objects.all()
+
+    if topics.count() > 0:
+        for topic in topics:
+            Messages.objects.bulk_create(
+                [
+                    Messages(
+                        message=fake.sentence(),
+                        board_id=topic.board_id,
+                        topic_id=topic.id,
+                        user_created_id=2,
+                    )
+                    for _ in range(25)
+                ]
+            )
