@@ -5,6 +5,7 @@ Forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 from django import forms
+from django.contrib.auth.models import Group
 from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -96,6 +97,7 @@ class NewBoardForm(ModelForm):
             }
         ),
     )
+    groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all())
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -103,7 +105,7 @@ class NewBoardForm(ModelForm):
         """
 
         model = Boards
-        fields = ["name", "description"]
+        fields = ["name", "description", "groups"]
 
 
 class ReplyForm(ModelForm):

@@ -37,6 +37,8 @@ $(function() {
         },
     }).disableSelection();
 
+    $('.categories-sortable select').SumoSelect({ okCancelInMulti: true, selectAll: true });
+
     /**
      * Sort boards via drag and drop
      */

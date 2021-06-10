@@ -169,6 +169,14 @@
     }
 }
 
+/* MultiSelect
+------------------------------------------------------------------------------------- */
+@media all {
+    .aa-forum .SumoSelect p {
+        height: auto;
+    }
+}
+
 @media all and (min-width: 768px) {
     .panel-aa-forum-category .aa-forum-board-name {
         width: 60%;

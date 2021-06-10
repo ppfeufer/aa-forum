@@ -97,6 +97,8 @@ def admin_board_create(request: WSGIRequest, category: Categories) -> HttpRespon
             new_board.order = 999999
             new_board.save()
 
+            new_board.groups.set(form.cleaned_data["groups"])
+
     return redirect("aa_forum:admin_index")
 
 
