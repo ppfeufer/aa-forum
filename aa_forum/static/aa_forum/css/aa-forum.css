@@ -138,6 +138,11 @@
 
     .aa-forum .boards-sortable > li {
         padding: 1rem;
+        background-color: rgb(236, 240, 241);
+    }
+
+    .template-dark-mode .aa-forum .boards-sortable > li {
+        background-color: rgb(70, 69, 69);
     }
 
     .aa-forum .boards-sortable > li:first-child {
