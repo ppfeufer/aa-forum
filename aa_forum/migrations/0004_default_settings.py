@@ -3,30 +3,12 @@
 from django.db import migrations
 
 default_settings_to_migrate = [
-    {
-        "variable": "defaultDateFormat",
-        "value": "F d, Y",
-    },
-    {
-        "variable": "defaultTimeFormat",
-        "value": "G:i:s",
-    },
-    {
-        "variable": "maxMessageLength",
-        "value": "20000",
-    },
-    {
-        "variable": "defaultMaxMessages",
-        "value": "15",
-    },
-    {
-        "variable": "defaultMaxTopics",
-        "value": "20",
-    },
-    {
-        "variable": "oldTopicDays",
-        "value": "120",
-    },
+    {"variable": "defaultDateFormat", "value": "F d, Y"},
+    {"variable": "defaultTimeFormat", "value": "G:i:s"},
+    {"variable": "maxMessageLength", "value": "20000"},
+    {"variable": "defaultMaxMessages", "value": "15"},
+    {"variable": "defaultMaxTopics", "value": "20"},
+    {"variable": "oldTopicDays", "value": "120"},
 ]
 
 
@@ -74,7 +56,7 @@ def remove_default_settings(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("aa_forum", "0002_settings"),
+        ("aa_forum", "0003_reserved_slugs"),
     ]
 
     operations = [
