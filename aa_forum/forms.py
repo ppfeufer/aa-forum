@@ -53,7 +53,7 @@ class NewTopicForm(forms.Form):
     )
 
 
-class NewCategoryForm(ModelForm):
+class EditCategoryForm(ModelForm):
     """
     New category form
     """
@@ -74,7 +74,7 @@ class NewCategoryForm(ModelForm):
         fields = ["name"]
 
 
-class NewBoardForm(ModelForm):
+class EditBoardForm(ModelForm):
     """
     New board form
     """
@@ -97,7 +97,9 @@ class NewBoardForm(ModelForm):
             }
         ),
     )
-    groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all())
+    groups = forms.ModelMultipleChoiceField(
+        required=False, queryset=Group.objects.all()
+    )
 
     class Meta:  # pylint: disable=too-few-public-methods
         """

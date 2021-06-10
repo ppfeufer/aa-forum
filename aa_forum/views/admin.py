@@ -8,7 +8,7 @@ from django.db.models import Prefetch
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 
-from aa_forum.forms import NewBoardForm, NewCategoryForm
+from aa_forum.forms import EditBoardForm, EditCategoryForm
 from aa_forum.models import Boards, Categories
 
 
@@ -37,8 +37,8 @@ def admin_index(request: WSGIRequest) -> HttpResponse:
     )
 
     # Forms
-    form_new_category = NewCategoryForm()
-    form_new_board = NewBoardForm()
+    form_new_category = EditCategoryForm()
+    form_new_board = EditBoardForm()
 
     context = {
         "categories": categories,
@@ -59,7 +59,7 @@ def admin_category_create(request: WSGIRequest) -> HttpResponse:
 
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = NewCategoryForm(request.POST)
+        form = EditCategoryForm(request.POST)
 
         # Check whether it's valid:
         if form.is_valid():
@@ -84,7 +84,7 @@ def admin_board_create(request: WSGIRequest, category: Categories) -> HttpRespon
 
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = NewBoardForm(request.POST)
+        form = EditBoardForm(request.POST)
 
         board_category = Categories.objects.get(pk=category)
 
