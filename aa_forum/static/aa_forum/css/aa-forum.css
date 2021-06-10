@@ -60,6 +60,25 @@
         height: auto !important; /* to override inline style added by CKeditor */
         max-width: 100%;
     }
+
+    .aa-forum .aa-forum-lightbox-modal {
+        z-index: -1;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .aa-forum .aa-forum-lightbox-modal .modal-dialog {
+        max-width: 95%;
+        width: auto !important;
+        max-height: 95%;
+        height: auto !important;
+        display: inline-block;
+    }
+
+    .modal-open .modal {
+        z-index: 1050;
+    }
 }
 
 /* Messages

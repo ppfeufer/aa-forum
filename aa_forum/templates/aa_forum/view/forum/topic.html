@@ -29,6 +29,23 @@
 
     {% include "aa_forum/partials/forum/topic/pagination.html" %}
     {% include "aa_forum/partials/forum/topic/reply.html" %}
+
+    <div tabindex="-1" class="aa-forum-lightbox-modal modal fade" id="lightboxModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">×</button>
+{#                    <div class="modal-title"></div>#}
+                </div>
+
+                <div class="modal-body"></div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">{% translate "Close" %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block extra_css %}
@@ -39,4 +56,19 @@
 {% block extra_javascript %}
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="application/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('.aa-forum-message-body img').click(function (event) {
+                event.preventDefault();
+
+                $('.modal-body').empty();
+
+                let title = $(this).parent('a').attr("title");
+
+                {#$('.modal-title').html(title);#}
+                $($(this).parents('div').html()).appendTo('.modal-body');
+                $('#lightboxModal').modal({show:true});
+            });
+        });
+    </script>
 {% endblock %}
