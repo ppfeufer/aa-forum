@@ -23,6 +23,11 @@ urlpatterns = [
         name="admin_category_edit",
     ),
     url(
+        r"^admin/category/(?P<category_id>[0-9]+)/delete/$",
+        admin.admin_category_delete,
+        name="admin_category_delete",
+    ),
+    url(
         r"^admin/category/(?P<category_id>[0-9]+)/board/create/$",
         admin.admin_board_create,
         name="admin_board_create",
@@ -31,6 +36,11 @@ urlpatterns = [
         r"^admin/category/(?P<category_id>[0-9]+)/board/(?P<board_id>[0-9]+)/edit/$",
         admin.admin_board_edit,
         name="admin_board_edit",
+    ),
+    url(
+        r"^admin/category/(?P<category_id>[0-9]+)/board/(?P<board_id>[0-9]+)/delete/$",
+        admin.admin_board_delete,
+        name="admin_board_delete",
     ),
     url(
         r"^ajax/admin/category-order/$",

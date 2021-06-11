@@ -1,0 +1,38 @@
+{% load i18n %}
+
+<div class="modal fade" id="delete-category-{{ category.pk }}" tabindex="-1" role="dialog" aria-labelledby="{% translate 'Delete Category' %}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <div class="modal-title">
+                    {% translate "Delete Category" %}
+                    "<b>{{ category.name }}</b>"
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <p>{% translate "Are you sure you want to delete this category?" %}</p>
+                <p>{% translate "This will also remove all boards, topics and messages in this category." %}</p>
+                <div class="alert alert-danger" role="alert">
+                    <p>{% translate "This action cannot be undone!" %}</p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">
+                    <i class="far fa-hand-paper"></i>
+                    {% translate "Cancel" %}
+                </button>
+
+                <a id="modal-button-confirm" class="btn btn-danger btn-sm" role="button" href="{% url 'aa_forum:admin_category_delete' category.pk %}">
+                    <i class="far fa-trash-alt"></i>
+                    {% translate "Delete" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

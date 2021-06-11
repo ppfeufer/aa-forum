@@ -10,7 +10,7 @@
                 <i class="fas fa-pencil-alt"></i>
             </button>
 
-            <button class="btn btn-danger btn-xs"title="{% translate 'Delete Board' %}">
+            <button class="btn btn-danger btn-xs"title="{% translate 'Delete Board' %}" data-toggle="modal" data-target="#delete-board-{{ board.board_obj.pk }}">
                 <i class="far fa-trash-alt"></i>
             </button>
         </div>
@@ -35,4 +35,6 @@
             </form>
         </div>
     </div>
+
+    {% include "aa_forum/modals/administration/delete-board.html" with board=board.board_obj %}
 </li>

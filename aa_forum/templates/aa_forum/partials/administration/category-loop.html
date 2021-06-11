@@ -12,7 +12,7 @@
                         <i class="fas fa-pencil-alt"></i>
                     </button>
 
-                    <button class="btn btn-danger btn-xs"title="{% translate 'Delete Category' %}">
+                    <button class="btn btn-danger btn-xs"title="{% translate 'Delete Category' %}" data-toggle="modal" data-target="#delete-category-{{ category.category_obj.pk }}">
                         <i class="far fa-trash-alt"></i>
                     </button>
 
@@ -86,4 +86,6 @@
             </div>
         </div>
     </div>
+
+    {% include "aa_forum/modals/administration/delete-category.html" with category=category.category_obj %}
 </li>

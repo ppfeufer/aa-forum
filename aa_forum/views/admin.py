@@ -2,11 +2,14 @@
 Administration related views
 """
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Prefetch
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
+from django.utils.safestring import mark_safe
+from django.utils.translation import gettext as _
 
 from aa_forum.forms import EditBoardForm, EditCategoryForm
 from aa_forum.models import Boards, Categories
@@ -92,6 +95,11 @@ def admin_category_create(request: WSGIRequest) -> HttpResponseRedirect:
             new_category.order = 999999
             new_category.save()
 
+            messages.success(
+                request,
+                mark_safe(_("<h4>Success!</h4><p>Category created.</p>")),
+            )
+
     return redirect("aa_forum:admin_index")
 
 
@@ -116,6 +124,34 @@ def admin_category_edit(request: WSGIRequest, category_id: int) -> HttpResponseR
             category = Categories.objects.get(pk=category_id)
             category.name = form.cleaned_data["name"]
             category.save()
+
+            messages.success(
+                request,
+                mark_safe(_("<h4>Success!</h4><p>Category changed.</p>")),
+            )
+
+    return redirect("aa_forum:admin_index")
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def admin_category_delete(
+    request: WSGIRequest, category_id: int
+) -> HttpResponseRedirect:
+    """
+    Edit a board
+    :param request:
+    :type request:
+    :param category_id:
+    :type category_id:
+    """
+
+    Categories.objects.get(pk=category_id).delete()
+
+    messages.success(
+        request,
+        mark_safe(_("<h4>Success!</h4><p>Category removed.</p>")),
+    )
 
     return redirect("aa_forum:admin_index")
 
@@ -149,6 +185,11 @@ def admin_board_create(request: WSGIRequest, category_id: int) -> HttpResponseRe
 
             new_board.groups.set(form.cleaned_data["groups"])
 
+            messages.success(
+                request,
+                mark_safe(_("<h4>Success!</h4><p>Board created.</p>")),
+            )
+
     return redirect("aa_forum:admin_index")
 
 
@@ -178,6 +219,36 @@ def admin_board_edit(
             board.description = form.cleaned_data["description"]
             board.groups.set(form.cleaned_data["groups"])
             board.save()
+
+            messages.success(
+                request,
+                mark_safe(_("<h4>Success!</h4><p>Board changed.</p>")),
+            )
+
+    return redirect("aa_forum:admin_index")
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def admin_board_delete(
+    request: WSGIRequest, category_id: int, board_id: int
+) -> HttpResponseRedirect:
+    """
+    Edit a board
+    :param request:
+    :type request:
+    :param category_id:
+    :type category_id:
+    :param board_id:
+    :type board_id:
+    """
+
+    Boards.objects.get(pk=board_id, category_id=category_id).delete()
+
+    messages.success(
+        request,
+        mark_safe(_("<h4>Success!</h4><p>Board removed.</p>")),
+    )
 
     return redirect("aa_forum:admin_index")
 
