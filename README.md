@@ -39,6 +39,8 @@ Work in progress on this one
 
 ## Installation
 
+### ⚠️ This is still in development, so only install it if you know what you're doing ⚠️
+
 **Important**: Please make sure you meet all preconditions before you proceed:
 
 - AA Forum is a plugin for Alliance Auth. If you don't have Alliance Auth
@@ -55,8 +57,9 @@ Work in progress on this one
 Make sure you are in the virtual environment (venv) of your Alliance Auth
 installation Then install the latest release directly from PyPi.
 
-Since this is still in develoment, there is no Pipy repository to install. This will
-change as soon as the module goes into its beta phase.
+```shell
+pip install aa-forum
+```
 
 
 ### Step 2 - Configure Alliance Auth
