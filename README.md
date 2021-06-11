@@ -19,14 +19,13 @@ these kind of changes. For you own sanity, and mine :-)
 
 ## Contents
 - [Overview](#overview)
-  - Features
-  - Screenshots
+    - Feature- Screenshots
 - [Installation](#installation)
-  - [Step 1 - Install the package](#step-1---install-the-package)
-  - [Step 2 - Configure Alliance Auth](#step-2---configure-alliance-auth)
-  - [Step 3 - Configure your webserver](#step-3---configure-your-webserver)
-  - [Step 4 - Finalize the installation](#step-4---finalize-the-installation)
-  - [Step 5 - Set up permissions](#step-5---set-up-permissions)
+    - [Step 1 - Install the package](#step-1---install-the-package)
+    - [Step 2 - Configure Alliance Auth](#step-2---configure-alliance-auth)
+    - [Step 3 - Configure your webserver](#step-3---configure-your-webserver)
+    - [Step 4 - Finalize the installation](#step-4---finalize-the-installation)
+    - [Step 5 - Set up permissions](#step-5---set-up-permissions)
 - [Permissions](#permissions)
 - [Changelog](#changelog)
 - [Contributing](#contributing)
@@ -43,12 +42,12 @@ Work in progress on this one
 
 **Important**: Please make sure you meet all preconditions before you proceed:
 
-- AA Forum is a plugin for Alliance Auth. If you don't have Alliance Auth
-  running already, please install it first before proceeding. (see the official
+- AA Forum is a plugin for Alliance Auth. If you don't have Alliance Auth running
+  already, please install it first before proceeding. (see the official
   [AA installation guide](https://allianceauth.readthedocs.io/en/latest/installation/allianceauth.html)
   or details)
-- AA Forum needs a couple of changes made to your Webserver and Alliance
-  Auth configuration. So make sure you know how to do so. The steps needed will be
+- AA Forum needs a couple of changes made to your Webserver and Alliance Auth
+  configuration. So make sure you know how to do so. The steps needed will be
   described in this document, but you need to understand what will be changed.
 
 
@@ -221,5 +220,5 @@ See [CHANGELOG.md](CHANGELOG.md)
 
 You want to contribute to this project? That's cool!
 
-Please make sure to read the [contribution guidelines](CONTRIBUTING.md)
-(I promise, it's not much, just some basics)
+Please make sure to read the [contribution guidelines](CONTRIBUTING.md) (I promise,
+it's not much, just some basics)
