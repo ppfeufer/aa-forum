@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Removed the page number from pagination links when navigating to teh first page.
+- Removed the page number from pagination links when navigating to the first page.
   It's not needed there ...
 
 
