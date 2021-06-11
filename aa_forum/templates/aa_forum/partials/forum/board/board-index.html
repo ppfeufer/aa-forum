@@ -19,8 +19,8 @@
 
 <div class="panel panel-default" style="margin-top: 2rem;">
     <div class="panel-body">
-        {% if board.topics.all %}
-            {% for topic in board.topics.all %}
+        {% if page_obj %}
+            {% for topic in page_obj %}
                 {% include "aa_forum/partials/forum/board/topic.html" %}
             {% endfor %}
         {% else %}
@@ -32,3 +32,7 @@
 </div>
 
 {% include "aa_forum/partials/forum/board/new-topic-button.html" %}
+
+{% if page_obj %}
+    {% include "aa_forum/partials/forum/board/pagination.html" %}
+{% endif %}

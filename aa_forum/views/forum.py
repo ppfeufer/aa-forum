@@ -60,7 +60,7 @@ def forum_index(request: WSGIRequest) -> HttpResponse:
 @login_required
 @permission_required("aa_forum.basic_access")
 def forum_board(
-    request: WSGIRequest, category_slug: str, board_slug: str
+    request: WSGIRequest, category_slug: str, board_slug: str, page_number: int = None
 ) -> HttpResponse:
     """
     Forum board view
@@ -114,7 +114,16 @@ def forum_board(
 
         return redirect("aa_forum:forum_index")
 
-    context = {"board": board}
+    settings = Settings.objects.all()
+    paginator = Paginator(
+        board.topics.all(),
+        settings.values_list("value", flat=True).get(
+            variable__exact="defaultMaxTopics"
+        ),
+    )
+    page_obj = paginator.get_page(page_number)
+
+    context = {"board": board, "page_obj": page_obj}
 
     return render(request, "aa_forum/view/forum/board.html", context)
 

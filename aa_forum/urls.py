@@ -65,6 +65,11 @@ urlpatterns = [
         name="forum_board",
     ),
     url(
+        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/(?P<page_number>[0-9]+)/$",
+        forum.forum_board,
+        name="forum_board",
+    ),
+    url(
         r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/new-topic/$",
         forum.forum_board_new_topic,
         name="forum_board_new_topic",
