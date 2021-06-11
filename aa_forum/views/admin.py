@@ -5,7 +5,7 @@ Administration related views
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Prefetch
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 
 from aa_forum.forms import EditBoardForm, EditCategoryForm
@@ -39,18 +39,30 @@ def admin_index(request: WSGIRequest) -> HttpResponse:
     category_loop = list()
     for category in categories:
         boards_data = [
-            {"board_obj": board, "board_form": EditBoardForm(prefix=board.id)}
+            {
+                "board_obj": board,
+                "board_edit_form": EditBoardForm(
+                    prefix="edit-board-" + str(board.id), instance=board
+                ),
+            }
             for board in category.boards.all()
         ]
         category_data = {
             "category_obj": category,
-            "category_form": EditBoardForm(prefix=category.id),
+            "category_forms": {
+                "new_board": EditBoardForm(
+                    prefix="new-board-in-category-" + str(category.id)
+                ),
+                "edit_category": EditCategoryForm(
+                    prefix="edit-category-" + str(category.id), instance=category
+                ),
+            },
             "boards": boards_data,
         }
+
         category_loop.append(category_data)
 
-    # Forms
-    form_new_category = EditCategoryForm()
+    form_new_category = EditCategoryForm(prefix="new-category")
 
     context = {
         "new_category_form": form_new_category,
@@ -62,7 +74,7 @@ def admin_index(request: WSGIRequest) -> HttpResponse:
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def admin_category_create(request: WSGIRequest) -> HttpResponse:
+def admin_category_create(request: WSGIRequest) -> HttpResponseRedirect:
     """
     Create a new category
     :param request:
@@ -85,19 +97,45 @@ def admin_category_create(request: WSGIRequest) -> HttpResponse:
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def admin_board_create(request: WSGIRequest, category_id: int) -> HttpResponse:
+def admin_category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirect:
     """
-    Create a new board
+    Edit a category
     :param request:
     :type request:
-    :param category_slug:
-    :type category_slug:
+    :param category_id:
+    :type category_id:
     """
 
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = EditBoardForm(request.POST, prefix=category_id)
+        form = EditCategoryForm(
+            request.POST, prefix="edit-category-" + str(category_id)
+        )
 
+        if form.is_valid():
+            category = Categories.objects.get(pk=category_id)
+            category.name = form.cleaned_data["name"]
+            category.save()
+
+    return redirect("aa_forum:admin_index")
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def admin_board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect:
+    """
+    Create a new board
+    :param request:
+    :type request:
+    :param category_id:
+    :type category_id:
+    """
+
+    if request.method == "POST":
+        # Create a form instance and populate it with data from the request
+        form = EditBoardForm(
+            request.POST, prefix="new-board-in-category-" + str(category_id)
+        )
         board_category = Categories.objects.get(pk=category_id)
 
         # Check whether it's valid:
@@ -110,6 +148,36 @@ def admin_board_create(request: WSGIRequest, category_id: int) -> HttpResponse:
             new_board.save()
 
             new_board.groups.set(form.cleaned_data["groups"])
+
+    return redirect("aa_forum:admin_index")
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def admin_board_edit(
+    request: WSGIRequest, category_id: int, board_id: int
+) -> HttpResponseRedirect:
+    """
+    Edit a board
+    :param request:
+    :type request:
+    :param category_id:
+    :type category_id:
+    :param board_id:
+    :type board_id:
+    """
+
+    if request.method == "POST":
+        # Create a form instance and populate it with data from the request
+        form = EditBoardForm(request.POST, prefix="edit-board-" + str(board_id))
+
+        # Check whether it's valid:
+        if form.is_valid():
+            board = Boards.objects.get(pk=board_id, category_id=category_id)
+            board.name = form.cleaned_data["name"]
+            board.description = form.cleaned_data["description"]
+            board.groups.set(form.cleaned_data["groups"])
+            board.save()
 
     return redirect("aa_forum:admin_index")
 

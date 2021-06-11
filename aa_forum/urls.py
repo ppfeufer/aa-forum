@@ -18,9 +18,19 @@ urlpatterns = [
         name="admin_category_create",
     ),
     url(
+        r"^admin/category/(?P<category_id>[0-9]+)/edit/$",
+        admin.admin_category_edit,
+        name="admin_category_edit",
+    ),
+    url(
         r"^admin/category/(?P<category_id>[0-9]+)/board/create/$",
         admin.admin_board_create,
         name="admin_board_create",
+    ),
+    url(
+        r"^admin/category/(?P<category_id>[0-9]+)/board/(?P<board_id>[0-9]+)/edit/$",
+        admin.admin_board_edit,
+        name="admin_board_edit",
     ),
     url(
         r"^ajax/admin/category-order/$",
