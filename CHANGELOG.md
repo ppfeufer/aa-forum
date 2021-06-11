@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Topic pagination in board view
 
+### Changed
+
+- Removed the page number from pagination links when navigating to teh first page.
+  It's not needed there ...
+
 
 ## [0.0.1-alpha.2] - 2021-06-11
 

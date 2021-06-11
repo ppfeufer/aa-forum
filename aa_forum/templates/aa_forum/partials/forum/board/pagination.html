@@ -26,9 +26,15 @@
                 </li>
 
                 <li>
-                    <a class="page-link" href="{% url 'aa_forum:forum_board' category.slug board.slug page_obj.previous_page_number %}">
-                        {{ page_obj.previous_page_number }}
-                    </a>
+                    {% if page_obj.previous_page_number == 1 %}
+                        <a class="page-link" href="{% url 'aa_forum:forum_board' category.slug board.slug %}">
+                            {{ page_obj.previous_page_number }}
+                        </a>
+                    {% else %}
+                        <a class="page-link" href="{% url 'aa_forum:forum_board' category.slug board.slug page_obj.previous_page_number %}">
+                            {{ page_obj.previous_page_number }}
+                        </a>
+                    {% endif %}
                 </li>
             {% else %}
                 <li class="page-item disabled">
