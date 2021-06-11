@@ -78,15 +78,26 @@ def forum_board(
         board = (
             Boards.objects.prefetch_related("messages")
             # .prefetch_related("child_boards")
-            .prefetch_related("topics")
+            # .prefetch_related("topics")
+            .prefetch_related(
+                Prefetch(
+                    "topics",
+                    queryset=Topics.objects.prefetch_related("messages")
+                    .distinct()
+                    .annotate(
+                        num_posts=Count("messages", distinct=True),
+                    )
+                    .order_by("-time_modified"),
+                )
+            )
             .filter(
                 Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
                 category__slug__slug__exact=category_slug,
                 slug__slug__exact=board_slug,
             )
-            .annotate(
-                num_posts=Count("messages", distinct=True),
-            )
+            # .annotate(
+            #     num_posts=Count("messages", distinct=True),
+            # )
             .distinct()
             .get()
         )
@@ -311,7 +322,8 @@ def forum_topic_reply(
 
             # Remove all users from "read by" list and set the current user again.
             # This way we mark this topic as unread for all but the current user.
-            topic.read_by.set(request.user)
+            topic.read_by.clear()
+            topic.read_by.add(request.user)
 
             return redirect(
                 "aa_forum:forum_message_entry_point_in_topic", new_message.id

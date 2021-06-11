@@ -151,7 +151,6 @@
     }
 
     .aa-forum .categories-sortable > li, .aa-forum .boards-sortable > li {
-        /*padding: 1rem;*/
         margin-bottom: 1rem;
     }
 
@@ -181,6 +180,66 @@
     }
 }
 
+/* Board view
+------------------------------------------------------------------------------------- */
+@media all {
+    .aa-forum .aa-forum-topic-row .aa-forum-topic {
+        align-content: center;
+        align-items: center;
+        /*border-bottom: 1px solid #ecf0f1;*/
+        display: flex;
+        flex-direction: row;
+        padding: 1rem;
+        transition: var(--bg-hover-transition);
+    }
+
+    .aa-forum .aa-forum-topic-row:last-child .aa-forum-topic {
+        /*border-bottom: 0;*/
+        margin-bottom: 0;
+    }
+
+    .aa-forum .aa-forum-topic-row .aa-forum-topic:hover {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    .aa-forum .aa-forum-topic-row .aa-forum-topic .aa-forum-topic-image {
+        width: 40px;
+    }
+
+    .aa-forum .aa-forum-topic-row .aa-forum-topic .aa-forum-topic-name {
+        width: 60%;
+    }
+
+    .aa-forum .aa-forum-topic-row .aa-forum-topic .aa-forum-topic-stats {
+        text-align: center;
+        width: 15%;
+    }
+
+    .aa-forum .aa-forum-topic-row .aa-forum-topic .aa-forum-topic-last-post {
+        width: 25%;
+    }
+
+    .aa-forum .aa-forum-topic-row .aa-forum-topic .aa-forum-topic-actions {
+        width: 60px;
+    }
+}
+
+/* Buttons
+------------------------------------------------------------------------------------- */
+@media all {
+    .aa-forum .btn-aa-forum-topic-moderation {
+        background: none;
+    }
+
+    .aa-forum .btn-aa-forum-topic-moderation.focus,
+    .aa-forum .btn-aa-forum-topic-moderation:focus,
+    .aa-forum .btn-aa-forum-topic-moderation:hover {
+        color: inherit;
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
+    }
+}
+
 /* MultiSelect
 ------------------------------------------------------------------------------------- */
 @media all {
@@ -189,6 +248,8 @@
     }
 }
 
+/* Responsive
+------------------------------------------------------------------------------------- */
 @media all and (min-width: 768px) {
     .panel-aa-forum-category .aa-forum-board-name {
         width: 60%;

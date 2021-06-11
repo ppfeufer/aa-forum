@@ -28,7 +28,10 @@
     {% endfor %}
 
     {% include "aa_forum/partials/forum/topic/pagination.html" %}
-    {% include "aa_forum/partials/forum/topic/reply.html" %}
+
+    {% if not topic.is_locked %}
+        {% include "aa_forum/partials/forum/topic/reply.html" %}
+    {% endif %}
 
     <div tabindex="-1" class="aa-forum-lightbox-modal modal fade" id="lightboxModal" role="dialog">
         <div class="modal-dialog">
