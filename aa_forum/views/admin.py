@@ -86,7 +86,7 @@ def admin_category_create(request: WSGIRequest) -> HttpResponseRedirect:
 
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = EditCategoryForm(request.POST)
+        form = EditCategoryForm(request.POST, prefix="new-category")
 
         # Check whether it's valid:
         if form.is_valid():
