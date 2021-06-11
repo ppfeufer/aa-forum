@@ -311,8 +311,7 @@ def forum_topic_reply(
 
             # Remove all users from "read by" list and set the current user again.
             # This way we mark this topic as unread for all but the current user.
-            topic.read_by.clear()
-            topic.read_by.add(request.user)
+            topic.read_by.set(request.user)
 
             return redirect(
                 "aa_forum:forum_message_entry_point_in_topic", new_message.id
