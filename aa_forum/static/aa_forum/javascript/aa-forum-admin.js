@@ -1,6 +1,6 @@
 /* global categoriesWithBoards, aaForumAdminSettings */
 
-$(function() {
+$(function () {
     'use strict';
 
     /**
@@ -10,7 +10,7 @@ $(function() {
         placeholder: 'aa-forum-ui-placeholder',
         connectWith: '.categories_sortable',
         axis: 'y',
-        start: function(e, ui){
+        start: function (e, ui) {
             // this makes the placeholder fit with the row that's being dragged
             ui.placeholder.height(ui.helper.height());
         },
@@ -22,7 +22,7 @@ $(function() {
 
                 categories.push({
                     catId: $(this).data('category-id'),
-                    catOrder: index,
+                    catOrder: index
                 });
             });
 
@@ -34,10 +34,12 @@ $(function() {
                     csrfmiddlewaretoken: aaForumAdminSettings.form.csrfToken
                 }
             );
-        },
+        }
     }).disableSelection();
 
-    $('.categories-sortable select').SumoSelect({ okCancelInMulti: true, selectAll: true });
+    $('.categories-sortable select').SumoSelect(
+        {okCancelInMulti: true, selectAll: true}
+    );
 
     /**
      * Sort boards via drag and drop
@@ -89,7 +91,7 @@ $(function() {
                             csrfmiddlewaretoken: aaForumAdminSettings.form.csrfToken
                         }
                     );
-                },
+                }
             }).disableSelection();
         });
     }
