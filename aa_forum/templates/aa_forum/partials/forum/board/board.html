@@ -59,9 +59,11 @@
 
             <p class="last-post-information small">
                 <b>{% translate "Last post:" %}</b>
+
                 <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' board_last_message.id %}">
                     {{ board_latest_topic.subject|truncatechars:25 }}
                 </a>
+
                 <br>
                 <b>{% translate "posted by:" %}</b> {{ board_last_message_author|main_character_name }}<br>
                 <b>{% translate "posted at:" %}</b> {{ board_last_message.time_posted|date }}, {{ board_last_message.time_posted|time:"G:i:s" }}

@@ -49,29 +49,39 @@
         <div class="aa-forum-topic-last-post hidden-xs">
             <span class="small">
                 {% translate "Last post" %} {{ topic.time_modified|date }}, {{ topic.time_modified|time:"G:i:s" }}
-                <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' topic.last_message.pk %}" title="{% translate 'Go to last message' %}">
+
+                <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' topic.last_message.pk %}" title="{% translate 'Go to last message' %}" style="margin-left: 0.5rem;">
                     <i class="fas fa-sign-in-alt"></i>
                 </a>
+
                 <br>
                 by {{ topic.user_updated|main_character_name }}
             </span>
         </div>
 
         <div class="aa-forum-topic-actions hidden-xs">
-            {% if topic.user_started == request.user or perms.aa_forum.manage_forum %}
-                {% if topic.is_locked %}
-                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Unlock/Re-Open Topic' %}">
-                        <i class="fas fa-unlock"></i>
-                    </button>
-                {% else %}
-                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Lock/Close Topic' %}">
-                        <i class="fas fa-lock"></i>
-                    </button>
-                {% endif %}
-            {% endif %}
-
             {% if perms.aa_forum.manage_forum %}
-                <button class="btn btn-aa-forum-topic-moderation btn-xs"><i class="fas fa-thumbtack"></i></button>
+                <div class="text-right">
+                    {% if topic.is_locked %}
+                        <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Unlock/Re-Open Topic' %}" data-toggle="modal" data-target="#topic-lock-state-change-{{ topic.pk }}">
+                            <i class="fas fa-unlock"></i>
+                        </button>
+                    {% else %}
+                        <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Lock/Close Topic' %}" data-toggle="modal" data-target="#topic-lock-state-change-{{ topic.pk }}">
+                            <i class="fas fa-lock"></i>
+                        </button>
+                    {% endif %}
+
+                    <button class="btn btn-aa-forum-topic-moderation btn-xs">
+                        <i class="fas fa-thumbtack"></i>
+                    </button>
+
+                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Delete Topic' %}">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </div>
+
+                {% include "aa_forum/modals/forum/board/topic-change-lock-state.html" %}
             {% endif %}
         </div>
     </div>

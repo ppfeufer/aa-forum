@@ -58,7 +58,12 @@ urlpatterns = [
         forum.message_entry_point_in_topic,
         name="forum_message_entry_point_in_topic",
     ),
-    # Forum URLs
+    url(
+        r"^topic/(?P<topic_id>[0-9]+)/change-lock-state/$",
+        admin.topic_change_lock_state,
+        name="admin_topic_change_lock_state",
+    ),
+    # Forum URLs (This needs to be the last block!)
     url(
         r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/$",
         forum.forum_board,

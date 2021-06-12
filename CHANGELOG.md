@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - Unknown
 
+### Added
+
+- A note when replying to a topic while not being on teh last page of it
+- Ability to lock and unlock topics for forum managers
+
 ### Changed
 
 - Implemented a simpler way to get a setting from the DB
@@ -18,7 +23,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Topic pagination in board view
-- A note when replying to a topic while not being on teh last page of it
 
 ### Changed
 
