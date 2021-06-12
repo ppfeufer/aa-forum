@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Topic pagination in board view
+- A note when replying to a topic while not being on teh last page of it
 
 ### Changed
 

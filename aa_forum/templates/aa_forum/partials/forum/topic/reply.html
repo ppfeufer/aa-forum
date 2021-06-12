@@ -9,6 +9,12 @@
     </div>
 
     <div class="panel-body">
+        {% if page_obj.has_next %}
+            <div class="alert alert-warning">
+                {% translate "Note: You are not on the last page of this topic and may miss the most recent replies." %}
+            </div>
+        {% endif %}
+
         <form autocomplete="off" action="{% url "aa_forum:forum_topic_reply" topic.board.category.slug topic.board.slug topic.slug %}" method="post">
             {% csrf_token %}
 
