@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [0.0.1-alpha.4] - 2021-06-12
+## [0.0.1-alpha.5] - 2021-06-12
 
 ### Added
 
@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - `time_modified` timestamps for messages
+- Topic does not exist error when trying to view a topic that indeed does not exist
+  (anymore)
 
 
 ## [0.0.1-alpha.4] - 2021-06-12

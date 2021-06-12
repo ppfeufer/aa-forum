@@ -272,7 +272,21 @@ def topic(
 
         return redirect("aa_forum:forum_index")
 
-    topic = Topics.objects.get(slug__slug__exact=topic_slug)
+    try:
+        topic = Topics.objects.get(slug__slug__exact=topic_slug)
+    except Topics.DoesNotExist:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The topic you were trying to view does not "
+                    "exist ...</p>"
+                )
+            ),
+        )
+
+        return redirect("aa_forum:forum_index")
+
     topic_messages = Messages.objects.filter(topic=topic)
 
     # Set this topic as "read by" by the current user
