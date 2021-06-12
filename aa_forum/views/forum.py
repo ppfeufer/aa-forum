@@ -672,3 +672,56 @@ def message_modify(
     context = {"form": form, "board": board, "message": message}
 
     return render(request, "aa_forum/view/forum/modify-message.html", context)
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirect:
+    """
+    Delete a message from a topic
+    If it is the last message in this topic, the topic will be removed as well
+    :param request:
+    :type request:
+    :param message_id:
+    :type message_id:
+    """
+
+    message = Messages.objects.get(pk=message_id)
+    topic = message.topic
+
+    # Let's check if we have more than one message in this topic
+    # If so, remove just that message and return to the topic
+    if topic.messages.all().count() > 1:
+        message.delete()
+
+        messages.success(
+            request,
+            mark_safe(_("<h4>Success!</h4><p>The message has been deleted.</p>")),
+        )
+
+        return redirect(
+            "aa_forum:forum_topic",
+            category_slug=topic.board.category.slug,
+            board_slug=topic.board.slug,
+            topic_slug=topic.slug,
+        )
+
+    # If it is the only/last message in the topic, remove the topic
+    topic.delete()
+
+    messages.success(
+        request,
+        mark_safe(
+            _(
+                "<h4>Success!</h4><p>The message has been deleted.</p><p>This was "
+                "the only/last message in this topic, so the topic has been "
+                "removed as well.</p>"
+            )
+        ),
+    )
+
+    return redirect(
+        "aa_forum:forum_board",
+        category_slug=topic.board.category.slug,
+        board_slug=topic.board.slug,
+    )

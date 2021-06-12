@@ -59,6 +59,11 @@ urlpatterns = [
         name="forum_message_entry_point_in_topic",
     ),
     url(
+        r"^message/(?P<message_id>[0-9]+)/delete/$",
+        forum.message_delete,
+        name="forum_message_delete",
+    ),
+    url(
         r"^topic/(?P<topic_id>[0-9]+)/change-lock-state/$",
         forum.topic_change_lock_state,
         name="forum_topic_change_lock_state",

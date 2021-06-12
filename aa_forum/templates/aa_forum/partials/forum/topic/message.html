@@ -40,11 +40,17 @@
                     <div class="col-md-6">
                         <div class="text-right">
                             {% if message_author == request.user or perms.aa_forum.modify_forum %}
-                                <a href="{% url 'aa_forum:forum_message_modify' topic.board.category.slug topic.board.slug topic.slug message.pk %}" class="btn btn-warning btn-xs" title="{% translate 'Modify Message' %}">
+                                <a href="{% url 'aa_forum:forum_message_modify' topic.board.category.slug topic.board.slug topic.slug message.pk %}" class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Modify Message' %}">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
+
+                                <btn class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Delete Message' %}" data-toggle="modal" data-target="#delete-message-{{ message.pk }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </btn>
                             {% endif %}
                         </div>
+
+                        {% include "aa_forum/modals/forum/topic/message-delete.html" %}
                     </div>
                 </div>
 

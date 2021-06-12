@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Messages can now be modified by their author or anyone with the `manage_forum`
   permission
+- Messages can now be deleted by users with the `manage_forum` permission. Keep in
+  mind, if the last message of a topic is deleted, the topic will be removed as well.
 
 ### Fixed
 
