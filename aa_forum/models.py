@@ -9,6 +9,8 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
+from aa_forum.managers import SettingsManager
+
 
 def get_sentinel_user() -> User:
     """
@@ -444,6 +446,8 @@ class Settings(models.Model):
         max_length=254, blank=False, primary_key=True, unique=True
     )
     value = models.TextField(blank=False)
+
+    objects = SettingsManager()
 
     class Meta:
         """

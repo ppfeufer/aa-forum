@@ -16,6 +16,7 @@ from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
+from aa_forum.constants import SETTING_MESSAGESPERPAGE, SETTING_TOPICSPERPAGE
 from aa_forum.forms import NewTopicForm, ReplyForm
 from aa_forum.models import Boards, Categories, Messages, Settings, Topics
 
@@ -78,7 +79,6 @@ def forum_board(
         board = (
             Boards.objects.prefetch_related("messages")
             # .prefetch_related("child_boards")
-            # .prefetch_related("topics")
             .prefetch_related(
                 Prefetch(
                     "topics",
@@ -87,7 +87,7 @@ def forum_board(
                     .annotate(
                         num_posts=Count("messages", distinct=True),
                     )
-                    .order_by("-time_modified"),
+                    .order_by("-is_sticky", "-time_modified"),
                 )
             )
             .filter(
@@ -95,9 +95,6 @@ def forum_board(
                 category__slug__slug__exact=category_slug,
                 slug__slug__exact=board_slug,
             )
-            # .annotate(
-            #     num_posts=Count("messages", distinct=True),
-            # )
             .distinct()
             .get()
         )
@@ -114,12 +111,9 @@ def forum_board(
 
         return redirect("aa_forum:forum_index")
 
-    settings = Settings.objects.all()
     paginator = Paginator(
         board.topics.all(),
-        settings.values_list("value", flat=True).get(
-            variable__exact="defaultMaxTopics"
-        ),
+        int(Settings.objects.get_setting(setting_key=SETTING_TOPICSPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
 
@@ -272,16 +266,13 @@ def forum_topic(
 
     topic = Topics.objects.get(slug__slug__exact=topic_slug)
     topic_messages = Messages.objects.filter(topic=topic)
-    settings = Settings.objects.all()
 
     # Set this topic as "read by" by the current user
     topic.read_by.add(request.user)
 
     paginator = Paginator(
         topic_messages,
-        settings.values_list("value", flat=True).get(
-            variable__exact="defaultMaxMessages"
-        ),
+        int(Settings.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
 
