@@ -222,6 +222,18 @@
     .aa-forum .aa-forum-topic-row .aa-forum-topic .aa-forum-topic-actions {
         width: 60px;
     }
+
+    .aa-forum .aa-forum-topic-locked {
+        background-color: rgba(185, 199, 219, 0.25);
+    }
+
+    .aa-forum .aa-forum-topic-sticky {
+        background-color: rgba(255, 220, 104, 0.25);
+    }
+
+    .aa-forum .aa-forum-topic-status-icon {
+        margin: 0 0.25rem;
+    }
 }
 
 /* Buttons

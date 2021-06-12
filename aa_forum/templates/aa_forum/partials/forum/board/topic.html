@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 
-<div class="aa-forum-topic-row row">
+<div class="aa-forum-topic-row {% if topic.is_locked %}aa-forum-topic-locked{% endif %} {% if topic.is_sticky %}aa-forum-topic-sticky{% endif %} row">
     <div class="aa-forum-topic">
         <div class="aa-forum-topic-image">
             <img src="{% static 'aa_forum/images/new_none.png' %}" alt="Topic">
@@ -13,15 +13,20 @@
                 <a href="{% url 'aa_forum:forum_topic' topic.board.category.slug topic.board.slug topic.slug %}">
                     {{ topic.subject }}
                 </a>
-                {% if topic.is_locked %}
-                    <i class="fas fa-unlock"></i>
-                {% endif %}
-
-                {% if topic.is_sticky %}
-                    <i class="fas fa-thumbtack"></i>
-                {% endif %}
                 <br>
                 <span class="small">
+                    {% if topic.is_sticky %}
+                        <span class="aa-forum-topic-status-icon aa-forum-topic-status-sticky">
+                            <i class="fas fa-thumbtack" title="{% translate 'Topic is always on top' %}"></i>
+                        </span>
+                    {% endif %}
+
+                    {% if topic.is_locked %}
+                        <span class="aa-forum-topic-status-icon aa-forum-topic-status-locked">
+                            <i class="fas fa-lock" title="{% translate 'Topic is locked' %}"></i>
+                        </span>
+                    {% endif %}
+
                     {% translate "Started by" %} {{ topic.user_started|main_character_name }}
                 </span>
             </p>
@@ -53,21 +58,21 @@
         </div>
 
         <div class="aa-forum-topic-actions hidden-xs">
-{#            {% if topic.user_started == request.user or perms.aa_forum.manage_forum %}#}
-{#                {% if topic.is_locked %}#}
-{#                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Unlock/Re-Open Topic' %}">#}
-{#                        <i class="fas fa-unlock"></i>#}
-{#                    </button>#}
-{#                {% else %}#}
-{#                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Lock/Close Topic' %}">#}
-{#                        <i class="fas fa-lock"></i>#}
-{#                    </button>#}
-{#                {% endif %}#}
-{#            {% endif %}#}
+            {% if topic.user_started == request.user or perms.aa_forum.manage_forum %}
+                {% if topic.is_locked %}
+                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Unlock/Re-Open Topic' %}">
+                        <i class="fas fa-unlock"></i>
+                    </button>
+                {% else %}
+                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Lock/Close Topic' %}">
+                        <i class="fas fa-lock"></i>
+                    </button>
+                {% endif %}
+            {% endif %}
 
-{#            {% if perms.aa_forum.manage_forum %}#}
-{#                <button class="btn btn-aa-forum-topic-moderation btn-xs"><i class="fas fa-thumbtack"></i></button>#}
-{#            {% endif %}#}
+            {% if perms.aa_forum.manage_forum %}
+                <button class="btn btn-aa-forum-topic-moderation btn-xs"><i class="fas fa-thumbtack"></i></button>
+            {% endif %}
         </div>
     </div>
 </div>
