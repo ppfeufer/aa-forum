@@ -350,7 +350,7 @@ def topic_change_sticky_state(
     request: WSGIRequest, topic_id: int
 ) -> HttpResponseRedirect:
     """
-    Change the lock state of the given topic
+    Change the sticky state of the given topic
     :param request:
     :type request:
     :param topic_id:
@@ -379,3 +379,27 @@ def topic_change_sticky_state(
     topic.save()
 
     return redirect("aa_forum:forum_board", topic.board.category.slug, topic.board.slug)
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
+    """
+    Delete a given topic
+    :param request:
+    :type request:
+    :param topic_id:
+    :type topic_id:
+    """
+
+    topic = Topics.objects.get(pk=topic_id)
+    board = topic.board
+
+    topic.delete()
+
+    messages.success(
+        request,
+        mark_safe(_("<h4>Success!</h4><p>Topic removed.</p>")),
+    )
+
+    return redirect("aa_forum:forum_board", board.category.slug, board.slug)

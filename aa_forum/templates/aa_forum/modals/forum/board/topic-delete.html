@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="modal fade" id="delete-category-{{ category.pk }}" tabindex="-1" role="dialog" aria-labelledby="{% translate 'Delete Category' %}" aria-hidden="true">
+<div class="modal fade" id="delete-topic-{{ topic.pk }}" tabindex="-1" role="dialog" aria-labelledby="{% translate 'Delete Topic' %}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,14 +9,14 @@
                 </button>
 
                 <div class="modal-title">
-                    {% translate "Delete Category" %}
-                    "<b>{{ category.name }}</b>"
+                    {% translate "Delete Topic" %}
+                    "<b>{{ topic.subject }}</b>"
                 </div>
             </div>
 
             <div class="modal-body">
-                <p>{% translate "Are you sure you want to delete this category?" %}</p>
-                <p>{% translate "This will also remove all boards, topics and messages in this category." %}</p>
+                <p>{% translate "Are you sure you want to delete this topic?" %}</p>
+                <p>{% translate "This will also remove all topics and messages in this topic." %}</p>
                 <div class="alert alert-danger" role="alert">
                     <p>{% translate "This action cannot be undone!" %}</p>
                 </div>
@@ -28,7 +28,7 @@
                     {% translate "Cancel" %}
                 </button>
 
-                <a id="modal-button-confirm" class="btn btn-danger btn-sm" role="button" href="{% url 'aa_forum:admin_category_delete' category.pk %}">
+                <a id="modal-button-confirm" class="btn btn-danger btn-sm" role="button" href="{% url 'aa_forum:admin_topic_delete' topic.pk %}">
                     <i class="far fa-trash-alt"></i>
                     {% translate "Delete" %}
                 </a>

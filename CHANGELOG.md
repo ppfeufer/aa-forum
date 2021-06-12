@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - A note when replying to a topic while not being on teh last page of it
 - Ability to lock and unlock topics for forum managers
 - Ability to set/unset topics as "Sticky" for forum managers
+- Ability to delete topics for forum managers
 
 ### Changed
 

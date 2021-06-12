@@ -76,13 +76,14 @@
                         <i class="fas fa-thumbtack"></i>
                     </button>
 
-                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Delete Topic' %}">
+                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Delete Topic' %}" data-toggle="modal" data-target="#delete-topic-{{ topic.pk }}">
                         <i class="far fa-trash-alt"></i>
                     </button>
                 </div>
 
                 {% include "aa_forum/modals/forum/board/topic-change-lock-state.html" %}
                 {% include "aa_forum/modals/forum/board/topic-change-sticky-state.html" %}
+                {% include "aa_forum/modals/forum/board/topic-delete.html" %}
             {% endif %}
         </div>
     </div>

@@ -68,6 +68,11 @@ urlpatterns = [
         admin.topic_change_sticky_state,
         name="admin_topic_change_sticky_state",
     ),
+    url(
+        r"^topic/(?P<topic_id>[0-9]+)/delete/$",
+        admin.topic_delete,
+        name="admin_topic_delete",
+    ),
     # Forum URLs (This needs to be the last block!)
     url(
         r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/$",
