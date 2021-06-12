@@ -18,6 +18,9 @@ def main_character_name(user: User) -> str:
     :rtype:
     """
 
+    if user is None:
+        return ""
+
     try:
         return_value = user.profile.main_character.character_name
     except AttributeError:
@@ -35,6 +38,9 @@ def main_character_id(user: User) -> int:
     :return:
     :rtype:
     """
+
+    if user is None:
+        return ""
 
     try:
         return_value = user.profile.main_character.character_id
@@ -55,6 +61,9 @@ def main_character_corporation_name(user: User) -> str:
     :rtype:
     """
 
+    if user is None:
+        return ""
+
     try:
         return_value = user.profile.main_character.corporation_name
     except AttributeError:
@@ -72,6 +81,9 @@ def main_character_corporation_id(user: User) -> int:
     :return:
     :rtype:
     """
+
+    if user is None:
+        return ""
 
     try:
         return_value = user.profile.main_character.corporation_id
@@ -92,6 +104,9 @@ def main_character_alliance_name(user: User) -> str:
     :rtype:
     """
 
+    if user is None:
+        return ""
+
     try:
         return_value = user.profile.main_character.alliance_name
     except AttributeError:
@@ -109,6 +124,9 @@ def main_character_alliance_id(user: User) -> int:
     :return:
     :rtype:
     """
+
+    if user is None:
+        return ""
 
     try:
         return_value = user.profile.main_character.alliance_id
