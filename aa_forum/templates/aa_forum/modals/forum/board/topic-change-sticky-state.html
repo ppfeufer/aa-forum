@@ -33,7 +33,7 @@
                     {% translate "Cancel" %}
                 </button>
 
-                <a id="modal-button-confirm" class="btn btn-danger btn-sm" role="button" href="{% url 'aa_forum:admin_topic_change_sticky_state' topic.pk %}">
+                <a id="modal-button-confirm" class="btn btn-danger btn-sm" role="button" href="{% url 'aa_forum:forum_topic_change_sticky_state' topic.pk %}">
                     {% if topic.is_sticky %}
                         <i class="fas fa-unlock"></i>
                         {% translate 'Unset Sticky' %}
