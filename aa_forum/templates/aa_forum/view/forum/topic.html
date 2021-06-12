@@ -31,6 +31,8 @@
 
     {% if not topic.is_locked %}
         {% include "aa_forum/partials/forum/topic/reply.html" %}
+    {% elif topic.is_locked and perms.aa_forum.manage_forum %}
+        {% include "aa_forum/partials/forum/topic/reply.html" %}
     {% endif %}
 
     <div tabindex="-1" class="aa-forum-lightbox-modal modal fade" id="lightboxModal" role="dialog">
