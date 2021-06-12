@@ -17,7 +17,7 @@ from aa_forum.models import Boards, Categories
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def admin_index(request: WSGIRequest) -> HttpResponse:
+def index(request: WSGIRequest) -> HttpResponse:
     """
     Administration index view
     :param request:
@@ -77,7 +77,7 @@ def admin_index(request: WSGIRequest) -> HttpResponse:
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def admin_category_create(request: WSGIRequest) -> HttpResponseRedirect:
+def category_create(request: WSGIRequest) -> HttpResponseRedirect:
     """
     Create a new category
     :param request:
@@ -105,7 +105,7 @@ def admin_category_create(request: WSGIRequest) -> HttpResponseRedirect:
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def admin_category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirect:
+def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirect:
     """
     Edit a category
     :param request:
@@ -135,9 +135,7 @@ def admin_category_edit(request: WSGIRequest, category_id: int) -> HttpResponseR
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def admin_category_delete(
-    request: WSGIRequest, category_id: int
-) -> HttpResponseRedirect:
+def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedirect:
     """
     Edit a board
     :param request:
@@ -158,7 +156,7 @@ def admin_category_delete(
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def admin_board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect:
+def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect:
     """
     Create a new board
     :param request:
@@ -195,7 +193,7 @@ def admin_board_create(request: WSGIRequest, category_id: int) -> HttpResponseRe
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def admin_board_edit(
+def board_edit(
     request: WSGIRequest, category_id: int, board_id: int
 ) -> HttpResponseRedirect:
     """
@@ -230,7 +228,7 @@ def admin_board_edit(
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def admin_board_delete(
+def board_delete(
     request: WSGIRequest, category_id: int, board_id: int
 ) -> HttpResponseRedirect:
     """

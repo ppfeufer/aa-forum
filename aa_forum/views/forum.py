@@ -23,7 +23,7 @@ from aa_forum.models import Boards, Categories, Messages, Settings, Topics
 
 @login_required
 @permission_required("aa_forum.basic_access")
-def forum_index(request: WSGIRequest) -> HttpResponse:
+def index(request: WSGIRequest) -> HttpResponse:
     """
     Forum index view
     :param request:
@@ -60,7 +60,7 @@ def forum_index(request: WSGIRequest) -> HttpResponse:
 
 @login_required
 @permission_required("aa_forum.basic_access")
-def forum_board(
+def board(
     request: WSGIRequest, category_slug: str, board_slug: str, page_number: int = None
 ) -> HttpResponse:
     """
@@ -124,7 +124,7 @@ def forum_board(
 
 @login_required
 @permission_required("aa_forum.basic_access")
-def forum_board_new_topic(
+def board_new_topic(
     request: WSGIRequest, category_slug: str, board_slug: str
 ) -> HttpResponse:
     """
@@ -222,7 +222,7 @@ def forum_board_new_topic(
 
 @login_required
 @permission_required("aa_forum.basic_access")
-def forum_topic(
+def topic(
     request: WSGIRequest,
     category_slug: str,
     board_slug: str,
@@ -285,7 +285,7 @@ def forum_topic(
 
 @login_required
 @permission_required("aa_forum.basic_access")
-def forum_topic_reply(
+def topic_reply(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
     """
