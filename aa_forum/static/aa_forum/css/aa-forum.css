@@ -76,7 +76,7 @@
         width: auto !important;
     }
 
-    .modal-open .modal {
+    .aa-forum .aa-forum-lightbox-modal.fade.in {
         z-index: 1050;
     }
 }

@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `time_modified` timestamps for messages
 - Topic does not exist error when trying to view a topic that indeed does not exist
   (anymore)
+- An issue where the initialization of the lightbox modal would interfere with other
+  modals in a topic view. Even when there was no image that needs a lightbox.
 
 
 ## [0.0.1-alpha.4] - 2021-06-12

@@ -66,12 +66,12 @@
             $('.aa-forum-message-body img').click(function (event) {
                 event.preventDefault();
 
-                $('.modal-body').empty();
+                $('.aa-forum-lightbox-modal .modal-body').empty();
 
                 let title = $(this).parent('a').attr("title");
 
                 {#$('.modal-title').html(title);#}
-                $($(this).parents('div').html()).appendTo('.modal-body');
+                $($(this).parents('div').html()).appendTo('.aa-forum-lightbox-modal .modal-body');
                 $('#lightboxModal').modal({show:true});
             });
         });
