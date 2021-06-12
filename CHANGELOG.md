@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   (anymore)
 - An issue where the initialization of the lightbox modal would interfere with other
   modals in a topic view. Even when there was no image that needs a lightbox.
+- Consistent button style
 
 
 ## [0.0.1-alpha.4] - 2021-06-12

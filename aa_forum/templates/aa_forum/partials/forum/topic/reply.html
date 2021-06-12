@@ -15,7 +15,7 @@
             </div>
         {% endif %}
 
-        <form autocomplete="off" action="{% url "aa_forum:forum_topic_reply" topic.board.category.slug topic.board.slug topic.slug %}" method="post">
+        <form  autocomplete="off"action="{% url "aa_forum:forum_topic_reply" topic.board.category.slug topic.board.slug topic.slug %}" method="post">
             {% csrf_token %}
 
             {{ reply_form|bootstrap }}
@@ -23,7 +23,7 @@
             {% include "aa_forum/partials/form/required_field_hint.html" %}
 
             <div class="form-group text-right clearfix">
-                <button class="btn btn-success" type="submit">{% translate "Reply" %}</button>
+                <button class="btn btn-primary btn-sm" type="submit">{% translate "Reply" %}</button>
             </div>
         </form>
     </div>

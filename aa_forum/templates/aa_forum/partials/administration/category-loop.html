@@ -31,7 +31,7 @@
                         {% translate "Changing the name of this category does not change its URL part. This will remain the same to not break any possible links into this category." %}
                     </p>
 
-                    <form action="{% url 'aa_forum:admin_category_edit' category.category_obj.pk %}" method="post">
+                    <form autocomplete="off" action="{% url 'aa_forum:admin_category_edit' category.category_obj.pk %}" method="post">
                         <fieldset>
                             {% csrf_token %}
 
@@ -58,7 +58,7 @@
                             {% translate "New boards will be added at the bottom of the board list for this category. You can move them via drag and drop to a position of your liking." %}
                         </p>
 
-                        <form action="{% url 'aa_forum:admin_board_create' category.category_obj.pk %}" method="post">
+                        <form autocomplete="off" action="{% url 'aa_forum:admin_board_create' category.category_obj.pk %}" method="post">
                             <fieldset>
                                 {% csrf_token %}
 

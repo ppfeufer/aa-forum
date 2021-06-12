@@ -17,14 +17,14 @@
             {% translate "New categories will be added at the bottom of the category list. You can move them via drag and drop to a position of your liking." %}
         </p>
 
-        <form action="{% url 'aa_forum:admin_category_create' %}" method="post">
+        <form autocomplete="off" action="{% url 'aa_forum:admin_category_create' %}" method="post">
             <fieldset>
                 {% csrf_token %}
 
                 {{ new_category_form|bootstrap }}
 
                 <div class="form-group aa-forum-form-new-category text-right clearfix">
-                    <button class="btn btn-primary" type="submit">{% translate 'Create Category' %}</button>
+                    <button class="btn btn-primary btn-sm" type="submit">{% translate 'Create Category' %}</button>
                 </div>
             </fieldset>
         </form>
