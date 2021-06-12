@@ -106,4 +106,10 @@ urlpatterns = [
         forum.topic_reply,
         name="forum_topic_reply",
     ),
+    url(
+        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/"
+        r"(?P<topic_slug>[\w-]+)/modify/(?P<message_id>[\w-]+)/$",
+        forum.message_modify,
+        name="forum_message_modify",
+    ),
 ]

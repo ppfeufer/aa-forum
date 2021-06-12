@@ -16,7 +16,11 @@
                 <li>» <a href="{% url 'aa_forum:forum_board' category_slug board_slug %}">{{ board.name }}</a></li>
 
                 {% if topic %}
-                    <li>» <a href="{% url 'aa_forum:forum_topic' category_slug board_slug topic_slug %}">{{ topic.subject }}</a></li>
+                    {% if modify_message %}
+                        <li>» {% translate "Modify Message" %} (<a href="{% url 'aa_forum:forum_topic' category_slug board_slug topic_slug %}">{{ topic.subject }}</a>)</li>
+                    {% else %}
+                        <li>» <a href="{% url 'aa_forum:forum_topic' category_slug board_slug topic_slug %}">{{ topic.subject }}</a></li>
+                    {% endif %}
                 {% endif %}
             {% endif %}
         {% endif %}

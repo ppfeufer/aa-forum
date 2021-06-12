@@ -110,7 +110,7 @@ class EditBoardForm(ModelForm):
         fields = ["name", "description", "groups"]
 
 
-class ReplyForm(ModelForm):
+class EditMessageForm(ModelForm):
     """
     Reply form
     """

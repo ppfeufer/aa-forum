@@ -113,6 +113,10 @@
         border-top: 1px solid rgb(236, 240, 241);
         padding: 1em 0 0 0;
     }
+
+    .aa-forum .aa-forum-message-body-last-edited {
+        margin-top: 5rem;
+    }
 }
 
 /* Breadcrumb

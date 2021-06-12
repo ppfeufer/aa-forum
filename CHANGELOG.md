@@ -10,6 +10,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Messages can now be modified by their author or anyone with the `manage_forum`
+  permission
+
+### Fixed
+
+- `time_modified` timestamps for messages
+
+
+## [0.0.1-alpha.4] - 2021-06-12
+
+### Added
+
 - A note when replying to a topic while not being on the last page of it
 - Ability to lock and unlock topics for forum managers
 - Ability to set/unset topics as "Sticky" for forum managers

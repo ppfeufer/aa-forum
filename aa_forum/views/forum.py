@@ -6,6 +6,8 @@ import math
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+
+# from django.core import serializers
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
 from django.db.models import Count, Prefetch, Q
@@ -17,8 +19,10 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 from aa_forum.constants import SETTING_MESSAGESPERPAGE, SETTING_TOPICSPERPAGE
-from aa_forum.forms import NewTopicForm, ReplyForm
+from aa_forum.forms import EditMessageForm, NewTopicForm
 from aa_forum.models import Boards, Categories, Messages, Settings, Topics
+
+# from aa_forum.tasks import set_messages_read_by_user_in_pagination
 
 
 @login_required
@@ -104,7 +108,7 @@ def board(
             mark_safe(
                 _(
                     "<h4>Error!</h4><p>The board you were trying to visit does "
-                    "either not exist, or you don't have access to it ...</p> "
+                    "either not exist, or you don't have access to it ...</p>"
                 )
             ),
         )
@@ -147,7 +151,7 @@ def board_new_topic(
             mark_safe(
                 _(
                     "<h4>Error!</h4><p>The category you were trying to post in does "
-                    "not exist ...</p> "
+                    "not exist ...</p>"
                 )
             ),
         )
@@ -170,7 +174,7 @@ def board_new_topic(
             mark_safe(
                 _(
                     "<h4>Error!</h4><p>The board you were trying to post in does "
-                    "either not exist, or you don't have access to it ...</p> "
+                    "either not exist, or you don't have access to it ...</p>"
                 )
             ),
         )
@@ -199,6 +203,8 @@ def board_new_topic(
             message = Messages()
             message.topic = topic
             message.board = board
+            message.time_posted = post_time
+            message.time_modified = post_time
             message.user_created = user_started
             message.message = form.cleaned_data["message"]
             message.save()
@@ -259,7 +265,7 @@ def topic(
             mark_safe(
                 _(
                     "<h4>Error!</h4><p>The topic you were trying to view does "
-                    "either not exist, or you don't have access to it ...</p> "
+                    "either not exist, or you don't have access to it ...</p>"
                 )
             ),
         )
@@ -278,9 +284,36 @@ def topic(
     )
     page_obj = paginator.get_page(page_number)
 
-    reply_form = ReplyForm()
+    # Set the messages as "read by" the current user
+    # MessagesReadByUsers = Messages.read_by.through
+    # MessagesReadByUsers.objects.bulk_create(
+    #     [
+    #         MessagesReadByUsers(messages_id=pk, user=request.user)
+    #         for pk in page_obj.object_list.values_list("pk", flat=True)
+    #     ]
+    # )
 
-    context = {"topic": topic, "page_obj": page_obj, "reply_form": reply_form}
+    # messages_this_page = page_obj.object_list
+    # last_message = messages_this_page[
+    #     int(Settings.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)) - 1
+    # ]
+
+    # request.user.aa_forum_read_messages.add(*page_obj.object_list)
+
+    # set_messages_read_by_user_in_pagination.delay(
+    #     object_list=serializers.serialize("json", page_obj.object_list),
+    #     user_id=request.user.id,
+    # )
+
+    reply_form = EditMessageForm()
+
+    context = {
+        "topic": topic,
+        "page_obj": page_obj,
+        "reply_form": reply_form,
+        # "messages_this_page": messages_this_page,
+        # "last_message": last_message.id,
+    }
 
     return render(request, "aa_forum/view/forum/topic.html", context)
 
@@ -306,22 +339,25 @@ def topic_reply(
 
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = ReplyForm(request.POST)
+        form = EditMessageForm(request.POST)
 
         # Check whether it's valid:
         if form.is_valid():
             board = Boards.objects.get(slug__slug__exact=board_slug)
             topic = Topics.objects.get(slug__slug__exact=topic_slug)
+            time_posted = timezone.now()
 
             new_message = Messages()
             new_message.topic = topic
             new_message.board = board
             new_message.user_created = request.user
+            new_message.time_posted = time_posted
+            new_message.time_modified = time_posted
             new_message.message = form.cleaned_data["message"]
             new_message.save()
 
             # Update the modified timestamp on the topic
-            topic.time_modified = timezone.now()
+            topic.time_modified = time_posted
             topic.save()
 
             # Remove all users from "read by" list and set the current user again.
@@ -460,7 +496,7 @@ def message_entry_point_in_topic(
     except Messages.DoesNotExist:
         messages.error(
             request,
-            mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p> ")),
+            mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p>")),
         )
 
         return redirect("aa_forum:forum_index")
@@ -480,7 +516,7 @@ def message_entry_point_in_topic(
             mark_safe(
                 _(
                     "<h4>Error!</h4><p>The topic you were trying to view does "
-                    "either not exist, or you don't have access to it ...</p> "
+                    "either not exist, or you don't have access to it ...</p>"
                 )
             ),
         )
@@ -515,3 +551,110 @@ def message_entry_point_in_topic(
         redirect_url = f"{redirect_path}#message-{message.pk}"
 
     return HttpResponseRedirect(redirect_url)
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def message_modify(
+    request: WSGIRequest,
+    category_slug: str,
+    board_slug: str,
+    topic_slug: str,
+    message_id: int,
+) -> HttpResponse:
+    """
+    Modify a given message
+    :param request:
+    :type request:
+    :param category_slug:
+    :type category_slug:
+    :param board_slug:
+    :type board_slug:
+    :param topic_slug:
+    :type topic_slug:
+    :param message_id:
+    :type message_id:
+    """
+
+    # Check if the user has access to this board in the first place
+    try:
+        board = (
+            Boards.objects.filter(
+                Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
+                slug__slug__exact=board_slug,
+            )
+            .distinct()
+            .get()
+        )
+    except Boards.DoesNotExist:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The topic you were trying to view does "
+                    "either not exist, or you don't have access to it ...</p>"
+                )
+            ),
+        )
+
+        return redirect("aa_forum:forum_index")
+
+    # If the user has access, check if the message exists
+    try:
+        message = Messages.objects.get(pk=message_id)
+    except Messages.DoesNotExist:
+        messages.error(
+            request,
+            mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p>")),
+        )
+
+        return redirect("aa_forum:forum_index")
+
+    # Check if the user actually has the right to edit this message
+    if message.user_created_id is not request.user.id and not request.user.has_perm(
+        "aa_forum.manage_forum"
+    ):
+        messages.error(
+            request,
+            mark_safe(
+                _("<h4>Error!</h4><p>You are not allowed to modify this message!</p>")
+            ),
+        )
+
+        return redirect("aa_forum:forum_index")
+
+    # We are in the clear, let's see what we've got
+    if request.method == "POST":
+        # Create a form instance and populate it with data from the request
+        form = EditMessageForm(request.POST)
+
+        # Check whether it's valid:
+        if form.is_valid():
+            user_updated = request.user
+            updated_time = timezone.now()
+
+            # topic = Topics.objects.get(slug__slug__exact=topic_slug)
+            # topic.time_modified = updated_time
+            # topic.save()
+
+            message.user_updated = user_updated
+            message.time_modified = updated_time
+            message.message = form.cleaned_data["message"]
+            message.save()
+
+            messages.success(
+                request,
+                mark_safe(_("<h4>Success!</h4><p>The message has been updated.</p>")),
+            )
+
+            return redirect(
+                "aa_forum:forum_message_entry_point_in_topic", message_id=message_id
+            )
+
+    # If not, we'll fill the form with the information from the message object
+    else:
+        form = EditMessageForm(instance=message)
+
+    context = {"form": form, "board": board, "message": message}
+
+    return render(request, "aa_forum/view/forum/modify-message.html", context)
