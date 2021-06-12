@@ -196,14 +196,16 @@ def board_new_topic(
             topic.subject = form.cleaned_data["subject"]
             topic.save()
 
-            topic.read_by.add(user_updated)
-
             message = Messages()
             message.topic = topic
             message.board = board
             message.user_created = user_started
             message.message = form.cleaned_data["message"]
             message.save()
+
+            # Set topic and message as "read by" by the author
+            topic.read_by.add(user_updated)
+            message.read_by.add(request.user)
 
             return redirect(
                 "aa_forum:forum_board",
@@ -326,6 +328,9 @@ def topic_reply(
             # This way we mark this topic as unread for all but the current user.
             topic.read_by.clear()
             topic.read_by.add(request.user)
+
+            # Set the message as "read by" the author
+            new_message.read_by.add(request.user)
 
             return redirect(
                 "aa_forum:forum_message_entry_point_in_topic", new_message.id
