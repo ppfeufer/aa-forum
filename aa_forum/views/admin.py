@@ -342,3 +342,40 @@ def topic_change_lock_state(
     topic.save()
 
     return redirect("aa_forum:forum_board", topic.board.category.slug, topic.board.slug)
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def topic_change_sticky_state(
+    request: WSGIRequest, topic_id: int
+) -> HttpResponseRedirect:
+    """
+    Change the lock state of the given topic
+    :param request:
+    :type request:
+    :param topic_id:
+    :type topic_id:
+    :return:
+    :rtype:
+    """
+
+    topic = Topics.objects.get(pk=topic_id)
+
+    if topic.is_sticky:
+        topic.is_sticky = False
+
+        messages.success(
+            request,
+            mark_safe(_('<h4>Success!</h4><p>Topic is no longer "Sticky".</p>')),
+        )
+    else:
+        topic.is_sticky = True
+
+        messages.success(
+            request,
+            mark_safe(_('<h4>Success!</h4><p>Topic is now "Sticky".</p>')),
+        )
+
+    topic.save()
+
+    return redirect("aa_forum:forum_board", topic.board.category.slug, topic.board.slug)
