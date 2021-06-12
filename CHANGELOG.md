@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [Unreleased] - Unknown
+## [0.0.1-alpha.4] - 2021-06-12
 
 ### Added
 
@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Ability to lock and unlock topics for forum managers
 - Ability to set/unset topics as "Sticky" for forum managers
 - Ability to delete topics for forum managers
+- Some "read_by" marker in preparation for the "Unread Messages" functionality
 
 ### Changed
 
