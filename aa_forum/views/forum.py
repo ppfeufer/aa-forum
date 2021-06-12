@@ -283,6 +283,8 @@ def forum_topic(
     return render(request, "aa_forum/view/forum/topic.html", context)
 
 
+@login_required
+@permission_required("aa_forum.basic_access")
 def forum_topic_reply(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
@@ -337,6 +339,8 @@ def forum_topic_reply(
     return redirect("aa_forum:forum_topic", category_slug, board_slug, topic_slug)
 
 
+@login_required
+@permission_required("aa_forum.basic_access")
 def message_entry_point_in_topic(
     request: WSGIRequest, message_id: int
 ) -> HttpResponseRedirect:
