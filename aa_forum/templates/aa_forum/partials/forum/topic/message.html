@@ -34,7 +34,7 @@
                             {% if not forloop.first %}{% translate "Re:" %}{% endif %}
                             {{ topic.subject }}
                         </a><br>
-                        <small>« <b>{% translate "on:" %}</b> {{ message.time_posted }} »</small>
+                        <small>« <b>{% translate "on:" %}</b> {{ message.time_posted|date }}, {{ message.time_posted|time:"G:i:s" }} »</small>
                     </div>
 
                     <div class="col-md-6">

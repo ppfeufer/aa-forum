@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.0.1-alpha.6] - Upcoming
+
+### Fixed
+
+- Date and time format in message header
+
+
 ## [0.0.1-alpha.5] - 2021-06-13
 
 ### Added
