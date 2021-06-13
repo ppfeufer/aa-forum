@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Date and time format in message header
 - The editor now uses the space it has and doesn't sit in its corner any longer
+  Add the following to your `local.py`
+  ```python
+  CKEDITOR_CONFIGS = {"default": {"width": "100%", "height": "45vh"}}
+  ```
 - Lightbox doesn't put the complete message in the modal anymore, now just the image
   that has been clicked
 
