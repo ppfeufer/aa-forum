@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Date and time format in message header
+- Date and time format in the message header
 - The editor now uses the space it has and doesn't sit in its corner any longer
   Add the following to your `local.py`
   ```python
