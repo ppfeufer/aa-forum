@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Warning when replying on locked topics
+- "Re:" on last message subject on forum index, if the last message in this board
+  isn't the last message in the respective topic
 
 ### Fixed
 

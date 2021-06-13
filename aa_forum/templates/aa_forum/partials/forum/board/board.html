@@ -50,6 +50,7 @@
     <div class="aa-forum-board-last-post hidden-xs">
         {% if board.messages.all %}
             {% set_template_variable board_latest_topic = board.latest_topic %}
+            {% set_template_variable board_first_message = board_latest_topic.first_message %}
             {% set_template_variable board_last_message = board_latest_topic.last_message %}
             {% set_template_variable board_last_message_author = board_last_message.user_created %}
 
@@ -61,6 +62,10 @@
                 <b>{% translate "Last post:" %}</b>
 
                 <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' board_last_message.id %}">
+                    {% if board_first_message.pk != board_last_message.pk %}
+                        {% translate "Re:" %}
+                    {% endif %}
+
                     {{ board_latest_topic.subject|truncatechars:25 }}
                 </a>
 
