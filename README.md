@@ -81,6 +81,8 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_RESTRICT_BY_USER = True
 CKEDITOR_ALLOW_NONIMAGE_FILES = False
+
+CKEDITOR_CONFIGS = {"default": {"width": "100%", "height": "45vh"}}
 ```
 
 Now let's move on to editing the global URL configuration of Alliance Auth. To do so,
