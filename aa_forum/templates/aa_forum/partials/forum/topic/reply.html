@@ -15,6 +15,12 @@
             </div>
         {% endif %}
 
+        {% if topic.is_locked %}
+            <div class="alert alert-danger">
+                {% translate "Warning: this topic is locked! Only admins and can reply." %}
+            </div>
+        {% endif %}
+
         <form  autocomplete="off"action="{% url "aa_forum:forum_topic_reply" topic.board.category.slug topic.board.slug topic.slug %}" method="post">
             {% csrf_token %}
 
