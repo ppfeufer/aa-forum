@@ -214,6 +214,10 @@
         width: 60%;
     }
 
+    .aa-forum .aa-forum-topic-row .aa-forum-topic .aa-forum-topic-name p:last-child {
+        margin-bottom: 0;
+    }
+
     .aa-forum .aa-forum-topic-row .aa-forum-topic .aa-forum-topic-stats {
         text-align: center;
         width: 15%;

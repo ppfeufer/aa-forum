@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - After creating a new topic, the user now returns to the newly created topic
   instead of the board view
+- Vertical alignment of the topic names in board view
 
 
 ## [0.0.1-alpha.6] - 2021-06-13
