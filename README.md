@@ -208,7 +208,7 @@ about the available permissions.
 | ID                    | Description                   | Notes|
 |-----------------------|-------------------------------|------|
 | `basic_access`        | Can access the AA-Forum module | Grants read access to the forum |
-| `manage_forum`        | Can manage the AA-Forum module (Categories, topics and messages)          | Grants the right to add, edit and delete topics, boards and categories, as well as messages |
+| `manage_forum`        | Can manage the AA-Forum module (Categories, topics and messages)          | User with this permission can create, edit and delete boards and categories in the "Administration" view. They can also modify and delete messages and topics in the "Forum" view from boards they have access to. They cannot see all boards in the "Forum" view and are still bound by the board's groups restrictions. |
 
 
 ## Changelog
