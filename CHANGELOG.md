@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Date and time format in message header
+- The editor now uses the space it has and doesn't sit in its corner any longer
 
 
 ## [0.0.1-alpha.5] - 2021-06-13

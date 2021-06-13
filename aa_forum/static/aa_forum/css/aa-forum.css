@@ -265,6 +265,18 @@
     }
 }
 
+/* cKEditor
+------------------------------------------------------------------------------------- */
+@media all {
+    .aa-forum #cke_id_message {
+        width: 100% !important;
+    }
+
+    .aa-forum .cke_contents {
+        height: 45vh !important;
+    }
+}
+
 /* Responsive
 ------------------------------------------------------------------------------------- */
 @media all and (min-width: 768px) {
