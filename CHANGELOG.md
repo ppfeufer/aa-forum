@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Date and time format in message header
 - The editor now uses the space it has and doesn't sit in its corner any longer
+- Lightbox doesn't put the complete message in the modal anymore, now just the image
+  that has been clicked
 
 
 ## [0.0.1-alpha.5] - 2021-06-13

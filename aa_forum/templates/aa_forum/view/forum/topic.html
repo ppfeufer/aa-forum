@@ -71,7 +71,9 @@
                 let title = $(this).parent('a').attr("title");
 
                 {#$('.modal-title').html(title);#}
-                $($(this).parents('div').html()).appendTo('.aa-forum-lightbox-modal .modal-body');
+                $('.aa-forum-lightbox-modal .modal-body').html(
+                    '<p><img src="' + $(this).attr('src') + '"></p>'
+                );
                 $('#lightboxModal').modal({show:true});
             });
         });
