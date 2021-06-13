@@ -214,9 +214,10 @@ def board_new_topic(
             message.read_by.add(request.user)
 
             return redirect(
-                "aa_forum:forum_board",
-                category_slug=board.category.slug.slug,
-                board_slug=board.slug.slug,
+                "aa_forum:forum_topic",
+                category_slug=board.category.slug,
+                board_slug=board.slug,
+                topic_slug=topic.slug,
             )
 
     # If not, we'll create a blank form

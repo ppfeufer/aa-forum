@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.0.1-alpha.7] - Unreleased
+
+### Fixed
+
+- After creating a new topic, the user now returns to the newly created topic
+  instead of the board view
+
+
 ## [0.0.1-alpha.6] - 2021-06-13
 
 ### Fixed
