@@ -4,14 +4,14 @@
 {% load aa_forum_user %}
 
 {% for category in categories %}
-    {% if category.boards.all %}
+    {% if category.boards.exists %}
         <div id="category-{{ category.id }}" class="panel panel-default panel-aa-forum-category">
             <div class="panel-heading">
                 <div class="panel-title">{{ category.name }}</div>
             </div>
 
             <div class="panel-body">
-                {% for board in category.boards.all %}
+                {% for board in category.boards_sorted %}
                     {% include "aa_forum/partials/forum/board/board.html" %}
                 {% endfor %}
             </div>

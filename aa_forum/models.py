@@ -231,16 +231,13 @@ class Board(models.Model):
     def __str__(self) -> str:
         return str(self.name)
 
-    def latest_topic(self):
-        """
-        Get the latest topic for this board
-        :return:
-        :rtype:
-        """
-
-        topic = self.topics.order_by("time_modified").last()
-
-        return topic
+    def last_message(self) -> "Message":
+        """Return the last posted message for this board."""
+        return (
+            Message.objects.filter(topic__board=self)
+            .select_related("topic", "user_created__profile__main_character")
+            .order_by("-time_modified")[0]
+        )
 
 
 class Topic(models.Model):
@@ -319,8 +316,7 @@ class Topic(models.Model):
         :rtype:
         """
 
-        message = Message.objects.filter(topic=self).first()
-
+        message = self.messages.order_by("time_modified")[0]
         return message
 
     def last_message(self):
@@ -330,7 +326,9 @@ class Topic(models.Model):
         :rtype:
         """
 
-        message = Message.objects.filter(topic=self).last()
+        message = self.messages.select_related(
+            "user_created__profile__main_character"
+        ).order_by("-time_modified")[0]
 
         return message
 

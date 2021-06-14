@@ -35,12 +35,13 @@ def index(request: WSGIRequest) -> HttpResponse:
     :return:
     :rtype:
     """
-
     categories = (
-        Category.objects.prefetch_related(
+        Category.objects.select_related("slug")
+        .prefetch_related(
             Prefetch(
                 "boards",
-                queryset=Board.objects.prefetch_related("topics__messages")
+                queryset=Board.objects.select_related("slug", "category__slug")
+                .prefetch_related("topics__messages", "groups")
                 .filter(
                     Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
                     parent_board__isnull=True,
@@ -51,9 +52,9 @@ def index(request: WSGIRequest) -> HttpResponse:
                     num_topics=Count("topics", distinct=True),
                 )
                 .order_by("order"),
+                to_attr="boards_sorted",
             )
         )
-        .all()
         .order_by("order")
     )
 
