@@ -72,7 +72,7 @@ class Slug(models.Model):
     Slug
     """
 
-    slug = models.SlugField(max_length=255, allow_unicode=True)
+    slug = models.SlugField(max_length=255, unique=True)
 
     class Meta:
         """
@@ -137,7 +137,7 @@ class Category(models.Model):
         on_delete=models.CASCADE,
     )
     is_collapsible = models.BooleanField(default=False)
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
 
     class Meta:
         """
@@ -238,7 +238,7 @@ class Board(models.Model):
         :rtype:
         """
 
-        topic = Topic.objects.filter(board=self).order_by("time_modified").last()
+        topic = self.topics.order_by("time_modified").last()
 
         return topic
 
@@ -281,7 +281,7 @@ class Topic(models.Model):
     )
     num_views = models.IntegerField(default=0)
     num_replies = models.IntegerField(default=0)
-    time_modified = models.DateTimeField(default=timezone.now)
+    time_modified = models.DateTimeField(default=timezone.now, db_index=True)
     read_by = models.ManyToManyField(
         User,
         blank=True,
@@ -346,7 +346,7 @@ class Message(models.Model):
         on_delete=models.CASCADE,
     )
     time_posted = models.DateTimeField(default=timezone.now)
-    time_modified = models.DateTimeField(default=timezone.now)
+    time_modified = models.DateTimeField(default=timezone.now, db_index=True)
     user_created = models.ForeignKey(
         User,
         related_name="+",
