@@ -2,8 +2,11 @@
 Fake some messages
 """
 
+import random
+
 from faker import Faker
 
+from django.contrib.auth.models import User
 from django.utils import timezone
 
 from aa_forum.models import Boards, Messages, Topics
@@ -15,6 +18,7 @@ def run():
     """
 
     fake = Faker()
+    user_ids = list(User.objects.values_list("id", flat=True))
 
     # Add some topics
     boards = Boards.objects.all()
@@ -23,10 +27,11 @@ def run():
             time_posted = timezone.now()
 
             for _ in range(25):
+                user_id = random.choice(user_ids)
                 topic = Topics()
                 topic.board = board
-                topic.user_started_id = 2
-                topic.user_updated_id = 2
+                topic.user_started_id = user_id
+                topic.user_updated_id = user_id
                 topic.time_modified = time_posted
                 topic.subject = fake.sentence()
                 topic.save()
@@ -36,7 +41,7 @@ def run():
                 message.board = board
                 message.time_posted = time_posted
                 message.time_modified = time_posted
-                message.user_created_id = 2
+                message.user_created_id = user_id
                 message.message = f"<p>{fake.sentence()}</p>"
                 message.save()
 
@@ -44,6 +49,7 @@ def run():
     topics = Topics.objects.all()
     if topics.count() > 0:
         for topic in topics:
+            user_id = random.choice(user_ids)
             Messages.objects.bulk_create(
                 [
                     Messages(
@@ -52,7 +58,7 @@ def run():
                         time_modified=time_posted,
                         board_id=topic.board_id,
                         topic_id=topic.id,
-                        user_created_id=2,
+                        user_created_id=user_id,
                     )
                     for _ in range(25)
                 ]
