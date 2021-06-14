@@ -519,7 +519,7 @@ def message_entry_point_in_topic(
     request: WSGIRequest, message_id: int
 ) -> HttpResponseRedirect:
     """
-    Get a messages antry point in a topic, so we end up on the right page with it
+    Get a messages' entry point in a topic, so we end up on the right page with it
     :param request:
     :type request:
     :param message_id:
