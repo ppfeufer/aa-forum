@@ -3,7 +3,7 @@
 
 <div class="col-4 offset-4">
     {% set_template_variable topic_first_message = topic.first_message %}
-    {% set_template_variable topic_first_message_board = topic_first_message.board %}
+    {% set_template_variable topic_first_message_board = topic_first_message.topic.board %}
     {% set_template_variable topic_first_message_category = topic_first_message_board.category %}
 
     <nav aria-label="{% translate 'Message Pagination' %}">

@@ -340,11 +340,6 @@ class Message(models.Model):
     Message
     """
 
-    board = models.ForeignKey(
-        Board,
-        related_name="messages",
-        on_delete=models.CASCADE,
-    )
     topic = models.ForeignKey(
         Topic,
         related_name="messages",

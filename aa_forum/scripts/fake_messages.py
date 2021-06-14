@@ -38,7 +38,6 @@ def run():
 
                 message = Message()
                 message.topic = topic
-                message.board = board
                 message.time_posted = time_posted
                 message.time_modified = time_posted
                 message.user_created_id = user_id

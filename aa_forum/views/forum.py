@@ -40,14 +40,14 @@ def index(request: WSGIRequest) -> HttpResponse:
         Category.objects.prefetch_related(
             Prefetch(
                 "boards",
-                queryset=Board.objects.prefetch_related("messages")
+                queryset=Board.objects.prefetch_related("topics__messages")
                 .filter(
                     Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
                     parent_board__isnull=True,
                 )
                 .distinct()
                 .annotate(
-                    num_posts=Count("messages", distinct=True),
+                    num_posts=Count("topics__messages", distinct=True),
                     num_topics=Count("topics", distinct=True),
                 )
                 .order_by("order"),
@@ -85,14 +85,15 @@ def board(
         # )
 
         board = (
-            Board.objects.prefetch_related(
-                Prefetch(
-                    "messages",
-                    queryset=Message.objects.prefetch_related(
-                        "user_created"
-                    ).prefetch_related("user_updated"),
-                )
-            )
+            Board.objects
+            # .prefetch_related(
+            #     Prefetch(
+            #         "topics__messages",
+            #         queryset=Message.objects.prefetch_related(
+            #             "user_created"
+            #         ).prefetch_related("user_updated"),
+            #     )
+            # )
             .prefetch_related(
                 Prefetch(
                     "topics",
@@ -220,7 +221,6 @@ def board_new_topic(
 
             message = Message()
             message.topic = topic
-            message.board = board
             message.time_posted = post_time
             message.time_modified = post_time
             message.user_created = user_started
@@ -540,7 +540,7 @@ def message_entry_point_in_topic(
         board = (
             Board.objects.filter(
                 Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-                pk=message.board.pk,
+                pk=message.topic.board.pk,
             )
             .distinct()
             .get()

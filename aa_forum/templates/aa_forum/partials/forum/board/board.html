@@ -48,7 +48,7 @@
     </div>
 
     <div class="aa-forum-board-last-post hidden-xs">
-        {% if board.messages.all %}
+        {% if board.topics.all %}
             {% set_template_variable board_latest_topic = board.latest_topic %}
             {% set_template_variable board_first_message = board_latest_topic.first_message %}
             {% set_template_variable board_last_message = board_latest_topic.last_message %}

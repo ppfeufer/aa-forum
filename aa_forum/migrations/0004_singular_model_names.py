@@ -7,70 +7,113 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auth', '0012_alter_user_first_name_max_length'),
+        ("auth", "0012_alter_user_first_name_max_length"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('aa_forum', '0003_default_settings'),
+        ("aa_forum", "0003_default_settings"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='Boards',
-            new_name='Board',
+            old_name="Boards",
+            new_name="Board",
         ),
         migrations.RenameModel(
-            old_name='Categories',
-            new_name='Category',
+            old_name="Categories",
+            new_name="Category",
         ),
         migrations.RenameModel(
-            old_name='Messages',
-            new_name='Message',
+            old_name="Messages",
+            new_name="Message",
         ),
         migrations.RenameModel(
-            old_name='PersonalMessages',
-            new_name='PersonalMessage',
+            old_name="PersonalMessages",
+            new_name="PersonalMessage",
         ),
         migrations.RenameModel(
-            old_name='Settings',
-            new_name='Setting',
+            old_name="Settings",
+            new_name="Setting",
         ),
         migrations.RenameModel(
-            old_name='Slugs',
-            new_name='Slug',
+            old_name="Slugs",
+            new_name="Slug",
         ),
         migrations.RenameModel(
-            old_name='Topics',
-            new_name='Topic',
+            old_name="Topics",
+            new_name="Topic",
         ),
         migrations.AlterModelOptions(
-            name='board',
-            options={'default_permissions': (), 'verbose_name': 'board', 'verbose_name_plural': 'boards'},
+            name="board",
+            options={
+                "default_permissions": (),
+                "verbose_name": "board",
+                "verbose_name_plural": "boards",
+            },
         ),
         migrations.AlterModelOptions(
-            name='category',
-            options={'default_permissions': (), 'verbose_name': 'category', 'verbose_name_plural': 'categories'},
+            name="category",
+            options={
+                "default_permissions": (),
+                "verbose_name": "category",
+                "verbose_name_plural": "categories",
+            },
         ),
         migrations.AlterModelOptions(
-            name='general',
-            options={'default_permissions': (), 'managed': False, 'permissions': (('basic_access', 'Can access the AA-Forum module'), ('manage_forum', 'Can manage the AA-Forum module (Category, topics and messages)')), 'verbose_name': 'AA-Forum'},
+            name="general",
+            options={
+                "default_permissions": (),
+                "managed": False,
+                "permissions": (
+                    ("basic_access", "Can access the AA-Forum module"),
+                    (
+                        "manage_forum",
+                        (
+                            "Can manage the AA-Forum module "
+                            "(Category, topics and messages)"
+                        ),
+                    ),
+                ),
+                "verbose_name": "AA-Forum",
+            },
         ),
         migrations.AlterModelOptions(
-            name='message',
-            options={'default_permissions': (), 'verbose_name': 'message', 'verbose_name_plural': 'messages'},
+            name="message",
+            options={
+                "default_permissions": (),
+                "verbose_name": "message",
+                "verbose_name_plural": "messages",
+            },
         ),
         migrations.AlterModelOptions(
-            name='personalmessage',
-            options={'default_permissions': (), 'verbose_name': 'personal message', 'verbose_name_plural': 'personal messages'},
+            name="personalmessage",
+            options={
+                "default_permissions": (),
+                "verbose_name": "personal message",
+                "verbose_name_plural": "personal messages",
+            },
         ),
         migrations.AlterModelOptions(
-            name='setting',
-            options={'default_permissions': (), 'verbose_name': 'setting', 'verbose_name_plural': 'settings'},
+            name="setting",
+            options={
+                "default_permissions": (),
+                "verbose_name": "setting",
+                "verbose_name_plural": "settings",
+            },
         ),
         migrations.AlterModelOptions(
-            name='slug',
-            options={'default_permissions': (), 'verbose_name': 'slug', 'verbose_name_plural': 'slugs'},
+            name="slug",
+            options={
+                "default_permissions": (),
+                "verbose_name": "slug",
+                "verbose_name_plural": "slugs",
+            },
         ),
         migrations.AlterModelOptions(
-            name='topic',
-            options={'default_permissions': (), 'ordering': ['-time_modified'], 'verbose_name': 'topic', 'verbose_name_plural': 'topics'},
+            name="topic",
+            options={
+                "default_permissions": (),
+                "ordering": ["-time_modified"],
+                "verbose_name": "topic",
+                "verbose_name_plural": "topics",
+            },
         ),
     ]
