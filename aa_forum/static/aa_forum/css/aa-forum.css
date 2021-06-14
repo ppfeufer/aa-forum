@@ -135,6 +135,10 @@
         transition: var(--bg-hover-transition);
     }
 
+    .aa-forum .panel-aa-forum-topic-list {
+        margin: 2rem 0;
+    }
+
     .aa-forum .aa-forum-topic-row:last-child .aa-forum-topic {
         /*border-bottom: 0;*/
         margin-bottom: 0;
