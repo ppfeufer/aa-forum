@@ -61,7 +61,7 @@
             <p class="last-post-information small">
                 <b>{% translate "Last post:" %}</b>
 
-                <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' board_last_message.id %}">
+                <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' board_last_message.pk %}">
                     {% if board_first_message.pk != board_last_message.pk %}
                         {% translate "Re:" %}
                     {% endif %}

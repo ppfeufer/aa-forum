@@ -48,9 +48,9 @@
 
         <div class="aa-forum-topic-last-post hidden-xs">
             <span class="small">
-                {% translate "Last post" %} {{ topic.time_modified|date }}, {{ topic.time_modified|time:"G:i:s" }}
+                {% translate "Last post" %} {{ topic.last_message_time|date }}, {{ topic.last_message_time|time:"G:i:s" }}
 
-                <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' topic.last_message.pk %}" title="{% translate 'Go to last message' %}" style="margin-left: 0.5rem;">
+                <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' topic.last_message_id %}" title="{% translate 'Go to last message' %}" style="margin-left: 0.5rem;">
                     <i class="fas fa-sign-in-alt"></i>
                 </a>
 

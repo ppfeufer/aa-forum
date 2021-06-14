@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 # from django.core import serializers
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
-from django.db.models import Count, Prefetch, Q
+from django.db.models import Count, Max, Prefetch, Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -80,18 +80,36 @@ def board(
     """
 
     try:
+        # newest = Messages.objects.filter(topic=OuterRef("pk")).order_by(
+        #     "-time_modified", "-id"
+        # )
+
         board = (
-            Boards.objects.prefetch_related("messages")
-            # .prefetch_related("child_boards")
+            Boards.objects.prefetch_related(
+                Prefetch(
+                    "messages",
+                    queryset=Messages.objects.prefetch_related(
+                        "user_created"
+                    ).prefetch_related("user_updated"),
+                )
+            )
             .prefetch_related(
                 Prefetch(
                     "topics",
                     queryset=Topics.objects.prefetch_related("messages")
                     .distinct()
+                    .prefetch_related("user_started")
+                    .prefetch_related("user_updated")
+                    # .annotate(
+                    #     last_message_user=Subquery(newest.values("user_updated")[:1])
+                    # )
+                    .annotate(last_message_time=Max("messages__time_posted"))
+                    .annotate(last_message_id=Max("messages__pk"))
                     .annotate(
                         num_posts=Count("messages", distinct=True),
                     )
-                    .order_by("-is_sticky", "-time_modified"),
+                    # Order the topics
+                    .order_by("-is_sticky", "-time_modified", "-id"),
                 )
             )
             .filter(
@@ -210,8 +228,8 @@ def board_new_topic(
             message.save()
 
             # Set topic and message as "read by" by the author
-            topic.read_by.add(user_updated)
-            message.read_by.add(request.user)
+            # topic.read_by.add(user_updated)
+            # message.read_by.add(request.user)
 
             return redirect(
                 "aa_forum:forum_topic",
@@ -255,7 +273,7 @@ def topic(
     """
 
     try:
-        Boards.objects.prefetch_related("messages").filter(
+        Boards.objects.filter(
             Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
             category__slug__slug__exact=category_slug,
             slug__slug__exact=board_slug,
@@ -371,17 +389,19 @@ def topic_reply(
             new_message.message = form.cleaned_data["message"]
             new_message.save()
 
-            # Update the modified timestamp on the topic
+            # Update the modified timestamp on the topic and set the user who wrote
+            # the last message
             topic.time_modified = time_posted
+            topic.user_updated = request.user
             topic.save()
 
             # Remove all users from "read by" list and set the current user again.
             # This way we mark this topic as unread for all but the current user.
-            topic.read_by.clear()
-            topic.read_by.add(request.user)
+            # topic.read_by.clear()
+            # topic.read_by.add(request.user)
 
             # Set the message as "read by" the author
-            new_message.read_by.add(request.user)
+            # new_message.read_by.add(request.user)
 
             return redirect(
                 "aa_forum:forum_message_entry_point_in_topic", new_message.id
