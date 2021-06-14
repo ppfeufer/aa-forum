@@ -11,7 +11,7 @@ verbose_name = "AA-Forum - A simple forum for Alliance Auth"
 verbose_name_slug = slugify(verbose_name, allow_unicode=True)
 user_agent = f"{verbose_name_slug} v{__version__} {github_url}"
 
-# Settings keys
+# Setting keys
 SETTING_DATEFORMAT = "defaultDateFormat"
 SETTING_TIMEFORMAT = "defaultTimeFormat"
 SETTING_MAXMESSAGELENGTH = "maxMessageLength"

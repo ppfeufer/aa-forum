@@ -9,7 +9,7 @@ from faker import Faker
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from aa_forum.models import Boards, Messages, Topics
+from aa_forum.models import Board, Message, Topic
 
 
 def run():
@@ -21,14 +21,14 @@ def run():
     user_ids = list(User.objects.values_list("id", flat=True))
 
     # Add some topics
-    boards = Boards.objects.all()
+    boards = Board.objects.all()
     if boards.count() > 0:
         for board in boards:
             time_posted = timezone.now()
 
             for _ in range(25):
                 user_id = random.choice(user_ids)
-                topic = Topics()
+                topic = Topic()
                 topic.board = board
                 topic.user_started_id = user_id
                 topic.user_updated_id = user_id
@@ -36,7 +36,7 @@ def run():
                 topic.subject = fake.sentence()
                 topic.save()
 
-                message = Messages()
+                message = Message()
                 message.topic = topic
                 message.board = board
                 message.time_posted = time_posted
@@ -46,13 +46,13 @@ def run():
                 message.save()
 
     # Add some messages to topics
-    topics = Topics.objects.all()
+    topics = Topic.objects.all()
     if topics.count() > 0:
         for topic in topics:
             user_id = random.choice(user_ids)
-            Messages.objects.bulk_create(
+            Message.objects.bulk_create(
                 [
-                    Messages(
+                    Message(
                         message=f"<p>{fake.sentence()}</p>",
                         time_posted=time_posted,
                         time_modified=time_posted,

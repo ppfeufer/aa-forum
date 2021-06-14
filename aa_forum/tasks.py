@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 # from django.core import serializers
 # from django.core.paginator import Page
 
-# from aa_forum.models import Messages
+# from aa_forum.models import Message
 
 
 @shared_task
@@ -22,7 +22,7 @@ def set_messages_read_by_user_in_pagination(object_list, user_id: int):
     :type user:
     """
 
-    # MessagesReadByUsers = Messages.read_by.through
+    # MessagesReadByUsers = Message.read_by.through
     # MessagesReadByUsers.objects.bulk_create(
     #     [
     #         MessagesReadByUsers(messages_id=pk, user=user)

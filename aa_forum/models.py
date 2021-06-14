@@ -34,13 +34,13 @@ def get_slug_on_save(subject: str) -> str:
     run = 0
     subject_slug = slugify(subject, allow_unicode=True)
 
-    while Slugs.objects.filter(slug=subject_slug).exists():
+    while Slug.objects.filter(slug=subject_slug).exists():
         run += 1
         subject_slug = slugify(subject + "-" + str(run), allow_unicode=True)
 
-    Slugs(slug=subject_slug).save()
+    Slug(slug=subject_slug).save()
 
-    slug_to_return = Slugs.objects.get(slug=subject_slug)
+    slug_to_return = Slug.objects.get(slug=subject_slug)
 
     return slug_to_return
 
@@ -62,14 +62,14 @@ class General(models.Model):
             ("basic_access", _("Can access the AA-Forum module")),
             (
                 "manage_forum",
-                _("Can manage the AA-Forum module (Categories, topics and messages)"),
+                _("Can manage the AA-Forum module (Category, topics and messages)"),
             ),
         )
 
 
-class Slugs(models.Model):
+class Slug(models.Model):
     """
-    Slugs
+    Slug
     """
 
     slug = models.SlugField(max_length=255, allow_unicode=True)
@@ -80,10 +80,10 @@ class Slugs(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Slug")
-        verbose_name_plural = _("Slugs")
+        verbose_name = _("slug")
+        verbose_name_plural = _("slugs")
 
-    @receiver(models.signals.post_delete, sender="aa_forum.Categories")
+    @receiver(models.signals.post_delete, sender="aa_forum.Category")
     def handle_deleted_category(sender, instance, **kwargs):
         """
         Delete category slug, when category is deleted
@@ -95,7 +95,7 @@ class Slugs(models.Model):
 
         instance.slug.delete()
 
-    @receiver(models.signals.post_delete, sender="aa_forum.Boards")
+    @receiver(models.signals.post_delete, sender="aa_forum.Board")
     def handle_deleted_board(sender, instance, **kwargs):
         """
         Delete board slug, when board is deleted
@@ -107,7 +107,7 @@ class Slugs(models.Model):
 
         instance.slug.delete()
 
-    @receiver(models.signals.post_delete, sender="aa_forum.Topics")
+    @receiver(models.signals.post_delete, sender="aa_forum.Topic")
     def handle_deleted_topic(sender, instance, **kwargs):
         """
         Delete topic slug, when topic is deleted
@@ -123,14 +123,14 @@ class Slugs(models.Model):
         return str(self.slug)
 
 
-class Categories(models.Model):
+class Category(models.Model):
     """
-    Categories
+    Category
     """
 
     name = models.CharField(max_length=254, default="")
     slug = models.ForeignKey(
-        Slugs,
+        Slug,
         blank=True,
         null=True,
         related_name="+",
@@ -145,8 +145,8 @@ class Categories(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Category")
-        verbose_name_plural = _("Categories")
+        verbose_name = _("category")
+        verbose_name_plural = _("categories")
 
     def save(
         self, force_insert=False, force_update=False, using=None, update_fields=None
@@ -173,19 +173,19 @@ class Categories(models.Model):
         return str(self.name)
 
 
-class Boards(models.Model):
+class Board(models.Model):
     """
-    Boards
+    Board
     """
 
     category = models.ForeignKey(
-        Categories,
+        Category,
         related_name="boards",
         on_delete=models.CASCADE,
     )
     name = models.CharField(max_length=254, default="")
     slug = models.ForeignKey(
-        Slugs,
+        Slug,
         blank=True,
         null=True,
         related_name="+",
@@ -212,8 +212,8 @@ class Boards(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Board")
-        verbose_name_plural = _("Boards")
+        verbose_name = _("board")
+        verbose_name_plural = _("boards")
 
     def save(
         self, force_insert=False, force_update=False, using=None, update_fields=None
@@ -238,19 +238,19 @@ class Boards(models.Model):
         :rtype:
         """
 
-        topic = Topics.objects.filter(board=self).order_by("time_modified").last()
+        topic = Topic.objects.filter(board=self).order_by("time_modified").last()
 
         return topic
 
 
-class Topics(models.Model):
+class Topic(models.Model):
     """
-    Topics
+    Topic
     """
 
     subject = models.CharField(max_length=254, default="")
     slug = models.ForeignKey(
-        Slugs,
+        Slug,
         blank=True,
         null=True,
         related_name="+",
@@ -265,7 +265,7 @@ class Topics(models.Model):
         db_index=True,
     )
     board = models.ForeignKey(
-        Boards,
+        Board,
         related_name="topics",
         on_delete=models.CASCADE,
     )
@@ -294,8 +294,8 @@ class Topics(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Topic")
-        verbose_name_plural = _("Topics")
+        verbose_name = _("topic")
+        verbose_name_plural = _("topics")
 
         ordering = ["-time_modified"]
 
@@ -319,7 +319,7 @@ class Topics(models.Model):
         :rtype:
         """
 
-        message = Messages.objects.filter(topic=self).first()
+        message = Message.objects.filter(topic=self).first()
 
         return message
 
@@ -330,23 +330,23 @@ class Topics(models.Model):
         :rtype:
         """
 
-        message = Messages.objects.filter(topic=self).last()
+        message = Message.objects.filter(topic=self).last()
 
         return message
 
 
-class Messages(models.Model):
+class Message(models.Model):
     """
-    Messages
+    Message
     """
 
     board = models.ForeignKey(
-        Boards,
+        Board,
         related_name="messages",
         on_delete=models.CASCADE,
     )
     topic = models.ForeignKey(
-        Topics,
+        Topic,
         related_name="messages",
         on_delete=models.CASCADE,
     )
@@ -377,14 +377,14 @@ class Messages(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Message")
-        verbose_name_plural = _("Messages")
+        verbose_name = _("message")
+        verbose_name_plural = _("messages")
 
     def __str__(self) -> str:
         return str(self.pk)
 
 
-class PersonalMessages(models.Model):
+class PersonalMessage(models.Model):
     """
     Personal messages
     """
@@ -402,7 +402,7 @@ class PersonalMessages(models.Model):
     time_sent = models.DateTimeField(default=timezone.now)
     subject = models.CharField(max_length=254, default="")
     slug = models.ForeignKey(
-        Slugs,
+        Slug,
         blank=True,
         null=True,
         related_name="+",
@@ -417,8 +417,8 @@ class PersonalMessages(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Personal Message")
-        verbose_name_plural = _("Personal Messages")
+        verbose_name = _("personal message")
+        verbose_name_plural = _("personal messages")
 
     def save(
         self, force_insert=False, force_update=False, using=None, update_fields=None
@@ -437,9 +437,9 @@ class PersonalMessages(models.Model):
         return str(self.subject)
 
 
-class Settings(models.Model):
+class Setting(models.Model):
     """
-    Settings
+    Setting
     """
 
     variable = models.CharField(
@@ -455,5 +455,5 @@ class Settings(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Setting")
-        verbose_name_plural = _("Settings")
+        verbose_name = _("setting")
+        verbose_name_plural = _("settings")

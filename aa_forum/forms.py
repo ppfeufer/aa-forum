@@ -10,7 +10,7 @@ from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from aa_forum.models import Boards, Categories, Messages
+from aa_forum.models import Board, Category, Message
 
 
 def get_mandatory_form_label_text(text):
@@ -70,7 +70,7 @@ class EditCategoryForm(ModelForm):
         Meta definitions
         """
 
-        model = Categories
+        model = Category
         fields = ["name"]
 
 
@@ -106,7 +106,7 @@ class EditBoardForm(ModelForm):
         Meta definitions
         """
 
-        model = Boards
+        model = Board
         fields = ["name", "description", "groups"]
 
 
@@ -128,5 +128,5 @@ class EditMessageForm(ModelForm):
         Meta definitions
         """
 
-        model = Messages
+        model = Message
         fields = ["message"]

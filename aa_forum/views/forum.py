@@ -20,7 +20,7 @@ from django.utils.translation import gettext as _
 
 from aa_forum.constants import SETTING_MESSAGESPERPAGE, SETTING_TOPICSPERPAGE
 from aa_forum.forms import EditMessageForm, NewTopicForm
-from aa_forum.models import Boards, Categories, Messages, Settings, Topics
+from aa_forum.models import Board, Category, Message, Setting, Topic
 
 # from aa_forum.tasks import set_messages_read_by_user_in_pagination
 
@@ -37,10 +37,10 @@ def index(request: WSGIRequest) -> HttpResponse:
     """
 
     categories = (
-        Categories.objects.prefetch_related(
+        Category.objects.prefetch_related(
             Prefetch(
                 "boards",
-                queryset=Boards.objects.prefetch_related("messages")
+                queryset=Board.objects.prefetch_related("messages")
                 .filter(
                     Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
                     parent_board__isnull=True,
@@ -80,15 +80,15 @@ def board(
     """
 
     try:
-        # newest = Messages.objects.filter(topic=OuterRef("pk")).order_by(
+        # newest = Message.objects.filter(topic=OuterRef("pk")).order_by(
         #     "-time_modified", "-id"
         # )
 
         board = (
-            Boards.objects.prefetch_related(
+            Board.objects.prefetch_related(
                 Prefetch(
                     "messages",
-                    queryset=Messages.objects.prefetch_related(
+                    queryset=Message.objects.prefetch_related(
                         "user_created"
                     ).prefetch_related("user_updated"),
                 )
@@ -96,7 +96,7 @@ def board(
             .prefetch_related(
                 Prefetch(
                     "topics",
-                    queryset=Topics.objects.prefetch_related("messages")
+                    queryset=Topic.objects.prefetch_related("messages")
                     .distinct()
                     .prefetch_related("user_started")
                     .prefetch_related("user_updated")
@@ -120,7 +120,7 @@ def board(
             .distinct()
             .get()
         )
-    except Boards.DoesNotExist:
+    except Board.DoesNotExist:
         messages.error(
             request,
             mark_safe(
@@ -135,7 +135,7 @@ def board(
 
     paginator = Paginator(
         board.topics.all(),
-        int(Settings.objects.get_setting(setting_key=SETTING_TOPICSPERPAGE)),
+        int(Setting.objects.get_setting(setting_key=SETTING_TOPICSPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
 
@@ -162,8 +162,8 @@ def board_new_topic(
     """
 
     try:
-        Categories.objects.get(slug__slug__exact=category_slug)
-    except Categories.DoesNotExist:
+        Category.objects.get(slug__slug__exact=category_slug)
+    except Category.DoesNotExist:
         messages.error(
             request,
             mark_safe(
@@ -178,7 +178,7 @@ def board_new_topic(
 
     try:
         board = (
-            Boards.objects.filter(
+            Board.objects.filter(
                 Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
                 category__slug__slug__exact=category_slug,
                 slug__slug__exact=board_slug,
@@ -186,7 +186,7 @@ def board_new_topic(
             .distinct()
             .get()
         )
-    except Boards.DoesNotExist:
+    except Board.DoesNotExist:
         messages.error(
             request,
             mark_safe(
@@ -210,7 +210,7 @@ def board_new_topic(
             user_updated = request.user
             post_time = timezone.now()
 
-            topic = Topics()
+            topic = Topic()
             topic.board = board
             topic.user_started = user_started
             topic.user_updated = user_updated
@@ -218,7 +218,7 @@ def board_new_topic(
             topic.subject = form.cleaned_data["subject"]
             topic.save()
 
-            message = Messages()
+            message = Message()
             message.topic = topic
             message.board = board
             message.time_posted = post_time
@@ -273,12 +273,12 @@ def topic(
     """
 
     try:
-        Boards.objects.filter(
+        Board.objects.filter(
             Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
             category__slug__slug__exact=category_slug,
             slug__slug__exact=board_slug,
         ).distinct().get()
-    except Boards.DoesNotExist:
+    except Board.DoesNotExist:
         messages.error(
             request,
             mark_safe(
@@ -292,8 +292,8 @@ def topic(
         return redirect("aa_forum:forum_index")
 
     try:
-        topic = Topics.objects.get(slug__slug__exact=topic_slug)
-    except Topics.DoesNotExist:
+        topic = Topic.objects.get(slug__slug__exact=topic_slug)
+    except Topic.DoesNotExist:
         messages.error(
             request,
             mark_safe(
@@ -306,19 +306,19 @@ def topic(
 
         return redirect("aa_forum:forum_index")
 
-    topic_messages = Messages.objects.filter(topic=topic)
+    topic_messages = Message.objects.filter(topic=topic)
 
     # Set this topic as "read by" by the current user
     topic.read_by.add(request.user)
 
     paginator = Paginator(
         topic_messages,
-        int(Settings.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)),
+        int(Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
 
     # Set the messages as "read by" the current user
-    # MessagesReadByUsers = Messages.read_by.through
+    # MessagesReadByUsers = Message.read_by.through
     # MessagesReadByUsers.objects.bulk_create(
     #     [
     #         MessagesReadByUsers(messages_id=pk, user=request.user)
@@ -328,7 +328,7 @@ def topic(
 
     # messages_this_page = page_obj.object_list
     # last_message = messages_this_page[
-    #     int(Settings.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)) - 1
+    #     int(Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)) - 1
     # ]
 
     # request.user.aa_forum_read_messages.add(*page_obj.object_list)
@@ -376,11 +376,11 @@ def topic_reply(
 
         # Check whether it's valid:
         if form.is_valid():
-            board = Boards.objects.get(slug__slug__exact=board_slug)
-            topic = Topics.objects.get(slug__slug__exact=topic_slug)
+            board = Board.objects.get(slug__slug__exact=board_slug)
+            topic = Topic.objects.get(slug__slug__exact=topic_slug)
             time_posted = timezone.now()
 
-            new_message = Messages()
+            new_message = Message()
             new_message.topic = topic
             new_message.board = board
             new_message.user_created = request.user
@@ -430,7 +430,7 @@ def topic_change_lock_state(
     :rtype:
     """
 
-    topic = Topics.objects.get(pk=topic_id)
+    topic = Topic.objects.get(pk=topic_id)
 
     if topic.is_locked:
         topic.is_locked = False
@@ -467,7 +467,7 @@ def topic_change_sticky_state(
     :rtype:
     """
 
-    topic = Topics.objects.get(pk=topic_id)
+    topic = Topic.objects.get(pk=topic_id)
 
     if topic.is_sticky:
         topic.is_sticky = False
@@ -500,7 +500,7 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
     :type topic_id:
     """
 
-    topic = Topics.objects.get(pk=topic_id)
+    topic = Topic.objects.get(pk=topic_id)
     board = topic.board
 
     topic.delete()
@@ -527,8 +527,8 @@ def message_entry_point_in_topic(
     """
 
     try:
-        message = Messages.objects.get(pk=message_id)
-    except Messages.DoesNotExist:
+        message = Message.objects.get(pk=message_id)
+    except Message.DoesNotExist:
         messages.error(
             request,
             mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p>")),
@@ -538,14 +538,14 @@ def message_entry_point_in_topic(
 
     try:
         board = (
-            Boards.objects.filter(
+            Board.objects.filter(
                 Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
                 pk=message.board.pk,
             )
             .distinct()
             .get()
         )
-    except Boards.DoesNotExist:
+    except Board.DoesNotExist:
         messages.error(
             request,
             mark_safe(
@@ -558,9 +558,9 @@ def message_entry_point_in_topic(
 
         return redirect("aa_forum:forum_index")
 
-    messages_in_topic = Messages.objects.filter(pk__lte=message.pk, topic=message.topic)
+    messages_in_topic = Message.objects.filter(pk__lte=message.pk, topic=message.topic)
     number_of_messages_in_topic = messages_in_topic.count()
-    settings = Settings.objects.all()
+    settings = Setting.objects.all()
     messages_per_topic = settings.values_list("value", flat=True).get(
         variable__exact="defaultMaxMessages"
     )
@@ -614,14 +614,14 @@ def message_modify(
     # Check if the user has access to this board in the first place
     try:
         board = (
-            Boards.objects.filter(
+            Board.objects.filter(
                 Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
                 slug__slug__exact=board_slug,
             )
             .distinct()
             .get()
         )
-    except Boards.DoesNotExist:
+    except Board.DoesNotExist:
         messages.error(
             request,
             mark_safe(
@@ -636,8 +636,8 @@ def message_modify(
 
     # If the user has access, check if the message exists
     try:
-        message = Messages.objects.get(pk=message_id)
-    except Messages.DoesNotExist:
+        message = Message.objects.get(pk=message_id)
+    except Message.DoesNotExist:
         messages.error(
             request,
             mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p>")),
@@ -668,7 +668,7 @@ def message_modify(
             user_updated = request.user
             updated_time = timezone.now()
 
-            # topic = Topics.objects.get(slug__slug__exact=topic_slug)
+            # topic = Topic.objects.get(slug__slug__exact=topic_slug)
             # topic.time_modified = updated_time
             # topic.save()
 
@@ -707,7 +707,7 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
     :type message_id:
     """
 
-    message = Messages.objects.get(pk=message_id)
+    message = Message.objects.get(pk=message_id)
     topic = message.topic
 
     # Let's check if we have more than one message in this topic
