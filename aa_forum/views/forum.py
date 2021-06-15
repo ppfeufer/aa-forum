@@ -86,10 +86,6 @@ def board(
     """
 
     try:
-        # newest = Message.objects.filter(topic=OuterRef("pk")).order_by(
-        #     "-time_modified", "-id"
-        # )
-
         board = (
             Board.objects
             # .prefetch_related(
@@ -100,15 +96,20 @@ def board(
             #         ).prefetch_related("user_updated"),
             #     )
             # )
+            .select_related("slug")
             .prefetch_related(
                 Prefetch(
                     "topics",
-                    queryset=Topic.objects.prefetch_related("messages").distinct()
-                    # .annotate(
-                    #     last_message_user=Subquery(newest.values("user_updated")[:1])
-                    # )
+                    queryset=Topic.objects.select_related(
+                        "slug",
+                        "last_message",
+                        "last_message__user_created",
+                        "last_message__user_created__profile__main_character",
+                        "first_message",
+                        "first_message__user_created",
+                        "first_message__user_created__profile__main_character",
+                    )
                     .annotate(num_posts=Count("messages", distinct=True))
-                    # Order the topics
                     .order_by("-is_sticky", "-last_message__time_modified", "-id"),
                 )
             )
