@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 # from django.core import serializers
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
+from django.db import transaction
 from django.db.models import Count, Prefetch, Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -215,20 +216,21 @@ def board_new_topic(
 
         # Check whether it's valid:
         if form.is_valid():
-            post_time = timezone.now()
+            with transaction.atomic():
+                post_time = timezone.now()
 
-            topic = Topic()
-            topic.board = board
-            topic.subject = form.cleaned_data["subject"]
-            topic.save()
+                topic = Topic()
+                topic.board = board
+                topic.subject = form.cleaned_data["subject"]
+                topic.save()
 
-            message = Message()
-            message.topic = topic
-            message.time_posted = post_time
-            message.time_modified = post_time
-            message.user_created = request.user
-            message.message = form.cleaned_data["message"]
-            message.save()
+                message = Message()
+                message.topic = topic
+                message.time_posted = post_time
+                message.time_modified = post_time
+                message.user_created = request.user
+                message.message = form.cleaned_data["message"]
+                message.save()
 
             # Set topic and message as "read by" by the author
             # topic.read_by.add(user_updated)
@@ -683,10 +685,6 @@ def message_modify(
         if form.is_valid():
             user_updated = request.user
             updated_time = timezone.now()
-
-            # topic = Topic.objects.get(slug__slug__exact=topic_slug)
-            # topic.time_modified = updated_time
-            # topic.save()
 
             message.user_updated = user_updated
             message.time_modified = updated_time

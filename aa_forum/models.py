@@ -3,7 +3,7 @@ Models
 """
 
 from django.contrib.auth.models import Group, User
-from django.db import models
+from django.db import models, transaction
 from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.text import slugify
@@ -151,6 +151,7 @@ class Category(models.Model):
     def __str__(self) -> str:
         return str(self.name)
 
+    @transaction.atomic()
     def save(self, *args, **kwargs):
         # Add the slug on save
         if not self.slug:
@@ -222,20 +223,13 @@ class Board(models.Model):
     def __str__(self) -> str:
         return str(self.name)
 
+    @transaction.atomic()
     def save(self, *args, **kwargs):
         # Add the slug on save
         if not self.slug:
             slug = get_slug_on_save(subject=self.name)
             self.slug = slug
         super().save(*args, **kwargs)
-
-    # def last_message(self) -> "Message":
-    #     """Return the last posted message for this board."""
-    #     return (
-    #         Message.objects.filter(topic__board=self)
-    #         .select_related("topic", "user_created__profile__main_character")
-    #         .order_by("-time_modified")[0]
-    #     )
 
 
 class Topic(models.Model):
@@ -264,19 +258,8 @@ class Topic(models.Model):
         related_name="topics",
         on_delete=models.CASCADE,
     )
-    # user_started = models.ForeignKey(
-    #     User,
-    #     related_name="+",
-    #     on_delete=models.SET(get_sentinel_user),
-    # )
-    # user_updated = models.ForeignKey(
-    #     User,
-    #     related_name="+",
-    #     on_delete=models.SET(get_sentinel_user),
-    # )
     num_views = models.IntegerField(default=0)
     num_replies = models.IntegerField(default=0)
-    # time_modified = models.DateTimeField(default=timezone.now, db_index=True)
     read_by = models.ManyToManyField(
         User,
         blank=True,
@@ -310,45 +293,25 @@ class Topic(models.Model):
         verbose_name = _("topic")
         verbose_name_plural = _("topics")
 
-        # ordering = ["-time_modified"]
-
     def __str__(self) -> str:
         return str(self.subject)
 
+    @transaction.atomic()
     def save(self, *args, **kwargs):
         # Add the slug on save
         if not self.slug:
             slug = get_slug_on_save(subject=self.subject)
             self.slug = slug
         super().save(*args, **kwargs)
-        if self.first_message and not self.board.first_message:
+        update_fields = list()
+        if self.board.first_message != self.first_message:
             self.board.first_message = self.first_message
-        if self.last_message:
+            update_fields.append("first_message")
+        if self.board.last_message != self.last_message:
             self.board.last_message = self.last_message
-        self.board.save()
-
-    # def first_message(self):
-    #     """
-    #     Get the first message for this topic
-    #     :return:
-    #     :rtype:
-    #     """
-
-    #     message = self.messages.order_by("time_modified")[0]
-    #     return message
-
-    # def last_message(self):
-    #     """
-    #     Get the latest message for this topic
-    #     :return:
-    #     :rtype:
-    #     """
-
-    #     message = self.messages.select_related(
-    #         "user_created__profile__main_character"
-    #     ).order_by("-time_modified")[0]
-
-    #     return message
+            update_fields.append("last_message")
+        if update_fields:
+            self.board.save(update_fields=update_fields)
 
 
 class Message(models.Model):
@@ -394,14 +357,18 @@ class Message(models.Model):
     def __str__(self) -> str:
         return str(self.pk)
 
+    @transaction.atomic()
     def save(self, *args, **kwargs) -> None:
         super().save(*args, **kwargs)
-        # self.topic.time_modified = self.time_posted
-        # self.topic.user_updated = self.user_created
+        update_fields = list()
         if not self.topic.first_message:
             self.topic.first_message = self
-        self.topic.last_message = self
-        self.topic.save()
+            update_fields.append("first_message")
+        if self.topic.last_message != self:
+            self.topic.last_message = self
+            update_fields.append("last_message")
+        if update_fields:
+            self.topic.save(update_fields=update_fields)
 
 
 class PersonalMessage(models.Model):
@@ -443,6 +410,7 @@ class PersonalMessage(models.Model):
     def __str__(self) -> str:
         return str(self.subject)
 
+    @transaction.atomic()
     def save(self, *args, **kwargs):
         # Add the slug on save
         if not self.slug:
