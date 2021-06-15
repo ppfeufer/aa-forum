@@ -148,29 +148,15 @@ class Category(models.Model):
         verbose_name = _("category")
         verbose_name_plural = _("categories")
 
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        """
-        Add the slug on save
-        :param force_insert:
-        :type force_insert:
-        :param force_update:
-        :type force_update:
-        :param using:
-        :type using:
-        :param update_fields:
-        :type update_fields:
-        """
-
-        if self.slug is None or self.slug == "":
-            slug = get_slug_on_save(subject=self.name)
-            self.slug = slug
-
-        super().save()
-
     def __str__(self) -> str:
         return str(self.name)
+
+    def save(self, *args, **kwargs):
+        # Add the slug on save
+        if not self.slug:
+            slug = get_slug_on_save(subject=self.name)
+            self.slug = slug
+        super().save(*args, **kwargs)
 
 
 class Board(models.Model):
@@ -215,29 +201,23 @@ class Board(models.Model):
         verbose_name = _("board")
         verbose_name_plural = _("boards")
 
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        """
-        Add the slug on save
-        """
-
-        if self.slug is None or self.slug == "":
-            slug = get_slug_on_save(subject=self.name)
-            self.slug = slug
-
-        super().save()
-
     def __str__(self) -> str:
         return str(self.name)
 
-    def last_message(self) -> "Message":
-        """Return the last posted message for this board."""
-        return (
-            Message.objects.filter(topic__board=self)
-            .select_related("topic", "user_created__profile__main_character")
-            .order_by("-time_modified")[0]
-        )
+    def save(self, *args, **kwargs):
+        # Add the slug on save
+        if not self.slug:
+            slug = get_slug_on_save(subject=self.name)
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    # def last_message(self) -> "Message":
+    #     """Return the last posted message for this board."""
+    #     return (
+    #         Message.objects.filter(topic__board=self)
+    #         .select_related("topic", "user_created__profile__main_character")
+    #         .order_by("-time_modified")[0]
+    #     )
 
 
 class Topic(models.Model):
@@ -296,18 +276,15 @@ class Topic(models.Model):
 
         ordering = ["-time_modified"]
 
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        """
-        Add the slug on save
-        """
+    def __str__(self) -> str:
+        return str(self.subject)
 
-        if self.slug is None or self.slug == "":
+    def save(self, *args, **kwargs):
+        # Add the slug on save
+        if not self.slug:
             slug = get_slug_on_save(subject=self.subject)
             self.slug = slug
-
-        super().save()
+        super().save(*args, **kwargs)
 
     def first_message(self):
         """
@@ -319,18 +296,18 @@ class Topic(models.Model):
         message = self.messages.order_by("time_modified")[0]
         return message
 
-    def last_message(self):
-        """
-        Get the latest message for this topic
-        :return:
-        :rtype:
-        """
+    # def last_message(self):
+    #     """
+    #     Get the latest message for this topic
+    #     :return:
+    #     :rtype:
+    #     """
 
-        message = self.messages.select_related(
-            "user_created__profile__main_character"
-        ).order_by("-time_modified")[0]
+    #     message = self.messages.select_related(
+    #         "user_created__profile__main_character"
+    #     ).order_by("-time_modified")[0]
 
-        return message
+    #     return message
 
 
 class Message(models.Model):
@@ -413,21 +390,15 @@ class PersonalMessage(models.Model):
         verbose_name = _("personal message")
         verbose_name_plural = _("personal messages")
 
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        """
-        Add the slug on save
-        """
-
-        if self.slug is None or self.slug == "":
-            slug = get_slug_on_save(subject=self.subject)
-            self.slug = slug
-
-        super().save()
-
     def __str__(self) -> str:
         return str(self.subject)
+
+    def save(self, *args, **kwargs):
+        # Add the slug on save
+        if not self.slug:
+            slug = get_slug_on_save(subject=self.subject)
+            self.slug = slug
+        super().save(*args, **kwargs)
 
 
 class Setting(models.Model):
@@ -441,6 +412,9 @@ class Setting(models.Model):
     value = models.TextField(blank=False)
 
     objects = SettingsManager()
+
+    def __str__(self) -> str:
+        return self.variable
 
     class Meta:
         """
