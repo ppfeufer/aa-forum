@@ -377,13 +377,11 @@ def topic_reply(
 
         # Check whether it's valid:
         if form.is_valid():
-            board = Board.objects.get(slug__slug__exact=board_slug)
             topic = Topic.objects.get(slug__slug__exact=topic_slug)
             time_posted = timezone.now()
 
             new_message = Message()
             new_message.topic = topic
-            new_message.board = board
             new_message.user_created = request.user
             new_message.time_posted = time_posted
             new_message.time_modified = time_posted
