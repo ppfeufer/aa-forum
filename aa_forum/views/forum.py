@@ -291,12 +291,12 @@ def topic(
                 )
             ),
         )
-
         return redirect("aa_forum:forum_index")
 
     try:
         topic = (
             Topic.objects.select_related(
+                "slug",
                 "board",
                 "board__slug",
                 "board__category",
@@ -330,7 +330,6 @@ def topic(
                 )
             ),
         )
-
         return redirect("aa_forum:forum_index")
 
     # Set this topic as "read by" by the current user
