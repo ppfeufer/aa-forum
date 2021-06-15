@@ -27,7 +27,7 @@
                         </span>
                     {% endif %}
 
-                    {% translate "Started by" %} {{ topic.user_started|main_character_name }}
+                    {% translate "Started by" %} {{ topic.first_message.user_created|main_character_name }}
                 </span>
             </p>
         </div>
@@ -48,14 +48,14 @@
 
         <div class="aa-forum-topic-last-post hidden-xs">
             <span class="small">
-                {% translate "Last post" %} {{ topic.last_message_time|date }}, {{ topic.last_message_time|time:"G:i:s" }}
+                {% translate "Last post" %} {{ topic.last_message.time_posted|date }}, {{ topic.last_message.time_posted|time:"G:i:s" }}
 
                 <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' topic.last_message_id %}" title="{% translate 'Go to last message' %}" style="margin-left: 0.5rem;">
                     <i class="fas fa-sign-in-alt"></i>
                 </a>
 
                 <br>
-                by {{ topic.user_updated|main_character_name }}
+                by {{ topic.last_message.user_created|main_character_name }}
             </span>
         </div>
 

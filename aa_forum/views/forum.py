@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 # from django.core import serializers
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
-from django.db.models import Count, Max, Prefetch, Q
+from django.db.models import Count, Prefetch, Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -40,7 +40,12 @@ def index(request: WSGIRequest) -> HttpResponse:
         .prefetch_related(
             Prefetch(
                 "boards",
-                queryset=Board.objects.select_related("slug", "category__slug")
+                queryset=Board.objects.select_related(
+                    "slug",
+                    "category__slug",
+                    "last_message",
+                    "last_message__user_created__profile__main_character",
+                )
                 .prefetch_related("topics__messages", "groups")
                 .filter(
                     Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
@@ -98,20 +103,13 @@ def board(
             .prefetch_related(
                 Prefetch(
                     "topics",
-                    queryset=Topic.objects.prefetch_related("messages")
-                    .distinct()
-                    .prefetch_related("user_started")
-                    .prefetch_related("user_updated")
+                    queryset=Topic.objects.prefetch_related("messages").distinct()
                     # .annotate(
                     #     last_message_user=Subquery(newest.values("user_updated")[:1])
                     # )
-                    .annotate(last_message_time=Max("messages__time_posted"))
-                    .annotate(last_message_id=Max("messages__pk"))
-                    .annotate(
-                        num_posts=Count("messages", distinct=True),
-                    )
+                    .annotate(num_posts=Count("messages", distinct=True))
                     # Order the topics
-                    .order_by("-is_sticky", "-time_modified", "-id"),
+                    .order_by("-is_sticky", "-last_message__time_modified", "-id"),
                 )
             )
             .filter(
@@ -208,15 +206,10 @@ def board_new_topic(
 
         # Check whether it's valid:
         if form.is_valid():
-            user_started = request.user
-            user_updated = request.user
             post_time = timezone.now()
 
             topic = Topic()
             topic.board = board
-            topic.user_started = user_started
-            topic.user_updated = user_updated
-            topic.time_modified = post_time
             topic.subject = form.cleaned_data["subject"]
             topic.save()
 
@@ -224,7 +217,7 @@ def board_new_topic(
             message.topic = topic
             message.time_posted = post_time
             message.time_modified = post_time
-            message.user_created = user_started
+            message.user_created = request.user
             message.message = form.cleaned_data["message"]
             message.save()
 
@@ -387,12 +380,6 @@ def topic_reply(
             new_message.time_modified = time_posted
             new_message.message = form.cleaned_data["message"]
             new_message.save()
-
-            # Update the modified timestamp on the topic and set the user who wrote
-            # the last message
-            topic.time_modified = time_posted
-            topic.user_updated = request.user
-            topic.save()
 
             # Remove all users from "read by" list and set the current user again.
             # This way we mark this topic as unread for all but the current user.

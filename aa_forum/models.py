@@ -191,6 +191,24 @@ class Board(models.Model):
         related_name="aa_forum_boards_group_restriction",
     )
     order = models.IntegerField(default=0)
+    first_message = models.ForeignKey(
+        "Message",
+        editable=False,
+        null=True,
+        default=None,
+        related_name="+",
+        on_delete=models.SET_DEFAULT,
+        help_text="Shortcut for better performance",
+    )
+    last_message = models.ForeignKey(
+        "Message",
+        editable=False,
+        null=True,
+        default=None,
+        related_name="+",
+        on_delete=models.SET_DEFAULT,
+        help_text="Shortcut for better performance",
+    )
 
     class Meta:
         """
@@ -246,23 +264,41 @@ class Topic(models.Model):
         related_name="topics",
         on_delete=models.CASCADE,
     )
-    user_started = models.ForeignKey(
-        User,
-        related_name="+",
-        on_delete=models.SET(get_sentinel_user),
-    )
-    user_updated = models.ForeignKey(
-        User,
-        related_name="+",
-        on_delete=models.SET(get_sentinel_user),
-    )
+    # user_started = models.ForeignKey(
+    #     User,
+    #     related_name="+",
+    #     on_delete=models.SET(get_sentinel_user),
+    # )
+    # user_updated = models.ForeignKey(
+    #     User,
+    #     related_name="+",
+    #     on_delete=models.SET(get_sentinel_user),
+    # )
     num_views = models.IntegerField(default=0)
     num_replies = models.IntegerField(default=0)
-    time_modified = models.DateTimeField(default=timezone.now, db_index=True)
+    # time_modified = models.DateTimeField(default=timezone.now, db_index=True)
     read_by = models.ManyToManyField(
         User,
         blank=True,
         related_name="aa_forum_read_topics",
+    )
+    first_message = models.ForeignKey(
+        "Message",
+        editable=False,
+        null=True,
+        default=None,
+        related_name="+",
+        on_delete=models.SET_DEFAULT,
+        help_text="Shortcut for better performance",
+    )
+    last_message = models.ForeignKey(
+        "Message",
+        editable=False,
+        null=True,
+        default=None,
+        related_name="+",
+        on_delete=models.SET_DEFAULT,
+        help_text="Shortcut for better performance",
     )
 
     class Meta:
@@ -274,7 +310,7 @@ class Topic(models.Model):
         verbose_name = _("topic")
         verbose_name_plural = _("topics")
 
-        ordering = ["-time_modified"]
+        # ordering = ["-time_modified"]
 
     def __str__(self) -> str:
         return str(self.subject)
@@ -285,16 +321,21 @@ class Topic(models.Model):
             slug = get_slug_on_save(subject=self.subject)
             self.slug = slug
         super().save(*args, **kwargs)
+        if self.first_message and not self.board.first_message:
+            self.board.first_message = self.first_message
+        if self.last_message:
+            self.board.last_message = self.last_message
+        self.board.save()
 
-    def first_message(self):
-        """
-        Get the first message for this topic
-        :return:
-        :rtype:
-        """
+    # def first_message(self):
+    #     """
+    #     Get the first message for this topic
+    #     :return:
+    #     :rtype:
+    #     """
 
-        message = self.messages.order_by("time_modified")[0]
-        return message
+    #     message = self.messages.order_by("time_modified")[0]
+    #     return message
 
     # def last_message(self):
     #     """
@@ -352,6 +393,15 @@ class Message(models.Model):
 
     def __str__(self) -> str:
         return str(self.pk)
+
+    def save(self, *args, **kwargs) -> None:
+        super().save(*args, **kwargs)
+        # self.topic.time_modified = self.time_posted
+        # self.topic.user_updated = self.user_created
+        if not self.topic.first_message:
+            self.topic.first_message = self
+        self.topic.last_message = self
+        self.topic.save()
 
 
 class PersonalMessage(models.Model):

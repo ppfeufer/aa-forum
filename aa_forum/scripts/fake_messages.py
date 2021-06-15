@@ -30,9 +30,9 @@ def run():
                 user_id = random.choice(user_ids)
                 topic = Topic()
                 topic.board = board
-                topic.user_started_id = user_id
-                topic.user_updated_id = user_id
-                topic.time_modified = time_posted
+                # topic.user_started_id = user_id
+                # topic.user_updated_id = user_id
+                # topic.time_modified = time_posted
                 topic.subject = fake.sentence()
                 topic.save()
 
@@ -55,7 +55,6 @@ def run():
                         message=f"<p>{fake.sentence()}</p>",
                         time_posted=time_posted,
                         time_modified=time_posted,
-                        board_id=topic.board_id,
                         topic_id=topic.id,
                         user_created_id=user_id,
                     )
