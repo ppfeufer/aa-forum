@@ -35,36 +35,42 @@ def index(request: WSGIRequest) -> HttpResponse:
     :return:
     :rtype:
     """
-    categories = (
-        Category.objects.select_related("slug")
-        .prefetch_related(
-            Prefetch(
-                "boards",
-                queryset=Board.objects.select_related(
-                    "slug",
-                    "category__slug",
-                    "last_message",
-                    "last_message__user_created__profile__main_character",
-                )
-                .prefetch_related("topics__messages", "groups")
-                .filter(
-                    Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-                    parent_board__isnull=True,
-                )
-                .distinct()
-                .annotate(
-                    num_posts=Count("topics__messages", distinct=True),
-                    num_topics=Count("topics", distinct=True),
-                )
-                .order_by("order"),
-                to_attr="boards_sorted",
-            )
+    boards = (
+        Board.objects.select_related(
+            "slug",
+            "category",
+            "category__slug",
+            "last_message",
+            "last_message__topic",
+            "last_message__user_created__profile__main_character",
+            "first_message",
+        )
+        .prefetch_related("groups", "topics")
+        .filter(
+            Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
+            parent_board__isnull=True,
+        )
+        .distinct()
+        .annotate(
+            num_posts=Count("topics__messages", distinct=True),
+            num_topics=Count("topics", distinct=True),
         )
         .order_by("order")
     )
+    categories_map = dict()
+    for board in boards:
+        category = board.category
+        if category.pk not in categories_map:
+            categories_map[category.pk] = {
+                "id": category.id,
+                "name": category.name,
+                "boards_sorted": list(),
+                "order": category.order,
+            }
+        categories_map[category.pk]["boards_sorted"].append(board)
 
+    categories = sorted(categories_map.values(), key=lambda k: k["order"])
     context = {"categories": categories}
-
     return render(request, "aa_forum/view/forum/index.html", context)
 
 
