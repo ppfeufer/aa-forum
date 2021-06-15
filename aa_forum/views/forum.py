@@ -96,7 +96,7 @@ def board(
             #         ).prefetch_related("user_updated"),
             #     )
             # )
-            .select_related("slug")
+            .select_related("slug", "category", "category__slug")
             .prefetch_related(
                 Prefetch(
                     "topics",
@@ -111,6 +111,7 @@ def board(
                     )
                     .annotate(num_posts=Count("messages", distinct=True))
                     .order_by("-is_sticky", "-last_message__time_modified", "-id"),
+                    to_attr="topics_sorted",
                 )
             )
             .filter(
@@ -135,7 +136,7 @@ def board(
         return redirect("aa_forum:forum_index")
 
     paginator = Paginator(
-        board.topics.all(),
+        board.topics_sorted,
         int(Setting.objects.get_setting(setting_key=SETTING_TOPICSPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
@@ -179,7 +180,8 @@ def board_new_topic(
 
     try:
         board = (
-            Board.objects.filter(
+            Board.objects.select_related("slug", "category", "category__slug")
+            .filter(
                 Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
                 category__slug__slug__exact=category_slug,
                 slug__slug__exact=board_slug,
@@ -287,7 +289,31 @@ def topic(
         return redirect("aa_forum:forum_index")
 
     try:
-        topic = Topic.objects.get(slug__slug__exact=topic_slug)
+        topic = (
+            Topic.objects.select_related(
+                "board",
+                "board__slug",
+                "board__category",
+                "board__category__slug",
+                "first_message",
+                "first_message__topic",
+                "first_message__topic__slug",
+                "first_message__topic__board",
+                "first_message__topic__board__slug",
+                "first_message__topic__board__category",
+                "first_message__topic__board__category__slug",
+            )
+            .prefetch_related(
+                Prefetch(
+                    "messages",
+                    queryset=Message.objects.select_related(
+                        "user_created", "user_created__profile__main_character"
+                    ).order_by("time_modified"),
+                    to_attr="messages_sorted",
+                )
+            )
+            .get(slug__slug__exact=topic_slug)
+        )
     except Topic.DoesNotExist:
         messages.error(
             request,
@@ -301,13 +327,11 @@ def topic(
 
         return redirect("aa_forum:forum_index")
 
-    topic_messages = Message.objects.filter(topic=topic)
-
     # Set this topic as "read by" by the current user
     topic.read_by.add(request.user)
 
     paginator = Paginator(
-        topic_messages,
+        topic.messages_sorted,
         int(Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
