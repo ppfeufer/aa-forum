@@ -4,6 +4,7 @@ Administration related views
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import Group
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Prefetch
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -26,26 +27,25 @@ def index(request: WSGIRequest) -> HttpResponse:
     :rtype:
     """
 
-    categories = (
-        Category.objects.prefetch_related(
-            Prefetch(
-                "boards",
-                queryset=Board.objects.filter(parent_board__isnull=True).order_by(
-                    "order"
-                ),
-            )
+    categories = Category.objects.prefetch_related(
+        Prefetch(
+            "boards",
+            queryset=Board.objects.filter(parent_board__isnull=True)
+            .prefetch_related("groups")
+            .order_by("order"),
         )
-        .all()
-        .order_by("order")
-    )
+    ).order_by("order")
 
+    groups_queryset = Group.objects.all()
     category_loop = list()
     for category in categories:
         boards_data = [
             {
                 "board_obj": board,
                 "board_edit_form": EditBoardForm(
-                    prefix="edit-board-" + str(board.id), instance=board
+                    prefix="edit-board-" + str(board.id),
+                    instance=board,
+                    groups_queryset=groups_queryset,
                 ),
             }
             for board in category.boards.all()
@@ -54,7 +54,8 @@ def index(request: WSGIRequest) -> HttpResponse:
             "category_obj": category,
             "category_forms": {
                 "new_board": EditBoardForm(
-                    prefix="new-board-in-category-" + str(category.id)
+                    prefix="new-board-in-category-" + str(category.id),
+                    groups_queryset=groups_queryset,
                 ),
                 "edit_category": EditCategoryForm(
                     prefix="edit-category-" + str(category.id), instance=category
