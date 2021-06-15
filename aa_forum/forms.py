@@ -74,6 +74,21 @@ class EditCategoryForm(ModelForm):
         fields = ["name"]
 
 
+class MyModelMultipleChoiceField(forms.ModelMultipleChoiceField):
+    """Variant of ModelMultipleChoiceField to prevent it from loading the
+    groups queryset more than once.
+    """
+
+    def _get_queryset(self):
+        return self._queryset
+
+    def _set_queryset(self, queryset):
+        self._queryset = None if queryset is None else queryset
+        self.widget.choices = self.choices
+
+    queryset = property(_get_queryset, _set_queryset)
+
+
 class EditBoardForm(ModelForm):
     """
     New board form
@@ -97,9 +112,13 @@ class EditBoardForm(ModelForm):
             }
         ),
     )
-    groups = forms.ModelMultipleChoiceField(
-        required=False, queryset=Group.objects.all()
-    )
+    groups = MyModelMultipleChoiceField(required=False, queryset=Group.objects.none())
+
+    def __init__(self, *args, **kwargs):
+        groups_queryset = kwargs.pop("groups_queryset", None)
+        super().__init__(*args, **kwargs)
+        if groups_queryset:
+            self.fields["groups"].queryset = groups_queryset
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
