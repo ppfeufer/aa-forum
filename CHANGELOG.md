@@ -26,7 +26,7 @@ python manage.py migrate aa_forum
 
 - SQL script to drop all tables
 
-## Changed
+### Changed
 
 - Improved model design for better data consistency, performance and compliance with
   Django conventions
