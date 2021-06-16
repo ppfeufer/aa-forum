@@ -15,7 +15,6 @@ from django.db.models import Count, Prefetch, Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -217,8 +216,6 @@ def board_new_topic(
         # Check whether it's valid:
         if form.is_valid():
             with transaction.atomic():
-                post_time = timezone.now()
-
                 topic = Topic()
                 topic.board = board
                 topic.subject = form.cleaned_data["subject"]
@@ -226,8 +223,6 @@ def board_new_topic(
 
                 message = Message()
                 message.topic = topic
-                message.time_posted = post_time
-                message.time_modified = post_time
                 message.user_created = request.user
                 message.message = form.cleaned_data["message"]
                 message.save()
@@ -403,13 +398,10 @@ def topic_reply(
         # Check whether it's valid:
         if form.is_valid():
             topic = Topic.objects.get(slug__slug__exact=topic_slug)
-            time_posted = timezone.now()
 
             new_message = Message()
             new_message.topic = topic
             new_message.user_created = request.user
-            new_message.time_posted = time_posted
-            new_message.time_modified = time_posted
             new_message.message = form.cleaned_data["message"]
             new_message.save()
 
@@ -683,11 +675,7 @@ def message_modify(
 
         # Check whether it's valid:
         if form.is_valid():
-            user_updated = request.user
-            updated_time = timezone.now()
-
-            message.user_updated = user_updated
-            message.time_modified = updated_time
+            message.user_updated = request.user
             message.message = form.cleaned_data["message"]
             message.save()
 

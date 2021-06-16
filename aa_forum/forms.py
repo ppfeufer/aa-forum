@@ -32,7 +32,7 @@ def get_mandatory_form_label_text(text):
     )
 
 
-class MyModelChoiceIterator(forms.models.ModelChoiceIterator):
+class SpecialModelChoiceIterator(forms.models.ModelChoiceIterator):
     """Variant of Django's ModelChoiceIterator to prevent it from always re-fetching the
     given queryset from database.
     """
@@ -45,12 +45,12 @@ class MyModelChoiceIterator(forms.models.ModelChoiceIterator):
             yield self.choice(obj)
 
 
-class MyModelMultipleChoiceField(forms.ModelMultipleChoiceField):
+class SpecialModelMultipleChoiceField(forms.ModelMultipleChoiceField):
     """Variant of Django's ModelMultipleChoiceField to prevent it from always
     re-fetching the given queryset from database.
     """
 
-    iterator = MyModelChoiceIterator
+    iterator = SpecialModelChoiceIterator
 
     def _get_queryset(self):
         return self._queryset
@@ -127,7 +127,9 @@ class EditBoardForm(ModelForm):
             }
         ),
     )
-    groups = MyModelMultipleChoiceField(required=False, queryset=Group.objects.none())
+    groups = SpecialModelMultipleChoiceField(
+        required=False, queryset=Group.objects.none()
+    )
 
     def __init__(self, *args, **kwargs):
         groups_queryset = kwargs.pop("groups_queryset", None)

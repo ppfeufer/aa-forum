@@ -3,9 +3,9 @@ Models
 """
 
 from django.contrib.auth.models import Group, User
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models, transaction
 from django.dispatch import receiver
-from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
@@ -72,7 +72,7 @@ class Slug(models.Model):
     Slug
     """
 
-    slug = models.SlugField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, allow_unicode=True)
 
     class Meta:
         """
@@ -128,14 +128,8 @@ class Category(models.Model):
     Category
     """
 
-    name = models.CharField(max_length=254, default="")
-    slug = models.ForeignKey(
-        Slug,
-        blank=True,
-        null=True,
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
+    name = models.CharField(max_length=254, unique=True)
+    slug = models.ForeignKey(Slug, related_name="+", on_delete=models.CASCADE)
     is_collapsible = models.BooleanField(default=False)
     order = models.IntegerField(default=0, db_index=True)
 
@@ -153,10 +147,11 @@ class Category(models.Model):
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
-        # Add the slug on save
-        if not self.slug:
-            slug = get_slug_on_save(subject=self.name)
-            self.slug = slug
+        # Add the slug on save if it does not exist
+        try:
+            self.slug
+        except ObjectDoesNotExist:
+            self.slug = get_slug_on_save(subject=self.name)
         super().save(*args, **kwargs)
 
 
@@ -166,19 +161,12 @@ class Board(models.Model):
     """
 
     category = models.ForeignKey(
-        Category,
-        related_name="boards",
-        on_delete=models.CASCADE,
+        Category, related_name="boards", on_delete=models.CASCADE
     )
-    name = models.CharField(max_length=254, default="")
-    slug = models.ForeignKey(
-        Slug,
-        blank=True,
-        null=True,
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
-    description = models.TextField(null=True, blank=True)
+    name = models.CharField(max_length=254)
+
+    slug = models.ForeignKey(Slug, related_name="+", on_delete=models.CASCADE)
+    description = models.TextField(blank=True)
     parent_board = models.ForeignKey(
         "self",
         blank=True,
@@ -219,16 +207,20 @@ class Board(models.Model):
         default_permissions = ()
         verbose_name = _("board")
         verbose_name_plural = _("boards")
+        constraints = [
+            models.UniqueConstraint(fields=["category", "name"], name="fpk_board")
+        ]
 
     def __str__(self) -> str:
         return str(self.name)
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
-        # Add the slug on save
-        if not self.slug:
-            slug = get_slug_on_save(subject=self.name)
-            self.slug = slug
+        # Add the slug on save if it does not exist
+        try:
+            self.slug
+        except ObjectDoesNotExist:
+            self.slug = get_slug_on_save(subject=self.name)
         super().save(*args, **kwargs)
 
 
@@ -237,14 +229,10 @@ class Topic(models.Model):
     Topic
     """
 
-    subject = models.CharField(max_length=254, default="")
-    slug = models.ForeignKey(
-        Slug,
-        blank=True,
-        null=True,
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
+    board = models.ForeignKey(Board, related_name="topics", on_delete=models.CASCADE)
+    subject = models.CharField(max_length=254)
+
+    slug = models.ForeignKey(Slug, related_name="+", on_delete=models.CASCADE)
     is_sticky = models.BooleanField(
         default=False,
         db_index=True,
@@ -253,13 +241,6 @@ class Topic(models.Model):
         default=False,
         db_index=True,
     )
-    board = models.ForeignKey(
-        Board,
-        related_name="topics",
-        on_delete=models.CASCADE,
-    )
-    num_views = models.IntegerField(default=0)
-    num_replies = models.IntegerField(default=0)
     read_by = models.ManyToManyField(
         User,
         blank=True,
@@ -292,16 +273,20 @@ class Topic(models.Model):
         default_permissions = ()
         verbose_name = _("topic")
         verbose_name_plural = _("topics")
+        constraints = [
+            models.UniqueConstraint(fields=["board", "subject"], name="fpk_topic")
+        ]
 
     def __str__(self) -> str:
         return str(self.subject)
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
-        # Add the slug on save
-        if not self.slug:
-            slug = get_slug_on_save(subject=self.subject)
-            self.slug = slug
+        # Add the slug on save if it does not exist
+        try:
+            self.slug
+        except ObjectDoesNotExist:
+            self.slug = get_slug_on_save(subject=self.subject)
         super().save(*args, **kwargs)
         update_fields = list()
         if self.board.first_message != self.first_message:
@@ -324,8 +309,8 @@ class Message(models.Model):
         related_name="messages",
         on_delete=models.CASCADE,
     )
-    time_posted = models.DateTimeField(default=timezone.now)
-    time_modified = models.DateTimeField(default=timezone.now, db_index=True)
+    time_posted = models.DateTimeField(auto_now_add=True)
+    time_modified = models.DateTimeField(auto_now=True, db_index=True)
     user_created = models.ForeignKey(
         User,
         related_name="+",
@@ -338,7 +323,7 @@ class Message(models.Model):
         related_name="+",
         on_delete=models.SET(get_sentinel_user),
     )
-    message = models.TextField(null=True, blank=True)
+    message = models.TextField(blank=True)
     read_by = models.ManyToManyField(
         User,
         blank=True,
@@ -386,16 +371,10 @@ class PersonalMessage(models.Model):
         related_name="+",
         on_delete=models.SET(get_sentinel_user),
     )
-    time_sent = models.DateTimeField(default=timezone.now)
-    subject = models.CharField(max_length=254, default="")
-    slug = models.ForeignKey(
-        Slug,
-        blank=True,
-        null=True,
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
-    message = models.TextField(null=True, blank=True)
+    time_sent = models.DateTimeField(auto_now_add=True)
+    subject = models.CharField(max_length=254)
+    slug = models.ForeignKey(Slug, related_name="+", on_delete=models.CASCADE)
+    message = models.TextField(blank=True)
     is_read = models.BooleanField(default=False)
 
     class Meta:
@@ -412,10 +391,10 @@ class PersonalMessage(models.Model):
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
-        # Add the slug on save
-        if not self.slug:
-            slug = get_slug_on_save(subject=self.subject)
-            self.slug = slug
+        try:
+            self.slug
+        except ObjectDoesNotExist:
+            self.slug = get_slug_on_save(subject=self.subject)
         super().save(*args, **kwargs)
 
 
@@ -424,9 +403,7 @@ class Setting(models.Model):
     Setting
     """
 
-    variable = models.CharField(
-        max_length=254, blank=False, primary_key=True, unique=True
-    )
+    variable = models.CharField(max_length=254, blank=False, unique=True)
     value = models.TextField(blank=False)
 
     objects = SettingsManager()
