@@ -27,19 +27,6 @@ def index(request: WSGIRequest) -> HttpResponse:
     :rtype:
     """
 
-    class SpecialGroupsQueryset:
-        """This class emulates a queryset for ModelMultipleChoiceField
-        to prevend it from fetching that same queryset more than once.
-        """
-
-        def __init__(self) -> None:
-            self._queryset = list(Group.objects.all())
-
-        def iterator(self):
-            return iter(self._queryset)
-
-        _prefetch_related_lookups = None
-
     categories = Category.objects.prefetch_related(
         Prefetch(
             "boards",
@@ -49,7 +36,7 @@ def index(request: WSGIRequest) -> HttpResponse:
         )
     ).order_by("order")
 
-    groups_queryset = SpecialGroupsQueryset()
+    groups_queryset = Group.objects.all()
     category_loop = list()
     for category in categories:
         boards_data = [

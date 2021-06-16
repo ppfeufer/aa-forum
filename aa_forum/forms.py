@@ -32,6 +32,36 @@ def get_mandatory_form_label_text(text):
     )
 
 
+class MyModelChoiceIterator(forms.models.ModelChoiceIterator):
+    """Variant of Django's ModelChoiceIterator to prevent it from always re-fetching the
+    given queryset from database.
+    """
+
+    def __iter__(self):
+        if self.field.empty_label is not None:
+            yield ("", self.field.empty_label)
+        queryset = self.queryset
+        for obj in queryset:
+            yield self.choice(obj)
+
+
+class MyModelMultipleChoiceField(forms.ModelMultipleChoiceField):
+    """Variant of Django's ModelMultipleChoiceField to prevent it from always
+    re-fetching the given queryset from database.
+    """
+
+    iterator = MyModelChoiceIterator
+
+    def _get_queryset(self):
+        return self._queryset
+
+    def _set_queryset(self, queryset):
+        self._queryset = queryset
+        self.widget.choices = self.choices
+
+    queryset = property(_get_queryset, _set_queryset)
+
+
 class NewTopicForm(forms.Form):
     """
     New topic form
@@ -72,21 +102,6 @@ class EditCategoryForm(ModelForm):
 
         model = Category
         fields = ["name"]
-
-
-class MyModelMultipleChoiceField(forms.ModelMultipleChoiceField):
-    """Variant of ModelMultipleChoiceField to prevent it from loading the
-    groups queryset more than once.
-    """
-
-    def _get_queryset(self):
-        return self._queryset
-
-    def _set_queryset(self, queryset):
-        self._queryset = None if queryset is None else queryset
-        self.widget.choices = self.choices
-
-    queryset = property(_get_queryset, _set_queryset)
 
 
 class EditBoardForm(ModelForm):
