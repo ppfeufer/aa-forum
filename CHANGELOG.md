@@ -5,7 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+
+## [0.0.1-alpha.8] - 2021-06-16
+
+### ⚠️ Migration Reset ⚠️
+
+**Before** you update to this version, run the following command:
+
+```shell
+python manage.py migrate aa_forum zero
+```
+
+**After** you updated run:
+
+```shell
+python manage.py migrate aa_forum
+```
 
 ### Added
 
@@ -13,7 +28,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Changed
 
-- Improved model design for better data consistency, performance and compliance with Django conventions
+- Improved model design for better data consistency, performance and compliance with
+  Django conventions
 - Improved queries to reduce page load time for all main views
 
 
