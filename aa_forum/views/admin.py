@@ -4,6 +4,7 @@ Administration related views
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import Group
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Prefetch
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -12,7 +13,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 from aa_forum.forms import EditBoardForm, EditCategoryForm
-from aa_forum.models import Boards, Categories
+from aa_forum.models import Board, Category
 
 
 @login_required
@@ -26,26 +27,25 @@ def index(request: WSGIRequest) -> HttpResponse:
     :rtype:
     """
 
-    categories = (
-        Categories.objects.prefetch_related(
-            Prefetch(
-                "boards",
-                queryset=Boards.objects.filter(parent_board__isnull=True).order_by(
-                    "order"
-                ),
-            )
+    categories = Category.objects.prefetch_related(
+        Prefetch(
+            "boards",
+            queryset=Board.objects.filter(parent_board__isnull=True)
+            .prefetch_related("groups")
+            .order_by("order"),
         )
-        .all()
-        .order_by("order")
-    )
+    ).order_by("order")
 
+    groups_queryset = Group.objects.all()
     category_loop = list()
     for category in categories:
         boards_data = [
             {
                 "board_obj": board,
                 "board_edit_form": EditBoardForm(
-                    prefix="edit-board-" + str(board.id), instance=board
+                    prefix="edit-board-" + str(board.id),
+                    instance=board,
+                    groups_queryset=groups_queryset,
                 ),
             }
             for board in category.boards.all()
@@ -54,7 +54,8 @@ def index(request: WSGIRequest) -> HttpResponse:
             "category_obj": category,
             "category_forms": {
                 "new_board": EditBoardForm(
-                    prefix="new-board-in-category-" + str(category.id)
+                    prefix="new-board-in-category-" + str(category.id),
+                    groups_queryset=groups_queryset,
                 ),
                 "edit_category": EditCategoryForm(
                     prefix="edit-category-" + str(category.id), instance=category
@@ -90,7 +91,7 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
 
         # Check whether it's valid:
         if form.is_valid():
-            new_category = Categories()
+            new_category = Category()
             new_category.name = form.cleaned_data["name"]
             new_category.order = 999999
             new_category.save()
@@ -121,7 +122,7 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
         )
 
         if form.is_valid():
-            category = Categories.objects.get(pk=category_id)
+            category = Category.objects.get(pk=category_id)
             category.name = form.cleaned_data["name"]
             category.save()
 
@@ -144,7 +145,7 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
     :type category_id:
     """
 
-    Categories.objects.get(pk=category_id).delete()
+    Category.objects.get(pk=category_id).delete()
 
     messages.success(
         request,
@@ -170,11 +171,11 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
         form = EditBoardForm(
             request.POST, prefix="new-board-in-category-" + str(category_id)
         )
-        board_category = Categories.objects.get(pk=category_id)
+        board_category = Category.objects.get(pk=category_id)
 
         # Check whether it's valid:
         if form.is_valid():
-            new_board = Boards()
+            new_board = Board()
             new_board.name = form.cleaned_data["name"]
             new_board.description = form.cleaned_data["description"]
             new_board.category = board_category
@@ -212,7 +213,7 @@ def board_edit(
 
         # Check whether it's valid:
         if form.is_valid():
-            board = Boards.objects.get(pk=board_id, category_id=category_id)
+            board = Board.objects.get(pk=board_id, category_id=category_id)
             board.name = form.cleaned_data["name"]
             board.description = form.cleaned_data["description"]
             board.groups.set(form.cleaned_data["groups"])
@@ -241,7 +242,7 @@ def board_delete(
     :type board_id:
     """
 
-    Boards.objects.get(pk=board_id, category_id=category_id).delete()
+    Board.objects.get(pk=board_id, category_id=category_id).delete()
 
     messages.success(
         request,
@@ -268,7 +269,7 @@ def ajax_category_order(request: WSGIRequest) -> JsonResponse:
         categories = simplejson.loads(request.POST.get("categories"))
 
         for category in categories:
-            Categories.objects.update_or_create(
+            Category.objects.update_or_create(
                 pk=category["catId"],
                 defaults={"order": category["catOrder"]},
             )
@@ -295,7 +296,7 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
         boards = simplejson.loads(request.POST.get("boards"))
 
         for board in boards:
-            Boards.objects.update_or_create(
+            Board.objects.update_or_create(
                 pk=board["boardId"],
                 defaults={"order": board["boardOrder"]},
             )

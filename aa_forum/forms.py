@@ -10,7 +10,7 @@ from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from aa_forum.models import Boards, Categories, Messages
+from aa_forum.models import Board, Category, Message
 
 
 def get_mandatory_form_label_text(text):
@@ -30,6 +30,36 @@ def get_mandatory_form_label_text(text):
     return mark_safe(
         f'<span class="form-field-required">{text} {required_marker}</span>'
     )
+
+
+class SpecialModelChoiceIterator(forms.models.ModelChoiceIterator):
+    """Variant of Django's ModelChoiceIterator to prevent it from always re-fetching the
+    given queryset from database.
+    """
+
+    def __iter__(self):
+        if self.field.empty_label is not None:
+            yield ("", self.field.empty_label)
+        queryset = self.queryset
+        for obj in queryset:
+            yield self.choice(obj)
+
+
+class SpecialModelMultipleChoiceField(forms.ModelMultipleChoiceField):
+    """Variant of Django's ModelMultipleChoiceField to prevent it from always
+    re-fetching the given queryset from database.
+    """
+
+    iterator = SpecialModelChoiceIterator
+
+    def _get_queryset(self):
+        return self._queryset
+
+    def _set_queryset(self, queryset):
+        self._queryset = queryset
+        self.widget.choices = self.choices
+
+    queryset = property(_get_queryset, _set_queryset)
 
 
 class NewTopicForm(forms.Form):
@@ -70,7 +100,7 @@ class EditCategoryForm(ModelForm):
         Meta definitions
         """
 
-        model = Categories
+        model = Category
         fields = ["name"]
 
 
@@ -97,16 +127,22 @@ class EditBoardForm(ModelForm):
             }
         ),
     )
-    groups = forms.ModelMultipleChoiceField(
+    groups = SpecialModelMultipleChoiceField(
         required=False, queryset=Group.objects.all()
     )
+
+    def __init__(self, *args, **kwargs):
+        groups_queryset = kwargs.pop("groups_queryset", None)
+        super().__init__(*args, **kwargs)
+        if groups_queryset:
+            self.fields["groups"].queryset = groups_queryset
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
 
-        model = Boards
+        model = Board
         fields = ["name", "description", "groups"]
 
 
@@ -128,5 +164,5 @@ class EditMessageForm(ModelForm):
         Meta definitions
         """
 
-        model = Messages
+        model = Message
         fields = ["message"]

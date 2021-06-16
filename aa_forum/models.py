@@ -3,9 +3,9 @@ Models
 """
 
 from django.contrib.auth.models import Group, User
-from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import models, transaction
 from django.dispatch import receiver
-from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
@@ -34,13 +34,13 @@ def get_slug_on_save(subject: str) -> str:
     run = 0
     subject_slug = slugify(subject, allow_unicode=True)
 
-    while Slugs.objects.filter(slug=subject_slug).exists():
+    while Slug.objects.filter(slug=subject_slug).exists():
         run += 1
         subject_slug = slugify(subject + "-" + str(run), allow_unicode=True)
 
-    Slugs(slug=subject_slug).save()
+    Slug(slug=subject_slug).save()
 
-    slug_to_return = Slugs.objects.get(slug=subject_slug)
+    slug_to_return = Slug.objects.get(slug=subject_slug)
 
     return slug_to_return
 
@@ -62,17 +62,17 @@ class General(models.Model):
             ("basic_access", _("Can access the AA-Forum module")),
             (
                 "manage_forum",
-                _("Can manage the AA-Forum module (Categories, topics and messages)"),
+                _("Can manage the AA-Forum module (Category, topics and messages)"),
             ),
         )
 
 
-class Slugs(models.Model):
+class Slug(models.Model):
     """
-    Slugs
+    Slug
     """
 
-    slug = models.SlugField(max_length=255, allow_unicode=True)
+    slug = models.SlugField(max_length=255, unique=True, allow_unicode=True)
 
     class Meta:
         """
@@ -80,10 +80,10 @@ class Slugs(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Slug")
-        verbose_name_plural = _("Slugs")
+        verbose_name = _("slug")
+        verbose_name_plural = _("slugs")
 
-    @receiver(models.signals.post_delete, sender="aa_forum.Categories")
+    @receiver(models.signals.post_delete, sender="aa_forum.Category")
     def handle_deleted_category(sender, instance, **kwargs):
         """
         Delete category slug, when category is deleted
@@ -95,7 +95,7 @@ class Slugs(models.Model):
 
         instance.slug.delete()
 
-    @receiver(models.signals.post_delete, sender="aa_forum.Boards")
+    @receiver(models.signals.post_delete, sender="aa_forum.Board")
     def handle_deleted_board(sender, instance, **kwargs):
         """
         Delete board slug, when board is deleted
@@ -107,7 +107,7 @@ class Slugs(models.Model):
 
         instance.slug.delete()
 
-    @receiver(models.signals.post_delete, sender="aa_forum.Topics")
+    @receiver(models.signals.post_delete, sender="aa_forum.Topic")
     def handle_deleted_topic(sender, instance, **kwargs):
         """
         Delete topic slug, when topic is deleted
@@ -123,21 +123,15 @@ class Slugs(models.Model):
         return str(self.slug)
 
 
-class Categories(models.Model):
+class Category(models.Model):
     """
-    Categories
+    Category
     """
 
-    name = models.CharField(max_length=254, default="")
-    slug = models.ForeignKey(
-        Slugs,
-        blank=True,
-        null=True,
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
+    name = models.CharField(max_length=254, unique=True)
+    slug = models.ForeignKey(Slug, related_name="+", on_delete=models.CASCADE)
     is_collapsible = models.BooleanField(default=False)
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
 
     class Meta:
         """
@@ -145,53 +139,34 @@ class Categories(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Category")
-        verbose_name_plural = _("Categories")
-
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        """
-        Add the slug on save
-        :param force_insert:
-        :type force_insert:
-        :param force_update:
-        :type force_update:
-        :param using:
-        :type using:
-        :param update_fields:
-        :type update_fields:
-        """
-
-        if self.slug is None or self.slug == "":
-            slug = get_slug_on_save(subject=self.name)
-            self.slug = slug
-
-        super().save()
+        verbose_name = _("category")
+        verbose_name_plural = _("categories")
 
     def __str__(self) -> str:
         return str(self.name)
 
+    @transaction.atomic()
+    def save(self, *args, **kwargs):
+        # Add the slug on save if it does not exist
+        try:
+            self.slug
+        except ObjectDoesNotExist:
+            self.slug = get_slug_on_save(subject=self.name)
+        super().save(*args, **kwargs)
 
-class Boards(models.Model):
+
+class Board(models.Model):
     """
-    Boards
+    Board
     """
 
     category = models.ForeignKey(
-        Categories,
-        related_name="boards",
-        on_delete=models.CASCADE,
+        Category, related_name="boards", on_delete=models.CASCADE
     )
-    name = models.CharField(max_length=254, default="")
-    slug = models.ForeignKey(
-        Slugs,
-        blank=True,
-        null=True,
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
-    description = models.TextField(null=True, blank=True)
+    name = models.CharField(max_length=254)
+
+    slug = models.ForeignKey(Slug, related_name="+", on_delete=models.CASCADE)
+    description = models.TextField(blank=True)
     parent_board = models.ForeignKey(
         "self",
         blank=True,
@@ -205,6 +180,24 @@ class Boards(models.Model):
         related_name="aa_forum_boards_group_restriction",
     )
     order = models.IntegerField(default=0)
+    first_message = models.ForeignKey(
+        "Message",
+        editable=False,
+        null=True,
+        default=None,
+        related_name="+",
+        on_delete=models.SET_DEFAULT,
+        help_text="Shortcut for better performance",
+    )
+    last_message = models.ForeignKey(
+        "Message",
+        editable=False,
+        null=True,
+        default=None,
+        related_name="+",
+        on_delete=models.SET_DEFAULT,
+        help_text="Shortcut for better performance",
+    )
 
     class Meta:
         """
@@ -212,50 +205,34 @@ class Boards(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Board")
-        verbose_name_plural = _("Boards")
-
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        """
-        Add the slug on save
-        """
-
-        if self.slug is None or self.slug == "":
-            slug = get_slug_on_save(subject=self.name)
-            self.slug = slug
-
-        super().save()
+        verbose_name = _("board")
+        verbose_name_plural = _("boards")
+        constraints = [
+            models.UniqueConstraint(fields=["category", "name"], name="fpk_board")
+        ]
 
     def __str__(self) -> str:
         return str(self.name)
 
-    def latest_topic(self):
-        """
-        Get the latest topic for this board
-        :return:
-        :rtype:
-        """
-
-        topic = Topics.objects.filter(board=self).order_by("time_modified").last()
-
-        return topic
+    @transaction.atomic()
+    def save(self, *args, **kwargs):
+        # Add the slug on save if it does not exist
+        try:
+            self.slug
+        except ObjectDoesNotExist:
+            self.slug = get_slug_on_save(subject=self.name)
+        super().save(*args, **kwargs)
 
 
-class Topics(models.Model):
+class Topic(models.Model):
     """
-    Topics
+    Topic
     """
 
-    subject = models.CharField(max_length=254, default="")
-    slug = models.ForeignKey(
-        Slugs,
-        blank=True,
-        null=True,
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
+    board = models.ForeignKey(Board, related_name="topics", on_delete=models.CASCADE)
+    subject = models.CharField(max_length=254)
+
+    slug = models.ForeignKey(Slug, related_name="+", on_delete=models.CASCADE)
     is_sticky = models.BooleanField(
         default=False,
         db_index=True,
@@ -264,28 +241,28 @@ class Topics(models.Model):
         default=False,
         db_index=True,
     )
-    board = models.ForeignKey(
-        Boards,
-        related_name="topics",
-        on_delete=models.CASCADE,
-    )
-    user_started = models.ForeignKey(
-        User,
-        related_name="+",
-        on_delete=models.SET(get_sentinel_user),
-    )
-    user_updated = models.ForeignKey(
-        User,
-        related_name="+",
-        on_delete=models.SET(get_sentinel_user),
-    )
-    num_views = models.IntegerField(default=0)
-    num_replies = models.IntegerField(default=0)
-    time_modified = models.DateTimeField(default=timezone.now)
     read_by = models.ManyToManyField(
         User,
         blank=True,
         related_name="aa_forum_read_topics",
+    )
+    first_message = models.ForeignKey(
+        "Message",
+        editable=False,
+        null=True,
+        default=None,
+        related_name="+",
+        on_delete=models.SET_DEFAULT,
+        help_text="Shortcut for better performance",
+    )
+    last_message = models.ForeignKey(
+        "Message",
+        editable=False,
+        null=True,
+        default=None,
+        related_name="+",
+        on_delete=models.SET_DEFAULT,
+        help_text="Shortcut for better performance",
     )
 
     class Meta:
@@ -294,64 +271,46 @@ class Topics(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Topic")
-        verbose_name_plural = _("Topics")
+        verbose_name = _("topic")
+        verbose_name_plural = _("topics")
+        constraints = [
+            models.UniqueConstraint(fields=["board", "subject"], name="fpk_topic")
+        ]
 
-        ordering = ["-time_modified"]
+    def __str__(self) -> str:
+        return str(self.subject)
 
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        """
-        Add the slug on save
-        """
-
-        if self.slug is None or self.slug == "":
-            slug = get_slug_on_save(subject=self.subject)
-            self.slug = slug
-
-        super().save()
-
-    def first_message(self):
-        """
-        Get the first message for this topic
-        :return:
-        :rtype:
-        """
-
-        message = Messages.objects.filter(topic=self).first()
-
-        return message
-
-    def last_message(self):
-        """
-        Get the latest message for this topic
-        :return:
-        :rtype:
-        """
-
-        message = Messages.objects.filter(topic=self).last()
-
-        return message
+    @transaction.atomic()
+    def save(self, *args, **kwargs):
+        # Add the slug on save if it does not exist
+        try:
+            self.slug
+        except ObjectDoesNotExist:
+            self.slug = get_slug_on_save(subject=self.subject)
+        super().save(*args, **kwargs)
+        update_fields = list()
+        if self.board.first_message != self.first_message:
+            self.board.first_message = self.first_message
+            update_fields.append("first_message")
+        if self.board.last_message != self.last_message:
+            self.board.last_message = self.last_message
+            update_fields.append("last_message")
+        if update_fields:
+            self.board.save(update_fields=update_fields)
 
 
-class Messages(models.Model):
+class Message(models.Model):
     """
-    Messages
+    Message
     """
 
-    board = models.ForeignKey(
-        Boards,
-        related_name="messages",
-        on_delete=models.CASCADE,
-    )
     topic = models.ForeignKey(
-        Topics,
+        Topic,
         related_name="messages",
         on_delete=models.CASCADE,
     )
-    time_posted = models.DateTimeField(default=timezone.now)
-    time_modified = models.DateTimeField(default=timezone.now)
+    time_posted = models.DateTimeField(auto_now_add=True)
+    time_modified = models.DateTimeField(auto_now=True, db_index=True)
     user_created = models.ForeignKey(
         User,
         related_name="+",
@@ -364,7 +323,7 @@ class Messages(models.Model):
         related_name="+",
         on_delete=models.SET(get_sentinel_user),
     )
-    message = models.TextField(null=True, blank=True)
+    message = models.TextField(blank=True)
     read_by = models.ManyToManyField(
         User,
         blank=True,
@@ -377,14 +336,27 @@ class Messages(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Message")
-        verbose_name_plural = _("Messages")
+        verbose_name = _("message")
+        verbose_name_plural = _("messages")
 
     def __str__(self) -> str:
         return str(self.pk)
 
+    @transaction.atomic()
+    def save(self, *args, **kwargs) -> None:
+        super().save(*args, **kwargs)
+        update_fields = list()
+        if not self.topic.first_message:
+            self.topic.first_message = self
+            update_fields.append("first_message")
+        if self.topic.last_message != self:
+            self.topic.last_message = self
+            update_fields.append("last_message")
+        if update_fields:
+            self.topic.save(update_fields=update_fields)
 
-class PersonalMessages(models.Model):
+
+class PersonalMessage(models.Model):
     """
     Personal messages
     """
@@ -399,16 +371,10 @@ class PersonalMessages(models.Model):
         related_name="+",
         on_delete=models.SET(get_sentinel_user),
     )
-    time_sent = models.DateTimeField(default=timezone.now)
-    subject = models.CharField(max_length=254, default="")
-    slug = models.ForeignKey(
-        Slugs,
-        blank=True,
-        null=True,
-        related_name="+",
-        on_delete=models.CASCADE,
-    )
-    message = models.TextField(null=True, blank=True)
+    time_sent = models.DateTimeField(auto_now_add=True)
+    subject = models.CharField(max_length=254)
+    slug = models.ForeignKey(Slug, related_name="+", on_delete=models.CASCADE)
+    message = models.TextField(blank=True)
     is_read = models.BooleanField(default=False)
 
     class Meta:
@@ -417,37 +383,33 @@ class PersonalMessages(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Personal Message")
-        verbose_name_plural = _("Personal Messages")
-
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        """
-        Add the slug on save
-        """
-
-        if self.slug is None or self.slug == "":
-            slug = get_slug_on_save(subject=self.subject)
-            self.slug = slug
-
-        super().save()
+        verbose_name = _("personal message")
+        verbose_name_plural = _("personal messages")
 
     def __str__(self) -> str:
         return str(self.subject)
 
+    @transaction.atomic()
+    def save(self, *args, **kwargs):
+        try:
+            self.slug
+        except ObjectDoesNotExist:
+            self.slug = get_slug_on_save(subject=self.subject)
+        super().save(*args, **kwargs)
 
-class Settings(models.Model):
+
+class Setting(models.Model):
     """
-    Settings
+    Setting
     """
 
-    variable = models.CharField(
-        max_length=254, blank=False, primary_key=True, unique=True
-    )
+    variable = models.CharField(max_length=254, blank=False, unique=True)
     value = models.TextField(blank=False)
 
     objects = SettingsManager()
+
+    def __str__(self) -> str:
+        return self.variable
 
     class Meta:
         """
@@ -455,5 +417,5 @@ class Settings(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("Setting")
-        verbose_name_plural = _("Settings")
+        verbose_name = _("setting")
+        verbose_name_plural = _("settings")
