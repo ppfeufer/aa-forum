@@ -128,7 +128,7 @@ class EditBoardForm(ModelForm):
         ),
     )
     groups = SpecialModelMultipleChoiceField(
-        required=False, queryset=Group.objects.none()
+        required=False, queryset=Group.objects.all()
     )
 
     def __init__(self, *args, **kwargs):
