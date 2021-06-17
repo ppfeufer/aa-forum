@@ -1,6 +1,7 @@
 """
 Models
 """
+from typing import Optional
 
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ObjectDoesNotExist
@@ -237,6 +238,13 @@ class Board(models.Model):
             self.slug = get_slug_on_save(subject=self.name)
         super().save(*args, **kwargs)
 
+    def update_last_message(self) -> Optional[models.Model]:
+        """Update the last message for this board."""
+        self.last_message = (
+            Message.objects.filter(topic__board=self).order_by("-time_modified").first()
+        )
+        self.save(update_fields=["last_message"])
+
 
 class Topic(models.Model):
     """
@@ -323,6 +331,20 @@ class Topic(models.Model):
         if update_fields:
             self.board.save(update_fields=update_fields)
 
+    @transaction.atomic()
+    def delete(self, *args, **kwargs):
+        board_needs_update = self.last_message = self.board.last_message
+        super().delete(*args, **kwargs)
+        if board_needs_update:
+            self.board.update_last_message()
+
+    def update_last_message(self) -> Optional[models.Model]:
+        """Updated the last message for this topic."""
+        self.last_message = (
+            Message.objects.filter(topic=self).order_by("-time_modified").first()
+        )
+        self.save(update_fields=["last_message"])
+
 
 class Message(models.Model):
     """
@@ -391,6 +413,16 @@ class Message(models.Model):
 
         if update_fields:
             self.topic.save(update_fields=update_fields)
+
+    @transaction.atomic()
+    def delete(self, *args, **kwargs):
+        topic_needs_update = self.topic.last_message == self
+        board_needs_update = self.topic.board.last_message == self
+        super().delete(*args, **kwargs)
+        if topic_needs_update:
+            self.topic.update_last_message()
+        if board_needs_update:
+            self.topic.board.update_last_message()
 
 
 class PersonalMessage(models.Model):
