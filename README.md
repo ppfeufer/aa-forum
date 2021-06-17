@@ -19,7 +19,8 @@ these kind of changes. For you own sanity, and mine :-)
 
 ## Contents
 - [Overview](#overview)
-    - Feature- Screenshots
+    - Features
+    - Screenshots
 - [Installation](#installation)
     - [Step 1 - Install the package](#step-1---install-the-package)
     - [Step 2 - Configure Alliance Auth](#step-2---configure-alliance-auth)
