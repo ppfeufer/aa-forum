@@ -309,7 +309,7 @@ def topic(
                     "messages",
                     queryset=Message.objects.select_related(
                         "user_created", "user_created__profile__main_character"
-                    ).order_by("time_modified"),
+                    ).order_by("time_posted"),
                     to_attr="messages_sorted",
                 )
             )
