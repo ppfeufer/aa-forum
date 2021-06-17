@@ -11,6 +11,8 @@ class SettingsManager(models.Manager):
     """
 
     def get_setting(self, setting_key: str) -> str:
-        """Return value for given setting."""
+        """
+        Return the value for given setting key
+        """
 
         return self.get(variable=setting_key).value

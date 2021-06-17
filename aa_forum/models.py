@@ -147,7 +147,14 @@ class Category(models.Model):
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
-        # Add the slug on save if it does not exist
+        """
+        Add the slug on save if it does not exist
+        :param args:
+        :type args:
+        :param kwargs:
+        :type kwargs:
+        """
+
         try:
             self.slug
         except ObjectDoesNotExist:
@@ -216,7 +223,14 @@ class Board(models.Model):
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
-        # Add the slug on save if it does not exist
+        """
+        Add the slug on save if it does not exist
+        :param args:
+        :type args:
+        :param kwargs:
+        :type kwargs:
+        """
+
         try:
             self.slug
         except ObjectDoesNotExist:
@@ -282,19 +296,30 @@ class Topic(models.Model):
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
-        # Add the slug on save if it does not exist
+        """
+        Add the slug on save if it does not exist
+        :param args:
+        :type args:
+        :param kwargs:
+        :type kwargs:
+        """
+
         try:
             self.slug
         except ObjectDoesNotExist:
             self.slug = get_slug_on_save(subject=self.subject)
         super().save(*args, **kwargs)
+
         update_fields = list()
+
         if self.board.first_message != self.first_message:
             self.board.first_message = self.first_message
             update_fields.append("first_message")
+
         if self.board.last_message != self.last_message:
             self.board.last_message = self.last_message
             update_fields.append("last_message")
+
         if update_fields:
             self.board.save(update_fields=update_fields)
 
@@ -344,14 +369,26 @@ class Message(models.Model):
 
     @transaction.atomic()
     def save(self, *args, **kwargs) -> None:
+        """
+        Add the slug on save if it does not exist
+        :param args:
+        :type args:
+        :param kwargs:
+        :type kwargs:
+        """
+
         super().save(*args, **kwargs)
+
         update_fields = list()
+
         if not self.topic.first_message:
             self.topic.first_message = self
             update_fields.append("first_message")
+
         if self.topic.last_message != self:
             self.topic.last_message = self
             update_fields.append("last_message")
+
         if update_fields:
             self.topic.save(update_fields=update_fields)
 
@@ -391,6 +428,14 @@ class PersonalMessage(models.Model):
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
+        """
+        Add the slug on save if it does not exist
+        :param args:
+        :type args:
+        :param kwargs:
+        :type kwargs:
+        """
+
         try:
             self.slug
         except ObjectDoesNotExist:

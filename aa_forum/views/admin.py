@@ -38,6 +38,7 @@ def index(request: WSGIRequest) -> HttpResponse:
 
     groups_queryset = Group.objects.all()
     category_loop = list()
+
     for category in categories:
         boards_data = [
             {
@@ -50,6 +51,7 @@ def index(request: WSGIRequest) -> HttpResponse:
             }
             for board in category.boards.all()
         ]
+
         category_data = {
             "category_obj": category,
             "category_forms": {
@@ -171,6 +173,7 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
         form = EditBoardForm(
             request.POST, prefix="new-board-in-category-" + str(category_id)
         )
+
         board_category = Category.objects.get(pk=category_id)
 
         # Check whether it's valid:

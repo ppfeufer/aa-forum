@@ -35,6 +35,7 @@ def index(request: WSGIRequest) -> HttpResponse:
     :return:
     :rtype:
     """
+
     boards = (
         Board.objects.select_related(
             "slug",
@@ -57,9 +58,12 @@ def index(request: WSGIRequest) -> HttpResponse:
         )
         .order_by("order")
     )
+
     categories_map = dict()
+
     for board in boards:
         category = board.category
+
         if category.pk not in categories_map:
             categories_map[category.pk] = {
                 "id": category.id,
@@ -67,10 +71,12 @@ def index(request: WSGIRequest) -> HttpResponse:
                 "boards_sorted": list(),
                 "order": category.order,
             }
+
         categories_map[category.pk]["boards_sorted"].append(board)
 
     categories = sorted(categories_map.values(), key=lambda k: k["order"])
     context = {"categories": categories}
+
     return render(request, "aa_forum/view/forum/index.html", context)
 
 
@@ -93,16 +99,7 @@ def board(
 
     try:
         board = (
-            Board.objects
-            # .prefetch_related(
-            #     Prefetch(
-            #         "topics__messages",
-            #         queryset=Message.objects.prefetch_related(
-            #             "user_created"
-            #         ).prefetch_related("user_updated"),
-            #     )
-            # )
-            .select_related("slug", "category", "category__slug")
+            Board.objects.select_related("slug", "category", "category__slug")
             .prefetch_related(
                 Prefetch(
                     "topics",
@@ -288,6 +285,7 @@ def topic(
                 )
             ),
         )
+
         return redirect("aa_forum:forum_index")
 
     try:
@@ -327,6 +325,7 @@ def topic(
                 )
             ),
         )
+
         return redirect("aa_forum:forum_index")
 
     # Set this topic as "read by" by the current user
@@ -568,12 +567,11 @@ def message_entry_point_in_topic(
 
         return redirect("aa_forum:forum_index")
 
+    messages_per_topic = int(
+        Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)
+    )
     messages_in_topic = Message.objects.filter(pk__lte=message.pk, topic=message.topic)
     number_of_messages_in_topic = messages_in_topic.count()
-    settings = Setting.objects.all()
-    messages_per_topic = settings.values_list("value", flat=True).get(
-        variable__exact="defaultMaxMessages"
-    )
 
     page = int(math.ceil(int(number_of_messages_in_topic) / int(messages_per_topic)))
 

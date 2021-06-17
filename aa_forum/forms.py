@@ -33,7 +33,8 @@ def get_mandatory_form_label_text(text):
 
 
 class SpecialModelChoiceIterator(forms.models.ModelChoiceIterator):
-    """Variant of Django's ModelChoiceIterator to prevent it from always re-fetching the
+    """
+    Variant of Django's ModelChoiceIterator to prevent it from always re-fetching the
     given queryset from database.
     """
 
@@ -46,7 +47,8 @@ class SpecialModelChoiceIterator(forms.models.ModelChoiceIterator):
 
 
 class SpecialModelMultipleChoiceField(forms.ModelMultipleChoiceField):
-    """Variant of Django's ModelMultipleChoiceField to prevent it from always
+    """
+    Variant of Django's ModelMultipleChoiceField to prevent it from always
     re-fetching the given queryset from database.
     """
 
