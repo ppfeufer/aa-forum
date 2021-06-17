@@ -257,19 +257,6 @@ DEBUG = False
 # Add any additional apps to this list.
 INSTALLED_APPS += ["ckeditor", "ckeditor_uploader", "aa_forum"]
 
-# Enter credentials to use MySQL/MariaDB. Comment out to use sqlite3
-"""
-DATABASES['default'] = {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'alliance_auth',
-    'USER': '',
-    'PASSWORD': '',
-    'HOST': '127.0.0.1',
-    'PORT': '3306',
-    'OPTIONS': {'charset': 'utf8mb4'},
-}
-"""
-
 # Register an application at https://developers.eveonline.com for Authentication
 # & API Access and fill out these settings. Be sure to set the callback URL
 # to https://example.com/sso/callback substituting your domain for example.com

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+# pylint: skip-file
 import sys
 
 if __name__ == "__main__":
