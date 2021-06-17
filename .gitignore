@@ -2,9 +2,11 @@
 /dist/
 /*.egg-info/
 .idea/
+.tox/
 
 *.log
 *.tmp
 *.bak
 *.old
 __pycache__
+.coverage
