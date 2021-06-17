@@ -199,6 +199,11 @@
     .aa-forum .aa-forum-topic-status-icon {
         margin: 0 0.25rem;
     }
+
+    .aa-forum .label-aa-forum-topic-new-message {
+        font-size: 55%;
+        margin-left: 1rem;
+    }
 }
 
 /* Message view

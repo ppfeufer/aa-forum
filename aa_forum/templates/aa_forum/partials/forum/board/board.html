@@ -10,7 +10,11 @@
 
 <div class="aa-forum-board row">
     <div class="aa-forum-board-image">
-        <img src="{% static 'aa_forum/images/off.png' %}" alt="Board">
+        {% if board.has_unread_messages %}
+            <img src="{% static 'aa_forum/images/on.png' %}" alt="Board">
+        {% else %}
+            <img src="{% static 'aa_forum/images/off.png' %}" alt="Board">
+        {% endif %}
     </div>
 
     <div class="aa-forum-board-name">

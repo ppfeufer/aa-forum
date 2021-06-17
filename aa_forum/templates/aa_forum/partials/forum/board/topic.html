@@ -5,7 +5,11 @@
 <div class="aa-forum-topic-row {% if topic.is_locked %}aa-forum-topic-locked{% endif %} {% if topic.is_sticky %}aa-forum-topic-sticky{% endif %} row">
     <div class="aa-forum-topic">
         <div class="aa-forum-topic-image">
-            <img src="{% static 'aa_forum/images/new_none.png' %}" alt="Topic">
+            {% if topic.has_unread_messages %}
+                <img src="{% static 'aa_forum/images/new_some.png' %}" alt="Topic">
+            {% else %}
+                <img src="{% static 'aa_forum/images/new_none.png' %}" alt="Topic">
+            {% endif %}
         </div>
 
         <div class="aa-forum-topic-name">
@@ -13,6 +17,11 @@
                 <a href="{% url 'aa_forum:forum_topic' topic.board.category.slug topic.board.slug topic.slug %}">
                     {{ topic.subject }}
                 </a>
+                {% if topic.has_unread_messages %}
+                    <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' topic.first_unread_message %}" class="label label-warning label label-aa-forum-topic-new-message">
+                        {% translate "New" %}
+                    </a>
+                {% endif %}
                 <br>
                 <span class="small">
                     {% if topic.is_sticky %}
