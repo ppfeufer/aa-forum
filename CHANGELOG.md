@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.0.1-alpha.9] - 2021-06-17
+
+### Added
+
+- Search functionality
+
+### Fixed
+
+- A bug that prevented the forum index to load after removing a message or even a topic
+
+
 ## [0.0.1-alpha.8] - 2021-06-16
 
 ### ⚠️ Migration Reset ⚠️

@@ -2,28 +2,13 @@
 {% load i18n %}
 
 <div class="aa-forum-search-result">
-    <div class="aa-forum-search-result-details">
+    <div class="aa-forum-search-result-inner">
         <div class="aa-forum-search-result-counter">
-            {{ forloop.counter }}
+            {{ search_results.start_index|add:forloop.counter|add:-1 }}
         </div>
 
-        <div class="aa-forum-search-result-keyinfo">
-            <a href="{% url 'aa_forum:forum_board' message.topic.board.category.slug message.topic.board.slug %}">
-                {{ message.topic.board.name }}
-            </a>
-            »
-            <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' message.pk %}">
-                {% if message.topic.first_message.pk != message.pk %}
-                    {% translate "Re:" %}
-                {% endif %}
-
-                {{ message.topic.subject }}
-            </a><br>
-            <small>« <b>{% translate "on:" %}</b> {{ message.time_posted|date }}, {{ message.time_posted|time:"G:i:s" }} »</small>
-        </div>
-
-        <div class="aa-forum-search-result-message-excerpt">
-            {{ message.message|highlight_search_term:search_term }}
+        <div class="aa-forum-search-result-details">
+            {% include "aa_forum/partials/forum/topic/message.html" with topic=message.topic %}
         </div>
     </div>
 </div>

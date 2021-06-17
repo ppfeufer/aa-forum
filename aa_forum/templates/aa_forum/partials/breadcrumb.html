@@ -24,5 +24,13 @@
                 {% endif %}
             {% endif %}
         {% endif %}
+
+        {% if search_term %}
+            <li>» <a href="{% url 'aa_forum:search_results' %}">{% translate "Search" %}</a></li>
+
+            {% if search_term %}
+                <li>» <a href="{{ request.path }}?q={{ search_term }}">{% translate "Search for:" %} {{ search_term }}</a></li>
+            {% endif %}
+        {% endif %}
     </ul>
 </div>

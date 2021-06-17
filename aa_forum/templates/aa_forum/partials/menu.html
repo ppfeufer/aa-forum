@@ -26,12 +26,7 @@
         </div>
 
         <div class="aa-forum-search-box navbar-form navbar-right">
-            <form autocomplete="off" action="{% url 'aa_forum:search_results' %}" method="get">
-                <div class="form-group has-feedback has-search">
-                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                    <input type="text" class="form-control"name="q" value="{{ search_term }}" placeholder="Search">
-                </div>
-            </form>
+            {% include "aa_forum/partials/search/search-form.html" %}
         </div>
     </div>
 </nav>

@@ -26,7 +26,11 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     :rtype:
     """
 
-    search_term = request.GET.get("q")
+    if request.GET:
+        search_term = request.GET.get("q")
+    else:
+        search_term = ""
+
     search_results = None
     page_obj = None
 
