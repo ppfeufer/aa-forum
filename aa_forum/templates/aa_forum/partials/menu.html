@@ -15,7 +15,7 @@
             <a class="navbar-brand" href="{% url 'aa_forum:forum_index' %}">{% translate "Forum" %}</a>
         </div>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse nav navbar-left" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 {% if perms.aa_forum.manage_forum %}
                     <li class="{% navactive request 'aa_forum:admin_index' %}">
@@ -23,6 +23,15 @@
                     </li>
                 {% endif %}
             </ul>
+        </div>
+
+        <div class="aa-forum-search-box navbar-form navbar-right">
+            <form autocomplete="off" action="{% url 'aa_forum:search_results' %}" method="get">
+                <div class="form-group has-feedback has-search">
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    <input type="text" class="form-control"name="q" value="{{ search_term }}" placeholder="Search">
+                </div>
+            </form>
         </div>
     </div>
 </nav>

@@ -4,6 +4,21 @@
     --bg-hover-transition: background-color 0.25s linear;
 }
 
+/* Search Box
+------------------------------------------------------------------------------------- */
+@media all {
+    .aa-forum .aa-forum-search-box .form-control-feedback {
+        right: initial;
+        left: 0;
+        color: #ccc;
+    }
+
+    .aa-forum .aa-forum-search-box .form-control {
+        padding-right: 1rem;
+        padding-left: 35px;
+    }
+}
+
 /* Administration :: Sortable categories and boards
 ------------------------------------------------------------------------------------- */
 @media all {

@@ -4,7 +4,7 @@ AA-Forum url config
 
 from django.conf.urls import url
 
-from aa_forum.views import admin, forum
+from aa_forum.views import admin, forum, search
 
 app_name: str = "aa_forum"
 
@@ -77,6 +77,16 @@ urlpatterns = [
         r"^topic/(?P<topic_id>[0-9]+)/delete/$",
         forum.topic_delete,
         name="forum_topic_delete",
+    ),
+    url(
+        r"^search/$",
+        search.results,
+        name="search_results",
+    ),
+    url(
+        r"^search/(?P<page_number>[0-9]+)/$",
+        search.results,
+        name="search_results",
     ),
     # Forum URLs (This needs to be the last block!)
     url(
