@@ -84,7 +84,7 @@ urlpatterns = [
         name="search_results",
     ),
     url(
-        r"^search/(?P<page_number>[0-9]+)/$",
+        r"^search/page/(?P<page_number>[0-9]+)/$",
         search.results,
         name="search_results",
     ),
@@ -95,7 +95,7 @@ urlpatterns = [
         name="forum_board",
     ),
     url(
-        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/(?P<page_number>[0-9]+)/$",
+        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/page/(?P<page_number>[0-9]+)/$",
         forum.board,
         name="forum_board",
     ),
@@ -111,7 +111,7 @@ urlpatterns = [
     ),
     url(
         r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/"
-        r"(?P<topic_slug>[\w-]+)/(?P<page_number>[0-9]+)/$",
+        r"(?P<topic_slug>[\w-]+)/page/(?P<page_number>[0-9]+)/$",
         forum.topic,
         name="forum_topic",
     ),
