@@ -4,11 +4,11 @@ Django admin declarations
 
 from django.contrib import admin
 
-from aa_forum.models import Board, Category
+from aa_forum.models import Board, Category, Topic
 
 
 @admin.register(Category)
-class CategoriesAdmin(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin):
     """
     Category admin
     """
@@ -18,10 +18,22 @@ class CategoriesAdmin(admin.ModelAdmin):
 
 
 @admin.register(Board)
-class BoardsAdmin(admin.ModelAdmin):
+class BoardAdmin(admin.ModelAdmin):
     """
     Board admin
     """
 
-    list_display = ("name", "slug")
+    list_display = ("name", "slug", "category")
     exclude = ("slug", "parent_board", "groups", "order")
+
+
+@admin.register(Topic)
+class TopicAdmin(admin.ModelAdmin):
+    """
+    Board admin
+    """
+
+    list_display = ("subject", "board", "_messages_count")
+
+    def _messages_count(self, obj):
+        return obj.messages.count()
