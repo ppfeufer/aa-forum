@@ -95,7 +95,8 @@ urlpatterns = [
         name="forum_board",
     ),
     url(
-        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/page/(?P<page_number>[0-9]+)/$",
+        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/"
+        r"page/(?P<page_number>[0-9]+)/$",
         forum.board,
         name="forum_board",
     ),
