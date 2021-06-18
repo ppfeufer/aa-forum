@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block aa_forum_body %}
-    {% include "aa_forum/partials/search/search-form.html" %}
+    {% include "aa_forum/partials/search/search-form.html" with suffix="results" %}
 
     {% if search_results %}
         <div class="aa-forum-search-results-total-number">

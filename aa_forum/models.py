@@ -373,7 +373,9 @@ class Message(models.Model):
         related_name="messages",
         on_delete=models.CASCADE,
     )
-    time_posted = models.DateTimeField(auto_now_add=True)
+    time_posted = models.DateTimeField(
+        auto_now_add=True
+    )  # TODO: Add index with next model update
     time_modified = models.DateTimeField(auto_now=True, db_index=True)
     user_created = models.ForeignKey(
         User,

@@ -21,7 +21,7 @@
             </div>
         {% endif %}
 
-        <form  autocomplete="off"action="{% url 'aa_forum:forum_topic_reply' topic.board.category.slug topic.board.slug topic.slug %}" method="post">
+        <form id="aa-forum-form-message-reply" autocomplete="off" action="{% url 'aa_forum:forum_topic_reply' topic.board.category.slug topic.board.slug topic.slug %}" method="post">
             {% csrf_token %}
 
             {{ reply_form|bootstrap }}
