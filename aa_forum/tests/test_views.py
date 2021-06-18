@@ -45,27 +45,32 @@ class TestBoardViews(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.user = create_fake_user(
+        cls.user_1001 = create_fake_user(
             1001, "Bruce Wayne", permissions=["aa_forum.basic_access"]
+        )
+        cls.user_1002 = create_fake_user(
+            1002, "Peter Parker", permissions=["aa_forum.basic_access"]
         )
         cls.category = Category.objects.create(name="Science")
         cls.board = Board.objects.create(name="Physics", category=cls.category)
+        # topic 1 is completely new
         cls.topic_1 = Topic.objects.create(subject="Mysteries", board=cls.board)
         create_fake_messages(cls.topic_1, 15)
         cls.topic_1.update_last_message()
+        # topic 2 is read
         cls.topic_2 = Topic.objects.create(subject="Off Topic", board=cls.board)
         create_fake_messages(cls.topic_2, 9)
         cls.topic_2.update_last_message()
         cls.board.update_last_message()
         LastMessageSeen.objects.create(
             topic=cls.topic_2,
-            user=cls.user,
+            user=cls.user_1001,
             message_time=cls.topic_2.messages.order_by("-time_posted")[0].time_posted,
         )
 
     def test_should_show_new_indicator_when_seen_nothing(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         # when
         res = self.client.get(
             reverse("aa_forum:forum_board", args=[self.category.slug, self.board.slug])
@@ -76,11 +81,11 @@ class TestBoardViews(TestCase):
 
     def test_should_show_new_indicator_when_seen_first_page_only(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         last_message_seen = self.topic_1.messages.order_by("time_posted")[4]
         LastMessageSeen.objects.create(
             topic=self.topic_1,
-            user=self.user,
+            user=self.user_1001,
             message_time=last_message_seen.time_posted,
         )
         # when
@@ -93,11 +98,11 @@ class TestBoardViews(TestCase):
 
     def test_should_show_new_indicator_when_seen_second_page_only(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         last_message_seen = self.topic_1.messages.order_by("time_posted")[9]
         LastMessageSeen.objects.create(
             topic=self.topic_1,
-            user=self.user,
+            user=self.user_1001,
             message_time=last_message_seen.time_posted,
         )
         # when
@@ -110,11 +115,11 @@ class TestBoardViews(TestCase):
 
     def test_should_not_show_new_indicator_when_seen_last_page(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         last_message_seen = self.topic_1.messages.order_by("time_posted")[14]
         LastMessageSeen.objects.create(
             topic=self.topic_1,
-            user=self.user,
+            user=self.user_1001,
             message_time=last_message_seen.time_posted,
         )
         # when
@@ -124,6 +129,20 @@ class TestBoardViews(TestCase):
         # then
         self.assertEqual(res.status_code, 200)
         self.assertNotContains(res, f"aa-forum-link-new-{self.topic_1.id}")
+
+    def test_should_show_new_indicator_when_new_posts_are_made(self):
+        # given
+        self.client.force_login(self.user_1001)
+        # when
+        Message.objects.create(
+            topic=self.topic_2, user_created=self.user_1002, message="new message"
+        )
+        res = self.client.get(
+            reverse("aa_forum:forum_board", args=[self.category.slug, self.board.slug])
+        )
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, f"aa-forum-link-new-{self.topic_2.id}")
 
 
 @patch(VIEWS_PATH + ".Setting.objects.get_setting", new=my_get_setting)

@@ -69,3 +69,9 @@ def run():
                             message=f"<p>{fake.sentence()}</p>",
                             user_created_id=random.choice(user_ids),
                         )
+                    topic.update_last_message()
+            print(f"Updating {len(boards)} boards...")
+            for board in boards:
+                board.update_last_message()
+
+    print("DONE")
