@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 
 
 @register.filter
-def highlight_search_term(text: str, search_term: str) -> str:
+def highlight_search_term(text: str, search_phrase: str) -> str:
     """
     Highlight the search term in search results
     :param text:
@@ -20,10 +20,23 @@ def highlight_search_term(text: str, search_term: str) -> str:
     :rtype:
     """
 
-    highlighted = re.sub(
-        "(?i)(%s)" % (re.escape(search_term)),
-        '<span class="aa-forum-search-term-highlight">\\1</span>',
-        text,
+    search_phrase_cleaned = (
+        search_phrase.replace('"', "").replace("<", "").replace(">", "")
     )
+    search_phrase_terms = search_phrase_cleaned.split()
+    highlighted = text
 
-    return mark_safe(highlighted)
+    for search_term in search_phrase_terms:
+        highlighted = re.sub(
+            "(?i)(%s)" % (re.escape(search_term)),
+            # "(?!<.?)(%s)(?!.?>)" % (re.escape(search_term)),
+            # '<span class="aa-forum-search-term-highlight">\\1</span>',
+            "«\\1»",
+            highlighted,
+        )
+
+    return mark_safe(
+        highlighted.replace(
+            "«", '<span class="aa-forum-search-term-highlight">'
+        ).replace("»", "</span>")
+    )

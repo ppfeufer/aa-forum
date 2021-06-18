@@ -1,6 +1,8 @@
 """
 Search related views
 """
+from functools import reduce
+from operator import or_
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
@@ -27,14 +29,17 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     """
 
     if request.GET:
-        search_term = request.GET.get("q")
+        search_phrase = request.GET.get("q")
     else:
-        search_term = ""
+        search_phrase = ""
 
     search_results = None
     page_obj = None
 
-    if search_term != "":
+    search_phrase_cleaned = (
+        search_phrase.replace('"', "").replace("<", "").replace(">", "")
+    )
+    if search_phrase_cleaned != "":
         boards = (
             Board.objects.filter(
                 Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
@@ -44,10 +49,19 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
             .values_list("pk", flat=True)
         )
 
+        search_phrase_terms = search_phrase_cleaned.split()
+
         search_results = (
             Message.objects.filter(
-                Q(message__icontains=search_term),
-                # | Q(topic__subject__icontains=search_term),
+                # Q(message__icontains=search_phrase),
+                reduce(
+                    # and_,
+                    or_,
+                    [
+                        Q(message__icontains=search_term)
+                        for search_term in search_phrase_terms
+                    ],
+                ),
                 topic__board__pk__in=boards,
             )
             .select_related(
@@ -61,7 +75,7 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
                 "topic__board__category",
                 "topic__board__category__slug",
             )
-            .order_by("time_modified")
+            .order_by("-time_modified")
             .distinct()
         )
 
@@ -72,7 +86,7 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
         page_obj = paginator.get_page(page_number)
 
     context = {
-        "search_term": search_term,
+        "search_term": search_phrase,
         "search_results": page_obj,
         "search_results_count": 0 if search_results is None else search_results.count(),
     }
