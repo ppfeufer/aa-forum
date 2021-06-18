@@ -18,7 +18,7 @@
                     {{ topic.subject }}
                 </a>
                 {% if topic.has_unread_messages %}
-                    <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' topic.first_unread_message %}" class="label label-warning label label-aa-forum-topic-new-message">
+                    <a href="#" class="label label-warning label label-aa-forum-topic-new-message">
                         {% translate "New" %}
                     </a>
                 {% endif %}

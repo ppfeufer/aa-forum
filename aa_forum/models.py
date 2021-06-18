@@ -290,6 +290,7 @@ class Topic(models.Model):
         on_delete=models.SET_DEFAULT,
         help_text="Shortcut for better performance",
     )
+    last_message_seen = models.ManyToManyField(User, through="LastMessageSeen")
 
     class Meta:
         """
@@ -361,6 +362,15 @@ class Topic(models.Model):
             Message.objects.filter(topic=self).order_by("-time_modified").first()
         )
         self.save(update_fields=["last_message"])
+
+
+class LastMessageSeen(models.Model):
+    topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message_time = models.DateTimeField()
+
+    def __str__(self) -> str:
+        return f"{self.topic}-{self.user}-{self.message_time}"
 
 
 class Message(models.Model):

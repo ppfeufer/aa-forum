@@ -1,12 +1,19 @@
 """
 Fake some messages
+
+shortcuts:
+- Topic.objects.all().delete()
+- from aa_forum.scripts import fake_messages;fake_messages.run()
 """
 
+import datetime as dt
 import random
+from unittest.mock import patch
 
 from faker import Faker
 
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 from aa_forum.models import Board, Message, Topic
 
@@ -33,19 +40,23 @@ def run():
                 message.topic = topic
                 message.user_created_id = random.choice(user_ids)
                 message.message = f"<p>{fake.sentence()}</p>"
-                message.save()
+                my_now = now() - dt.timedelta(
+                    hours=random.randint(0, 1000), minutes=random.randint(0, 59)
+                )
+                with patch("django.utils.timezone.now", lambda: my_now):
+                    message.save()
 
     # Add some messages to topics
     topics = Topic.objects.all()
     if topics.count() > 0:
         for topic in topics:
-            Message.objects.bulk_create(
-                [
-                    Message(
-                        message=f"<p>{fake.sentence()}</p>",
+            for _ in range(25):
+                my_now = now() - dt.timedelta(
+                    hours=random.randint(0, 1000), minutes=random.randint(0, 59)
+                )
+                with patch("django.utils.timezone.now", lambda: my_now):
+                    Message.objects.create(
                         topic_id=topic.id,
+                        message=f"<p>{fake.sentence()}</p>",
                         user_created_id=random.choice(user_ids),
                     )
-                    for _ in range(25)
-                ]
-            )

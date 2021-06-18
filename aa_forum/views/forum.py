@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
 from django.db import transaction
-from django.db.models import Count, Prefetch, Q
+from django.db.models import Count, Exists, OuterRef, Prefetch, Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -20,7 +20,7 @@ from django.utils.translation import gettext as _
 
 from aa_forum.constants import SETTING_MESSAGESPERPAGE, SETTING_TOPICSPERPAGE
 from aa_forum.forms import EditMessageForm, NewTopicForm
-from aa_forum.models import Board, Category, Message, Setting, Topic
+from aa_forum.models import Board, Category, LastMessageSeen, Message, Setting, Topic
 
 # from aa_forum.tasks import set_messages_read_by_user_in_pagination
 
@@ -96,7 +96,11 @@ def board(
     :return:
     :rtype:
     """
-
+    has_read_all_messages = LastMessageSeen.objects.filter(
+        topic=OuterRef("pk"),
+        user=request.user,
+        message_time__gte=OuterRef("last_message__time_posted"),
+    )
     try:
         board = (
             Board.objects.select_related("slug", "category", "category__slug")
@@ -113,6 +117,7 @@ def board(
                         "first_message__user_created__profile__main_character",
                     )
                     .annotate(num_posts=Count("messages", distinct=True))
+                    .annotate(has_unread_messages=~Exists(has_read_all_messages))
                     .order_by("-is_sticky", "-last_message__time_modified", "-id"),
                     to_attr="topics_sorted",
                 )
@@ -337,6 +342,17 @@ def topic(
     )
     page_obj = paginator.get_page(page_number)
 
+    try:
+        last_message_on_page = page_obj.object_list[-1]
+    except IndexError:
+        pass
+    else:
+        LastMessageSeen.objects.update_or_create(
+            topic=topic,
+            user=request.user,
+            defaults={"message_time": last_message_on_page.time_posted},
+        )
+
     # Set the messages as "read by" the current user
     # MessagesReadByUsers = Message.read_by.through
     # MessagesReadByUsers.objects.bulk_create(
@@ -369,6 +385,18 @@ def topic(
     }
 
     return render(request, "aa_forum/view/forum/topic.html", context)
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def forum_topic_unread(
+    request,
+    category_slug: str,
+    board_slug: str,
+    topic_slug: str,
+    page_number: int = None,
+) -> HttpResponse:
+    pass
 
 
 @login_required
