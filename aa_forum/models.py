@@ -245,7 +245,7 @@ class Board(models.Model):
         """
 
         self.last_message = (
-            Message.objects.filter(topic__board=self).order_by("-time_modified").first()
+            Message.objects.filter(topic__board=self).order_by("-time_posted").first()
         )
         self.save(update_fields=["last_message"])
 
@@ -359,7 +359,7 @@ class Topic(models.Model):
         """
 
         self.last_message = (
-            Message.objects.filter(topic=self).order_by("-time_modified").first()
+            Message.objects.filter(topic=self).order_by("-time_posted").first()
         )
         self.save(update_fields=["last_message"])
 

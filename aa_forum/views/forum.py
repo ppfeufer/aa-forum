@@ -3,6 +3,7 @@ Forum related views
 """
 
 import math
+from typing import Optional
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -274,63 +275,13 @@ def topic(
     :rtype:
     """
 
-    try:
-        Board.objects.filter(
-            Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-            category__slug__slug__exact=category_slug,
-            slug__slug__exact=board_slug,
-        ).distinct().get()
-    except Board.DoesNotExist:
-        messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The topic you were trying to view does "
-                    "either not exist, or you don't have access to it ...</p>"
-                )
-            ),
-        )
-
-        return redirect("aa_forum:forum_index")
-
-    try:
-        topic = (
-            Topic.objects.select_related(
-                "slug",
-                "board",
-                "board__slug",
-                "board__category",
-                "board__category__slug",
-                "first_message",
-                "first_message__topic",
-                "first_message__topic__slug",
-                "first_message__topic__board",
-                "first_message__topic__board__slug",
-                "first_message__topic__board__category",
-                "first_message__topic__board__category__slug",
-            )
-            .prefetch_related(
-                Prefetch(
-                    "messages",
-                    queryset=Message.objects.select_related(
-                        "user_created", "user_created__profile__main_character"
-                    ).order_by("time_posted"),
-                    to_attr="messages_sorted",
-                )
-            )
-            .get(slug__slug__exact=topic_slug)
-        )
-    except Topic.DoesNotExist:
-        messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The topic you were trying to view does not "
-                    "exist ...</p>"
-                )
-            ),
-        )
-
+    topic = _topic_from_slugs(
+        request=request,
+        category_slug=category_slug,
+        board_slug=board_slug,
+        topic_slug=topic_slug,
+    )
+    if not topic:
         return redirect("aa_forum:forum_index")
 
     # Set this topic as "read by" by the current user
@@ -374,12 +325,10 @@ def topic(
     #     user_id=request.user.id,
     # )
 
-    reply_form = EditMessageForm()
-
     context = {
         "topic": topic,
         "page_obj": page_obj,
-        "reply_form": reply_form,
+        "reply_form": EditMessageForm(),
         # "messages_this_page": messages_this_page,
         # "last_message": last_message.id,
     }
@@ -387,16 +336,106 @@ def topic(
     return render(request, "aa_forum/view/forum/topic.html", context)
 
 
+def _topic_from_slugs(
+    request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
+) -> Optional[Topic]:
+    """Fetch topic from given slug params."""
+    try:
+        Board.objects.filter(
+            Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
+            category__slug__slug__exact=category_slug,
+            slug__slug__exact=board_slug,
+        ).distinct().get()
+    except Board.DoesNotExist:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The topic you were trying to view does "
+                    "either not exist, or you don't have access to it ...</p>"
+                )
+            ),
+        )
+        return None
+
+    try:
+        topic = (
+            Topic.objects.select_related(
+                "slug",
+                "board",
+                "board__slug",
+                "board__category",
+                "board__category__slug",
+                "first_message",
+                "first_message__topic",
+                "first_message__topic__slug",
+                "first_message__topic__board",
+                "first_message__topic__board__slug",
+                "first_message__topic__board__category",
+                "first_message__topic__board__category__slug",
+            )
+            .prefetch_related(
+                Prefetch(
+                    "messages",
+                    queryset=Message.objects.select_related(
+                        "user_created", "user_created__profile__main_character"
+                    ).order_by("time_posted"),
+                    to_attr="messages_sorted",
+                )
+            )
+            .get(slug__slug__exact=topic_slug)
+        )
+    except Topic.DoesNotExist:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The topic you were trying to view does not "
+                    "exist ...</p>"
+                )
+            ),
+        )
+        return None
+
+    return topic
+
+
 @login_required
 @permission_required("aa_forum.basic_access")
-def forum_topic_unread(
-    request,
-    category_slug: str,
-    board_slug: str,
-    topic_slug: str,
-    page_number: int = None,
+def topic_unread(
+    request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
-    pass
+    """Redirect to first unread message of a topic."""
+    topic = _topic_from_slugs(
+        request=request,
+        category_slug=category_slug,
+        board_slug=board_slug,
+        topic_slug=topic_slug,
+    )
+    if not topic:
+        return redirect("aa_forum:forum_index")
+    try:
+        last_message_seen = LastMessageSeen.objects.filter(
+            topic=topic, user=request.user
+        ).get()
+    except LastMessageSeen.DoesNotExist:
+        pass
+    else:
+        first_unread_message = (
+            topic.messages.filter(time_posted__gt=last_message_seen.message_time)
+            .order_by("time_posted")
+            .first()
+        )
+        if first_unread_message:
+            return redirect(
+                "aa_forum:forum_message_entry_point_in_topic", first_unread_message.id
+            )
+        if topic.last_message:
+            return redirect(
+                "aa_forum:forum_message_entry_point_in_topic", topic.last_message.id
+            )
+
+    return redirect("aa_forum:forum_topic", category_slug, board_slug, topic_slug)
 
 
 @login_required
