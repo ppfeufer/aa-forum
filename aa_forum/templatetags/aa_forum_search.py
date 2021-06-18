@@ -14,8 +14,8 @@ def highlight_search_term(text: str, search_phrase: str) -> str:
     Highlight the search term in search results
     :param text:
     :type text:
-    :param search_term:
-    :type search_term:
+    :param search_phrase:
+    :type search_phrase:
     :return:
     :rtype:
     """

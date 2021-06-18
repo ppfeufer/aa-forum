@@ -1,6 +1,7 @@
 """
 Search related views
 """
+
 from functools import reduce
 from operator import or_
 
