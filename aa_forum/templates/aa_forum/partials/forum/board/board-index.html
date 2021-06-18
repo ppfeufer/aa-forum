@@ -15,7 +15,7 @@
 {#    {% endif %}#}
 </div>
 
-{% include "aa_forum/partials/forum/board/new-topic-button.html" with num=1 %}
+{% include "aa_forum/partials/forum/board/new-topic-button.html" with suffix="above-list" %}
 
 <div class="panel panel-default panel-aa-forum-topic-list">
     <div class="panel-body">
@@ -31,7 +31,7 @@
     </div>
 </div>
 
-{% include "aa_forum/partials/forum/board/new-topic-button.html" with num=2 %}
+{% include "aa_forum/partials/forum/board/new-topic-button.html" with suffix="below-list" %}
 
 {% if page_obj %}
     {% include "aa_forum/partials/forum/board/pagination.html" %}

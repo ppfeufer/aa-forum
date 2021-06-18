@@ -23,7 +23,7 @@ class TestForumUI(WebTest):
             reverse("aa_forum:forum_board", args=[self.category.slug, self.board.slug])
         )
         # when
-        page = page.click(linkid="aa-forum-btn-new-topic-1")
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
         # then
         form = page.forms["aa-forum-form-new-topic"]
         form["subject"] = "Recent Discoveries"
