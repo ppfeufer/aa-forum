@@ -41,6 +41,91 @@ class TestIndexView(TestCase):
         self.assertEqual(res.status_code, 200)
 
 
+class TestBoardViews(TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+        cls.user = create_fake_user(
+            1001, "Bruce Wayne", permissions=["aa_forum.basic_access"]
+        )
+        cls.category = Category.objects.create(name="Science")
+        cls.board = Board.objects.create(name="Physics", category=cls.category)
+        cls.topic_1 = Topic.objects.create(subject="Mysteries", board=cls.board)
+        create_fake_messages(cls.topic_1, 15)
+        cls.topic_1.update_last_message()
+        cls.topic_2 = Topic.objects.create(subject="Off Topic", board=cls.board)
+        create_fake_messages(cls.topic_2, 9)
+        cls.topic_2.update_last_message()
+        cls.board.update_last_message()
+        LastMessageSeen.objects.create(
+            topic=cls.topic_2,
+            user=cls.user,
+            message_time=cls.topic_2.messages.order_by("-time_posted")[0].time_posted,
+        )
+
+    def test_should_show_new_indicator_when_seen_nothing(self):
+        # given
+        self.client.force_login(self.user)
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_board", args=[self.category.slug, self.board.slug])
+        )
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, f"aa-forum-link-new-{self.topic_1.id}")
+
+    def test_should_show_new_indicator_when_seen_first_page_only(self):
+        # given
+        self.client.force_login(self.user)
+        last_message_seen = self.topic_1.messages.order_by("time_posted")[4]
+        LastMessageSeen.objects.create(
+            topic=self.topic_1,
+            user=self.user,
+            message_time=last_message_seen.time_posted,
+        )
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_board", args=[self.category.slug, self.board.slug])
+        )
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, f"aa-forum-link-new-{self.topic_1.id}")
+
+    def test_should_show_new_indicator_when_seen_second_page_only(self):
+        # given
+        self.client.force_login(self.user)
+        last_message_seen = self.topic_1.messages.order_by("time_posted")[9]
+        LastMessageSeen.objects.create(
+            topic=self.topic_1,
+            user=self.user,
+            message_time=last_message_seen.time_posted,
+        )
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_board", args=[self.category.slug, self.board.slug])
+        )
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, f"aa-forum-link-new-{self.topic_1.id}")
+
+    def test_should_not_show_new_indicator_when_seen_last_page(self):
+        # given
+        self.client.force_login(self.user)
+        last_message_seen = self.topic_1.messages.order_by("time_posted")[14]
+        LastMessageSeen.objects.create(
+            topic=self.topic_1,
+            user=self.user,
+            message_time=last_message_seen.time_posted,
+        )
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_board", args=[self.category.slug, self.board.slug])
+        )
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertNotContains(res, f"aa-forum-link-new-{self.topic_1.id}")
+
+
 @patch(VIEWS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
 class TestTopicViews(TestCase):
     @classmethod
@@ -72,7 +157,7 @@ class TestTopicViews(TestCase):
             topic=self.topic, user=self.user
         )
         # view has 2 pages á 5 messages. this is last message on 1st page
-        last_message = Message.objects.order_by("time_posted")[4]
+        last_message = self.topic.messages.order_by("time_posted")[4]
         self.assertEqual(last_message_seen.message_time, last_message.time_posted)
 
     def test_should_remember_last_message_seen_by_user_page_2(self):
