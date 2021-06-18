@@ -35,3 +35,6 @@ The following will be checked by `pre-commit`:
 To contribute code via pull request, make sure that you fork the repository and branch
 your changes from the `development` branch. Only pull requests towards the development
 branch will be considered.
+
+Please make sure you have signed the [License Agreement](https://developers.eveonline.com/resource/license-agreement)
+by logging in at https://developers.eveonline.com before submitting any pull requests.
