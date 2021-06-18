@@ -28,7 +28,7 @@ class TestIndexView(TestCase):
         cls.category = Category.objects.create(name="Science")
         cls.board = Board.objects.create(name="Physics", category=cls.category)
         cls.topic = Topic.objects.create(subject="Mysteries", board=cls.board)
-        create_fake_messages(cls.topic, 10)
+        create_fake_messages(cls.topic, 14)
         cls.topic.update_last_message()
         cls.board.update_last_message()
 
@@ -166,4 +166,92 @@ class TestTopicViews(TestCase):
                 "aa_forum:forum_message_entry_point_in_topic",
                 args=[last_seen_message.id],
             ),
+        )
+
+    def test_should_redirect_to_message_by_id_first_page(self):
+        # given
+        self.client.force_login(self.user)
+        my_message = self.topic.messages.order_by("time_posted")[3]
+        # when
+        res = self.client.get(
+            reverse(
+                "aa_forum:forum_message_entry_point_in_topic",
+                args=[my_message.id],
+            ),
+        )
+        # then
+        self.assertEqual(res.status_code, 302)
+        self.assertEqual(
+            res.url,
+            reverse(
+                "aa_forum:forum_topic",
+                args=[self.category.slug, self.board.slug, self.topic.slug],
+            )
+            + f"#message-{my_message.id}",
+        )
+
+    def test_should_redirect_to_message_by_id_middle_page_1(self):
+        # given
+        self.client.force_login(self.user)
+        my_message = self.topic.messages.order_by("time_posted")[5]
+        # when
+        res = self.client.get(
+            reverse(
+                "aa_forum:forum_message_entry_point_in_topic",
+                args=[my_message.id],
+            ),
+        )
+        # then
+        self.assertEqual(res.status_code, 302)
+        self.assertEqual(
+            res.url,
+            reverse(
+                "aa_forum:forum_topic",
+                args=[self.category.slug, self.board.slug, self.topic.slug, 2],
+            )
+            + f"#message-{my_message.id}",
+        )
+
+    def test_should_redirect_to_message_by_id_middle_page_2(self):
+        # given
+        self.client.force_login(self.user)
+        my_message = self.topic.messages.order_by("time_posted")[9]
+        # when
+        res = self.client.get(
+            reverse(
+                "aa_forum:forum_message_entry_point_in_topic",
+                args=[my_message.id],
+            ),
+        )
+        # then
+        self.assertEqual(res.status_code, 302)
+        self.assertEqual(
+            res.url,
+            reverse(
+                "aa_forum:forum_topic",
+                args=[self.category.slug, self.board.slug, self.topic.slug, 2],
+            )
+            + f"#message-{my_message.id}",
+        )
+
+    def test_should_redirect_to_message_by_id_last_page(self):
+        # given
+        self.client.force_login(self.user)
+        my_message = self.topic.messages.order_by("time_posted")[12]
+        # when
+        res = self.client.get(
+            reverse(
+                "aa_forum:forum_message_entry_point_in_topic",
+                args=[my_message.id],
+            ),
+        )
+        # then
+        self.assertEqual(res.status_code, 302)
+        self.assertEqual(
+            res.url,
+            reverse(
+                "aa_forum:forum_topic",
+                args=[self.category.slug, self.board.slug, self.topic.slug, 3],
+            )
+            + f"#message-{my_message.id}",
         )

@@ -18,9 +18,9 @@ from aa_forum.models import Board, Message, Topic
 
 MAX_MESSAGE_HOURS_INTO_PAST = 1000
 MIN_TOPICS_PER_BOARD = 3
-MAX_TOPICS_PER_BOARD = 25
+MAX_TOPICS_PER_BOARD = 20
 MIN_MESSAGES_PER_TOPIC = 2
-MAX_MESSAGES_PER_TOPIC = 25
+MAX_MESSAGES_PER_TOPIC = 35
 
 
 def random_dt() -> dt.datetime:
@@ -42,10 +42,11 @@ def run():
 
     # Add some topics
     boards = Board.objects.all()
-    print(boards)
-    if boards.count() > 0:
+    board_count = boards.count()
+    if board_count > 0:
         topics = list()
-        for board in boards:
+        for num, board in enumerate(boards):
+            print(f"Generating topics for board {num + 1} / {board_count}")
             for _ in range(
                 random.randrange(MIN_TOPICS_PER_BOARD, MAX_TOPICS_PER_BOARD)
             ):
@@ -57,7 +58,8 @@ def run():
         # Add some messages to topics
         if topics:
             with patch("django.utils.timezone.now", new=random_dt):
-                for topic in topics:
+                for num, topic in enumerate(topics):
+                    print(f"Generating messages for topic {num + 1} / {len(topics)}")
                     for _ in range(
                         random.randrange(MIN_MESSAGES_PER_TOPIC, MAX_MESSAGES_PER_TOPIC)
                     ):

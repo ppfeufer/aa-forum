@@ -626,7 +626,7 @@ def message_entry_point_in_topic(
             request,
             mark_safe(
                 _(
-                    "<h4>Error!</h4><p>The topic you were trying to view does "
+                    "<h4>Error!</h4><p>The board you were trying to view does "
                     "either not exist, or you don't have access to it ...</p>"
                 )
             ),
@@ -637,29 +637,23 @@ def message_entry_point_in_topic(
     messages_per_topic = int(
         Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)
     )
-    messages_in_topic = Message.objects.filter(pk__lte=message.pk, topic=message.topic)
-    number_of_messages_in_topic = messages_in_topic.count()
-
-    page = int(math.ceil(int(number_of_messages_in_topic) / int(messages_per_topic)))
-
+    position = (
+        message.topic.messages.order_by("time_posted")
+        .filter(time_posted__lt=message.time_posted)
+        .count()
+    ) + 1
+    page = math.ceil(position / messages_per_topic)
     if page > 1:
         redirect_path = reverse(
             "aa_forum:forum_topic",
-            args=(
-                board.category.slug,
-                board.slug,
-                message.topic.slug,
-                page,
-            ),
+            args=(board.category.slug, board.slug, message.topic.slug, page),
         )
-        redirect_url = f"{redirect_path}#message-{message.pk}"
     else:
         redirect_path = reverse(
             "aa_forum:forum_topic",
             args=(board.category.slug, board.slug, message.topic.slug),
         )
-        redirect_url = f"{redirect_path}#message-{message.pk}"
-
+    redirect_url = f"{redirect_path}#message-{message.pk}"
     return HttpResponseRedirect(redirect_url)
 
 
