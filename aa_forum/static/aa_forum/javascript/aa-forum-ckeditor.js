@@ -7,10 +7,12 @@ $(function() {
         $('form').on('reset', function(e) {
             if ($(CKEDITOR.instances).length) {
                 for (let key in CKEDITOR.instances) {
-                    let instance = CKEDITOR.instances[key];
+                    if ({}.hasOwnProperty.call(CKEDITOR.instances, key)) {
+                        let instance = CKEDITOR.instances[key];
 
-                    if ($(instance.element.$).closest('form').attr('name') === $(e.target).attr('name')) {
-                        instance.setData(instance.element.$.defaultValue);
+                        if ($(instance.element.$).closest('form').attr('name') === $(e.target).attr('name')) {
+                            instance.setData(instance.element.$.defaultValue);
+                        }
                     }
                 }
             }
