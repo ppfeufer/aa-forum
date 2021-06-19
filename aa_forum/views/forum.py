@@ -117,7 +117,7 @@ def board(
                     )
                     .annotate(num_posts=Count("messages", distinct=True))
                     .annotate(has_unread_messages=~Exists(has_read_all_messages))
-                    .order_by("-is_sticky", "-last_message__time_modified", "-id"),
+                    .order_by("-is_sticky", "-last_message__time_posted", "-id"),
                     to_attr="topics_sorted",
                 )
             )

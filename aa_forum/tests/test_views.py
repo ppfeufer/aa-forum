@@ -203,7 +203,7 @@ class TestTopicViews(TestCase):
         # then
         self.assertRedirects(res, first_message.get_absolute_url())
 
-    def test_should_redirect_to_first_new_message(self):
+    def test_should_redirect_to_first_new_message_normal(self):
         # given
         self.client.force_login(self.user)
         messages_sorted = list(self.topic.messages.order_by("time_posted"))
@@ -214,6 +214,28 @@ class TestTopicViews(TestCase):
             user=self.user,
             message_time=last_seen_message.time_posted,
         )
+        # when
+        res = self.client.get(
+            reverse(
+                "aa_forum:forum_topic_unread",
+                args=[self.category.slug, self.board.slug, self.topic.slug],
+            )
+        )
+        # then
+        self.assertRedirects(res, first_unseen_message.get_absolute_url())
+
+    def test_should_redirect_to_first_new_message_last_when_seen_message_deleted(self):
+        # given
+        self.client.force_login(self.user)
+        messages_sorted = list(self.topic.messages.order_by("time_posted"))
+        last_seen_message = messages_sorted[2]
+        first_unseen_message = messages_sorted[3]
+        LastMessageSeen.objects.create(
+            topic=self.topic,
+            user=self.user,
+            message_time=last_seen_message.time_posted,
+        )
+        last_seen_message.delete()
         # when
         res = self.client.get(
             reverse(

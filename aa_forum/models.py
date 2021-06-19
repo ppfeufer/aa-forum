@@ -191,7 +191,7 @@ class Board(models.Model):
         blank=True,
         related_name="aa_forum_boards_group_restriction",
     )
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
     first_message = models.ForeignKey(
         "Message",
         editable=False,
@@ -390,6 +390,12 @@ class LastMessageSeen(models.Model):
 
     class Meta:
         default_permissions = ()
+        indexes = [
+            models.Index(
+                fields=["topic", "user", "message_time"],
+                name="lastmessageseen_compounded",
+            ),
+        ]
 
 
 class Message(models.Model):
@@ -402,10 +408,8 @@ class Message(models.Model):
         related_name="messages",
         on_delete=models.CASCADE,
     )
-    time_posted = models.DateTimeField(
-        auto_now_add=True
-    )  # TODO: Add index with next model update
-    time_modified = models.DateTimeField(auto_now=True, db_index=True)
+    time_posted = models.DateTimeField(auto_now_add=True, db_index=True)
+    time_modified = models.DateTimeField(auto_now=True)
     user_created = models.ForeignKey(
         User,
         related_name="+",
