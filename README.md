@@ -97,14 +97,14 @@ from allianceauth import urls
 from django.urls import re_path
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
-from ckeditor_uploader import views
+from ckeditor_uploader import views as ckeditor_views
 
 urlpatterns = [
     # *** New URL override for cKeditor BEFORE THE MAIN IMPORT
-    re_path(r"^upload/", login_required(views.upload), name="ckeditor_upload"),
+    re_path(r"^upload/", login_required(ckeditor_views.upload), name="ckeditor_upload"),
     re_path(
         r"^browse/",
-        never_cache(login_required(views.browse)),
+        never_cache(login_required(ckeditor_views.browse)),
         name="ckeditor_browse",
     ),
     # Alliance Auth URLs
