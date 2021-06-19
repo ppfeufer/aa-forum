@@ -2,16 +2,19 @@
 Models
 """
 
+import math
 from typing import Optional
 
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models, transaction
 from django.dispatch import receiver
+from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
-from aa_forum.managers import SettingsManager
+from aa_forum.constants import SETTING_MESSAGESPERPAGE
+from aa_forum.managers import SettingsManager, TopicManager
 
 
 def get_sentinel_user() -> User:
@@ -292,6 +295,8 @@ class Topic(models.Model):
     )
     last_message_seen = models.ManyToManyField(User, through="LastMessageSeen")
 
+    objects = TopicManager()
+
     class Meta:
         """
         Meta definitions
@@ -355,7 +360,7 @@ class Topic(models.Model):
 
     def update_last_message(self) -> Optional[models.Model]:
         """
-        Updated the last message for this topic.
+        Update the last message for this topic.
         """
 
         self.last_message = (
@@ -363,14 +368,28 @@ class Topic(models.Model):
         )
         self.save(update_fields=["last_message"])
 
+    def get_absolute_url(self):
+        """
+        Calculate URL for this topic and return it.
+        """
+        return reverse(
+            "aa_forum:forum_topic",
+            args=[self.board.category.slug, self.board.slug, self.slug],
+        )
+
 
 class LastMessageSeen(models.Model):
+    """Stores information about the last message seen by a user in a topic."""
+
     topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message_time = models.DateTimeField()
 
     def __str__(self) -> str:
         return f"{self.topic}-{self.user}-{self.message_time}"
+
+    class Meta:
+        default_permissions = ()
 
 
 class Message(models.Model):
@@ -463,6 +482,40 @@ class Message(models.Model):
 
         if board_needs_update:
             self.topic.board.update_last_message()
+
+    def get_absolute_url(self):
+        """
+        Calculate URL for this message and return it.
+        """
+        messages_per_topic = int(
+            Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)
+        )
+        position = (
+            self.topic.messages.order_by("time_posted")
+            .filter(time_posted__lt=self.time_posted)
+            .count()
+        ) + 1
+        page = math.ceil(position / messages_per_topic)
+        if page > 1:
+            redirect_path = reverse(
+                "aa_forum:forum_topic",
+                args=(
+                    self.topic.board.category.slug,
+                    self.topic.board.slug,
+                    self.topic.slug,
+                    page,
+                ),
+            )
+        else:
+            redirect_path = reverse(
+                "aa_forum:forum_topic",
+                args=(
+                    self.topic.board.category.slug,
+                    self.topic.board.slug,
+                    self.topic.slug,
+                ),
+            )
+        return f"{redirect_path}#message-{self.pk}"
 
 
 class PersonalMessage(models.Model):

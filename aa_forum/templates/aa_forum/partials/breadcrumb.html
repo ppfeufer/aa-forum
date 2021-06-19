@@ -11,15 +11,14 @@
             {% if board %}
                 {% set_template_variable category_slug = category.slug %}
                 {% set_template_variable board_slug = board.slug %}
-                {% set_template_variable topic_slug = topic.slug %}
 
                 <li>» <a href="{% url 'aa_forum:forum_board' category_slug board_slug %}">{{ board.name }}</a></li>
 
                 {% if topic %}
                     {% if modify_message %}
-                        <li>» {% translate "Modify Message" %} (<a href="{% url 'aa_forum:forum_topic' category_slug board_slug topic_slug %}">{{ topic.subject }}</a>)</li>
+                        <li>» {% translate "Modify Message" %} (<a href="{{ topic.get_absolute_url }}">{{ topic.subject }}</a>)</li>
                     {% else %}
-                        <li>» <a href="{% url 'aa_forum:forum_topic' category_slug board_slug topic_slug %}">{{ topic.subject }}</a></li>
+                        <li>» <a href="{{ topic.get_absolute_url }}">{{ topic.subject }}</a></li>
                     {% endif %}
                 {% endif %}
             {% endif %}

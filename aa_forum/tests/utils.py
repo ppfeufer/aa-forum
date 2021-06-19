@@ -11,7 +11,9 @@ from django.utils.timezone import now
 
 from allianceauth.tests.auth_utils import AuthUtils
 
-from ..models import Message, Topic
+from aa_forum.constants import SETTING_MESSAGESPERPAGE
+
+from ..models import Message, Setting, Topic
 
 MAX_MESSAGE_HOURS_INTO_PAST = 1000
 fake = Faker()
@@ -75,3 +77,10 @@ def random_dt() -> dt.datetime:
         minutes=random.randint(0, 59),
         seconds=random.randint(0, 59),
     )
+
+
+def my_get_setting(setting_key: str) -> str:
+    """Overload settings for tests."""
+    if setting_key == SETTING_MESSAGESPERPAGE:
+        return "5"
+    return Setting.objects.get_setting(setting_key=setting_key)

@@ -14,7 +14,7 @@
 
         <div class="aa-forum-topic-name">
             <p>
-                <a href="{% url 'aa_forum:forum_topic' topic.board.category.slug topic.board.slug topic.slug %}">
+                <a href="{{ topic.get_absolute_url }}">
                     {{ topic.subject }}
                 </a>
                 {% if topic.has_unread_messages %}

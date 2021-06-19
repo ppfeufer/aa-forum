@@ -3,19 +3,10 @@ from unittest.mock import patch
 from django.test import TestCase
 from django.urls import reverse
 
-from aa_forum.constants import SETTING_MESSAGESPERPAGE
-
-from ..models import Board, Category, LastMessageSeen, Message, Setting, Topic
-from .utils import create_fake_messages, create_fake_user
+from ..models import Board, Category, LastMessageSeen, Message, Topic
+from .utils import create_fake_messages, create_fake_user, my_get_setting
 
 VIEWS_PATH = "aa_forum.views.forum"
-
-
-def my_get_setting(setting_key: str) -> str:
-    """Overload settings for tests."""
-    if setting_key == SETTING_MESSAGESPERPAGE:
-        return "5"
-    return Setting.objects.get_setting(setting_key=setting_key)
 
 
 class TestIndexView(TestCase):
@@ -68,7 +59,7 @@ class TestBoardViews(TestCase):
             message_time=cls.topic_2.messages.order_by("-time_posted")[0].time_posted,
         )
 
-    def test_should_show_new_indicator_when_seen_nothing(self):
+    def test_should_show_new_indicator_when_topic_not_seen_yet(self):
         # given
         self.client.force_login(self.user_1001)
         # when
@@ -198,9 +189,10 @@ class TestTopicViews(TestCase):
         last_message = Message.objects.order_by("time_posted")[9]
         self.assertEqual(last_message_seen.message_time, last_message.time_posted)
 
-    def test_should_redirect_to_topic_when_no_last_seen_entry(self):
+    def test_should_redirect_to_first_message_when_topic_not_seen_yet(self):
         # given
         self.client.force_login(self.user)
+        first_message = self.topic.messages.order_by("time_posted").first()
         # when
         res = self.client.get(
             reverse(
@@ -209,14 +201,7 @@ class TestTopicViews(TestCase):
             )
         )
         # then
-        self.assertEqual(res.status_code, 302)
-        self.assertEqual(
-            res.url,
-            reverse(
-                "aa_forum:forum_topic",
-                args=[self.category.slug, self.board.slug, self.topic.slug],
-            ),
-        )
+        self.assertRedirects(res, first_message.get_absolute_url())
 
     def test_should_redirect_to_first_new_message(self):
         # given
@@ -237,16 +222,9 @@ class TestTopicViews(TestCase):
             )
         )
         # then
-        self.assertEqual(res.status_code, 302)
-        self.assertEqual(
-            res.url,
-            reverse(
-                "aa_forum:forum_message_entry_point_in_topic",
-                args=[first_unseen_message.id],
-            ),
-        )
+        self.assertRedirects(res, first_unseen_message.get_absolute_url())
 
-    def test_should_redirect_to_newest_message(self):
+    def test_should_redirect_to_newest_message_when_seen_full_topic(self):
         # given
         self.client.force_login(self.user)
         last_seen_message = self.topic.messages.order_by("-time_posted")[0]
@@ -263,14 +241,7 @@ class TestTopicViews(TestCase):
             )
         )
         # then
-        self.assertEqual(res.status_code, 302)
-        self.assertEqual(
-            res.url,
-            reverse(
-                "aa_forum:forum_message_entry_point_in_topic",
-                args=[last_seen_message.id],
-            ),
-        )
+        self.assertRedirects(res, last_seen_message.get_absolute_url())
 
     def test_should_redirect_to_message_by_id_first_page(self):
         # given
@@ -284,15 +255,7 @@ class TestTopicViews(TestCase):
             ),
         )
         # then
-        self.assertEqual(res.status_code, 302)
-        self.assertEqual(
-            res.url,
-            reverse(
-                "aa_forum:forum_topic",
-                args=[self.category.slug, self.board.slug, self.topic.slug],
-            )
-            + f"#message-{my_message.id}",
-        )
+        self.assertRedirects(res, my_message.get_absolute_url())
 
     def test_should_redirect_to_message_by_id_middle_page_1(self):
         # given
@@ -306,15 +269,7 @@ class TestTopicViews(TestCase):
             ),
         )
         # then
-        self.assertEqual(res.status_code, 302)
-        self.assertEqual(
-            res.url,
-            reverse(
-                "aa_forum:forum_topic",
-                args=[self.category.slug, self.board.slug, self.topic.slug, 2],
-            )
-            + f"#message-{my_message.id}",
-        )
+        self.assertRedirects(res, my_message.get_absolute_url())
 
     def test_should_redirect_to_message_by_id_middle_page_2(self):
         # given
@@ -328,15 +283,7 @@ class TestTopicViews(TestCase):
             ),
         )
         # then
-        self.assertEqual(res.status_code, 302)
-        self.assertEqual(
-            res.url,
-            reverse(
-                "aa_forum:forum_topic",
-                args=[self.category.slug, self.board.slug, self.topic.slug, 2],
-            )
-            + f"#message-{my_message.id}",
-        )
+        self.assertRedirects(res, my_message.get_absolute_url())
 
     def test_should_redirect_to_message_by_id_last_page(self):
         # given
@@ -350,12 +297,4 @@ class TestTopicViews(TestCase):
             ),
         )
         # then
-        self.assertEqual(res.status_code, 302)
-        self.assertEqual(
-            res.url,
-            reverse(
-                "aa_forum:forum_topic",
-                args=[self.category.slug, self.board.slug, self.topic.slug, 3],
-            )
-            + f"#message-{my_message.id}",
-        )
+        self.assertRedirects(res, my_message.get_absolute_url())

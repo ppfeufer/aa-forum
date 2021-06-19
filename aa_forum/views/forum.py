@@ -2,7 +2,6 @@
 Forum related views
 """
 
-import math
 from typing import Optional
 
 from django.contrib import messages
@@ -15,7 +14,6 @@ from django.db import transaction
 from django.db.models import Count, Exists, OuterRef, Prefetch, Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -340,63 +338,22 @@ def _topic_from_slugs(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> Optional[Topic]:
     """Fetch topic from given slug params."""
-    try:
-        Board.objects.filter(
-            Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-            category__slug__slug__exact=category_slug,
-            slug__slug__exact=board_slug,
-        ).distinct().get()
-    except Board.DoesNotExist:
-        messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The topic you were trying to view does "
-                    "either not exist, or you don't have access to it ...</p>"
-                )
-            ),
-        )
-        return None
-
-    try:
-        topic = (
-            Topic.objects.select_related(
-                "slug",
-                "board",
-                "board__slug",
-                "board__category",
-                "board__category__slug",
-                "first_message",
-                "first_message__topic",
-                "first_message__topic__slug",
-                "first_message__topic__board",
-                "first_message__topic__board__slug",
-                "first_message__topic__board__category",
-                "first_message__topic__board__category__slug",
-            )
-            .prefetch_related(
-                Prefetch(
-                    "messages",
-                    queryset=Message.objects.select_related(
-                        "user_created", "user_created__profile__main_character"
-                    ).order_by("time_posted"),
-                    to_attr="messages_sorted",
-                )
-            )
-            .get(slug__slug__exact=topic_slug)
-        )
-    except Topic.DoesNotExist:
+    topic = Topic.objects.get_for_user_from_slugs(
+        user=request.user,
+        category_slug=category_slug,
+        board_slug=board_slug,
+        topic_slug=topic_slug,
+    )
+    if not topic:
         messages.error(
             request,
             mark_safe(
                 _(
                     "<h4>Error!</h4><p>The topic you were trying to view does not "
-                    "exist ...</p>"
+                    "exist or you do not have access to it.</p>"
                 )
             ),
         )
-        return None
-
     return topic
 
 
@@ -405,7 +362,9 @@ def _topic_from_slugs(
 def topic_unread(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
-    """Redirect to first unread message of a topic."""
+    """
+    Redirect to first unread message of a topic.
+    """
     topic = _topic_from_slugs(
         request=request,
         category_slug=category_slug,
@@ -414,28 +373,23 @@ def topic_unread(
     )
     if not topic:
         return redirect("aa_forum:forum_index")
+    messages_sorted = topic.messages.order_by("time_posted")
     try:
         last_message_seen = LastMessageSeen.objects.filter(
             topic=topic, user=request.user
         ).get()
     except LastMessageSeen.DoesNotExist:
-        pass
+        redirect_message = messages_sorted.first()
     else:
-        first_unread_message = (
-            topic.messages.filter(time_posted__gt=last_message_seen.message_time)
-            .order_by("time_posted")
-            .first()
-        )
-        if first_unread_message:
-            return redirect(
-                "aa_forum:forum_message_entry_point_in_topic", first_unread_message.id
-            )
-        if topic.last_message:
-            return redirect(
-                "aa_forum:forum_message_entry_point_in_topic", topic.last_message.id
-            )
+        redirect_message = messages_sorted.filter(
+            time_posted__gt=last_message_seen.message_time
+        ).first()
+        if not redirect_message:
+            redirect_message = messages_sorted.last()
 
-    return redirect("aa_forum:forum_topic", category_slug, board_slug, topic_slug)
+    if redirect_message:
+        return redirect(redirect_message.get_absolute_url())
+    return redirect(topic.get_absolute_url())
 
 
 @login_required
@@ -603,58 +557,22 @@ def message_entry_point_in_topic(
     """
 
     try:
-        message = Message.objects.get(pk=message_id)
+        message = Message.objects.select_related(
+            "topic",
+            "topic__slug",
+            "topic__board",
+            "topic__board__slug",
+            "topic__board__category",
+            "topic__board__category__slug",
+        ).get(pk=message_id)
     except Message.DoesNotExist:
         messages.error(
             request,
             mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p>")),
         )
-
         return redirect("aa_forum:forum_index")
 
-    try:
-        board = (
-            Board.objects.filter(
-                Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-                pk=message.topic.board.pk,
-            )
-            .distinct()
-            .get()
-        )
-    except Board.DoesNotExist:
-        messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The board you were trying to view does "
-                    "either not exist, or you don't have access to it ...</p>"
-                )
-            ),
-        )
-
-        return redirect("aa_forum:forum_index")
-
-    messages_per_topic = int(
-        Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)
-    )
-    position = (
-        message.topic.messages.order_by("time_posted")
-        .filter(time_posted__lt=message.time_posted)
-        .count()
-    ) + 1
-    page = math.ceil(position / messages_per_topic)
-    if page > 1:
-        redirect_path = reverse(
-            "aa_forum:forum_topic",
-            args=(board.category.slug, board.slug, message.topic.slug, page),
-        )
-    else:
-        redirect_path = reverse(
-            "aa_forum:forum_topic",
-            args=(board.category.slug, board.slug, message.topic.slug),
-        )
-    redirect_url = f"{redirect_path}#message-{message.pk}"
-    return HttpResponseRedirect(redirect_url)
+    return redirect(message.get_absolute_url())
 
 
 @login_required
