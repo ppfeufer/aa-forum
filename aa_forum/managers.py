@@ -21,22 +21,17 @@ class SettingsManager(models.Manager):
 
 
 class TopicQuerySet(models.QuerySet):
-    def get_for_user_from_slugs(
-        self, user: User, category_slug: str, board_slug: str, topic_slug: str
+    def get_from_slugs(
+        self,
+        category_slug: str,
+        board_slug: str,
+        topic_slug: str,
+        user: User,
     ) -> models.Model:
         """
         Fetch topic from slugs for user. Return None if not found or no access.
         """
-        from .models import Board, Message
-
-        try:
-            Board.objects.filter(
-                Q(groups__in=user.groups.all()) | Q(groups__isnull=True),
-                category__slug__slug__exact=category_slug,
-                slug__slug__exact=board_slug,
-            ).distinct().get()
-        except Board.DoesNotExist:
-            return None
+        from .models import Message
 
         try:
             topic = (
@@ -63,7 +58,16 @@ class TopicQuerySet(models.QuerySet):
                         to_attr="messages_sorted",
                     )
                 )
-                .get(slug__slug__exact=topic_slug)
+                .filter(
+                    board__category__slug__slug=str(category_slug),
+                    board__slug__slug=str(board_slug),
+                    slug__slug=str(topic_slug),
+                )
+                .filter(
+                    Q(board__groups__in=user.groups.all())
+                    | Q(board__groups__isnull=True)
+                )
+                .get()
             )
         except self.model.DoesNotExist:
             return None

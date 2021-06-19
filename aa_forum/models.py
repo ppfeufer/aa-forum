@@ -293,7 +293,7 @@ class Topic(models.Model):
         on_delete=models.SET_DEFAULT,
         help_text="Shortcut for better performance",
     )
-    last_message_seen = models.ManyToManyField(User, through="LastMessageSeen")
+    # last_message_seen = models.ManyToManyField(User, through="LastMessageSeen")
 
     objects = TopicManager()
 
@@ -379,7 +379,9 @@ class Topic(models.Model):
 
 
 class LastMessageSeen(models.Model):
-    """Stores information about the last message seen by a user in a topic."""
+    """
+    Stores information about the last message seen by a user in a topic.
+    """
 
     topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

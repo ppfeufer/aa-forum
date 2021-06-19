@@ -338,11 +338,11 @@ def _topic_from_slugs(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> Optional[Topic]:
     """Fetch topic from given slug params."""
-    topic = Topic.objects.get_for_user_from_slugs(
-        user=request.user,
+    topic = Topic.objects.get_from_slugs(
         category_slug=category_slug,
         board_slug=board_slug,
         topic_slug=topic_slug,
+        user=request.user,
     )
     if not topic:
         messages.error(
