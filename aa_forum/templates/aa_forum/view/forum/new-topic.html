@@ -35,6 +35,7 @@
                 {% include "aa_forum/partials/form/required-field-hint.html" %}
 
                 <div class="form-group text-right clearfix">
+                    <button class="btn btn-default btn-sm" type="reset">{% translate "Clear Form" %}</button>
                     <button class="btn btn-primary btn-sm" type="submit">{% translate "Start Topic" %}</button>
                 </div>
             </form>
@@ -48,6 +49,7 @@
 {% endblock %}
 
 {% block extra_javascript %}
-    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="application/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="application/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="application/javascript" src="{% static "aa_forum/javascript/aa-forum-ckeditor.min.js" %}"></script>
 {% endblock %}
