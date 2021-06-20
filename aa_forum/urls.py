@@ -128,4 +128,10 @@ urlpatterns = [
         forum.message_modify,
         name="forum_message_modify",
     ),
+    url(
+        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/"
+        r"(?P<topic_slug>[\w-]+)/unread/$",
+        forum.topic_unread,
+        name="forum_topic_unread",
+    ),
 ]

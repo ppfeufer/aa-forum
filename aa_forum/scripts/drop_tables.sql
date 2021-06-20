@@ -20,4 +20,5 @@ DROP TABLE IF EXISTS aa_forum_setting;
 DROP TABLE IF EXISTS aa_forum_slug;
 DROP TABLE IF EXISTS aa_forum_topic;
 DROP TABLE IF EXISTS aa_forum_topic_read_by;
+DROP TABLE IF EXISTS aa_forum_lastmessageseen;
 SET FOREIGN_KEY_CHECKS=1;

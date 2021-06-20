@@ -2,12 +2,16 @@ import datetime as dt
 from unittest.mock import patch
 
 from django.test import TestCase
+from django.urls import reverse
 from django.utils.timezone import now
 
 from ..models import Board, Category, Message, Topic
-from .utils import create_fake_user
+from .utils import create_fake_messages, create_fake_user, my_get_setting
+
+MODELS_PATH = "aa_forum.models"
 
 
+@patch(MODELS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
 class TestMessage(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -70,6 +74,46 @@ class TestMessage(TestCase):
         self.assertEqual(self.topic.first_message, message_1)
         self.assertEqual(self.board.last_message, message_1)
         self.assertEqual(self.board.first_message, message_1)
+
+    def test_should_return_url_first_page(self):
+        # given
+        message = Message.objects.create(
+            topic=self.topic, user_created=self.user, message="What is dark energy?"
+        )
+        url = message.get_absolute_url()
+        # then
+        self.assertURLEqual(
+            url,
+            reverse(
+                "aa_forum:forum_topic",
+                args=(
+                    self.topic.board.category.slug,
+                    self.topic.board.slug,
+                    self.topic.slug,
+                ),
+            )
+            + f"#message-{message.pk}",
+        )
+
+    def test_should_return_url_other_pages(self):
+        # given
+        create_fake_messages(self.topic, 9)
+        message = self.topic.messages.order_by("time_posted").last()
+        url = message.get_absolute_url()
+        # then
+        self.assertURLEqual(
+            url,
+            reverse(
+                "aa_forum:forum_topic",
+                args=(
+                    self.topic.board.category.slug,
+                    self.topic.board.slug,
+                    self.topic.slug,
+                    2,
+                ),
+            )
+            + f"#message-{message.pk}",
+        )
 
 
 class TestTopic(TestCase):
@@ -144,6 +188,20 @@ class TestTopic(TestCase):
         # then
         self.board.refresh_from_db()
         self.assertEqual(self.board.last_message, message_2)
+
+    def test_should_return_url(self):
+        # given
+        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        # when
+        url = topic.get_absolute_url()
+        # then
+        self.assertURLEqual(
+            url,
+            reverse(
+                "aa_forum:forum_topic",
+                args=[self.board.category.slug, self.board.slug, topic.slug],
+            ),
+        )
 
 
 class TestBoard(TestCase):

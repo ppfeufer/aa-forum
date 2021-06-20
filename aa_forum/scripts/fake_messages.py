@@ -1,14 +1,35 @@
-"""
-Fake some messages
+"""Generate a bunch of fake topics and messages in existing boards for development.
+
+shortcuts:
+- Topic.objects.all().delete()
+- from aa_forum.scripts import fake_messages;fake_messages.run()
 """
 
+import datetime as dt
 import random
+from unittest.mock import patch
 
 from faker import Faker
 
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 from aa_forum.models import Board, Message, Topic
+
+MAX_MESSAGE_HOURS_INTO_PAST = 1000
+MIN_TOPICS_PER_BOARD = 3
+MAX_TOPICS_PER_BOARD = 20
+MIN_MESSAGES_PER_TOPIC = 2
+MAX_MESSAGES_PER_TOPIC = 35
+
+
+def random_dt() -> dt.datetime:
+    """Return random datetime between now and x hours into the past."""
+    return now() - dt.timedelta(
+        hours=random.randint(0, MAX_MESSAGE_HOURS_INTO_PAST),
+        minutes=random.randint(0, 59),
+        seconds=random.randint(0, 59),
+    )
 
 
 def run():
@@ -21,31 +42,36 @@ def run():
 
     # Add some topics
     boards = Board.objects.all()
-    if boards.count() > 0:
-        for board in boards:
-            for _ in range(25):
-                topic = Topic()
-                topic.board = board
-                topic.subject = fake.sentence()
-                topic.save()
+    board_count = boards.count()
+    if board_count > 0:
+        topics = list()
+        for num, board in enumerate(boards):
+            print(f"Generating topics for board {num + 1} / {board_count}")
+            for _ in range(
+                random.randrange(MIN_TOPICS_PER_BOARD, MAX_TOPICS_PER_BOARD)
+            ):
+                # can not bulk create, or we would not get slugs
+                topics.append(
+                    Topic.objects.create(board=board, subject=fake.sentence())
+                )
 
-                message = Message()
-                message.topic = topic
-                message.user_created_id = random.choice(user_ids)
-                message.message = f"<p>{fake.sentence()}</p>"
-                message.save()
+        # Add some messages to topics
+        if topics:
+            with patch("django.utils.timezone.now", new=random_dt):
+                for num, topic in enumerate(topics):
+                    print(f"Generating messages for topic {num + 1} / {len(topics)}")
+                    for _ in range(
+                        random.randrange(MIN_MESSAGES_PER_TOPIC, MAX_MESSAGES_PER_TOPIC)
+                    ):
+                        # can not bulk create, or we would not get first and last messages
+                        Message.objects.create(
+                            topic_id=topic.id,
+                            message=f"<p>{fake.sentence()}</p>",
+                            user_created_id=random.choice(user_ids),
+                        )
+                    topic.update_last_message()
+            print(f"Updating {len(boards)} boards...")
+            for board in boards:
+                board.update_last_message()
 
-    # Add some messages to topics
-    topics = Topic.objects.all()
-    if topics.count() > 0:
-        for topic in topics:
-            Message.objects.bulk_create(
-                [
-                    Message(
-                        message=f"<p>{fake.sentence()}</p>",
-                        topic_id=topic.id,
-                        user_created_id=random.choice(user_ids),
-                    )
-                    for _ in range(25)
-                ]
-            )
+    print("DONE")

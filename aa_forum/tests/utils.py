@@ -1,9 +1,22 @@
+import datetime as dt
+import random
 import re
 from typing import List
+from unittest.mock import patch
+
+from faker import Faker
 
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 from allianceauth.tests.auth_utils import AuthUtils
+
+from aa_forum.constants import SETTING_MESSAGESPERPAGE
+
+from ..models import Message, Setting, Topic
+
+MAX_MESSAGE_HOURS_INTO_PAST = 1000
+fake = Faker()
 
 
 def create_fake_user(
@@ -40,3 +53,34 @@ def create_fake_user(
         perm_objs = [AuthUtils.get_permission_by_name(perm) for perm in permissions]
         user = AuthUtils.add_permissions_to_user(perms=perm_objs, user=user)
     return user
+
+
+def create_fake_message(topic: Topic, user: User):
+    """Create a fake message."""
+    Message.objects.create(
+        topic=topic, message=f"<p>{fake.sentence()}</p>", user_created=user
+    )
+
+
+def create_fake_messages(topic: Topic, amount):
+    """Create a bunch of fake messags in given topic."""
+    users = list(User.objects.all())
+    with patch("django.utils.timezone.now", new=random_dt):
+        for _ in range(amount):
+            create_fake_message(topic, user=random.choice(users))
+
+
+def random_dt() -> dt.datetime:
+    """Return random datetime between now and x hours into the past."""
+    return now() - dt.timedelta(
+        hours=random.randint(0, MAX_MESSAGE_HOURS_INTO_PAST),
+        minutes=random.randint(0, 59),
+        seconds=random.randint(0, 59),
+    )
+
+
+def my_get_setting(setting_key: str) -> str:
+    """Overload settings for tests."""
+    if setting_key == SETTING_MESSAGESPERPAGE:
+        return "5"
+    return Setting.objects.get_setting(setting_key=setting_key)
