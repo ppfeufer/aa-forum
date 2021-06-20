@@ -28,13 +28,28 @@ class TestForumUI(WebTest):
         form = page.forms["aa-forum-form-new-topic"]
         form["subject"] = "Recent Discoveries"
         form["message"] = "Energy of the Higgs boson"
-        form.submit()
+        page = form.submit().follow()
         # then
         self.assertEqual(self.board.topics.count(), 1)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
         new_topic = Topic.objects.last()
         self.assertEqual(new_topic.subject, "Recent Discoveries")
         new_message = Message.objects.last()
         self.assertEqual(new_message.message, "Energy of the Higgs boson")
+
+    def test_should_cancel_new_topic(self):
+        # given
+        self.app.set_user(self.user)
+        page = self.app.get(
+            reverse("aa_forum:forum_board", args=[self.category.slug, self.board.slug])
+        )
+        # when
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+        # then
+        page = page.click(linkid="aa-forum-btn-cancel")
+        # then
+        self.assertEqual(self.board.topics.count(), 0)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/board.html")
 
     def test_should_create_reply_to_message(self):
         # given
@@ -52,8 +67,9 @@ class TestForumUI(WebTest):
         # when
         form = page.forms["aa-forum-form-message-reply"]
         form["message"] = "What is dark matter?"
-        form.submit()
+        page = form.submit().follow().follow()
         # then
         self.assertEqual(topic.messages.count(), 2)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
         new_message = Message.objects.last()
         self.assertEqual(new_message.message, "What is dark matter?")
