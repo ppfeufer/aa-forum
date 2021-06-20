@@ -23,6 +23,8 @@
         </div>
     </div>
 
+    {% include "aa_forum/partials/forum/topic/pagination.html" %}
+
     {% for message in page_obj %}
         {% include "aa_forum/partials/forum/topic/message.html" %}
     {% endfor %}
