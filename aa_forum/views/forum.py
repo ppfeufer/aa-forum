@@ -54,9 +54,7 @@ def index(request: WSGIRequest) -> HttpResponse:
         )
         .prefetch_related("groups", "topics")
         .user_has_access(request.user)
-        .filter(
-            parent_board__isnull=True,
-        )
+        .filter(parent_board__isnull=True)
         .annotate(
             num_posts=Count("topics__messages", distinct=True),
             num_topics=Count("topics", distinct=True),
@@ -701,7 +699,17 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
     :type message_id:
     """
 
-    message = Message.objects.get(pk=message_id)
+    try:
+        message = Message.objects.select_related(
+            "topic",
+            "topic__slug",
+            "topic__board",
+            "topic__board__slug",
+            "topic__board__category",
+            "topic__board__category__slug",
+        ).get(pk=message_id)
+    except Message.DoesNotExist:
+        return HttpResponseNotFound("Message not found.")
     topic = message.topic
 
     # Let's check if we have more than one message in this topic

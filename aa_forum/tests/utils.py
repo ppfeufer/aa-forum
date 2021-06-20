@@ -57,17 +57,19 @@ def create_fake_user(
 
 def create_fake_message(topic: Topic, user: User):
     """Create a fake message."""
-    Message.objects.create(
+    return Message.objects.create(
         topic=topic, message=f"<p>{fake.sentence()}</p>", user_created=user
     )
 
 
-def create_fake_messages(topic: Topic, amount):
+def create_fake_messages(topic: Topic, amount) -> List[Message]:
     """Create a bunch of fake messags in given topic."""
     users = list(User.objects.all())
+    messages = list()
     with patch("django.utils.timezone.now", new=random_dt):
         for _ in range(amount):
-            create_fake_message(topic, user=random.choice(users))
+            messages.append(create_fake_message(topic, user=random.choice(users)))
+    return messages
 
 
 def random_dt() -> dt.datetime:

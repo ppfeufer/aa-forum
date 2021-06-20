@@ -314,8 +314,13 @@ class TestTopicViews(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.user = create_fake_user(
+        cls.user_1001 = create_fake_user(
             1001, "Bruce Wayne", permissions=["aa_forum.basic_access"]
+        )
+        cls.user_1003 = create_fake_user(
+            1003,
+            "Clark Lent",
+            permissions=["aa_forum.basic_access", "aa_forum.manage_forum"],
         )
         cls.category = Category.objects.create(name="Science")
         cls.board = Board.objects.create(name="Physics", category=cls.category)
@@ -326,7 +331,7 @@ class TestTopicViews(TestCase):
 
     def test_should_remember_last_message_seen_by_user_page_1(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         # when
         res = self.client.get(
             reverse(
@@ -337,7 +342,7 @@ class TestTopicViews(TestCase):
         # then
         self.assertEqual(res.status_code, 200)
         last_message_seen = LastMessageSeen.objects.get(
-            topic=self.topic, user=self.user
+            topic=self.topic, user=self.user_1001
         )
         # view has 2 pages á 5 messages. this is last message on 1st page
         last_message = self.topic.messages.order_by("time_posted")[4]
@@ -345,7 +350,7 @@ class TestTopicViews(TestCase):
 
     def test_should_remember_last_message_seen_by_user_page_2(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         # when
         res = self.client.get(
             reverse(
@@ -356,7 +361,7 @@ class TestTopicViews(TestCase):
         # then
         self.assertEqual(res.status_code, 200)
         last_message_seen = LastMessageSeen.objects.get(
-            topic=self.topic, user=self.user
+            topic=self.topic, user=self.user_1001
         )
         # view has 2 pages á 5 messages. this is last message on 1st page
         last_message = Message.objects.order_by("time_posted")[9]
@@ -364,7 +369,7 @@ class TestTopicViews(TestCase):
 
     def test_should_redirect_to_first_message_when_topic_not_seen_yet(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         first_message = self.topic.messages.order_by("time_posted").first()
         # when
         res = self.client.get(
@@ -378,13 +383,13 @@ class TestTopicViews(TestCase):
 
     def test_should_redirect_to_first_new_message_normal(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         messages_sorted = list(self.topic.messages.order_by("time_posted"))
         last_seen_message = messages_sorted[2]
         first_unseen_message = messages_sorted[3]
         LastMessageSeen.objects.create(
             topic=self.topic,
-            user=self.user,
+            user=self.user_1001,
             message_time=last_seen_message.time_posted,
         )
         # when
@@ -399,13 +404,13 @@ class TestTopicViews(TestCase):
 
     def test_should_redirect_to_first_new_message_last_when_seen_message_deleted(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         messages_sorted = list(self.topic.messages.order_by("time_posted"))
         last_seen_message = messages_sorted[2]
         first_unseen_message = messages_sorted[3]
         LastMessageSeen.objects.create(
             topic=self.topic,
-            user=self.user,
+            user=self.user_1001,
             message_time=last_seen_message.time_posted,
         )
         last_seen_message.delete()
@@ -421,11 +426,11 @@ class TestTopicViews(TestCase):
 
     def test_should_redirect_to_newest_message_when_seen_full_topic(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         last_seen_message = self.topic.messages.order_by("-time_posted")[0]
         LastMessageSeen.objects.create(
             topic=self.topic,
-            user=self.user,
+            user=self.user_1001,
             message_time=last_seen_message.time_posted,
         )
         # when
@@ -440,7 +445,7 @@ class TestTopicViews(TestCase):
 
     def test_should_redirect_to_message_by_id_first_page(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         my_message = self.topic.messages.order_by("time_posted")[3]
         # when
         res = self.client.get(
@@ -454,7 +459,7 @@ class TestTopicViews(TestCase):
 
     def test_should_redirect_to_message_by_id_middle_page_1(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         my_message = self.topic.messages.order_by("time_posted")[5]
         # when
         res = self.client.get(
@@ -468,7 +473,7 @@ class TestTopicViews(TestCase):
 
     def test_should_redirect_to_message_by_id_middle_page_2(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         my_message = self.topic.messages.order_by("time_posted")[9]
         # when
         res = self.client.get(
@@ -482,7 +487,7 @@ class TestTopicViews(TestCase):
 
     def test_should_redirect_to_message_by_id_last_page(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         my_message = self.topic.messages.order_by("time_posted")[12]
         # when
         res = self.client.get(
@@ -493,3 +498,39 @@ class TestTopicViews(TestCase):
         )
         # then
         self.assertRedirects(res, my_message.get_absolute_url())
+
+    def test_should_delete_regular_message(self):
+        # given
+        self.client.force_login(self.user_1003)
+        my_message = self.topic.messages.first()
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_message_delete", args=[my_message.pk])
+        )
+        # then
+        self.assertEqual(res.status_code, 302)
+        self.assertEqual(res.url, self.topic.get_absolute_url())
+        self.assertFalse(self.topic.messages.filter(pk=my_message.pk).exists())
+
+    def test_should_delete_last_message_in_topic(self):
+        # given
+        self.client.force_login(self.user_1003)
+        my_message = self.topic.messages.first()
+        self.topic.messages.exclude(pk=my_message.pk).delete()
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_message_delete", args=[my_message.pk])
+        )
+        # then
+        self.assertEqual(res.status_code, 302)
+        self.assertEqual(res.url, self.topic.board.get_absolute_url())
+        self.assertFalse(self.topic.messages.filter(pk=my_message.pk).exists())
+        self.assertFalse(self.board.topics.filter(pk=self.topic.pk).exists())
+
+    def test_should_return_404_when_delete_message_not_found(self):
+        # given
+        self.client.force_login(self.user_1003)
+        # when
+        res = self.client.get(reverse("aa_forum:forum_message_delete", args=[0]))
+        # then
+        self.assertEqual(res.status_code, 404)
