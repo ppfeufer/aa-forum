@@ -244,6 +244,12 @@ class Board(models.Model):
             self.slug = get_slug_on_save(subject=self.name)
         super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        """
+        Calculate URL for this board and return it.
+        """
+        return reverse("aa_forum:forum_board", args=[self.category.slug, self.slug])
+
     def update_last_message(self) -> Optional[models.Model]:
         """
         Update the last message for this board.

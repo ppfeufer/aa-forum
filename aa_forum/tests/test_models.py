@@ -197,10 +197,7 @@ class TestTopic(TestCase):
         # then
         self.assertURLEqual(
             url,
-            reverse(
-                "aa_forum:forum_topic",
-                args=[self.board.category.slug, self.board.slug, topic.slug],
-            ),
+            reverse("aa_forum:forum_topic", args=["science", "physics", "mysteries"]),
         )
 
 
@@ -236,3 +233,14 @@ class TestBoard(TestCase):
         # then
         board.refresh_from_db()
         self.assertIsNone(board.last_message)
+
+    def test_should_return_url(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        # when
+        url = board.get_absolute_url()
+        # then
+        self.assertURLEqual(
+            url,
+            reverse("aa_forum:forum_board", args=["science", "physics"]),
+        )

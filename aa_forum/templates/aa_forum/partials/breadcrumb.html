@@ -12,7 +12,7 @@
                 {% set_template_variable category_slug = category.slug %}
                 {% set_template_variable board_slug = board.slug %}
 
-                <li>» <a href="{% url 'aa_forum:forum_board' category_slug board_slug %}">{{ board.name }}</a></li>
+                <li>» <a href="{{ board.get_absolute_url }}">{{ board.name }}</a></li>
 
                 {% if topic %}
                     {% if modify_message %}
