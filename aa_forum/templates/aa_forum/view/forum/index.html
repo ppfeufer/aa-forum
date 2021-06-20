@@ -1,5 +1,6 @@
 {% extends 'aa_forum/base.html' %}
 
+{% load aa_forum_versioned_static %}
 {% load evelinks %}
 {% load static %}
 {% load i18n %}
@@ -18,8 +19,8 @@
 {% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'aa_forum/css/aa-forum.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% versioned_static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% versioned_static 'aa_forum/css/aa-forum.min.css' %}">
 {% endblock %}
 
 {% block extra_javascript %}
