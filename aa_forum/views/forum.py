@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
 from django.db import transaction
-from django.db.models import Count, Exists, OuterRef, Prefetch, Q
+from django.db.models import Count, Exists, OuterRef, Prefetch
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
@@ -53,11 +53,10 @@ def index(request: WSGIRequest) -> HttpResponse:
             "first_message",
         )
         .prefetch_related("groups", "topics")
+        .user_has_access(request.user)
         .filter(
-            Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
             parent_board__isnull=True,
         )
-        .distinct()
         .annotate(
             num_posts=Count("topics__messages", distinct=True),
             num_topics=Count("topics", distinct=True),
@@ -133,12 +132,8 @@ def board(
                     to_attr="topics_sorted",
                 )
             )
-            .filter(
-                Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-                category__slug__slug__exact=category_slug,
-                slug__slug__exact=board_slug,
-            )
-            .distinct()
+            .user_has_access(request.user)
+            .filter(category__slug__slug=category_slug, slug__slug=board_slug)
             .get()
         )
     except Board.DoesNotExist:
@@ -200,12 +195,11 @@ def board_new_topic(
     try:
         board = (
             Board.objects.select_related("slug", "category", "category__slug")
+            .user_has_access(request.user)
             .filter(
-                Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
                 category__slug__slug__exact=category_slug,
                 slug__slug__exact=board_slug,
             )
-            .distinct()
             .get()
         )
     except Board.DoesNotExist:
@@ -625,11 +619,8 @@ def message_modify(
     # Check if the user has access to this board in the first place
     try:
         board = (
-            Board.objects.filter(
-                Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-                slug__slug__exact=board_slug,
-            )
-            .distinct()
+            Board.objects.user_has_access(request.user)
+            .filter(slug__slug=board_slug)
             .get()
         )
     except Board.DoesNotExist:

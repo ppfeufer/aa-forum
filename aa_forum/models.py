@@ -16,7 +16,7 @@ from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
 from aa_forum.constants import SETTING_MESSAGESPERPAGE
-from aa_forum.managers import SettingsManager, TopicManager
+from aa_forum.managers import BoardManager, SettingsManager, TopicManager
 
 
 def get_sentinel_user() -> User:
@@ -212,6 +212,8 @@ class Board(models.Model):
         on_delete=models.SET_DEFAULT,
         help_text="Shortcut for better performance",
     )
+
+    objects = BoardManager()
 
     class Meta:
         """
