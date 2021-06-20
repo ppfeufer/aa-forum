@@ -20,10 +20,24 @@ def highlight_search_term(text: str, search_phrase: str) -> str:
     :rtype:
     """
 
-    search_phrase_cleaned = (
-        search_phrase.replace('"', "").replace("<", "").replace(">", "")
-    )
-    search_phrase_terms = search_phrase_cleaned.split()
+    stopwords = [
+        "what",
+        "who",
+        "is",
+        "a",
+        "at",
+        "is",
+        "in",
+        "he",
+        '"',
+        "<",
+        ">",
+        "on",
+        "of",
+        "off",
+    ]
+    querywords = search_phrase.split()
+    search_phrase_terms = [word for word in querywords if word.lower() not in stopwords]
     highlighted = text
 
     for search_term in search_phrase_terms:

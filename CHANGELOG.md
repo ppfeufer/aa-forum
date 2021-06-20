@@ -6,6 +6,35 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.0.1-alpha.10] - Upcoming
+
+### ⚠️ Migration Reset ⚠️
+
+**Before** you update to this version, run the following command:
+
+```shell
+python manage.py migrate aa_forum zero
+```
+
+**After** you updated run:
+
+```shell
+python manage.py migrate aa_forum
+```
+
+### Added
+
+- Unread messages functionality
+- Version to static files to break browser caches on version updates
+
+### Changed
+
+- Search function behavior. Up until now, the search function was looking for the
+  whole search phrase, which is not the desired behavior. Now it checks if at least
+  one word of the search phrase is in the message. This might give you more results
+  but also doesn't miss the result you were looking for.
+
+
 ## [0.0.1-alpha.9] - 2021-06-17
 
 ### Added

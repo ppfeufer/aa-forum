@@ -37,10 +37,26 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     search_results = None
     page_obj = None
 
-    search_phrase_cleaned = (
-        search_phrase.replace('"', "").replace("<", "").replace(">", "")
-    )
-    if search_phrase_cleaned != "":
+    stopwords = [
+        "what",
+        "who",
+        "is",
+        "a",
+        "at",
+        "is",
+        "in",
+        "he",
+        '"',
+        "<",
+        ">",
+        "on",
+        "of",
+        "off",
+    ]
+    querywords = search_phrase.split()
+    search_phrase_terms = [word for word in querywords if word.lower() not in stopwords]
+
+    if len(search_phrase_terms) >= 1:
         boards = (
             Board.objects.filter(
                 Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
@@ -50,11 +66,8 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
             .values_list("pk", flat=True)
         )
 
-        search_phrase_terms = search_phrase_cleaned.split()
-
         search_results = (
             Message.objects.filter(
-                # Q(message__icontains=search_phrase),
                 reduce(
                     # and_,
                     or_,
