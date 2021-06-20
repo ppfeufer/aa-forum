@@ -92,21 +92,28 @@ class TestBoardViews(TestCase):
         cls.user_1002 = create_fake_user(
             1002, "Peter Parker", permissions=["aa_forum.basic_access"]
         )
+        cls.user_1003 = create_fake_user(
+            1003,
+            "Clark Kent",
+            permissions=["aa_forum.basic_access", "aa_forum.manage_forum"],
+        )
         cls.category = Category.objects.create(name="Science")
         cls.board = Board.objects.create(name="Physics", category=cls.category)
+
+    def setUp(self) -> None:
         # topic 1 is completely new
-        cls.topic_1 = Topic.objects.create(subject="Mysteries", board=cls.board)
-        create_fake_messages(cls.topic_1, 15)
-        cls.topic_1.update_last_message()
+        self.topic_1 = Topic.objects.create(subject="Mysteries", board=self.board)
+        create_fake_messages(self.topic_1, 15)
+        self.topic_1.update_last_message()
         # topic 2 is read
-        cls.topic_2 = Topic.objects.create(subject="Off Topic", board=cls.board)
-        create_fake_messages(cls.topic_2, 9)
-        cls.topic_2.update_last_message()
-        cls.board.update_last_message()
+        self.topic_2 = Topic.objects.create(subject="Off Topic", board=self.board)
+        create_fake_messages(self.topic_2, 9)
+        self.topic_2.update_last_message()
+        self.board.update_last_message()
         LastMessageSeen.objects.create(
-            topic=cls.topic_2,
-            user=cls.user_1001,
-            message_time=cls.topic_2.messages.order_by("-time_posted")[0].time_posted,
+            topic=self.topic_2,
+            user=self.user_1001,
+            message_time=self.topic_2.messages.order_by("-time_posted")[0].time_posted,
         )
 
     def test_should_show_new_indicator_when_topic_not_seen_yet(self):
@@ -184,6 +191,122 @@ class TestBoardViews(TestCase):
         # then
         self.assertEqual(res.status_code, 200)
         self.assertContains(res, f"aa-forum-link-new-{self.topic_2.id}")
+
+    def test_should_delete_topic(self):
+        # given
+        self.client.force_login(self.user_1003)
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_topic_delete", args=[self.topic_1.pk])
+        )
+        # then
+        self.assertRedirects(
+            res,
+            reverse(
+                "aa_forum:forum_board", args=[self.board.category.slug, self.board.slug]
+            ),
+        )
+        self.assertFalse(self.board.topics.filter(pk=self.topic_1.pk).exists())
+
+    def test_should_return_404_when_delete_topic_not_found(self):
+        # given
+        self.client.force_login(self.user_1003)
+        # when
+        res = self.client.get(reverse("aa_forum:forum_topic_delete", args=[0]))
+        # then
+        self.assertEqual(res.status_code, 404)
+
+    def test_should_lock_topic(self):
+        # given
+        self.client.force_login(self.user_1003)
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_topic_change_lock_state", args=[self.topic_1.pk])
+        )
+        # then
+        self.assertRedirects(
+            res,
+            reverse(
+                "aa_forum:forum_board", args=[self.board.category.slug, self.board.slug]
+            ),
+        )
+        self.topic_1.refresh_from_db()
+        self.assertTrue(self.topic_1.is_locked)
+
+    def test_should_unlock_topic(self):
+        # given
+        self.client.force_login(self.user_1003)
+        self.topic_1.is_locked = True
+        self.topic_1.save()
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_topic_change_lock_state", args=[self.topic_1.pk])
+        )
+        # then
+        self.assertRedirects(
+            res,
+            reverse(
+                "aa_forum:forum_board", args=[self.board.category.slug, self.board.slug]
+            ),
+        )
+        self.topic_1.refresh_from_db()
+        self.assertFalse(self.topic_1.is_locked)
+
+    def test_should_return_404_when_lock_topic_not_found(self):
+        # given
+        self.client.force_login(self.user_1003)
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_topic_change_lock_state", args=[0])
+        )
+        # then
+        self.assertEqual(res.status_code, 404)
+
+    def test_should_make_topic_sticky(self):
+        # given
+        self.client.force_login(self.user_1003)
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_topic_change_sticky_state", args=[self.topic_1.pk])
+        )
+        # then
+        self.assertRedirects(
+            res,
+            reverse(
+                "aa_forum:forum_board", args=[self.board.category.slug, self.board.slug]
+            ),
+        )
+        self.topic_1.refresh_from_db()
+        self.assertTrue(self.topic_1.is_sticky)
+
+    def test_should_reverse_topic_sticky(self):
+        # given
+        self.client.force_login(self.user_1003)
+        self.topic_1.is_sticky = True
+        self.topic_1.save()
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_topic_change_sticky_state", args=[self.topic_1.pk])
+        )
+        # then
+        self.assertRedirects(
+            res,
+            reverse(
+                "aa_forum:forum_board", args=[self.board.category.slug, self.board.slug]
+            ),
+        )
+        self.topic_1.refresh_from_db()
+        self.assertFalse(self.topic_1.is_sticky)
+
+    def test_should_return_404_when_sticky_topic_not_found(self):
+        # given
+        self.client.force_login(self.user_1003)
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_topic_change_sticky_state", args=[0])
+        )
+        # then
+        self.assertEqual(res.status_code, 404)
 
 
 @patch(VIEWS_PATH + ".Setting.objects.get_setting", new=my_get_setting)

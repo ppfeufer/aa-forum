@@ -12,7 +12,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Count, Exists, OuterRef, Prefetch, Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
@@ -472,24 +472,28 @@ def topic_change_lock_state(
     :rtype:
     """
 
-    topic = Topic.objects.get(pk=topic_id)
+    try:
+        topic = Topic.objects.select_related(
+            "board", "board__slug", "board__category__slug"
+        ).get(pk=topic_id)
+    except Topic.DoesNotExist:
+        return HttpResponseNotFound("Could not find topic.")
 
     if topic.is_locked:
         topic.is_locked = False
-
         messages.success(
             request,
             mark_safe(_("<h4>Success!</h4><p>Topic has been unlocked/re-opened.</p>")),
         )
+
     else:
         topic.is_locked = True
-
         messages.success(
             request,
             mark_safe(_("<h4>Success!</h4><p>Topic has been locked/closed.</p>")),
         )
 
-    topic.save()
+    topic.save(update_fields=["is_locked"])
 
     return redirect("aa_forum:forum_board", topic.board.category.slug, topic.board.slug)
 
@@ -509,26 +513,30 @@ def topic_change_sticky_state(
     :rtype:
     """
 
-    topic = Topic.objects.get(pk=topic_id)
+    try:
+        topic = Topic.objects.select_related(
+            "board", "board__slug", "board__category__slug"
+        ).get(pk=topic_id)
+    except Topic.DoesNotExist:
+        return HttpResponseNotFound("Could not find topic.")
 
     if topic.is_sticky:
         topic.is_sticky = False
-
         messages.success(
             request,
             mark_safe(_('<h4>Success!</h4><p>Topic is no longer "Sticky".</p>')),
         )
+
     else:
         topic.is_sticky = True
-
         messages.success(
             request,
             mark_safe(_('<h4>Success!</h4><p>Topic is now "Sticky".</p>')),
         )
 
-    topic.save()
+    topic.save(update_fields=["is_sticky"])
 
-    return redirect("aa_forum:forum_board", topic.board.category.slug, topic.board.slug)
+    return redirect(topic.board.get_absolute_url())
 
 
 @login_required
@@ -542,17 +550,21 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
     :type topic_id:
     """
 
-    topic = Topic.objects.get(pk=topic_id)
+    try:
+        topic = Topic.objects.select_related(
+            "board", "board__slug", "board__category__slug"
+        ).get(pk=topic_id)
+    except Topic.DoesNotExist:
+        return HttpResponseNotFound("Could not find topic.")
+
     board = topic.board
-
     topic.delete()
-
     messages.success(
         request,
         mark_safe(_("<h4>Success!</h4><p>Topic removed.</p>")),
     )
 
-    return redirect("aa_forum:forum_board", board.category.slug, board.slug)
+    return redirect(board.get_absolute_url())
 
 
 @login_required
