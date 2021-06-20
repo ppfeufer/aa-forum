@@ -21,6 +21,10 @@
                         <li>» <a href="{{ topic.get_absolute_url }}">{{ topic.subject }}</a></li>
                     {% endif %}
                 {% endif %}
+
+                {% if new_topic == 'yes' %}
+                    <li>» {% translate "Start new topic" %}</li>
+                {% endif %}
             {% endif %}
         {% endif %}
 

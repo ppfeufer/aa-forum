@@ -13,6 +13,7 @@
     <br>
 
     {% include "aa_forum/partials/menu.html" %}
+    {% include "aa_forum/partials/breadcrumb.html" with category=board.category board=board new_topic='yes' %}
 {% endblock %}
 
 {% block aa_forum_body %}
