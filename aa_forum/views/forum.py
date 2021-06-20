@@ -34,7 +34,14 @@ def index(request: WSGIRequest) -> HttpResponse:
     :return:
     :rtype:
     """
-
+    has_read_all_messages = LastMessageSeen.objects.filter(
+        topic=OuterRef("pk"),
+        user=request.user,
+        message_time__gte=OuterRef("last_message__time_posted"),
+    )
+    unread_topic_pks = Topic.objects.filter(~Exists(has_read_all_messages)).values_list(
+        "pk", flat=True
+    )
     boards = (
         Board.objects.select_related(
             "slug",
@@ -54,6 +61,11 @@ def index(request: WSGIRequest) -> HttpResponse:
         .annotate(
             num_posts=Count("topics__messages", distinct=True),
             num_topics=Count("topics", distinct=True),
+            has_unread_topics=Exists(
+                Board.objects.filter(
+                    pk=OuterRef("pk"), topics__in=list(unread_topic_pks)
+                )
+            ),
         )
         .order_by("category__order", "category__id")
     )

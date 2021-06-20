@@ -10,8 +10,8 @@
 
 <div class="aa-forum-board row">
     <div class="aa-forum-board-image">
-        {% if board.has_unread_messages %}
-            <img src="{% static 'aa_forum/images/on.png' %}" alt="Board">
+        {% if board.has_unread_topics %}
+            <img id="aa-forum-link-on-{{ board.id }}" src="{% static 'aa_forum/images/on.png' %}" alt="Board">
         {% else %}
             <img src="{% static 'aa_forum/images/off.png' %}" alt="Board">
         {% endif %}

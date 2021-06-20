@@ -9,27 +9,77 @@ from .utils import create_fake_messages, create_fake_user, my_get_setting
 VIEWS_PATH = "aa_forum.views.forum"
 
 
-class TestIndexView(TestCase):
+class TestIndexViews(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.user = create_fake_user(
+        cls.user_1001 = create_fake_user(
             1001, "Bruce Wayne", permissions=["aa_forum.basic_access"]
         )
+        cls.user_1002 = create_fake_user(
+            1002, "Peter Parker", permissions=["aa_forum.basic_access"]
+        )
         cls.category = Category.objects.create(name="Science")
-        cls.board = Board.objects.create(name="Physics", category=cls.category)
-        cls.topic = Topic.objects.create(subject="Mysteries", board=cls.board)
-        create_fake_messages(cls.topic, 14)
-        cls.topic.update_last_message()
-        cls.board.update_last_message()
+
+    def setUp(self) -> None:
+        # board 1 has an unread topic
+        self.board_1 = Board.objects.create(name="Physics", category=self.category)
+        topic_1 = Topic.objects.create(subject="Mysteries", board=self.board_1)
+        create_fake_messages(topic_1, 4)
+        topic_1.update_last_message()
+        topic_2 = Topic.objects.create(subject="Recent Discoveries", board=self.board_1)
+        create_fake_messages(topic_2, 2)
+        topic_2.update_last_message()
+        LastMessageSeen.objects.create(
+            topic=topic_2,
+            user=self.user_1001,
+            message_time=topic_2.messages.order_by("-time_posted")[0].time_posted,
+        )
+        self.board_1.update_last_message()
+
+        # board 2 has no unread topics
+        self.board_2 = Board.objects.create(name="Math", category=self.category)
+        topic = Topic.objects.create(subject="Unsolved Problems", board=self.board_2)
+        create_fake_messages(topic, 2)
+        topic.update_last_message()
+        LastMessageSeen.objects.create(
+            topic=topic,
+            user=self.user_1001,
+            message_time=topic.messages.order_by("-time_posted")[0].time_posted,
+        )
+        self.board_2.update_last_message()
 
     def test_should_show_index(self):
         # given
-        self.client.force_login(self.user)
+        self.client.force_login(self.user_1001)
         # when
         res = self.client.get(reverse("aa_forum:forum_index"))
         # then
         self.assertEqual(res.status_code, 200)
+
+    def test_should_show_new_indicator_when_one_topic_not_seen_yet(self):
+        # given
+        self.client.force_login(self.user_1001)
+        # when
+        res = self.client.get(reverse("aa_forum:forum_index"))
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, f"aa-forum-link-on-{self.board_1.id}")
+        self.assertNotContains(res, f"aa-forum-link-on-{self.board_2.id}")
+
+    def test_should_show_new_indicator_when_new_posts_are_made(self):
+        # given
+        self.client.force_login(self.user_1001)
+        # when
+        Message.objects.create(
+            topic=self.board_2.topics.first(),
+            user_created=self.user_1002,
+            message="new message",
+        )
+        res = self.client.get(reverse("aa_forum:forum_index"))
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, f"aa-forum-link-on-{self.board_2.id}")
 
 
 class TestBoardViews(TestCase):
