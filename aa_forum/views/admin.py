@@ -12,7 +12,7 @@ from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
-from aa_forum.forms import EditBoardForm, EditCategoryForm
+from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm
 from aa_forum.models import Board, Category
 
 
@@ -68,7 +68,7 @@ def index(request: WSGIRequest) -> HttpResponse:
 
         category_loop.append(category_data)
 
-    form_new_category = EditCategoryForm(prefix="new-category")
+    form_new_category = NewCategoryForm(prefix="new-category")
 
     context = {
         "new_category_form": form_new_category,
@@ -89,7 +89,7 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
 
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = EditCategoryForm(request.POST, prefix="new-category")
+        form = NewCategoryForm(request.POST, prefix="new-category")
 
         # Check whether it's valid:
         if form.is_valid():
@@ -97,6 +97,13 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
             new_category.name = form.cleaned_data["name"]
             new_category.order = 999999
             new_category.save()
+
+            if form.cleaned_data["boards"] != "":
+                boards = form.cleaned_data["boards"]
+
+                for board_name in boards.splitlines():
+                    new_board = Board(name=board_name, category=new_category)
+                    new_board.save()
 
             messages.success(
                 request,

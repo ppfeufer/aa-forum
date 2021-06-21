@@ -85,9 +85,47 @@ class NewTopicForm(forms.Form):
     )
 
 
-class EditCategoryForm(ModelForm):
+class NewCategoryForm(ModelForm):
     """
     New category form
+    """
+
+    name = forms.CharField(
+        required=True,
+        label=get_mandatory_form_label_text(_("Name")),
+        max_length=255,
+        widget=forms.TextInput(attrs={"placeholder": _("Category Name")}),
+    )
+    boards = forms.CharField(
+        required=False,
+        label=_("Boards"),
+        help_text=_(
+            "Boards to be created with this category (One board per line). These "
+            "boards will have no group restrictions, so you have to add them later "
+            "where needed."
+        ),
+        widget=forms.Textarea(
+            attrs={
+                "rows": 10,
+                "cols": 20,
+                "input_type": "textarea",
+                "placeholder": _("Boards"),
+            }
+        ),
+    )
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        """
+        Meta definitions
+        """
+
+        model = Category
+        fields = ["name", "boards"]
+
+
+class EditCategoryForm(ModelForm):
+    """
+    Edit category form
     """
 
     name = forms.CharField(
