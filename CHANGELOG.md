@@ -27,6 +27,7 @@ python manage.py migrate aa_forum
 - Unread messages functionality
 - Version to static files to break browser caches on version updates
 - New topic view now also has the bread crumb navigation
+- Ability to create new boards with a new category
 
 ### Changed
 
