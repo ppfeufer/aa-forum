@@ -55,7 +55,7 @@ def index(request: WSGIRequest) -> HttpResponse:
             num_posts=Count("topics__messages", distinct=True),
             num_topics=Count("topics", distinct=True),
         )
-        .order_by("order")
+        .order_by("category__order", "category__id")
     )
 
     categories_map = dict()

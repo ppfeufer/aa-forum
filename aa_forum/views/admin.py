@@ -34,7 +34,7 @@ def index(request: WSGIRequest) -> HttpResponse:
             .prefetch_related("groups")
             .order_by("order"),
         )
-    ).order_by("order")
+    ).order_by("order", "id")
 
     groups_queryset = Group.objects.all()
     category_loop = list()
