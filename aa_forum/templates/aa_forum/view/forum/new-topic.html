@@ -50,13 +50,7 @@
 {% endblock %}
 
 {% block extra_javascript %}
-<<<<<<< HEAD
-    <script type="application/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-    <script type="application/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
-    <script type="application/javascript" src="{% versioned_static "aa_forum/javascript/aa-forum-ckeditor.min.js" %}"></script>
-=======
-    <script type="application/javascript" src="{% versioned_static 'ckeditor/ckeditor-init.js' %}"></script>
-    <script type="application/javascript" src="{% versioned_static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <script type="application/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="application/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
     <script type="application/javascript" src="{% versioned_static 'aa_forum/javascript/aa-forum-ckeditor.min.js' %}"></script>
->>>>>>> Refactor direct board links
 {% endblock %}
