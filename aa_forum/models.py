@@ -5,6 +5,8 @@ Models
 import math
 from typing import Optional
 
+from ckeditor_uploader.fields import RichTextUploadingField
+
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models, transaction
@@ -424,7 +426,7 @@ class Message(models.Model):
         related_name="+",
         on_delete=models.SET(get_sentinel_user),
     )
-    message = models.TextField(blank=True)
+    message = RichTextUploadingField(blank=False)
     read_by = models.ManyToManyField(
         User,
         blank=True,
