@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
 from django.db import transaction
-from django.db.models import Count, Exists, OuterRef, Prefetch
+from django.db.models import Count, Exists, OuterRef, Prefetch, Q
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
@@ -58,10 +58,8 @@ def index(request: WSGIRequest) -> HttpResponse:
         .annotate(
             num_posts=Count("topics__messages", distinct=True),
             num_topics=Count("topics", distinct=True),
-            has_unread_topics=Exists(
-                Board.objects.filter(
-                    pk=OuterRef("pk"), topics__in=list(unread_topic_pks)
-                )
+            num_unread=Count(
+                "topics", filter=Q(topics__in=unread_topic_pks), distinct=True
             ),
         )
         .order_by("category__order", "category__id")

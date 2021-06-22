@@ -10,7 +10,7 @@
 
 <div class="aa-forum-board row">
     <div class="aa-forum-board-image">
-        {% if board.has_unread_topics %}
+        {% if board.num_unread > 0 %}
             <img id="aa-forum-link-on-{{ board.id }}" src="{% static 'aa_forum/images/on.png' %}" alt="Board">
         {% else %}
             <img src="{% static 'aa_forum/images/off.png' %}" alt="Board">
@@ -46,7 +46,8 @@
 
     <div class="aa-forum-board-stats hidden-sm hidden-xs">
         {{ board.num_posts }} {% translate "Posts" %}<br>
-        {{ board.num_topics }} {% translate "Topics" %}
+        {{ board.num_topics }} {% translate "Topics" %}<br>
+        {{ board.num_unread }} {% translate "Unread" %}
     </div>
 
     <div class="aa-forum-board-last-post hidden-xs">
