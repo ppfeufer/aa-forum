@@ -1,6 +1,5 @@
 {% extends 'aa_forum/base.html' %}
 
-{% load aa_forum_template_variables %}
 {% load aa_forum_versioned_static %}
 {% load bootstrap %}
 {% load evelinks %}
@@ -17,19 +16,18 @@
 {% endblock %}
 
 {% block aa_forum_body %}
-    {% set_template_variable category_slug = board.category.slug %}
-    {% set_template_variable board_slug = board.slug %}
 
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
                 {% translate "Start new topic in" %}
-                "<a href="{% url 'aa_forum:forum_board' category_slug board_slug %}">{{ board.name }}</a>"
+                "<a href="{{ board.get_absolute_url }}">{{ board.name }}</a>"
             </div>
         </div>
 
         <div class="panel-body">
-            <form id="aa-forum-form-new-topic" autocomplete="off" action="{% url 'aa_forum:forum_board_new_topic' category_slug board_slug %}" method="post">
+            <form id="aa-forum-form-new-topic" autocomplete="off"
+                action="{% url 'aa_forum:forum_board_new_topic' board.category.slug board.slug %}" method="post">
                 {% csrf_token %}
 
                 {{ form|bootstrap }}
@@ -37,6 +35,7 @@
                 {% include "aa_forum/partials/form/required-field-hint.html" %}
 
                 <div class="form-group text-right clearfix">
+                    <a id="aa-forum-btn-cancel" class="btn btn-default btn-sm" href="{{ board.get_absolute_url }}">{% translate "Cancel" %}</a>
                     <button class="btn btn-default btn-sm" type="reset">{% translate "Clear Form" %}</button>
                     <button class="btn btn-primary btn-sm" type="submit">{% translate "Start Topic" %}</button>
                 </div>
@@ -51,7 +50,7 @@
 {% endblock %}
 
 {% block extra_javascript %}
-    <script type="application/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-    <script type="application/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
-    <script type="application/javascript" src="{% versioned_static "aa_forum/javascript/aa-forum-ckeditor.min.js" %}"></script>
+    <script type="application/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="application/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <script type="application/javascript" src="{% versioned_static 'aa_forum/javascript/aa-forum-ckeditor.min.js' %}"></script>
 {% endblock %}

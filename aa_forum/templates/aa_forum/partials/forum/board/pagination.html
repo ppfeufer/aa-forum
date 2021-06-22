@@ -8,14 +8,14 @@
         <ul class="pagination pagination-sm">
             {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a href="{% url 'aa_forum:forum_board' category.slug board.slug %}" class="page-link">
+                    <a href="{{ board.get_absolute_url }}" class="page-link">
                         {% translate "First" %}
                     </a>
                 </li>
 
                 <li class="page-item">
                     {% if page_obj.previous_page_number == 1 %}
-                        <a href="{% url 'aa_forum:forum_board' category.slug board.slug %}" class="page-link">
+                        <a href="{{ board.get_absolute_url }}" class="page-link">
                             {% translate "Previous" %}
                         </a>
                     {% else %}
@@ -27,7 +27,7 @@
 
                 <li>
                     {% if page_obj.previous_page_number == 1 %}
-                        <a class="page-link" href="{% url 'aa_forum:forum_board' category.slug board.slug %}">
+                        <a class="page-link" href="{{ board.get_absolute_url }}">
                             {{ page_obj.previous_page_number }}
                         </a>
                     {% else %}

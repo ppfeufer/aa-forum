@@ -12,7 +12,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Count, Exists, OuterRef, Prefetch, Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
@@ -34,7 +34,14 @@ def index(request: WSGIRequest) -> HttpResponse:
     :return:
     :rtype:
     """
-
+    has_read_all_messages = LastMessageSeen.objects.filter(
+        topic=OuterRef("pk"),
+        user=request.user,
+        message_time__gte=OuterRef("last_message__time_posted"),
+    )
+    unread_topic_pks = Topic.objects.filter(~Exists(has_read_all_messages)).values_list(
+        "pk", flat=True
+    )
     boards = (
         Board.objects.select_related(
             "slug",
@@ -46,14 +53,14 @@ def index(request: WSGIRequest) -> HttpResponse:
             "first_message",
         )
         .prefetch_related("groups", "topics")
-        .filter(
-            Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-            parent_board__isnull=True,
-        )
-        .distinct()
+        .user_has_access(request.user)
+        .filter(parent_board__isnull=True)
         .annotate(
             num_posts=Count("topics__messages", distinct=True),
             num_topics=Count("topics", distinct=True),
+            num_unread=Count(
+                "topics", filter=Q(topics__in=unread_topic_pks), distinct=True
+            ),
         )
         .order_by("category__order", "category__id")
     )
@@ -121,12 +128,8 @@ def board(
                     to_attr="topics_sorted",
                 )
             )
-            .filter(
-                Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-                category__slug__slug__exact=category_slug,
-                slug__slug__exact=board_slug,
-            )
-            .distinct()
+            .user_has_access(request.user)
+            .filter(category__slug__slug=category_slug, slug__slug=board_slug)
             .get()
         )
     except Board.DoesNotExist:
@@ -188,12 +191,11 @@ def board_new_topic(
     try:
         board = (
             Board.objects.select_related("slug", "category", "category__slug")
+            .user_has_access(request.user)
             .filter(
-                Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
                 category__slug__slug__exact=category_slug,
                 slug__slug__exact=board_slug,
             )
-            .distinct()
             .get()
         )
     except Board.DoesNotExist:
@@ -460,24 +462,28 @@ def topic_change_lock_state(
     :rtype:
     """
 
-    topic = Topic.objects.get(pk=topic_id)
+    try:
+        topic = Topic.objects.select_related(
+            "board", "board__slug", "board__category__slug"
+        ).get(pk=topic_id)
+    except Topic.DoesNotExist:
+        return HttpResponseNotFound("Could not find topic.")
 
     if topic.is_locked:
         topic.is_locked = False
-
         messages.success(
             request,
             mark_safe(_("<h4>Success!</h4><p>Topic has been unlocked/re-opened.</p>")),
         )
+
     else:
         topic.is_locked = True
-
         messages.success(
             request,
             mark_safe(_("<h4>Success!</h4><p>Topic has been locked/closed.</p>")),
         )
 
-    topic.save()
+    topic.save(update_fields=["is_locked"])
 
     return redirect("aa_forum:forum_board", topic.board.category.slug, topic.board.slug)
 
@@ -497,26 +503,30 @@ def topic_change_sticky_state(
     :rtype:
     """
 
-    topic = Topic.objects.get(pk=topic_id)
+    try:
+        topic = Topic.objects.select_related(
+            "board", "board__slug", "board__category__slug"
+        ).get(pk=topic_id)
+    except Topic.DoesNotExist:
+        return HttpResponseNotFound("Could not find topic.")
 
     if topic.is_sticky:
         topic.is_sticky = False
-
         messages.success(
             request,
             mark_safe(_('<h4>Success!</h4><p>Topic is no longer "Sticky".</p>')),
         )
+
     else:
         topic.is_sticky = True
-
         messages.success(
             request,
             mark_safe(_('<h4>Success!</h4><p>Topic is now "Sticky".</p>')),
         )
 
-    topic.save()
+    topic.save(update_fields=["is_sticky"])
 
-    return redirect("aa_forum:forum_board", topic.board.category.slug, topic.board.slug)
+    return redirect(topic.board.get_absolute_url())
 
 
 @login_required
@@ -530,17 +540,21 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
     :type topic_id:
     """
 
-    topic = Topic.objects.get(pk=topic_id)
+    try:
+        topic = Topic.objects.select_related(
+            "board", "board__slug", "board__category__slug"
+        ).get(pk=topic_id)
+    except Topic.DoesNotExist:
+        return HttpResponseNotFound("Could not find topic.")
+
     board = topic.board
-
     topic.delete()
-
     messages.success(
         request,
         mark_safe(_("<h4>Success!</h4><p>Topic removed.</p>")),
     )
 
-    return redirect("aa_forum:forum_board", board.category.slug, board.slug)
+    return redirect(board.get_absolute_url())
 
 
 @login_required
@@ -598,17 +612,26 @@ def message_modify(
     :type message_id:
     """
 
-    # Check if the user has access to this board in the first place
+    # Check if the message exists
     try:
-        board = (
-            Board.objects.filter(
-                Q(groups__in=request.user.groups.all()) | Q(groups__isnull=True),
-                slug__slug__exact=board_slug,
-            )
-            .distinct()
-            .get()
+        message = Message.objects.select_related(
+            "topic",
+            "topic__slug",
+            "topic__board",
+            "topic__board__slug",
+            "topic__board__category",
+            "topic__board__category__slug",
+        ).get(pk=message_id)
+    except Message.DoesNotExist:
+        messages.error(
+            request,
+            mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p>")),
         )
-    except Board.DoesNotExist:
+
+        return redirect("aa_forum:forum_index")
+
+    # Check if the user has access to this board
+    if not message.topic.board.user_has_access(request.user):
         messages.error(
             request,
             mark_safe(
@@ -621,19 +644,8 @@ def message_modify(
 
         return redirect("aa_forum:forum_index")
 
-    # If the user has access, check if the message exists
-    try:
-        message = Message.objects.get(pk=message_id)
-    except Message.DoesNotExist:
-        messages.error(
-            request,
-            mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p>")),
-        )
-
-        return redirect("aa_forum:forum_index")
-
     # Check if the user actually has the right to edit this message
-    if message.user_created_id is not request.user.id and not request.user.has_perm(
+    if message.user_created_id != request.user.id and not request.user.has_perm(
         "aa_forum.manage_forum"
     ):
         messages.error(
@@ -643,7 +655,7 @@ def message_modify(
             ),
         )
 
-        return redirect("aa_forum:forum_index")
+        return redirect(message.topic.get_absolute_url())
 
     # We are in the clear, let's see what we've got
     if request.method == "POST":
@@ -669,7 +681,7 @@ def message_modify(
     else:
         form = EditMessageForm(instance=message)
 
-    context = {"form": form, "board": board, "message": message}
+    context = {"form": form, "board": message.topic.board, "message": message}
 
     return render(request, "aa_forum/view/forum/modify-message.html", context)
 
@@ -686,7 +698,17 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
     :type message_id:
     """
 
-    message = Message.objects.get(pk=message_id)
+    try:
+        message = Message.objects.select_related(
+            "topic",
+            "topic__slug",
+            "topic__board",
+            "topic__board__slug",
+            "topic__board__category",
+            "topic__board__category__slug",
+        ).get(pk=message_id)
+    except Message.DoesNotExist:
+        return HttpResponseNotFound("Message not found.")
     topic = message.topic
 
     # Let's check if we have more than one message in this topic

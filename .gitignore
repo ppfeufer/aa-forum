@@ -3,6 +3,7 @@
 /*.egg-info/
 .idea/
 .tox/
+htmlcov/
 
 *.log
 *.tmp

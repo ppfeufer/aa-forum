@@ -16,7 +16,7 @@ from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
 from aa_forum.constants import SETTING_MESSAGESPERPAGE
-from aa_forum.managers import SettingsManager, TopicManager
+from aa_forum.managers import BoardManager, SettingsManager, TopicManager
 
 
 def get_sentinel_user() -> User:
@@ -213,6 +213,8 @@ class Board(models.Model):
         help_text="Shortcut for better performance",
     )
 
+    objects = BoardManager()
+
     class Meta:
         """
         Meta definitions
@@ -244,6 +246,12 @@ class Board(models.Model):
             self.slug = get_slug_on_save(subject=self.name)
         super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        """
+        Calculate URL for this board and return it.
+        """
+        return reverse("aa_forum:forum_board", args=[self.category.slug, self.slug])
+
     def update_last_message(self) -> Optional[models.Model]:
         """
         Update the last message for this board.
@@ -253,6 +261,12 @@ class Board(models.Model):
             Message.objects.filter(topic__board=self).order_by("-time_posted").first()
         )
         self.save(update_fields=["last_message"])
+
+    def user_has_access(self, user: User) -> bool:
+        """
+        Return True if the given user has access to this board, else False.
+        """
+        return Board.objects.user_has_access(user).filter(pk=self.pk).exists()
 
 
 class Topic(models.Model):
@@ -331,6 +345,18 @@ class Topic(models.Model):
         super().save(*args, **kwargs)
 
         update_fields = list()
+
+        # sometimes that message does not exist
+        # which would otherwise cause this method to fail
+        try:
+            self.board.first_message
+        except Message.DoesNotExist:
+            self.board.first_message = None
+
+        try:
+            self.board.last_message
+        except Message.DoesNotExist:
+            self.board.last_message = None
 
         if self.board.first_message != self.first_message:
             self.board.first_message = self.first_message

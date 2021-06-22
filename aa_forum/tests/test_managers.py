@@ -5,6 +5,44 @@ from ..models import Board, Category, Topic
 from .utils import create_fake_message, create_fake_user
 
 
+class TestBoard(TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+        cls.group = Group.objects.create(name="Superhero")
+        cls.category = Category.objects.create(name="Science")
+
+    def setUp(self) -> None:
+        self.user = create_fake_user(1001, "Bruce Wayne")
+
+    def test_should_return_board_with_no_groups(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        # when
+        result = Board.objects.user_has_access(self.user)
+        # then
+        self.assertIn(board, result)
+
+    def test_should_return_board_for_group_member(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        board.groups.add(self.group)
+        self.user.groups.add(self.group)
+        # when
+        result = Board.objects.user_has_access(self.user)
+        # then
+        self.assertIn(board, result)
+
+    def test_should_not_return_board_for_non_group_member(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        board.groups.add(self.group)
+        # when
+        result = Board.objects.user_has_access(self.user)
+        # then
+        self.assertNotIn(board, result)
+
+
 class TestTopic(TestCase):
     @classmethod
     def setUpClass(cls) -> None:

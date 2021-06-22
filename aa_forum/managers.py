@@ -20,6 +20,23 @@ class SettingsManager(models.Manager):
         return self.get(variable=setting_key).value
 
 
+class BoardQuerySet(models.QuerySet):
+    def user_has_access(self, user: User) -> models.QuerySet:
+        """
+        Filter boards that given user has access to.
+        """
+        return self.filter(
+            Q(groups__in=user.groups.all()) | Q(groups__isnull=True)
+        ).distinct()
+
+
+class BoardManagerBase(models.Manager):
+    pass
+
+
+BoardManager = BoardManagerBase.from_queryset(BoardQuerySet)
+
+
 class TopicQuerySet(models.QuerySet):
     def get_from_slugs(
         self,
