@@ -340,6 +340,7 @@ class Topic(models.Model):
 
         update_fields = list()
 
+        self.board.refresh_from_db()
         if self.board.first_message != self.first_message:
             self.board.first_message = self.first_message
             update_fields.append("first_message")
@@ -467,6 +468,7 @@ class Message(models.Model):
 
         update_fields = list()
 
+        self.topic.refresh_from_db()
         if not self.topic.first_message:
             self.topic.first_message = self
             update_fields.append("first_message")

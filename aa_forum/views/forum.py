@@ -656,7 +656,7 @@ def message_modify(
             ),
         )
 
-        return redirect("aa_forum:forum_index")
+        return redirect(message.topic.get_absolute_url())
 
     # We are in the clear, let's see what we've got
     if request.method == "POST":

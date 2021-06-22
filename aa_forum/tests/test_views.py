@@ -534,3 +534,57 @@ class TestTopicViews(TestCase):
         res = self.client.get(reverse("aa_forum:forum_message_delete", args=[0]))
         # then
         self.assertEqual(res.status_code, 404)
+
+    @patch(VIEWS_PATH + ".messages")
+    def test_should_not_edit_message_from_others(self, messages):
+        # given
+        self.client.force_login(self.user_1001)
+        alien_message = Message.objects.create(
+            topic=self.topic, user_created=self.user_1003, message="old text"
+        )
+        # when
+        res = self.client.post(
+            reverse(
+                "aa_forum:forum_message_modify",
+                args=[
+                    self.category.slug,
+                    self.board.slug,
+                    self.topic.slug,
+                    alien_message.pk,
+                ],
+            ),
+            data={"message": "new text"},
+        )
+        # then
+        self.assertEqual(res.status_code, 302)
+        self.assertEqual(res.url, self.topic.get_absolute_url())
+        alien_message.refresh_from_db()
+        self.assertEqual(alien_message.message, "old text")
+        self.assertTrue(messages.error.called)
+
+    # @patch(VIEWS_PATH + ".messages")
+    # def test_should_not_edit_message_from_board_with_no_access(self, messages):
+    #     # given
+    #     self.client.force_login(self.user_1001)
+    #     alien_message = Message.objects.create(
+    #         topic=self.topic, user_created=self.user_1003, message="old text"
+    #     )
+    #     # when
+    #     res = self.client.post(
+    #         reverse(
+    #             "aa_forum:forum_message_modify",
+    #             args=[
+    #                 self.category.slug,
+    #                 self.board.slug,
+    #                 self.topic.slug,
+    #                 alien_message.pk,
+    #             ],
+    #         ),
+    #         data={"message": "new text"},
+    #     )
+    #     # then
+    #     self.assertEqual(res.status_code, 302)
+    #     self.assertEqual(res.url, self.topic.get_absolute_url())
+    #     alien_message.refresh_from_db()
+    #     self.assertEqual(alien_message.message, "old text")
+    #     self.assertTrue(messages.error.called)
