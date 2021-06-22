@@ -262,6 +262,12 @@ class Board(models.Model):
         )
         self.save(update_fields=["last_message"])
 
+    def user_has_access(self, user: User) -> bool:
+        """
+        Return True if the given user has access to this board, else False.
+        """
+        return Board.objects.user_has_access(user).filter(pk=self.pk).exists()
+
 
 class Topic(models.Model):
     """
@@ -340,7 +346,18 @@ class Topic(models.Model):
 
         update_fields = list()
 
-        self.board.refresh_from_db()
+        # sometimes that message does not exist
+        # which would otherwise cause this method to fail
+        try:
+            self.board.first_message
+        except Message.DoesNotExist:
+            self.board.first_message = None
+
+        try:
+            self.board.last_message
+        except Message.DoesNotExist:
+            self.board.last_message = None
+
         if self.board.first_message != self.first_message:
             self.board.first_message = self.first_message
             update_fields.append("first_message")
@@ -468,7 +485,6 @@ class Message(models.Model):
 
         update_fields = list()
 
-        self.topic.refresh_from_db()
         if not self.topic.first_message:
             self.topic.first_message = self
             update_fields.append("first_message")

@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+from django.contrib.auth.models import Group
 from django.test import TestCase
 from django.urls import reverse
 
@@ -322,12 +323,15 @@ class TestTopicViews(TestCase):
             "Clark Lent",
             permissions=["aa_forum.basic_access", "aa_forum.manage_forum"],
         )
+        cls.group = Group.objects.create(name="Superhero")
         cls.category = Category.objects.create(name="Science")
-        cls.board = Board.objects.create(name="Physics", category=cls.category)
-        cls.topic = Topic.objects.create(subject="Mysteries", board=cls.board)
-        create_fake_messages(cls.topic, 15)
-        cls.topic.update_last_message()
-        cls.board.update_last_message()
+
+    def setUp(self) -> None:
+        self.board = Board.objects.create(name="Physics", category=self.category)
+        self.topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        create_fake_messages(self.topic, 15)
+        self.topic.update_last_message()
+        self.board.update_last_message()
 
     def test_should_remember_last_message_seen_by_user_page_1(self):
         # given
@@ -562,29 +566,30 @@ class TestTopicViews(TestCase):
         self.assertEqual(alien_message.message, "old text")
         self.assertTrue(messages.error.called)
 
-    # @patch(VIEWS_PATH + ".messages")
-    # def test_should_not_edit_message_from_board_with_no_access(self, messages):
-    #     # given
-    #     self.client.force_login(self.user_1001)
-    #     alien_message = Message.objects.create(
-    #         topic=self.topic, user_created=self.user_1003, message="old text"
-    #     )
-    #     # when
-    #     res = self.client.post(
-    #         reverse(
-    #             "aa_forum:forum_message_modify",
-    #             args=[
-    #                 self.category.slug,
-    #                 self.board.slug,
-    #                 self.topic.slug,
-    #                 alien_message.pk,
-    #             ],
-    #         ),
-    #         data={"message": "new text"},
-    #     )
-    #     # then
-    #     self.assertEqual(res.status_code, 302)
-    #     self.assertEqual(res.url, self.topic.get_absolute_url())
-    #     alien_message.refresh_from_db()
-    #     self.assertEqual(alien_message.message, "old text")
-    #     self.assertTrue(messages.error.called)
+    @patch(VIEWS_PATH + ".messages")
+    def test_should_not_edit_message_from_board_with_no_access(self, messages):
+        # given
+        self.board.groups.add(self.group)
+        self.client.force_login(self.user_1001)
+        alien_message = Message.objects.create(
+            topic=self.topic, user_created=self.user_1001, message="old text"
+        )
+        # when
+        res = self.client.post(
+            reverse(
+                "aa_forum:forum_message_modify",
+                args=[
+                    self.category.slug,
+                    self.board.slug,
+                    self.topic.slug,
+                    alien_message.pk,
+                ],
+            ),
+            data={"message": "new text"},
+        )
+        # then
+        self.assertEqual(res.status_code, 302)
+        self.assertEqual(res.url, reverse("aa_forum:forum_index"))
+        alien_message.refresh_from_db()
+        self.assertEqual(alien_message.message, "old text")
+        self.assertTrue(messages.error.called)

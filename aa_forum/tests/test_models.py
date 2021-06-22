@@ -1,6 +1,7 @@
 import datetime as dt
 from unittest.mock import patch
 
+from django.contrib.auth.models import Group
 from django.test import TestCase
 from django.urls import reverse
 from django.utils.timezone import now
@@ -206,6 +207,7 @@ class TestBoard(TestCase):
     def setUpClass(cls) -> None:
         super().setUpClass()
         cls.user = create_fake_user(1001, "Bruce Wayne")
+        cls.group = Group.objects.create(name="Superhero")
 
     def setUp(self) -> None:
         self.category = Category.objects.create(name="Science")
@@ -244,3 +246,30 @@ class TestBoard(TestCase):
             url,
             reverse("aa_forum:forum_board", args=["science", "physics"]),
         )
+
+    def test_should_return_board_with_no_groups(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        # when
+        result = board.user_has_access(self.user)
+        # then
+        self.assertTrue(result)
+
+    def test_should_return_board_for_group_member(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        board.groups.add(self.group)
+        self.user.groups.add(self.group)
+        # when
+        result = board.user_has_access(self.user)
+        # then
+        self.assertTrue(result)
+
+    def test_should_not_return_board_for_non_group_member(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        board.groups.add(self.group)
+        # when
+        result = board.user_has_access(self.user)
+        # then
+        self.assertFalse(result)

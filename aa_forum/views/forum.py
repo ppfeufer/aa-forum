@@ -614,14 +614,26 @@ def message_modify(
     :type message_id:
     """
 
-    # Check if the user has access to this board in the first place
+    # Check if the message exists
     try:
-        board = (
-            Board.objects.user_has_access(request.user)
-            .filter(slug__slug=board_slug)
-            .get()
+        message = Message.objects.select_related(
+            "topic",
+            "topic__slug",
+            "topic__board",
+            "topic__board__slug",
+            "topic__board__category",
+            "topic__board__category__slug",
+        ).get(pk=message_id)
+    except Message.DoesNotExist:
+        messages.error(
+            request,
+            mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p>")),
         )
-    except Board.DoesNotExist:
+
+        return redirect("aa_forum:forum_index")
+
+    # Check if the user has access to this board
+    if not message.topic.board.user_has_access(request.user):
         messages.error(
             request,
             mark_safe(
@@ -634,19 +646,8 @@ def message_modify(
 
         return redirect("aa_forum:forum_index")
 
-    # If the user has access, check if the message exists
-    try:
-        message = Message.objects.get(pk=message_id)
-    except Message.DoesNotExist:
-        messages.error(
-            request,
-            mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p>")),
-        )
-
-        return redirect("aa_forum:forum_index")
-
     # Check if the user actually has the right to edit this message
-    if message.user_created_id is not request.user.id and not request.user.has_perm(
+    if message.user_created_id != request.user.id and not request.user.has_perm(
         "aa_forum.manage_forum"
     ):
         messages.error(
@@ -682,7 +683,7 @@ def message_modify(
     else:
         form = EditMessageForm(instance=message)
 
-    context = {"form": form, "board": board, "message": message}
+    context = {"form": form, "board": message.topic.board, "message": message}
 
     return render(request, "aa_forum/view/forum/modify-message.html", context)
 
