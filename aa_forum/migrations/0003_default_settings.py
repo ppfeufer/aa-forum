@@ -1,12 +1,8 @@
 from django.db import migrations
 
 default_settings_to_migrate = [
-    {"variable": "defaultDateFormat", "value": "F d, Y"},
-    {"variable": "defaultTimeFormat", "value": "G:i:s"},
-    {"variable": "maxMessageLength", "value": "20000"},
     {"variable": "defaultMaxMessages", "value": "15"},
     {"variable": "defaultMaxTopics", "value": "20"},
-    {"variable": "oldTopicDays", "value": "120"},
 ]
 
 

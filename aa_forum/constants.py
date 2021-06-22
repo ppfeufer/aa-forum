@@ -12,9 +12,5 @@ verbose_name_slug = slugify(verbose_name, allow_unicode=True)
 user_agent = f"{verbose_name_slug} v{__version__} {github_url}"
 
 # Setting keys
-SETTING_DATEFORMAT = "defaultDateFormat"
-SETTING_TIMEFORMAT = "defaultTimeFormat"
-SETTING_MAXMESSAGELENGTH = "maxMessageLength"
 SETTING_MESSAGESPERPAGE = "defaultMaxMessages"
 SETTING_TOPICSPERPAGE = "defaultMaxTopics"
-SETTING_OLDTOPICDAYS = "oldTopicDays"
