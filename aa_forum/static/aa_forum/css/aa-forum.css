@@ -332,6 +332,16 @@
     .aa-forum .SumoSelect p {
         height: auto;
     }
+
+    /* For for Dark Mode
+    --------------------------------------------------------------------------------- */
+    .template-dark-mode .aa-forum .SumoSelect {
+        color: rgb(54, 54, 54);
+    }
+
+    .template-dark-mode .aa-forum .SumoSelect > .CaptionCont > span.placeholder {
+        color: rgb(62, 68, 76);
+    }
 }
 
 /* cKeditor

@@ -36,6 +36,10 @@ python manage.py migrate aa_forum
   one word of the search phrase is in the message. This might give you more results
   but also doesn't miss the result you were looking for.
 
+### Fixed
+
+- Appearance for multi select dropdown when dark mode is used
+
 
 ## [0.0.1-alpha.9] - 2021-06-17
 
