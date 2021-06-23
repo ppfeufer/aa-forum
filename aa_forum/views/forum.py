@@ -290,11 +290,22 @@ def topic(
     except IndexError:
         pass
     else:
-        LastMessageSeen.objects.update_or_create(
-            topic=topic,
-            user=request.user,
-            defaults={"message_time": last_message_on_page.time_posted},
-        )
+        try:
+            last_message_seen = LastMessageSeen.objects.get(
+                topic=topic, user=request.user
+            )
+        except LastMessageSeen.DoesNotExist:
+            last_message_seen = None
+
+        if (
+            not last_message_seen
+            or last_message_seen.message_time < last_message_on_page.time_posted
+        ):
+            LastMessageSeen.objects.update_or_create(
+                topic=topic,
+                user=request.user,
+                defaults={"message_time": last_message_on_page.time_posted},
+            )
 
     context = {
         "topic": topic,
