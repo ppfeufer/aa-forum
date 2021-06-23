@@ -42,9 +42,7 @@ def index(request: WSGIRequest) -> HttpResponse:
     )
     boards = (
         Board.objects.select_related(
-            "slug",
             "category",
-            "category__slug",
             "last_message",
             "last_message__topic",
             "last_message__user_created__profile__main_character",
@@ -107,12 +105,11 @@ def board(
     )
     try:
         board = (
-            Board.objects.select_related("slug", "category", "category__slug")
+            Board.objects.select_related("category")
             .prefetch_related(
                 Prefetch(
                     "topics",
                     queryset=Topic.objects.select_related(
-                        "slug",
                         "last_message",
                         "last_message__user_created",
                         "last_message__user_created__profile__main_character",
@@ -127,7 +124,7 @@ def board(
                 )
             )
             .user_has_access(request.user)
-            .filter(category__slug__slug=category_slug, slug__slug=board_slug)
+            .filter(category__slug=category_slug, slug=board_slug)
             .get()
         )
     except Board.DoesNotExist:
@@ -172,7 +169,7 @@ def board_new_topic(
     """
 
     try:
-        Category.objects.get(slug__slug__exact=category_slug)
+        Category.objects.get(slug__exact=category_slug)
     except Category.DoesNotExist:
         messages.error(
             request,
@@ -188,12 +185,9 @@ def board_new_topic(
 
     try:
         board = (
-            Board.objects.select_related("slug", "category", "category__slug")
+            Board.objects.select_related("category")
             .user_has_access(request.user)
-            .filter(
-                category__slug__slug__exact=category_slug,
-                slug__slug__exact=board_slug,
-            )
+            .filter(category__slug=category_slug, slug=board_slug)
             .get()
         )
     except Board.DoesNotExist:
@@ -401,7 +395,7 @@ def topic_reply(
 
         # Check whether it's valid:
         if form.is_valid():
-            topic = Topic.objects.get(slug__slug__exact=topic_slug)
+            topic = Topic.objects.get(slug__exact=topic_slug)
 
             new_message = Message()
             new_message.topic = topic
@@ -437,9 +431,7 @@ def topic_change_lock_state(
     """
 
     try:
-        topic = Topic.objects.select_related(
-            "board", "board__slug", "board__category__slug"
-        ).get(pk=topic_id)
+        topic = Topic.objects.select_related("board").get(pk=topic_id)
     except Topic.DoesNotExist:
         return HttpResponseNotFound("Could not find topic.")
 
@@ -478,9 +470,7 @@ def topic_change_sticky_state(
     """
 
     try:
-        topic = Topic.objects.select_related(
-            "board", "board__slug", "board__category__slug"
-        ).get(pk=topic_id)
+        topic = Topic.objects.select_related("board").get(pk=topic_id)
     except Topic.DoesNotExist:
         return HttpResponseNotFound("Could not find topic.")
 
@@ -515,9 +505,7 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
     """
 
     try:
-        topic = Topic.objects.select_related(
-            "board", "board__slug", "board__category__slug"
-        ).get(pk=topic_id)
+        topic = Topic.objects.select_related("board").get(pk=topic_id)
     except Topic.DoesNotExist:
         return HttpResponseNotFound("Could not find topic.")
 
@@ -546,12 +534,7 @@ def message_entry_point_in_topic(
 
     try:
         message = Message.objects.select_related(
-            "topic",
-            "topic__slug",
-            "topic__board",
-            "topic__board__slug",
-            "topic__board__category",
-            "topic__board__category__slug",
+            "topic", "topic__board", "topic__board__category"
         ).get(pk=message_id)
     except Message.DoesNotExist:
         messages.error(
@@ -589,12 +572,7 @@ def message_modify(
     # Check if the message exists
     try:
         message = Message.objects.select_related(
-            "topic",
-            "topic__slug",
-            "topic__board",
-            "topic__board__slug",
-            "topic__board__category",
-            "topic__board__category__slug",
+            "topic", "topic__board", "topic__board__category"
         ).get(pk=message_id)
     except Message.DoesNotExist:
         messages.error(
@@ -674,12 +652,7 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
 
     try:
         message = Message.objects.select_related(
-            "topic",
-            "topic__slug",
-            "topic__board",
-            "topic__board__slug",
-            "topic__board__category",
-            "topic__board__category__slug",
+            "topic", "topic__board", "topic__board__category"
         ).get(pk=message_id)
     except Message.DoesNotExist:
         return HttpResponseNotFound("Message not found.")
