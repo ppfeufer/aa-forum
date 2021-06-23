@@ -367,7 +367,34 @@ class TestTopicViews(TestCase):
         last_message_seen = LastMessageSeen.objects.get(
             topic=self.topic, user=self.user_1001
         )
-        # view has 2 pages á 5 messages. this is last message on 1st page
+        # view has 2 pages á 5 messages. this is last message on 2nd page
+        last_message = Message.objects.order_by("time_posted")[9]
+        self.assertEqual(last_message_seen.message_time, last_message.time_posted)
+
+    def test_should_remember_last_message_seen_by_user_when_opening_previous_pages(
+        self,
+    ):
+        # given
+        self.client.force_login(self.user_1001)
+        res = self.client.get(
+            reverse(
+                "aa_forum:forum_topic",
+                args=[self.category.slug, self.board.slug, self.topic.slug, 2],
+            )
+        )
+        # when
+        res = self.client.get(
+            reverse(
+                "aa_forum:forum_topic",
+                args=[self.category.slug, self.board.slug, self.topic.slug, 1],
+            )
+        )
+        # then
+        self.assertEqual(res.status_code, 200)
+        last_message_seen = LastMessageSeen.objects.get(
+            topic=self.topic, user=self.user_1001
+        )
+        # view has 2 pages á 5 messages. this is last message on 2nd page
         last_message = Message.objects.order_by("time_posted")[9]
         self.assertEqual(last_message_seen.message_time, last_message.time_posted)
 
