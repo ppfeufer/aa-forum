@@ -12,6 +12,28 @@ from .utils import create_fake_messages, create_fake_user, my_get_setting
 MODELS_PATH = "aa_forum.models"
 
 
+class TestCategory(TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+        cls.user = create_fake_user(1001, "Bruce Wayne")
+
+    def test_should_create_new_category_with_slug(self):
+        # when
+        category = Category.objects.create(name="Science")
+        # then
+        self.assertEqual(category.slug, "science")
+
+    def test_should_keep_existing_slug_when_changing_name(self):
+        category = Category.objects.create(name="Science")
+        # when
+        category.name = "Politics"
+        category.save()
+        # then
+        category.refresh_from_db()
+        self.assertEqual(category.slug, "science")
+
+
 @patch(MODELS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
 class TestMessage(TestCase):
     @classmethod
