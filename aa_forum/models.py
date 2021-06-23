@@ -286,11 +286,6 @@ class Topic(models.Model):
         default=False,
         db_index=True,
     )
-    read_by = models.ManyToManyField(
-        User,
-        blank=True,
-        related_name="aa_forum_read_topics",
-    )
     first_message = models.ForeignKey(
         "Message",
         editable=False,
@@ -453,11 +448,6 @@ class Message(models.Model):
         on_delete=models.SET(get_sentinel_user),
     )
     message = RichTextUploadingField(blank=False)
-    read_by = models.ManyToManyField(
-        User,
-        blank=True,
-        related_name="aa_forum_read_messages",
-    )
 
     class Meta:
         """

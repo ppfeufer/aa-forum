@@ -21,8 +21,6 @@ from aa_forum.constants import SETTING_MESSAGESPERPAGE, SETTING_TOPICSPERPAGE
 from aa_forum.forms import EditMessageForm, NewTopicForm
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Setting, Topic
 
-# from aa_forum.tasks import set_messages_read_by_user_in_pagination
-
 
 @login_required
 @permission_required("aa_forum.basic_access")
@@ -230,10 +228,6 @@ def board_new_topic(
                 message.message = form.cleaned_data["message"]
                 message.save()
 
-            # Set topic and message as "read by" by the author
-            # topic.read_by.add(user_updated)
-            # message.read_by.add(request.user)
-
             return redirect(
                 "aa_forum:forum_topic",
                 category_slug=board.category.slug,
@@ -285,8 +279,6 @@ def topic(
         return redirect("aa_forum:forum_index")
 
     # Set this topic as "read by" by the current user
-    topic.read_by.add(request.user)
-
     paginator = Paginator(
         topic.messages_sorted,
         int(Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)),
@@ -303,27 +295,6 @@ def topic(
             user=request.user,
             defaults={"message_time": last_message_on_page.time_posted},
         )
-
-    # Set the messages as "read by" the current user
-    # MessagesReadByUsers = Message.read_by.through
-    # MessagesReadByUsers.objects.bulk_create(
-    #     [
-    #         MessagesReadByUsers(messages_id=pk, user=request.user)
-    #         for pk in page_obj.object_list.values_list("pk", flat=True)
-    #     ]
-    # )
-
-    # messages_this_page = page_obj.object_list
-    # last_message = messages_this_page[
-    #     int(Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)) - 1
-    # ]
-
-    # request.user.aa_forum_read_messages.add(*page_obj.object_list)
-
-    # set_messages_read_by_user_in_pagination.delay(
-    #     object_list=serializers.serialize("json", page_obj.object_list),
-    #     user_id=request.user.id,
-    # )
 
     context = {
         "topic": topic,
@@ -426,14 +397,6 @@ def topic_reply(
             new_message.user_created = request.user
             new_message.message = form.cleaned_data["message"]
             new_message.save()
-
-            # Remove all users from "read by" list and set the current user again.
-            # This way we mark this topic as unread for all but the current user.
-            # topic.read_by.clear()
-            # topic.read_by.add(request.user)
-
-            # Set the message as "read by" the author
-            # new_message.read_by.add(request.user)
 
             return redirect(
                 "aa_forum:forum_message_entry_point_in_topic", new_message.id
