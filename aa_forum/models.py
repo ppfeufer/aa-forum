@@ -12,6 +12,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models, transaction
 from django.dispatch import receiver
 from django.urls import reverse
+from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
@@ -448,6 +449,7 @@ class Message(models.Model):
         on_delete=models.SET(get_sentinel_user),
     )
     message = RichTextUploadingField(blank=False)
+    message_plaintext = models.TextField(blank=True)
 
     class Meta:
         """
@@ -471,6 +473,7 @@ class Message(models.Model):
         :type kwargs:
         """
 
+        self.message_plaintext = strip_tags(self.message)
         super().save(*args, **kwargs)
 
         update_fields = list()

@@ -72,7 +72,7 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
                     # and_,
                     or_,
                     [
-                        Q(message__icontains=search_term)
+                        Q(message_plaintext__icontains=search_term)
                         for search_term in search_phrase_terms
                     ],
                 ),
