@@ -88,46 +88,46 @@ urlpatterns = [
         search.results,
         name="search_results",
     ),
-    # Forum URLs (This needs to be the last block!)
+    # Forum URLs - They all need to start with: -/
     path(
-        "<slug:category_slug>/<slug:board_slug>/",
+        "-/<slug:category_slug>/<slug:board_slug>/",
         forum.board,
         name="forum_board",
     ),
     path(
-        "<slug:category_slug>/<slug:board_slug>/page/<int:page_number>/",
+        "-/<slug:category_slug>/<slug:board_slug>/page/<int:page_number>/",
         forum.board,
         name="forum_board",
     ),
     path(
-        "<slug:category_slug>/<slug:board_slug>/new-topic/",
+        "-/<slug:category_slug>/<slug:board_slug>/new-topic/",
         forum.board_new_topic,
         name="forum_board_new_topic",
     ),
     path(
-        "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/",
+        "-/<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/",
         forum.topic,
         name="forum_topic",
     ),
     path(
-        "<slug:category_slug>/<slug:board_slug>/"
+        "-/<slug:category_slug>/<slug:board_slug>/"
         "<slug:topic_slug>/page/<int:page_number>/",
         forum.topic,
         name="forum_topic",
     ),
     path(
-        "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/reply/",
+        "-/<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/reply/",
         forum.topic_reply,
         name="forum_topic_reply",
     ),
     path(
-        "<slug:category_slug>/<slug:board_slug>/"
+        "-/<slug:category_slug>/<slug:board_slug>/"
         "<slug:topic_slug>/modify/<int:message_id>/",
         forum.message_modify,
         name="forum_message_modify",
     ),
     path(
-        "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/unread/",
+        "-/<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/unread/",
         forum.topic_unread,
         name="forum_topic_unread",
     ),
