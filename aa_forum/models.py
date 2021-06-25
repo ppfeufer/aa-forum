@@ -268,30 +268,15 @@ class Topic(models.Model):
 
         super().save(*args, **kwargs)
 
-        update_fields = list()
-
-        # sometimes that message does not exist
-        # which would otherwise cause this method to fail
         try:
-            self.board.first_message
+            self.board.first_message = self.first_message
         except Message.DoesNotExist:
             self.board.first_message = None
-
         try:
-            self.board.last_message
+            self.board.last_message = self.last_message
         except Message.DoesNotExist:
             self.board.last_message = None
-
-        if self.board.first_message != self.first_message:
-            self.board.first_message = self.first_message
-            update_fields.append("first_message")
-
-        if self.board.last_message != self.last_message:
-            self.board.last_message = self.last_message
-            update_fields.append("last_message")
-
-        if update_fields:
-            self.board.save(update_fields=update_fields)
+        self.board.save(update_fields=["first_message", "last_message"])
 
     @transaction.atomic()
     def delete(self, *args, **kwargs):
