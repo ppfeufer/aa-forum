@@ -12,7 +12,7 @@ from django.db import models, transaction
 from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils.text import slugify
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from aa_forum.constants import SETTING_MESSAGESPERPAGE
 from aa_forum.managers import BoardManager, SettingsManager, TopicManager
@@ -85,6 +85,7 @@ class Category(models.Model):
     def __str__(self) -> str:
         return str(self.name)
 
+    @transaction.atomic()
     def save(self, *args, **kwargs):
         """
         Generates the slug.
@@ -161,6 +162,7 @@ class Board(models.Model):
     def __str__(self) -> str:
         return str(self.name)
 
+    @transaction.atomic()
     def save(self, *args, **kwargs):
         """
         Generates the slug.
@@ -504,6 +506,7 @@ class PersonalMessage(models.Model):
     def __str__(self) -> str:
         return str(self.subject)
 
+    @transaction.atomic()
     def save(self, *args, **kwargs):
         """
         Generates the slug.

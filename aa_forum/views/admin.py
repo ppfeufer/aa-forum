@@ -15,6 +15,8 @@ from django.utils.translation import gettext as _
 from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm
 from aa_forum.models import Board, Category
 
+from ..helpers import message_form_errors
+
 
 @login_required
 @permission_required("aa_forum.manage_forum")
@@ -109,6 +111,8 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
                 request,
                 mark_safe(_("<h4>Success!</h4><p>Category created.</p>")),
             )
+        else:
+            message_form_errors(request, form)
 
     return redirect("aa_forum:admin_index")
 
@@ -139,6 +143,8 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
                 request,
                 mark_safe(_("<h4>Success!</h4><p>Category changed.</p>")),
             )
+        else:
+            message_form_errors(request, form)
 
     return redirect("aa_forum:admin_index")
 
@@ -198,6 +204,8 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
                 request,
                 mark_safe(_("<h4>Success!</h4><p>Board created.</p>")),
             )
+        else:
+            message_form_errors(request, form)
 
     return redirect("aa_forum:admin_index")
 
@@ -230,9 +238,10 @@ def board_edit(
             board.save()
 
             messages.success(
-                request,
-                mark_safe(_("<h4>Success!</h4><p>Board changed.</p>")),
+                request, mark_safe(_("<h4>Success!</h4><p>Board changed.</p>"))
             )
+        else:
+            message_form_errors(request, form)
 
     return redirect("aa_forum:admin_index")
 
