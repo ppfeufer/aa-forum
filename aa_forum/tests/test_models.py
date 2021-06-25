@@ -12,6 +12,89 @@ from .utils import create_fake_messages, create_fake_user, my_get_setting
 MODELS_PATH = "aa_forum.models"
 
 
+class TestBoard(TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+        cls.user = create_fake_user(1001, "Bruce Wayne")
+        cls.group = Group.objects.create(name="Superhero")
+
+    def setUp(self) -> None:
+        self.category = Category.objects.create(name="Science")
+
+    def test_should_update_last_message_normal(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        topic = Topic.objects.create(subject="Mysteries", board=board)
+        message = Message.objects.create(
+            topic=topic, user_created=self.user, message="What is dark energy?"
+        )
+        board.last_message = None
+        board.save()
+        # when
+        board.update_last_message()
+        # then
+        board.refresh_from_db()
+        self.assertEqual(board.last_message, message)
+
+    def test_should_update_last_message_empty(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        # when
+        board.update_last_message()
+        # then
+        board.refresh_from_db()
+        self.assertIsNone(board.last_message)
+
+    def test_should_return_url(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        # when
+        url = board.get_absolute_url()
+        # then
+        self.assertURLEqual(
+            url,
+            reverse("aa_forum:forum_board", args=["science", "physics"]),
+        )
+
+    def test_should_return_board_with_no_groups(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        # when
+        result = board.user_has_access(self.user)
+        # then
+        self.assertTrue(result)
+
+    def test_should_return_board_for_group_member(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        board.groups.add(self.group)
+        self.user.groups.add(self.group)
+        # when
+        result = board.user_has_access(self.user)
+        # then
+        self.assertTrue(result)
+
+    def test_should_not_return_board_for_non_group_member(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        board.groups.add(self.group)
+        # when
+        result = board.user_has_access(self.user)
+        # then
+        self.assertFalse(result)
+
+    def test_should_generate_new_slug_when_slug_already_exists(self):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        board.slug = "dummy"  # we are faking the same slug here
+        board.save()
+        # when
+        board = Board.objects.create(name="Dummy", category=self.category)
+        # then
+        self.assertEqual(board.slug, "dummy-1")
+
+
 class TestCategory(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -32,6 +115,16 @@ class TestCategory(TestCase):
         # then
         category.refresh_from_db()
         self.assertEqual(category.slug, "science")
+
+    def test_should_generate_new_slug_when_slug_already_exists(self):
+        # given
+        category = Category.objects.create(name="Science")
+        category.slug = "dummy"  # we are faking the same slug here
+        category.save()
+        # when
+        category = Category.objects.create(name="Dummy")
+        # then
+        self.assertEqual(category.slug, "dummy-1")
 
 
 @patch(MODELS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
@@ -223,75 +316,12 @@ class TestTopic(TestCase):
             reverse("aa_forum:forum_topic", args=["science", "physics", "mysteries"]),
         )
 
-
-class TestBoard(TestCase):
-    @classmethod
-    def setUpClass(cls) -> None:
-        super().setUpClass()
-        cls.user = create_fake_user(1001, "Bruce Wayne")
-        cls.group = Group.objects.create(name="Superhero")
-
-    def setUp(self) -> None:
-        self.category = Category.objects.create(name="Science")
-
-    def test_should_update_last_message_normal(self):
+    def test_should_generate_new_slug_when_slug_already_exists(self):
         # given
-        board = Board.objects.create(name="Physics", category=self.category)
-        topic = Topic.objects.create(subject="Mysteries", board=board)
-        message = Message.objects.create(
-            topic=topic, user_created=self.user, message="What is dark energy?"
-        )
-        board.last_message = None
-        board.save()
+        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        topic.slug = "dummy"  # we are faking the same slug here
+        topic.save()
         # when
-        board.update_last_message()
+        topic = Topic.objects.create(subject="Dummy", board=self.board)
         # then
-        board.refresh_from_db()
-        self.assertEqual(board.last_message, message)
-
-    def test_should_update_last_message_empty(self):
-        # given
-        board = Board.objects.create(name="Physics", category=self.category)
-        # when
-        board.update_last_message()
-        # then
-        board.refresh_from_db()
-        self.assertIsNone(board.last_message)
-
-    def test_should_return_url(self):
-        # given
-        board = Board.objects.create(name="Physics", category=self.category)
-        # when
-        url = board.get_absolute_url()
-        # then
-        self.assertURLEqual(
-            url,
-            reverse("aa_forum:forum_board", args=["science", "physics"]),
-        )
-
-    def test_should_return_board_with_no_groups(self):
-        # given
-        board = Board.objects.create(name="Physics", category=self.category)
-        # when
-        result = board.user_has_access(self.user)
-        # then
-        self.assertTrue(result)
-
-    def test_should_return_board_for_group_member(self):
-        # given
-        board = Board.objects.create(name="Physics", category=self.category)
-        board.groups.add(self.group)
-        self.user.groups.add(self.group)
-        # when
-        result = board.user_has_access(self.user)
-        # then
-        self.assertTrue(result)
-
-    def test_should_not_return_board_for_non_group_member(self):
-        # given
-        board = Board.objects.create(name="Physics", category=self.category)
-        board.groups.add(self.group)
-        # when
-        result = board.user_has_access(self.user)
-        # then
-        self.assertFalse(result)
+        self.assertEqual(topic.slug, "dummy-1")

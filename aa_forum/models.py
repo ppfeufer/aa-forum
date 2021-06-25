@@ -28,6 +28,19 @@ def get_sentinel_user() -> User:
     return User.objects.get_or_create(username="deleted")[0]
 
 
+def _generate_slug(MyModel: models.Model, name: str) -> str:
+    """
+    Generate a valid slug and return it.
+    """
+    run = 0
+    slug_name = slugify(name, allow_unicode=True)
+    while MyModel.objects.filter(slug=slug_name).exists():
+        run += 1
+        slug_name = slugify(f"{name}-{run}", allow_unicode=True)
+
+    return slug_name
+
+
 class General(models.Model):
     """
     Meta model for app permissions
@@ -82,7 +95,7 @@ class Category(models.Model):
         """
 
         if self._state.adding is True:
-            self.slug = slugify(self.name, allow_unicode=True)
+            self.slug = _generate_slug(type(self), self.name)
 
         super().save(*args, **kwargs)
 
@@ -158,7 +171,7 @@ class Board(models.Model):
         """
 
         if self._state.adding is True:
-            self.slug = slugify(self.name, allow_unicode=True)
+            self.slug = _generate_slug(type(self), self.name)
 
         super().save(*args, **kwargs)
 
@@ -249,7 +262,7 @@ class Topic(models.Model):
         """
 
         if self._state.adding is True:
-            self.slug = slugify(self.subject, allow_unicode=True)
+            self.slug = _generate_slug(type(self), self.subject)
 
         super().save(*args, **kwargs)
 
@@ -295,6 +308,15 @@ class Topic(models.Model):
         if board_needs_update:
             self.board.update_last_message()
 
+    def get_absolute_url(self):
+        """
+        Calculate URL for this topic and return it.
+        """
+        return reverse(
+            "aa_forum:forum_topic",
+            args=[self.board.category.slug, self.board.slug, self.slug],
+        )
+
     def update_last_message(self) -> Optional[models.Model]:
         """
         Update the last message for this topic.
@@ -304,15 +326,6 @@ class Topic(models.Model):
             Message.objects.filter(topic=self).order_by("-time_posted").first()
         )
         self.save(update_fields=["last_message"])
-
-    def get_absolute_url(self):
-        """
-        Calculate URL for this topic and return it.
-        """
-        return reverse(
-            "aa_forum:forum_topic",
-            args=[self.board.category.slug, self.board.slug, self.slug],
-        )
 
 
 class LastMessageSeen(models.Model):
@@ -501,7 +514,7 @@ class PersonalMessage(models.Model):
         """
 
         if self._state.adding is True:
-            self.slug = slugify(self.name, allow_unicode=True)
+            self.slug = _generate_slug(type(self), self.subject)
 
         super().save(*args, **kwargs)
 
