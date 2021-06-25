@@ -8,6 +8,7 @@ from typing import Optional
 from ckeditor_uploader.fields import RichTextUploadingField
 
 from django.contrib.auth.models import Group, User
+from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.urls import reverse
 from django.utils.html import strip_tags
@@ -32,6 +33,8 @@ def _generate_slug(MyModel: models.Model, name: str) -> str:
     """
     Generate a valid slug and return it.
     """
+    if name == "-":
+        name = "dash"
     run = 0
     slug_name = slugify(name, allow_unicode=True)
     while MyModel.objects.filter(slug=slug_name).exists():
@@ -84,6 +87,10 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return str(self.name)
+
+    def clean(self):
+        if self.name == "-":
+            raise ValidationError("Invalid category name.")
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
@@ -161,6 +168,10 @@ class Board(models.Model):
 
     def __str__(self) -> str:
         return str(self.name)
+
+    def clean(self):
+        if self.name == "-":
+            raise ValidationError("Invalid board name.")
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
@@ -252,6 +263,10 @@ class Topic(models.Model):
 
     def __str__(self) -> str:
         return str(self.subject)
+
+    def clean(self):
+        if self.name == "-":
+            raise ValidationError("Invalid topic name.")
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
@@ -490,6 +505,10 @@ class PersonalMessage(models.Model):
 
     def __str__(self) -> str:
         return str(self.subject)
+
+    def clean(self):
+        if self.name == "-":
+            raise ValidationError("Invalid subject name.")
 
     @transaction.atomic()
     def save(self, *args, **kwargs):
