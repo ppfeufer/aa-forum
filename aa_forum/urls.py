@@ -1,136 +1,133 @@
 """
-AA-Forum url config
+AA-Forum path config
 """
 
-from django.conf.urls import url
+from django.urls import path
 
 from aa_forum.views import admin, forum, search
 
 app_name: str = "aa_forum"
 
 urlpatterns = [
-    url(r"^$", forum.index, name="forum_index"),
+    path("", forum.index, name="forum_index"),
     # Admin URLs (These need to be first!)
-    url(r"^admin/$", admin.index, name="admin_index"),
-    url(
-        r"^admin/category/create/$",
+    path("admin/", admin.index, name="admin_index"),
+    path(
+        "admin/category/create/",
         admin.category_create,
         name="admin_category_create",
     ),
-    url(
-        r"^admin/category/(?P<category_id>[0-9]+)/edit/$",
+    path(
+        "admin/category/<int:category_id>/edit/",
         admin.category_edit,
         name="admin_category_edit",
     ),
-    url(
-        r"^admin/category/(?P<category_id>[0-9]+)/delete/$",
+    path(
+        "admin/category/<int:category_id>/delete/",
         admin.category_delete,
         name="admin_category_delete",
     ),
-    url(
-        r"^admin/category/(?P<category_id>[0-9]+)/board/create/$",
+    path(
+        "admin/category/<int:category_id>/board/create/",
         admin.board_create,
         name="admin_board_create",
     ),
-    url(
-        r"^admin/category/(?P<category_id>[0-9]+)/board/(?P<board_id>[0-9]+)/edit/$",
+    path(
+        "admin/category/<int:category_id>/board/<int:board_id>/edit/",
         admin.board_edit,
         name="admin_board_edit",
     ),
-    url(
-        r"^admin/category/(?P<category_id>[0-9]+)/board/(?P<board_id>[0-9]+)/delete/$",
+    path(
+        "admin/category/<int:category_id>/board/<int:board_id>/delete/",
         admin.board_delete,
         name="admin_board_delete",
     ),
-    url(
-        r"^ajax/admin/category-order/$",
+    path(
+        "ajax/admin/category-order/",
         admin.ajax_category_order,
         name="admin_ajax_category_order",
     ),
-    url(
-        r"^ajax/admin/board-order/$",
+    path(
+        "ajax/admin/board-order/",
         admin.ajax_board_order,
         name="admin_ajax_board_order",
     ),
     # Service URLs (These have to be before the forum URLs!)
-    url(
-        r"^message/(?P<message_id>[0-9]+)/$",
+    path(
+        "message/<int:message_id>/",
         forum.message_entry_point_in_topic,
         name="forum_message_entry_point_in_topic",
     ),
-    url(
-        r"^message/(?P<message_id>[0-9]+)/delete/$",
+    path(
+        "message/<int:message_id>/delete/",
         forum.message_delete,
         name="forum_message_delete",
     ),
-    url(
-        r"^topic/(?P<topic_id>[0-9]+)/change-lock-state/$",
+    path(
+        "topic/<int:topic_id>/change-lock-state/",
         forum.topic_change_lock_state,
         name="forum_topic_change_lock_state",
     ),
-    url(
-        r"^topic/(?P<topic_id>[0-9]+)/change-sticky-state/$",
+    path(
+        "topic/<int:topic_id>/change-sticky-state/",
         forum.topic_change_sticky_state,
         name="forum_topic_change_sticky_state",
     ),
-    url(
-        r"^topic/(?P<topic_id>[0-9]+)/delete/$",
+    path(
+        "topic/<int:topic_id>/delete/",
         forum.topic_delete,
         name="forum_topic_delete",
     ),
-    url(
-        r"^search/$",
+    path(
+        "search/",
         search.results,
         name="search_results",
     ),
-    url(
-        r"^search/page/(?P<page_number>[0-9]+)/$",
+    path(
+        "search/page/<int:page_number>/",
         search.results,
         name="search_results",
     ),
     # Forum URLs (This needs to be the last block!)
-    url(
-        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/$",
+    path(
+        "<slug:category_slug>/<slug:board_slug>/",
         forum.board,
         name="forum_board",
     ),
-    url(
-        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/"
-        r"page/(?P<page_number>[0-9]+)/$",
+    path(
+        "<slug:category_slug>/<slug:board_slug>/page/<int:page_number>/",
         forum.board,
         name="forum_board",
     ),
-    url(
-        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/new-topic/$",
+    path(
+        "<slug:category_slug>/<slug:board_slug>/new-topic/",
         forum.board_new_topic,
         name="forum_board_new_topic",
     ),
-    url(
-        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/(?P<topic_slug>[\w-]+)/$",
+    path(
+        "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/",
         forum.topic,
         name="forum_topic",
     ),
-    url(
-        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/"
-        r"(?P<topic_slug>[\w-]+)/page/(?P<page_number>[0-9]+)/$",
+    path(
+        "<slug:category_slug>/<slug:board_slug>/"
+        "<slug:topic_slug>/page/<int:page_number>/",
         forum.topic,
         name="forum_topic",
     ),
-    url(
-        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/"
-        r"(?P<topic_slug>[\w-]+)/reply/$",
+    path(
+        "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/reply/",
         forum.topic_reply,
         name="forum_topic_reply",
     ),
-    url(
-        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/"
-        r"(?P<topic_slug>[\w-]+)/modify/(?P<message_id>[\w-]+)/$",
+    path(
+        "<slug:category_slug>/<slug:board_slug>/"
+        "<slug:topic_slug>/modify/<int:message_id>/",
         forum.message_modify,
         name="forum_message_modify",
     ),
-    url(
-        r"^(?P<category_slug>[\w-]+)/(?P<board_slug>[\w-]+)/"
-        r"(?P<topic_slug>[\w-]+)/unread/$",
+    path(
+        "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/unread/",
         forum.topic_unread,
         name="forum_topic_unread",
     ),
