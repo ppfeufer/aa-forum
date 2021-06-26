@@ -94,6 +94,12 @@ class TestBoard(TestCase):
         # then
         self.assertEqual(board.slug, "dummy-1")
 
+    def test_should_not_allow_creation_with_hyphen_slugs(self):
+        # when
+        board = Board.objects.create(name="Dummy", category=self.category, slug="-")
+        # then
+        self.assertEqual(board.slug, "dummy")
+
 
 class TestCategory(TestCase):
     @classmethod
@@ -125,6 +131,22 @@ class TestCategory(TestCase):
         category = Category.objects.create(name="Dummy")
         # then
         self.assertEqual(category.slug, "dummy-1")
+
+    def test_should_not_allow_creation_with_hyphen_slugs(self):
+        # when
+        category = Category.objects.create(name="Science", slug="-")
+        # then
+        self.assertEqual(category.slug, "science")
+
+    def test_should_not_allow_to_update_slug_to_hyphen(self):
+        # given
+        category = Category.objects.create(name="Science")
+        # when
+        category.slug = "-"
+        category.save()
+        # then
+        category.refresh_from_db()
+        self.assertEqual(category.slug, "science-1")
 
 
 @patch(MODELS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
@@ -325,3 +347,9 @@ class TestTopic(TestCase):
         topic = Topic.objects.create(subject="Dummy", board=self.board)
         # then
         self.assertEqual(topic.slug, "dummy-1")
+
+    def test_should_not_allow_creation_with_hyphen_slugs(self):
+        # when
+        topic = Topic.objects.create(subject="Dummy", board=self.board, slug="-")
+        # then
+        self.assertEqual(topic.slug, "dummy")

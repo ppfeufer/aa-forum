@@ -8,9 +8,13 @@ from aa_forum.views import admin, forum, search
 
 app_name: str = "aa_forum"
 
+# IMPORTANT
+# All URLs for internal pages (except the index page) need to start
+# with "-/" to prevend conflicts with automatically generated URLs for forum pages
+
 urlpatterns = [
     path("", forum.index, name="forum_index"),
-    # Admin URLs (These need to be first!)
+    # Admin URLs
     path("-/admin/", admin.index, name="admin_index"),
     path(
         "-/admin/category/create/",
@@ -52,7 +56,7 @@ urlpatterns = [
         admin.ajax_board_order,
         name="admin_ajax_board_order",
     ),
-    # Service URLs (These have to be before the forum URLs!)
+    # Service URLs
     path(
         "-/message/<int:message_id>/",
         forum.message_entry_point_in_topic,
@@ -88,7 +92,7 @@ urlpatterns = [
         search.results,
         name="search_results",
     ),
-    # Forum URLs - They all need to start with:
+    # Forum URLs
     path(
         "<slug:category_slug>/<slug:board_slug>/",
         forum.board,

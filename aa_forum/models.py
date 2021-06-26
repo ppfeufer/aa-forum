@@ -8,7 +8,6 @@ from typing import Optional
 from ckeditor_uploader.fields import RichTextUploadingField
 
 from django.contrib.auth.models import Group, User
-from django.core.exceptions import ValidationError
 from django.db import models, transaction
 from django.urls import reverse
 from django.utils.html import strip_tags
@@ -17,6 +16,10 @@ from django.utils.translation import gettext_lazy as _
 
 from aa_forum.constants import SETTING_MESSAGESPERPAGE
 from aa_forum.managers import BoardManager, SettingsManager, TopicManager
+
+# Slugs are not allowed to be a single hyphen
+# in order to prevent conflicts with internal URLs
+_HYPHEN_CHARACTER = "-"
 
 
 def get_sentinel_user() -> User:
@@ -33,8 +36,8 @@ def _generate_slug(MyModel: models.Model, name: str) -> str:
     """
     Generate a valid slug and return it.
     """
-    if name == "-":
-        name = "dash"
+    if name == _HYPHEN_CHARACTER:
+        name = "hyphen"
     run = 0
     slug_name = slugify(name, allow_unicode=True)
     while MyModel.objects.filter(slug=slug_name).exists():
@@ -88,10 +91,6 @@ class Category(models.Model):
     def __str__(self) -> str:
         return str(self.name)
 
-    def clean(self):
-        if self.name == "-":
-            raise ValidationError("Invalid category name.")
-
     @transaction.atomic()
     def save(self, *args, **kwargs):
         """
@@ -102,7 +101,7 @@ class Category(models.Model):
         :type kwargs:
         """
 
-        if self._state.adding is True:
+        if self._state.adding is True or self.slug == _HYPHEN_CHARACTER:
             self.slug = _generate_slug(type(self), self.name)
 
         super().save(*args, **kwargs)
@@ -169,10 +168,6 @@ class Board(models.Model):
     def __str__(self) -> str:
         return str(self.name)
 
-    def clean(self):
-        if self.name == "-":
-            raise ValidationError("Invalid board name.")
-
     @transaction.atomic()
     def save(self, *args, **kwargs):
         """
@@ -183,7 +178,7 @@ class Board(models.Model):
         :type kwargs:
         """
 
-        if self._state.adding is True:
+        if self._state.adding is True or self.slug == _HYPHEN_CHARACTER:
             self.slug = _generate_slug(type(self), self.name)
 
         super().save(*args, **kwargs)
@@ -264,10 +259,6 @@ class Topic(models.Model):
     def __str__(self) -> str:
         return str(self.subject)
 
-    def clean(self):
-        if self.name == "-":
-            raise ValidationError("Invalid topic name.")
-
     @transaction.atomic()
     def save(self, *args, **kwargs):
         """
@@ -278,7 +269,7 @@ class Topic(models.Model):
         :type kwargs:
         """
 
-        if self._state.adding is True:
+        if self._state.adding is True or self.slug == _HYPHEN_CHARACTER:
             self.slug = _generate_slug(type(self), self.subject)
 
         super().save(*args, **kwargs)
@@ -506,10 +497,6 @@ class PersonalMessage(models.Model):
     def __str__(self) -> str:
         return str(self.subject)
 
-    def clean(self):
-        if self.name == "-":
-            raise ValidationError("Invalid subject name.")
-
     @transaction.atomic()
     def save(self, *args, **kwargs):
         """
@@ -520,7 +507,7 @@ class PersonalMessage(models.Model):
         :type kwargs:
         """
 
-        if self._state.adding is True:
+        if self._state.adding is True or self.slug == _HYPHEN_CHARACTER:
             self.slug = _generate_slug(type(self), self.subject)
 
         super().save(*args, **kwargs)
