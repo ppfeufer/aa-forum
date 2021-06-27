@@ -102,8 +102,9 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
                 boards = form.cleaned_data["boards"]
 
                 for board_name in boards.splitlines():
-                    new_board = Board(name=board_name, category=new_category)
-                    new_board.order = 999999
+                    new_board = Board(
+                        name=board_name, category=new_category, order=999999
+                    )
                     new_board.save()
 
             messages.success(
