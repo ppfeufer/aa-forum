@@ -60,7 +60,7 @@ def index(request: WSGIRequest) -> HttpResponse:
                 "topics", filter=Q(topics__in=unread_topic_pks), distinct=True
             ),
         )
-        .order_by("category__order", "category__id")
+        .order_by("category__order", "category__id", "order", "id")
     )
 
     categories_map = dict()
