@@ -58,7 +58,7 @@
                             {% translate "New boards will be added at the bottom of the board list for this category. You can move them via drag and drop to a position of your liking." %}
                         </p>
 
-                        <form autocomplete="off" action="{% url 'aa_forum:admin_board_create' category.category_obj.pk %}" method="post">
+                        <form id="aa-forum-form-admin-add-board-{{ category.category_obj.pk }}" autocomplete="off" action="{% url 'aa_forum:admin_board_create' category.category_obj.pk %}" method="post">
                             <fieldset>
                                 {% csrf_token %}
 

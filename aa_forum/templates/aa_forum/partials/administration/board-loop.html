@@ -22,12 +22,11 @@
                 {% translate "Changing the name of this board does not change its URL part. This will remain the same to not break any possible links into this board." %}
             </p>
 
-            <form autocomplete="off" action="{% url 'aa_forum:admin_board_edit' category.category_obj.pk board.board_obj.pk %}" method="post">
+            <form id="aa-forum-form-edit-board-{{ board.id }}" autocomplete="off" action="{% url 'aa_forum:admin_board_edit' category.category_obj.pk board.board_obj.pk %}" method="post">
                 <fieldset>
                     {% csrf_token %}
 
                     {{ board.board_edit_form|bootstrap }}
-
                     <div class="form-group aa-forum-form-new-category text-right clearfix">
                         <button class="btn btn-primary btn-sm" type="submit">{% translate 'Change Board' %}</button>
                     </div>

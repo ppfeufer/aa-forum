@@ -17,7 +17,7 @@
             {% translate "New categories will be added at the bottom of the category list. You can move them via drag and drop to a position of your liking." %}
         </p>
 
-        <form autocomplete="off" action="{% url 'aa_forum:admin_category_create' %}" method="post">
+        <form id="aa-forum-form-admin-new-category" autocomplete="off" action="{% url 'aa_forum:admin_category_create' %}" method="post">
             <fieldset>
                 {% csrf_token %}
 
