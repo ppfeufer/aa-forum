@@ -21,6 +21,14 @@ class TestForumUI(WebTest):
         cls.category = Category.objects.create(name="Science")
         cls.board = Board.objects.create(name="Physics", category=cls.category)
 
+    def test_should_show_forum_index(self):
+        # given
+        self.app.set_user(self.user_1001)
+        # when
+        page = self.app.get(reverse("aa_forum:forum_index"))
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/forum/index.html")
+
     def test_should_create_new_topic(self):
         # given
         self.app.set_user(self.user_1001)
@@ -93,7 +101,30 @@ class TestForumUI(WebTest):
         # when
         page = self.app.get(topic.get_absolute_url())
         # then
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
         self.assertNotContains(page, f"aa-forum-btn-modify-message-{alien_message.pk}")
+
+    def test_should_find_message_by_key_word(self):
+        # given
+        topic_1 = Topic.objects.create(subject="Topic 1", board=self.board)
+        create_fake_messages(topic=topic_1, amount=5)
+        topic_2 = Topic.objects.create(subject="Topic 2", board=self.board)
+        create_fake_messages(topic=topic_2, amount=5)
+        message = Message.objects.create(
+            topic=topic_1, user_created=self.user_1001, message="xyz dummy123 abc"
+        )
+        self.app.set_user(self.user_1001)
+        page = self.app.get(reverse("aa_forum:forum_index"))
+        # when
+        form = page.forms["aa-forum-form-search-menu"]
+        form["q"] = "dummy123"
+        res = form.submit()
+        # then
+        self.assertTemplateUsed(res, "aa_forum/view/search/results.html")
+        self.assertContains(
+            res,
+            reverse("aa_forum:forum_message_entry_point_in_topic", args=[message.pk]),
+        )
 
 
 class TestAdminUI(WebTest):
