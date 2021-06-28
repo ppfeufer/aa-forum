@@ -27,11 +27,11 @@
 
                 <li>
                     {% if page_obj.previous_page_number == 1 %}
-                        <a class="page-link" href="{{ board.get_absolute_url }}">
+                        <a href="{{ board.get_absolute_url }}" class="page-link">
                             {{ page_obj.previous_page_number }}
                         </a>
                     {% else %}
-                        <a class="page-link" href="{% url 'aa_forum:forum_board' category.slug board.slug page_obj.previous_page_number %}">
+                        <a href="{% url 'aa_forum:forum_board' category.slug board.slug page_obj.previous_page_number %}" class="page-link">
                             {{ page_obj.previous_page_number }}
                         </a>
                     {% endif %}
@@ -52,19 +52,19 @@
 
             {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="{% url 'aa_forum:forum_board' category.slug board.slug page_obj.next_page_number %}">
+                    <a href="{% url 'aa_forum:forum_board' category.slug board.slug page_obj.next_page_number %}" class="page-link">
                         {{ page_obj.next_page_number }}
                     </a>
                 </li>
 
                 <li class="page-item ">
-                    <a class="page-link" href="{% url 'aa_forum:forum_board' category.slug board.slug page_obj.next_page_number %}">
+                    <a href="{% url 'aa_forum:forum_board' category.slug board.slug page_obj.next_page_number %}" class="page-link">
                         {% translate "Next" %}
                     </a>
                 </li>
 
                 <li class="page-item ">
-                    <a class="page-link" href="{% url 'aa_forum:forum_board' category.slug board.slug page_obj.paginator.num_pages %}">
+                    <a href="{% url 'aa_forum:forum_board' category.slug board.slug page_obj.paginator.num_pages %}" class="page-link">
                         {% translate "Last" %}
                     </a>
                 </li>
