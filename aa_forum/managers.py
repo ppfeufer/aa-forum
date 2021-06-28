@@ -25,12 +25,17 @@ class BoardQuerySet(models.QuerySet):
         """
         Filter boards that given user has access to.
         """
+
         return self.filter(
             Q(groups__in=user.groups.all()) | Q(groups__isnull=True)
         ).distinct()
 
 
 class BoardManagerBase(models.Manager):
+    """
+    BoardManagerBase
+    """
+
     pass
 
 
@@ -48,6 +53,7 @@ class TopicQuerySet(models.QuerySet):
         """
         Fetch topic from slugs for user. Return None if not found or no access.
         """
+
         from .models import Message
 
         try:
@@ -87,6 +93,10 @@ class TopicQuerySet(models.QuerySet):
 
 
 class TopicManagerBase(models.Manager):
+    """
+    TopicManagerBase
+    """
+
     pass
 
 

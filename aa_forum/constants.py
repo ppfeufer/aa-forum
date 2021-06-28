@@ -18,3 +18,21 @@ SETTING_TOPICSPERPAGE = "defaultMaxTopics"
 # All internal URLs need to start with this prefix
 # to prevent conflicts with user generated forum URLs
 INTERNAL_URL_PREFIX = "-"
+
+# Search stop words. These words and characters will be removed from the search phrase
+SEARCH_STOPWORDS = [
+    "what",
+    "who",
+    "is",
+    "a",
+    "at",
+    "is",
+    "in",
+    "he",
+    '"',
+    "<",
+    ">",
+    "on",
+    "of",
+    "off",
+]

@@ -34,7 +34,7 @@ def index(request: WSGIRequest) -> HttpResponse:
             "boards",
             queryset=Board.objects.filter(parent_board__isnull=True)
             .prefetch_related("groups")
-            .order_by("order"),
+            .order_by("order", "id"),
         )
     ).order_by("order", "id")
 
@@ -100,6 +100,7 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
             new_category.order = 999999
             new_category.save()
 
+            # Add boards if any given
             if form.cleaned_data["boards"] != "":
                 boards = form.cleaned_data["boards"]
 
@@ -254,7 +255,7 @@ def board_delete(
     request: WSGIRequest, category_id: int, board_id: int
 ) -> HttpResponseRedirect:
     """
-    Edit a board
+    Delete a board
     :param request:
     :type request:
     :param category_id:

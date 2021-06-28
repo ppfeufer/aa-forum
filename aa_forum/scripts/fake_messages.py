@@ -1,6 +1,7 @@
-"""Generate a bunch of fake topics and messages in existing boards for development.
+"""
+Generate a bunch of fake topics and messages in existing boards for development.
 
-shortcuts:
+Shortcuts:
 - Topic.objects.all().delete()
 - from aa_forum.scripts import fake_messages;fake_messages.run()
 """
@@ -24,7 +25,10 @@ MAX_MESSAGES_PER_TOPIC = 35
 
 
 def random_dt() -> dt.datetime:
-    """Return random datetime between now and x hours into the past."""
+    """
+    Return random datetime between now and x hours into the past.
+    """
+
     return now() - dt.timedelta(
         hours=random.randint(0, MAX_MESSAGE_HOURS_INTO_PAST),
         minutes=random.randint(0, 59),
@@ -50,7 +54,7 @@ def run():
             for _ in range(
                 random.randrange(MIN_TOPICS_PER_BOARD, MAX_TOPICS_PER_BOARD)
             ):
-                # can not bulk create, or we would not get slugs
+                # Can not bulk create, or we would not get slugs
                 topics.append(
                     Topic.objects.create(board=board, subject=fake.sentence())
                 )
@@ -63,7 +67,8 @@ def run():
                     for _ in range(
                         random.randrange(MIN_MESSAGES_PER_TOPIC, MAX_MESSAGES_PER_TOPIC)
                     ):
-                        # can not bulk create, or we would not get first and last messages
+                        # Can not bulk create, or we would not get first and last
+                        # messages
                         Message.objects.create(
                             topic_id=topic.id,
                             message=f"<p>{fake.sentence()}</p>",

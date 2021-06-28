@@ -12,7 +12,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from aa_forum.constants import SETTING_MESSAGESPERPAGE
+from aa_forum.constants import SEARCH_STOPWORDS, SETTING_MESSAGESPERPAGE
 from aa_forum.models import Board, Message, Setting
 
 
@@ -37,24 +37,10 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     search_results = None
     page_obj = None
 
-    stopwords = [
-        "what",
-        "who",
-        "is",
-        "a",
-        "at",
-        "is",
-        "in",
-        "he",
-        '"',
-        "<",
-        ">",
-        "on",
-        "of",
-        "off",
-    ]
     querywords = search_phrase.split()
-    search_phrase_terms = [word for word in querywords if word.lower() not in stopwords]
+    search_phrase_terms = [
+        word for word in querywords if word.lower() not in SEARCH_STOPWORDS
+    ]
 
     if len(search_phrase_terms) >= 1:
         boards = (

@@ -16,7 +16,7 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
     """
 
     def __init__(self):
-        # setup menu entry for sidebar
+        # Setup menu entry for sidebar
         MenuItemHook.__init__(
             self,
             _(__title__),
@@ -45,7 +45,7 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
 @hooks.register("menu_item_hook")
 def register_menu():
     """
-    register our menu item
+    Register our menu item
     :return:
     """
 
@@ -55,7 +55,7 @@ def register_menu():
 @hooks.register("url_hook")
 def register_urls():
     """
-    register our basu url
+    Register our base url
     :return:
     """
 

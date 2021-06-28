@@ -32,6 +32,7 @@ def index(request: WSGIRequest) -> HttpResponse:
     :return:
     :rtype:
     """
+
     has_read_all_messages = LastMessageSeen.objects.filter(
         topic=OuterRef("pk"),
         user=request.user,
@@ -98,11 +99,13 @@ def board(
     :return:
     :rtype:
     """
+
     has_read_all_messages = LastMessageSeen.objects.filter(
         topic=OuterRef("pk"),
         user=request.user,
         message_time__gte=OuterRef("last_message__time_posted"),
     )
+
     try:
         board = (
             Board.objects.select_related("category")
@@ -145,7 +148,6 @@ def board(
         int(Setting.objects.get_setting(setting_key=SETTING_TOPICSPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
-
     context = {"board": board, "page_obj": page_obj}
 
     return render(request, "aa_forum/view/forum/board.html", context)
@@ -203,7 +205,7 @@ def board_new_topic(
 
         return redirect("aa_forum:forum_index")
 
-    # If this is a POST request we need to process the form data
+    # If this is a POST request we need to process the form data ...
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
         form = NewTopicForm(request.POST)
@@ -228,7 +230,6 @@ def board_new_topic(
                 board_slug=board.slug,
                 topic_slug=topic.slug,
             )
-
     # If not, we'll create a blank form
     else:
         form = NewTopicForm()
@@ -269,6 +270,7 @@ def topic(
         board_slug=board_slug,
         topic_slug=topic_slug,
     )
+
     if not topic:
         return redirect("aa_forum:forum_index")
 
@@ -301,13 +303,7 @@ def topic(
                 defaults={"message_time": last_message_on_page.time_posted},
             )
 
-    context = {
-        "topic": topic,
-        "page_obj": page_obj,
-        "reply_form": EditMessageForm(),
-        # "messages_this_page": messages_this_page,
-        # "last_message": last_message.id,
-    }
+    context = {"topic": topic, "page_obj": page_obj, "reply_form": EditMessageForm()}
 
     return render(request, "aa_forum/view/forum/topic.html", context)
 
@@ -315,13 +311,17 @@ def topic(
 def _topic_from_slugs(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> Optional[Topic]:
-    """Fetch topic from given slug params."""
+    """
+    Fetch topic from given slug params.
+    """
+
     topic = Topic.objects.get_from_slugs(
         category_slug=category_slug,
         board_slug=board_slug,
         topic_slug=topic_slug,
         user=request.user,
     )
+
     if not topic:
         messages.error(
             request,
@@ -332,6 +332,7 @@ def _topic_from_slugs(
                 )
             ),
         )
+
     return topic
 
 
@@ -343,15 +344,19 @@ def topic_unread(
     """
     Redirect to first unread message of a topic.
     """
+
     topic = _topic_from_slugs(
         request=request,
         category_slug=category_slug,
         board_slug=board_slug,
         topic_slug=topic_slug,
     )
+
     if not topic:
         return redirect("aa_forum:forum_index")
+
     messages_sorted = topic.messages.order_by("time_posted")
+
     try:
         last_message_seen = LastMessageSeen.objects.filter(
             topic=topic, user=request.user
@@ -362,11 +367,13 @@ def topic_unread(
         redirect_message = messages_sorted.filter(
             time_posted__gt=last_message_seen.message_time
         ).first()
+
         if not redirect_message:
             redirect_message = messages_sorted.last()
 
     if redirect_message:
         return redirect(redirect_message.get_absolute_url())
+
     return redirect(topic.get_absolute_url())
 
 
@@ -437,6 +444,7 @@ def topic_change_lock_state(
 
     if topic.is_locked:
         topic.is_locked = False
+
         messages.success(
             request,
             mark_safe(_("<h4>Success!</h4><p>Topic has been unlocked/re-opened.</p>")),
@@ -444,6 +452,7 @@ def topic_change_lock_state(
 
     else:
         topic.is_locked = True
+
         messages.success(
             request,
             mark_safe(_("<h4>Success!</h4><p>Topic has been locked/closed.</p>")),
@@ -476,6 +485,7 @@ def topic_change_sticky_state(
 
     if topic.is_sticky:
         topic.is_sticky = False
+
         messages.success(
             request,
             mark_safe(_('<h4>Success!</h4><p>Topic is no longer "Sticky".</p>')),
@@ -483,6 +493,7 @@ def topic_change_sticky_state(
 
     else:
         topic.is_sticky = True
+
         messages.success(
             request,
             mark_safe(_('<h4>Success!</h4><p>Topic is now "Sticky".</p>')),
@@ -510,7 +521,9 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
         return HttpResponseNotFound("Could not find topic.")
 
     board = topic.board
+
     topic.delete()
+
     messages.success(
         request,
         mark_safe(_("<h4>Success!</h4><p>Topic removed.</p>")),
@@ -541,6 +554,7 @@ def message_entry_point_in_topic(
             request,
             mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p>")),
         )
+
         return redirect("aa_forum:forum_index")
 
     return redirect(message.get_absolute_url())
@@ -628,7 +642,6 @@ def message_modify(
             return redirect(
                 "aa_forum:forum_message_entry_point_in_topic", message_id=message_id
             )
-
     # If not, we'll fill the form with the information from the message object
     else:
         form = EditMessageForm(instance=message)
@@ -656,6 +669,7 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
         ).get(pk=message_id)
     except Message.DoesNotExist:
         return HttpResponseNotFound("Message not found.")
+
     topic = message.topic
 
     # Let's check if we have more than one message in this topic

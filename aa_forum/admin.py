@@ -30,7 +30,7 @@ class BoardAdmin(admin.ModelAdmin):
 @admin.register(Topic)
 class TopicAdmin(admin.ModelAdmin):
     """
-    Board admin
+    Topic admin
     """
 
     list_display = ("subject", "board", "_messages_count")

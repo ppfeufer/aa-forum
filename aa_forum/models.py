@@ -31,11 +31,20 @@ def get_sentinel_user() -> User:
 def _generate_slug(MyModel: models.Model, name: str) -> str:
     """
     Generate a valid slug and return it.
+    :param MyModel:
+    :type MyModel:
+    :param name:
+    :type name:
+    :return:
+    :rtype:
     """
+
     if name == INTERNAL_URL_PREFIX:
         name = "hyphen"
+
     run = 0
     slug_name = slugify(name, allow_unicode=True)
+
     while MyModel.objects.filter(slug=slug_name).exists():
         run += 1
         slug_name = slugify(f"{name}-{run}", allow_unicode=True)
@@ -73,7 +82,7 @@ class Category(models.Model):
     name = models.CharField(max_length=254, unique=True)
     slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
     is_collapsible = models.BooleanField(default=False)
-    order = models.IntegerField(default=0, db_index=True)
+    order = models.IntegerField(default=999999, db_index=True)
 
     class Meta:
         """
@@ -127,7 +136,7 @@ class Board(models.Model):
         blank=True,
         related_name="aa_forum_boards_group_restriction",
     )
-    order = models.IntegerField(default=0, db_index=True)
+    order = models.IntegerField(default=999999, db_index=True)
     first_message = models.ForeignKey(
         "Message",
         editable=False,
@@ -183,6 +192,7 @@ class Board(models.Model):
         """
         Calculate URL for this board and return it.
         """
+
         return reverse("aa_forum:forum_board", args=[self.category.slug, self.slug])
 
     def update_last_message(self) -> Optional[models.Model]:
@@ -199,6 +209,7 @@ class Board(models.Model):
         """
         Return True if the given user has access to this board, else False.
         """
+
         return Board.objects.user_has_access(user).filter(pk=self.pk).exists()
 
 
@@ -274,10 +285,12 @@ class Topic(models.Model):
             self.board.first_message = self.first_message
         except Message.DoesNotExist:
             self.board.first_message = None
+
         try:
             self.board.last_message = self.last_message
         except Message.DoesNotExist:
             self.board.last_message = None
+
         self.board.save(update_fields=["first_message", "last_message"])
 
     @transaction.atomic()
@@ -301,6 +314,7 @@ class Topic(models.Model):
         """
         Calculate URL for this topic and return it.
         """
+
         return reverse(
             "aa_forum:forum_topic",
             args=[self.board.category.slug, self.board.slug, self.slug],
@@ -429,6 +443,7 @@ class Message(models.Model):
         """
         Calculate URL for this message and return it.
         """
+
         messages_per_topic = int(
             Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)
         )
@@ -437,7 +452,9 @@ class Message(models.Model):
             .filter(time_posted__lt=self.time_posted)
             .count()
         ) + 1
+
         page = math.ceil(position / messages_per_topic)
+
         if page > 1:
             redirect_path = reverse(
                 "aa_forum:forum_topic",
@@ -457,6 +474,7 @@ class Message(models.Model):
                     self.topic.slug,
                 ),
             )
+
         return f"{redirect_path}#message-{self.pk}"
 
 

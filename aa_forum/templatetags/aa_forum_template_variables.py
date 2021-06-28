@@ -45,8 +45,8 @@ def set_template_variable(parser, token):
 
     if len(parts) < 4:
         raise template.TemplateSyntaxError(
-            "'set_template_variable' tag must be of the form: {% "
-            "set_template_variable <var_name> = <var_value> %}"
+            "'set_template_variable' tag must be of the form: "
+            "{% set_template_variable <var_name> = <var_value> %}"
         )
 
     return SetVarNode(parts[1], parts[3])

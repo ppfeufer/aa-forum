@@ -146,7 +146,7 @@ class EditCategoryForm(ModelForm):
 
 class EditBoardForm(ModelForm):
     """
-    New board form
+    Edit board form
     """
 
     name = forms.CharField(
@@ -188,7 +188,7 @@ class EditBoardForm(ModelForm):
 
 class EditMessageForm(ModelForm):
     """
-    Reply form
+    Edit message form
     """
 
     message = forms.CharField(
