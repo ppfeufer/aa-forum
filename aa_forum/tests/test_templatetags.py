@@ -65,13 +65,13 @@ class TestMainCharacterId(TestCase):
         # then
         self.assertEqual(result, "1")
 
-    def test_should_be_empty_for_None(self):
+    def test_should_be_dummy_id_for_None(self):
         # given
         context = Context({"user": None})
         # when
         result = self.template.render(context)
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(result, "1")
 
 
 class TestMainCharacterCorporationName(TestCase):
@@ -126,22 +126,22 @@ class TestMainCorporationId(TestCase):
         # then
         self.assertEqual(result, "2001")
 
-    def test_should_be_empty_for_users_without_main(self):
+    def test_should_be_dummy_id_for_users_without_main(self):
         # given
         user = AuthUtils.create_user("john")
         context = Context({"user": user})
         # when
         result = self.template.render(context)
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(result, "1")
 
-    def test_should_be_empty_for_None(self):
+    def test_should_be_dummy_id_for_None(self):
         # given
         context = Context({"user": None})
         # when
         result = self.template.render(context)
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(result, "1")
 
 
 class TestMainCharacterAllianceName(TestCase):
@@ -212,19 +212,19 @@ class TestMainAllianceId(TestCase):
         # then
         self.assertEqual(result, "3001")
 
-    def test_should_be_empty_for_users_without_main(self):
+    def test_should_be_dummy_id_for_users_without_main(self):
         # given
         user = AuthUtils.create_user("john")
         context = Context({"user": user})
         # when
         result = self.template.render(context)
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(result, "1")
 
-    def test_should_be_empty_for_None(self):
+    def test_should_be_dummy_id_for_None(self):
         # given
         context = Context({"user": None})
         # when
         result = self.template.render(context)
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(result, "1")
