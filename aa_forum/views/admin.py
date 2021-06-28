@@ -339,9 +339,7 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
     data = list()
 
     if request.method == "POST":
-        import simplejson
-
-        boards = simplejson.loads(request.POST.get("boards"))
+        boards = json.loads(request.POST.get("boards"))
 
         for board in boards:
             try:
