@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [0.0.1-alpha.10] - Upcoming
+## [0.0.1-alpha.10] - 2021-06-28
 
 ### ⚠️ Migration Reset ⚠️
 
@@ -28,6 +28,7 @@ python manage.py migrate aa_forum
 - Version to static files to break browser caches on version updates
 - New topic view now also has the bread crumb navigation
 - Ability to create new boards with a new category
+- Clear form button in forms that need it
 
 ### Changed
 
@@ -35,6 +36,9 @@ python manage.py migrate aa_forum
   whole search phrase, which is not the desired behavior. Now it checks if at least
   one word of the search phrase is in the message. This might give you more results
   but also doesn't miss the result you were looking for.
+- Slugs consolidated
+- Internal URLs reworked
+- Pagination URLs reworked
 
 ### Fixed
 
