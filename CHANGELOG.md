@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.0.1-alpha.11] - 2021-06-28
+
+### Fixed
+
+- `Topic.MultipleObjectsReturned: get() returned more than one Topic -- it returned
+  2!` when a board was restricted to more than 1 group
+
+
 ## [0.0.1-alpha.10] - 2021-06-28
 
 ### ⚠️ Migration Reset ⚠️

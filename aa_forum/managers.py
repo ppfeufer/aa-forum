@@ -84,6 +84,7 @@ class TopicQuerySet(models.QuerySet):
                     Q(board__groups__in=user.groups.all())
                     | Q(board__groups__isnull=True)
                 )
+                .distinct()
                 .get()
             )
         except self.model.DoesNotExist:
