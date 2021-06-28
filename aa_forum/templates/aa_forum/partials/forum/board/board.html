@@ -46,8 +46,11 @@
 
     <div class="aa-forum-board-stats hidden-sm hidden-xs small">
         {{ board.num_topics }} {% translate "Topics" %}<br>
-        {{ board.num_posts }} {% translate "Posts" %}<br>
-        {{ board.num_unread }} {% translate "Unread" %}
+        {{ board.num_posts }} {% translate "Posts" %}
+        {% if board.num_unread %}
+            <br>
+            {{ board.num_unread }} {% translate "Unread" %}
+        {% endif %}
     </div>
 
     <div class="aa-forum-board-last-post hidden-xs">
