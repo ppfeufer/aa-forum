@@ -82,12 +82,9 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
                 "user_created",
                 "user_created__profile__main_character",
                 "topic",
-                "topic__slug",
                 "topic__first_message",
                 "topic__board",
-                "topic__board__slug",
                 "topic__board__category",
-                "topic__board__category__slug",
             )
             .order_by("-time_modified")
             .distinct()

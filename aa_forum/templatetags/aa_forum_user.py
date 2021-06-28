@@ -73,7 +73,7 @@ def main_character_corporation_name(user: User) -> str:
 
 
 @register.filter
-def main_character_corporation_id(user: User) -> int:
+def main_character_corporation_id(user: User) -> str:
     """
     Get the users main character corporation id, or None if no main character
     :param user:
@@ -86,9 +86,9 @@ def main_character_corporation_id(user: User) -> int:
         return ""
 
     try:
-        return_value = user.profile.main_character.corporation_id
+        return_value = str(user.profile.main_character.corporation_id)
     except AttributeError:
-        return_value = None
+        return_value = ""
 
     return return_value
 
@@ -131,6 +131,6 @@ def main_character_alliance_id(user: User) -> int:
     try:
         return_value = user.profile.main_character.alliance_id
     except AttributeError:
-        return_value = None
+        return_value = ""
 
     return return_value

@@ -53,18 +53,12 @@ class TopicQuerySet(models.QuerySet):
         try:
             topic = (
                 self.select_related(
-                    "slug",
                     "board",
-                    "board__slug",
                     "board__category",
-                    "board__category__slug",
                     "first_message",
                     "first_message__topic",
-                    "first_message__topic__slug",
                     "first_message__topic__board",
-                    "first_message__topic__board__slug",
                     "first_message__topic__board__category",
-                    "first_message__topic__board__category__slug",
                 )
                 .prefetch_related(
                     Prefetch(
@@ -76,9 +70,9 @@ class TopicQuerySet(models.QuerySet):
                     )
                 )
                 .filter(
-                    board__category__slug__slug=str(category_slug),
-                    board__slug__slug=str(board_slug),
-                    slug__slug=str(topic_slug),
+                    board__category__slug=str(category_slug),
+                    board__slug=str(board_slug),
+                    slug=str(topic_slug),
                 )
                 .filter(
                     Q(board__groups__in=user.groups.all())

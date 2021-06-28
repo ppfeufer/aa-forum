@@ -8,15 +8,13 @@ from typing import Optional
 from ckeditor_uploader.fields import RichTextUploadingField
 
 from django.contrib.auth.models import Group, User
-from django.core.exceptions import ObjectDoesNotExist
 from django.db import models, transaction
-from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils.text import slugify
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
-from aa_forum.constants import SETTING_MESSAGESPERPAGE
+from aa_forum.constants import INTERNAL_URL_PREFIX, SETTING_MESSAGESPERPAGE
 from aa_forum.managers import BoardManager, SettingsManager, TopicManager
 
 
@@ -30,27 +28,19 @@ def get_sentinel_user() -> User:
     return User.objects.get_or_create(username="deleted")[0]
 
 
-def get_slug_on_save(subject: str) -> str:
+def _generate_slug(MyModel: models.Model, name: str) -> str:
     """
-    Get the slug
-    :param subject:
-    :type subject:
-    :return:
-    :rtype:
+    Generate a valid slug and return it.
     """
-
+    if name == INTERNAL_URL_PREFIX:
+        name = "hyphen"
     run = 0
-    subject_slug = slugify(subject, allow_unicode=True)
-
-    while Slug.objects.filter(slug=subject_slug).exists():
+    slug_name = slugify(name, allow_unicode=True)
+    while MyModel.objects.filter(slug=slug_name).exists():
         run += 1
-        subject_slug = slugify(subject + "-" + str(run), allow_unicode=True)
+        slug_name = slugify(f"{name}-{run}", allow_unicode=True)
 
-    Slug(slug=subject_slug).save()
-
-    slug_to_return = Slug.objects.get(slug=subject_slug)
-
-    return slug_to_return
+    return slug_name
 
 
 class General(models.Model):
@@ -75,69 +65,13 @@ class General(models.Model):
         )
 
 
-class Slug(models.Model):
-    """
-    Slug
-    """
-
-    slug = models.SlugField(max_length=255, unique=True, allow_unicode=True)
-
-    class Meta:
-        """
-        Meta definitions
-        """
-
-        default_permissions = ()
-        verbose_name = _("slug")
-        verbose_name_plural = _("slugs")
-
-    @receiver(models.signals.post_delete, sender="aa_forum.Category")
-    def handle_deleted_category(sender, instance, **kwargs):
-        """
-        Delete category slug, when category is deleted
-        :param instance:
-        :type instance:
-        :param kwargs:
-        :type kwargs:
-        """
-
-        instance.slug.delete()
-
-    @receiver(models.signals.post_delete, sender="aa_forum.Board")
-    def handle_deleted_board(sender, instance, **kwargs):
-        """
-        Delete board slug, when board is deleted
-        :param instance:
-        :type instance:
-        :param kwargs:
-        :type kwargs:
-        """
-
-        instance.slug.delete()
-
-    @receiver(models.signals.post_delete, sender="aa_forum.Topic")
-    def handle_deleted_topic(sender, instance, **kwargs):
-        """
-        Delete topic slug, when topic is deleted
-        :param instance:
-        :type instance:
-        :param kwargs:
-        :type kwargs:
-        """
-
-        instance.slug.delete()
-
-    def __str__(self) -> str:
-        return str(self.slug)
-
-
 class Category(models.Model):
     """
     Category
     """
 
     name = models.CharField(max_length=254, unique=True)
-    slug = models.ForeignKey(Slug, related_name="+", on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
     is_collapsible = models.BooleanField(default=False)
     order = models.IntegerField(default=0, db_index=True)
 
@@ -156,17 +90,16 @@ class Category(models.Model):
     @transaction.atomic()
     def save(self, *args, **kwargs):
         """
-        Add the slug on save if it does not exist
+        Generates the slug.
         :param args:
         :type args:
         :param kwargs:
         :type kwargs:
         """
 
-        try:
-            self.slug
-        except ObjectDoesNotExist:
-            self.slug = get_slug_on_save(subject=self.name)
+        if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
+            self.slug = _generate_slug(type(self), self.name)
+
         super().save(*args, **kwargs)
 
 
@@ -180,7 +113,7 @@ class Board(models.Model):
     )
     name = models.CharField(max_length=254)
 
-    slug = models.ForeignKey(Slug, related_name="+", on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
     description = models.TextField(blank=True)
     parent_board = models.ForeignKey(
         "self",
@@ -234,17 +167,16 @@ class Board(models.Model):
     @transaction.atomic()
     def save(self, *args, **kwargs):
         """
-        Add the slug on save if it does not exist
+        Generates the slug.
         :param args:
         :type args:
         :param kwargs:
         :type kwargs:
         """
 
-        try:
-            self.slug
-        except ObjectDoesNotExist:
-            self.slug = get_slug_on_save(subject=self.name)
+        if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
+            self.slug = _generate_slug(type(self), self.name)
+
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -278,7 +210,7 @@ class Topic(models.Model):
     board = models.ForeignKey(Board, related_name="topics", on_delete=models.CASCADE)
     subject = models.CharField(max_length=254)
 
-    slug = models.ForeignKey(Slug, related_name="+", on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
     is_sticky = models.BooleanField(
         default=False,
         db_index=True,
@@ -305,7 +237,6 @@ class Topic(models.Model):
         on_delete=models.SET_DEFAULT,
         help_text="Shortcut for better performance",
     )
-    # last_message_seen = models.ManyToManyField(User, through="LastMessageSeen")
 
     objects = TopicManager()
 
@@ -327,43 +258,27 @@ class Topic(models.Model):
     @transaction.atomic()
     def save(self, *args, **kwargs):
         """
-        Add the slug on save if it does not exist
+        Generate slug for new objects and update first and last messages.
         :param args:
         :type args:
         :param kwargs:
         :type kwargs:
         """
 
-        try:
-            self.slug
-        except ObjectDoesNotExist:
-            self.slug = get_slug_on_save(subject=self.subject)
+        if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
+            self.slug = _generate_slug(type(self), self.subject)
+
         super().save(*args, **kwargs)
 
-        update_fields = list()
-
-        # sometimes that message does not exist
-        # which would otherwise cause this method to fail
         try:
-            self.board.first_message
+            self.board.first_message = self.first_message
         except Message.DoesNotExist:
             self.board.first_message = None
-
         try:
-            self.board.last_message
+            self.board.last_message = self.last_message
         except Message.DoesNotExist:
             self.board.last_message = None
-
-        if self.board.first_message != self.first_message:
-            self.board.first_message = self.first_message
-            update_fields.append("first_message")
-
-        if self.board.last_message != self.last_message:
-            self.board.last_message = self.last_message
-            update_fields.append("last_message")
-
-        if update_fields:
-            self.board.save(update_fields=update_fields)
+        self.board.save(update_fields=["first_message", "last_message"])
 
     @transaction.atomic()
     def delete(self, *args, **kwargs):
@@ -382,6 +297,15 @@ class Topic(models.Model):
         if board_needs_update:
             self.board.update_last_message()
 
+    def get_absolute_url(self):
+        """
+        Calculate URL for this topic and return it.
+        """
+        return reverse(
+            "aa_forum:forum_topic",
+            args=[self.board.category.slug, self.board.slug, self.slug],
+        )
+
     def update_last_message(self) -> Optional[models.Model]:
         """
         Update the last message for this topic.
@@ -391,15 +315,6 @@ class Topic(models.Model):
             Message.objects.filter(topic=self).order_by("-time_posted").first()
         )
         self.save(update_fields=["last_message"])
-
-    def get_absolute_url(self):
-        """
-        Calculate URL for this topic and return it.
-        """
-        return reverse(
-            "aa_forum:forum_topic",
-            args=[self.board.category.slug, self.board.slug, self.slug],
-        )
 
 
 class LastMessageSeen(models.Model):
@@ -562,7 +477,7 @@ class PersonalMessage(models.Model):
     )
     time_sent = models.DateTimeField(auto_now_add=True)
     subject = models.CharField(max_length=254)
-    slug = models.ForeignKey(Slug, related_name="+", on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
     message = models.TextField(blank=True)
     is_read = models.BooleanField(default=False)
 
@@ -581,17 +496,16 @@ class PersonalMessage(models.Model):
     @transaction.atomic()
     def save(self, *args, **kwargs):
         """
-        Add the slug on save if it does not exist
+        Generates the slug.
         :param args:
         :type args:
         :param kwargs:
         :type kwargs:
         """
 
-        try:
-            self.slug
-        except ObjectDoesNotExist:
-            self.slug = get_slug_on_save(subject=self.subject)
+        if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
+            self.slug = _generate_slug(type(self), self.subject)
+
         super().save(*args, **kwargs)
 
 

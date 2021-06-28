@@ -14,3 +14,7 @@ user_agent = f"{verbose_name_slug} v{__version__} {github_url}"
 # Setting keys
 SETTING_MESSAGESPERPAGE = "defaultMaxMessages"
 SETTING_TOPICSPERPAGE = "defaultMaxTopics"
+
+# All internal URLs need to start with this prefix
+# to prevent conflicts with user generated forum URLs
+INTERNAL_URL_PREFIX = "-"

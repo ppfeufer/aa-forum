@@ -1,5 +1,7 @@
 from django_webtest import WebTest
 
+from django.urls import reverse
+
 from ..models import Board, Category, Message, Topic
 from .utils import create_fake_message, create_fake_messages, create_fake_user
 
@@ -92,3 +94,41 @@ class TestForumUI(WebTest):
         page = self.app.get(topic.get_absolute_url())
         # then
         self.assertNotContains(page, f"aa-forum-btn-modify-message-{alien_message.pk}")
+
+
+class TestAdminUI(WebTest):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.user = create_fake_user(
+            1001,
+            "Bruce Wayne",
+            permissions=["aa_forum.basic_access", "aa_forum.manage_forum"],
+        )
+
+    def test_should_create_category(self):
+        # given
+        self.app.set_user(self.user)
+        page = self.app.get(reverse("aa_forum:admin_index"))
+        # when
+        form = page.forms["aa-forum-form-admin-new-category"]
+        form["new-category-name"] = "Category"
+        page = form.submit().follow()
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
+        new_category = Category.objects.last()
+        self.assertEqual(new_category.name, "Category")
+
+    def test_should_add_board_to_category(self):
+        # given
+        category = Category.objects.create(name="Science")
+        self.app.set_user(self.user)
+        page = self.app.get(reverse("aa_forum:admin_index"))
+        # when
+        form = page.forms[f"aa-forum-form-admin-add-board-{category.id}"]
+        form[f"new-board-in-category-{category.id}-name"] = "Board"
+        page = form.submit().follow()
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
+        new_board = category.boards.last()
+        self.assertEqual(new_board.name, "Board")
