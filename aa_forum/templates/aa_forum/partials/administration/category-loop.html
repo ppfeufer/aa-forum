@@ -31,7 +31,7 @@
                         {% translate "Changing the name of this category does not change its URL part. This will remain the same to not break any possible links into this category." %}
                     </p>
 
-                    <form autocomplete="off" action="{% url 'aa_forum:admin_category_edit' category.category_obj.pk %}" method="post">
+                    <form id="aa-forum-form-admin-edit-category-{{ category.category_obj.pk }}" autocomplete="off" action="{% url 'aa_forum:admin_category_edit' category.category_obj.pk %}" method="post">
                         <fieldset>
                             {% csrf_token %}
 

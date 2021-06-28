@@ -22,7 +22,7 @@
                 {% translate "Changing the name of this board does not change its URL part. This will remain the same to not break any possible links into this board." %}
             </p>
 
-            <form id="aa-forum-form-edit-board-{{ board.id }}" autocomplete="off" action="{% url 'aa_forum:admin_board_edit' category.category_obj.pk board.board_obj.pk %}" method="post">
+            <form id="aa-forum-form-edit-board-{{ board.board_obj.pk }}" autocomplete="off" action="{% url 'aa_forum:admin_board_edit' category.category_obj.pk board.board_obj.pk %}" method="post">
                 <fieldset>
                     {% csrf_token %}
 
