@@ -119,9 +119,23 @@ class TestAdminUI(WebTest):
         new_category = Category.objects.last()
         self.assertEqual(new_category.name, "Category")
 
+    def test_should_edit_category(self):
+        # given
+        category = Category.objects.create(name="Category")
+        self.app.set_user(self.user)
+        page = self.app.get(reverse("aa_forum:admin_index"))
+        # when
+        form = page.forms[f"aa-forum-form-admin-edit-category-{category.pk}"]
+        form[f"edit-category-{category.pk}-name"] = "Dummy"
+        page = form.submit().follow()
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
+        category.refresh_from_db()
+        self.assertEqual(category.name, "Dummy")
+
     def test_should_add_board_to_category(self):
         # given
-        category = Category.objects.create(name="Science")
+        category = Category.objects.create(name="Category")
         self.app.set_user(self.user)
         page = self.app.get(reverse("aa_forum:admin_index"))
         # when
@@ -132,3 +146,18 @@ class TestAdminUI(WebTest):
         self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
         new_board = category.boards.last()
         self.assertEqual(new_board.name, "Board")
+
+    def test_should_edit_board(self):
+        # given
+        category = Category.objects.create(name="Category")
+        board = Board.objects.create(name="Board", category=category)
+        self.app.set_user(self.user)
+        page = self.app.get(reverse("aa_forum:admin_index"))
+        # when
+        form = page.forms[f"aa-forum-form-edit-board-{board.pk}"]
+        form[f"edit-board-{board.pk}-name"] = "Dummy"
+        page = form.submit().follow()
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
+        board.refresh_from_db()
+        self.assertEqual(board.name, "Dummy")

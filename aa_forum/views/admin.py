@@ -2,20 +2,31 @@
 Administration related views
 """
 
+import json
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Prefetch
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import (
+    HttpResponse,
+    HttpResponseNotFound,
+    HttpResponseRedirect,
+    JsonResponse,
+)
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
+
+from allianceauth.services.hooks import get_extension_logger
 
 from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm
 from aa_forum.models import Board, Category
 
 from ..helpers import message_form_errors
+
+logger = get_extension_logger(__name__)
 
 
 @login_required
@@ -162,8 +173,14 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
     :type category_id:
     """
 
-    Category.objects.get(pk=category_id).delete()
+    try:
+        category = Category.objects.get(pk=category_id)
+    except Category.DoesNotExist:
+        msg = f"Category with PK {category_id} not found."
+        logger.warning(msg)
+        return HttpResponseNotFound(msg)
 
+    category.delete()
     messages.success(
         request,
         mark_safe(_("<h4>Success!</h4><p>Category removed.</p>")),
@@ -263,8 +280,14 @@ def board_delete(
     :type board_id:
     """
 
-    Board.objects.get(pk=board_id, category_id=category_id).delete()
+    try:
+        board = Board.objects.get(pk=board_id)
+    except Board.DoesNotExist:
+        msg = f"Board with PK {board_id} not found."
+        logger.warning(msg)
+        return HttpResponseNotFound(msg)
 
+    board.delete()
     messages.success(
         request,
         mark_safe(_("<h4>Success!</h4><p>Board removed.</p>")),
@@ -285,15 +308,19 @@ def ajax_category_order(request: WSGIRequest) -> JsonResponse:
     data = list()
 
     if request.method == "POST":
-        import simplejson
-
-        categories = simplejson.loads(request.POST.get("categories"))
+        categories = json.loads(request.POST.get("categories"))
 
         for category in categories:
-            Category.objects.update_or_create(
-                pk=category["catId"],
-                defaults={"order": category["catOrder"]},
-            )
+            try:
+                category_obj = Category.objects.get(pk=category["catId"])
+            except Category.DoesNotExist:
+                logger.warning(
+                    "Tried to change order for non existing category with ID %s",
+                    category["catId"],
+                )
+            else:
+                category_obj.order = category["catOrder"]
+                category_obj.save(update_fields=["order"])
 
         data.append({"success": True})
 
@@ -317,10 +344,16 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
         boards = simplejson.loads(request.POST.get("boards"))
 
         for board in boards:
-            Board.objects.update_or_create(
-                pk=board["boardId"],
-                defaults={"order": board["boardOrder"]},
-            )
+            try:
+                board_obj = Board.objects.get(pk=board["boardId"])
+            except Board.DoesNotExist:
+                logger.warning(
+                    "Tried to change order for non existing board with ID %s",
+                    board["boardId"],
+                )
+            else:
+                board_obj.order = board["boardOrder"]
+                board_obj.save(update_fields=["order"])
 
         data.append({"success": True})
 
