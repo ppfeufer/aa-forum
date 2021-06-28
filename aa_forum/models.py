@@ -14,12 +14,8 @@ from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
-from aa_forum.constants import SETTING_MESSAGESPERPAGE
+from aa_forum.constants import INTERNAL_URL_PREFIX, SETTING_MESSAGESPERPAGE
 from aa_forum.managers import BoardManager, SettingsManager, TopicManager
-
-# Slugs are not allowed to be a single hyphen
-# in order to prevent conflicts with internal URLs
-_HYPHEN_CHARACTER = "-"
 
 
 def get_sentinel_user() -> User:
@@ -36,7 +32,7 @@ def _generate_slug(MyModel: models.Model, name: str) -> str:
     """
     Generate a valid slug and return it.
     """
-    if name == _HYPHEN_CHARACTER:
+    if name == INTERNAL_URL_PREFIX:
         name = "hyphen"
     run = 0
     slug_name = slugify(name, allow_unicode=True)
@@ -101,7 +97,7 @@ class Category(models.Model):
         :type kwargs:
         """
 
-        if self._state.adding is True or self.slug == _HYPHEN_CHARACTER:
+        if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
             self.slug = _generate_slug(type(self), self.name)
 
         super().save(*args, **kwargs)
@@ -178,7 +174,7 @@ class Board(models.Model):
         :type kwargs:
         """
 
-        if self._state.adding is True or self.slug == _HYPHEN_CHARACTER:
+        if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
             self.slug = _generate_slug(type(self), self.name)
 
         super().save(*args, **kwargs)
@@ -269,7 +265,7 @@ class Topic(models.Model):
         :type kwargs:
         """
 
-        if self._state.adding is True or self.slug == _HYPHEN_CHARACTER:
+        if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
             self.slug = _generate_slug(type(self), self.subject)
 
         super().save(*args, **kwargs)
@@ -507,7 +503,7 @@ class PersonalMessage(models.Model):
         :type kwargs:
         """
 
-        if self._state.adding is True or self.slug == _HYPHEN_CHARACTER:
+        if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
             self.slug = _generate_slug(type(self), self.subject)
 
         super().save(*args, **kwargs)

@@ -15,4 +15,4 @@ omit =
     */tests/*.py
     */migrations/*
     doc/*
-    */tools/*
+    */scripts/*

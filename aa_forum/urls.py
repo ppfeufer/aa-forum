@@ -4,91 +4,98 @@ AA-Forum path config
 
 from django.urls import path
 
+from aa_forum.constants import INTERNAL_URL_PREFIX
 from aa_forum.views import admin, forum, search
 
 app_name: str = "aa_forum"
 
 # IMPORTANT
-# All URLs for internal pages (except the index page) need to start
-# with "-/" to prevend conflicts with automatically generated URLs for forum pages
+# All internal URLs need to start with the designated prefix
+# to prevent conflicts with user generated forum URLs
 
 urlpatterns = [
     path("", forum.index, name="forum_index"),
     # Admin URLs
-    path("-/admin/", admin.index, name="admin_index"),
+    path(f"{INTERNAL_URL_PREFIX}/admin/", admin.index, name="admin_index"),
     path(
-        "-/admin/category/create/",
+        f"{INTERNAL_URL_PREFIX}/admin/category/create/",
         admin.category_create,
         name="admin_category_create",
     ),
     path(
-        "-/admin/category/<int:category_id>/edit/",
+        f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/edit/",
         admin.category_edit,
         name="admin_category_edit",
     ),
     path(
-        "-/admin/category/<int:category_id>/delete/",
+        f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/delete/",
         admin.category_delete,
         name="admin_category_delete",
     ),
     path(
-        "-/admin/category/<int:category_id>/board/create/",
+        f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/board/create/",
         admin.board_create,
         name="admin_board_create",
     ),
     path(
-        "-/admin/category/<int:category_id>/board/<int:board_id>/edit/",
+        (
+            f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/board/"
+            "<int:board_id>/edit/"
+        ),
         admin.board_edit,
         name="admin_board_edit",
     ),
     path(
-        "-/admin/category/<int:category_id>/board/<int:board_id>/delete/",
+        (
+            f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/board/"
+            "<int:board_id>/delete/"
+        ),
         admin.board_delete,
         name="admin_board_delete",
     ),
     path(
-        "-/ajax/admin/category-order/",
+        f"{INTERNAL_URL_PREFIX}/ajax/admin/category-order/",
         admin.ajax_category_order,
         name="admin_ajax_category_order",
     ),
     path(
-        "-/ajax/admin/board-order/",
+        f"{INTERNAL_URL_PREFIX}/ajax/admin/board-order/",
         admin.ajax_board_order,
         name="admin_ajax_board_order",
     ),
     # Service URLs
     path(
-        "-/message/<int:message_id>/",
+        f"{INTERNAL_URL_PREFIX}/message/<int:message_id>/",
         forum.message_entry_point_in_topic,
         name="forum_message_entry_point_in_topic",
     ),
     path(
-        "-/message/<int:message_id>/delete/",
+        f"{INTERNAL_URL_PREFIX}/message/<int:message_id>/delete/",
         forum.message_delete,
         name="forum_message_delete",
     ),
     path(
-        "-/topic/<int:topic_id>/change-lock-state/",
+        f"{INTERNAL_URL_PREFIX}/topic/<int:topic_id>/change-lock-state/",
         forum.topic_change_lock_state,
         name="forum_topic_change_lock_state",
     ),
     path(
-        "-/topic/<int:topic_id>/change-sticky-state/",
+        f"{INTERNAL_URL_PREFIX}/topic/<int:topic_id>/change-sticky-state/",
         forum.topic_change_sticky_state,
         name="forum_topic_change_sticky_state",
     ),
     path(
-        "-/topic/<int:topic_id>/delete/",
+        f"{INTERNAL_URL_PREFIX}/topic/<int:topic_id>/delete/",
         forum.topic_delete,
         name="forum_topic_delete",
     ),
     path(
-        "-/search/",
+        f"{INTERNAL_URL_PREFIX}/search/",
         search.results,
         name="search_results",
     ),
     path(
-        "-/search/page/<int:page_number>/",
+        f"{INTERNAL_URL_PREFIX}/search/page/<int:page_number>/",
         search.results,
         name="search_results",
     ),
