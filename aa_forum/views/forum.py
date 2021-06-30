@@ -708,3 +708,43 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
         category_slug=topic.board.category.slug,
         board_slug=topic.board.slug,
     )
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
+    """
+    Mark all available topics as read
+    :param request:
+    :type request:
+    """
+
+    has_read_all_messages = LastMessageSeen.objects.filter(
+        topic=OuterRef("pk"),
+        user=request.user,
+        message_time__gte=OuterRef("last_message__time_posted"),
+    )
+
+    boards = (
+        Board.objects.prefetch_related(
+            Prefetch(
+                "topics",
+                queryset=Topic.objects.select_related(
+                    "last_message",
+                ).annotate(has_unread_messages=~Exists(has_read_all_messages)),
+            )
+        )
+        .user_has_access(request.user)
+        .all()
+    )
+
+    if boards.count() > 0:
+        for board in boards:
+            for topic in board.topics.all():
+                LastMessageSeen.objects.update_or_create(
+                    topic=topic,
+                    user=request.user,
+                    defaults={"message_time": topic.last_message.time_posted},
+                )
+
+    return redirect("aa_forum:forum_index")

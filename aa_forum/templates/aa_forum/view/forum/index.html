@@ -18,7 +18,7 @@
     {% include 'aa_forum/partials/forum/forum-index.html' %}
 
     <div class="panel-body">
-        <div class="aa-forum-legend">
+        <div class="aa-forum-legend pull-left">
             <span class="aa-forum-legend-new-post">
                 <span class="aa-forum-legend-image">
                     <img src="{% static 'aa_forum/images/new_some.png' %}" alt="Board">
@@ -32,6 +32,12 @@
                 </span>
                 <span class="aa-forum-legend-text">{% translate "No new posts" %}</span>
             </span>
+        </div>
+
+        <div class="aa-forum-mark-read-button pull-right">
+            <a href="{% url 'aa_forum:forum_mark_all_as_read' %}" class="btn btn-default btn-sm">
+                {% translate "Mark all messages as read" %}
+            </a>
         </div>
     </div>
 {% endblock %}
