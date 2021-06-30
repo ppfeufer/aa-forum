@@ -99,6 +99,11 @@ urlpatterns = [
         search.results,
         name="search_results",
     ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/mark-all-as-read/",
+        forum.mark_all_as_read,
+        name="forum_mark_all_as_read",
+    ),
     # Forum URLs
     path(
         "<slug:category_slug>/<slug:board_slug>/",
