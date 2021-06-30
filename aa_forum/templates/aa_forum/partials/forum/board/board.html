@@ -11,9 +11,9 @@
 <div class="aa-forum-board row">
     <div class="aa-forum-board-image">
         {% if board.num_unread > 0 %}
-            <img id="aa-forum-link-on-{{ board.id }}" src="{% static 'aa_forum/images/on.png' %}" alt="Board">
+            <img id="aa-forum-link-on-{{ board.id }}" src="{% static 'aa_forum/images/on.png' %}" alt="{% translate "New posts" %}">
         {% else %}
-            <img src="{% static 'aa_forum/images/off.png' %}" alt="Board">
+            <img src="{% static 'aa_forum/images/off.png' %}" alt="{% translate "No new posts" %}">
         {% endif %}
     </div>
 
