@@ -16,6 +16,24 @@
 
 {% block aa_forum_body %}
     {% include 'aa_forum/partials/forum/forum-index.html' %}
+
+    <div class="panel-body">
+        <div class="aa-forum-legend">
+            <span class="aa-forum-legend-new-post">
+                <span class="aa-forum-legend-image">
+                    <img src="{% static 'aa_forum/images/new_some.png' %}" alt="Board">
+                </span>
+                <span class="aa-forum-legend-text">{% translate "New posts" %}</span>
+            </span>
+
+            <span class="aa-forum-legend-no-new-post">
+                <span class="aa-forum-legend-image">
+                    <img src="{% static 'aa_forum/images/new_none.png' %}" alt="Board">
+                </span>
+                <span class="aa-forum-legend-text">{% translate "No new posts" %}</span>
+            </span>
+        </div>
+    </div>
 {% endblock %}
 
 {% block extra_css %}

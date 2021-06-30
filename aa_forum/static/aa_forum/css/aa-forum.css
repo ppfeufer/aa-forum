@@ -135,6 +135,28 @@
         white-space: nowrap;
         word-wrap: normal;
     }
+
+    .aa-forum .aa-forum-legend {
+        display: flex;
+    }
+
+    .aa-forum .aa-forum-legend > span {
+        margin-right: 5rem;
+        display: flex;
+    }
+
+    .aa-forum .aa-forum-legend .aa-forum-legend-image {
+        margin-right: 0.5rem;
+    }
+
+    .aa-forum .aa-forum-legend .aa-forum-legend-text {
+        display: inline-block;
+        margin-top: 0.25rem;
+    }
+
+    .aa-forum .aa-forum-legend span:last-child {
+        margin-right: 0;
+    }
 }
 
 /* Board view
