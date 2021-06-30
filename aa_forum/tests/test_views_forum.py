@@ -324,9 +324,9 @@ class TestTopicViews(TestCase):
             permissions=["aa_forum.basic_access", "aa_forum.manage_forum"],
         )
         cls.group = Group.objects.create(name="Superhero")
-        cls.category = Category.objects.create(name="Science")
 
     def setUp(self) -> None:
+        self.category = Category.objects.create(name="Science")
         self.board = Board.objects.create(name="Physics", category=self.category)
         self.topic = Topic.objects.create(subject="Mysteries", board=self.board)
         create_fake_messages(self.topic, 15)
@@ -433,7 +433,9 @@ class TestTopicViews(TestCase):
         # then
         self.assertRedirects(res, first_unseen_message.get_absolute_url())
 
-    def test_should_redirect_to_first_new_message_last_when_seen_message_deleted(self):
+    def test_should_redirect_to_first_unseen_message_when_last_seen_message_deleted(
+        self,
+    ):
         # given
         self.client.force_login(self.user_1001)
         messages_sorted = list(self.topic.messages.order_by("time_posted"))

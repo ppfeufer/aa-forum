@@ -1,4 +1,4 @@
-name: Automated Checks
+name: Checks
 
 on:
   push:
