@@ -10,11 +10,11 @@ $(function () {
         placeholder: 'aa-forum-ui-placeholder',
         connectWith: '.categories_sortable',
         axis: 'y',
-        start: function (e, ui) {
+        start (e, ui) {
             // this makes the placeholder fit with the row that's being dragged
             ui.placeholder.height(ui.helper.height());
         },
-        update: function (event, ui) {
+        update (event, ui) {
             let categories = [];
 
             $('.categories-sortable .category-sortable').each(function (index) {
@@ -50,7 +50,7 @@ $(function () {
                 placeholder: 'aa-forum-ui-placeholder',
                 connectWith: categoriesWithBoards[key],
                 containment: 'parent',
-                start: function (e, ui) {
+                start (e, ui) {
                     // get the instance of the sortable.
                     // instance method is new to jquery ui 1.11, for previous versions
                     // you can use $(this).data()['ui-sortable'];
@@ -71,7 +71,7 @@ $(function () {
                     // will resolve the issue.
                     sort.containment[1] -= sort.offset.click.top;
                 },
-                update: function (event, ui) {
+                update (event, ui) {
                     let boards = [];
 
                     $(categoriesWithBoards[key] + ' li.board-sortable').each(function (index) {
