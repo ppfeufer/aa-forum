@@ -55,7 +55,6 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
         search_results = (
             Message.objects.filter(
                 reduce(
-                    # and_,
                     or_,
                     [
                         Q(message_plaintext__icontains=search_term)

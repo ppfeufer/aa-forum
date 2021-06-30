@@ -41,7 +41,9 @@ class SpecialModelChoiceIterator(forms.models.ModelChoiceIterator):
     def __iter__(self):
         if self.field.empty_label is not None:
             yield ("", self.field.empty_label)
+
         queryset = self.queryset
+
         for obj in queryset:
             yield self.choice(obj)
 
@@ -173,7 +175,9 @@ class EditBoardForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         groups_queryset = kwargs.pop("groups_queryset", None)
+
         super().__init__(*args, **kwargs)
+
         if groups_queryset:
             self.fields["groups"].queryset = groups_queryset
 

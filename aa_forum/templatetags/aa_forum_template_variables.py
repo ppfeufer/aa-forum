@@ -38,7 +38,7 @@ class SetVarNode(template.Node):
 @register.tag(name="set_template_variable")
 def set_template_variable(parser, token):
     """
-    {% set_template_variable some_var = '123' %}
+    {% set_template_variable <var_name> = <var_value> %}
     """
 
     parts = token.split_contents()

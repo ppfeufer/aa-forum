@@ -30,11 +30,11 @@ def highlight_search_term(text: str, search_phrase: str) -> str:
 
     for search_term in search_phrase_terms:
         highlighted = re.sub(
-            "(?i)(%s)" % (re.escape(search_term)), "«\\1»", highlighted
+            "(?i)(%s)" % (re.escape(search_term)), "{«}\\1{»}", highlighted
         )
 
     return mark_safe(
         highlighted.replace(
-            "«", '<span class="aa-forum-search-term-highlight">'
-        ).replace("»", "</span>")
+            "{«}", '<span class="aa-forum-search-term-highlight">'
+        ).replace("{»}", "</span>")
     )

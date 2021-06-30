@@ -3,7 +3,6 @@ Models
 """
 
 import math
-from typing import Optional
 
 from ckeditor_uploader.fields import RichTextUploadingField
 
@@ -188,14 +187,14 @@ class Board(models.Model):
 
         super().save(*args, **kwargs)
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         """
         Calculate URL for this board and return it.
         """
 
         return reverse("aa_forum:forum_board", args=[self.category.slug, self.slug])
 
-    def update_last_message(self) -> Optional[models.Model]:
+    def update_last_message(self):
         """
         Update the last message for this board.
         """
@@ -310,7 +309,7 @@ class Topic(models.Model):
         if board_needs_update:
             self.board.update_last_message()
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         """
         Calculate URL for this topic and return it.
         """
@@ -320,7 +319,7 @@ class Topic(models.Model):
             args=[self.board.category.slug, self.board.slug, self.slug],
         )
 
-    def update_last_message(self) -> Optional[models.Model]:
+    def update_last_message(self):
         """
         Update the last message for this topic.
         """

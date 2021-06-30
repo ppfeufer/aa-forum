@@ -141,8 +141,8 @@
     }
 
     .aa-forum .aa-forum-legend > span {
-        margin-right: 5rem;
         display: flex;
+        margin-right: 5rem;
     }
 
     .aa-forum .aa-forum-legend .aa-forum-legend-image {

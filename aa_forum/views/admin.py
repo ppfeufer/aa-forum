@@ -22,9 +22,8 @@ from django.utils.translation import gettext as _
 from allianceauth.services.hooks import get_extension_logger
 
 from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm
+from aa_forum.helpers import message_form_errors
 from aa_forum.models import Board, Category
-
-from ..helpers import message_form_errors
 
 logger = get_extension_logger(__name__)
 

@@ -6,8 +6,6 @@ from typing import Optional
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
-
-# from django.core import serializers
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
 from django.db import transaction
@@ -96,6 +94,8 @@ def board(
     :type category_slug:
     :param board_slug:
     :type board_slug:
+    :param page_number:
+    :type page_number:
     :return:
     :rtype:
     """
@@ -159,7 +159,7 @@ def board_new_topic(
     request: WSGIRequest, category_slug: str, board_slug: str
 ) -> HttpResponse:
     """
-    Beginn a new topic
+    Begin a new topic
     :param request:
     :type request:
     :param category_slug:
@@ -313,6 +313,16 @@ def _topic_from_slugs(
 ) -> Optional[Topic]:
     """
     Fetch topic from given slug params.
+    :param request:
+    :type request:
+    :param category_slug:
+    :type category_slug:
+    :param board_slug:
+    :type board_slug:
+    :param topic_slug:
+    :type topic_slug:
+    :return:
+    :rtype:
     """
 
     topic = Topic.objects.get_from_slugs(
@@ -343,6 +353,16 @@ def topic_unread(
 ) -> HttpResponse:
     """
     Redirect to first unread message of a topic.
+    :param request:
+    :type request:
+    :param category_slug:
+    :type category_slug:
+    :param board_slug:
+    :type board_slug:
+    :param topic_slug:
+    :type topic_slug:
+    :return:
+    :rtype:
     """
 
     topic = _topic_from_slugs(
@@ -383,7 +403,7 @@ def topic_reply(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
     """
-    Reply to posts in a topic
+    Reply to a post in a topic
     :param request:
     :type request:
     :param category_slug:
@@ -490,7 +510,6 @@ def topic_change_sticky_state(
             request,
             mark_safe(_('<h4>Success!</h4><p>Topic is no longer "Sticky".</p>')),
         )
-
     else:
         topic.is_sticky = True
 
@@ -513,6 +532,8 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
     :type request:
     :param topic_id:
     :type topic_id:
+    :return:
+    :rtype:
     """
 
     try:
@@ -543,6 +564,8 @@ def message_entry_point_in_topic(
     :type request:
     :param message_id:
     :type message_id:
+    :return:
+    :rtype:
     """
 
     try:
@@ -581,6 +604,8 @@ def message_modify(
     :type topic_slug:
     :param message_id:
     :type message_id:
+    :return:
+    :rtype:
     """
 
     # Check if the message exists
@@ -661,6 +686,8 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
     :type request:
     :param message_id:
     :type message_id:
+    :return:
+    :rtype:
     """
 
     try:
@@ -717,6 +744,8 @@ def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
     Mark all available topics as read
     :param request:
     :type request:
+    :return:
+    :rtype:
     """
 
     has_read_all_messages = LastMessageSeen.objects.filter(
