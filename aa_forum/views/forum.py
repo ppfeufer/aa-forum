@@ -777,3 +777,42 @@ def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
                 )
 
     return redirect("aa_forum:forum_index")
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def unread_messages_count_all(request: WSGIRequest) -> int:
+    """
+    Get the number of unread messages for the user
+    :param request:
+    :type request:
+    :return:
+    :rtype:
+    """
+
+    has_read_all_messages = LastMessageSeen.objects.filter(
+        topic=OuterRef("pk"),
+        user=request.user,
+        message_time__gte=OuterRef("last_message__time_posted"),
+    )
+    unread_topic_pks = Topic.objects.filter(~Exists(has_read_all_messages)).values_list(
+        "pk", flat=True
+    )
+
+    boards = (
+        Board.objects.annotate(
+            num_unread=Count(
+                "topics", filter=Q(topics__in=unread_topic_pks), distinct=True
+            ),
+        )
+        .user_has_access(request.user)
+        .all()
+    )
+
+    count_unread_messages = 0
+
+    if boards.count() > 0:
+        for board in boards:
+            count_unread_messages += board.num_unread
+
+    return count_unread_messages
