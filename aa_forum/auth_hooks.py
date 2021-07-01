@@ -8,7 +8,7 @@ from allianceauth import hooks
 from allianceauth.services.hooks import MenuItemHook, UrlHook
 
 from aa_forum import __title__, urls
-from aa_forum.views.forum import unread_messages_count_all
+from aa_forum.views.forum import unread_topics_count
 
 
 class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
@@ -38,10 +38,10 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
             # app_count = AaForumManager.pending_requests_count_for_user(request.user)
             # self.count = app_count if app_count and app_count > 0 else None
 
-            unread_messages_count = unread_messages_count_all(request=request)
+            count_unread_topics = unread_topics_count(request=request)
             self.count = (
-                unread_messages_count
-                if unread_messages_count and unread_messages_count > 0
+                count_unread_topics
+                if count_unread_topics and count_unread_topics > 0
                 else None
             )
 

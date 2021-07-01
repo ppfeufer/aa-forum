@@ -781,7 +781,7 @@ def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
 
 @login_required
 @permission_required("aa_forum.basic_access")
-def unread_messages_count_all(request: WSGIRequest) -> int:
+def unread_topics_count(request: WSGIRequest) -> int:
     """
     Get the number of unread messages for the user
     :param request:
@@ -801,7 +801,7 @@ def unread_messages_count_all(request: WSGIRequest) -> int:
 
     boards = (
         Board.objects.annotate(
-            num_unread=Count(
+            num_unread_topics=Count(
                 "topics", filter=Q(topics__in=unread_topic_pks), distinct=True
             ),
         )
@@ -809,10 +809,10 @@ def unread_messages_count_all(request: WSGIRequest) -> int:
         .all()
     )
 
-    count_unread_messages = 0
+    count_unread_topics = 0
 
     if boards.count() > 0:
         for board in boards:
-            count_unread_messages += board.num_unread
+            count_unread_topics += board.num_unread_topics
 
-    return count_unread_messages
+    return count_unread_topics
