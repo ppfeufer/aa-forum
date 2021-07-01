@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Title attribute to last message in forum index
 - "Mark all messages as read" button to forum index
+- Counter for unread messages on forum link in navigation
 
 
 ## [0.0.1-alpha.11] - 2021-06-28
