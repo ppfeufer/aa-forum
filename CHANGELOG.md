@@ -12,15 +12,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Title attribute to last message in forum index
 - "Mark all messages as read" button to forum index
-- Counter for unread messages on forum link in navigation
+- Counter for unread topics on forum link in navigation
 
 
 ## [0.0.1-alpha.11] - 2021-06-28
 
 ### Fixed
 
-- `Topic.MultipleObjectsReturned: get() returned more than one Topic -- it returned
-  2!` when a board was restricted to more than 1 group
+- `Topic.MultipleObjectsReturned: get() returned more than one Topic -- it returned 2!`
+  when a board was restricted to more than 1 group
 
 
 ## [0.0.1-alpha.10] - 2021-06-28
