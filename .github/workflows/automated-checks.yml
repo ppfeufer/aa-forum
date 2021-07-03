@@ -65,13 +65,13 @@ jobs:
 
   # run test coverage
   test-coverage:
-    needs: [codacy-security-scan]
+#    needs: [codacy-security-scan]
     name: Test Coverage
 
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [ 3.6 ]
+        python: [ 3.6, 3.7, 3.8, 3.9 ]
 
     steps:
       - uses: actions/checkout@v2
