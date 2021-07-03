@@ -19,8 +19,8 @@ these kind of changes. For you own sanity, and mine :-)
 
 ## Contents
 - [Overview](#overview)
-    - Features
-    - Screenshots
+    - [Features](#features)
+    - [Screenshots](#screenshots)
 - [Installation](#installation)
     - [Step 1 - Install the package](#step-1---install-the-package)
     - [Step 2 - Configure Alliance Auth](#step-2---configure-alliance-auth)
@@ -34,14 +34,48 @@ these kind of changes. For you own sanity, and mine :-)
 
 ## Overview
 
-Work in progress on this one
+### Features
+
+- Simple permission system. Only 2 permissions ("has_access" and "can_manage")
+- Simple administration, no maze to click through to get where you wantet to go
+- Categories and boards are sortable via drag and drop in admin view
+- Mass creation of boards with a new categoy
+- Boards can be restricted to 1 or more groups, bards without restrictions are
+  visible for everyone who has access to the forum
+- ckEditor with image upload
+- Unread topics counter as number on the "Forum" link in the left navigation
+
+
+### Screenshots
+
+#### Forum Index
+
+![Forum Index](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/forum-index.jpg)
+
+
+#### Topic Overview / Board Index
+
+![Topic Overview / Board Index](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-overview.jpg)
+
+
+#### Topic View
+
+![Topic View](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-view.jpg)
+
+
+#### Start new Topic (ckEditor)
+
+![Start new Topic](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/start-new-topic.jpg)
+
+
+#### Admin View
+
+![Admin View](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/admin-view.jpg)
 
 
 ## Installation
 
-### ⚠️ This is still in development, so only install it if you know what you're doing ⚠️
-
-**Important**: Please make sure you meet all preconditions before you proceed:
+#### Important: Please make sure you meet all preconditions before you proceed:
 
 - AA Forum is a plugin for Alliance Auth. If you don't have Alliance Auth running
   already, please install it first before proceeding. (see the official
@@ -130,6 +164,7 @@ the server where to find all the static files. We are adding a similar line for 
 media, right below that one.
 
 Add the following right below the static proxy match:
+
 ```apache
 ProxyPassMatch ^/media !
 ```
@@ -137,11 +172,12 @@ ProxyPassMatch ^/media !
 Now we also need to let the server know where to find the media directory we just
 configured the proxy for. To do so, add a new Alias to your configuration. This can
 be done right below the already existing Alias for `/static`:
+
 ```apache
 Alias "/media" "/var/www/myauth/media/"
 ```
 
-At last a Directory rule is needed as well. Add the following below the already
+At last a "Directory" rule is needed as well. Add the following below the already
 existing Directory rule for the static files:
 
 ```apache
@@ -151,6 +187,7 @@ existing Directory rule for the static files:
 ```
 
 So the whole block should now look like this:
+
 ```apache
 ProxyPassMatch ^/static !
 ProxyPassMatch ^/media !  # *** NEW proxy rule
@@ -176,7 +213,9 @@ Restart your Apache webserver.
 #### Nginx
 
 In order to let Nginx know where to find the uploaded files, you need to add a new
-location rule to the configuration.
+location rule to the configuration. Add the following right below the definition for
+your "static" location.
+
 ```nginx
 location /media {
     alias /var/www/myauth/media;
