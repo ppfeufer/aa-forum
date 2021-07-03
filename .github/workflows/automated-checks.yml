@@ -65,7 +65,7 @@ jobs:
 
   # run test coverage
   test-coverage:
-#    needs: [codacy-security-scan]
+    needs: [codacy-security-scan]
     name: Test Coverage
 
     runs-on: ubuntu-latest
