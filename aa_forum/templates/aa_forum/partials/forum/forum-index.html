@@ -1,0 +1,15 @@
+{% load i18n %}
+
+{% for category in categories %}
+    <div id="category-{{ category.id }}" class="panel panel-default panel-aa-forum-category">
+        <div class="panel-heading">
+            <div class="panel-title">{{ category.name }}</div>
+        </div>
+
+        <div class="panel-body">
+            {% for board in category.boards_sorted %}
+                {% include "aa_forum/partials/forum/board/board.html" %}
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}

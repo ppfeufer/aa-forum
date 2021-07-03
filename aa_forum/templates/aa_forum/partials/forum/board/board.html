@@ -1,0 +1,84 @@
+{% load aa_forum_template_variables %}
+{% load i18n %}
+{% load static %}
+{% load evelinks %}
+
+{% set_template_variable category_slug = board.category.slug %}
+{% set_template_variable board_slug = board.slug %}
+{% set_template_variable board_groups = board.groups.all %}
+{% set_template_variable board_child_boards = board.child_boards.all %}
+
+<div class="aa-forum-board row">
+    <div class="aa-forum-board-image">
+        {% if board.num_unread > 0 %}
+            <img id="aa-forum-link-on-{{ board.id }}" src="{% static 'aa_forum/images/on.png' %}" alt="{% translate "New posts" %}">
+        {% else %}
+            <img src="{% static 'aa_forum/images/off.png' %}" alt="{% translate "No new posts" %}">
+        {% endif %}
+    </div>
+
+    <div class="aa-forum-board-name">
+        <p><a href="{{ board.get_absolute_url }}">{{ board.name }}</a></p>
+
+        {% if board.description %}
+            <p class="text-muted">{{ board.description }}</p>
+        {% endif %}
+
+        {% if board_groups %}
+            <p class="aa-forum-text-board-group-restrictions text-muted small">
+                {% translate "This board is restricted to the following group(s):" %}<br>
+                {{ board_groups|join:", " }}
+            </p>
+        {% endif %}
+
+{#        {% if board_child_boards %}#}
+{#            <p class="aa-forum-child-boards text-muted small">#}
+{#                <b>{% translate "Child Boards:" %}</b>#}
+{##}
+{#                {% for child_board in board_child_boards %}#}
+{#                    <a href="{% url 'aa_forum:forum_board' category_slug child_board.slug %}">#}
+{#                        {{ child_board.name }}#}
+{#                    </a>{% if not forloop.last %}, {% endif %}#}
+{#                {% endfor %}#}
+{#            </p>#}
+{#        {% endif %}#}
+    </div>
+
+    <div class="aa-forum-board-stats hidden-sm hidden-xs small">
+        {{ board.num_posts }} {% translate "Posts" %}<br>
+        {{ board.num_topics }} {% translate "Topics" %}
+
+        {% if board.num_unread %}
+            <br>
+            {{ board.num_unread }} {% translate "Unread" %}
+        {% endif %}
+    </div>
+
+    <div class="aa-forum-board-last-post hidden-xs">
+        {% if board.topics.exists %}
+            {% set_template_variable board_last_message = board.last_message %}
+            {% set_template_variable board_latest_topic = board_last_message.topic %}
+            {% set_template_variable board_last_message_author = board_last_message.user_created %}
+
+            {% with author_maincharacter_id=board_last_message_author|main_character_id %}
+                <img class="img img-rounded img-last-post-avatar" src="{{ author_maincharacter_id|character_portrait_url:64 }}" alt="{{ board_last_message_author|main_character_name }}">
+            {% endwith %}
+
+            <p class="last-post-information small">
+                <b>{% translate "Last post:" %}</b>
+
+                <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' board_last_message.pk %}" title="{{ board_latest_topic.subject }}">
+                    {% if board.last_message != board.first_message %}
+                        {% translate "Re:" %}
+                    {% endif %}
+
+                    {{ board_latest_topic.subject|truncatechars:25 }}
+                </a>
+
+                <br>
+                <b>{% translate "posted by:" %}</b> {{ board_last_message_author|main_character_name }}<br>
+                <b>{% translate "posted at:" %}</b> {{ board_last_message.time_posted|date }}, {{ board_last_message.time_posted|time:"G:i:s" }}
+            </p>
+        {% endif %}
+    </div>
+</div>

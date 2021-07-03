@@ -1,0 +1,32 @@
+{% load static %}
+{% load i18n %}
+{% load navactive %}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">{% translate "Toggle navigation" %}</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="{% url 'aa_forum:forum_index' %}">{% translate "Forum" %}</a>
+        </div>
+
+        <div class="collapse navbar-collapse nav navbar-left" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% if perms.aa_forum.manage_forum %}
+                    <li class="{% navactive request 'aa_forum:admin_index' %}">
+                        <a href="{% url 'aa_forum:admin_index' %}">{% translate "Administration" %}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="aa-forum-search-box navbar-form navbar-right">
+            {% include "aa_forum/partials/search/search-form.html" with suffix="menu" %}
+        </div>
+    </div>
+</nav>

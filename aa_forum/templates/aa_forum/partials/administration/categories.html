@@ -1,0 +1,31 @@
+{% load bootstrap %}
+{% load i18n %}
+
+<div class="row">
+    <div class="col-md-6 col-md-push-6">
+        {% include "aa_forum/partials/administration/new-category.html" %}
+    </div>
+
+    {% if category_loop %}
+        <div class="col-md-6 col-md-pull-6">
+            <script type="application/javascript">
+                let categoriesWithBoards = []
+
+                aaForumAdminSettings['urls'] = {
+                    categoryOrder: '{% url "aa_forum:admin_ajax_category_order" %}',
+                    boardOrder: '{% url "aa_forum:admin_ajax_board_order" %}'
+                }
+
+                aaForumAdminSettings['form'] = {
+                    csrfToken: '{{ csrf_token }}'
+                }
+            </script>
+
+            <ul id="categories-sortable" class="categories-sortable">
+                {% for category in category_loop %}
+                    {% include "aa_forum/partials/administration/category-loop.html" %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>

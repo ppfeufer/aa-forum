@@ -1,0 +1,39 @@
+{% load aa_forum_template_variables %}
+{% load i18n %}
+
+<div class="aa-forum-breadcrumb">
+    <ul>
+        <li><a href="{% url 'aa_forum:forum_index' %}">{% translate "Forum Index" %}</a></li>
+
+        {% if category %}
+            <li>» <a href="{% url 'aa_forum:forum_index' %}#category-{{ category.id }}">{{ category.name }}</a></li>
+
+            {% if board %}
+                {% set_template_variable category_slug = category.slug %}
+                {% set_template_variable board_slug = board.slug %}
+
+                <li>» <a href="{{ board.get_absolute_url }}">{{ board.name }}</a></li>
+
+                {% if topic %}
+                    {% if modify_message %}
+                        <li>» {% translate "Modify Message" %} (<a href="{{ topic.get_absolute_url }}">{{ topic.subject }}</a>)</li>
+                    {% else %}
+                        <li>» <a href="{{ topic.get_absolute_url }}">{{ topic.subject }}</a></li>
+                    {% endif %}
+                {% endif %}
+
+                {% if new_topic == 'yes' %}
+                    <li>» {% translate "Start new topic" %}</li>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+        {% if search_term %}
+            <li>» <a href="{% url 'aa_forum:search_results' %}">{% translate "Search" %}</a></li>
+
+            {% if search_term %}
+                <li>» <a href="{{ request.path }}?q={{ search_term }}">{% translate "Search for:" %} {{ search_term }}</a></li>
+            {% endif %}
+        {% endif %}
+    </ul>
+</div>

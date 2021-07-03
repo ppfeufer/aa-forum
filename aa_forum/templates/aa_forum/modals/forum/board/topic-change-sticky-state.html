@@ -1,0 +1,48 @@
+{% load i18n %}
+
+<div class="modal fade" id="topic-sticky-state-change-{{ topic.pk }}" tabindex="-1" role="dialog" aria-labelledby="{% translate 'Change sticky state of topic' %}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <div class="modal-title">
+                    {% if topic.is_sticky %}
+                        {% translate 'Remove "Sticky" State from Topic' %}
+                        "<b>{{ topic.subject }}</b>"
+                    {% else %}
+                        {% translate 'Set "Sticky" State for Topic' %}
+                        "<b>{{ topic.subject }}</b>"
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="modal-body">
+                {% if topic.is_sticky %}
+                    <p>{% translate "Are you sure you want to remove the sticky state from this topic?" %}</p>
+                {% else %}
+                    <p>{% translate "Are you sure you want to make this topic sticky, so it always shows up on top of the topic list?" %}</p>
+                {% endif %}
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">
+                    <i class="far fa-hand-paper"></i>
+                    {% translate "Cancel" %}
+                </button>
+
+                <a id="modal-button-confirm" class="btn btn-danger btn-sm" role="button" href="{% url 'aa_forum:forum_topic_change_sticky_state' topic.pk %}">
+                    {% if topic.is_sticky %}
+                        <i class="fas fa-unlock"></i>
+                        {% translate 'Unset Sticky' %}
+                    {% else %}
+                        <i class="fas fa-lock"></i>
+                        {% translate 'Make Sticky' %}
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

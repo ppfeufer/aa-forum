@@ -1,0 +1,84 @@
+{% extends 'aa_forum/base.html' %}
+
+{% load aa_forum_versioned_static %}
+{% load evelinks %}
+{% load static %}
+{% load i18n %}
+
+{% block page_title %}{{ topic.subject }} » {% translate 'Forum' %}{% endblock %}
+
+{% block aa_forum_header %}
+    <br>
+
+    {% include "aa_forum/partials/menu.html" %}
+    {% include "aa_forum/partials/breadcrumb.html" with category=topic.board.category board=topic.board topic=topic %}
+{% endblock %}
+
+{% block aa_forum_body %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                {{ topic.subject }}
+            </div>
+        </div>
+    </div>
+
+    {% include "aa_forum/partials/forum/topic/pagination.html" %}
+
+    {% for message in page_obj %}
+        {% include "aa_forum/partials/forum/topic/message.html" %}
+    {% endfor %}
+
+    {% include "aa_forum/partials/forum/topic/pagination.html" %}
+
+    {% if not topic.is_locked %}
+        {% include "aa_forum/partials/forum/topic/reply.html" %}
+    {% elif topic.is_locked and perms.aa_forum.manage_forum %}
+        {% include "aa_forum/partials/forum/topic/reply.html" %}
+    {% endif %}
+
+    <div tabindex="-1" class="aa-forum-lightbox-modal modal fade" id="lightboxModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">×</button>
+{#                    <div class="modal-title"></div>#}
+                </div>
+
+                <div class="modal-body"></div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-default btn-sm" data-dismiss="modal">{% translate "Close" %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% versioned_static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% versioned_static 'aa_forum/css/aa-forum.min.css' %}">
+{% endblock %}
+
+{% block extra_javascript %}
+    <script type="application/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="application/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <script type="application/javascript" src="{% versioned_static "aa_forum/javascript/aa-forum-ckeditor.min.js" %}"></script>
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('.aa-forum-message-body img').click(function (event) {
+                event.preventDefault();
+
+                $('.aa-forum-lightbox-modal .modal-body').empty();
+
+                let title = $(this).parent('a').attr("title");
+
+                {#$('.modal-title').html(title);#}
+                $('.aa-forum-lightbox-modal .modal-body').html(
+                    '<p><img src="' + $(this).attr('src') + '"></p>'
+                );
+                $('#lightboxModal').modal({show:true});
+            });
+        });
+    </script>
+{% endblock %}

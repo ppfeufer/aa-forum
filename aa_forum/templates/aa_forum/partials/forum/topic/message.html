@@ -1,0 +1,86 @@
+{% load aa_forum_search %}
+{% load aa_forum_template_variables %}
+{% load aa_forum_user %}
+{% load evelinks %}
+{% load i18n %}
+
+<div id="message-{{ message.id }}" class="panel panel-default">
+    {% set_template_variable message_author = message.user_created %}
+
+    <div class="panel-body">
+        <div class="aa-forum-message">
+            <div class="aa-forum-message-author">
+                <figure>
+                    {% with user_maincharacter_id=message_author|main_character_id %}
+                        <img class="img img-rounded img-author-avatar" src="{{ user_maincharacter_id|character_portrait_url:128 }}" alt="{{ message_author|main_character_name }}">
+                    {% endwith %}
+                </figure>
+
+                <p>
+                    <b>{{ message_author|main_character_name }}</b><br>
+                    {{ message_author|main_character_corporation_name }}
+
+                    {% with main_character_alliance_name=message_author|main_character_alliance_name %}
+                        {% if main_character_alliance_name %}
+                            <br><em>{{ main_character_alliance_name }}</em>
+                        {% endif %}
+                    {% endwith %}
+                </p>
+            </div>
+
+            <div class="aa-forum-message-wrapper">
+                <div class="aa-forum-message-header row">
+                    <div class="aa-forum-message-keyinfo col-md-6">
+                        <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' message.pk %}">
+                            {% if not forloop.first %}
+                                {% translate "Re:" %}
+                            {% endif %}
+
+                            {{ topic.subject }}
+                        </a><br>
+                        <small>« <b>{% translate "on:" %}</b> {{ message.time_posted|date }}, {{ message.time_posted|time:"G:i:s" }} »</small>
+                    </div>
+
+                    <div class="col-md-6">
+                        {% if not search_term %}
+                            <div class="text-right">
+                                {% if message_author == request.user or perms.aa_forum.modify_forum %}
+                                    <a
+                                        id="aa-forum-btn-modify-message-{{ message.pk }}"
+                                        href="{% url 'aa_forum:forum_message_modify' topic.board.category.slug topic.board.slug topic.slug message.pk %}"
+                                        class="btn btn-aa-forum-topic-moderation btn-xs"
+                                        title="{% translate 'Modify Message' %}"
+                                    >
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+
+                                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Delete Message' %}" data-toggle="modal" data-target="#delete-message-{{ message.pk }}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                {% endif %}
+                            </div>
+
+                            {% include "aa_forum/modals/forum/topic/message-delete.html" %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="aa-forum-message-body">
+                    <div class="aa-forum-message-body-inner">
+                        {% if search_term %}
+                            {{ message.message|highlight_search_term:search_term }}
+                        {% else %}
+                            {{ message.message|safe }}
+                        {% endif %}
+                    </div>
+
+                    {% if message.user_updated %}
+                        <div class="aa-forum-message-body-last-edited text-muted small">
+                            « {% translate "Last Modified:" %} {{ message.time_modified|date }}, {{ message.time_modified|time:"G:i:s" }} by {{ message.user_updated|main_character_name }} »
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

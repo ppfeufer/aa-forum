@@ -1,0 +1,38 @@
+{% load static %}
+{% load i18n %}
+
+<div id="category-{{ category.id }}" class="panel panel-default panel-aa-forum-category">
+    <div class="panel-heading">
+        <div class="panel-title">{{ board.name }}</div>
+    </div>
+
+{#    {% if board.child_boards.all %}#}
+{#        <div class="panel-body">#}
+{#            {% for board in board.child_boards.all %}#}
+{#                {% include "aa_forum/partials/forum/board/board.html" %}#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    {% endif %}#}
+</div>
+
+{% include "aa_forum/partials/forum/board/new-topic-button.html" with suffix="above-list" %}
+
+<div class="panel panel-default panel-aa-forum-topic-list">
+    <div class="panel-body">
+        {% if page_obj %}
+            {% for topic in page_obj %}
+                {% include "aa_forum/partials/forum/board/topic.html" %}
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">
+                <p>{% translate "No topics have been started in this board ..." %}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% include "aa_forum/partials/forum/board/new-topic-button.html" with suffix="below-list" %}
+
+{% if page_obj %}
+    {% include "aa_forum/partials/forum/board/pagination.html" %}
+{% endif %}

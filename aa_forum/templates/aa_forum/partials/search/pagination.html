@@ -1,0 +1,79 @@
+{% load i18n %}
+
+<div class="col-4 offset-4">
+    <nav aria-label="{% translate 'Message Pagination' %}">
+        <ul class="pagination pagination-sm">
+            {% if search_results.has_previous %}
+                <li class="page-item">
+                    <a href="{% url 'aa_forum:search_results' %}?q={{ search_term }}" class="page-link">
+                        {% translate "First" %}
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    {% if search_results.previous_page_number == 1 %}
+                        <a href="{% url 'aa_forum:search_results' %}?q={{ search_term }}" class="page-link">
+                            {% translate "Previous" %}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'aa_forum:search_results' search_results.previous_page_number %}?q={{ search_term }}" class="page-link">
+                            {% translate "Previous" %}
+                        </a>
+                    {% endif %}
+                </li>
+
+                <li>
+                    {% if search_results.previous_page_number == 1 %}
+                        <a href="{% url 'aa_forum:search_results' %}?q={{ search_term }}" class="page-link">
+                            {{ search_results.previous_page_number }}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'aa_forum:search_results' search_results.previous_page_number %}?q={{ search_term }}" class="page-link">
+                            {{ search_results.previous_page_number }}
+                        </a>
+                    {% endif %}
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">{% translate "First" %}</span>
+                </li>
+
+                <li class="page-item disabled">
+                    <span class="page-link">{% translate "Previous" %}</span>
+                </li>
+            {% endif %}
+
+            <li class="page-item active">
+                <span class="page-link">{{ search_results.number }}</span>
+            </li>
+
+            {% if search_results.has_next %}
+                <li class="page-item">
+                    <a href="{% url 'aa_forum:search_results' search_results.next_page_number %}?q={{ search_term }}" class="page-link">
+                        {{ search_results.next_page_number }}
+                    </a>
+                </li>
+
+                <li class="page-item ">
+                    <a href="{% url 'aa_forum:search_results' search_results.next_page_number %}?q={{ search_term }}" class="page-link">
+                        {% translate "Next" %}
+                    </a>
+                </li>
+
+                <li class="page-item ">
+                    <a href="{% url 'aa_forum:search_results' search_results.paginator.num_pages %}?q={{ search_term }}" class="page-link">
+                        {% translate "Last" %}
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">{% translate "Next" %}</span>
+                </li>
+
+                <li class="page-item disabled">
+                    <span class="page-link">{% translate "Last" %}</span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>

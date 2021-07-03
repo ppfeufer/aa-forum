@@ -1,0 +1,14 @@
+{% load aa_forum_search %}
+{% load i18n %}
+
+<div class="aa-forum-search-result">
+    <div class="aa-forum-search-result-inner">
+        <div class="aa-forum-search-result-counter">
+            {{ search_results.start_index|add:forloop.counter|add:-1 }}
+        </div>
+
+        <div class="aa-forum-search-result-details">
+            {% include "aa_forum/partials/forum/topic/message.html" with topic=message.topic %}
+        </div>
+    </div>
+</div>

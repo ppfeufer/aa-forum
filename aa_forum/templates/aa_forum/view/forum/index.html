@@ -1,0 +1,51 @@
+{% extends 'aa_forum/base.html' %}
+
+{% load aa_forum_versioned_static %}
+{% load evelinks %}
+{% load static %}
+{% load i18n %}
+
+{% block page_title %}{% translate 'Forum' %}{% endblock %}
+
+{% block aa_forum_header %}
+    <br>
+
+    {% include "aa_forum/partials/menu.html" %}
+    {% include "aa_forum/partials/breadcrumb.html" %}
+{% endblock %}
+
+{% block aa_forum_body %}
+    {% include 'aa_forum/partials/forum/forum-index.html' %}
+
+    <div class="panel-body">
+        <div class="aa-forum-legend pull-left">
+            <span class="aa-forum-legend-new-post">
+                <span class="aa-forum-legend-image">
+                    <img src="{% static 'aa_forum/images/new_some.png' %}" alt="{% translate 'New posts' %}">
+                </span>
+                <span class="aa-forum-legend-text">{% translate "New posts" %}</span>
+            </span>
+
+            <span class="aa-forum-legend-no-new-post">
+                <span class="aa-forum-legend-image">
+                    <img src="{% static 'aa_forum/images/new_none.png' %}" alt="{% translate 'No new posts' %}">
+                </span>
+                <span class="aa-forum-legend-text">{% translate "No new posts" %}</span>
+            </span>
+        </div>
+
+        <div class="aa-forum-mark-read-button pull-right">
+            <a href="{% url 'aa_forum:forum_mark_all_as_read' %}" class="btn btn-default btn-sm">
+                {% translate "Mark all messages as read" %}
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% versioned_static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% versioned_static 'aa_forum/css/aa-forum.min.css' %}">
+{% endblock %}
+
+{% block extra_javascript %}
+{% endblock %}

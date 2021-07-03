@@ -1,0 +1,91 @@
+{% load bootstrap %}
+{% load i18n %}
+
+<li class="category-sortable ui-state-default ui-sortable" data-category-id="{{ category.category_obj.pk }}" data-position="{{ category.category_obj.order }}">
+    <div class="panel panel-default aa-forum-admin-panel-aa-forum-category">
+        <div class="panel-heading">
+            <div class="panel-title">
+                {{ category.category_obj.name }}
+
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-xs" title="{% translate 'Edit Category' %}" data-toggle="collapse" data-target="#collapseEditCategory-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseEditCategory-{{ category.category_obj.pk }}">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+
+                    <button class="btn btn-danger btn-xs" title="{% translate 'Delete Category' %}" data-toggle="modal" data-target="#delete-category-{{ category.category_obj.pk }}">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+
+                    <button class="aa-forum-admin-expand-collapse-category btn btn-default btn-xs collapsed" title="{% translate 'Expand/Collapse Category' %}" data-toggle="collapse" data-target="#collapseCategory-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseCategory-{{ category.category_obj.pk }}">
+                        <i class="if-collapsed fas fa-expand-alt"></i>
+                        <i class="if-expanded fas fa-compress-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="collapse" id="collapseEditCategory-{{ category.category_obj.pk }}">
+                <div class="well">
+                    <p>
+                        {% translate "Changing the name of this category does not change its URL part. This will remain the same to not break any possible links into this category." %}
+                    </p>
+
+                    <form id="aa-forum-form-admin-edit-category-{{ category.category_obj.pk }}" autocomplete="off" action="{% url 'aa_forum:admin_category_edit' category.category_obj.pk %}" method="post">
+                        <fieldset>
+                            {% csrf_token %}
+
+                            {{ category.category_forms.edit_category|bootstrap }}
+
+                            <div class="form-group aa-forum-form-new-category text-right clearfix">
+                                <button class="btn btn-primary btn-sm" type="submit">{% translate 'Change Category' %}</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+            <div class="collapse" id="collapseCategory-{{ category.category_obj.pk }}">
+                <p>
+                    <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseNewBoardForm-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseNewBoardForm-{{ category.category_obj.pk }}">
+                        {% translate "New Board" %}
+                    </button>
+                </p>
+
+                <div class="collapse" id="collapseNewBoardForm-{{ category.category_obj.pk }}">
+                    <div class="well">
+                        <p>
+                            {% translate "New boards will be added at the bottom of the board list for this category. You can move them via drag and drop to a position of your liking." %}
+                        </p>
+
+                        <form id="aa-forum-form-admin-add-board-{{ category.category_obj.pk }}" autocomplete="off" action="{% url 'aa_forum:admin_board_create' category.category_obj.pk %}" method="post">
+                            <fieldset>
+                                {% csrf_token %}
+
+                                {{ category.category_forms.new_board|bootstrap }}
+
+                                <div class="form-group aa-forum-form-new-category text-right clearfix">
+                                    <button class="btn btn-primary btn-sm" type="submit">{% translate 'Create Board' %}</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+
+                {% if category.boards %}
+                    <ul id="boards-sortable-category-{{ category.category_obj.pk }}" class="boards-sortable">
+                        {% for board in category.boards %}
+                            {% include "aa_forum/partials/administration/board-loop.html" %}
+                        {% endfor %}
+                    </ul>
+
+                    <script type="application/javascript">
+                        categoriesWithBoards.push('#boards-sortable-category-{{ category.category_obj.pk }}')
+                    </script>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% include "aa_forum/modals/administration/delete-category.html" with category=category.category_obj %}
+</li>

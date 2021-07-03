@@ -1,0 +1,43 @@
+{% extends 'aa_forum/base.html' %}
+
+{% load aa_forum_versioned_static %}
+{% load evelinks %}
+{% load static %}
+{% load i18n %}
+
+{% block page_title %}{% translate "Search Results » Forum" %}{% endblock %}
+
+{% block aa_forum_header %}
+    <br>
+
+    {% include "aa_forum/partials/menu.html" %}
+    {% include "aa_forum/partials/breadcrumb.html" with search_term=search_term search_results=search_results %}
+{% endblock %}
+
+{% block aa_forum_body %}
+    {% include "aa_forum/partials/search/search-form.html" with suffix="results" %}
+
+    {% if search_results %}
+        <div class="aa-forum-search-results-total-number">
+            {{ search_results_count }} {% translate "Result(s)" %}
+        </div>
+
+        {% for message in search_results %}
+            {% include "aa_forum/partials/search/search-result.html" %}
+        {% endfor %}
+
+        {% include "aa_forum/partials/search/pagination.html" %}
+    {% else %}
+        {% if search_term %}
+            {% translate "Nothing found ..." %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% versioned_static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% versioned_static 'aa_forum/css/aa-forum.min.css' %}">
+{% endblock %}
+
+{% block extra_javascript %}
+{% endblock %}

@@ -1,0 +1,84 @@
+{% load aa_forum_template_variables %}
+{% load i18n %}
+
+<div class="col-4 offset-4">
+    {% set_template_variable topic_first_message = topic.first_message %}
+    {% set_template_variable topic_first_message_board = topic_first_message.topic.board %}
+    {% set_template_variable topic_first_message_category = topic_first_message_board.category %}
+
+    <nav aria-label="{% translate 'Message Pagination' %}">
+        <ul class="pagination pagination-sm">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a href="{{ topic.get_absolute_url }}" class="page-link">
+                        {% translate "First" %}
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    {% if page_obj.previous_page_number == 1 %}
+                        <a href="{{ topic.get_absolute_url }}" class="page-link">
+                            {% translate "Previous" %}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'aa_forum:forum_topic' topic_first_message_category.slug topic_first_message_board.slug topic.slug page_obj.previous_page_number %}" class="page-link">
+                            {% translate "Previous" %}
+                        </a>
+                    {% endif %}
+                </li>
+
+                <li>
+                    {% if page_obj.previous_page_number == 1 %}
+                        <a class="page-link" href="{{ topic.get_absolute_url }}">
+                            {{ page_obj.previous_page_number }}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'aa_forum:forum_topic' topic_first_message_category.slug topic_first_message_board.slug topic.slug page_obj.previous_page_number %}" class="page-link">
+                            {{ page_obj.previous_page_number }}
+                        </a>
+                    {% endif %}
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">{% translate "First" %}</span>
+                </li>
+
+                <li class="page-item disabled">
+                    <span class="page-link">{% translate "Previous" %}</span>
+                </li>
+            {% endif %}
+
+            <li class="page-item active">
+                <span class="page-link">{{ page_obj.number }}</span>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a href="{% url 'aa_forum:forum_topic' topic_first_message_category.slug topic_first_message_board.slug topic.slug page_obj.next_page_number %}" class="page-link">
+                        {{ page_obj.next_page_number }}
+                    </a>
+                </li>
+
+                <li class="page-item ">
+                    <a href="{% url 'aa_forum:forum_topic' topic_first_message_category.slug topic_first_message_board.slug topic.slug page_obj.next_page_number %}" class="page-link">
+                        {% translate "Next" %}
+                    </a>
+                </li>
+
+                <li class="page-item ">
+                    <a href="{% url 'aa_forum:forum_topic' topic_first_message_category.slug topic_first_message_board.slug topic.slug page_obj.paginator.num_pages %}" class="page-link">
+                        {% translate "Last" %}
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">{% translate "Next" %}</span>
+                </li>
+
+                <li class="page-item disabled">
+                    <span class="page-link">{% translate "Last" %}</span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>

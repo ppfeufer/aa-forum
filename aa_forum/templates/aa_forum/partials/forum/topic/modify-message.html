@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load bootstrap %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            {% translate "Modify Message" %}
+        </div>
+    </div>
+
+    <div class="panel-body">
+        {% if page_obj.has_next %}
+            <div class="alert alert-warning">
+                {% translate "Note: You are not on the last page of this topic and may miss the most recent replies." %}
+            </div>
+        {% endif %}
+
+        <form id="aa-forum-form-message-modify" autocomplete="off" action="{% url 'aa_forum:forum_message_modify' board.category.slug board.slug message.topic.slug message.pk %}" method="post">
+            {% csrf_token %}
+
+            {{ form|bootstrap }}
+
+            {% include "aa_forum/partials/form/required-field-hint.html" %}
+
+            <div class="form-group text-right clearfix">
+                <button class="btn btn-primary btn-sm" type="submit">{% translate "Modify" %}</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+{% load bootstrap %}
+{% load i18n %}
+
+<p>
+    {% translate "Here you can create, modify and delete categories and boards. You also can change their order via drag and drop." %}
+</p>
+
+<p>
+    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseNewCategoryForm" aria-expanded="false" aria-controls="collapseNewCategoryForm">
+        {% translate "Create New Category" %}
+    </button>
+</p>
+
+<div class="collapse" id="collapseNewCategoryForm">
+    <div class="well">
+        <p>
+            {% translate "New categories will be added at the bottom of the category list. You can move them via drag and drop to a position of your liking." %}
+        </p>
+
+        <form id="aa-forum-form-admin-new-category" autocomplete="off" action="{% url 'aa_forum:admin_category_create' %}" method="post">
+            <fieldset>
+                {% csrf_token %}
+
+                {{ new_category_form|bootstrap }}
+
+                <div class="form-group aa-forum-form-new-category text-right clearfix">
+                    <button class="btn btn-primary btn-sm" type="submit">{% translate 'Create Category' %}</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

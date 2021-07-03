@@ -1,0 +1,48 @@
+{% load i18n %}
+
+<div class="modal fade" id="topic-lock-state-change-{{ topic.pk }}" tabindex="-1" role="dialog" aria-labelledby="{% translate 'Change lock state of topic' %}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <div class="modal-title">
+                    {% if topic.is_locked %}
+                        {% translate 'Unlock/Re-Open Topic' %}
+                        "<b>{{ topic.subject }}</b>"
+                    {% else %}
+                        {% translate 'Lock/Close Topic' %}
+                        "<b>{{ topic.subject }}</b>"
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="modal-body">
+                {% if topic.is_locked %}
+                    <p>{% translate "Are you sure you want to unlock/re-open this topic?" %}</p>
+                {% else %}
+                    <p>{% translate "Are you sure you want to lock/close this topic?" %}</p>
+                {% endif %}
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">
+                    <i class="far fa-hand-paper"></i>
+                    {% translate "Cancel" %}
+                </button>
+
+                <a id="modal-button-confirm" class="btn btn-danger btn-sm" role="button" href="{% url 'aa_forum:forum_topic_change_lock_state' topic.pk %}">
+                    {% if topic.is_locked %}
+                        <i class="fas fa-unlock"></i>
+                        {% translate 'Unlock/Re-Open Topic' %}
+                    {% else %}
+                        <i class="fas fa-lock"></i>
+                        {% translate 'Lock/Close Topic' %}
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

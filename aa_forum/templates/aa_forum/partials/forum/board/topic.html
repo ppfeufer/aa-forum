@@ -1,0 +1,103 @@
+{% load aa_forum_template_variables %}
+{% load i18n %}
+{% load static %}
+
+<div class="aa-forum-topic-row {% if topic.is_locked %}aa-forum-topic-locked{% endif %} {% if topic.is_sticky %}aa-forum-topic-sticky{% endif %} row">
+    <div class="aa-forum-topic">
+        <div class="aa-forum-topic-image">
+            {% if topic.has_unread_messages %}
+                <img src="{% static 'aa_forum/images/new_some.png' %}" alt="{% translate "New posts" %}">
+            {% else %}
+                <img src="{% static 'aa_forum/images/new_none.png' %}" alt="{% translate "No new posts" %}">
+            {% endif %}
+        </div>
+
+        <div class="aa-forum-topic-name">
+            <p>
+                <a href="{{ topic.get_absolute_url }}">
+                    {{ topic.subject }}
+                </a>
+                {% if topic.has_unread_messages %}
+                    <a
+                        id="aa-forum-link-new-{{ topic.id }}"
+                        href="{% url 'aa_forum:forum_topic_unread' topic.board.category.slug topic.board.slug topic.slug %}"
+                        class="label label-warning label label-aa-forum-topic-new-message"
+                    >
+                        {% translate "New" %}
+                    </a>
+                {% endif %}
+                <br>
+                <span class="small">
+                    {% if topic.is_sticky %}
+                        <span class="aa-forum-topic-status-icon aa-forum-topic-status-sticky">
+                            <i class="fas fa-thumbtack" title="{% translate 'Topic is always on top' %}"></i>
+                        </span>
+                    {% endif %}
+
+                    {% if topic.is_locked %}
+                        <span class="aa-forum-topic-status-icon aa-forum-topic-status-locked">
+                            <i class="fas fa-lock" title="{% translate 'Topic is locked' %}"></i>
+                        </span>
+                    {% endif %}
+
+                    {% translate "Started by" %} {{ topic.first_message.user_created|main_character_name }}
+                </span>
+            </p>
+        </div>
+
+        <div class="aa-forum-topic-stats hidden-sm hidden-xs">
+            <span class="small">
+                {% if topic.num_posts > 0 %}
+                    {% if topic.num_posts == 2 %}
+                        1 {% translate "Reply" %}
+                    {% else %}
+                        {{ topic.num_posts|add:"-1" }} {% translate "Replies" %}
+                    {% endif %}
+                {% else %}
+                    0 {% translate "Replies" %}
+                {% endif %}
+            </span>
+        </div>
+
+        <div class="aa-forum-topic-last-post hidden-xs">
+            <span class="small">
+                {% translate "Last post" %} {{ topic.last_message.time_posted|date }}, {{ topic.last_message.time_posted|time:"G:i:s" }}
+
+                <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' topic.last_message_id %}" title="{% translate 'Go to last message' %}" style="margin-left: 0.5rem;">
+                    <i class="fas fa-sign-in-alt"></i>
+                </a>
+
+                <br>
+                by {{ topic.last_message.user_created|main_character_name }}
+            </span>
+        </div>
+
+        <div class="aa-forum-topic-actions hidden-xs">
+            {% if perms.aa_forum.manage_forum %}
+                <div class="text-right">
+                    {% if topic.is_locked %}
+                        <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Unlock/Re-Open topic' %}" data-toggle="modal" data-target="#topic-lock-state-change-{{ topic.pk }}">
+                            <i class="fas fa-unlock"></i>
+                        </button>
+                    {% else %}
+                        <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Lock/Close topic' %}" data-toggle="modal" data-target="#topic-lock-state-change-{{ topic.pk }}">
+                            <i class="fas fa-lock"></i>
+                        </button>
+                    {% endif %}
+
+                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Change topics sticky state' %}" data-toggle="modal" data-target="#topic-sticky-state-change-{{ topic.pk }}">
+                        <i class="fas fa-thumbtack"></i>
+                    </button>
+
+                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Delete topic' %}" data-toggle="modal" data-target="#delete-topic-{{ topic.pk }}">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </div>
+
+                {% include "aa_forum/modals/forum/board/topic-change-lock-state.html" %}
+                {% include "aa_forum/modals/forum/board/topic-change-sticky-state.html" %}
+                {% include "aa_forum/modals/forum/board/topic-delete.html" %}
+            {% endif %}
+        </div>
+    </div>
+</div>

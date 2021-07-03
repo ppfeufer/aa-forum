@@ -1,0 +1,37 @@
+{% load i18n %}
+{% load bootstrap %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            {% translate "Reply" %}
+        </div>
+    </div>
+
+    <div class="panel-body">
+        {% if page_obj.has_next %}
+            <div class="alert alert-warning">
+                {% translate "Note: You are not on the last page of this topic and may miss the most recent replies." %}
+            </div>
+        {% endif %}
+
+        {% if topic.is_locked %}
+            <div class="alert alert-danger">
+                {% translate "Warning: this topic is locked! Only admins and can reply." %}
+            </div>
+        {% endif %}
+
+        <form id="aa-forum-form-message-reply" autocomplete="off" action="{% url 'aa_forum:forum_topic_reply' topic.board.category.slug topic.board.slug topic.slug %}" method="post">
+            {% csrf_token %}
+
+            {{ reply_form|bootstrap }}
+
+            {% include "aa_forum/partials/form/required-field-hint.html" %}
+
+            <div class="form-group text-right clearfix">
+                <button class="btn btn-default btn-sm" type="reset">{% translate "Clear Form" %}</button>
+                <button class="btn btn-primary btn-sm" type="submit">{% translate "Reply" %}</button>
+            </div>
+        </form>
+    </div>
+</div>

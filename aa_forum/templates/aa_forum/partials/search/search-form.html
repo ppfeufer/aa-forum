@@ -1,0 +1,8 @@
+{% load i18n %}
+
+<form id="aa-forum-form-search-{{ suffix }}" autocomplete="off" action="{% url 'aa_forum:search_results' %}" method="get">
+    <div class="form-group has-feedback has-search">
+        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        <input type="text" class="form-control" name="q" value="{{ search_term }}" placeholder="{% translate 'Search ...' %}">
+    </div>
+</form>

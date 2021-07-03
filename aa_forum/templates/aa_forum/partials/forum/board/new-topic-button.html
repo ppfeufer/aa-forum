@@ -1,0 +1,8 @@
+{% load i18n %}
+
+<div class="text-right">
+    <a id="aa-forum-btn-new-topic-{{ suffix }}" class="btn btn-default btn-sm" href="{% url 'aa_forum:forum_board_new_topic' board.category.slug board.slug %}">
+        <i class="fas fa-pencil-alt"></i>
+        <span class="hidden-xs">{% translate "New Topic" %}</span>
+    </a>
+</div>

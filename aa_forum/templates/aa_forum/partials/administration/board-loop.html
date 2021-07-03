@@ -1,0 +1,39 @@
+{% load bootstrap %}
+{% load i18n %}
+
+<li class="board-sortable ui-state-default ui-sortable" data-board-id="{{ board.board_obj.pk }}" data-position="{{ board.board_obj.order }}">
+    <div class="aa-forum-admin-board-name clearfix">
+        {{ board.board_obj.name }}
+
+        <div class="pull-right">
+            <button class="btn btn-warning btn-xs" title="{% translate 'Edit Board' %}" data-toggle="collapse" data-target="#collapseEditBoard-{{ board.board_obj.pk }}" aria-expanded="false" aria-controls="collapseEditBoard-{{ board.board_obj.pk }}">
+                <i class="fas fa-pencil-alt"></i>
+            </button>
+
+            <button class="btn btn-danger btn-xs" title="{% translate 'Delete Board' %}" data-toggle="modal" data-target="#delete-board-{{ board.board_obj.pk }}">
+                <i class="far fa-trash-alt"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="collapse" id="collapseEditBoard-{{ board.board_obj.pk }}" style="margin-top: 1rem;">
+        <div class="well">
+            <p>
+                {% translate "Changing the name of this board does not change its URL part. This will remain the same to not break any possible links into this board." %}
+            </p>
+
+            <form id="aa-forum-form-edit-board-{{ board.board_obj.pk }}" autocomplete="off" action="{% url 'aa_forum:admin_board_edit' category.category_obj.pk board.board_obj.pk %}" method="post">
+                <fieldset>
+                    {% csrf_token %}
+
+                    {{ board.board_edit_form|bootstrap }}
+                    <div class="form-group aa-forum-form-new-category text-right clearfix">
+                        <button class="btn btn-primary btn-sm" type="submit">{% translate 'Change Board' %}</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    {% include "aa_forum/modals/administration/delete-board.html" with board=board.board_obj %}
+</li>

@@ -1,0 +1,34 @@
+{% extends 'aa_forum/base.html' %}
+
+{% load aa_forum_versioned_static %}
+{% load static %}
+{% load i18n %}
+
+{% block page_title %}{% translate 'Forum (Administration)' %}{% endblock %}
+
+{% block aa_forum_header %}
+    <br>
+
+    {% include "aa_forum/partials/menu.html" %}
+{% endblock %}
+
+{% block aa_forum_body %}
+    <script type="application/javascript">
+        let aaForumAdminSettings = {}
+    </script>
+
+    {% include "aa_forum/partials/administration/categories.html" %}
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% versioned_static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'aa_forum/libs/jquery/ui/1.12.1/jquery-ui.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'aa_forum/libs/sumoselect/3.0.2-66/sumoselect.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% versioned_static 'aa_forum/css/aa-forum.min.css' %}">
+{% endblock %}
+
+{% block extra_javascript %}
+    <script type="application/javascript" src="{% static 'aa_forum/libs/jquery/ui/1.12.1/jquery-ui.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'aa_forum/libs/sumoselect/3.0.2-66/jquery.sumoselect.min.js' %}"></script>
+    <script type="application/javascript" src="{% versioned_static 'aa_forum/javascript/aa-forum-admin.min.js' %}"></script>
+{% endblock %}
