@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.1.0-beta.2] - 2021-07-05
+
+### Changed
+
+- Setup classifier and pyupgrade check, since we aim to support AA 2.8.x with its
+  current minimum Python version of 3.6
+
+
 ## [0.1.0-beta.1] - 2021-07-04
 
 ## \o/ FIRST PUBLIC BETA \o/
