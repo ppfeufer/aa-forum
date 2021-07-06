@@ -1,5 +1,7 @@
 include LICENSE
+include CODEOWNERS
 include README.md
+include CHANGELOG.md
 include MANIFEST.in
 graft aa_forum
 
