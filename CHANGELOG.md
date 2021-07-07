@@ -10,11 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Youtube embed plugin for cKeditor
+- Youtube embed plugin for CKEditor
 
 ### Changed
 
-- Default config for cKeditor (see [Readme](README.md) for details) to implement the
+- Default config for CKEditor (see [Readme](README.md) for details) to implement the
   Youtube embed plugin and to remove the obsolete Flash embed
 
 
