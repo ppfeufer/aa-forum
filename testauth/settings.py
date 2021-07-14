@@ -290,13 +290,129 @@ NOTIFICATIONS_REFRESH_TIME = 30
 NOTIFICATIONS_MAX_PER_USER = 50
 
 ## aa_forum
-MEDIA_URL = "/media/"
-MEDIA_ROOT = "/var/www/myauth/media/"
+if "ckeditor" in INSTALLED_APPS:
+    import ckeditor.configs
 
-X_FRAME_OPTIONS = "SAMEORIGIN"
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = "/var/www/myauth/media/"
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_RESTRICT_BY_USER = True
-CKEDITOR_ALLOW_NONIMAGE_FILES = False
+    X_FRAME_OPTIONS = "SAMEORIGIN"
 
-CKEDITOR_CONFIGS = {"default": {"width": "100%", "height": "45vh"}}
+    CKEDITOR_UPLOAD_PATH = "uploads/"
+    CKEDITOR_RESTRICT_BY_USER = True
+    CKEDITOR_ALLOW_NONIMAGE_FILES = False
+
+    # Editor configuration
+    # You can extend and change this to your needs
+    # Some of the options are commented out, feel free to play around with them
+    CKEDITOR_CONFIGS = {
+        "default": ckeditor.configs.DEFAULT_CONFIG,
+        "aa_forum": {
+            "width": "100%",
+            "height": "45vh",
+            "youtube_responsive": True,
+            "youtube_privacy": True,
+            "youtube_related": False,
+            "youtube_width": 1920,
+            "youtube_height": 1080,
+            "extraPlugins": ",".join(
+                [
+                    "uploadimage",
+                    # "div",
+                    "autolink",
+                    # "autoembed",
+                    # "embedsemantic",
+                    "clipboard",
+                    "elementspath",
+                    # "codesnippet",
+                    "youtube",
+                ]
+            ),
+            "external_plugin_resources": [
+                (
+                    "youtube",
+                    "/static/aa_forum/ckeditor/plugins/youtube/",
+                    "plugin.min.js",
+                )
+            ],
+            "toolbar": "default",
+            "toolbar_default": [
+                {
+                    "name": "styles",
+                    "items": [
+                        "Styles",
+                        "Format",
+                        # "Font",
+                        # "FontSize",
+                    ],
+                },
+                {
+                    "name": "basicstyles",
+                    "items": [
+                        "Bold",
+                        "Italic",
+                        "Underline",
+                        "Strike",
+                        # "Subscript",
+                        # "Superscript",
+                        # "-",
+                        # "RemoveFormat",
+                    ],
+                },
+                {
+                    "name": "clipboard",
+                    "items": [
+                        # "Cut",
+                        # "Copy",
+                        # "Paste",
+                        # "PasteText",
+                        # "PasteFromWord",
+                        # "-",
+                        "Undo",
+                        "Redo",
+                    ],
+                },
+                {
+                    "name": "links",
+                    "items": [
+                        "Link",
+                        "Unlink",
+                        "Anchor",
+                    ],
+                },
+                {
+                    "name": "insert",
+                    "items": [
+                        "Image",
+                        "Youtube",
+                        "Table",
+                        "HorizontalRule",
+                        "Smiley",
+                        "SpecialChar",
+                        # "PageBreak",
+                        # "Iframe",
+                    ],
+                },
+                {
+                    "name": "colors",
+                    "items": [
+                        "TextColor",
+                        "BGColor",
+                    ],
+                },
+                {
+                    "name": "document",
+                    "items": [
+                        "Source",
+                        # "-",
+                        # "Save",
+                        # "NewPage",
+                        # "Preview",
+                        # "Print",
+                        # "-",
+                        # "Templates",
+                    ],
+                },
+            ],
+        },
+    }

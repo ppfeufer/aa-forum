@@ -80,7 +80,8 @@ class NewTopicForm(forms.Form):
 
     message = forms.CharField(
         widget=CKEditorUploadingWidget(
-            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"}
+            config_name="aa_forum",
+            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
         label=get_mandatory_form_label_text(_("Message")),
@@ -218,7 +219,8 @@ class EditMessageForm(ModelForm):
 
     message = forms.CharField(
         widget=CKEditorUploadingWidget(
-            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"}
+            config_name="aa_forum",
+            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
         label=get_mandatory_form_label_text(_("Message")),
