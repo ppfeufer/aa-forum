@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Link to a message now has the full path (category, board and topic) in its URL
 
+### Fixed
+
+- When the first message is deleted, the topic will be deleted as well. This is to
+  prevent having topics with replies to a message that does no longer exist.
+
 
 ## [0.1.0-beta.3] - 2021-07-07
 
