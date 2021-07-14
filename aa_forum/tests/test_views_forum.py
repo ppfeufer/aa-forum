@@ -555,7 +555,7 @@ class TestTopicViews(TestCase):
     def test_should_delete_regular_message(self):
         # given
         self.client.force_login(self.user_1003)
-        my_message = self.topic.messages.first()
+        my_message = self.topic.messages.last()
         # when
         res = self.client.get(
             reverse("aa_forum:forum_message_delete", args=[my_message.pk])
@@ -564,6 +564,20 @@ class TestTopicViews(TestCase):
         self.assertEqual(res.status_code, 302)
         self.assertEqual(res.url, self.topic.get_absolute_url())
         self.assertFalse(self.topic.messages.filter(pk=my_message.pk).exists())
+
+    def test_should_delete_first_message(self):
+        # given
+        self.client.force_login(self.user_1003)
+        my_message = self.topic.messages.first()
+        # when
+        res = self.client.get(
+            reverse("aa_forum:forum_message_delete", args=[my_message.pk])
+        )
+        # then
+        self.assertEqual(res.status_code, 302)
+        self.assertEqual(res.url, self.topic.board.get_absolute_url())
+        self.assertFalse(self.topic.messages.filter(pk=my_message.pk).exists())
+        self.assertFalse(self.board.topics.filter(pk=self.topic.pk).exists())
 
     def test_should_delete_last_message_in_topic(self):
         # given
