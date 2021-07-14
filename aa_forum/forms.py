@@ -10,7 +10,7 @@ from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from aa_forum.models import Board, Category, Message
+from aa_forum.models import Board, Category, Message, Topic
 
 
 def get_mandatory_form_label_text(text):
@@ -85,6 +85,27 @@ class NewTopicForm(forms.Form):
         required=True,
         label=get_mandatory_form_label_text(_("Message")),
     )
+
+
+class EditTopicForm(ModelForm):
+    """
+    Edit category form
+    """
+
+    subject = forms.CharField(
+        required=True,
+        label=get_mandatory_form_label_text(_("Subject")),
+        max_length=255,
+        widget=forms.TextInput(attrs={"placeholder": _("Subject")}),
+    )
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        """
+        Meta definitions
+        """
+
+        model = Topic
+        fields = ["subject"]
 
 
 class NewCategoryForm(ModelForm):

@@ -16,7 +16,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 from aa_forum.constants import SETTING_MESSAGESPERPAGE, SETTING_TOPICSPERPAGE
-from aa_forum.forms import EditMessageForm, NewTopicForm
+from aa_forum.forms import EditMessageForm, EditTopicForm, NewTopicForm
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Setting, Topic
 
 
@@ -274,6 +274,13 @@ def topic(
     if not topic:
         return redirect("aa_forum:forum_index")
 
+    # Determine if the current user can modify the topics subject
+    can_modify_subject = False
+    if request.user == topic.first_message.user_created or request.user.has_perm(
+        "aa_forum.manage_forum"
+    ):
+        can_modify_subject = True
+
     # Set this topic as "read by" by the current user
     paginator = Paginator(
         topic.messages_sorted,
@@ -303,9 +310,94 @@ def topic(
                 defaults={"message_time": last_message_on_page.time_posted},
             )
 
-    context = {"topic": topic, "page_obj": page_obj, "reply_form": EditMessageForm()}
+    context = {
+        "topic": topic,
+        "can_modify_subject": can_modify_subject,
+        "page_obj": page_obj,
+        "reply_form": EditMessageForm(),
+    }
 
     return render(request, "aa_forum/view/forum/topic.html", context)
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def topic_modify(
+    request: WSGIRequest,
+    category_slug: str,
+    board_slug: str,
+    topic_slug: str,
+) -> HttpResponse:
+    """
+    Modify the topics subject
+    :param request:
+    :type request:
+    :param category_slug:
+    :type category_slug:
+    :param board_slug:
+    :type board_slug:
+    :param topic_slug:
+    :type topic_slug:
+    """
+
+    topic = _topic_from_slugs(
+        request=request,
+        category_slug=category_slug,
+        board_slug=board_slug,
+        topic_slug=topic_slug,
+    )
+
+    if not topic:
+        return redirect("aa_forum:forum_index")
+
+    # Check if the user actually has the right to edit this message
+    if topic.first_message.user_created != request.user and not request.user.has_perm(
+        "aa_forum.manage_forum"
+    ):
+        messages.error(
+            request,
+            mark_safe(
+                _("<h4>Error!</h4><p>You are not allowed to modify this topic!</p>")
+            ),
+        )
+
+        return redirect(
+            "aa_forum:forum_topic",
+            category_slug=category_slug,
+            board_slug=board_slug,
+            topic_slug=topic_slug,
+        )
+
+    # We are in the clear, let's see what we've got
+    if request.method == "POST":
+        # Create a form instance and populate it with data from the request
+        form = EditTopicForm(request.POST)
+
+        # Check whether it's valid:
+        if form.is_valid():
+            topic.subject = form.cleaned_data["subject"]
+            topic.save()
+
+            messages.success(
+                request,
+                mark_safe(
+                    _("<h4>Success!</h4><p>The topic subject has been updated.</p>")
+                ),
+            )
+
+            return redirect(
+                "aa_forum:forum_topic",
+                category_slug=category_slug,
+                board_slug=board_slug,
+                topic_slug=topic_slug,
+            )
+    # If not, we'll fill the form with the information from the message object
+    else:
+        form = EditTopicForm(instance=topic)
+
+    context = {"form": form, "topic": topic}
+
+    return render(request, "aa_forum/view/forum/modify-topic.html", context)
 
 
 def _topic_from_slugs(

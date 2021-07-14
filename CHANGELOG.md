@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.1.0-beta.4] - Unreleased
 
+### Added
+
+- Ability to change the topics subject (User need to be the original poster or forum
+  admin to change a topics subject)
+
 ### Changed
 
 - Link to a message now has the full path (category, board and topic) in its URL

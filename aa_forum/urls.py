@@ -137,6 +137,11 @@ urlpatterns = [
         forum.topic_unread,
         name="forum_topic_unread",
     ),
+    path(
+        "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/modify/",
+        forum.topic_modify,
+        name="forum_topic_modify",
+    ),
     # Forum URLs :: Message
     path(
         "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/<int:message_id>/",
