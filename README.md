@@ -120,6 +120,7 @@ if "ckeditor" in INSTALLED_APPS:
 
     # Default editor configuration
     # You can extend and change this to your needs
+    # Some of the options are commented out, feel free to play around with them
     CKEDITOR_CONFIGS = {
         "default": {
             "width": "100%",
@@ -131,15 +132,14 @@ if "ckeditor" in INSTALLED_APPS:
             "youtube_height": 1080,
             "extraPlugins": ",".join(
                 [
-                    "uploadimage",  # the upload image feature
-                    # your extra plugins here
-                    "div",
+                    "uploadimage",
+                    # "div",
                     "autolink",
-                    "autoembed",
-                    "embedsemantic",
+                    # "autoembed",
+                    # "embedsemantic",
                     "clipboard",
                     "elementspath",
-                    "codesnippet",
+                    # "codesnippet",
                     "youtube",
                 ]
             ),
