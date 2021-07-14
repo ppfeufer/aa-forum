@@ -431,7 +431,11 @@ def topic_reply(
             new_message.save()
 
             return redirect(
-                "aa_forum:forum_message_entry_point_in_topic", new_message.id
+                "aa_forum:forum_message",
+                category_slug=category_slug,
+                board_slug=board_slug,
+                topic_slug=topic_slug,
+                message_id=new_message.id,
             )
 
     messages.warning(
@@ -555,13 +559,23 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
 
 @login_required
 @permission_required("aa_forum.basic_access")
-def message_entry_point_in_topic(
-    request: WSGIRequest, message_id: int
+def message(
+    request: WSGIRequest,
+    category_slug: str,
+    board_slug: str,
+    topic_slug: str,
+    message_id: int,
 ) -> HttpResponseRedirect:
     """
     Get a messages' entry point in a topic, so we end up on the right page with it
     :param request:
     :type request:
+    :param category_slug:
+    :type category_slug:
+    :param board_slug:
+    :type board_slug:
+    :param topic_slug:
+    :type topic_slug:
     :param message_id:
     :type message_id:
     :return:
@@ -665,7 +679,11 @@ def message_modify(
             )
 
             return redirect(
-                "aa_forum:forum_message_entry_point_in_topic", message_id=message_id
+                "aa_forum:forum_message",
+                category_slug=category_slug,
+                board_slug=board_slug,
+                topic_slug=topic_slug,
+                message_id=message_id,
             )
     # If not, we'll fill the form with the information from the message object
     else:

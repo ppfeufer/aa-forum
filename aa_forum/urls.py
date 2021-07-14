@@ -65,11 +65,6 @@ urlpatterns = [
     ),
     # Service URLs
     path(
-        f"{INTERNAL_URL_PREFIX}/message/<int:message_id>/",
-        forum.message_entry_point_in_topic,
-        name="forum_message_entry_point_in_topic",
-    ),
-    path(
         f"{INTERNAL_URL_PREFIX}/message/<int:message_id>/delete/",
         forum.message_delete,
         name="forum_message_delete",
@@ -104,7 +99,7 @@ urlpatterns = [
         forum.mark_all_as_read,
         name="forum_mark_all_as_read",
     ),
-    # Forum URLs
+    # Forum URLs :: Board
     path(
         "<slug:category_slug>/<slug:board_slug>/",
         forum.board,
@@ -120,6 +115,7 @@ urlpatterns = [
         forum.board_new_topic,
         name="forum_board_new_topic",
     ),
+    # Forum URLs :: Topic
     path(
         "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/",
         forum.topic,
@@ -137,14 +133,20 @@ urlpatterns = [
         name="forum_topic_reply",
     ),
     path(
-        "<slug:category_slug>/<slug:board_slug>/"
-        "<slug:topic_slug>/modify/<int:message_id>/",
-        forum.message_modify,
-        name="forum_message_modify",
-    ),
-    path(
         "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/unread/",
         forum.topic_unread,
         name="forum_topic_unread",
+    ),
+    # Forum URLs :: Message
+    path(
+        "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/<int:message_id>/",
+        forum.message,
+        name="forum_message",
+    ),
+    path(
+        "<slug:category_slug>/<slug:board_slug>/"
+        "<slug:topic_slug>/<int:message_id>/modify/",
+        forum.message_modify,
+        name="forum_message_modify",
     ),
 ]

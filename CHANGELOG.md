@@ -6,16 +6,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.1.0-beta.4] - Unreleased
+
+### Changed
+
+- Link to a message now has the full path (category, board and topic) in its URL
+
+
 ## [0.1.0-beta.3] - 2021-07-07
 
 ### Added
 
-- Youtube embed plugin for CKEditor
+- YouTube embed plugin for CKEditor
 
 ### Changed
 
 - Default config for CKEditor (see [Readme](README.md) for details) to implement the
-  Youtube embed plugin and to remove the obsolete Flash embed
+  YouTube embed plugin and to remove the obsolete Flash embed
 
 
 ## [0.1.0-beta.2] - 2021-07-05

@@ -483,8 +483,13 @@ class TestTopicViews(TestCase):
         # when
         res = self.client.get(
             reverse(
-                "aa_forum:forum_message_entry_point_in_topic",
-                args=[my_message.id],
+                "aa_forum:forum_message",
+                args=[
+                    my_message.topic.board.category.slug,
+                    my_message.topic.board.slug,
+                    my_message.topic.slug,
+                    my_message.pk,
+                ],
             ),
         )
         # then
@@ -497,8 +502,13 @@ class TestTopicViews(TestCase):
         # when
         res = self.client.get(
             reverse(
-                "aa_forum:forum_message_entry_point_in_topic",
-                args=[my_message.id],
+                "aa_forum:forum_message",
+                args=[
+                    my_message.topic.board.category.slug,
+                    my_message.topic.board.slug,
+                    my_message.topic.slug,
+                    my_message.pk,
+                ],
             ),
         )
         # then
@@ -511,8 +521,13 @@ class TestTopicViews(TestCase):
         # when
         res = self.client.get(
             reverse(
-                "aa_forum:forum_message_entry_point_in_topic",
-                args=[my_message.id],
+                "aa_forum:forum_message",
+                args=[
+                    my_message.topic.board.category.slug,
+                    my_message.topic.board.slug,
+                    my_message.topic.slug,
+                    my_message.pk,
+                ],
             ),
         )
         # then
@@ -525,8 +540,13 @@ class TestTopicViews(TestCase):
         # when
         res = self.client.get(
             reverse(
-                "aa_forum:forum_message_entry_point_in_topic",
-                args=[my_message.id],
+                "aa_forum:forum_message",
+                args=[
+                    my_message.topic.board.category.slug,
+                    my_message.topic.board.slug,
+                    my_message.topic.slug,
+                    my_message.pk,
+                ],
             ),
         )
         # then
