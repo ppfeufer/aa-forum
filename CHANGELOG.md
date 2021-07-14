@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Ability to change the topics subject (User need to be the original poster or forum
-  admin to change a topics subject)
+- Ability to change the subject of the topic (User need to be the original poster or
+  forum admin to change a topic's subject)
 
 ### Changed
 
