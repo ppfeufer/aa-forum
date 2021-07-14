@@ -123,7 +123,15 @@ class TestForumUI(WebTest):
         self.assertTemplateUsed(res, "aa_forum/view/search/results.html")
         self.assertContains(
             res,
-            reverse("aa_forum:forum_message_entry_point_in_topic", args=[message.pk]),
+            reverse(
+                "aa_forum:forum_message",
+                args=[
+                    message.topic.board.category.slug,
+                    message.topic.board.slug,
+                    message.topic.slug,
+                    message.pk,
+                ],
+            ),
         )
 
 

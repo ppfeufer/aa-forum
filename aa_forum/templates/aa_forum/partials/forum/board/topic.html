@@ -63,7 +63,7 @@
             <span class="small">
                 {% translate "Last post" %} {{ topic.last_message.time_posted|date }}, {{ topic.last_message.time_posted|time:"G:i:s" }}
 
-                <a href="{% url 'aa_forum:forum_message_entry_point_in_topic' topic.last_message_id %}" title="{% translate 'Go to last message' %}" style="margin-left: 0.5rem;">
+                <a href="{% url 'aa_forum:forum_message' topic.board.category.slug topic.board.slug topic.slug topic.last_message_id %}" title="{% translate 'Go to last message' %}" style="margin-left: 0.5rem;">
                     <i class="fas fa-sign-in-alt"></i>
                 </a>
 
