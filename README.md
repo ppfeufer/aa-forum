@@ -109,6 +109,8 @@ INSTALLED_APPS += [
 ]
 
 if "ckeditor" in INSTALLED_APPS:
+    import ckeditor.configs
+
     MEDIA_URL = "/media/"
     MEDIA_ROOT = "/var/www/myauth/media/"
 
@@ -118,11 +120,12 @@ if "ckeditor" in INSTALLED_APPS:
     CKEDITOR_RESTRICT_BY_USER = True
     CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
-    # Default editor configuration
+    # Editor configuration
     # You can extend and change this to your needs
     # Some of the options are commented out, feel free to play around with them
     CKEDITOR_CONFIGS = {
-        "default": {
+        "default": ckeditor.configs.DEFAULT_CONFIG,
+        "aa_forum": {
             "width": "100%",
             "height": "45vh",
             "youtube_responsive": True,
@@ -143,6 +146,13 @@ if "ckeditor" in INSTALLED_APPS:
                     "youtube",
                 ]
             ),
+            "external_plugin_resources": [
+                (
+                    "youtube",
+                    "/static/aa_forum/ckeditor/plugins/youtube/",
+                    "plugin.min.js",
+                )
+            ],
             "toolbar": "default",
             "toolbar_default": [
                 {
@@ -222,7 +232,7 @@ if "ckeditor" in INSTALLED_APPS:
                     ],
                 },
             ],
-        }
+        },
     }
 ```
 

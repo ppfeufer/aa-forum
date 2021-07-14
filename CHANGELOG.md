@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.1.0-beta.5] - 2021-07-15
+
+### Changed
+
+- CKEditor config changed to prevent possible collisions in static files (see
+  [Readme](README.md) for details)
+
+
 ## [0.1.0-beta.4] - 2021-07-14
 
 ### Added
