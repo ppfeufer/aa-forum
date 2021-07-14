@@ -787,7 +787,7 @@ def message_modify(
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required("aa_forum.basic_access")
 def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirect:
     """
     Delete a message from a topic
@@ -809,9 +809,28 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
 
     topic = message.topic
 
+    # Safety check to make sure the user is allowed to delete this message
+    if message.user_created_id != request.user.id and not request.user.has_perm(
+        "aa_forum.manage_forum"
+    ):
+        messages.error(
+            request,
+            mark_safe(
+                _("<h4>Error!</h4><p>You are not allowed to delete this message.</p>")
+            ),
+        )
+
+        return redirect(
+            "aa_forum:forum_topic",
+            category_slug=topic.board.category.slug,
+            board_slug=topic.board.slug,
+            topic_slug=topic.slug,
+        )
+
     # Let's check if we have more than one message in this topic
+    # and the message we want to delete is not the first
     # If so, remove just that message and return to the topic
-    if topic.messages.all().count() > 1:
+    if topic.first_message.pk != message.pk and topic.messages.all().count() > 1:
         message.delete()
 
         messages.success(
@@ -826,7 +845,8 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
             topic_slug=topic.slug,
         )
 
-    # If it is the only/last message in the topic, remove the topic
+    # If it is the only remaining message in the topic or the topics first message,
+    # remove the topic
     topic.delete()
 
     messages.success(
@@ -834,8 +854,8 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
         mark_safe(
             _(
                 "<h4>Success!</h4><p>The message has been deleted.</p><p>This was "
-                "the only/last message in this topic, so the topic has been "
-                "removed as well.</p>"
+                "either the first message in this topic or the only remaining "
+                "message, so the topic has been deleted as well</p>"
             )
         ),
     )
