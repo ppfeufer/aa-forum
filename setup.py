@@ -49,6 +49,6 @@ setup(
     install_requires=[
         "allianceauth>=2.8.2",
         "django-ckeditor",
-        "allianceauth-app-utils",
+        "allianceauth-app-utils>=1.8.0",
     ],
 )
