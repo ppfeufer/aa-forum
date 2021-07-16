@@ -76,6 +76,10 @@
                         {% include "aa_forum/partials/administration/board-loop.html" with board=child_board is_child_board='yes' %}
                     {% endfor %}
                 </ul>
+
+                <script type="application/javascript">
+                    boardsWithChildren.push('#child-boards-sortable-parent-board-{{ board.board_obj.pk }}')
+                </script>
             {% endif %}
         </div>
     {% endif %}

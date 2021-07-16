@@ -59,13 +59,15 @@ def index(request: WSGIRequest) -> HttpResponse:
                     "first_message",
                     "first_message__user_created",
                     "first_message__user_created__profile__main_character",
-                ).annotate(
+                )
+                .annotate(
                     num_posts=Count("topics__messages", distinct=True),
                     num_topics=Count("topics", distinct=True),
                     num_unread=Count(
                         "topics", filter=Q(topics__in=unread_topic_pks), distinct=True
                     ),
-                ),
+                )
+                .order_by("order", "id"),
             )
         )
         .prefetch_related("groups", "topics")
@@ -145,7 +147,8 @@ def board(
                         "first_message",
                         "first_message__user_created",
                         "first_message__user_created__profile__main_character",
-                    ).annotate(
+                    )
+                    .annotate(
                         num_posts=Count("topics__messages", distinct=True),
                         num_topics=Count("topics", distinct=True),
                         num_unread=Count(
@@ -153,7 +156,8 @@ def board(
                             filter=Q(topics__in=unread_topic_pks),
                             distinct=True,
                         ),
-                    ),
+                    )
+                    .order_by("order", "id"),
                 )
             )
             .prefetch_related(
