@@ -74,6 +74,7 @@ def index(request: WSGIRequest) -> HttpResponse:
                         "topics", filter=Q(topics__in=unread_topic_pks), distinct=True
                     ),
                 )
+                .user_has_access(request.user)
                 .order_by("order", "id"),
             )
         )
@@ -166,6 +167,7 @@ def board(
                             distinct=True,
                         ),
                     )
+                    .user_has_access(request.user)
                     .order_by("order", "id"),
                 )
             )
