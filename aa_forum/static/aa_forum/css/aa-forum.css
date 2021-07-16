@@ -55,6 +55,10 @@
         padding: 1rem;
     }
 
+    .aa-forum .child-boards-sortable > li{
+        background-color: rgb(213, 217, 218);
+    }
+
     .template-dark-mode .aa-forum .boards-sortable > li {
         background-color: rgb(93, 89, 89);
     }
