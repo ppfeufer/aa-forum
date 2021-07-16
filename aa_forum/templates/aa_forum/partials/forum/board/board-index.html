@@ -6,13 +6,13 @@
         <div class="panel-title">{{ board.name }}</div>
     </div>
 
-{#    {% if board.child_boards.all %}#}
-{#        <div class="panel-body">#}
-{#            {% for board in board.child_boards.all %}#}
-{#                {% include "aa_forum/partials/forum/board/board.html" %}#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    {% endif %}#}
+    {% if board.child_boards.all %}
+        <div class="panel-body">
+            {% for child_board in board.child_boards.all %}
+                {% include "aa_forum/partials/forum/board/board.html" with board=child_board %}
+            {% endfor %}
+        </div>
+    {% endif %}
 </div>
 
 {% include "aa_forum/partials/forum/board/new-topic-button.html" with suffix="above-list" %}
