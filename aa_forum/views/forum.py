@@ -202,7 +202,7 @@ def board(
         )
 
         logger.info(
-            f'{request.user} called board "{board.name}" but has no access. '
+            f"{request.user} called board without having access to it. "
             f"Redirecting to forum index"
         )
 
