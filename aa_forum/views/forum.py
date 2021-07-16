@@ -47,6 +47,27 @@ def index(request: WSGIRequest) -> HttpResponse:
             "last_message__user_created__profile__main_character",
             "first_message",
         )
+        .prefetch_related(
+            Prefetch(
+                "child_boards",
+                queryset=Board.objects.select_related(
+                    "category",
+                    "parent_board",
+                    "last_message",
+                    "last_message__user_created",
+                    "last_message__user_created__profile__main_character",
+                    "first_message",
+                    "first_message__user_created",
+                    "first_message__user_created__profile__main_character",
+                ).annotate(
+                    num_posts=Count("topics__messages", distinct=True),
+                    num_topics=Count("topics", distinct=True),
+                    num_unread=Count(
+                        "topics", filter=Q(topics__in=unread_topic_pks), distinct=True
+                    ),
+                ),
+            )
+        )
         .prefetch_related("groups", "topics")
         .user_has_access(request.user)
         .filter(parent_board__isnull=True)
@@ -105,10 +126,36 @@ def board(
         user=request.user,
         message_time__gte=OuterRef("last_message__time_posted"),
     )
+    unread_topic_pks = Topic.objects.filter(~Exists(has_read_all_messages)).values_list(
+        "pk", flat=True
+    )
 
     try:
         board = (
             Board.objects.select_related("category")
+            .prefetch_related(
+                Prefetch(
+                    "child_boards",
+                    queryset=Board.objects.select_related(
+                        "category",
+                        "parent_board",
+                        "last_message",
+                        "last_message__user_created",
+                        "last_message__user_created__profile__main_character",
+                        "first_message",
+                        "first_message__user_created",
+                        "first_message__user_created__profile__main_character",
+                    ).annotate(
+                        num_posts=Count("topics__messages", distinct=True),
+                        num_topics=Count("topics", distinct=True),
+                        num_unread=Count(
+                            "topics",
+                            filter=Q(topics__in=unread_topic_pks),
+                            distinct=True,
+                        ),
+                    ),
+                )
+            )
             .prefetch_related(
                 Prefetch(
                     "topics",
