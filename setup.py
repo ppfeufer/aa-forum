@@ -46,9 +46,5 @@ setup(
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     ],
     python_requires="~=3.6",
-    install_requires=[
-        "allianceauth>=2.8.2",
-        "django-ckeditor",
-        "allianceauth-app-utils>=1.8.0",
-    ],
+    install_requires=["allianceauth>=2.8.2", "django-ckeditor"],
 )
