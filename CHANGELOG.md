@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.1.0-beta.7] - 2021-07-17
+
+### Added
+
+- Child boards (1 Level). Child board will inherit their access restrictions from
+  their parents.
+
+
 ## [0.1.0-beta.6] - 2021-07-16
 
 ### Fixed
