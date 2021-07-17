@@ -211,13 +211,6 @@ class Board(models.Model):
         Return True if the given user has access to this board, else False.
         """
 
-        if self.parent_board:
-            return (
-                Board.objects.user_has_access(user)
-                .filter(pk=self.parent_board.pk)
-                .exists()
-            )
-
         return Board.objects.user_has_access(user).filter(pk=self.pk).exists()
 
 
