@@ -43,14 +43,26 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     ]
 
     if len(search_phrase_terms) >= 1:
-        boards = (
-            Board.objects.user_has_access(request.user)
-            .filter(
-                parent_board__isnull=True,
-            )
-            .distinct()
-            .values_list("pk", flat=True)
-        )
+        # boards = (
+        #     Board.objects.user_has_access(request.user)
+        #     .filter(
+        #         parent_board__isnull=True,
+        #     )
+        #     .distinct()
+        #     .values_list("pk", flat=True)
+        # )
+
+        boards = Board.objects.user_has_access(request.user).distinct()
+
+        board_ids = []
+        for board in boards:
+            has_access_to_parent = True
+
+            if board.parent_board:
+                has_access_to_parent = board.user_can_access(request.user)
+
+            if has_access_to_parent is True:
+                board_ids.append(board.pk)
 
         search_results = (
             Message.objects.filter(
@@ -61,7 +73,8 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
                         for search_term in search_phrase_terms
                     ],
                 ),
-                topic__board__pk__in=boards,
+                # topic__board__pk__in=boards,
+                topic__board__pk__in=board_ids,
             )
             .select_related(
                 "user_created",
