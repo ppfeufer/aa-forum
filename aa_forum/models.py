@@ -204,7 +204,7 @@ class Board(models.Model):
         )
         self.save(update_fields=["last_message"])
 
-    def user_has_access(self, user: User) -> bool:
+    def user_can_access(self, user: User) -> bool:
         """
         Return True if the given user has access to this board, else False.
         """

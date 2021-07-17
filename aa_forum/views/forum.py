@@ -212,16 +212,10 @@ def board(
         return redirect("aa_forum:forum_index")
 
     # WORKAROUND
-    # For what ever reason, the `user_has_access` check in the model doesn't work in
+    # For what ever reason, the `user_has_access` filter in the model doesn't work in
     # the above query when we have a child board, so we have to check here again ...
     if board.parent_board:
-        has_access_to_parent = (
-            Board.objects.user_has_access(request.user)
-            .filter(pk=board.parent_board.pk)
-            .exists()
-        )
-
-        if has_access_to_parent is False:
+        if not board.user_can_access(request.user):
             messages.error(
                 request,
                 mark_safe(
@@ -559,16 +553,10 @@ def _topic_from_slugs(
     )
 
     # WORKAROUND
-    # For what ever reason, the `user_has_access` check in the model doesn't work in
+    # For what ever reason, the `user_has_access` filter in the model doesn't work in
     # the above query when we have a child board, so we have to check here again ...
     if topic.board.parent_board:
-        has_access = (
-            Board.objects.user_has_access(request.user)
-            .filter(pk=topic.board.parent_board.pk)
-            .exists()
-        )
-
-        if has_access is False:
+        if not topic.board.user_can_access(request.user):
             topic = None
 
     if not topic:
@@ -891,7 +879,7 @@ def message_modify(
         return redirect("aa_forum:forum_index")
 
     # Check if the user has access to this board
-    if not message.topic.board.user_has_access(request.user):
+    if not message.topic.board.user_can_access(request.user):
         messages.error(
             request,
             mark_safe(
@@ -1145,16 +1133,12 @@ def unread_topics_count(request: WSGIRequest) -> int:
     if boards.count() > 0:
         for board in boards:
             # WORKAROUND
-            # For what ever reason, the `user_has_access` check in the model doesn't work in
+            # For what ever reason, the `user_has_access` filter in the model doesn't work in
             # the above query when we have a child board, so we have to check here again ...
             has_access_to_parent = True
 
             if board.parent_board:
-                has_access_to_parent = (
-                    Board.objects.user_has_access(request.user)
-                    .filter(pk=board.parent_board.pk)
-                    .exists()
-                )
+                has_access_to_parent = board.user_can_access(request.user)
 
             if has_access_to_parent is True:
                 count_unread_topics += board.num_unread_topics

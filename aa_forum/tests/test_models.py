@@ -61,7 +61,7 @@ class TestBoard(TestCase):
         # given
         board = Board.objects.create(name="Physics", category=self.category)
         # when
-        result = board.user_has_access(self.user)
+        result = board.user_can_access(self.user)
         # then
         self.assertTrue(result)
 
@@ -71,7 +71,7 @@ class TestBoard(TestCase):
         board.groups.add(self.group)
         self.user.groups.add(self.group)
         # when
-        result = board.user_has_access(self.user)
+        result = board.user_can_access(self.user)
         # then
         self.assertTrue(result)
 
@@ -84,7 +84,7 @@ class TestBoard(TestCase):
             name="Thermal Theories", category=self.category, parent_board=board
         )
         # when
-        result = board_2.user_has_access(self.user)
+        result = board_2.user_can_access(self.user)
         # then
         self.assertTrue(result)
 
@@ -93,7 +93,7 @@ class TestBoard(TestCase):
         board = Board.objects.create(name="Physics", category=self.category)
         board.groups.add(self.group)
         # when
-        result = board.user_has_access(self.user)
+        result = board.user_can_access(self.user)
         # then
         self.assertFalse(result)
 
@@ -105,7 +105,7 @@ class TestBoard(TestCase):
             name="Thermal Theories", category=self.category, parent_board=board
         )
         # when
-        result = board_2.user_has_access(self.user)
+        result = board_2.user_can_access(self.user)
         # then
         self.assertFalse(result)
 
