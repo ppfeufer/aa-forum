@@ -40,6 +40,14 @@ urlpatterns = [
     path(
         (
             f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/board/"
+            f"<int:board_id>/create-child-board/"
+        ),
+        admin.board_create_child,
+        name="admin_board_create_child",
+    ),
+    path(
+        (
+            f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/board/"
             "<int:board_id>/edit/"
         ),
         admin.board_edit,
