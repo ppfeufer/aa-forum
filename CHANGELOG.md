@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Child boards (1 Level). Child board will inherit their access restrictions from
+- Child boards (1 Level). Child boards will inherit their access restrictions from
   their parents.
 
 
