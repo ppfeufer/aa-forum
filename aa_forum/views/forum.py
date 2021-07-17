@@ -211,28 +211,6 @@ def board(
 
         return redirect("aa_forum:forum_index")
 
-    # WORKAROUND
-    # For what ever reason, the `user_has_access` filter in the model doesn't work in
-    # the above query when we have a child board, so we have to check here again ...
-    if board.parent_board:
-        if not board.user_can_access(request.user):
-            messages.error(
-                request,
-                mark_safe(
-                    _(
-                        "<h4>Error!</h4><p>The board you were trying to visit does "
-                        "either not exist, or you don't have access to it ...</p>"
-                    )
-                ),
-            )
-
-            logger.info(
-                f"{request.user} called board without having access to it. "
-                f"Redirecting to forum index"
-            )
-
-            return redirect("aa_forum:forum_index")
-
     paginator = Paginator(
         board.topics_sorted,
         int(Setting.objects.get_setting(setting_key=SETTING_TOPICSPERPAGE)),
@@ -551,13 +529,6 @@ def _topic_from_slugs(
         topic_slug=topic_slug,
         user=request.user,
     )
-
-    # WORKAROUND
-    # For what ever reason, the `user_has_access` filter in the model doesn't work in
-    # the above query when we have a child board, so we have to check here again ...
-    if topic.board.parent_board:
-        if not topic.board.user_can_access(request.user):
-            topic = None
 
     if not topic:
         messages.error(
@@ -1132,15 +1103,6 @@ def unread_topics_count(request: WSGIRequest) -> int:
 
     if boards.count() > 0:
         for board in boards:
-            # WORKAROUND
-            # For what ever reason, the `user_has_access` filter in the model doesn't work in
-            # the above query when we have a child board, so we have to check here again ...
-            has_access_to_parent = True
-
-            if board.parent_board:
-                has_access_to_parent = board.user_can_access(request.user)
-
-            if has_access_to_parent is True:
-                count_unread_topics += board.num_unread_topics
+            count_unread_topics += board.num_unread_topics
 
     return count_unread_topics
