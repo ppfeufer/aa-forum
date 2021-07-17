@@ -44,6 +44,16 @@ BoardManager = BoardManagerBase.from_queryset(BoardQuerySet)
 
 
 class TopicQuerySet(models.QuerySet):
+    def user_has_access(self, user: User) -> models.QuerySet:
+        """
+        Filter boards that given user has access to.
+        """
+
+        # @todo :: implement child board access checks
+        return self.filter(
+            Q(board__groups__in=user.groups.all()) | Q(board__groups__isnull=True)
+        ).distinct()
+
     def get_from_slugs(
         self,
         category_slug: str,
@@ -82,10 +92,7 @@ class TopicQuerySet(models.QuerySet):
                     board__slug=str(board_slug),
                     slug=str(topic_slug),
                 )
-                .filter(
-                    Q(board__groups__in=user.groups.all())
-                    | Q(board__groups__isnull=True)
-                )
+                .user_has_access(user)
                 .distinct()
                 .get()
             )

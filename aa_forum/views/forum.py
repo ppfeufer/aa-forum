@@ -561,15 +561,15 @@ def _topic_from_slugs(
     # WORKAROUND
     # For what ever reason, the `user_has_access` check in the model doesn't work in
     # the above query when we have a child board, so we have to check here again ...
-    if topic.board.parent_board:
-        has_access = (
-            Board.objects.user_has_access(request.user)
-            .filter(pk=topic.board.parent_board.pk)
-            .exists()
-        )
-
-        if has_access is False:
-            topic = None
+    # if topic.board.parent_board:
+    #     has_access = (
+    #         Board.objects.user_has_access(request.user)
+    #         .filter(pk=topic.board.parent_board.pk)
+    #         .exists()
+    #     )
+    #
+    #     if has_access is False:
+    #         topic = None
 
     if not topic:
         messages.error(
