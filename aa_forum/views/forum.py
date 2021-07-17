@@ -145,6 +145,7 @@ def board(
     try:
         board = (
             Board.objects.select_related("category")
+            .select_related("parent_board")
             .prefetch_related(
                 Prefetch(
                     "child_boards",
@@ -188,8 +189,8 @@ def board(
                     to_attr="topics_sorted",
                 )
             )
-            .user_has_access(request.user)
             .filter(category__slug=category_slug, slug=board_slug)
+            .user_has_access(request.user)
             .get()
         )
     except Board.DoesNotExist:
@@ -210,12 +211,43 @@ def board(
 
         return redirect("aa_forum:forum_index")
 
+    # WORKAROUND
+    # For what ever reason, the `user_has_access` check in the model doesn't work in
+    # the above query when we have a child board, so we have to check here again ...
+    if board.parent_board:
+        has_access_to_parent = (
+            Board.objects.user_has_access(request.user)
+            .filter(pk=board.parent_board.pk)
+            .exists()
+        )
+
+        if has_access_to_parent is False:
+            messages.error(
+                request,
+                mark_safe(
+                    _(
+                        "<h4>Error!</h4><p>The board you were trying to visit does "
+                        "either not exist, or you don't have access to it ...</p>"
+                    )
+                ),
+            )
+
+            logger.info(
+                f"{request.user} called board without having access to it. "
+                f"Redirecting to forum index"
+            )
+
+            return redirect("aa_forum:forum_index")
+
     paginator = Paginator(
         board.topics_sorted,
         int(Setting.objects.get_setting(setting_key=SETTING_TOPICSPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
-    context = {"board": board, "page_obj": page_obj}
+    context = {
+        "board": board,
+        "page_obj": page_obj,
+    }
 
     logger.info(f'{request.user} called board "{board.name}"')
 
@@ -525,6 +557,19 @@ def _topic_from_slugs(
         topic_slug=topic_slug,
         user=request.user,
     )
+
+    # WORKAROUND
+    # For what ever reason, the `user_has_access` check in the model doesn't work in
+    # the above query when we have a child board, so we have to check here again ...
+    if topic.board.parent_board:
+        has_access = (
+            Board.objects.user_has_access(request.user)
+            .filter(pk=topic.board.parent_board.pk)
+            .exists()
+        )
+
+        if has_access is False:
+            topic = None
 
     if not topic:
         messages.error(
@@ -851,7 +896,7 @@ def message_modify(
             request,
             mark_safe(
                 _(
-                    "<h4>Error!</h4><p>The topic you were trying to view does "
+                    "<h4>Error!</h4><p>The topic you were trying to modify does "
                     "either not exist, or you don't have access to it ...</p>"
                 )
             ),
