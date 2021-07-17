@@ -44,6 +44,7 @@ def index(request: WSGIRequest) -> HttpResponse:
             "boards",
             queryset=Board.objects.filter(parent_board__isnull=True)
             .prefetch_related("groups")
+            .prefetch_related("child_boards")
             .order_by("order", "id"),
         )
     ).order_by("order", "id")
@@ -52,17 +53,39 @@ def index(request: WSGIRequest) -> HttpResponse:
     category_loop = list()
 
     for category in categories:
-        boards_data = [
-            {
-                "board_obj": board,
-                "board_edit_form": EditBoardForm(
-                    prefix="edit-board-" + str(board.id),
-                    instance=board,
-                    groups_queryset=groups_queryset,
-                ),
-            }
-            for board in category.boards.all()
-        ]
+        boards_data = []
+
+        for board in category.boards.all():
+            child_boards_data = [
+                {
+                    "board_obj": child_board,
+                    "board_forms": {
+                        "board_edit_form": EditBoardForm(
+                            prefix="edit-board-" + str(child_board.id),
+                            instance=child_board,
+                            groups_queryset=groups_queryset,
+                        ),
+                    },
+                }
+                for child_board in board.child_boards.all()
+            ]
+
+            boards_data.append(
+                {
+                    "board_obj": board,
+                    "board_forms": {
+                        "new_child_board_form": EditBoardForm(
+                            prefix="new-child-board-" + str(board.id)
+                        ),
+                        "board_edit_form": EditBoardForm(
+                            prefix="edit-board-" + str(board.id),
+                            instance=board,
+                            groups_queryset=groups_queryset,
+                        ),
+                    },
+                    "child_boards": child_boards_data,
+                }
+            )
 
         category_data = {
             "category_obj": category,
@@ -218,6 +241,49 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
             new_board.save()
 
             new_board.groups.set(form.cleaned_data["groups"])
+
+            messages.success(
+                request,
+                mark_safe(_("<h4>Success!</h4><p>Board created.</p>")),
+            )
+        else:
+            message_form_errors(request, form)
+
+    return redirect("aa_forum:admin_index")
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def board_create_child(
+    request: WSGIRequest, category_id: int, board_id: int
+) -> HttpResponseRedirect:
+    """
+    Create a child board
+    :param request:
+    :type request:
+    :param category_id:
+    :type category_id:
+    :param board_id:
+    :type board_id:
+    """
+
+    if request.method == "POST":
+        # Create a form instance and populate it with data from the request
+        form = EditBoardForm(request.POST, prefix="new-child-board-" + str(board_id))
+
+        # Check whether it's valid:
+        if form.is_valid():
+            parent_board = Board.objects.get(pk=board_id)
+
+            new_board = Board()
+            new_board.name = form.cleaned_data["name"]
+            new_board.description = form.cleaned_data["description"]
+            new_board.parent_board = parent_board
+            new_board.category = parent_board.category
+            new_board.order = 999999
+            new_board.save()
+
+            # new_board.groups.set(parent_board.groups)
 
             messages.success(
                 request,
