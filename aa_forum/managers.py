@@ -26,7 +26,6 @@ class BoardQuerySet(models.QuerySet):
         Filter boards that given user has access to.
         """
 
-        # @todo :: implement child board access checks
         return self.filter(
             Q(groups__in=user.groups.all()) | Q(groups__isnull=True)
         ).distinct()
@@ -49,7 +48,6 @@ class TopicQuerySet(models.QuerySet):
         Filter boards that given user has access to.
         """
 
-        # @todo :: implement child board access checks
         return self.filter(
             Q(board__groups__in=user.groups.all()) | Q(board__groups__isnull=True)
         ).distinct()
@@ -67,7 +65,6 @@ class TopicQuerySet(models.QuerySet):
 
         from .models import Message
 
-        # @todo :: implement child board access checks
         try:
             topic = (
                 self.select_related(
