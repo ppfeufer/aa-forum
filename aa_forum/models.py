@@ -204,19 +204,19 @@ class Board(models.Model):
         )
         self.save(update_fields=["last_message"])
 
-    # def user_has_access(self, user: User) -> bool:
-    #     """
-    #     Return True if the given user has access to this board, else False.
-    #     """
-    #
-    #     if self.parent_board:
-    #         return (
-    #             Board.objects.user_has_access(user)
-    #             .filter(pk=self.parent_board.pk)
-    #             .exists()
-    #         )
-    #
-    #     return Board.objects.user_has_access(user).filter(pk=self.pk).exists()
+    def user_has_access(self, user: User) -> bool:
+        """
+        Return True if the given user has access to this board, else False.
+        """
+
+        if self.parent_board:
+            return (
+                Board.objects.user_has_access(user)
+                .filter(pk=self.parent_board.pk)
+                .exists()
+            )
+
+        return Board.objects.user_has_access(user).filter(pk=self.pk).exists()
 
 
 class Topic(models.Model):
