@@ -55,7 +55,15 @@
         padding: 1rem;
     }
 
+    .aa-forum .child-boards-sortable > li{
+        background-color: rgb(213, 217, 218);
+    }
+
     .template-dark-mode .aa-forum .boards-sortable > li {
+        background-color: rgb(93, 89, 89);
+    }
+
+    .template-dark-mode .aa-forum .child-boards-sortable > li{
         background-color: rgb(70, 69, 69);
     }
 
@@ -240,6 +248,13 @@
     .aa-forum .label-aa-forum-topic-new-message {
         font-size: 55%;
         margin-left: 1rem;
+    }
+
+    .aa-forum .label-aa-forum-child-board-new-message {
+        font-size: 55%;
+        padding: 0.3em 0.6em;
+        margin-left: 0.25rem;
+        vertical-align: middle;
     }
 }
 

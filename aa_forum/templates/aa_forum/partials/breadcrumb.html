@@ -12,6 +12,10 @@
                 {% set_template_variable category_slug = category.slug %}
                 {% set_template_variable board_slug = board.slug %}
 
+                {% if board.parent_board %}
+                    <li>» <a href="{{ board.parent_board.get_absolute_url }}">{{ board.parent_board.name }}</a></li>
+                {% endif %}
+
                 <li>» <a href="{{ board.get_absolute_url }}">{{ board.name }}</a></li>
 
                 {% if topic %}
