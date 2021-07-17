@@ -45,6 +45,9 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     if len(search_phrase_terms) >= 1:
         boards = (
             Board.objects.user_has_access(request.user)
+            .filter(
+                parent_board__isnull=True,
+            )
             .distinct()
             .values_list("pk", flat=True)
         )
