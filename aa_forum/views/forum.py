@@ -1144,6 +1144,19 @@ def unread_topics_count(request: WSGIRequest) -> int:
 
     if boards.count() > 0:
         for board in boards:
-            count_unread_topics += board.num_unread_topics
+            # WORKAROUND
+            # For what ever reason, the `user_has_access` check in the model doesn't work in
+            # the above query when we have a child board, so we have to check here again ...
+            has_access_to_parent = True
+
+            if board.parent_board:
+                has_access_to_parent = (
+                    Board.objects.user_has_access(request.user)
+                    .filter(pk=board.parent_board.pk)
+                    .exists()
+                )
+
+            if has_access_to_parent is True:
+                count_unread_topics += board.num_unread_topics
 
     return count_unread_topics
