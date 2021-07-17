@@ -4,8 +4,6 @@ Forum related views
 
 from typing import Optional
 
-from app_utils.logging import LoggerAddTag
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
@@ -17,14 +15,9 @@ from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
-from allianceauth.services.hooks import get_extension_logger
-
-from aa_forum import __title__
 from aa_forum.constants import SETTING_MESSAGESPERPAGE, SETTING_TOPICSPERPAGE
 from aa_forum.forms import EditMessageForm, EditTopicForm, NewTopicForm
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Setting, Topic
-
-logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
 
 @login_required
@@ -53,30 +46,6 @@ def index(request: WSGIRequest) -> HttpResponse:
             "last_message__topic",
             "last_message__user_created__profile__main_character",
             "first_message",
-        )
-        .prefetch_related(
-            Prefetch(
-                "child_boards",
-                queryset=Board.objects.select_related(
-                    "category",
-                    "parent_board",
-                    "last_message",
-                    "last_message__user_created",
-                    "last_message__user_created__profile__main_character",
-                    "first_message",
-                    "first_message__user_created",
-                    "first_message__user_created__profile__main_character",
-                )
-                .annotate(
-                    num_posts=Count("topics__messages", distinct=True),
-                    num_topics=Count("topics", distinct=True),
-                    num_unread=Count(
-                        "topics", filter=Q(topics__in=unread_topic_pks), distinct=True
-                    ),
-                )
-                .user_has_access(request.user)
-                .order_by("order", "id"),
-            )
         )
         .prefetch_related("groups", "topics")
         .user_has_access(request.user)
@@ -109,8 +78,6 @@ def index(request: WSGIRequest) -> HttpResponse:
     categories = sorted(categories_map.values(), key=lambda k: k["order"])
     context = {"categories": categories}
 
-    logger.info(f"{request.user} called forum index")
-
     return render(request, "aa_forum/view/forum/index.html", context)
 
 
@@ -138,40 +105,10 @@ def board(
         user=request.user,
         message_time__gte=OuterRef("last_message__time_posted"),
     )
-    unread_topic_pks = Topic.objects.filter(~Exists(has_read_all_messages)).values_list(
-        "pk", flat=True
-    )
 
     try:
         board = (
             Board.objects.select_related("category")
-            .select_related("parent_board")
-            .prefetch_related(
-                Prefetch(
-                    "child_boards",
-                    queryset=Board.objects.select_related(
-                        "category",
-                        "parent_board",
-                        "last_message",
-                        "last_message__user_created",
-                        "last_message__user_created__profile__main_character",
-                        "first_message",
-                        "first_message__user_created",
-                        "first_message__user_created__profile__main_character",
-                    )
-                    .annotate(
-                        num_posts=Count("topics__messages", distinct=True),
-                        num_topics=Count("topics", distinct=True),
-                        num_unread=Count(
-                            "topics",
-                            filter=Q(topics__in=unread_topic_pks),
-                            distinct=True,
-                        ),
-                    )
-                    .user_has_access(request.user)
-                    .order_by("order", "id"),
-                )
-            )
             .prefetch_related(
                 Prefetch(
                     "topics",
@@ -189,8 +126,8 @@ def board(
                     to_attr="topics_sorted",
                 )
             )
-            .filter(category__slug=category_slug, slug=board_slug)
             .user_has_access(request.user)
+            .filter(category__slug=category_slug, slug=board_slug)
             .get()
         )
     except Board.DoesNotExist:
@@ -204,11 +141,6 @@ def board(
             ),
         )
 
-        logger.info(
-            f"{request.user} called board without having access to it. "
-            f"Redirecting to forum index"
-        )
-
         return redirect("aa_forum:forum_index")
 
     paginator = Paginator(
@@ -216,12 +148,7 @@ def board(
         int(Setting.objects.get_setting(setting_key=SETTING_TOPICSPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
-    context = {
-        "board": board,
-        "page_obj": page_obj,
-    }
-
-    logger.info(f'{request.user} called board "{board.name}"')
+    context = {"board": board, "page_obj": page_obj}
 
     return render(request, "aa_forum/view/forum/board.html", context)
 
@@ -256,8 +183,6 @@ def board_new_topic(
             ),
         )
 
-        logger.info(f"{request.user} tried to open a non existing category")
-
         return redirect("aa_forum:forum_index")
 
     try:
@@ -276,11 +201,6 @@ def board_new_topic(
                     "either not exist, or you don't have access to it ...</p>"
                 )
             ),
-        )
-
-        logger.info(
-            f"{request.user} tried to create a topic in a board they have no access "
-            f"to. Redirecting to forum index "
         )
 
         return redirect("aa_forum:forum_index")
@@ -304,11 +224,6 @@ def board_new_topic(
                 message.message = form.cleaned_data["message"]
                 message.save()
 
-            logger.info(
-                f'{request.user} started a new topic "{topic.subject}" '
-                f'in board "{board.name}"'
-            )
-
             return redirect(
                 "aa_forum:forum_topic",
                 category_slug=board.category.slug,
@@ -320,8 +235,6 @@ def board_new_topic(
         form = NewTopicForm()
 
     context = {"board": board, "form": form}
-
-    logger.info(f'{request.user} is starting a new topic in board "{board.name}"')
 
     return render(request, "aa_forum/view/forum/new-topic.html", context)
 
@@ -359,10 +272,6 @@ def topic(
     )
 
     if not topic:
-        logger.info(
-            f"{request.user} called a non existent topic. Redirecting to forum index"
-        )
-
         return redirect("aa_forum:forum_index")
 
     # Determine if the current user can modify the topics subject
@@ -408,8 +317,6 @@ def topic(
         "reply_form": EditMessageForm(),
     }
 
-    logger.info(f'{request.user} called topic "{topic.subject}"')
-
     return render(request, "aa_forum/view/forum/topic.html", context)
 
 
@@ -441,10 +348,6 @@ def topic_modify(
     )
 
     if not topic:
-        logger.info(
-            f"{request.user} called a non existent topic. Redirecting to forum index"
-        )
-
         return redirect("aa_forum:forum_index")
 
     # Check if the user actually has the right to edit this message
@@ -456,11 +359,6 @@ def topic_modify(
             mark_safe(
                 _("<h4>Error!</h4><p>You are not allowed to modify this topic!</p>")
             ),
-        )
-
-        logger.info(
-            f'{request.user} tried to modify topic "{topic.subject}" without the '
-            f"proper permissions. Redirecting to forum index"
         )
 
         return redirect(
@@ -487,8 +385,6 @@ def topic_modify(
                 ),
             )
 
-            logger.info(f'{request.user} modified topic "{topic.subject}"')
-
             return redirect(
                 "aa_forum:forum_topic",
                 category_slug=category_slug,
@@ -500,8 +396,6 @@ def topic_modify(
         form = EditTopicForm(instance=topic)
 
     context = {"form": form, "topic": topic}
-
-    logger.info(f'{request.user} modifying "{topic.subject}"')
 
     return render(request, "aa_forum/view/forum/modify-topic.html", context)
 
@@ -628,8 +522,6 @@ def topic_reply(
             new_message.message = form.cleaned_data["message"]
             new_message.save()
 
-            logger.info(f"{request.user} replied to topic {topic.subject}")
-
             return redirect(
                 "aa_forum:forum_message",
                 category_slug=category_slug,
@@ -674,7 +566,6 @@ def topic_change_lock_state(
             mark_safe(_("<h4>Success!</h4><p>Topic has been unlocked/re-opened.</p>")),
         )
 
-        logger.info(f"{request.user} unlocked/re-opened topic {topic.subject}")
     else:
         topic.is_locked = True
 
@@ -682,8 +573,6 @@ def topic_change_lock_state(
             request,
             mark_safe(_("<h4>Success!</h4><p>Topic has been locked/closed.</p>")),
         )
-
-        logger.info(f'{request.user} locked/closed "{topic.subject}"')
 
     topic.save(update_fields=["is_locked"])
 
@@ -717,10 +606,6 @@ def topic_change_sticky_state(
             request,
             mark_safe(_('<h4>Success!</h4><p>Topic is no longer "Sticky".</p>')),
         )
-
-        logger.info(
-            f'{request.user} changed topic "{topic.subject}" to be no longer sticky'
-        )
     else:
         topic.is_sticky = True
 
@@ -728,8 +613,6 @@ def topic_change_sticky_state(
             request,
             mark_safe(_('<h4>Success!</h4><p>Topic is now "Sticky".</p>')),
         )
-
-        logger.info(f'{request.user} changed topic "{topic.subject}" to be sticky')
 
     topic.save(update_fields=["is_sticky"])
 
@@ -755,7 +638,6 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
         return HttpResponseNotFound("Could not find topic.")
 
     board = topic.board
-    topic_subject = topic.subject
 
     topic.delete()
 
@@ -763,8 +645,6 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
         request,
         mark_safe(_("<h4>Success!</h4><p>Topic removed.</p>")),
     )
-
-    logger.info(f'{request.user} removed topic "{topic_subject}"')
 
     return redirect(board.get_absolute_url())
 
@@ -845,25 +725,18 @@ def message_modify(
             mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p>")),
         )
 
-        logger.info(f"{request.user} tried to modify a message that doesn't exist")
-
         return redirect("aa_forum:forum_index")
 
     # Check if the user has access to this board
-    if not message.topic.board.user_can_access(request.user):
+    if not message.topic.board.user_has_access(request.user):
         messages.error(
             request,
             mark_safe(
                 _(
-                    "<h4>Error!</h4><p>The topic you were trying to modify does "
+                    "<h4>Error!</h4><p>The topic you were trying to view does "
                     "either not exist, or you don't have access to it ...</p>"
                 )
             ),
-        )
-
-        logger.info(
-            f"{request.user} trying to change a message in a topic that either does "
-            f"not exist or they have no access to"
         )
 
         return redirect("aa_forum:forum_index")
@@ -877,11 +750,6 @@ def message_modify(
             mark_safe(
                 _("<h4>Error!</h4><p>You are not allowed to modify this message!</p>")
             ),
-        )
-
-        logger.info(
-            f"{request.user} tried to modify a message in topic "
-            f'"{message.topic.subject}" without permission to do so'
         )
 
         return redirect(message.topic.get_absolute_url())
@@ -902,11 +770,6 @@ def message_modify(
                 mark_safe(_("<h4>Success!</h4><p>The message has been updated.</p>")),
             )
 
-            logger.info(
-                f"{request.user} modified message ID {message.pk} "
-                f'in topic "{message.topic.subject}"'
-            )
-
             return redirect(
                 "aa_forum:forum_message",
                 category_slug=category_slug,
@@ -919,11 +782,6 @@ def message_modify(
         form = EditMessageForm(instance=message)
 
     context = {"form": form, "board": message.topic.board, "message": message}
-
-    logger.info(
-        f"{request.user} is modifying message ID {message.pk} "
-        f'in topic "{message.topic.subject}"'
-    )
 
     return render(request, "aa_forum/view/forum/modify-message.html", context)
 
@@ -950,7 +808,6 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
         return HttpResponseNotFound("Message not found.")
 
     topic = message.topic
-    topic_subject = topic.subject
 
     # Safety check to make sure the user is allowed to delete this message
     if message.user_created_id != request.user.id and not request.user.has_perm(
@@ -961,11 +818,6 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
             mark_safe(
                 _("<h4>Error!</h4><p>You are not allowed to delete this message.</p>")
             ),
-        )
-
-        logger.info(
-            f"{request.user} was trying to delete message ID {message_id} without "
-            f"permission to do so. Redirecting to forum index"
         )
 
         return redirect(
@@ -984,11 +836,6 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
         messages.success(
             request,
             mark_safe(_("<h4>Success!</h4><p>The message has been deleted.</p>")),
-        )
-
-        logger.info(
-            f"{request.user} removed message ID {message_id} "
-            f'from topic "{topic_subject}"'
         )
 
         return redirect(
@@ -1011,11 +858,6 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
                 "message, so the topic has been deleted as well</p>"
             )
         ),
-    )
-
-    logger.info(
-        f"{request.user} removed message ID {message_id}. This was the original post, "
-        f'so the topic "{topic_subject}" has been removed as well.'
     )
 
     return redirect(
@@ -1063,8 +905,6 @@ def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
                     user=request.user,
                     defaults={"message_time": topic.last_message.time_posted},
                 )
-
-    logger.info(f"{request.user} marked all new messages as read")
 
     return redirect("aa_forum:forum_index")
 

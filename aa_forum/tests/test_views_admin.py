@@ -137,22 +137,6 @@ class TestAdminViews(TestCase):
         board_2.refresh_from_db()
         self.assertEqual(board_2.order, 2)
 
-    def test_should_create_child_board(self):
-        # given
-        category = Category.objects.create(name="Category")
-        board_1 = Board.objects.create(name="Board 1", category=category)
-        self.client.force_login(self.user)
-        # when
-        res = self.client.get(
-            reverse("aa_forum:admin_board_create_child", args=[category.pk, board_1.pk])
-        )
-        child_board = Board.objects.create(
-            name="Child Board 1", category=category, parent_board=board_1
-        )
-        # then
-        self.assertTrue(Board.objects.filter(pk=child_board.pk).exists())
-        self.assertRedirects(res, reverse("aa_forum:admin_index"))
-
     def test_should_save_boards_order_and_handle_errors(self):
         # given
         category = Category.objects.create(name="Category")
