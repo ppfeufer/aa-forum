@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   list in forum index
 - "Mark all topics as read" in unread topics view above and below board list
 - More logging
+- Access check when someone tries to reply to a topic they lost access to while viewing
 
 ### Removed
 

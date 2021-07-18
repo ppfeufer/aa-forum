@@ -693,14 +693,36 @@ def topic_reply(
     :rtype:
     """
 
+    topic = _topic_from_slugs(
+        request=request,
+        category_slug=category_slug,
+        board_slug=board_slug,
+        topic_slug=topic_slug,
+    )
+
+    if not topic:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The topic you were trying to reply does not "
+                    "exist or you do not have access to it.</p>"
+                )
+            ),
+        )
+
+        logger.info(
+            f"{request.user} called a non existent topic. Redirecting to forum index"
+        )
+
+        return redirect("aa_forum:forum_index")
+
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
         form = EditMessageForm(request.POST)
 
         # Check whether it's valid:
         if form.is_valid():
-            topic = Topic.objects.get(slug__exact=topic_slug)
-
             new_message = Message()
             new_message.topic = topic
             new_message.user_created = request.user
