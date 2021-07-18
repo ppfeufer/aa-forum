@@ -5,6 +5,10 @@
     <ul>
         <li><a href="{% url 'aa_forum:forum_index' %}">{% translate "Forum Index" %}</a></li>
 
+        {% if page %}
+            <li>» {{ page }}</li>
+        {% endif %}
+
         {% if category %}
             <li>» <a href="{% url 'aa_forum:forum_index' %}#category-{{ category.id }}">{{ category.name }}</a></li>
 
