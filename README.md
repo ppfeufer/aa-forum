@@ -42,6 +42,7 @@ these kind of changes. For you own sanity, and mine :-)
 - Mass creation of boards with a new categoy
 - Boards can be restricted to 1 or more groups, bards without restrictions are
   visible for everyone who has access to the forum
+- Child boards (1 Level), which inherit their access restrictions from their parent
 - ckEditor with image upload
 - Unread topics counter as number on the "Forum" link in the left navigation
 

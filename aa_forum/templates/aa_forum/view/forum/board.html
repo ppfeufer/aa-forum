@@ -1,11 +1,11 @@
-{% extends 'aa_forum/base.html' %}
+{% extends "aa_forum/base.html" %}
 
 {% load aa_forum_versioned_static %}
 {% load evelinks %}
 {% load static %}
 {% load i18n %}
 
-{% block page_title %}{{ board.name }} » {% translate 'Forum' %}{% endblock %}
+{% block page_title %}{{ board.name }} » {% translate "Forum" %}{% endblock %}
 
 {% block aa_forum_header %}
     <br>
@@ -16,9 +16,9 @@
 
 {% block aa_forum_body %}
     {% if board %}
-        {% include 'aa_forum/partials/forum/board/board-index.html' %}
+        {% include "aa_forum/partials/forum/board/board-index.html" %}
     {% else %}
-        {% include 'aa_forum/partials/forum/board/no-access.html' %}
+        {% include "aa_forum/partials/forum/board/no-access.html" %}
     {% endif %}
 {% endblock %}
 

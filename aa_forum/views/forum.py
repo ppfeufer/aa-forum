@@ -46,6 +46,7 @@ def index(request: WSGIRequest) -> HttpResponse:
     unread_topic_pks = Topic.objects.filter(~Exists(has_read_all_messages)).values_list(
         "pk", flat=True
     )
+
     boards = (
         Board.objects.select_related(
             "category",
@@ -546,7 +547,7 @@ def _topic_from_slugs(
 
 @login_required
 @permission_required("aa_forum.basic_access")
-def topic_unread(
+def topic_first_unread_message(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
     """
@@ -593,6 +594,64 @@ def topic_unread(
         return redirect(redirect_message.get_absolute_url())
 
     return redirect(topic.get_absolute_url())
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
+    """
+    Show all available unread topics
+    :param request:
+    :type request:
+    """
+
+    has_read_all_messages = LastMessageSeen.objects.filter(
+        topic=OuterRef("pk"),
+        user=request.user,
+        message_time__gte=OuterRef("last_message__time_posted"),
+    )
+    unread_topic_pks = Topic.objects.filter(~Exists(has_read_all_messages)).values_list(
+        "pk", flat=True
+    )
+
+    boards = (
+        Board.objects.select_related(
+            "parent_board",
+            "category",
+            "last_message",
+            "last_message__topic",
+            "last_message__user_created__profile__main_character",
+            "first_message",
+        )
+        .prefetch_related(
+            Prefetch(
+                "topics",
+                queryset=Topic.objects.select_related(
+                    "last_message",
+                    "last_message__user_created",
+                    "last_message__user_created__profile__main_character",
+                    "first_message",
+                    "first_message__user_created",
+                    "first_message__user_created__profile__main_character",
+                )
+                .filter(pk__in=unread_topic_pks)
+                .annotate(num_posts=Count("messages", distinct=True))
+                .annotate(has_unread_messages=~Exists(has_read_all_messages))
+                .order_by("-is_sticky", "-last_message__time_posted", "-id"),
+                # to_attr="topics_sorted",
+            )
+        )
+        .filter(topics__in=unread_topic_pks)
+        .user_has_access(request.user)
+        .order_by("category__order", "category__id", "order", "id")
+        .all()
+    )
+
+    context = {"boards": boards}
+
+    logger.info(f"{request.user} calling unread topics view")
+
+    return render(request, "aa_forum/view/forum/unread-topics.html", context)
 
 
 @login_required

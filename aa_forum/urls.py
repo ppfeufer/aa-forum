@@ -103,6 +103,11 @@ urlpatterns = [
         name="search_results",
     ),
     path(
+        f"{INTERNAL_URL_PREFIX}/unread/",
+        forum.topic_show_all_unread,
+        name="forum_topic_show_all_unread",
+    ),
+    path(
         f"{INTERNAL_URL_PREFIX}/mark-all-as-read/",
         forum.mark_all_as_read,
         name="forum_mark_all_as_read",
@@ -142,8 +147,8 @@ urlpatterns = [
     ),
     path(
         "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/unread/",
-        forum.topic_unread,
-        name="forum_topic_unread",
+        forum.topic_first_unread_message,
+        name="forum_topic_first_unread_message",
     ),
     path(
         "<slug:category_slug>/<slug:board_slug>/<slug:topic_slug>/modify/",

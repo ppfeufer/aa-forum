@@ -11,9 +11,9 @@
 <div class="aa-forum-board row">
     <div class="aa-forum-board-image">
         {% if board.num_unread > 0 %}
-            <img id="aa-forum-link-on-{{ board.id }}" src="{% static 'aa_forum/images/on.png' %}" alt="{% translate "New posts" %}">
+            <img id="aa-forum-link-on-{{ board.id }}" src="{% static 'aa_forum/images/on.png' %}" alt="{% translate 'New posts' %}">
         {% else %}
-            <img src="{% static 'aa_forum/images/off.png' %}" alt="{% translate "No new posts" %}">
+            <img src="{% static 'aa_forum/images/off.png' %}" alt="{% translate 'No new posts' %}">
         {% endif %}
     </div>
 
@@ -39,6 +39,7 @@
                     <a href="{% url 'aa_forum:forum_board' category_slug child_board.slug %}">
                         {{ child_board.name }}
                     </a>
+
                     {% if child_board.num_unread > 0 %}
                         <a href="{% url 'aa_forum:forum_board' category_slug child_board.slug %}" class="label label-warning label label-aa-forum-child-board-new-message small">
                             {% translate "New" %}
