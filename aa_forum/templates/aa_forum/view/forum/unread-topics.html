@@ -11,6 +11,7 @@
     <br>
 
     {% include "aa_forum/partials/menu.html" %}
+    {% include "aa_forum/partials/forum/mark-unread-button.html" with position="above-board-list" %}
 
     {% translate "Unread Topics" as page_title %}
     {% include "aa_forum/partials/breadcrumb.html" with page=page_title %}
@@ -21,6 +22,8 @@
         {% for board in boards %}
             {% include "aa_forum/partials/forum/topic/unread-topics.html" %}
         {% endfor %}
+
+        {% include "aa_forum/partials/forum/mark-unread-button.html" with position="below-board-list" %}
     {% else %}
         <div class="panel panel-default">
             <div class="panel-body">

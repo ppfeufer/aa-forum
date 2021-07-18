@@ -11,6 +11,7 @@
     <br>
 
     {% include "aa_forum/partials/menu.html" %}
+    {% include "aa_forum/partials/forum/unread-topic-buttons.html" with position="above-category-list" %}
     {% include "aa_forum/partials/breadcrumb.html" %}
 {% endblock %}
 
@@ -34,15 +35,7 @@
             </span>
         </div>
 
-        <div class="aa-forum-unread-topics-buttons pull-right">
-            <a href="{% url 'aa_forum:forum_topic_show_all_unread' %}" class="btn btn-default btn-sm">
-                {% translate "Show all unread topics" %}
-            </a>
-
-            <a href="{% url 'aa_forum:forum_mark_all_as_read' %}" class="btn btn-warning btn-sm">
-                {% translate "Mark all topics as read" %}
-            </a>
-        </div>
+        {% include "aa_forum/partials/forum/unread-topic-buttons.html" with position="below-category-list" %}
     </div>
 {% endblock %}
 
