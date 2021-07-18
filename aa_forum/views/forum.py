@@ -546,7 +546,7 @@ def _topic_from_slugs(
 
 @login_required
 @permission_required("aa_forum.basic_access")
-def topic_unread(
+def topic_first_unread_message(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
     """
