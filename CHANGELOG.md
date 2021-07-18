@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.1.0-beta.9] - Unreleased
+
+### Added
+
+- "Show all unread topics" and "Mark all topics as read" buttons above the category
+  list in forum index
+- "Mark all topics as read" in unread topics view above and below board list
+
+
+
 ## [0.1.0-beta.8] - 2021-07-18
 
 ### Added
