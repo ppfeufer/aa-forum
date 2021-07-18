@@ -1,11 +1,11 @@
-{% extends 'aa_forum/base.html' %}
+{% extends "aa_forum/base.html" %}
 
 {% load aa_forum_versioned_static %}
 {% load evelinks %}
 {% load static %}
 {% load i18n %}
 
-{% block page_title %}{{ topic.subject }} » {% translate 'Forum' %}{% endblock %}
+{% block page_title %}{{ topic.subject }} » {% translate "Forum" %}{% endblock %}
 
 {% block aa_forum_header %}
     <br>
@@ -60,7 +60,9 @@
                 <div class="modal-body"></div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-default btn-sm" data-dismiss="modal">{% translate "Close" %}</button>
+                    <button class="btn btn-default btn-sm" data-dismiss="modal">
+                        {% translate "Close" %}
+                    </button>
                 </div>
             </div>
         </div>
@@ -75,7 +77,7 @@
 {% block extra_javascript %}
     <script type="application/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
     <script type="application/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-    <script type="application/javascript" src="{% versioned_static "aa_forum/javascript/aa-forum-ckeditor.min.js" %}"></script>
+    <script type="application/javascript" src="{% versioned_static 'aa_forum/javascript/aa-forum-ckeditor.min.js' %}"></script>
     <script type="application/javascript">
         $(document).ready(function () {
             $('.aa-forum-message-body img').click(function (event) {
@@ -83,12 +85,13 @@
 
                 $('.aa-forum-lightbox-modal .modal-body').empty();
 
-                let title = $(this).parent('a').attr("title");
+                let title = $(this).parent('a').attr('title');
 
                 {#$('.modal-title').html(title);#}
                 $('.aa-forum-lightbox-modal .modal-body').html(
                     '<p><img src="' + $(this).attr('src') + '"></p>'
                 );
+
                 $('#lightboxModal').modal({show:true});
             });
         });

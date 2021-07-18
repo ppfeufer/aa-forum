@@ -1,4 +1,4 @@
-{% extends 'aa_forum/base.html' %}
+{% extends "aa_forum/base.html" %}
 
 {% load aa_forum_versioned_static %}
 {% load bootstrap %}
@@ -6,13 +6,13 @@
 {% load static %}
 {% load i18n %}
 
-{% block page_title %}{% translate 'New Topic » Forum' %}{% endblock %}
+{% block page_title %}{% translate "New Topic » Forum" %}{% endblock %}
 
 {% block aa_forum_header %}
     <br>
 
     {% include "aa_forum/partials/menu.html" %}
-    {% include "aa_forum/partials/breadcrumb.html" with category=board.category board=board new_topic='yes' %}
+    {% include "aa_forum/partials/breadcrumb.html" with category=board.category board=board new_topic="yes" %}
 {% endblock %}
 
 {% block aa_forum_body %}
@@ -25,8 +25,7 @@
         </div>
 
         <div class="panel-body">
-            <form id="aa-forum-form-new-topic" autocomplete="off"
-                action="{% url 'aa_forum:forum_board_new_topic' board.category.slug board.slug %}" method="post">
+            <form id="aa-forum-form-new-topic" autocomplete="off" action="{% url 'aa_forum:forum_board_new_topic' board.category.slug board.slug %}" method="post">
                 {% csrf_token %}
 
                 {{ form|bootstrap }}

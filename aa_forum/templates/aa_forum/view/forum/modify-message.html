@@ -1,4 +1,4 @@
-{% extends 'aa_forum/base.html' %}
+{% extends "aa_forum/base.html" %}
 
 {% load aa_forum_versioned_static %}
 {% load bootstrap %}
@@ -25,6 +25,6 @@
 {% endblock %}
 
 {% block extra_javascript %}
-    <script type="application/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-    <script type="application/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="application/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="application/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
 {% endblock %}
