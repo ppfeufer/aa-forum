@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - "Mark all topics as read" in unread topics view above and below board list
 - More logging
 
+### Removed
+
+- Arbitrary `user_has_access` function from `Message` model
+
 
 ## [0.1.0-beta.8] - 2021-07-18
 

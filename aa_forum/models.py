@@ -16,7 +16,12 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from aa_forum.constants import INTERNAL_URL_PREFIX, SETTING_MESSAGESPERPAGE
-from aa_forum.managers import BoardManager, SettingsManager, TopicManager
+from aa_forum.managers import (
+    BoardManager,
+    MessageManager,
+    SettingsManager,
+    TopicManager,
+)
 
 
 def get_sentinel_user() -> User:
@@ -206,13 +211,6 @@ class Board(models.Model):
         )
         self.save(update_fields=["last_message"])
 
-    def user_can_access(self, user: User) -> bool:
-        """
-        Return True if the given user has access to this board, else False.
-        """
-
-        return Board.objects.user_has_access(user).filter(pk=self.pk).exists()
-
 
 class Topic(models.Model):
     """
@@ -380,6 +378,8 @@ class Message(models.Model):
     )
     message = RichTextUploadingField(blank=False)
     message_plaintext = models.TextField(blank=True)
+
+    objects = MessageManager()
 
     class Meta:
         """
