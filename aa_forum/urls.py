@@ -103,7 +103,7 @@ urlpatterns = [
         name="search_results",
     ),
     path(
-        f"{INTERNAL_URL_PREFIX}/show-unread/",
+        f"{INTERNAL_URL_PREFIX}/unread/",
         forum.topic_show_all_unread,
         name="forum_topic_show_all_unread",
     ),
