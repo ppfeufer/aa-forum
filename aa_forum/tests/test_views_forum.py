@@ -405,7 +405,7 @@ class TestTopicViews(TestCase):
         # when
         res = self.client.get(
             reverse(
-                "aa_forum:forum_topic_unread",
+                "aa_forum:forum_topic_first_unread_message",
                 args=[self.category.slug, self.board.slug, self.topic.slug],
             )
         )
@@ -426,7 +426,7 @@ class TestTopicViews(TestCase):
         # when
         res = self.client.get(
             reverse(
-                "aa_forum:forum_topic_unread",
+                "aa_forum:forum_topic_first_unread_message",
                 args=[self.category.slug, self.board.slug, self.topic.slug],
             )
         )
@@ -451,7 +451,7 @@ class TestTopicViews(TestCase):
     #     # when
     #     res = self.client.get(
     #         reverse(
-    #             "aa_forum:forum_topic_unread",
+    #             "aa_forum:forum_topic_first_unread_message",
     #             args=[self.category.slug, self.board.slug, self.topic.slug],
     #         )
     #     )
@@ -470,7 +470,7 @@ class TestTopicViews(TestCase):
         # when
         res = self.client.get(
             reverse(
-                "aa_forum:forum_topic_unread",
+                "aa_forum:forum_topic_first_unread_message",
                 args=[self.category.slug, self.board.slug, self.topic.slug],
             )
         )

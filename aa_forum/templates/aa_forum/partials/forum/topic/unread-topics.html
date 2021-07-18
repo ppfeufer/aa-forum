@@ -1,0 +1,19 @@
+{% load static %}
+{% load i18n %}
+
+<div id="category-{{ category.id }}" class="panel panel-default panel-aa-forum-category">
+    <div class="panel-heading">
+        <div class="panel-title">
+            {% if board.parent_board %}
+                {{ board.parent_board.name }} »
+            {% endif %}
+            {{ board.name }}
+        </div>
+    </div>
+
+    <div class="panel-body">
+        {% for topic in board.topics.all %}
+            {% include "aa_forum/partials/forum/board/topic.html" %}
+        {% endfor %}
+    </div>
+</div>
