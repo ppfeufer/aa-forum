@@ -616,6 +616,7 @@ def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
 
     boards = (
         Board.objects.select_related(
+            "parent_board",
             "category",
             "last_message",
             "last_message__topic",
