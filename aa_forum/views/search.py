@@ -5,6 +5,8 @@ Search related views
 from functools import reduce
 from operator import or_
 
+from app_utils.logging import LoggerAddTag
+
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
@@ -12,8 +14,13 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from allianceauth.services.hooks import get_extension_logger
+
+from aa_forum import __title__
 from aa_forum.constants import SEARCH_STOPWORDS, SETTING_MESSAGESPERPAGE
 from aa_forum.models import Board, Message, Setting
+
+logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
 
 @login_required
@@ -83,5 +90,7 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
         "search_results": page_obj,
         "search_results_count": 0 if search_results is None else search_results.count(),
     }
+
+    logger.info(f'{request.user} calling search view, searching for "{search_phrase}"')
 
     return render(request, "aa_forum/view/search/results.html", context)

@@ -1123,7 +1123,7 @@ def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
                     defaults={"message_time": topic.last_message.time_posted},
                 )
 
-    logger.info(f"{request.user} marked all new messages as read")
+    logger.info(f"{request.user} marked all topics as read")
 
     return redirect("aa_forum:forum_index")
 
