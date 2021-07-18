@@ -103,6 +103,11 @@ urlpatterns = [
         name="search_results",
     ),
     path(
+        f"{INTERNAL_URL_PREFIX}/show-unread/",
+        forum.topic_show_all_unread,
+        name="forum_topic_show_all_unread",
+    ),
+    path(
         f"{INTERNAL_URL_PREFIX}/mark-all-as-read/",
         forum.mark_all_as_read,
         name="forum_mark_all_as_read",
