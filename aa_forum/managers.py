@@ -63,7 +63,7 @@ class TopicQuerySet(models.QuerySet):
         Fetch topic from slugs for user. Return None if not found or no access.
         """
 
-        from .models import Message
+        from aa_forum.models import Message
 
         try:
             topic = (
@@ -108,3 +108,64 @@ class TopicManagerBase(models.Manager):
 
 
 TopicManager = TopicManagerBase.from_queryset(TopicQuerySet)
+
+
+class MessageQuerySet(models.QuerySet):
+    def user_has_access(self, user: User) -> models.QuerySet:
+        """
+        Filter boards that given user has access to.
+        """
+
+        return self.filter(
+            Q(topic__board__groups__in=user.groups.all())
+            | Q(topic__board__groups__isnull=True)
+        ).distinct()
+
+    def get_from_slugs(
+        self,
+        category_slug: str,
+        board_slug: str,
+        topic_slug: str,
+        message_id: int,
+        user: User,
+    ) -> models.Model:
+        """
+        Fetch message from slugs for user. Return None if not found or no access.
+        """
+
+        try:
+            message = (
+                self.select_related(
+                    "topic",
+                    "topic__board",
+                    "topic__board__category",
+                    "topic__first_message",
+                    "topic__first_message__topic",
+                    "topic__first_message__topic__board",
+                    "topic__first_message__topic__board__category",
+                )
+                .filter(
+                    topic__board__category__slug=str(category_slug),
+                    topic__board__slug=str(board_slug),
+                    topic__slug=str(topic_slug),
+                    pk=message_id,
+                )
+                .user_has_access(user)
+                .distinct()
+                .get()
+            )
+        except self.model.DoesNotExist:
+            return None
+
+        return message
+
+
+class MessageManagerBase(models.Manager):
+    """
+    MessageManagerBase
+    """
+
+    pass
+
+
+MessageManager = MessageManagerBase.from_queryset(MessageQuerySet)

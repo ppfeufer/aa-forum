@@ -1,0 +1,7 @@
+{% load i18n %}
+
+<div id="aa-forum-mark-unread-button-{{ position }}" class="aa-forum-mark-unread-button pull-right">
+    <a href="{% url 'aa_forum:forum_mark_all_as_read' %}" class="btn btn-warning btn-sm">
+        {% translate "Mark all topics as read" %}
+    </a>
+</div>

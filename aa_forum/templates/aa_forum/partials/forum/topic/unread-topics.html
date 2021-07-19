@@ -4,9 +4,12 @@
 <div id="category-{{ category.id }}" class="panel panel-default panel-aa-forum-category">
     <div class="panel-heading">
         <div class="panel-title">
+            {{ board.category.name }} »
+
             {% if board.parent_board %}
                 {{ board.parent_board.name }} »
             {% endif %}
+
             {{ board.name }}
         </div>
     </div>

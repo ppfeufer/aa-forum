@@ -4,6 +4,8 @@ Administration related views
 
 import json
 
+from app_utils.logging import LoggerAddTag
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
@@ -21,11 +23,12 @@ from django.utils.translation import gettext as _
 
 from allianceauth.services.hooks import get_extension_logger
 
+from aa_forum import __title__
 from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm
 from aa_forum.helpers import message_form_errors
 from aa_forum.models import Board, Category
 
-logger = get_extension_logger(__name__)
+logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
 
 @login_required
@@ -110,6 +113,8 @@ def index(request: WSGIRequest) -> HttpResponse:
         "category_loop": category_loop,
     }
 
+    logger.info(f"{request.user} calling admin view")
+
     return render(request, "aa_forum/view/administration/index.html", context)
 
 
@@ -147,6 +152,8 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
                 request,
                 mark_safe(_("<h4>Success!</h4><p>Category created.</p>")),
             )
+
+            logger.info(f'{request.user} created category "{new_category.name}"')
         else:
             message_form_errors(request, form)
 
@@ -179,6 +186,8 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
                 request,
                 mark_safe(_("<h4>Success!</h4><p>Category changed.</p>")),
             )
+
+            logger.info(f'{request.user} changed category "{category.name}"')
         else:
             message_form_errors(request, form)
 
@@ -203,11 +212,14 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
         logger.warning(msg)
         return HttpResponseNotFound(msg)
 
+    category_name = category.name
     category.delete()
     messages.success(
         request,
         mark_safe(_("<h4>Success!</h4><p>Category removed.</p>")),
     )
+
+    logger.info(f'{request.user} removed category "{category_name}"')
 
     return redirect("aa_forum:admin_index")
 
@@ -246,6 +258,8 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
                 request,
                 mark_safe(_("<h4>Success!</h4><p>Board created.</p>")),
             )
+
+            logger.info(f'{request.user} created board "{new_board.name}"')
         else:
             message_form_errors(request, form)
 
@@ -289,6 +303,11 @@ def board_create_child(
                 request,
                 mark_safe(_("<h4>Success!</h4><p>Board created.</p>")),
             )
+
+            logger.info(
+                f'{request.user} created board "{new_board.name}" '
+                f'as child board of "{parent_board.name}"'
+            )
         else:
             message_form_errors(request, form)
 
@@ -325,6 +344,8 @@ def board_edit(
             messages.success(
                 request, mark_safe(_("<h4>Success!</h4><p>Board changed.</p>"))
             )
+
+            logger.info(f'{request.user} changed board "{board.name}"')
         else:
             message_form_errors(request, form)
 
@@ -353,11 +374,14 @@ def board_delete(
         logger.warning(msg)
         return HttpResponseNotFound(msg)
 
+    board_name = board.name
     board.delete()
     messages.success(
         request,
         mark_safe(_("<h4>Success!</h4><p>Board removed.</p>")),
     )
+
+    logger.info(f'{request.user} removed board "{board_name}"')
 
     return redirect("aa_forum:admin_index")
 

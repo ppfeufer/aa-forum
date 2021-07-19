@@ -360,6 +360,16 @@ def topic(
     )
 
     if not topic:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The topic you were trying to view does not "
+                    "exist or you do not have access to it.</p>"
+                )
+            ),
+        )
+
         logger.info(
             f"{request.user} called a non existent topic. Redirecting to forum index"
         )
@@ -434,14 +444,24 @@ def topic_modify(
     :type topic_slug:
     """
 
-    topic = _topic_from_slugs(
+    topic_to_modify = _topic_from_slugs(
         request=request,
         category_slug=category_slug,
         board_slug=board_slug,
         topic_slug=topic_slug,
     )
 
-    if not topic:
+    if not topic_to_modify:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The topic you were trying to modify does not "
+                    "exist or you do not have access to it.</p>"
+                )
+            ),
+        )
+
         logger.info(
             f"{request.user} called a non existent topic. Redirecting to forum index"
         )
@@ -449,8 +469,9 @@ def topic_modify(
         return redirect("aa_forum:forum_index")
 
     # Check if the user actually has the right to edit this message
-    if topic.first_message.user_created != request.user and not request.user.has_perm(
-        "aa_forum.manage_forum"
+    if (
+        topic_to_modify.first_message.user_created != request.user
+        and not request.user.has_perm("aa_forum.manage_forum")
     ):
         messages.error(
             request,
@@ -460,8 +481,8 @@ def topic_modify(
         )
 
         logger.info(
-            f'{request.user} tried to modify topic "{topic.subject}" without the '
-            f"proper permissions. Redirecting to forum index"
+            f'{request.user} tried to modify topic "{topic_to_modify.subject}" '
+            f"without the proper permissions. Redirecting to forum index"
         )
 
         return redirect(
@@ -478,8 +499,8 @@ def topic_modify(
 
         # Check whether it's valid:
         if form.is_valid():
-            topic.subject = form.cleaned_data["subject"]
-            topic.save()
+            topic_to_modify.subject = form.cleaned_data["subject"]
+            topic_to_modify.save()
 
             messages.success(
                 request,
@@ -488,7 +509,7 @@ def topic_modify(
                 ),
             )
 
-            logger.info(f'{request.user} modified topic "{topic.subject}"')
+            logger.info(f'{request.user} modified topic "{topic_to_modify.subject}"')
 
             return redirect(
                 "aa_forum:forum_topic",
@@ -498,11 +519,11 @@ def topic_modify(
             )
     # If not, we'll fill the form with the information from the message object
     else:
-        form = EditTopicForm(instance=topic)
+        form = EditTopicForm(instance=topic_to_modify)
 
-    context = {"form": form, "topic": topic}
+    context = {"form": form, "topic": topic_to_modify}
 
-    logger.info(f'{request.user} modifying "{topic.subject}"')
+    logger.info(f'{request.user} modifying "{topic_to_modify.subject}"')
 
     return render(request, "aa_forum/view/forum/modify-topic.html", context)
 
@@ -530,17 +551,6 @@ def _topic_from_slugs(
         topic_slug=topic_slug,
         user=request.user,
     )
-
-    if not topic:
-        messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The topic you were trying to view does not "
-                    "exist or you do not have access to it.</p>"
-                )
-            ),
-        )
 
     return topic
 
@@ -572,6 +582,16 @@ def topic_first_unread_message(
     )
 
     if not topic:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The topic you were trying to view does not "
+                    "exist or you do not have access to it.</p>"
+                )
+            ),
+        )
+
         return redirect("aa_forum:forum_index")
 
     messages_sorted = topic.messages.order_by("time_posted")
@@ -673,14 +693,36 @@ def topic_reply(
     :rtype:
     """
 
+    topic = _topic_from_slugs(
+        request=request,
+        category_slug=category_slug,
+        board_slug=board_slug,
+        topic_slug=topic_slug,
+    )
+
+    if not topic:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The topic you were trying to reply does not "
+                    "exist or you do not have access to it.</p>"
+                )
+            ),
+        )
+
+        logger.info(
+            f"{request.user} called a non existent topic. Redirecting to forum index"
+        )
+
+        return redirect("aa_forum:forum_index")
+
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
         form = EditMessageForm(request.POST)
 
         # Check whether it's valid:
         if form.is_valid():
-            topic = Topic.objects.get(slug__exact=topic_slug)
-
             new_message = Message()
             new_message.topic = topic
             new_message.user_created = request.user
@@ -893,28 +935,23 @@ def message_modify(
     :rtype:
     """
 
-    # Check if the message exists
-    try:
-        message = Message.objects.select_related(
-            "topic", "topic__board", "topic__board__category"
-        ).get(pk=message_id)
-    except Message.DoesNotExist:
-        messages.error(
-            request,
-            mark_safe(_("<h4>Error!</h4><p>The message doesn't exist ...</p>")),
-        )
+    message_to_modify = _message_from_slugs(
+        request=request,
+        category_slug=category_slug,
+        board_slug=board_slug,
+        topic_slug=topic_slug,
+        message_id=message_id,
+    )
 
-        logger.info(f"{request.user} tried to modify a message that doesn't exist")
-
-        return redirect("aa_forum:forum_index")
-
-    # Check if the user has access to this board
-    if not message.topic.board.user_can_access(request.user):
+    # Check if the message exists.
+    # If not, the user doesn't have access to its board, or it doesn't exist.
+    # Either way, message can't be edited
+    if not message_to_modify:
         messages.error(
             request,
             mark_safe(
                 _(
-                    "<h4>Error!</h4><p>The topic you were trying to modify does "
+                    "<h4>Error!</h4><p>The message you were trying to modify does "
                     "either not exist, or you don't have access to it ...</p>"
                 )
             ),
@@ -928,8 +965,9 @@ def message_modify(
         return redirect("aa_forum:forum_index")
 
     # Check if the user actually has the right to edit this message
-    if message.user_created_id != request.user.id and not request.user.has_perm(
-        "aa_forum.manage_forum"
+    if (
+        message_to_modify.user_created_id != request.user.id
+        and not request.user.has_perm("aa_forum.manage_forum")
     ):
         messages.error(
             request,
@@ -940,10 +978,10 @@ def message_modify(
 
         logger.info(
             f"{request.user} tried to modify a message in topic "
-            f'"{message.topic.subject}" without permission to do so'
+            f'"{message_to_modify.topic.subject}" without permission to do so'
         )
 
-        return redirect(message.topic.get_absolute_url())
+        return redirect(message_to_modify.topic.get_absolute_url())
 
     # We are in the clear, let's see what we've got
     if request.method == "POST":
@@ -952,9 +990,9 @@ def message_modify(
 
         # Check whether it's valid:
         if form.is_valid():
-            message.user_updated = request.user
-            message.message = form.cleaned_data["message"]
-            message.save()
+            message_to_modify.user_updated = request.user
+            message_to_modify.message = form.cleaned_data["message"]
+            message_to_modify.save()
 
             messages.success(
                 request,
@@ -962,8 +1000,8 @@ def message_modify(
             )
 
             logger.info(
-                f"{request.user} modified message ID {message.pk} "
-                f'in topic "{message.topic.subject}"'
+                f"{request.user} modified message ID {message_to_modify.pk} "
+                f'in topic "{message_to_modify.topic.subject}"'
             )
 
             return redirect(
@@ -975,16 +1013,54 @@ def message_modify(
             )
     # If not, we'll fill the form with the information from the message object
     else:
-        form = EditMessageForm(instance=message)
+        form = EditMessageForm(instance=message_to_modify)
 
-    context = {"form": form, "board": message.topic.board, "message": message}
+    context = {
+        "form": form,
+        "board": message_to_modify.topic.board,
+        "message": message_to_modify,
+    }
 
     logger.info(
-        f"{request.user} is modifying message ID {message.pk} "
-        f'in topic "{message.topic.subject}"'
+        f"{request.user} is modifying message ID {message_to_modify.pk} "
+        f'in topic "{message_to_modify.topic.subject}"'
     )
 
     return render(request, "aa_forum/view/forum/modify-message.html", context)
+
+
+def _message_from_slugs(
+    request: WSGIRequest,
+    category_slug: str,
+    board_slug: str,
+    topic_slug: str,
+    message_id: int,
+) -> Optional[Message]:
+    """
+
+    :param request:
+    :type request:
+    :param category_slug:
+    :type category_slug:
+    :param board_slug:
+    :type board_slug:
+    :param topic_slug:
+    :type topic_slug:
+    :param message_id:
+    :type message_id:
+    :return:
+    :rtype:
+    """
+
+    message = Message.objects.get_from_slugs(
+        category_slug=category_slug,
+        board_slug=board_slug,
+        topic_slug=topic_slug,
+        message_id=message_id,
+        user=request.user,
+    )
+
+    return message
 
 
 @login_required
@@ -1002,9 +1078,13 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
     """
 
     try:
-        message = Message.objects.select_related(
-            "topic", "topic__board", "topic__board__category"
-        ).get(pk=message_id)
+        message = (
+            Message.objects.select_related(
+                "topic", "topic__board", "topic__board__category"
+            )
+            .user_has_access(request.user)
+            .get(pk=message_id)
+        )
     except Message.DoesNotExist:
         return HttpResponseNotFound("Message not found.")
 
@@ -1057,17 +1137,16 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
             topic_slug=topic.slug,
         )
 
-    # If it is the only remaining message in the topic or the topics first message,
-    # remove the topic
+    # If it is the topics opening post ...
     topic.delete()
 
     messages.success(
         request,
         mark_safe(
             _(
-                "<h4>Success!</h4><p>The message has been deleted.</p><p>This was "
-                "either the first message in this topic or the only remaining "
-                "message, so the topic has been deleted as well</p>"
+                "<h4>Success!</h4><p>The message has been deleted.</p>"
+                "<p>This was the topics opening post, so the topic has been "
+                "deleted as well</p>"
             )
         ),
     )
@@ -1123,7 +1202,7 @@ def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
                     defaults={"message_time": topic.last_message.time_posted},
                 )
 
-    logger.info(f"{request.user} marked all new messages as read")
+    logger.info(f"{request.user} marked all topics as read")
 
     return redirect("aa_forum:forum_index")
 

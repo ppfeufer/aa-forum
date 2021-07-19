@@ -61,7 +61,7 @@ class TestBoard(TestCase):
         # given
         board = Board.objects.create(name="Physics", category=self.category)
         # when
-        result = board.user_can_access(self.user)
+        result = Board.objects.user_has_access(self.user).get(pk=board.pk)
         # then
         self.assertTrue(result)
 
@@ -71,7 +71,7 @@ class TestBoard(TestCase):
         board.groups.add(self.group)
         self.user.groups.add(self.group)
         # when
-        result = board.user_can_access(self.user)
+        result = Board.objects.user_has_access(self.user).get(pk=board.pk)
         # then
         self.assertTrue(result)
 
@@ -84,7 +84,7 @@ class TestBoard(TestCase):
             name="Thermal Theories", category=self.category, parent_board=board
         )
         # when
-        result = board_2.user_can_access(self.user)
+        result = Board.objects.user_has_access(self.user).get(pk=board_2.pk)
         # then
         self.assertTrue(result)
 
@@ -92,10 +92,9 @@ class TestBoard(TestCase):
         # given
         board = Board.objects.create(name="Physics", category=self.category)
         board.groups.add(self.group)
-        # when
-        result = board.user_can_access(self.user)
-        # then
-        self.assertFalse(result)
+
+        with self.assertRaises(Board.DoesNotExist):
+            Board.objects.user_has_access(self.user).get(pk=board.pk)
 
     def test_should_not_return_child_board_for_non_group_member(self):
         # given
@@ -104,10 +103,9 @@ class TestBoard(TestCase):
         board_2 = Board.objects.create(
             name="Thermal Theories", category=self.category, parent_board=board
         )
-        # when
-        result = board_2.user_can_access(self.user)
-        # then
-        self.assertFalse(result)
+
+        with self.assertRaises(Board.DoesNotExist):
+            Board.objects.user_has_access(self.user).get(pk=board_2.pk)
 
     def test_should_generate_new_slug_when_slug_already_exists(self):
         # given
