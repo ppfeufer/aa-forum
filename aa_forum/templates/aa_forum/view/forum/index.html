@@ -17,9 +17,10 @@
 
 {% block aa_forum_body %}
     {% include "aa_forum/partials/forum/forum-index.html" %}
+    {% include "aa_forum/partials/forum/unread-topic-buttons.html" with position="below-category-list" %}
 
     <div class="panel-body">
-        <div class="aa-forum-legend pull-left">
+        <div class="aa-forum-legend">
             <span class="aa-forum-legend-new-post">
                 <span class="aa-forum-legend-image">
                     <img src="{% static 'aa_forum/images/new_some.png' %}" alt="{% translate 'New posts' %}">
@@ -34,8 +35,6 @@
                 <span class="aa-forum-legend-text">{% translate "No new posts" %}</span>
             </span>
         </div>
-
-        {% include "aa_forum/partials/forum/unread-topic-buttons.html" with position="below-category-list" %}
     </div>
 {% endblock %}
 

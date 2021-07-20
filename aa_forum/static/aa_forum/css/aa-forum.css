@@ -100,6 +100,7 @@
         justify-content: flex-start;
         list-style-type: none;
         padding: 0;
+        margin: 6px 0;
     }
 
     .aa-forum .aa-forum-breadcrumb ul li {
@@ -161,6 +162,7 @@
 
     .aa-forum .aa-forum-legend {
         display: flex;
+        padding: 0.6rem 0;
     }
 
     .aa-forum .aa-forum-legend > span {
