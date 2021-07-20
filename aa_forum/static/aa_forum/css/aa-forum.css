@@ -4,6 +4,14 @@
     --bg-hover-transition: background-color 0.25s linear;
 }
 
+/* General
+------------------------------------------------------------------------------------- */
+@media all {
+    .aa-forum .aa-forum-header {
+        margin-bottom: 2rem;
+    }
+}
+
 /* Search Box
 ------------------------------------------------------------------------------------- */
 @media all {
