@@ -17,14 +17,14 @@
 {% block aa_forum_body %}
     <div class="panel panel-default">
         <div class="panel-heading">
-            <div class="panel-title">
+            <div class="panel-title clearfix">
                 {{ topic.subject }}
 
                 {% if can_modify_subject %}
                     <a
                         id="aa-forum-btn-modify-message-{{ message.pk }}"
                         href="{% url 'aa_forum:forum_topic_modify' topic.board.category.slug topic.board.slug topic.slug %}"
-                        class="btn btn-aa-forum-topic-moderation btn-xs"
+                        class="btn btn-aa-forum-topic-moderation btn-xs pull-right"
                         title="{% translate 'Modify Topic Subject' %}"
                     >
                         <i class="fas fa-pencil-alt"></i>
