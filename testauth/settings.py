@@ -305,114 +305,116 @@ if "ckeditor" in INSTALLED_APPS:
     # Editor configuration
     # You can extend and change this to your needs
     # Some of the options are commented out, feel free to play around with them
+    AA_FORUM_CKEDITOR_CONFIG = {
+        "width": "100%",
+        "height": "45vh",
+        "youtube_responsive": True,
+        "youtube_privacy": True,
+        "youtube_related": False,
+        "youtube_width": 1920,
+        "youtube_height": 1080,
+        "extraPlugins": ",".join(
+            [
+                "uploadimage",
+                # "div",
+                "autolink",
+                # "autoembed",
+                # "embedsemantic",
+                "clipboard",
+                "elementspath",
+                # "codesnippet",
+                "youtube",
+            ]
+        ),
+        "external_plugin_resources": [
+            (
+                "youtube",
+                "/static/aa_forum/ckeditor/plugins/youtube/",
+                "plugin.min.js",
+            )
+        ],
+        "toolbar": [
+            {
+                "name": "styles",
+                "items": [
+                    "Styles",
+                    "Format",
+                    # "Font",
+                    # "FontSize",
+                ],
+            },
+            {
+                "name": "basicstyles",
+                "items": [
+                    "Bold",
+                    "Italic",
+                    "Underline",
+                    "Strike",
+                    # "Subscript",
+                    # "Superscript",
+                    # "-",
+                    # "RemoveFormat",
+                ],
+            },
+            {
+                "name": "clipboard",
+                "items": [
+                    # "Cut",
+                    # "Copy",
+                    # "Paste",
+                    # "PasteText",
+                    # "PasteFromWord",
+                    # "-",
+                    "Undo",
+                    "Redo",
+                ],
+            },
+            {
+                "name": "links",
+                "items": [
+                    "Link",
+                    "Unlink",
+                    "Anchor",
+                ],
+            },
+            {
+                "name": "insert",
+                "items": [
+                    "Image",
+                    "Youtube",
+                    "Table",
+                    "HorizontalRule",
+                    "Smiley",
+                    "SpecialChar",
+                    # "PageBreak",
+                    # "Iframe",
+                ],
+            },
+            {
+                "name": "colors",
+                "items": [
+                    "TextColor",
+                    "BGColor",
+                ],
+            },
+            {
+                "name": "document",
+                "items": [
+                    "Source",
+                    # "-",
+                    # "Save",
+                    # "NewPage",
+                    # "Preview",
+                    # "Print",
+                    # "-",
+                    # "Templates",
+                ],
+            },
+        ],
+    }
+
+    # Put it all together
     CKEDITOR_CONFIGS = {
         "default": ckeditor.configs.DEFAULT_CONFIG,
-        "aa_forum": {
-            "width": "100%",
-            "height": "45vh",
-            "youtube_responsive": True,
-            "youtube_privacy": True,
-            "youtube_related": False,
-            "youtube_width": 1920,
-            "youtube_height": 1080,
-            "extraPlugins": ",".join(
-                [
-                    "uploadimage",
-                    # "div",
-                    "autolink",
-                    # "autoembed",
-                    # "embedsemantic",
-                    "clipboard",
-                    "elementspath",
-                    # "codesnippet",
-                    "youtube",
-                ]
-            ),
-            "external_plugin_resources": [
-                (
-                    "youtube",
-                    "/static/aa_forum/ckeditor/plugins/youtube/",
-                    "plugin.min.js",
-                )
-            ],
-            "toolbar": "default",
-            "toolbar_default": [
-                {
-                    "name": "styles",
-                    "items": [
-                        "Styles",
-                        "Format",
-                        # "Font",
-                        # "FontSize",
-                    ],
-                },
-                {
-                    "name": "basicstyles",
-                    "items": [
-                        "Bold",
-                        "Italic",
-                        "Underline",
-                        "Strike",
-                        # "Subscript",
-                        # "Superscript",
-                        # "-",
-                        # "RemoveFormat",
-                    ],
-                },
-                {
-                    "name": "clipboard",
-                    "items": [
-                        # "Cut",
-                        # "Copy",
-                        # "Paste",
-                        # "PasteText",
-                        # "PasteFromWord",
-                        # "-",
-                        "Undo",
-                        "Redo",
-                    ],
-                },
-                {
-                    "name": "links",
-                    "items": [
-                        "Link",
-                        "Unlink",
-                        "Anchor",
-                    ],
-                },
-                {
-                    "name": "insert",
-                    "items": [
-                        "Image",
-                        "Youtube",
-                        "Table",
-                        "HorizontalRule",
-                        "Smiley",
-                        "SpecialChar",
-                        # "PageBreak",
-                        # "Iframe",
-                    ],
-                },
-                {
-                    "name": "colors",
-                    "items": [
-                        "TextColor",
-                        "BGColor",
-                    ],
-                },
-                {
-                    "name": "document",
-                    "items": [
-                        "Source",
-                        # "-",
-                        # "Save",
-                        # "NewPage",
-                        # "Preview",
-                        # "Print",
-                        # "-",
-                        # "Templates",
-                    ],
-                },
-            ],
-        },
+        "aa_forum": AA_FORUM_CKEDITOR_CONFIG,
     }
