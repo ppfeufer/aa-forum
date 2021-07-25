@@ -289,7 +289,7 @@ LOGGING = False
 NOTIFICATIONS_REFRESH_TIME = 30
 NOTIFICATIONS_MAX_PER_USER = 50
 
-## aa_forum
+## AA Forum
 if "ckeditor" in INSTALLED_APPS:
     import ckeditor.configs
 
@@ -303,9 +303,13 @@ if "ckeditor" in INSTALLED_APPS:
     CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
     # Editor configuration
+    #
+    # If you already have this from another app, like `aa-bulletin-board`, you don't
+    # need to define this again, just add it to the `CKEDITOR_CONFIGS` dict, see below
+    #
     # You can extend and change this to your needs
     # Some of the options are commented out, feel free to play around with them
-    AA_FORUM_CKEDITOR_CONFIG = {
+    ckeditor_default_config = {
         "width": "100%",
         "height": "45vh",
         "youtube_responsive": True,
@@ -326,13 +330,6 @@ if "ckeditor" in INSTALLED_APPS:
                 "youtube",
             ]
         ),
-        "external_plugin_resources": [
-            (
-                "youtube",
-                "/static/aa_forum/ckeditor/plugins/youtube/",
-                "plugin.min.js",
-            )
-        ],
         "toolbar": [
             {
                 "name": "styles",
@@ -416,5 +413,14 @@ if "ckeditor" in INSTALLED_APPS:
     # Put it all together
     CKEDITOR_CONFIGS = {
         "default": ckeditor.configs.DEFAULT_CONFIG,
-        "aa_forum": AA_FORUM_CKEDITOR_CONFIG,
+        "aa_forum": ckeditor_default_config,
     }
+
+    # Add the external YouTube plugin
+    CKEDITOR_CONFIGS["aa_forum"]["external_plugin_resources"] = [
+        (
+            "youtube",
+            "/static/aa_forum/ckeditor/plugins/youtube/",
+            "plugin.min.js",
+        )
+    ]

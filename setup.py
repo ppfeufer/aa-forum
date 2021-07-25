@@ -11,25 +11,28 @@ from aa_forum import __version__
 # Read the contents of your README file
 this_directory = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(this_directory, "README.md"), encoding="utf-8") as f:
-    long_description = f.read()
+    project_long_description = f.read()
 
 # Allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
-package_name = "aa-forum"
-package_description = "Simple forum for Alliance Auth"
-package_license = "GPLv3"
-package_author = "Peter Pfeufer"
-package_author_email = "development@ppfeufer.de"
-package_git_url = "https://github.com/ppfeufer/aa-forum"
-package_issues_url = "https://github.com/ppfeufer/aa-forum/issues"
-package_changelog_url = "https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md"
-package_install_requirements = [
+# Setup variables
+project_name = "aa-forum"
+project_description = "Simple forum for Alliance Auth"
+project_license = "GPLv3"
+project_author = "Peter Pfeufer"
+project_author_email = "development@ppfeufer.de"
+project_git_url = "https://github.com/ppfeufer/aa-forum"
+project_issues_url = "https://github.com/ppfeufer/aa-forum/issues"
+project_changelog_url = "https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md"
+project_homepage_url = project_git_url
+project_install_requirements = [
     "allianceauth>=2.8.2",
     "django-ckeditor",
     "allianceauth-app-utils>=1.8.0",
 ]
-package_classifiers = [
+project_python_requires = "~=3.6"
+project_classifiers = [
     "Environment :: Web Environment",
     "Framework :: Django",
     "Framework :: Django :: 3.1",
@@ -49,25 +52,27 @@ package_classifiers = [
 
 # URLs are listed in reverse on Pypi
 project_urls = {
-    "Issue / Bug Reports": package_issues_url,
-    "Change Log": package_changelog_url,
-    "Git Repository": package_git_url,
+    "Issue / Bug Reports": project_issues_url,
+    "Changelog": project_changelog_url,
+    "Release Notes": project_git_url + "/releases/tag/v" + __version__,
+    "Git Repository": project_git_url,
 }
 
+
 setup(
-    name=package_name,
+    name=project_name,
     version=__version__,
     packages=find_packages(),
-    include_package_data=True,
-    license=package_license,
-    description=package_description,
-    long_description=long_description,
+    include_project_data=True,
+    license=project_license,
+    description=project_description,
+    long_description=project_long_description,
     long_description_content_type="text/markdown",
-    url=package_git_url,
+    url=project_homepage_url,
     project_urls=project_urls,
-    author=package_author,
-    author_email=package_author_email,
-    classifiers=package_classifiers,
-    python_requires="~=3.6",
-    install_requires=package_install_requirements,
+    author=project_author,
+    author_email=project_author_email,
+    classifiers=project_classifiers,
+    python_requires=project_python_requires,
+    install_requires=project_install_requirements,
 )
