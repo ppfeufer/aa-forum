@@ -54,6 +54,7 @@ project_classifiers = [
 project_urls = {
     "Issue / Bug Reports": project_issues_url,
     "Changelog": project_changelog_url,
+    "Release Notes": project_git_url + "/releases/tag/v" + __version__,
     "Git Repository": project_git_url,
 }
 
