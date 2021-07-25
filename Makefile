@@ -27,3 +27,8 @@ graph_models:
 
 coverage:
 	coverage run ../myauth/manage.py test $(package) --keepdb --failfast && coverage html && coverage report
+
+build_test:
+	rm -rfv dist && \
+	rm -rfv build && \
+	python3 setup.py sdist bdist_wheel
