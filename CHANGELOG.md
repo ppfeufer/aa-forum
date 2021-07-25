@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Updated
 
-- Configuration instrauctions in README.md to make it easier to understand if you
+- Configuration instructions in README.md to make it easier to understand if you
   have multiple apps that use CKEditor, like `aa-bulletin-board`, and how to combine
   these configurations
 
