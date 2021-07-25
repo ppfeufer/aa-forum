@@ -50,7 +50,7 @@ package_classifiers = [
 # URLs are listed in reverse on Pypi
 project_urls = {
     "Issue / Bug Reports": package_issues_url,
-    "Change Log": package_changelog_url,
+    "Changelog": package_changelog_url,
     "Git Repository": package_git_url,
 }
 
