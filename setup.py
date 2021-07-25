@@ -63,7 +63,7 @@ setup(
     name=project_name,
     version=__version__,
     packages=find_packages(),
-    include_project_data=True,
+    include_package_data=True,
     license=project_license,
     description=project_description,
     long_description=project_long_description,
