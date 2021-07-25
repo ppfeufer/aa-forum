@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.1.0-beta.12] - 2021-07-25
+
+### Updated
+
+- Configuration instrauctions in README.md to make it easier to understand if you
+  have multiple apps that use CKEditor, like `aa-bulletin-board`, and how to combine
+  these configurations
+
+
 ## [0.1.0-beta.11] - 2021-07-24
 
 ### Changed
