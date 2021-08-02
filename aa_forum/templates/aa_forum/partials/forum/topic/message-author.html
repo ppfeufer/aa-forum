@@ -1,0 +1,21 @@
+{% load evelinks %}
+{% load aa_forum_user %}
+
+<div class="aa-forum-message-author">
+    <figure>
+        {% with user_maincharacter_id=message_author|main_character_id %}
+            <img class="img img-rounded img-author-avatar" src="{{ user_maincharacter_id|character_portrait_url:128 }}" alt="{{ message_author|main_character_name }}">
+        {% endwith %}
+    </figure>
+
+    <p>
+        <span><b>{{ message_author|main_character_name }}</b><br></span>
+        <span class="hidden-xs">{{ message_author|main_character_corporation_name }}</span>
+
+        {% with main_character_alliance_name=message_author|main_character_alliance_name %}
+            {% if main_character_alliance_name %}
+                <span class="hidden-xs"><br><em>{{ main_character_alliance_name }}</em></span>
+            {% endif %}
+        {% endwith %}
+    </p>
+</div>
