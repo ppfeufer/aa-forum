@@ -3,11 +3,13 @@
 <div class="panel-body pull-right">
     <div id="aa-forum-unread-topics-buttons-{{ position }}" class="aa-forum-unread-topics-buttons">
         <a href="{% url 'aa_forum:forum_topic_show_all_unread' %}" class="btn btn-default btn-sm">
-            {% translate "Show all unread topics" %}
+            <i class="fas fa-mail-bulk"></i>
+            <span class="hidden-xs">{% translate "Show all unread topics" %}</span>
         </a>
 
         <a href="{% url 'aa_forum:forum_mark_all_as_read' %}" class="btn btn-warning btn-sm">
-            {% translate "Mark all topics as read" %}
+            <i class="fas fa-envelope-open-text"></i>
+            <span class="hidden-xs">{% translate "Mark all topics as read" %}</span>
         </a>
     </div>
 </div>
