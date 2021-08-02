@@ -9,27 +9,16 @@
 
     <div class="panel-body">
         <div class="aa-forum-message">
-            <div class="aa-forum-message-author">
-                <figure>
-                    {% with user_maincharacter_id=message_author|main_character_id %}
-                        <img class="img img-rounded img-author-avatar" src="{{ user_maincharacter_id|character_portrait_url:128 }}" alt="{{ message_author|main_character_name }}">
-                    {% endwith %}
-                </figure>
-
-                <p>
-                    <b>{{ message_author|main_character_name }}</b><br>
-                    {{ message_author|main_character_corporation_name }}
-
-                    {% with main_character_alliance_name=message_author|main_character_alliance_name %}
-                        {% if main_character_alliance_name %}
-                            <br><em>{{ main_character_alliance_name }}</em>
-                        {% endif %}
-                    {% endwith %}
-                </p>
+            <div class="hidden-xs">
+                {% include "aa_forum/partials/forum/topic/message-author.html" %}
             </div>
 
             <div class="aa-forum-message-wrapper">
                 <div class="aa-forum-message-header row">
+                    <div class="hidden-lg hidden-md hidden-sm">
+                        {% include "aa_forum/partials/forum/topic/message-author.html" %}
+                    </div>
+
                     <div class="aa-forum-message-keyinfo col-md-6">
                         <a href="{% url 'aa_forum:forum_message' message.topic.board.category.slug message.topic.board.slug message.topic.slug message.pk %}" title="{{ board_latest_topic.subject }}">
                             {% if not forloop.first %}
