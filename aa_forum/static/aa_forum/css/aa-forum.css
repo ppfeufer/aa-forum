@@ -271,7 +271,7 @@
 @media all {
     .aa-forum .aa-forum-message-author {
         float: left;
-        margin: 0 2rem 2rem;
+        margin: 0 2rem;
         min-width: 110px;
         width: 110px;
     }
