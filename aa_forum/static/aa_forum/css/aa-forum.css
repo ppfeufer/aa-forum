@@ -100,19 +100,18 @@
     }
 
     .aa-forum .aa-forum-breadcrumb ul {
-        align-content: center;
-        align-items: baseline;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
         list-style-type: none;
-        margin: 6px 0;
+        margin: 12px 0;
         padding: 0;
     }
 
     .aa-forum .aa-forum-breadcrumb ul li {
-        padding: .5rem 0 0.5rem 0.5rem;
+        display: inline;
+        padding: 0.5rem 0 0.5rem 0.5rem;
+    }
+
+    .aa-forum .aa-forum-breadcrumb ul li:first-child {
+        padding-left: 0;
     }
 }
 
@@ -418,6 +417,14 @@
                 Responsive (@media all and (min-width: 768px))
 -------------------------------------------------------------------------------------
 */
+
+/* Breadcrumb (@media all and (min-width: 768px))
+------------------------------------------------------------------------------------- */
+@media all and (min-width: 768px) {
+    .aa-forum .aa-forum-breadcrumb ul li:first-child {
+        padding-left: 0.5rem;
+    }
+}
 
 /* Category view (@media all and (min-width: 768px))
 ------------------------------------------------------------------------------------- */
