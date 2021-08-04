@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.1.0-beta.15] - 2021-08-04
+
+### Changed
+
+- User with the `manage_forum` permission can now see all boards and topics, so they can
+  actually manage the forum. With that said, choose wisely who gets this permission!
+
+
 ## [0.1.0-beta.14] - 2021-08-02
 
 ### Fixed

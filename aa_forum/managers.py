@@ -26,6 +26,11 @@ class BoardQuerySet(models.QuerySet):
         Filter boards that given user has access to.
         """
 
+        # Forum manager have always access, so assign this permission wisely
+        if user.has_perm("aa_forum.manage_forum"):
+            return self
+
+        # If not a forum manager, check if the user has access to the board
         return self.filter(
             Q(groups__in=user.groups.all()) | Q(groups__isnull=True)
         ).distinct()
@@ -48,6 +53,11 @@ class TopicQuerySet(models.QuerySet):
         Filter boards that given user has access to.
         """
 
+        # Forum manager have always access, so assign this permission wisely
+        if user.has_perm("aa_forum.manage_forum"):
+            return self
+
+        # If not a forum manager, check if the user has access to the board
         return self.filter(
             Q(board__groups__in=user.groups.all()) | Q(board__groups__isnull=True)
         ).distinct()
@@ -116,6 +126,11 @@ class MessageQuerySet(models.QuerySet):
         Filter boards that given user has access to.
         """
 
+        # Forum manager have always access, so assign this permission wisely
+        if user.has_perm("aa_forum.manage_forum"):
+            return self
+
+        # If not a forum manager, check if the user has access to the board
         return self.filter(
             Q(topic__board__groups__in=user.groups.all())
             | Q(topic__board__groups__isnull=True)
