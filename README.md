@@ -372,20 +372,20 @@ about the available permissions.
 
 ## Permissions
 
-| ID                    | Description                   | Notes|
-|-----------------------|-------------------------------|------|
-| `basic_access`        | Can access the AA-Forum module | Grants read access to the forum |
-| `manage_forum`        | Can manage the AA-Forum module (Categories, topics and messages)          | User with this permission can create, edit and delete boards and categories in the "Administration" view. They can also modify and delete messages and topics in the "Forum" view from boards they have access to. They cannot see all boards in the "Forum" view and are still bound by the board's groups restrictions. |
+| ID             | Description | Notes|
+|----------------|-------------|------|
+| `basic_access` | Can access the AA-Forum module | Grants access to the forum |
+| `manage_forum` | Can manage the AA-Forum module (Categories, topics and messages) | Users with this permission can create, edit and delete boards and categories in the "Administration" view. They can also modify and delete messages and topics in the "Forum" view. **Users with this permission are not bound by group restrictions and have access to all boards and topics, so choose wisely who is getting this permission.** |
 
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md)
+See [CHANGELOG.md](https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md)
 
 
 ## Contributing
 
 You want to contribute to this project? That's cool!
 
-Please make sure to read the [contribution guidelines](CONTRIBUTING.md) (I promise,
-it's not much, just some basics)
+Please make sure to read the [contribution guidelines](https://github.com/ppfeufer/aa-forum/blob/master/CONTRIBUTING.md)
+(I promise, it's not much, just some basics)
