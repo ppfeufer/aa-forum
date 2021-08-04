@@ -8,6 +8,7 @@ from app_utils.logging import LoggerAddTag
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import Group
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
 from django.db import transaction
@@ -79,7 +80,8 @@ def index(request: WSGIRequest) -> HttpResponse:
                 .order_by("order", "id"),
             )
         )
-        .prefetch_related("groups", "topics")
+        .prefetch_related(Prefetch("groups", queryset=Group.objects.order_by("name")))
+        .prefetch_related("topics")
         .user_has_access(request.user)
         .filter(parent_board__isnull=True)
         .annotate(
@@ -160,6 +162,10 @@ def board(
                         "first_message__user_created",
                         "first_message__user_created__profile__main_character",
                     )
+                    .prefetch_related(
+                        Prefetch("groups", queryset=Group.objects.order_by("name"))
+                    )
+                    .prefetch_related("topics")
                     .annotate(
                         num_posts=Count("topics__messages", distinct=True),
                         num_topics=Count("topics", distinct=True),
