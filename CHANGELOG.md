@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - "Copy message link to clipboard" button to messages in topic view
 
+### Removed
+
+- Image lightbox, it breaks images that have a hyperlink
+
 
 ## [0.1.0-beta.16] - 2021-08-04
 
