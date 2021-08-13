@@ -78,6 +78,9 @@
     <script type="application/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
     <script type="application/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
     <script type="application/javascript" src="{% versioned_static 'aa_forum/javascript/aa-forum-ckeditor.min.js' %}"></script>
+
+    {% include 'bundles/clipboard-js.html' %}
+
     <script type="application/javascript">
         $(document).ready(function () {
             $('.aa-forum-message-body img').click(function (event) {
@@ -93,6 +96,17 @@
                 );
 
                 $('#lightboxModal').modal({show:true});
+            });
+
+            let clipboard = new ClipboardJS('.btn-aa-forum-copy-to-clipboard');
+
+            clipboard.on('success', function (e) {
+                e.clearSelection();
+            });
+
+            clipboard.on('error', function (e) {
+                console.error('Action:', e.action);
+                console.error('Trigger:', e.trigger);
             });
         });
     </script>

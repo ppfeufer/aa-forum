@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.1.0-beta.17] - Unreleased
+
+### Added
+
+- "Copy message link to clipboard" button to messages in topic view
+
+
 ## [0.1.0-beta.16] - 2021-08-04
 
 ### Changed
