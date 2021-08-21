@@ -27,13 +27,13 @@ repos:
       - id: debug-statements  # Check for debugger imports and py37+ breakpoint() calls
 
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 2.3.5
+    rev: 2.3.54
     hooks:
       - id: editorconfig-checker
         exclude: ^(LICENSE|aa_forum/static/aa_forum/libs/|aa_forum/static/aa_forum/ckeditor)
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.23.1
+    rev: v2.23.3
     hooks:
       - id: pyupgrade
         args: [ --py36-plus ]
