@@ -1,4 +1,4 @@
-# Contributing to AA Fleet Pings
+# Contributing
 
 ## Code Formatting
 
