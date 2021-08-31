@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Marked `forum_board_new_topic` as internal URL to prevent conflicts with a possible
   topic called "New Topic"
+- Error 500 when trying to create a new topic with the exact same name of a topic
+  that already exists in this board
 
 
 ## [1.0.0] - 2021-08-21
