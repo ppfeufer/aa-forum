@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [1.0.1] - 2021-08-31
+
+### Changed
+
+- Default sort order for new categories and boards moved to a constant
+
+### Fixed
+
+- Marked `forum_board_new_topic` as internal URL to prevent conflicts with a possible
+  topic called "New Topic"
+- Error 500 when trying to create a new topic with the exact same name of a topic
+  that already exists in this board
+
+
 ## [1.0.0] - 2021-08-21
 
 ### Changed

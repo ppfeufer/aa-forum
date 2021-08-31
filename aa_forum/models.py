@@ -15,7 +15,11 @@ from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
-from aa_forum.constants import INTERNAL_URL_PREFIX, SETTING_MESSAGESPERPAGE
+from aa_forum.constants import (
+    DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
+    INTERNAL_URL_PREFIX,
+    SETTING_MESSAGESPERPAGE,
+)
 from aa_forum.managers import (
     BoardManager,
     MessageManager,
@@ -88,7 +92,9 @@ class Category(models.Model):
     name = models.CharField(max_length=254, unique=True)
     slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
     is_collapsible = models.BooleanField(default=False)
-    order = models.IntegerField(default=999999, db_index=True)
+    order = models.IntegerField(
+        default=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER, db_index=True
+    )
 
     class Meta:
         """
@@ -142,7 +148,9 @@ class Board(models.Model):
         blank=True,
         related_name="aa_forum_boards_group_restriction",
     )
-    order = models.IntegerField(default=999999, db_index=True)
+    order = models.IntegerField(
+        default=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER, db_index=True
+    )
     first_message = models.ForeignKey(
         "Message",
         editable=False,

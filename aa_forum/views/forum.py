@@ -15,6 +15,7 @@ from django.db import transaction
 from django.db.models import Count, Exists, OuterRef, Prefetch, Q
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -287,7 +288,7 @@ def board_new_topic(
 
         logger.info(
             f"{request.user} tried to create a topic in a board they have no access "
-            f"to. Redirecting to forum index "
+            f"to. Redirecting to forum index"
         )
 
         return redirect("aa_forum:forum_index")
@@ -300,6 +301,43 @@ def board_new_topic(
         # Check whether it's valid:
         if form.is_valid():
             with transaction.atomic():
+                # Check if a topic with the same subject already exists in this board
+                existing_topic = Topic.objects.filter(
+                    board=board, subject__iexact=form.cleaned_data["subject"]
+                )
+
+                if existing_topic.exists():
+                    existing_topic = existing_topic.get()
+
+                    existing_topic_url = reverse(
+                        "aa_forum:forum_topic",
+                        kwargs={
+                            "category_slug": existing_topic.board.category.slug,
+                            "board_slug": existing_topic.board.slug,
+                            "topic_slug": existing_topic.slug,
+                        },
+                    )
+
+                    messages.warning(
+                        request,
+                        mark_safe(
+                            _(
+                                "<h4>Warning!</h4>"
+                                f"<p>There is already a topic with the exact same "
+                                f"subject in this board.</p><p>See here: "
+                                f'<a href="{existing_topic_url}">'
+                                f"{existing_topic.subject}</a>"
+                                f"</p>"
+                            )
+                        ),
+                    )
+
+                    return render(
+                        request,
+                        "aa_forum/view/forum/new-topic.html",
+                        {"board": board, "form": form},
+                    )
+
                 topic = Topic()
                 topic.board = board
                 topic.subject = form.cleaned_data["subject"]
