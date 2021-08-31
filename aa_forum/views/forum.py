@@ -301,7 +301,7 @@ def board_new_topic(
         # Check whether it's valid:
         if form.is_valid():
             with transaction.atomic():
-                # Check if a topic with the same subject already exists
+                # Check if a topic with the same subject already exists in this board
                 existing_topic = Topic.objects.filter(
                     board=board, subject__iexact=form.cleaned_data["subject"]
                 )
