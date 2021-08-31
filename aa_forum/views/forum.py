@@ -307,7 +307,6 @@ def board_new_topic(
                 )
 
                 if existing_topic.exists():
-                    # if existing_topic:
                     existing_topic = existing_topic.get()
 
                     existing_topic_url = reverse(
