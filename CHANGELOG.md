@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Default sort order for new categories and boards moved to a constant
 
+### Fixed
+
+- Marked `forum_board_new_topic` as internal URL to prevent conflicts with a possible
+  topic called "New Topic"
+
 
 ## [1.0.0] - 2021-08-21
 

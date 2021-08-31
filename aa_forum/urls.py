@@ -124,7 +124,7 @@ urlpatterns = [
         name="forum_board",
     ),
     path(
-        "<slug:category_slug>/<slug:board_slug>/new-topic/",
+        f"{INTERNAL_URL_PREFIX}/<slug:category_slug>/<slug:board_slug>/new-topic/",
         forum.board_new_topic,
         name="forum_board_new_topic",
     ),
