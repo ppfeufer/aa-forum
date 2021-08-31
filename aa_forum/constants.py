@@ -19,6 +19,9 @@ SETTING_TOPICSPERPAGE = "defaultMaxTopics"
 # to prevent conflicts with user generated forum URLs
 INTERNAL_URL_PREFIX = "-"
 
+# Default sort order for new categories and boards
+DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER = 999999
+
 # Search stop words. These words and characters will be removed from the search phrase
 SEARCH_STOPWORDS = [
     '"',

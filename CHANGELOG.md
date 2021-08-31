@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [Upcoming] - Unreleased
+
+### Changed
+
+- Default sort order for new categories and boards moved to a constant
+
+
 ## [1.0.0] - 2021-08-21
 
 ### Changed
