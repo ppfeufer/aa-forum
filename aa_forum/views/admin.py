@@ -24,6 +24,7 @@ from django.utils.translation import gettext as _
 from allianceauth.services.hooks import get_extension_logger
 
 from aa_forum import __title__
+from aa_forum.constants import DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER
 from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm
 from aa_forum.helpers import message_form_errors
 from aa_forum.models import Board, Category
@@ -135,7 +136,7 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
         if form.is_valid():
             new_category = Category()
             new_category.name = form.cleaned_data["name"]
-            new_category.order = 999999
+            new_category.order = DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER
             new_category.save()
 
             # Add boards if any given
@@ -144,7 +145,9 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
 
                 for board_name in boards.splitlines():
                     new_board = Board(
-                        name=board_name, category=new_category, order=999999
+                        name=board_name,
+                        category=new_category,
+                        order=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
                     )
                     new_board.save()
 
@@ -249,7 +252,7 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
             new_board.name = form.cleaned_data["name"]
             new_board.description = form.cleaned_data["description"]
             new_board.category = board_category
-            new_board.order = 999999
+            new_board.order = DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER
             new_board.save()
 
             new_board.groups.set(form.cleaned_data["groups"])
@@ -294,7 +297,7 @@ def board_create_child(
             new_board.description = form.cleaned_data["description"]
             new_board.parent_board = parent_board
             new_board.category = parent_board.category
-            new_board.order = 999999
+            new_board.order = DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER
             new_board.save()
 
             # new_board.groups.set(parent_board.groups)
