@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [1.0.2] - 2021-09-05
+
+### Fixed
+
+- Admin models are now read-only, to prevent users from creating new entries via the
+  Django admin backend, which will cause issues (see issue #47)
+
+
 ## [1.0.1] - 2021-08-31
 
 ### Changed
