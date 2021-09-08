@@ -224,10 +224,7 @@ def board(
         int(Setting.objects.get_setting(setting_key=SETTING_TOPICSPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
-    context = {
-        "board": board,
-        "page_obj": page_obj,
-    }
+    context = {"board": board, "page_obj": page_obj}
 
     logger.info(f'{request.user} called board "{board.name}"')
 
@@ -338,16 +335,14 @@ def board_new_topic(
                         {"board": board, "form": form},
                     )
 
-                topic = Topic()
-                topic.board = board
-                topic.subject = form.cleaned_data["subject"]
+                topic = Topic(board=board, subject=form.cleaned_data["subject"])
                 topic.save()
 
-                message = Message()
-                message.topic = topic
-                message.user_created = request.user
-                message.message = form.cleaned_data["message"]
-                message.save()
+                Message(
+                    topic=topic,
+                    user_created=request.user,
+                    message=form.cleaned_data["message"],
+                ).save()
 
             logger.info(
                 f'{request.user} started a new topic "{topic.subject}" '
@@ -702,7 +697,6 @@ def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
                 .annotate(num_posts=Count("messages", distinct=True))
                 .annotate(has_unread_messages=~Exists(has_read_all_messages))
                 .order_by("-is_sticky", "-last_message__time_posted", "-id"),
-                # to_attr="topics_sorted",
             )
         )
         .filter(topics__in=unread_topic_pks)
@@ -767,10 +761,11 @@ def topic_reply(
 
         # Check whether it's valid:
         if form.is_valid():
-            new_message = Message()
-            new_message.topic = topic
-            new_message.user_created = request.user
-            new_message.message = form.cleaned_data["message"]
+            new_message = Message(
+                topic=topic,
+                user_created=request.user,
+                message=form.cleaned_data["message"],
+            )
             new_message.save()
 
             logger.info(f"{request.user} replied to topic {topic.subject}")

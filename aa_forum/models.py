@@ -229,14 +229,8 @@ class Topic(models.Model):
     subject = models.CharField(max_length=254)
 
     slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
-    is_sticky = models.BooleanField(
-        default=False,
-        db_index=True,
-    )
-    is_locked = models.BooleanField(
-        default=False,
-        db_index=True,
-    )
+    is_sticky = models.BooleanField(default=False, db_index=True)
+    is_locked = models.BooleanField(default=False, db_index=True)
     first_message = models.ForeignKey(
         "Message",
         editable=False,
