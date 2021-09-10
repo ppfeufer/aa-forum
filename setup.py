@@ -31,6 +31,7 @@ project_install_requirements = [
     "django-ckeditor",
     "allianceauth-app-utils>=1.8.0",
     "unidecode",
+    "requests",
 ]
 project_python_requires = "~=3.6"
 project_classifiers = [
