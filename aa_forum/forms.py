@@ -197,15 +197,16 @@ class EditBoardForm(ModelForm):
         help_text=_(
             "This will restrict access to this board to the selected groups. If no "
             "groups are selected, everyone who can access the forum can also access "
-            "this board."
+            "this board. (This setting is optional)"
         ),
         queryset=Group.objects.all(),
     )
     discord_webhook = forms.CharField(
         required=False,
-        label=_("Discord Webhook"),
+        label=_("Discord Webhook (Optional)"),
         help_text=_(
-            "Discord Webhook URL for the channel to post about new topics in this board"
+            "Discord Webhook URL for the channel to post about new topics in this "
+            "board. (This setting is optional) "
         ),
         max_length=254,
         widget=forms.TextInput(

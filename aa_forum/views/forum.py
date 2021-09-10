@@ -18,6 +18,7 @@ from django.db.models import Count, Exists, OuterRef, Prefetch, Q
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -353,7 +354,7 @@ def board_new_topic(
             )
 
             # Send to webhook if one is configured
-            if board.discord_webhook is not None:
+            if board.discord_webhook != "":
                 webhook_url = board.discord_webhook
                 topic_url = reverse_absolute(
                     "aa_forum:forum_topic",
@@ -361,13 +362,19 @@ def board_new_topic(
                 )
 
                 embed = {
-                    "description": mark_safe(message.message),
+                    "description": strip_tags(
+                        message.message[:250] + "..."
+                        if len(message.message) > 250
+                        else message.message
+                    ),
                     "title": topic.subject,
                     "url": topic_url,
                 }
 
                 data = {
-                    "content": _("New Topic"),
+                    "content": _(
+                        f'**New Topic has been posted in board "{board.name}"**'
+                    ),
                     # "username": "custom username",
                     "embeds": [embed],
                 }
@@ -377,7 +384,7 @@ def board_new_topic(
                 try:
                     result.raise_for_status()
                 except requests.exceptions.HTTPError as err:
-                    logger.info(f"Webhook Error: {err}")
+                    logger.info(f"Discord Webhook Error: {err}")
 
             return redirect(
                 "aa_forum:forum_topic",
