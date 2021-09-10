@@ -136,9 +136,9 @@ class Board(models.Model):
     name = models.CharField(max_length=254)
     slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
     description = models.TextField(blank=True)
-    discord_webhook = models.CharField(blank=True, default=None, max_length=254)
-    # notify_on_new_topic = models.BooleanField(default=False, db_index=True)
-    # notify_on_new_message = models.BooleanField(default=False, db_index=True)
+    discord_webhook = models.CharField(
+        blank=True, null=True, default=None, max_length=254
+    )
     parent_board = models.ForeignKey(
         "self",
         blank=True,

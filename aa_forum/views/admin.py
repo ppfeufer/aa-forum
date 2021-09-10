@@ -243,11 +243,17 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
 
         # Check whether it's valid:
         if form.is_valid():
+            discord_webhook = (
+                form.cleaned_data["discord_webhook"]
+                if form.cleaned_data["discord_webhook"] != ""
+                else None
+            )
+
             new_board = Board(
                 name=form.cleaned_data["name"],
                 description=form.cleaned_data["description"],
                 category=board_category,
-                discord_webhook=form.cleaned_data["discord_webhook"],
+                discord_webhook=discord_webhook,
                 order=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
             )
             new_board.save()
@@ -287,10 +293,16 @@ def board_create_child(
         # Check whether it's valid:
         if form.is_valid():
             parent_board = Board.objects.get(pk=board_id)
+            discord_webhook = (
+                form.cleaned_data["discord_webhook"]
+                if form.cleaned_data["discord_webhook"] != ""
+                else None
+            )
+
             new_board = Board(
                 name=form.cleaned_data["name"],
                 description=form.cleaned_data["description"],
-                discord_webhook=form.cleaned_data["discord_webhook"],
+                discord_webhook=discord_webhook,
                 parent_board=parent_board,
                 category=parent_board.category,
                 order=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
@@ -332,10 +344,16 @@ def board_edit(
 
         # Check whether it's valid:
         if form.is_valid():
+            discord_webhook = (
+                form.cleaned_data["discord_webhook"]
+                if form.cleaned_data["discord_webhook"] != ""
+                else None
+            )
+
             board = Board.objects.get(pk=board_id, category_id=category_id)
             board.name = form.cleaned_data["name"]
             board.description = form.cleaned_data["description"]
-            board.discord_webhook = form.cleaned_data["discord_webhook"]
+            board.discord_webhook = discord_webhook
             board.groups.set(form.cleaned_data["groups"])
             board.save()
 

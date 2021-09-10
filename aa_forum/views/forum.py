@@ -354,7 +354,7 @@ def board_new_topic(
             )
 
             # Send to webhook if one is configured
-            if board.discord_webhook != "":
+            if board.discord_webhook is not None:
                 webhook_url = board.discord_webhook
                 topic_url = reverse_absolute(
                     "aa_forum:forum_topic",
