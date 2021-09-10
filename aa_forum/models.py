@@ -133,9 +133,11 @@ class Board(models.Model):
         Category, related_name="boards", on_delete=models.CASCADE
     )
     name = models.CharField(max_length=254)
-
     slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
     description = models.TextField(blank=True)
+    discord_webhook = models.CharField(blank=True, default=None, max_length=254)
+    # notify_on_new_topic = models.BooleanField(default=False, db_index=True)
+    # notify_on_new_message = models.BooleanField(default=False, db_index=True)
     parent_board = models.ForeignKey(
         "self",
         blank=True,
@@ -227,7 +229,6 @@ class Topic(models.Model):
 
     board = models.ForeignKey(Board, related_name="topics", on_delete=models.CASCADE)
     subject = models.CharField(max_length=254)
-
     slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
     is_sticky = models.BooleanField(default=False, db_index=True)
     is_locked = models.BooleanField(default=False, db_index=True)

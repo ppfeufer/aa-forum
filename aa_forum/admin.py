@@ -114,7 +114,7 @@ class BoardAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
 
 
 @admin.register(Topic)
-class TopicAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
+class TopicAdmin(admin.ModelAdmin):
     """
     Topic admin
     """

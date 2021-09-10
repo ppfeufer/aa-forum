@@ -4,7 +4,9 @@ Forum related views
 
 from typing import Optional
 
+import requests
 from app_utils.logging import LoggerAddTag
+from app_utils.urls import reverse_absolute
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -338,16 +340,44 @@ def board_new_topic(
                 topic = Topic(board=board, subject=form.cleaned_data["subject"])
                 topic.save()
 
-                Message(
+                message = Message(
                     topic=topic,
                     user_created=request.user,
                     message=form.cleaned_data["message"],
-                ).save()
+                )
+                message.save()
 
             logger.info(
                 f'{request.user} started a new topic "{topic.subject}" '
                 f'in board "{board.name}"'
             )
+
+            # Send to webhook if one is configured
+            if board.discord_webhook is not None:
+                webhook_url = board.discord_webhook
+                topic_url = reverse_absolute(
+                    "aa_forum:forum_topic",
+                    args=[board.category.slug, board.slug, topic.slug],
+                )
+
+                embed = {
+                    "description": mark_safe(message.message),
+                    "title": topic.subject,
+                    "url": topic_url,
+                }
+
+                data = {
+                    "content": _("New Topic"),
+                    # "username": "custom username",
+                    "embeds": [embed],
+                }
+
+                result = requests.post(webhook_url, json=data)
+
+                try:
+                    result.raise_for_status()
+                except requests.exceptions.HTTPError as err:
+                    logger.info(f"Webhook Error: {err}")
 
             return redirect(
                 "aa_forum:forum_topic",
