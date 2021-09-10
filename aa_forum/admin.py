@@ -3,6 +3,7 @@ Django admin declarations
 """
 
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 
 from aa_forum.models import Board, Category, Topic
 
@@ -56,8 +57,19 @@ class CategoryAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
     Category admin
     """
 
-    list_display = ("name", "slug")
-    exclude = ("slug", "is_collapsible", "order")
+    list_display = ("name", "slug", "_board_count")
+    exclude = ("is_collapsible",)
+
+    def _board_count(self, obj):
+        """
+        Return the board count per category
+        :param obj:
+        :type obj:
+        :return:
+        :rtype:
+        """
+
+        return obj.boards.count()
 
 
 @admin.register(Board)
@@ -66,17 +78,48 @@ class BoardAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
     Board admin
     """
 
-    list_display = ("name", "slug", "category")
-    exclude = ("slug", "parent_board", "groups", "order")
+    list_display = (
+        "name",
+        "slug",
+        "parent_board",
+        "_groups",
+        "category",
+        "_topics_count",
+    )
+
+    def _groups(self, obj):
+        """
+        Return the groups this board is restricted to as list
+        :return:
+        :rtype:
+        """
+
+        groups = obj.groups.all()
+
+        if groups.count() > 0:
+            return mark_safe("<br>".join([group.name for group in groups]))
+
+        return ""
+
+    def _topics_count(self, obj):
+        """
+        Return the topics count per board
+        :param obj:
+        :type obj:
+        :return:
+        :rtype:
+        """
+
+        return obj.topics.count()
 
 
 @admin.register(Topic)
-class TopicAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
+class TopicAdmin(admin.ModelAdmin):
     """
     Topic admin
     """
 
-    list_display = ("subject", "board", "_messages_count")
+    list_display = ("subject", "slug", "board", "_messages_count")
 
     def _messages_count(self, obj):
         """

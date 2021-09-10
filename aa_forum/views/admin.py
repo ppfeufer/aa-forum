@@ -134,9 +134,10 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
 
         # Check whether it's valid:
         if form.is_valid():
-            new_category = Category()
-            new_category.name = form.cleaned_data["name"]
-            new_category.order = DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER
+            new_category = Category(
+                name=form.cleaned_data["name"],
+                order=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
+            )
             new_category.save()
 
             # Add boards if any given
@@ -144,16 +145,14 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
                 boards = form.cleaned_data["boards"]
 
                 for board_name in boards.splitlines():
-                    new_board = Board(
+                    Board(
                         name=board_name,
                         category=new_category,
                         order=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
-                    )
-                    new_board.save()
+                    ).save()
 
             messages.success(
-                request,
-                mark_safe(_("<h4>Success!</h4><p>Category created.</p>")),
+                request, mark_safe(_("<h4>Success!</h4><p>Category created.</p>"))
             )
 
             logger.info(f'{request.user} created category "{new_category.name}"')
@@ -186,8 +185,7 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
             category.save()
 
             messages.success(
-                request,
-                mark_safe(_("<h4>Success!</h4><p>Category changed.</p>")),
+                request, mark_safe(_("<h4>Success!</h4><p>Category changed.</p>"))
             )
 
             logger.info(f'{request.user} changed category "{category.name}"')
@@ -217,10 +215,7 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
 
     category_name = category.name
     category.delete()
-    messages.success(
-        request,
-        mark_safe(_("<h4>Success!</h4><p>Category removed.</p>")),
-    )
+    messages.success(request, mark_safe(_("<h4>Success!</h4><p>Category removed.</p>")))
 
     logger.info(f'{request.user} removed category "{category_name}"')
 
@@ -248,18 +243,18 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
 
         # Check whether it's valid:
         if form.is_valid():
-            new_board = Board()
-            new_board.name = form.cleaned_data["name"]
-            new_board.description = form.cleaned_data["description"]
-            new_board.category = board_category
-            new_board.order = DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER
+            new_board = Board(
+                name=form.cleaned_data["name"],
+                description=form.cleaned_data["description"],
+                category=board_category,
+                order=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
+            )
             new_board.save()
 
             new_board.groups.set(form.cleaned_data["groups"])
 
             messages.success(
-                request,
-                mark_safe(_("<h4>Success!</h4><p>Board created.</p>")),
+                request, mark_safe(_("<h4>Success!</h4><p>Board created.</p>"))
             )
 
             logger.info(f'{request.user} created board "{new_board.name}"')
@@ -291,20 +286,17 @@ def board_create_child(
         # Check whether it's valid:
         if form.is_valid():
             parent_board = Board.objects.get(pk=board_id)
-
-            new_board = Board()
-            new_board.name = form.cleaned_data["name"]
-            new_board.description = form.cleaned_data["description"]
-            new_board.parent_board = parent_board
-            new_board.category = parent_board.category
-            new_board.order = DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER
+            new_board = Board(
+                name=form.cleaned_data["name"],
+                description=form.cleaned_data["description"],
+                parent_board=parent_board,
+                category=parent_board.category,
+                order=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
+            )
             new_board.save()
 
-            # new_board.groups.set(parent_board.groups)
-
             messages.success(
-                request,
-                mark_safe(_("<h4>Success!</h4><p>Board created.</p>")),
+                request, mark_safe(_("<h4>Success!</h4><p>Board created.</p>"))
             )
 
             logger.info(
@@ -375,14 +367,13 @@ def board_delete(
     except Board.DoesNotExist:
         msg = f"Board with PK {board_id} not found."
         logger.warning(msg)
+
         return HttpResponseNotFound(msg)
 
     board_name = board.name
     board.delete()
-    messages.success(
-        request,
-        mark_safe(_("<h4>Success!</h4><p>Board removed.</p>")),
-    )
+
+    messages.success(request, mark_safe(_("<h4>Success!</h4><p>Board removed.</p>")))
 
     logger.info(f'{request.user} removed board "{board_name}"')
 

@@ -4,6 +4,7 @@ Models
 
 import math
 
+import unidecode
 from ckeditor_uploader.fields import RichTextUploadingField
 
 from django.contrib.auth.models import Group, User
@@ -53,11 +54,11 @@ def _generate_slug(MyModel: models.Model, name: str) -> str:
         name = "hyphen"
 
     run = 0
-    slug_name = slugify(name, allow_unicode=True)
+    slug_name = slugify(unidecode.unidecode(name), allow_unicode=True)
 
     while MyModel.objects.filter(slug=slug_name).exists():
         run += 1
-        slug_name = slugify(f"{name}-{run}", allow_unicode=True)
+        slug_name = slugify(unidecode.unidecode(f"{name}-{run}"), allow_unicode=True)
 
     return slug_name
 
@@ -229,14 +230,8 @@ class Topic(models.Model):
     subject = models.CharField(max_length=254)
 
     slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
-    is_sticky = models.BooleanField(
-        default=False,
-        db_index=True,
-    )
-    is_locked = models.BooleanField(
-        default=False,
-        db_index=True,
-    )
+    is_sticky = models.BooleanField(default=False, db_index=True)
+    is_locked = models.BooleanField(default=False, db_index=True)
     first_message = models.ForeignKey(
         "Message",
         editable=False,
