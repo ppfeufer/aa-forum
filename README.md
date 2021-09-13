@@ -45,6 +45,7 @@ these kind of changes. For you own sanity, and mine :-)
 - Child boards (1 Level), which inherit their access restrictions from their parent
 - ckEditor with image upload
 - Unread topics counter as number on the "Forum" link in the left navigation
+- Optional notifications about new topics in a board via Discord webhooks
 
 
 ### Screenshots
