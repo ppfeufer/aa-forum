@@ -28,6 +28,7 @@
 
                     {{ board.board_forms.board_edit_form.name|bootstrap }}
                     {{ board.board_forms.board_edit_form.description|bootstrap }}
+                    {{ board.board_forms.board_edit_form.discord_webhook|bootstrap }}
 
                     {% if not is_child_board %}
                         {{ board.board_forms.board_edit_form.groups|bootstrap }}
@@ -63,6 +64,7 @@
 
                             {{ board.board_forms.new_child_board_form.name|bootstrap }}
                             {{ board.board_forms.new_child_board_form.description|bootstrap }}
+                            {{ board.board_forms.board_edit_form.discord_webhook|bootstrap }}
 
                             <div class="form-group aa-forum-form-new-category text-right clearfix">
                                 <button class="btn btn-primary btn-sm" type="submit">
