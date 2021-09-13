@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [1.1.0] - 2021-09-13
+
+### Added
+
+- Optional Discord webhook configuration to boards to send messages to your Discord
+  via a webhook to notify a channel about new topics created in the board
+
+
 ## [1.0.3] - 2021-09-10
 
 ### Added

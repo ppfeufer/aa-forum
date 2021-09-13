@@ -74,7 +74,7 @@ class NewTopicForm(forms.Form):
     subject = forms.CharField(
         required=True,
         label=get_mandatory_form_label_text(_("Subject")),
-        max_length=255,
+        max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Subject")}),
     )
 
@@ -96,7 +96,7 @@ class EditTopicForm(ModelForm):
     subject = forms.CharField(
         required=True,
         label=get_mandatory_form_label_text(_("Subject")),
-        max_length=255,
+        max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Subject")}),
     )
 
@@ -117,7 +117,7 @@ class NewCategoryForm(ModelForm):
     name = forms.CharField(
         required=True,
         label=get_mandatory_form_label_text(_("Name")),
-        max_length=255,
+        max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Category Name")}),
     )
     boards = forms.CharField(
@@ -155,7 +155,7 @@ class EditCategoryForm(ModelForm):
     name = forms.CharField(
         required=True,
         label=get_mandatory_form_label_text(_("Name")),
-        max_length=255,
+        max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Category Name")}),
     )
 
@@ -176,7 +176,7 @@ class EditBoardForm(ModelForm):
     name = forms.CharField(
         required=True,
         label=get_mandatory_form_label_text(_("Name")),
-        max_length=255,
+        max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Board Name")}),
     )
     description = forms.CharField(
@@ -192,7 +192,28 @@ class EditBoardForm(ModelForm):
         ),
     )
     groups = SpecialModelMultipleChoiceField(
-        required=False, queryset=Group.objects.all()
+        required=False,
+        label=_("Group Restrictions"),
+        help_text=_(
+            "This will restrict access to this board to the selected groups. If no "
+            "groups are selected, everyone who can access the forum can also access "
+            "this board. (This setting is optional)"
+        ),
+        queryset=Group.objects.all(),
+    )
+    discord_webhook = forms.CharField(
+        required=False,
+        label=_("Discord Webhook (Optional)"),
+        help_text=_(
+            "Discord Webhook URL for the channel to post about new topics in this "
+            "board. (This setting is optional) "
+        ),
+        max_length=254,
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            }
+        ),
     )
 
     def __init__(self, *args, **kwargs):
@@ -209,7 +230,7 @@ class EditBoardForm(ModelForm):
         """
 
         model = Board
-        fields = ["name", "description", "groups"]
+        fields = ["name", "description", "groups", "discord_webhook"]
 
 
 class EditMessageForm(ModelForm):
