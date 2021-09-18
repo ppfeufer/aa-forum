@@ -18,6 +18,7 @@ class TestForumUI(WebTest):
         cls.user_1002 = create_fake_user(
             1002, "Peter Parker", permissions=["aa_forum.basic_access"]
         )
+        cls.user_1003 = create_fake_user(1003, "Lex Luthor", permissions=[])
         cls.category = Category.objects.create(name="Science")
         cls.board = Board.objects.create(name="Physics", category=cls.category)
 
@@ -28,6 +29,14 @@ class TestForumUI(WebTest):
         page = self.app.get(reverse("aa_forum:forum_index"))
         # then
         self.assertTemplateUsed(page, "aa_forum/view/forum/index.html")
+
+    def test_should_not_show_forum_index(self):
+        # given
+        self.app.set_user(self.user_1003)
+        # when
+        page = self.app.get(reverse("aa_forum:forum_index"))
+        # then
+        self.assertRedirects(page, "/account/login/?next=/forum/")
 
     def test_should_create_new_topic(self):
         # given

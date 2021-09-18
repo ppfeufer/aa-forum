@@ -21,6 +21,7 @@ from aa_forum.constants import (
     INTERNAL_URL_PREFIX,
     SETTING_MESSAGESPERPAGE,
 )
+from aa_forum.helpers import string_cleanup
 from aa_forum.managers import (
     BoardManager,
     MessageManager,
@@ -407,7 +408,9 @@ class Message(models.Model):
         :type kwargs:
         """
 
+        self.message = string_cleanup(self.message)
         self.message_plaintext = strip_tags(self.message)
+
         super().save(*args, **kwargs)
 
         update_fields = list()

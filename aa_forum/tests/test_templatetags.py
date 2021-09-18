@@ -1,9 +1,11 @@
-from django.template import Context, Template
+from django.template import Context, Template, TemplateSyntaxError
 from django.test import TestCase
 
 from allianceauth.tests.auth_utils import AuthUtils
 
 from .utils import create_fake_user
+
+# from aa_forum import __version__
 
 
 class TestMainCharacterName(TestCase):
@@ -228,3 +230,53 @@ class TestMainAllianceId(TestCase):
         result = self.template.render(context)
         # then
         self.assertEqual(result, "1")
+
+
+class TestForumTemplateVariables(TestCase):
+    def test_set_template_variable(self):
+        context = Context({"content": "bar"})
+        template_to_render = Template(
+            "{% load aa_forum_template_variables %}"
+            "{% set_template_variable foo = content %}"
+            "{{ foo }}"
+        )
+
+        rendered_template = template_to_render.render(context)
+
+        self.assertInHTML("bar", rendered_template)
+
+    def test_should_raise_template_syntax_error(self):
+        self.assertRaises(
+            TemplateSyntaxError,
+            Template,
+            "{% load aa_forum_template_variables %}"
+            "{% set_template_variable foo %}"
+            "{{ foo }}",
+        )
+
+        with self.assertRaisesMessage(
+            TemplateSyntaxError,
+            "'set_template_variable' tag must be of the form: "
+            "{% set_template_variable <var_name> = <var_value> %}",
+        ):
+            Template(
+                "{% load aa_forum_template_variables %}"
+                "{% set_template_variable foo %}"
+                "{{ foo }}"
+            )
+
+
+# class TestForumVersionedStatic(TestCase):
+#     def test_versioned_static(self):
+#         context = Context({"version": __version__})
+#         template_to_render = Template(
+#             "{% load aa_forum_versioned_static %}"
+#             "{% versioned_static 'aa_forum/css/aa-forum.min.css' %}"
+#         )
+#
+#         rendered_template = template_to_render.render(context)
+#
+#         self.assertInHTML(
+#             f'/static/aa_forum/css/aa-forum.min.css?v={context["version"]}',
+#             rendered_template,
+#         )

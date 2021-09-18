@@ -34,3 +34,16 @@ class TestHelpers(TestCase):
         helpers.message_form_errors(request, form)
         # then
         self.assertFalse(messages.error.called)
+
+    def test_should_return_cleaned_string(self, messages):
+        string = (
+            'this is a script test. <script type="text/javascript">alert('
+            "'test')</script>and this is style test. <style>.MathJax, "
+            ".MathJax_Message, .MathJax_Preview{display: none}</style>end tests."
+        )
+
+        cleaned_string = helpers.string_cleanup(string)
+
+        self.assertIn(
+            "this is a script test. and this is style test. end tests.", cleaned_string
+        )
