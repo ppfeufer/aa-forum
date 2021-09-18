@@ -103,20 +103,6 @@ jobs:
 #          fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
 
-#  codecov-reports:
-#    needs: [ test-coverage ]
-#    name: Codecoverage Reports Upload
-#    runs-on: ${{ matrix.os }}
-#    strategy:
-#      matrix:
-#        os: [ ubuntu-latest ]
-#    env:
-#      OS: ${{ matrix.os }}
-#      PYTHON: '3.7'
-#
-#    steps:
-#      - uses: actions/checkout@master
-
   # pypi build test
   pypi-build-test:
     needs: [test-coverage]
