@@ -93,7 +93,7 @@ jobs:
         # Run tox using the version of Python in `PATH`
         run: tox -e py
 
-      - name: Code Coverage Upload
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
