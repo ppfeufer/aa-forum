@@ -96,6 +96,13 @@ jobs:
   codecov-reports:
     needs: [ test-coverage ]
     name: Codecoverage Reports Upload
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+    env:
+      OS: ${{ matrix.os }}
+      PYTHON: '3.7'
 
     steps:
       - uses: actions/checkout@master
