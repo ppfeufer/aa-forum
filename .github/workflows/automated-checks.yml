@@ -93,6 +93,21 @@ jobs:
         # Run tox using the version of Python in `PATH`
         run: tox -e py
 
+  codecov-reports:
+    needs: [ test-coverage ]
+    name: Codecoverage Reports Upload
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+#          files: ./coverage1.xml,./coverage2.xml # optional
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
+
   # pypi build test
   pypi-build-test:
     needs: [test-coverage]
