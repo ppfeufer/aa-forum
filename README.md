@@ -220,7 +220,7 @@ if "ckeditor" in INSTALLED_APPS:
             {
                 "name": "document",
                 "items": [
-                    "Source",
+                    # "Source",
                     # "-",
                     # "Save",
                     # "NewPage",
