@@ -103,6 +103,12 @@ jobs:
 #          fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
 
+      - name: Upload to Codacy Coverage Reporter
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage.xml
+
   # pypi build test
   pypi-build-test:
     needs: [test-coverage]
