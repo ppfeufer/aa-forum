@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 from django.contrib.auth.models import Group
+from django.contrib.messages import get_messages
 from django.test import TestCase
 from django.urls import reverse
 
@@ -308,6 +309,33 @@ class TestBoardViews(TestCase):
         )
         # then
         self.assertEqual(res.status_code, 404)
+
+    def test_should_return_board_does_not_exist_for_wrong_board_on_board_view(self):
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_board",
+                args=["foo", "bar"],
+            ),
+        )
+
+        # then
+        messages = list(get_messages(response.wsgi_request))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRaises(Board.DoesNotExist)
+        self.assertEqual(response.url, reverse("aa_forum:forum_index"))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            (
+                "<h4>Error!</h4><p>The board you were trying to visit does "
+                "either not exist, or you don't have access to it ...</p>"
+            ),
+        )
 
 
 @patch(VIEWS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
@@ -657,3 +685,125 @@ class TestTopicViews(TestCase):
         alien_message.refresh_from_db()
         self.assertEqual(alien_message.message, "old text")
         self.assertTrue(messages.error.called)
+
+    def test_should_return_redirect_to_forum_index_if_topic_does_not_exist_on_topic_view(
+        self,
+    ):
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_topic",
+                args=["foo", "bar", "foobar"],
+            ),
+        )
+
+        # then
+        messages = list(get_messages(response.wsgi_request))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse("aa_forum:forum_index"))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            (
+                "<h4>Error!</h4><p>The topic you were trying to view does not "
+                "exist or you do not have access to it.</p>"
+            ),
+        )
+
+    def test_should_return_redirect_to_forum_index_if_topic_does_not_exist_on_topic_modify_view(
+        self,
+    ):
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_topic_modify",
+                args=["foo", "bar", "foobar"],
+            ),
+        )
+
+        # then
+        messages = list(get_messages(response.wsgi_request))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse("aa_forum:forum_index"))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            (
+                "<h4>Error!</h4><p>The topic you were trying to modify does not "
+                "exist or you do not have access to it.</p>"
+            ),
+        )
+
+    def test_should_return_redirect_to_forum_index_if_topic_does_not_exist_on_topic_reply(
+        self,
+    ):
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_topic_reply",
+                args=["foo", "bar", "foobar"],
+            ),
+        )
+
+        # then
+        messages = list(get_messages(response.wsgi_request))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse("aa_forum:forum_index"))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            (
+                "<h4>Error!</h4><p>The topic you were trying to reply does not "
+                "exist or you do not have access to it.</p>"
+            ),
+        )
+
+    def test_should_return_redirect_to_forum_index_if_message_does_not_exist_on_message_view(
+        self,
+    ):
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_message",
+                args=["foo", "bar", "foobar", 0],
+            ),
+        )
+
+        # then
+        messages = list(get_messages(response.wsgi_request))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse("aa_forum:forum_index"))
+        self.assertRaises(Message.DoesNotExist)
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            "<h4>Error!</h4><p>The message doesn't exist ...</p>",
+        )
+
+    def test_should_show_all_unread_messages(self):
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse("aa_forum:forum_topic_show_all_unread"),
+        )
+
+        # then
+        self.assertEqual(response.status_code, 200)
