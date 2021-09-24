@@ -33,7 +33,7 @@ repos:
         exclude: ^(LICENSE|aa_forum/static/aa_forum/libs/|aa_forum/static/aa_forum/ckeditor)
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.25.0
+    rev: v2.27.0
     hooks:
       - id: pyupgrade
         args: [ --py36-plus ]
@@ -49,7 +49,7 @@ repos:
       - id: isort
 
   - repo: https://github.com/psf/black
-    rev: 21.8b0
+    rev: 21.9b0
     hooks:
       - id: black
 
@@ -57,4 +57,4 @@ repos:
     rev: v1.11.0
     hooks:
       - id: blacken-docs
-        additional_dependencies: [ black==21.8b0 ]
+        additional_dependencies: [ black==21.9b0 ]
