@@ -43,12 +43,12 @@
 {% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" type="text/css" href="{% versioned_static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% versioned_static 'aa_forum/css/aa-forum.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% aa_forum_static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% aa_forum_static 'aa_forum/css/aa-forum.min.css' %}">
 {% endblock %}
 
 {% block extra_javascript %}
     <script type="application/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
     <script type="application/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-    <script type="application/javascript" src="{% versioned_static 'aa_forum/javascript/aa-forum-ckeditor.min.js' %}"></script>
+    <script type="application/javascript" src="{% aa_forum_static 'aa_forum/javascript/aa-forum-ckeditor.min.js' %}"></script>
 {% endblock %}

@@ -9,7 +9,7 @@ from aa_forum import __version__
 
 
 @register.simple_tag
-def versioned_static(path: str) -> str:
+def aa_forum_static(path: str) -> str:
     """
     Versioned static URL
     :param path:
