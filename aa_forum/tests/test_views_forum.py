@@ -850,7 +850,7 @@ class TestTopicViews(TestCase):
             "<h4>Error!</h4><p>The message doesn't exist ...</p>",
         )
 
-    def test_should_show_all_unread_messages(self):
+    def test_should_show_all_unread_messages_view(self):
         # given
         self.client.force_login(self.user_1001)
 
