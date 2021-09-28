@@ -38,3 +38,14 @@ branch will be considered.
 
 Please make sure you have signed the [License Agreement](https://developers.eveonline.com/resource/license-agreement)
 by logging in at https://developers.eveonline.com before submitting any pull requests.
+
+### Test Coverage
+
+Please make sure your contribution come with tests covering your additions and
+changes. We aim to provide a test coverage of well above 80% in this project. Pull
+requests lowering the test coverage will not be considered for merging.
+
+You can run tests locally via:
+```shell
+make coverage
+```
