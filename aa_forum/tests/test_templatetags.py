@@ -3,9 +3,9 @@ from django.test import TestCase
 
 from allianceauth.tests.auth_utils import AuthUtils
 
-from .utils import create_fake_user
+from aa_forum import __version__
 
-# from aa_forum import __version__
+from .utils import create_fake_user
 
 
 class TestMainCharacterName(TestCase):
@@ -266,17 +266,17 @@ class TestForumTemplateVariables(TestCase):
             )
 
 
-# class TestForumVersionedStatic(TestCase):
-#     def test_versioned_static(self):
-#         context = Context({"version": __version__})
-#         template_to_render = Template(
-#             "{% load aa_forum_versioned_static %}"
-#             "{% versioned_static 'aa_forum/css/aa-forum.min.css' %}"
-#         )
-#
-#         rendered_template = template_to_render.render(context)
-#
-#         self.assertInHTML(
-#             f'/static/aa_forum/css/aa-forum.min.css?v={context["version"]}',
-#             rendered_template,
-#         )
+class TestForumVersionedStatic(TestCase):
+    def test_versioned_static(self):
+        context = Context({"version": __version__})
+        template_to_render = Template(
+            "{% load aa_forum_versioned_static %}"
+            "{% aa_forum_static 'aa_forum/css/aa-forum.min.css' %}"
+        )
+
+        rendered_template = template_to_render.render(context)
+
+        self.assertInHTML(
+            f'/static/aa_forum/css/aa-forum.min.css?v={context["version"]}',
+            rendered_template,
+        )

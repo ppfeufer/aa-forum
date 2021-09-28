@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [1.1.2] - 2021-09-28
+
+### Fixed
+
+- A potential issue with one of our template tags
+
+
 ## [1.1.1] - 2021-09-18
 
 ### Fixed
