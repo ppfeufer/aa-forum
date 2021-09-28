@@ -337,6 +337,60 @@ class TestBoardViews(TestCase):
             ),
         )
 
+    def test_should_return_category_does_not_exists_on_new_topic(self):
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_board_new_topic",
+                args=["foo", "bar"],
+            ),
+        )
+
+        # then
+        messages = list(get_messages(response.wsgi_request))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRaises(Category.DoesNotExist)
+        self.assertEqual(response.url, reverse("aa_forum:forum_index"))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            (
+                "<h4>Error!</h4><p>The category you were trying to post in does "
+                "not exist ...</p>"
+            ),
+        )
+
+    def test_should_return_board_does_not_exists_on_new_topic(self):
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_board_new_topic",
+                args=[self.category.slug, "bar"],
+            ),
+        )
+
+        # then
+        messages = list(get_messages(response.wsgi_request))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRaises(Board.DoesNotExist)
+        self.assertEqual(response.url, reverse("aa_forum:forum_index"))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            (
+                "<h4>Error!</h4><p>The board you were trying to post in does "
+                "either not exist, or you don't have access to it ...</p>"
+            ),
+        )
+
 
 @patch(VIEWS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
 class TestTopicViews(TestCase):
