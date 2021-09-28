@@ -861,3 +861,78 @@ class TestTopicViews(TestCase):
 
         # then
         self.assertEqual(response.status_code, 200)
+
+    def test_should_return_to_forum_index_on_topic_modify_when_no_topic_found(self):
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_topic_modify",
+                args=["foo", "bar", "foobar"],
+            ),
+        )
+
+        # then
+        messages = list(get_messages(response.wsgi_request))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse("aa_forum:forum_index"))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            (
+                "<h4>Error!</h4><p>The topic you were trying to modify does not "
+                "exist or you do not have access to it.</p>"
+            ),
+        )
+
+    def test_should_redirect_to_topic_view_for_user_without_rights_to_modify_topic(
+        self,
+    ):
+        # given
+        user_without_modify_perms = create_fake_user(
+            1002, "Peter Parker", permissions=["aa_forum.basic_access"]
+        )
+        self.client.force_login(user_without_modify_perms)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_topic_modify",
+                args=[self.category.slug, self.board.slug, self.topic.slug],
+            ),
+        )
+
+        # then
+        messages = list(get_messages(response.wsgi_request))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.url,
+            reverse(
+                "aa_forum:forum_topic",
+                args=[self.category.slug, self.board.slug, self.topic.slug],
+            ),
+        )
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            "<h4>Error!</h4><p>You are not allowed to modify this topic!</p>",
+        )
+
+    def test_should_show_modify_topic_view(self):
+        # given
+        self.client.force_login(self.user_1003)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_topic_modify",
+                args=[self.category.slug, self.board.slug, self.topic.slug],
+            ),
+        )
+
+        # then
+        self.assertEqual(response.status_code, 200)
