@@ -515,30 +515,29 @@ class TestTopicViews(TestCase):
         # then
         self.assertRedirects(res, first_unseen_message.get_absolute_url())
 
-    # Fails randomly ...
-    # def test_should_redirect_to_first_unseen_message_when_last_seen_message_deleted(
-    #     self,
-    # ):
-    #     # given
-    #     self.client.force_login(self.user_1001)
-    #     messages_sorted = list(self.topic.messages.order_by("time_posted"))
-    #     last_seen_message = messages_sorted[2]
-    #     first_unseen_message = messages_sorted[3]
-    #     LastMessageSeen.objects.create(
-    #         topic=self.topic,
-    #         user=self.user_1001,
-    #         message_time=last_seen_message.time_posted,
-    #     )
-    #     last_seen_message.delete()
-    #     # when
-    #     res = self.client.get(
-    #         reverse(
-    #             "aa_forum:forum_topic_first_unread_message",
-    #             args=[self.category.slug, self.board.slug, self.topic.slug],
-    #         )
-    #     )
-    #     # then
-    #     self.assertRedirects(res, first_unseen_message.get_absolute_url())
+    def test_should_redirect_to_first_unseen_message_when_last_seen_message_deleted(
+        self,
+    ):
+        # given
+        self.client.force_login(self.user_1001)
+        messages_sorted = list(self.topic.messages.order_by("time_posted"))
+        last_seen_message = messages_sorted[2]
+        first_unseen_message = messages_sorted[3]
+        LastMessageSeen.objects.create(
+            topic=self.topic,
+            user=self.user_1001,
+            message_time=last_seen_message.time_posted,
+        )
+        last_seen_message.delete()
+        # when
+        res = self.client.get(
+            reverse(
+                "aa_forum:forum_topic_first_unread_message",
+                args=[self.category.slug, self.board.slug, self.topic.slug],
+            )
+        )
+        # then
+        self.assertRedirects(res, first_unseen_message.get_absolute_url())
 
     def test_should_redirect_to_newest_message_when_seen_full_topic(self):
         # given
