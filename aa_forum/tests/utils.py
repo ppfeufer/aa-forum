@@ -15,10 +15,9 @@ from aa_forum.constants import SETTING_MESSAGESPERPAGE
 
 from ..models import Message, Setting, Topic
 
-MAX_MESSAGE_HOURS_INTO_PAST = 1000
-
-MESSAGE_DATETIME_HOURS_INTO_PAST = 24
-MESSAGE_DATETIME_MINUTES_OFFSET = 1
+MESSAGE_DATETIME_HOURS_INTO_PAST = 240
+MESSAGE_DATETIME_MINUTES_OFFSET = 2
+NEW_MESSAGE_DATETIME = now() - dt.timedelta(hours=MESSAGE_DATETIME_HOURS_INTO_PAST)
 
 fake = Faker()
 
@@ -81,6 +80,7 @@ def create_fake_messages(topic: Topic, amount) -> List[Message]:
     """
     Create a bunch of fake messages in given topic.
     """
+
     users = list(User.objects.all())
     messages = list()
 
@@ -91,29 +91,17 @@ def create_fake_messages(topic: Topic, amount) -> List[Message]:
     return messages
 
 
-def random_dt() -> dt.datetime:
-    """
-    Return random datetime between now and x hours into the past.
-    """
-
-    return now() - dt.timedelta(
-        hours=random.randint(0, MAX_MESSAGE_HOURS_INTO_PAST),
-        minutes=random.randint(0, 59),
-        seconds=random.randint(0, 59),
-    )
-
-
 def message_datetime():
     """
-    make sure follow-up messages can not be before the earlier message
+    Make sure follow-up messages can not be before the earlier message
     :return:
     :rtype:
     """
 
     global MESSAGE_DATETIME_MINUTES_OFFSET
 
-    message_datetime = now() - dt.timedelta(
-        hours=MESSAGE_DATETIME_HOURS_INTO_PAST, minutes=MESSAGE_DATETIME_MINUTES_OFFSET
+    message_datetime = NEW_MESSAGE_DATETIME + dt.timedelta(
+        minutes=MESSAGE_DATETIME_MINUTES_OFFSET
     )
 
     MESSAGE_DATETIME_MINUTES_OFFSET += 2
@@ -122,7 +110,11 @@ def message_datetime():
 
 
 def my_get_setting(setting_key: str) -> str:
-    """Overload settings for tests."""
+    """
+    Overload settings for tests.
+    """
+
     if setting_key == SETTING_MESSAGESPERPAGE:
         return "5"
+
     return Setting.objects.get_setting(setting_key=setting_key)
