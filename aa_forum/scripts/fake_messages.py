@@ -26,7 +26,7 @@ MESSAGE_DATETIME_MINUTES_OFFSET = 2
 NEW_MESSAGE_DATETIME = now() - dt.timedelta(hours=MESSAGE_DATETIME_HOURS_INTO_PAST)
 
 
-def random_dt() -> dt.datetime:
+def message_datetime() -> dt.datetime:
     """
     Return random datetime between now and x hours into the past.
     """
@@ -70,7 +70,7 @@ def run():
 
         # Add some messages to topics
         if topics:
-            with patch("django.utils.timezone.now", new=random_dt):
+            with patch("django.utils.timezone.now", new=message_datetime):
                 for num, topic in enumerate(topics):
                     print(f"Generating messages for topic {num + 1} / {len(topics)}")
 
