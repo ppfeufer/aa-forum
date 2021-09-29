@@ -17,23 +17,29 @@ from django.utils.timezone import now
 
 from aa_forum.models import Board, Message, Topic
 
-MAX_MESSAGE_HOURS_INTO_PAST = 1000
 MIN_TOPICS_PER_BOARD = 3
 MAX_TOPICS_PER_BOARD = 20
 MIN_MESSAGES_PER_TOPIC = 2
 MAX_MESSAGES_PER_TOPIC = 35
+MESSAGE_DATETIME_HOURS_INTO_PAST = 240
+MESSAGE_DATETIME_MINUTES_OFFSET = 2
+NEW_MESSAGE_DATETIME = now() - dt.timedelta(hours=MESSAGE_DATETIME_HOURS_INTO_PAST)
 
 
-def random_dt() -> dt.datetime:
+def message_datetime() -> dt.datetime:
     """
     Return random datetime between now and x hours into the past.
     """
 
-    return now() - dt.timedelta(
-        hours=random.randint(0, MAX_MESSAGE_HOURS_INTO_PAST),
-        minutes=random.randint(0, 59),
-        seconds=random.randint(0, 59),
+    global MESSAGE_DATETIME_MINUTES_OFFSET
+
+    message_datetime = NEW_MESSAGE_DATETIME + dt.timedelta(
+        minutes=MESSAGE_DATETIME_MINUTES_OFFSET
     )
+
+    MESSAGE_DATETIME_MINUTES_OFFSET += 2
+
+    return message_datetime
 
 
 def run():
@@ -47,10 +53,13 @@ def run():
     # Add some topics
     boards = Board.objects.all()
     board_count = boards.count()
+
     if board_count > 0:
         topics = list()
+
         for num, board in enumerate(boards):
             print(f"Generating topics for board {num + 1} / {board_count}")
+
             for _ in range(
                 random.randrange(MIN_TOPICS_PER_BOARD, MAX_TOPICS_PER_BOARD)
             ):
@@ -61,9 +70,10 @@ def run():
 
         # Add some messages to topics
         if topics:
-            with patch("django.utils.timezone.now", new=random_dt):
+            with patch("django.utils.timezone.now", new=message_datetime):
                 for num, topic in enumerate(topics):
                     print(f"Generating messages for topic {num + 1} / {len(topics)}")
+
                     for _ in range(
                         random.randrange(MIN_MESSAGES_PER_TOPIC, MAX_MESSAGES_PER_TOPIC)
                     ):
@@ -74,8 +84,11 @@ def run():
                             message=f"<p>{fake.sentence()}</p>",
                             user_created_id=random.choice(user_ids),
                         )
+
                     topic.update_last_message()
+
             print(f"Updating {len(boards)} boards...")
+
             for board in boards:
                 board.update_last_message()
 
