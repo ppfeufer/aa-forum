@@ -99,7 +99,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: artifacts
+          name: coverage
           path: coverage.xml
 
 #      - name: Upload coverage to Codecov
@@ -129,8 +129,8 @@ jobs:
 
       - name: Download artifacts
         uses: actions/download-artifact@v2
-#        with:
-#          path: artifacts
+        with:
+          path: artifacts
 
       - name: Display structure of downloaded files
         run: ls -Rrtlh
@@ -140,7 +140,7 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          files: artifacts/coverage.xml # optional
+          files: artifacts/coverage/coverage.xml # optional
 #          flags: unittests # optional
 #          name: codecov-umbrella # optional
 #          fail_ci_if_error: true # optional (default = false)
@@ -150,7 +150,7 @@ jobs:
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: artifacts/coverage.xml
+          coverage-reports: artifacts/coverage/coverage.xml
 
 #  upload-to-codacy:
 #    needs: [test-coverage]
