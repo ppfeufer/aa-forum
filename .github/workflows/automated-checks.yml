@@ -108,16 +108,17 @@ jobs:
 ##          fail_ci_if_error: true # optional (default = false)
 #          verbose: true # optional (default = false)
 
-      - name: Upload to Codacy Coverage Reporter
-        uses: codacy/codacy-coverage-reporter-action@v1
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage.xml
+#      - name: Upload to Codacy Coverage Reporter
+#        uses: codacy/codacy-coverage-reporter-action@v1
+#        with:
+#          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+#          coverage-reports: coverage.xml
 
-  upload-to-codecov:
+  upload-coverage:
     needs: [test-coverage]
     name: Upload Coverage to Codecov
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -134,6 +135,30 @@ jobs:
 #          name: codecov-umbrella # optional
 #          fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
+
+      - name: Upload to Codacy Coverage Reporter
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage.xml
+
+#  upload-to-codacy:
+#    needs: [test-coverage]
+#    name: Upload Coverage to Codacy
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#
+#      - name: Download artifacts
+#        uses: actions/download-artifact@v2
+#
+#      - name: Upload to Codacy Coverage Reporter
+#        uses: codacy/codacy-coverage-reporter-action@v1
+#        with:
+#          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+#          coverage-reports: coverage.xml
 
   # pypi build test
   pypi-build-test:
