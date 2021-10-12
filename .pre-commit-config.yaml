@@ -33,7 +33,7 @@ repos:
         exclude: ^(LICENSE|aa_forum/static/aa_forum/libs/|aa_forum/static/aa_forum/ckeditor)
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.27.0
+    rev: v2.29.0
     hooks:
       - id: pyupgrade
         args: [ --py36-plus ]
@@ -42,6 +42,11 @@ repos:
     rev: 3.9.2
     hooks:
       - id: flake8
+
+  - repo: https://github.com/asottile/yesqa
+    rev: v1.2.3
+    hooks:
+      - id: yesqa
 
   - repo: https://github.com/pre-commit/mirrors-isort
     rev: v5.9.3
