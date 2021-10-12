@@ -96,9 +96,10 @@ jobs:
         # Run tox using the version of Python in `PATH`
         run: tox -e py
 
-      - uses: actions/upload-artifact@v2
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
         with:
-          name: Save Coverage Artifact
+          name: artifacts
           path: coverage.xml
 
 #      - name: Upload coverage to Codecov
@@ -132,7 +133,7 @@ jobs:
           path: artifacts
 
       - name: Display structure of downloaded files
-        run: ls -R
+        run: ls -Rrtlh
         working-directory: artifacts
 
       - name: Upload to Codecov
