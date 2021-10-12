@@ -36,9 +36,10 @@ jobs:
     needs: [pre-commit]
     name: Codacy Security Scan
     runs-on: ubuntu-latest
+
     steps:
       # Checkout the repository to the GitHub Actions runner
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v2
 
       # Execute Codacy Analysis CLI and generate a SARIF output with the security issues identified during the analysis
@@ -67,14 +68,16 @@ jobs:
   test-coverage:
     needs: [codacy-security-scan]
     name: Test Coverage
-
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         python: [ 3.6, 3.7, 3.8, 3.9 ]
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Install redis
         run: sudo apt-get install -y redis-tools redis-server
 
@@ -116,7 +119,7 @@ jobs:
 
   upload-coverage:
     needs: [test-coverage]
-    name: Upload Coverage to Codecov
+    name: Upload Coverage to Codecov and Codacy
     runs-on: ubuntu-latest
 
     steps:
@@ -130,7 +133,7 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-#          files: ./coverage1.xml,./coverage2.xml # optional
+          files: 'Save Coverage Artifact/coverage.xml' # optional
 #          flags: unittests # optional
 #          name: codecov-umbrella # optional
 #          fail_ci_if_error: true # optional (default = false)
@@ -140,7 +143,7 @@ jobs:
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage.xml
+          coverage-reports: 'Save Coverage Artifact/coverage.xml'
 
 #  upload-to-codacy:
 #    needs: [test-coverage]
