@@ -16,7 +16,7 @@ on:
       - '**'
 
 jobs:
-  # pre-commit checks
+  # pre-commit Checks
   pre-commit:
     name: Pre Commit Checks
     runs-on: ubuntu-latest
@@ -31,14 +31,15 @@ jobs:
       - name: Run Pre Commit Checks
         uses: pre-commit/action@v2.0.0
 
-  # codacy security scan
+  # Codacy Security Scan
   codacy-security-scan:
     needs: [pre-commit]
     name: Codacy Security Scan
     runs-on: ubuntu-latest
+
     steps:
       # Checkout the repository to the GitHub Actions runner
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v2
 
       # Execute Codacy Analysis CLI and generate a SARIF output with the security issues identified during the analysis
@@ -63,18 +64,20 @@ jobs:
         with:
           sarif_file: results.sarif
 
-  # run test coverage
+  # Run Test Coverage
   test-coverage:
     needs: [codacy-security-scan]
     name: Test Coverage
-
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         python: [ 3.6, 3.7, 3.8, 3.9 ]
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Install redis
         run: sudo apt-get install -y redis-tools redis-server
 
@@ -93,23 +96,48 @@ jobs:
         # Run tox using the version of Python in `PATH`
         run: tox -e py
 
-      - name: Upload coverage to Codecov
+      - name: Upload Coverage Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: coverage.xml
+
+  # Coverage upload to Codecov and Codacy
+  upload-coverage:
+    needs: [test-coverage]
+    name: Upload Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -Rrtlh
+        working-directory: artifacts
+
+      - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-#          files: ./coverage1.xml,./coverage2.xml # optional
+          files: artifacts/coverage/coverage.xml # optional
 #          flags: unittests # optional
 #          name: codecov-umbrella # optional
 #          fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
 
-      - name: Upload to Codacy Coverage Reporter
+      - name: Upload Coverage to Codacy Coverage Reporter
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage.xml
+          coverage-reports: artifacts/coverage/coverage.xml
 
-  # pypi build test
+  # Pypi Build Test
   pypi-build-test:
     needs: [test-coverage]
     name: PyPi Build Test
