@@ -93,6 +93,11 @@ jobs:
         # Run tox using the version of Python in `PATH`
         run: tox -e py
 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Save Coverage Artifact
+          path: coverage.xml
+
 #      - name: Upload coverage to Codecov
 #        uses: codecov/codecov-action@v2
 #        with:
@@ -111,13 +116,15 @@ jobs:
 
   upload-to-codecov:
     needs: [test-coverage]
-    name: Upload coverage to Codecov
+    name: Upload Coverage to Codecov
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Download artifacts
         uses: actions/download-artifact@v2
+
       - name: Upload to Codecov
         uses: codecov/codecov-action@v2
         with:
