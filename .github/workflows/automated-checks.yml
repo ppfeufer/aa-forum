@@ -106,6 +106,7 @@ jobs:
         with:
           name: coverage
           path: coverage.xml
+          if-no-files-found: ignore
 
   # Coverage upload to Codecov and Codacy
   upload-coverage:
