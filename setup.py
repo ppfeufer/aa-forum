@@ -29,7 +29,7 @@ project_homepage_url = project_git_url
 project_install_requirements = [
     "allianceauth>=2.8.2",
     "django-ckeditor",
-    "allianceauth-app-utils>=1.8.0",
+    "allianceauth-app-utils>=1.8.1",
     "unidecode",
 ]
 project_python_requires = "~=3.6"
