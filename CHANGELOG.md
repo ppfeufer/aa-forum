@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [1.2.0] - 2021-11-30
+
+### Changed
+
+- Minimum requirements
+  - Python 3.7
+  - Alliance Auth v2.9.3
+  - Django ckEditor v6.2.0
+  - Alliance Auth App Utils v1.8.2
+  - Unidecode v1.3.2
+
+
 ## [1.1.3] - 2021-10-31
 
 ### Changed
