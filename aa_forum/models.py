@@ -9,8 +9,6 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 from django.contrib.auth.models import Group, User
 from django.db import models, transaction
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils.text import slugify
@@ -556,20 +554,3 @@ class Setting(models.Model):
         default_permissions = ()
         verbose_name = _("setting")
         verbose_name_plural = _("settings")
-
-
-@receiver(post_save, sender=Board)
-def sync_parent_board_access_to_child_board(sender, instance, **kwargs):
-    """
-    Keeps the access restrictions in sync between parent boards and their children
-    """
-
-    if instance.parent_board:
-        parent_board = Board.objects.get(pk=instance.parent_board.pk)
-
-        instance.groups.set(parent_board.groups.all())
-    else:
-        child_boards = instance.child_boards.all()
-
-        for child_board in child_boards:
-            child_board.groups.set(instance.groups.all())

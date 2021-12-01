@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [1.2.1] - Unreleased
+
+### Code Change
+
+- Model signals moved to their own file
+
+
 ## [1.2.0] - 2021-11-30
 
 ### Changed
