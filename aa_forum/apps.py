@@ -15,3 +15,6 @@ class AaForumConfig(AppConfig):
     name = "aa_forum"
     label = "aa_forum"
     verbose_name = f"AA Forum v{__version__}"
+
+    def ready(self):
+        import aa_forum.signals  # noqa: F401 # pylint: disable=unused-import
