@@ -32,6 +32,8 @@
 
                     {% if not is_child_board %}
                         {{ board.board_forms.board_edit_form.groups|bootstrap }}
+                    {% else %}
+
                     {% endif %}
 
                     <div class="form-group aa-forum-form-new-category text-right clearfix">
@@ -64,7 +66,7 @@
 
                             {{ board.board_forms.new_child_board_form.name|bootstrap }}
                             {{ board.board_forms.new_child_board_form.description|bootstrap }}
-                            {{ board.board_forms.board_edit_form.discord_webhook|bootstrap }}
+                            {{ board.board_forms.new_child_board_form.discord_webhook|bootstrap }}
 
                             <div class="form-group aa-forum-form-new-category text-right clearfix">
                                 <button class="btn btn-primary btn-sm" type="submit">
