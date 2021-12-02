@@ -22,6 +22,11 @@ class TestBoard(TestCase):
     def setUp(self) -> None:
         self.category = Category.objects.create(name="Science")
 
+    def test_model_string_names(self):
+        board = Board.objects.create(name="Physics", category=self.category)
+
+        self.assertEqual(str(board), "Physics")
+
     def test_should_update_last_message_normal(self):
         # given
         board = Board.objects.create(name="Physics", category=self.category)
@@ -130,6 +135,11 @@ class TestCategory(TestCase):
         super().setUpClass()
         cls.user = create_fake_user(1001, "Bruce Wayne")
 
+    def test_model_string_names(self):
+        category = Category.objects.create(name="Science")
+
+        self.assertEqual(str(category), "Science")
+
     def test_should_create_new_category_with_slug(self):
         # when
         category = Category.objects.create(name="Science")
@@ -183,6 +193,13 @@ class TestMessage(TestCase):
         category = Category.objects.create(name="Science")
         self.board = Board.objects.create(name="Physics", category=category)
         self.topic = Topic.objects.create(subject="Mysteries", board=self.board)
+
+    def test_model_string_names(self):
+        message = Message.objects.create(
+            topic=self.topic, user_created=self.user, message="What is dark energy?"
+        )
+
+        self.assertEqual(str(message), str(message.pk))
 
     def test_should_update_first_and_last_messages_when_saving_1(self):
         # when
@@ -286,6 +303,11 @@ class TestTopic(TestCase):
     def setUp(self) -> None:
         category = Category.objects.create(name="Science")
         self.board = Board.objects.create(name="Physics", category=category)
+
+    def test_model_string_names(self):
+        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+
+        self.assertEqual(str(topic), "Mysteries")
 
     def test_should_update_last_message_normal(self):
         # given
