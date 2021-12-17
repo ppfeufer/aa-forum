@@ -42,6 +42,30 @@ class TestBoard(TestCase):
         board.refresh_from_db()
         self.assertEqual(board.last_message, message)
 
+    # def test_should_update_last_message_normal_from_child_board(self):
+    #     # given
+    #     board = Board.objects.create(name="Physics", category=self.category)
+    #     child_board = Board.objects.create(
+    #         name="Chemistry", category=self.category, parent_board=board
+    #     )
+    #     topic_board = Topic.objects.create(subject="Mysteries", board=board)
+    #     topic_child_board = Topic.objects.create(subject="Mysteries", board=child_board)
+    #     message_board = Message.objects.create(
+    #         topic=topic_board, user_created=self.user, message="What is dark energy?"
+    #     )
+    #     message_child_board = Message.objects.create(
+    #         topic=topic_child_board,
+    #         user_created=self.user,
+    #         message="What is dark energy?",
+    #     )
+    #     board.last_message = None
+    #     board.save()
+    #     # when
+    #     board.update_last_message()
+    #     # then
+    #     board.refresh_from_db()
+    #     self.assertEqual(board.last_message, message_child_board)
+
     def test_should_update_last_message_empty(self):
         # given
         board = Board.objects.create(name="Physics", category=self.category)
@@ -192,6 +216,9 @@ class TestMessage(TestCase):
     def setUp(self) -> None:
         category = Category.objects.create(name="Science")
         self.board = Board.objects.create(name="Physics", category=category)
+        self.child_board = Board.objects.create(
+            name="Chemistry", category=category, parent_board=self.board
+        )
         self.topic = Topic.objects.create(subject="Mysteries", board=self.board)
 
     def test_model_string_names(self):
@@ -303,6 +330,9 @@ class TestTopic(TestCase):
     def setUp(self) -> None:
         category = Category.objects.create(name="Science")
         self.board = Board.objects.create(name="Physics", category=category)
+        self.child_board = Board.objects.create(
+            name="Chemistry", category=category, parent_board=self.board
+        )
 
     def test_model_string_names(self):
         topic = Topic.objects.create(subject="Mysteries", board=self.board)
@@ -312,6 +342,20 @@ class TestTopic(TestCase):
     def test_should_update_last_message_normal(self):
         # given
         topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        message = Message.objects.create(
+            topic=topic, user_created=self.user, message="What is dark energy?"
+        )
+        topic.last_message = None
+        topic.save()
+        # when
+        topic.update_last_message()
+        # then
+        topic.refresh_from_db()
+        self.assertEqual(topic.last_message, message)
+
+    def test_should_update_last_message_normal_from_child_board(self):
+        # given
+        topic = Topic.objects.create(subject="Mysteries", board=self.child_board)
         message = Message.objects.create(
             topic=topic, user_created=self.user, message="What is dark energy?"
         )
