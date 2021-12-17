@@ -290,6 +290,10 @@ class Topic(models.Model):
 
         try:
             self.board.last_message = self.last_message
+
+            if self.board.parent_board is not None:
+                self.board.parent_board.last_message = self.last_message
+                self.board.parent_board.save()
         except Message.DoesNotExist:
             self.board.last_message = None
 
