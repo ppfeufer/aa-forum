@@ -2,10 +2,13 @@
 Setting up our app
 """
 
+# Standard Library
 import os
 
+# Third Party
 from setuptools import find_packages, setup
 
+# AA Forum
 from aa_forum import __version__
 
 # Read the contents of your README file

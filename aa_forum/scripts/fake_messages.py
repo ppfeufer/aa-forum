@@ -6,15 +6,19 @@ Shortcuts:
 - from aa_forum.scripts import fake_messages;fake_messages.run()
 """
 
+# Standard Library
 import datetime as dt
 import random
 from unittest.mock import patch
 
+# Third Party
 from faker import Faker
 
+# Django
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
+# AA Forum
 from aa_forum.models import Board, Message, Topic
 
 MIN_TOPICS_PER_BOARD = 3

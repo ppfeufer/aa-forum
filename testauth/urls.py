@@ -1,5 +1,7 @@
+# Third Party
 from ckeditor_uploader import views
 
+# Django
 from django.conf.urls import include, url
 from django.contrib.auth.decorators import login_required
 
@@ -7,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import re_path
 from django.views.decorators.cache import never_cache
 
+# Alliance Auth
 from allianceauth import urls
 
 urlpatterns = [

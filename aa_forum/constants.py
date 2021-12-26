@@ -2,8 +2,10 @@
 Constants
 """
 
+# Django
 from django.utils.text import slugify
 
+# AA Forum
 from aa_forum import __version__
 
 github_url = "https://github.com/ppfeufer/aa-forum"

@@ -4,6 +4,7 @@ Template tag
 Do some useful stuff with a User object
 """
 
+# Django
 from django.contrib.auth.models import User
 from django.template.defaulttags import register
 

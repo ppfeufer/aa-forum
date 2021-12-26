@@ -2,9 +2,11 @@
 Versioned static URLs to break browser caches when changing the app version
 """
 
+# Django
 from django.template.defaulttags import register
 from django.templatetags.static import static
 
+# AA Forum
 from aa_forum import __version__
 
 

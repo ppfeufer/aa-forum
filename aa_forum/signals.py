@@ -2,9 +2,11 @@
 Our signals
 """
 
+# Django
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+# AA Forum
 from aa_forum.models import Board
 
 

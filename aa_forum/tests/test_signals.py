@@ -2,11 +2,13 @@
 Test our signals
 """
 
+# Django
 from django.contrib.auth.models import Group
 from django.test import TestCase
 
-from ..models import Board, Category
-from .utils import create_fake_user
+# AA Forum
+from aa_forum.models import Board, Category
+from aa_forum.tests.utils import create_fake_user
 
 MODELS_PATH = "aa_forum.models"
 

@@ -2,8 +2,10 @@
 App config
 """
 
+# Django
 from django.apps import AppConfig
 
+# AA Forum
 from aa_forum import __version__
 
 
@@ -17,4 +19,5 @@ class AaForumConfig(AppConfig):
     verbose_name = f"AA Forum v{__version__}"
 
     def ready(self):
+        # AA Forum
         import aa_forum.signals  # noqa: F401 # pylint: disable=unused-import

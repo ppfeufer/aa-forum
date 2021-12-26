@@ -2,9 +2,11 @@
 Django admin declarations
 """
 
+# Django
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
+# AA Forum
 from aa_forum.models import Board, Category, Topic
 
 

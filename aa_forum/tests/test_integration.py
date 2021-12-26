@@ -1,9 +1,16 @@
+# Third Party
 from django_webtest import WebTest
 
+# Django
 from django.urls import reverse
 
-from ..models import Board, Category, Message, Topic
-from .utils import create_fake_message, create_fake_messages, create_fake_user
+# AA Forum
+from aa_forum.models import Board, Category, Message, Topic
+from aa_forum.tests.utils import (
+    create_fake_message,
+    create_fake_messages,
+    create_fake_user,
+)
 
 # from django.urls import reverse
 

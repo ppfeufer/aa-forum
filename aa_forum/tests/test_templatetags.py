@@ -1,11 +1,13 @@
+# Django
 from django.template import Context, Template, TemplateSyntaxError
 from django.test import TestCase
 
+# Alliance Auth
 from allianceauth.tests.auth_utils import AuthUtils
 
+# AA Forum
 from aa_forum import __version__
-
-from .utils import create_fake_user
+from aa_forum.tests.utils import create_fake_user
 
 
 class TestMainCharacterName(TestCase):
