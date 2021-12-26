@@ -1,10 +1,13 @@
+# Standard Library
 import json
 
+# Django
 from django.test import TestCase
 from django.urls import reverse
 
-from ..models import Board, Category
-from .utils import create_fake_user
+# AA Forum
+from aa_forum.models import Board, Category
+from aa_forum.tests.utils import create_fake_user
 
 VIEWS_PATH = "aa_forum.views.admin"
 

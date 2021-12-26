@@ -2,11 +2,14 @@
 Template filter for search views
 """
 
+# Standard Library
 import re
 
+# Django
 from django.template.defaulttags import register
 from django.utils.safestring import mark_safe
 
+# AA Forum
 from aa_forum.constants import SEARCH_STOPWORDS
 
 

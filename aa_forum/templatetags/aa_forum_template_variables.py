@@ -2,6 +2,7 @@
 Set custom variables in a Django template
 """
 
+# Django
 from django import template
 
 register = template.Library()

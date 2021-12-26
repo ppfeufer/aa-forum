@@ -1,3 +1,4 @@
+# Django
 from django.db import migrations
 
 default_settings_to_migrate = [

@@ -1,12 +1,15 @@
+# Standard Library
 from unittest.mock import patch
 
+# Django
 from django.contrib.auth.models import Group
 from django.contrib.messages import get_messages
 from django.test import TestCase
 from django.urls import reverse
 
-from ..models import Board, Category, LastMessageSeen, Message, Topic
-from .utils import create_fake_messages, create_fake_user, my_get_setting
+# AA Forum
+from aa_forum.models import Board, Category, LastMessageSeen, Message, Topic
+from aa_forum.tests.utils import create_fake_messages, create_fake_user, my_get_setting
 
 VIEWS_PATH = "aa_forum.views.forum"
 

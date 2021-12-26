@@ -1,13 +1,16 @@
+# Standard Library
 import datetime as dt
 from unittest.mock import patch
 
+# Django
 from django.contrib.auth.models import Group
 from django.test import TestCase
 from django.urls import reverse
 from django.utils.timezone import now
 
-from ..models import Board, Category, Message, Topic
-from .utils import create_fake_messages, create_fake_user, my_get_setting
+# AA Forum
+from aa_forum.models import Board, Category, Message, Topic
+from aa_forum.tests.utils import create_fake_messages, create_fake_user, my_get_setting
 
 MODELS_PATH = "aa_forum.models"
 

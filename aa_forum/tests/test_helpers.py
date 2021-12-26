@@ -1,10 +1,13 @@
+# Standard Library
 from unittest.mock import patch
 
+# Django
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
 
-from .. import helpers
-from ..forms import NewCategoryForm
+# AA Forum
+from aa_forum import helpers
+from aa_forum.forms import NewCategoryForm
 
 
 @patch("aa_forum.helpers.messages")
