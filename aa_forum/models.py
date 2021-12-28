@@ -294,6 +294,10 @@ class Topic(models.Model):
 
         try:
             self.board.first_message = self.first_message
+
+            if self.board.parent_board is not None:
+                self.board.parent_board.first_message = self.first_message
+                self.board.parent_board.save()
         except Message.DoesNotExist:
             self.board.first_message = None
 
