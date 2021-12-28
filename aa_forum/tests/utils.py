@@ -1,19 +1,23 @@
+# Standard Library
 import datetime as dt
 import random
 import re
 from typing import List
 from unittest.mock import patch
 
+# Third Party
 from faker import Faker
 
+# Django
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
+# Alliance Auth
 from allianceauth.tests.auth_utils import AuthUtils
 
+# AA Forum
 from aa_forum.constants import SETTING_MESSAGESPERPAGE
-
-from ..models import Message, Setting, Topic
+from aa_forum.models import Message, Setting, Topic
 
 MESSAGE_DATETIME_HOURS_INTO_PAST = 240
 MESSAGE_DATETIME_MINUTES_OFFSET = 2

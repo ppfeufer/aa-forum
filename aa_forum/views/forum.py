@@ -2,12 +2,15 @@
 Forum related views
 """
 
+# Standard Library
 from typing import Optional
 
+# Third Party
 import requests
 from app_utils.logging import LoggerAddTag
 from app_utils.urls import reverse_absolute
 
+# Django
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
@@ -22,8 +25,10 @@ from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
+# Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
+# AA Forum
 from aa_forum import __title__
 from aa_forum.constants import SETTING_MESSAGESPERPAGE, SETTING_TOPICSPERPAGE
 from aa_forum.forms import EditMessageForm, EditTopicForm, NewTopicForm

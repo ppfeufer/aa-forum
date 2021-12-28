@@ -2,18 +2,23 @@
 Models
 """
 
+# Standard Library
 import math
 
+# Third Party
 import unidecode
 from ckeditor_uploader.fields import RichTextUploadingField
 
+# Django
 from django.contrib.auth.models import Group, User
 from django.db import models, transaction
+from django.db.models import Q
 from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
+# AA Forum
 from aa_forum.constants import (
     DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
     INTERNAL_URL_PREFIX,
@@ -217,7 +222,11 @@ class Board(models.Model):
         """
 
         self.last_message = (
-            Message.objects.filter(topic__board=self).order_by("-time_posted").first()
+            Message.objects.filter(
+                Q(topic__board=self) | Q(topic__board__parent_board=self)
+            )
+            .order_by("-time_posted")
+            .first()
         )
         self.save(update_fields=["last_message"])
 
@@ -285,11 +294,19 @@ class Topic(models.Model):
 
         try:
             self.board.first_message = self.first_message
+
+            if self.board.parent_board is not None:
+                self.board.parent_board.first_message = self.first_message
+                self.board.parent_board.save()
         except Message.DoesNotExist:
             self.board.first_message = None
 
         try:
             self.board.last_message = self.last_message
+
+            if self.board.parent_board is not None:
+                self.board.parent_board.last_message = self.last_message
+                self.board.parent_board.save()
         except Message.DoesNotExist:
             self.board.last_message = None
 

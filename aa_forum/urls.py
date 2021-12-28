@@ -2,8 +2,10 @@
 AA-Forum path config
 """
 
+# Django
 from django.urls import path
 
+# AA Forum
 from aa_forum.constants import INTERNAL_URL_PREFIX
 from aa_forum.views import admin, forum, search
 

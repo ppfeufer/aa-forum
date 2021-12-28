@@ -2,6 +2,7 @@
 Managers for our models
 """
 
+# Django
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Prefetch, Q
@@ -73,6 +74,7 @@ class TopicQuerySet(models.QuerySet):
         Fetch topic from slugs for user. Return None if not found or no access.
         """
 
+        # AA Forum
         from aa_forum.models import Message
 
         try:

@@ -2,11 +2,14 @@
 Search related views
 """
 
+# Standard Library
 from functools import reduce
 from operator import or_
 
+# Third Party
 from app_utils.logging import LoggerAddTag
 
+# Django
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
@@ -14,8 +17,10 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
 
+# Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
+# AA Forum
 from aa_forum import __title__
 from aa_forum.constants import SEARCH_STOPWORDS, SETTING_MESSAGESPERPAGE
 from aa_forum.models import Board, Message, Setting

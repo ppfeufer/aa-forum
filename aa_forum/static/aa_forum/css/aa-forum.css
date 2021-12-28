@@ -87,8 +87,21 @@
         display: none;
     }
 
+    .aa-forum .aa-forum-admin-panel-aa-forum-category {
+        margin-bottom: 0;
+    }
+
     .aa-forum .aa-forum-admin-panel-aa-forum-category .panel-body {
-        padding: 1rem 1rem 0 1rem;
+        padding: 0 1rem 0 1rem;
+    }
+
+    .aa-forum .aa-forum-admin-panel-aa-forum-category .panel-body .collapse,
+    .aa-forum .aa-forum-admin-panel-aa-forum-category .panel-body .collapsing {
+        margin-top: 1rem;
+    }
+
+    .aa-forum .category-sortable {
+        cursor: move;
     }
 }
 
