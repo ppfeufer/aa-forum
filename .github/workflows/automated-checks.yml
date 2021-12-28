@@ -75,7 +75,7 @@ jobs:
         python-version: [ '3.7', '3.8', '3.9', '3.10', '3.11.0-alpha.3' ]
         django-version: [ '3.2' ]
 
-    continue-on-error: ${{ matrix.python-version == '3.11-dev' }}
+    continue-on-error: ${{ matrix.python-version == '3.11.0-alpha.3' }}
 
     steps:
       - name: Checkout
