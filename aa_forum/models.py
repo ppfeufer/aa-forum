@@ -12,6 +12,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 # Django
 from django.contrib.auth.models import Group, User
 from django.db import models, transaction
+from django.db.models import Q
 from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils.text import slugify
@@ -221,7 +222,11 @@ class Board(models.Model):
         """
 
         self.last_message = (
-            Message.objects.filter(topic__board=self).order_by("-time_posted").first()
+            Message.objects.filter(
+                Q(topic__board=self) | Q(topic__board__parent_board=self)
+            )
+            .order_by("-time_posted")
+            .first()
         )
         self.save(update_fields=["last_message"])
 
