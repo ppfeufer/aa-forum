@@ -99,7 +99,7 @@ jobs:
 
       - name: Run Tox
         # Run tox using the version of Python in `PATH`
-        run: tox -v
+        run: tox -rvve py
         env:
           DJANGO: ${{ matrix.django-version }}
 
