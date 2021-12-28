@@ -6,11 +6,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [Upcoming] - Unreleased
+## [1.3.0] - 2021-12-28
+
+### Added
+
+- Tests for model names
 
 ### Changed
 
-- Using jQuery UI provided by Alliance Auth
+- Now using jQuery UI provided by Alliance Auth
+- Minimum dependencies:
+  - Alliance Auth>=2.9.4
+
+### Fixed
+
+- Posts in child boards were not considered for possibly being the latest post (#78)
 
 
 ## [1.2.1] - 2021-12-01
