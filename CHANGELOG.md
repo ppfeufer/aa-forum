@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [Upcoming] - Unreleased
+
+### Changed
+
+- Using jQuery UI provided by Alliance Auth
+
+
 ## [1.2.1] - 2021-12-01
 
 ### Changed
