@@ -6,9 +6,6 @@ Search related views
 from functools import reduce
 from operator import or_
 
-# Third Party
-from app_utils.logging import LoggerAddTag
-
 # Django
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
@@ -19,6 +16,9 @@ from django.shortcuts import render
 
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
+
+# Alliance Auth (External Libs)
+from app_utils.logging import LoggerAddTag
 
 # AA Forum
 from aa_forum import __title__

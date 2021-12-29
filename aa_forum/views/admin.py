@@ -5,9 +5,6 @@ Administration related views
 # Standard Library
 import json
 
-# Third Party
-from app_utils.logging import LoggerAddTag
-
 # Django
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -26,6 +23,9 @@ from django.utils.translation import gettext as _
 
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
+
+# Alliance Auth (External Libs)
+from app_utils.logging import LoggerAddTag
 
 # AA Forum
 from aa_forum import __title__
