@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Added
+
+- Tests for Python 3.11
+
 ### Fixed
 
 - Some JS fixes
