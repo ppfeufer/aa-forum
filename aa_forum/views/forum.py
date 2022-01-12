@@ -7,8 +7,6 @@ from typing import Optional
 
 # Third Party
 import requests
-from app_utils.logging import LoggerAddTag
-from app_utils.urls import reverse_absolute
 
 # Django
 from django.contrib import messages
@@ -27,6 +25,10 @@ from django.utils.translation import gettext as _
 
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
+
+# Alliance Auth (External Libs)
+from app_utils.logging import LoggerAddTag
+from app_utils.urls import reverse_absolute
 
 # AA Forum
 from aa_forum import __title__

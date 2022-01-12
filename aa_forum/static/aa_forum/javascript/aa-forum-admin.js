@@ -9,13 +9,30 @@ $(function () {
     $('.categories-sortable').sortable({
         placeholder: 'aa-forum-ui-placeholder',
         connectWith: '.categories_sortable',
-        axis: 'y',
+        containment: 'parent',
         start (e, ui) {
+            // get the instance of the sortable.
+            // instance method is new to jquery ui 1.11, for previous versions
+            // you can use $(this).data()['ui-sortable'];
+            let sort = $(this).sortable('instance');
+
             // this makes the placeholder fit with the row that's being dragged
             ui.placeholder.height(ui.helper.height());
+
+            // containment property of the sortable instance is different
+            // as the containment option. The property is calculated
+            // from the option. You need to adjust bottom coordinates
+            // to take into account the row you just removed from it, and the click offset.
+            sort.containment[3] += ui.helper.height() * 2.5;
+
+            // Since your handle is centered, and pointer coordinates are used
+            // for sortable, but top coordinates are used for containment
+            // you can have issues with top row. Adjusting with the click offset
+            // will resolve the issue.
+            sort.containment[1] -= sort.offset.click.top;
         },
-        update (event, ui) {
-            let categories = [];
+        update () {
+            const categories = [];
 
             $('.categories-sortable .category-sortable').each(function (index) {
                 $(this).attr('data-position', index);
@@ -27,7 +44,7 @@ $(function () {
             });
 
             // Update DB
-            let posting = $.post(
+            $.post(
                 aaForumAdminSettings.urls.categoryOrder,
                 {
                     categories: JSON.stringify(categories),
@@ -44,7 +61,7 @@ $(function () {
     /**
      * Sort boards via drag and drop
      */
-    if (typeof categoriesWithBoards !== 'undefined' && categoriesWithBoards.length > 0) {
+    if ('undefined' !== typeof categoriesWithBoards && categoriesWithBoards.length > 0) {
         $(categoriesWithBoards).each(function (key) {
             $(categoriesWithBoards[key]).sortable({
                 placeholder: 'aa-forum-ui-placeholder',
@@ -71,8 +88,8 @@ $(function () {
                     // will resolve the issue.
                     sort.containment[1] -= sort.offset.click.top;
                 },
-                update (event, ui) {
-                    let boards = [];
+                update () {
+                    const boards = [];
 
                     $(categoriesWithBoards[key] + ' li.board-sortable').each(function (index) {
                         $(this).attr('data-position', index);
@@ -84,7 +101,7 @@ $(function () {
                     });
 
                     // Update DB
-                    let posting = $.post(
+                    $.post(
                         aaForumAdminSettings.urls.boardOrder,
                         {
                             boards: JSON.stringify(boards),
@@ -99,7 +116,7 @@ $(function () {
     /**
      * Sort child boards via drag and drop
      */
-    if (typeof boardsWithChildren !== 'undefined' && boardsWithChildren.length > 0) {
+    if ('undefined' !== typeof boardsWithChildren && boardsWithChildren.length > 0) {
         $(boardsWithChildren).each(function (key) {
             $(boardsWithChildren[key]).sortable({
                 placeholder: 'aa-forum-ui-placeholder',
@@ -126,23 +143,23 @@ $(function () {
                     // will resolve the issue.
                     sort.containment[1] -= sort.offset.click.top;
                 },
-                update (event, ui) {
-                    let boards = [];
+                update () {
+                    const childBoards = [];
 
                     $(boardsWithChildren[key] + ' li.child-board-sortable').each(function (index) {
                         $(this).attr('data-position', index);
 
-                        boards.push({
+                        childBoards.push({
                             boardId: $(this).data('board-id'),
                             boardOrder: index
                         });
                     });
 
                     // Update DB
-                    let posting = $.post(
+                    $.post(
                         aaForumAdminSettings.urls.boardOrder,
                         {
-                            boards: JSON.stringify(boards),
+                            boards: JSON.stringify(childBoards),
                             csrfmiddlewaretoken: aaForumAdminSettings.form.csrfToken
                         }
                     );
