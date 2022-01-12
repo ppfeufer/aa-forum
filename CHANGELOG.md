@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [In Development] - Unreleased
+
+### Fixed
+
+- Some JS fixes
+  - Removed unused parameters and variables
+  - Changed `let` to `const` where appropriate
+  - Set `containment` option to category drag and drop
+
+
 ## [1.3.0] - 2021-12-28
 
 ### Added
