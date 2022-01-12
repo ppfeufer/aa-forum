@@ -3,7 +3,7 @@
 $(function () {
     'use strict';
 
-    if (undefined !== typeof CKEDITOR) {
+    if ('undefined' !== typeof CKEDITOR) {
         $('form').on('reset', function (e) {
             if ($(CKEDITOR.instances).length) {
                 for (let key in CKEDITOR.instances) {

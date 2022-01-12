@@ -61,7 +61,7 @@ $(function () {
     /**
      * Sort boards via drag and drop
      */
-    if (undefined !== typeof categoriesWithBoards && categoriesWithBoards.length > 0) {
+    if ('undefined' !== typeof categoriesWithBoards && categoriesWithBoards.length > 0) {
         $(categoriesWithBoards).each(function (key) {
             $(categoriesWithBoards[key]).sortable({
                 placeholder: 'aa-forum-ui-placeholder',
@@ -116,7 +116,7 @@ $(function () {
     /**
      * Sort child boards via drag and drop
      */
-    if (undefined !== typeof boardsWithChildren && boardsWithChildren.length > 0) {
+    if ('undefined' !== typeof boardsWithChildren && boardsWithChildren.length > 0) {
         $(boardsWithChildren).each(function (key) {
             $(boardsWithChildren[key]).sortable({
                 placeholder: 'aa-forum-ui-placeholder',
