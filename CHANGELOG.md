@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [In development] - Unreleased
+
+
+## [1.4.1] - 2022-01-19
+
+### Changed
+
+- JavaScript: Some `let` vs. `const` slipped through the cracks and now have been fixed
+
+
 ## [1.4.0] - 2022-01-12
 
 ### Added

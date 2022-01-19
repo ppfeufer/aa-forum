@@ -14,7 +14,7 @@ $(function () {
             // get the instance of the sortable.
             // instance method is new to jquery ui 1.11, for previous versions
             // you can use $(this).data()['ui-sortable'];
-            let sort = $(this).sortable('instance');
+            const sort = $(this).sortable('instance');
 
             // this makes the placeholder fit with the row that's being dragged
             ui.placeholder.height(ui.helper.height());
@@ -71,7 +71,7 @@ $(function () {
                     // get the instance of the sortable.
                     // instance method is new to jquery ui 1.11, for previous versions
                     // you can use $(this).data()['ui-sortable'];
-                    let sort = $(this).sortable('instance');
+                    const sort = $(this).sortable('instance');
 
                     // this makes the placeholder fit with the row that's being dragged
                     ui.placeholder.height(ui.helper.height());
@@ -126,7 +126,7 @@ $(function () {
                     // get the instance of the sortable.
                     // instance method is new to jquery ui 1.11, for previous versions
                     // you can use $(this).data()['ui-sortable'];
-                    let sort = $(this).sortable('instance');
+                    const sort = $(this).sortable('instance');
 
                     // this makes the placeholder fit with the row that's being dragged
                     ui.placeholder.height(ui.helper.height());
