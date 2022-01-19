@@ -27,6 +27,8 @@ these kind of changes. For you own sanity, and mine :-)
 - [Installation](#installation)
     - [Step 1 - Install the package](#step-1---install-the-package)
     - [Step 2 - Configure Alliance Auth](#step-2---configure-alliance-auth)
+        - [local.py](#settings-in-homeallianceservermyauthmyauthsettingslocalpy)
+        - [urls.py](#settings-in-homeallianceservermyauthmyauthurlspy)
     - [Step 3 - Configure your webserver](#step-3---configure-your-webserver)
     - [Step 4 - Finalize the installation](#step-4---finalize-the-installation)
     - [Step 5 - Set up permissions](#step-5---set-up-permissions)
@@ -102,6 +104,8 @@ pip install aa-forum
 
 
 ### Step 2 - Configure Alliance Auth
+
+#### Settings in `/home/allianceserver/myauth/myauth/settings/local.py`
 
 This is fairly simple, configure your AA settings (`local.py`) as follows:
 
@@ -249,30 +253,64 @@ if "ckeditor" in INSTALLED_APPS:
     ]
 ```
 
+#### Settings in `/home/allianceserver/myauth/myauth/urls.py`
+
 Now let's move on to editing the global URL configuration of Alliance Auth. To do so,
-you need to open `/home/allianceserver/myauth/myauth/urls.py` and change the following:
+you need to open `/home/allianceserver/myauth/myauth/urls.py` and change the
+following block right before the `handler` definitions:
+
+```python
+# URL configuration for cKeditor
+from django.apps import apps
+
+if apps.is_installed("ckeditor"):
+    from django.urls import re_path
+    from django.contrib.auth.decorators import login_required
+    from django.views.decorators.cache import never_cache
+    from ckeditor_uploader import views as ckeditor_views
+
+    urlpatterns = [
+        re_path(
+            r"^upload/", login_required(ckeditor_views.upload), name="ckeditor_upload"
+        ),
+        re_path(
+            r"^browse/",
+            never_cache(login_required(ckeditor_views.browse)),
+            name="ckeditor_browse",
+        ),
+    ] + urlpatterns
+```
+
+After this, your `urls.py` should look similar to this:
 
 ```python
 from django.conf.urls import include, url
 from allianceauth import urls
 
-# *** New Imports for cKeditor
-from django.urls import re_path
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.cache import never_cache
-from ckeditor_uploader import views as ckeditor_views
-
+# Alliance auth urls
 urlpatterns = [
-    # *** New URL override for cKeditor BEFORE THE MAIN IMPORT
-    re_path(r"^upload/", login_required(ckeditor_views.upload), name="ckeditor_upload"),
-    re_path(
-        r"^browse/",
-        never_cache(login_required(ckeditor_views.browse)),
-        name="ckeditor_browse",
-    ),
-    # Alliance Auth URLs
     url(r"", include(urls)),
 ]
+
+# URL configuration for cKeditor
+from django.apps import apps
+
+if apps.is_installed("ckeditor"):
+    from django.urls import re_path
+    from django.contrib.auth.decorators import login_required
+    from django.views.decorators.cache import never_cache
+    from ckeditor_uploader import views as ckeditor_views
+
+    urlpatterns = [
+        re_path(
+            r"^upload/", login_required(ckeditor_views.upload), name="ckeditor_upload"
+        ),
+        re_path(
+            r"^browse/",
+            never_cache(login_required(ckeditor_views.browse)),
+            name="ckeditor_browse",
+        ),
+    ] + urlpatterns
 
 handler500 = "allianceauth.views.Generic500Redirect"
 handler404 = "allianceauth.views.Generic404Redirect"
