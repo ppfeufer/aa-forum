@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In development] - Unreleased
 
+
+## [1.4.0] - 2022-01-19
+
 ### Changed
 
 - JavaScript: Some `let` vs. `const` slipped through the cracks and now have been fixed
