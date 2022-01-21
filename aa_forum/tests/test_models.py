@@ -254,9 +254,12 @@ class TestMessage(TestCase):
 
         self.board = Board.objects.create(name="Physics", category=category)
         self.child_board = Board.objects.create(
-            name="Chemistry", category=category, parent_board=self.board
+            name="Astropyhsics", category=category, parent_board=self.board
         )
         self.topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        self.child_topic = Topic.objects.create(
+            subject="Black Holes", board=self.child_board
+        )
 
     def test_model_string_names(self):
         message = Message.objects.create(
@@ -281,12 +284,9 @@ class TestMessage(TestCase):
 
     def test_should_update_first_and_last_messages_when_saving_2(self):
         # given
-        my_now = now() - dt.timedelta(hours=1)
-
-        with patch("django.utils.timezone.now", lambda: my_now):
-            message_1 = Message.objects.create(
-                topic=self.topic, user_created=self.user, message="What is dark matter?"
-            )
+        message_1 = Message.objects.create(
+            topic=self.topic, user_created=self.user, message="What is dark matter?"
+        )
 
         # when
         message_2 = Message.objects.create(
@@ -301,15 +301,48 @@ class TestMessage(TestCase):
         self.assertEqual(self.board.last_message, message_2)
         self.assertEqual(self.board.first_message, message_1)
 
-    def test_should_update_last_messages_when_deleting_last_message(self):
+    def test_should_update_first_and_last_messages_when_saving_3(self):
+        # when
+        message = Message.objects.create(
+            topic=self.child_topic, user_created=self.user, message="text"
+        )
+
+        # then
+        self.child_topic.refresh_from_db()
+        self.child_board.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertEqual(self.child_topic.last_message, message)
+        self.assertEqual(self.child_topic.first_message, message)
+        self.assertEqual(self.child_board.last_message, message)
+        self.assertEqual(self.child_board.first_message, message)
+        self.assertEqual(self.board.last_message, message)
+        self.assertEqual(self.board.first_message, message)
+
+    def test_should_update_first_and_last_messages_when_saving_4(self):
+        message = Message.objects.create(
+            topic=self.topic, user_created=self.user, message="What is dark matter?"
+        )
+        # when
+        child_message = Message.objects.create(
+            topic=self.child_topic, user_created=self.user, message="text"
+        )
+
+        # then
+        self.child_topic.refresh_from_db()
+        self.child_board.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertEqual(self.child_topic.last_message, child_message)
+        self.assertEqual(self.child_topic.first_message, child_message)
+        self.assertEqual(self.child_board.last_message, child_message)
+        self.assertEqual(self.child_board.first_message, child_message)
+        self.assertEqual(self.board.last_message, child_message)
+        self.assertEqual(self.board.first_message, message)
+
+    def test_should_update_message_references_when_deleting_last_message_1(self):
         # given
-        my_now = now() - dt.timedelta(hours=1)
-
-        with patch("django.utils.timezone.now", lambda: my_now):
-            message_1 = Message.objects.create(
-                topic=self.topic, user_created=self.user, message="What is dark matter?"
-            )
-
+        message_1 = Message.objects.create(
+            topic=self.topic, user_created=self.user, message="What is dark matter?"
+        )
         message_2 = Message.objects.create(
             topic=self.topic, user_created=self.user, message="What is dark energy?"
         )
@@ -324,6 +357,93 @@ class TestMessage(TestCase):
         self.assertEqual(self.topic.first_message, message_1)
         self.assertEqual(self.board.last_message, message_1)
         self.assertEqual(self.board.first_message, message_1)
+
+    def test_should_update_message_references_when_deleting_last_message_2(self):
+        # given
+        message_1 = Message.objects.create(
+            topic=self.topic, user_created=self.user, message="What is dark matter?"
+        )
+        message_2 = Message.objects.create(
+            topic=self.topic, user_created=self.user, message="What is dark energy?"
+        )
+
+        # when
+        message_1.delete()
+
+        # then
+        self.topic.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertEqual(self.topic.last_message, message_2)
+        self.assertEqual(self.topic.first_message, message_2)
+        self.assertEqual(self.board.last_message, message_2)
+        self.assertEqual(self.board.first_message, message_2)
+
+    def test_should_update_message_references_when_deleting_last_message_3(self):
+        # given
+        message = Message.objects.create(
+            topic=self.topic, user_created=self.user, message="What is dark matter?"
+        )
+        child_message = Message.objects.create(
+            topic=self.child_topic,
+            user_created=self.user,
+            message="What is dark energy?",
+        )
+
+        # when
+        child_message.delete()
+
+        # then
+        self.topic.refresh_from_db()
+        self.child_topic.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertEqual(self.topic.last_message, message)
+        self.assertEqual(self.topic.first_message, message)
+        self.assertIsNone(self.child_topic.last_message)
+        self.assertIsNone(self.child_topic.first_message)
+        self.assertEqual(self.board.last_message, message)
+        self.assertEqual(self.board.first_message, message)
+
+    def test_should_update_message_references_when_deleting_last_message_4(self):
+        # given
+        message = Message.objects.create(
+            topic=self.topic, user_created=self.user, message="What is dark matter?"
+        )
+        child_message = Message.objects.create(
+            topic=self.child_topic,
+            user_created=self.user,
+            message="What is dark energy?",
+        )
+
+        # when
+        message.delete()
+
+        # then
+        self.topic.refresh_from_db()
+        self.child_topic.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertIsNone(self.topic.last_message)
+        self.assertIsNone(self.topic.first_message)
+        self.assertEqual(self.child_topic.last_message, child_message)
+        self.assertEqual(self.child_topic.first_message, child_message)
+        self.assertEqual(self.board.last_message, child_message)
+        self.assertEqual(self.board.first_message, child_message)
+
+    def test_should_reset_message_references_when_deleting_last_message_1(self):
+        # given
+        message = Message.objects.create(
+            topic=self.topic, user_created=self.user, message="What is dark matter?"
+        )
+
+        # when
+        message.delete()
+
+        # then
+        self.topic.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertIsNone(self.topic.last_message)
+        self.assertIsNone(self.topic.first_message)
+        self.assertIsNone(self.board.last_message)
+        self.assertIsNone(self.board.first_message)
 
     def test_should_return_url_first_page(self):
         # given

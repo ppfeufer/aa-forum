@@ -216,11 +216,18 @@ class Board(models.Model):
 
         return reverse("aa_forum:forum_board", args=[self.category.slug, self.slug])
 
-    def _update_last_message(self):
+    def _update_message_references(self):
         """
-        Update the last message for this board.
+        Update the first and last message for this board.
         """
 
+        self.first_message = (
+            Message.objects.filter(
+                Q(topic__board=self) | Q(topic__board__parent_board=self)
+            )
+            .order_by("time_posted")
+            .first()
+        )
         self.last_message = (
             Message.objects.filter(
                 Q(topic__board=self) | Q(topic__board__parent_board=self)
@@ -228,7 +235,9 @@ class Board(models.Model):
             .order_by("-time_posted")
             .first()
         )
-        self.save(update_fields=["last_message"])
+        self.save(update_fields=["first_message", "last_message"])
+        if self.parent_board:
+            self.parent_board._update_message_references()
 
 
 class Topic(models.Model):
@@ -291,26 +300,7 @@ class Topic(models.Model):
             self.slug = _generate_slug(type(self), self.subject)
 
         super().save(*args, **kwargs)
-
-        try:
-            self.board.first_message = self.first_message
-
-            if self.board.parent_board is not None:
-                self.board.parent_board.first_message = self.first_message
-                self.board.parent_board.save()
-        except Message.DoesNotExist:
-            self.board.first_message = None
-
-        try:
-            self.board.last_message = self.last_message
-
-            if self.board.parent_board is not None:
-                self.board.parent_board.last_message = self.last_message
-                self.board.parent_board.save()
-        except Message.DoesNotExist:
-            self.board.last_message = None
-
-        self.board.save(update_fields=["first_message", "last_message"])
+        self.board._update_message_references()
 
     @transaction.atomic()
     def delete(self, *args, **kwargs):
@@ -322,12 +312,8 @@ class Topic(models.Model):
         :type kwargs:
         """
 
-        board_needs_update = self.last_message = self.board.last_message
-
         super().delete(*args, **kwargs)
-
-        if board_needs_update:
-            self.board._update_last_message()
+        self.board._update_message_references()
 
     def get_absolute_url(self) -> str:
         """
@@ -339,15 +325,18 @@ class Topic(models.Model):
             args=[self.board.category.slug, self.board.slug, self.slug],
         )
 
-    def _update_last_message(self):
+    def _update_message_references(self):
         """
-        Update the last message for this topic.
+        Update the first and last message for this topic.
         """
 
+        self.first_message = (
+            Message.objects.filter(topic=self).order_by("time_posted").first()
+        )
         self.last_message = (
             Message.objects.filter(topic=self).order_by("-time_posted").first()
         )
-        self.save(update_fields=["last_message"])
+        self.save(update_fields=["first_message", "last_message"])
 
 
 class LastMessageSeen(models.Model):
@@ -451,16 +440,21 @@ class Message(models.Model):
         :type kwargs:
         """
 
-        topic_needs_update = self.topic.last_message == self
-        board_needs_update = self.topic.board.last_message == self
+        topic_needs_update = (
+            self.topic.first_message == self or self.topic.last_message == self
+        )
+        board_needs_update = (
+            self.topic.board.first_message == self
+            or self.topic.board.last_message == self
+        )
 
         super().delete(*args, **kwargs)
 
         if topic_needs_update:
-            self.topic._update_last_message()
+            self.topic._update_message_references()
 
         if board_needs_update:
-            self.topic.board._update_last_message()
+            self.topic.board._update_message_references()
 
     def get_absolute_url(self):
         """
