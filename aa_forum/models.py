@@ -216,7 +216,7 @@ class Board(models.Model):
 
         return reverse("aa_forum:forum_board", args=[self.category.slug, self.slug])
 
-    def update_last_message(self):
+    def _update_last_message(self):
         """
         Update the last message for this board.
         """
@@ -327,7 +327,7 @@ class Topic(models.Model):
         super().delete(*args, **kwargs)
 
         if board_needs_update:
-            self.board.update_last_message()
+            self.board._update_last_message()
 
     def get_absolute_url(self) -> str:
         """
@@ -339,7 +339,7 @@ class Topic(models.Model):
             args=[self.board.category.slug, self.board.slug, self.slug],
         )
 
-    def update_last_message(self):
+    def _update_last_message(self):
         """
         Update the last message for this topic.
         """
@@ -457,10 +457,10 @@ class Message(models.Model):
         super().delete(*args, **kwargs)
 
         if topic_needs_update:
-            self.topic.update_last_message()
+            self.topic._update_last_message()
 
         if board_needs_update:
-            self.topic.board.update_last_message()
+            self.topic.board._update_last_message()
 
     def get_absolute_url(self):
         """

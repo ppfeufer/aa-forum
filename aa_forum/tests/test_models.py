@@ -35,24 +35,21 @@ class TestBoard(TestCase):
 
         self.assertEqual(str(board), "Physics")
 
-    def test_should_update_last_message_normal(self):
+    def test_should_update_last_message_when_message_created(self):
         # given
         board = Board.objects.create(name="Physics", category=self.category)
         topic = Topic.objects.create(subject="Mysteries", board=board)
+
+        # when
         message = Message.objects.create(
             topic=topic, user_created=self.user, message="What is dark energy?"
         )
-        board.last_message = None
-        board.save()
-
-        # when
-        board.update_last_message()
 
         # then
         board.refresh_from_db()
         self.assertEqual(board.last_message, message)
 
-    def test_should_update_last_message_normal_from_child_board(self):
+    def test_should_update_last_message_when_message_created_in_child_board(self):
         # given
         board = Board.objects.create(name="Physics", category=self.category)
         child_board = Board.objects.create(
@@ -62,49 +59,33 @@ class TestBoard(TestCase):
         topic_child_board = Topic.objects.create(
             subject="Solved Mysteries", board=child_board
         )
-        message_board = Message.objects.create(
+        Message.objects.create(
             topic=topic_board, user_created=self.user, message="What is dark energy?"
         )
+        # when
         message_child_board = Message.objects.create(
             topic=topic_child_board,
             user_created=self.user,
             message="What is heat?",
         )
-        board.last_message = None
-        board.save()
-
-        # when
-        board.update_last_message()
 
         # then
         board.refresh_from_db()
-        self.assertNotEqual(board.last_message, message_board)
         self.assertEqual(board.last_message, message_child_board)
 
-    def test_should_update_last_message_empty(self):
-        # given
-        board = Board.objects.create(name="Physics", category=self.category)
+    # def test_should_update_last_message_when_message_is_deleted(self):
+    #     # given
+    #     board = Board.objects.create(name="Physics", category=self.category)
+    #     topic = Topic.objects.create(subject="Mysteries", board=board)
+    #     message = Message.objects.create(
+    #         topic=topic, user_created=self.user, message="What is dark energy?"
+    #     )
+    #     # when
+    #     message.delete()
 
-        # when
-        board.update_last_message()
-
-        # then
-        board.refresh_from_db()
-        self.assertIsNone(board.last_message)
-
-    def test_should_update_last_message_empty_from_child_board(self):
-        # given
-        board = Board.objects.create(name="Physics", category=self.category)
-        Board.objects.create(
-            name="Thermodynamics", category=self.category, parent_board=board
-        )
-
-        # when
-        board.update_last_message()
-
-        # then
-        board.refresh_from_db()
-        self.assertIsNone(board.last_message)
+    #     # then
+    #     board.refresh_from_db()
+    #     self.assertIsNone(board.last_message)
 
     def test_should_return_url(self):
         # given
@@ -407,53 +388,31 @@ class TestTopic(TestCase):
 
         self.assertEqual(str(topic), "Mysteries")
 
-    def test_should_update_last_message_normal(self):
-        # given
-        topic = Topic.objects.create(subject="Mysteries", board=self.board)
-        message = Message.objects.create(
-            topic=topic, user_created=self.user, message="What is dark energy?"
-        )
-
-        topic.last_message = None
-        topic.save()
-
-        # when
-        topic.update_last_message()
-
-        # then
-        topic.refresh_from_db()
-
-        self.assertEqual(topic.last_message, message)
-
-    def test_should_update_last_message_normal_from_child_board(self):
-        # given
-        topic = Topic.objects.create(subject="Mysteries", board=self.child_board)
-        message = Message.objects.create(
-            topic=topic, user_created=self.user, message="What is dark energy?"
-        )
-
-        topic.last_message = None
-        topic.save()
-
-        # when
-        topic.update_last_message()
-
-        # then
-        topic.refresh_from_db()
-
-        self.assertEqual(topic.last_message, message)
-
-    def test_should_return_none_as_last_message(self):
+    def test_should_update_last_message_when_message_is_created(self):
         # given
         topic = Topic.objects.create(subject="Mysteries", board=self.board)
 
         # when
-        topic.update_last_message()
+        message = Message.objects.create(
+            topic=topic, user_created=self.user, message="What is dark energy?"
+        )
 
         # then
         topic.refresh_from_db()
+        self.assertEqual(topic.last_message, message)
 
-        self.assertIsNone(topic.last_message)
+    def test_should_update_last_message_when_message_is_created_child_board(self):
+        # given
+        child_topic = Topic.objects.create(subject="Mysteries", board=self.child_board)
+
+        # when
+        child_message = Message.objects.create(
+            topic=child_topic, user_created=self.user, message="What is dark energy?"
+        )
+
+        # then
+        child_topic.refresh_from_db()
+        self.assertEqual(child_topic.last_message, child_message)
 
     def test_should_update_last_message_after_topic_deletion(self):
         # given
