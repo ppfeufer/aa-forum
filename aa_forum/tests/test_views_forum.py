@@ -86,6 +86,63 @@ class TestIndexViews(TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertContains(res, f"aa-forum-link-on-{self.board_2.id}")
 
+    def test_should_show_counts(self):
+        # given
+        self.client.force_login(self.user_1001)
+        # when
+        res = self.client.get(reverse("aa_forum:forum_index"))
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, "6 Posts")
+        self.assertContains(res, "2 Topics")
+
+    def test_should_show_empty_counts_after_all_topics_are_deleted(self):
+        # given
+        Topic.objects.all().delete()
+        self.client.force_login(self.user_1001)
+        # when
+        res = self.client.get(reverse("aa_forum:forum_index"))
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, "0 Posts")
+        self.assertContains(res, "0 Topics")
+
+
+class TestIndexViewsSpecial(TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+        cls.user_1001 = create_fake_user(
+            1001, "Bruce Wayne", permissions=["aa_forum.basic_access"]
+        )
+        cls.user_1002 = create_fake_user(
+            1002, "Peter Parker", permissions=["aa_forum.basic_access"]
+        )
+        cls.category = Category.objects.create(name="Science")
+
+    def test_should_show_empty_counts_after_all_topics_are_deleted_with_child_board(
+        self,
+    ):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        topic = Topic.objects.create(subject="alpha", board=board)
+        create_fake_messages(topic, 1)
+        topic.update_last_message()
+        child_board = Board.objects.create(
+            name="Thermodynamics", category=self.category, parent_board=board
+        )
+        child_topic = Topic.objects.create(subject="bravo", board=child_board)
+        create_fake_messages(child_topic, 1)
+        child_topic.update_last_message()
+        child_topic.delete()
+        self.client.force_login(self.user_1001)
+        # when
+        res = self.client.get(reverse("aa_forum:forum_index"))
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, "0 Posts")
+        self.assertContains(res, "0 Topics")
+
 
 class TestBoardViews(TestCase):
     @classmethod
