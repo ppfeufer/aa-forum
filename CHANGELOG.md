@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In development] - Unreleased
 
+### Fixed
+
+- Deleting last topic of a child board results in NoReverseMatch error on index page
 
 ## [1.4.1] - 2022-01-19
 

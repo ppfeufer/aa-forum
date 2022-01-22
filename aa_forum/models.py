@@ -218,7 +218,7 @@ class Board(models.Model):
 
     def _update_message_references(self):
         """
-        Update the first and last message for this board.
+        Update the first and last message for this board - and parent board if needed.
         """
 
         self.first_message = (
@@ -296,11 +296,25 @@ class Topic(models.Model):
         :type kwargs:
         """
 
+        if not self._state.adding and self.pk:
+            try:
+                old_instance = Topic.objects.get(pk=self.pk)
+            except Topic.DoesNotExist:
+                old_instance = None
+        else:
+            old_instance = None
+
+        board_needs_update = old_instance and (
+            old_instance.first_message != self.first_message
+            or old_instance.last_message != self.last_message
+        )
+
         if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
             self.slug = _generate_slug(type(self), self.subject)
 
         super().save(*args, **kwargs)
-        self.board._update_message_references()
+        if board_needs_update:
+            self.board._update_message_references()
 
     @transaction.atomic()
     def delete(self, *args, **kwargs):
@@ -311,9 +325,13 @@ class Topic(models.Model):
         :param kwargs:
         :type kwargs:
         """
-
+        board_needs_update = (
+            self.first_message == self.board.first_message
+            or self.last_message == self.board.last_message
+        )
         super().delete(*args, **kwargs)
-        self.board._update_message_references()
+        if board_needs_update:
+            self.board._update_message_references()
 
     def get_absolute_url(self) -> str:
         """
