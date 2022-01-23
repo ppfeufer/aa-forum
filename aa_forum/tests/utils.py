@@ -17,7 +17,7 @@ from allianceauth.tests.auth_utils import AuthUtils
 
 # AA Forum
 from aa_forum.constants import SETTING_MESSAGESPERPAGE
-from aa_forum.models import Message, Setting, Topic
+from aa_forum.models import Board, Category, Message, Setting, Topic
 
 MESSAGE_DATETIME_HOURS_INTO_PAST = 240
 MESSAGE_DATETIME_MINUTES_OFFSET = 2
@@ -122,3 +122,36 @@ def my_get_setting(setting_key: str) -> str:
         return "5"
 
     return Setting.objects.get_setting(setting_key=setting_key)
+
+
+"""
+Factories for test objects
+"""
+
+
+def create_category(**kwargs) -> Category:
+    if "name" not in kwargs:
+        kwargs["name"] = fake.name()
+    return Category.objects.create(**kwargs)
+
+
+def create_board(**kwargs) -> Board:
+    if "name" not in kwargs:
+        kwargs["name"] = fake.name()
+    if "category" not in kwargs:
+        kwargs["category"] = create_category()
+    return Board.objects.create(**kwargs)
+
+
+def create_topic(**kwargs) -> Category:
+    if "subject" not in kwargs:
+        kwargs["subject"] = fake.name()
+    if "board" not in kwargs:
+        kwargs["board"] = create_board()
+    return Topic.objects.create(**kwargs)
+
+
+def create_message(**kwargs) -> Message:
+    if "message" not in kwargs:
+        kwargs["message"] = f"<p>{fake.sentence()}</p>"
+    return Message.objects.create(**kwargs)

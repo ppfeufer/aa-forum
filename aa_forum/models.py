@@ -166,6 +166,7 @@ class Board(models.Model):
         related_name="+",
         on_delete=models.SET_DEFAULT,
         help_text="Shortcut for better performance",
+        # for adding "Re:" if needed, must be within the same topic as last message
     )
     last_message = models.ForeignKey(
         "Message",
