@@ -7,24 +7,43 @@ import datetime as dt
 from unittest.mock import patch
 
 # Django
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.test import TestCase
 from django.urls import reverse
 from django.utils.timezone import now
 
 # AA Forum
-from aa_forum.models import Board
+from aa_forum.models import Board, get_sentinel_user
 from aa_forum.tests.utils import (
     create_board,
     create_category,
     create_fake_messages,
     create_fake_user,
+    create_last_message_seen,
     create_message,
+    create_personal_message,
+    create_setting,
     create_topic,
     my_get_setting,
 )
 
 MODELS_PATH = "aa_forum.models"
+
+
+class TestGetSentinelUser(TestCase):
+    def test_should_create_user_when_it_does_not_exist(self):
+        # when
+        user = get_sentinel_user()
+        # then
+        self.assertEqual(user.username, "deleted")
+
+    def test_should_return_user_when_it_does(self):
+        # given
+        User.objects.create_user(username="deleted")
+        # when
+        user = get_sentinel_user()
+        # then
+        self.assertEqual(user.username, "deleted")
 
 
 class TestBoard(TestCase):
@@ -62,6 +81,7 @@ class TestBoard(TestCase):
         topic_board = create_topic(board=board)
         topic_child_board = create_topic(board=child_board)
         create_message(topic=topic_board, user_created=self.user)
+
         # when
         message_child_board = create_message(
             topic=topic_child_board, user_created=self.user
@@ -172,6 +192,14 @@ class TestBoard(TestCase):
         # then
         self.assertEqual(board.slug, "dummy")
 
+    @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
+    def test_should_create_slug_with_name_matching_internal_url_prefix(self):
+        # when
+        category = create_board(name="-", category=self.category)
+
+        # then
+        self.assertEqual(category.slug, "hyphen")
+
 
 class TestCategory(TestCase):
     @classmethod
@@ -233,6 +261,14 @@ class TestCategory(TestCase):
         # then
         category.refresh_from_db()
         self.assertEqual(category.slug, "science-1")
+
+    @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
+    def test_should_create_new_category_with_name_matching_internal_url_prefix(self):
+        # when
+        category = create_category(name="-")
+
+        # then
+        self.assertEqual(category.slug, "hyphen")
 
 
 @patch(MODELS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
@@ -583,3 +619,80 @@ class TestTopic(TestCase):
 
         # then
         self.assertEqual(topic.slug, "dummy")
+
+    @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
+    def test_should_create_slug_with_name_matching_internal_url_prefix(self):
+        # when
+        category = create_topic(subject="-", board=self.board)
+
+        # then
+        self.assertEqual(category.slug, "hyphen")
+
+
+class TestPersonalMessage(TestCase):
+    def test_str(self):
+        # with
+        message = create_personal_message(subject="Subject")
+
+        # then
+        self.assertEqual(str(message), "Subject")
+
+    @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
+    def test_can_create_personal_message(self):
+        # with
+        message = create_personal_message(subject="subject")
+
+        # then
+        self.assertEqual(message.subject, "subject")
+
+    def test_should_generate_new_slug_when_slug_already_exists(self):
+        # given
+        message_1 = create_personal_message()
+        message_1.slug = "dummy"  # we are faking the same slug here
+        message_1.save()
+
+        # when
+        message_2 = create_personal_message(subject="Dummy")
+
+        # then
+        self.assertEqual(message_2.slug, "dummy-1")
+
+    def test_should_not_allow_creation_with_hyphen_slugs(self):
+        # when
+        message = create_personal_message(subject="Dummy", slug="-")
+
+        # then
+        self.assertEqual(message.slug, "dummy")
+
+    def test_should_create_slug_with_name_matching_internal_url_prefix(self):
+        # when
+        message = create_personal_message(subject="-")
+
+        # then
+        self.assertEqual(message.slug, "hyphen")
+
+
+class LastMessageSeen(TestCase):
+    def test_str(self):
+        # given
+        topic = create_topic(subject="Alpha")
+        user = create_fake_user(1001, "Bruce Wayne")
+        message_time = dt.datetime(2022, 1, 12, 17, 30)
+        message = create_last_message_seen(
+            topic=topic, user=user, message_time=message_time
+        )
+
+        # when/then
+        result = str(message)
+
+        # then
+        self.assertEqual(result, "Alpha-Bruce_Wayne-2022-01-12 17:30:00")
+
+
+class TestSetting(TestCase):
+    def test_str(self):
+        # given
+        setting = create_setting(variable="alpha", value=1)
+
+        # when/then
+        self.assertEqual(str(setting), "alpha")
