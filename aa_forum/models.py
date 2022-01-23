@@ -221,13 +221,6 @@ class Board(models.Model):
         Update the first and last message for this board - and parent board if needed.
         """
 
-        self.first_message = (
-            Message.objects.filter(
-                Q(topic__board=self) | Q(topic__board__parent_board=self)
-            )
-            .order_by("time_posted")
-            .first()
-        )
         self.last_message = (
             Message.objects.filter(
                 Q(topic__board=self) | Q(topic__board__parent_board=self)
@@ -235,6 +228,12 @@ class Board(models.Model):
             .order_by("-time_posted")
             .first()
         )
+        if self.last_message:
+            self.first_message = self.last_message.topic.messages.order_by(
+                "time_posted"
+            ).first()
+        else:
+            self.first_message = None
         self.save(update_fields=["first_message", "last_message"])
         if self.parent_board:
             self.parent_board._update_message_references()
