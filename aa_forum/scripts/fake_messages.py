@@ -89,11 +89,11 @@ def run():
                             user_created_id=random.choice(user_ids),
                         )
 
-                    topic.update_last_message()
+                    topic._update_message_references()
 
             print(f"Updating {len(boards)} boards...")
 
             for board in boards:
-                board.update_last_message()
+                board._update_message_references()
 
     print("DONE")

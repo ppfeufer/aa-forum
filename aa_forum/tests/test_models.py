@@ -7,16 +7,43 @@ import datetime as dt
 from unittest.mock import patch
 
 # Django
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.test import TestCase
 from django.urls import reverse
 from django.utils.timezone import now
 
 # AA Forum
-from aa_forum.models import Board, Category, Message, Topic
-from aa_forum.tests.utils import create_fake_messages, create_fake_user, my_get_setting
+from aa_forum.models import Board, get_sentinel_user
+from aa_forum.tests.utils import (
+    create_board,
+    create_category,
+    create_fake_messages,
+    create_fake_user,
+    create_last_message_seen,
+    create_message,
+    create_personal_message,
+    create_setting,
+    create_topic,
+    my_get_setting,
+)
 
 MODELS_PATH = "aa_forum.models"
+
+
+class TestGetSentinelUser(TestCase):
+    def test_should_create_user_when_it_does_not_exist(self):
+        # when
+        user = get_sentinel_user()
+        # then
+        self.assertEqual(user.username, "deleted")
+
+    def test_should_return_user_when_it_does(self):
+        # given
+        User.objects.create_user(username="deleted")
+        # when
+        user = get_sentinel_user()
+        # then
+        self.assertEqual(user.username, "deleted")
 
 
 class TestBoard(TestCase):
@@ -28,87 +55,59 @@ class TestBoard(TestCase):
         cls.group = Group.objects.create(name="Superhero")
 
     def setUp(self) -> None:
-        self.category = Category.objects.create(name="Science")
+        self.category = create_category(name="Science")
 
     def test_model_string_names(self):
-        board = Board.objects.create(name="Physics", category=self.category)
+        board = create_board(name="Physics", category=self.category)
 
         self.assertEqual(str(board), "Physics")
 
-    def test_should_update_last_message_normal(self):
+    def test_should_update_last_message_when_message_created(self):
         # given
-        board = Board.objects.create(name="Physics", category=self.category)
-        topic = Topic.objects.create(subject="Mysteries", board=board)
-        message = Message.objects.create(
-            topic=topic, user_created=self.user, message="What is dark energy?"
-        )
-        board.last_message = None
-        board.save()
+        board = create_board(category=self.category)
+        topic = create_topic(board=board)
 
         # when
-        board.update_last_message()
+        message = create_message(topic=topic, user_created=self.user)
 
         # then
         board.refresh_from_db()
         self.assertEqual(board.last_message, message)
 
-    def test_should_update_last_message_normal_from_child_board(self):
+    def test_should_update_last_message_when_message_created_in_child_board(self):
         # given
-        board = Board.objects.create(name="Physics", category=self.category)
-        child_board = Board.objects.create(
-            name="Thermodynamics", category=self.category, parent_board=board
-        )
-        topic_board = Topic.objects.create(subject="Mysteries", board=board)
-        topic_child_board = Topic.objects.create(
-            subject="Solved Mysteries", board=child_board
-        )
-        message_board = Message.objects.create(
-            topic=topic_board, user_created=self.user, message="What is dark energy?"
-        )
-        message_child_board = Message.objects.create(
-            topic=topic_child_board,
-            user_created=self.user,
-            message="What is heat?",
-        )
-        board.last_message = None
-        board.save()
+        board = create_board(category=self.category)
+        child_board = create_board(category=self.category, parent_board=board)
+        topic_board = create_topic(board=board)
+        topic_child_board = create_topic(board=child_board)
+        create_message(topic=topic_board, user_created=self.user)
 
         # when
-        board.update_last_message()
+        message_child_board = create_message(
+            topic=topic_child_board, user_created=self.user
+        )
 
         # then
         board.refresh_from_db()
-        self.assertNotEqual(board.last_message, message_board)
         self.assertEqual(board.last_message, message_child_board)
 
-    def test_should_update_last_message_empty(self):
-        # given
-        board = Board.objects.create(name="Physics", category=self.category)
+    # def test_should_update_last_message_when_message_is_deleted(self):
+    #     # given
+    #     board = create_board(name="Physics", category=self.category)
+    #     topic = create_topic(subject="Mysteries", board=board)
+    #     message = create_message(
+    #         topic=topic, user_created=self.user, message="What is dark energy?"
+    #     )
+    #     # when
+    #     message.delete()
 
-        # when
-        board.update_last_message()
-
-        # then
-        board.refresh_from_db()
-        self.assertIsNone(board.last_message)
-
-    def test_should_update_last_message_empty_from_child_board(self):
-        # given
-        board = Board.objects.create(name="Physics", category=self.category)
-        Board.objects.create(
-            name="Thermodynamics", category=self.category, parent_board=board
-        )
-
-        # when
-        board.update_last_message()
-
-        # then
-        board.refresh_from_db()
-        self.assertIsNone(board.last_message)
+    #     # then
+    #     board.refresh_from_db()
+    #     self.assertIsNone(board.last_message)
 
     def test_should_return_url(self):
         # given
-        board = Board.objects.create(name="Physics", category=self.category)
+        board = create_board(category=self.category, name="Physics")
 
         # when
         url = board.get_absolute_url()
@@ -121,7 +120,7 @@ class TestBoard(TestCase):
 
     def test_should_return_board_with_no_groups(self):
         # given
-        board = Board.objects.create(name="Physics", category=self.category)
+        board = create_board(category=self.category)
 
         # when
         result = Board.objects.user_has_access(self.user).get(pk=board.pk)
@@ -131,7 +130,7 @@ class TestBoard(TestCase):
 
     def test_should_return_board_for_group_member(self):
         # given
-        board = Board.objects.create(name="Physics", category=self.category)
+        board = create_board(category=self.category)
         board.groups.add(self.group)
 
         self.user.groups.add(self.group)
@@ -144,24 +143,22 @@ class TestBoard(TestCase):
 
     def test_should_return_child_board_for_group_member(self):
         # given
-        board = Board.objects.create(name="Physics", category=self.category)
+        board = create_board(category=self.category)
         board.groups.add(self.group)
 
         self.user.groups.add(self.group)
 
-        board_2 = Board.objects.create(
-            name="Thermal Theories", category=self.category, parent_board=board
-        )
+        child_board = create_board(category=self.category, parent_board=board)
 
         # when
-        result = Board.objects.user_has_access(self.user).get(pk=board_2.pk)
+        result = Board.objects.user_has_access(self.user).get(pk=child_board.pk)
 
         # then
         self.assertTrue(result)
 
     def test_should_not_return_board_for_non_group_member(self):
         # given
-        board = Board.objects.create(name="Physics", category=self.category)
+        board = create_board(category=self.category)
         board.groups.add(self.group)
 
         with self.assertRaises(Board.DoesNotExist):
@@ -169,33 +166,39 @@ class TestBoard(TestCase):
 
     def test_should_not_return_child_board_for_non_group_member(self):
         # given
-        board = Board.objects.create(name="Physics", category=self.category)
+        board = create_board(category=self.category)
         board.groups.add(self.group)
-        board_2 = Board.objects.create(
-            name="Thermal Theories", category=self.category, parent_board=board
-        )
+        board_2 = create_board(category=self.category, parent_board=board)
 
         with self.assertRaises(Board.DoesNotExist):
             Board.objects.user_has_access(self.user).get(pk=board_2.pk)
 
     def test_should_generate_new_slug_when_slug_already_exists(self):
         # given
-        board = Board.objects.create(name="Physics", category=self.category)
+        board = create_board(category=self.category)
         board.slug = "dummy"  # we are faking the same slug here
         board.save()
 
         # when
-        board = Board.objects.create(name="Dummy", category=self.category)
+        board = create_board(name="Dummy", category=self.category)
 
         # then
         self.assertEqual(board.slug, "dummy-1")
 
     def test_should_not_allow_creation_with_hyphen_slugs(self):
         # when
-        board = Board.objects.create(name="Dummy", category=self.category, slug="-")
+        board = create_board(name="Dummy", category=self.category, slug="-")
 
         # then
         self.assertEqual(board.slug, "dummy")
+
+    @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
+    def test_should_create_slug_with_name_matching_internal_url_prefix(self):
+        # when
+        category = create_board(name="-", category=self.category)
+
+        # then
+        self.assertEqual(category.slug, "hyphen")
 
 
 class TestCategory(TestCase):
@@ -206,19 +209,19 @@ class TestCategory(TestCase):
         cls.user = create_fake_user(1001, "Bruce Wayne")
 
     def test_model_string_names(self):
-        category = Category.objects.create(name="Science")
+        category = create_category(name="Science")
 
         self.assertEqual(str(category), "Science")
 
     def test_should_create_new_category_with_slug(self):
         # when
-        category = Category.objects.create(name="Science")
+        category = create_category(name="Science")
 
         # then
         self.assertEqual(category.slug, "science")
 
     def test_should_keep_existing_slug_when_changing_name(self):
-        category = Category.objects.create(name="Science")
+        category = create_category(name="Science")
 
         # when
         category.name = "Politics"
@@ -230,26 +233,26 @@ class TestCategory(TestCase):
 
     def test_should_generate_new_slug_when_slug_already_exists(self):
         # given
-        category = Category.objects.create(name="Science")
+        category = create_category(name="Science")
         category.slug = "dummy"  # we are faking the same slug here
         category.save()
 
         # when
-        category = Category.objects.create(name="Dummy")
+        category = create_category(name="Dummy")
 
         # then
         self.assertEqual(category.slug, "dummy-1")
 
     def test_should_not_allow_creation_with_hyphen_slugs(self):
         # when
-        category = Category.objects.create(name="Science", slug="-")
+        category = create_category(name="Science", slug="-")
 
         # then
         self.assertEqual(category.slug, "science")
 
     def test_should_not_allow_to_update_slug_to_hyphen(self):
         # given
-        category = Category.objects.create(name="Science")
+        category = create_category(name="Science")
 
         # when
         category.slug = "-"
@@ -258,6 +261,14 @@ class TestCategory(TestCase):
         # then
         category.refresh_from_db()
         self.assertEqual(category.slug, "science-1")
+
+    @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
+    def test_should_create_new_category_with_name_matching_internal_url_prefix(self):
+        # when
+        category = create_category(name="-")
+
+        # then
+        self.assertEqual(category.slug, "hyphen")
 
 
 @patch(MODELS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
@@ -269,26 +280,23 @@ class TestMessage(TestCase):
         cls.user = create_fake_user(1001, "Bruce Wayne")
 
     def setUp(self) -> None:
-        category = Category.objects.create(name="Science")
+        category = create_category()
 
-        self.board = Board.objects.create(name="Physics", category=category)
-        self.child_board = Board.objects.create(
-            name="Chemistry", category=category, parent_board=self.board
-        )
-        self.topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        self.board = create_board(category=category)
+        self.child_board = create_board(category=category, parent_board=self.board)
+        self.topic = create_topic(board=self.board)
+        self.child_topic = create_topic(board=self.child_board)
 
     def test_model_string_names(self):
-        message = Message.objects.create(
-            topic=self.topic, user_created=self.user, message="What is dark energy?"
-        )
+        # when
+        message = create_message(topic=self.topic, user_created=self.user)
 
+        # then
         self.assertEqual(str(message), str(message.pk))
 
     def test_should_update_first_and_last_messages_when_saving_1(self):
         # when
-        message = Message.objects.create(
-            topic=self.topic, user_created=self.user, message="What is dark matter?"
-        )
+        message = create_message(topic=self.topic, user_created=self.user)
 
         # then
         self.topic.refresh_from_db()
@@ -300,17 +308,10 @@ class TestMessage(TestCase):
 
     def test_should_update_first_and_last_messages_when_saving_2(self):
         # given
-        my_now = now() - dt.timedelta(hours=1)
-
-        with patch("django.utils.timezone.now", lambda: my_now):
-            message_1 = Message.objects.create(
-                topic=self.topic, user_created=self.user, message="What is dark matter?"
-            )
+        message_1 = create_message(topic=self.topic, user_created=self.user)
 
         # when
-        message_2 = Message.objects.create(
-            topic=self.topic, user_created=self.user, message="What is dark energy?"
-        )
+        message_2 = create_message(topic=self.topic, user_created=self.user)
 
         # then
         self.topic.refresh_from_db()
@@ -320,18 +321,69 @@ class TestMessage(TestCase):
         self.assertEqual(self.board.last_message, message_2)
         self.assertEqual(self.board.first_message, message_1)
 
-    def test_should_update_last_messages_when_deleting_last_message(self):
+    def test_should_update_first_and_last_messages_when_saving_3(self):
+        # when
+        message = create_message(topic=self.child_topic, user_created=self.user)
+
+        # then
+        self.child_topic.refresh_from_db()
+        self.child_board.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertEqual(self.child_topic.last_message, message)
+        self.assertEqual(self.child_topic.first_message, message)
+        self.assertEqual(self.child_board.last_message, message)
+        self.assertEqual(self.child_board.first_message, message)
+        self.assertEqual(self.board.last_message, message)
+        self.assertEqual(self.board.first_message, message)
+
+    def test_should_update_first_and_last_messages_when_saving_4(self):
         # given
-        my_now = now() - dt.timedelta(hours=1)
+        message = create_message(topic=self.topic, user_created=self.user)
 
-        with patch("django.utils.timezone.now", lambda: my_now):
-            message_1 = Message.objects.create(
-                topic=self.topic, user_created=self.user, message="What is dark matter?"
-            )
+        # when
+        child_message = create_message(topic=self.child_topic, user_created=self.user)
 
-        message_2 = Message.objects.create(
-            topic=self.topic, user_created=self.user, message="What is dark energy?"
-        )
+        # then
+        self.child_topic.refresh_from_db()
+        self.child_board.refresh_from_db()
+        self.topic.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertEqual(self.child_topic.last_message, child_message)
+        self.assertEqual(self.child_topic.first_message, child_message)
+        self.assertEqual(self.child_board.last_message, child_message)
+        self.assertEqual(self.child_board.first_message, child_message)
+        self.assertEqual(self.topic.last_message, message)
+        self.assertEqual(self.topic.last_message, message)
+        self.assertEqual(self.board.last_message, child_message)
+        self.assertEqual(self.board.first_message, child_message)
+
+    def test_should_update_first_and_last_messages_when_saving_5(self):
+        # given
+        message_1 = create_message(topic=self.topic, user_created=self.user)
+        message_2 = create_message(topic=self.topic, user_created=self.user)
+
+        # when
+        child_message_1 = create_message(topic=self.child_topic, user_created=self.user)
+        child_message_2 = create_message(topic=self.child_topic, user_created=self.user)
+
+        # then
+        self.child_topic.refresh_from_db()
+        self.child_board.refresh_from_db()
+        self.topic.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertEqual(self.child_topic.first_message, child_message_1)
+        self.assertEqual(self.child_topic.last_message, child_message_2)
+        self.assertEqual(self.child_board.first_message, child_message_1)
+        self.assertEqual(self.child_board.last_message, child_message_2)
+        self.assertEqual(self.topic.first_message, message_1)
+        self.assertEqual(self.topic.last_message, message_2)
+        self.assertEqual(self.board.first_message, child_message_1)
+        self.assertEqual(self.board.last_message, child_message_2)
+
+    def test_should_update_message_references_when_deleting_last_message_1(self):
+        # given
+        message_1 = create_message(topic=self.topic, user_created=self.user)
+        message_2 = create_message(topic=self.topic, user_created=self.user)
 
         # when
         message_2.delete()
@@ -344,11 +396,78 @@ class TestMessage(TestCase):
         self.assertEqual(self.board.last_message, message_1)
         self.assertEqual(self.board.first_message, message_1)
 
+    def test_should_update_message_references_when_deleting_last_message_2(self):
+        # given
+        message_1 = create_message(topic=self.topic, user_created=self.user)
+        message_2 = create_message(topic=self.topic, user_created=self.user)
+
+        # when
+        message_1.delete()
+
+        # then
+        self.topic.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertEqual(self.topic.last_message, message_2)
+        self.assertEqual(self.topic.first_message, message_2)
+        self.assertEqual(self.board.last_message, message_2)
+        self.assertEqual(self.board.first_message, message_2)
+
+    def test_should_update_message_references_when_deleting_last_message_3(self):
+        # given
+        message = create_message(topic=self.topic, user_created=self.user)
+        child_message = create_message(topic=self.child_topic, user_created=self.user)
+
+        # when
+        child_message.delete()
+
+        # then
+        self.topic.refresh_from_db()
+        self.child_topic.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertEqual(self.topic.last_message, message)
+        self.assertEqual(self.topic.first_message, message)
+        self.assertIsNone(self.child_topic.last_message)
+        self.assertIsNone(self.child_topic.first_message)
+        self.assertEqual(self.board.last_message, message)
+        self.assertEqual(self.board.first_message, message)
+
+    def test_should_update_message_references_when_deleting_last_message_4(self):
+        # given
+        message = create_message(topic=self.topic, user_created=self.user)
+        child_message = create_message(topic=self.child_topic, user_created=self.user)
+
+        # when
+        message.delete()
+
+        # then
+        self.topic.refresh_from_db()
+        self.child_topic.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertIsNone(self.topic.last_message)
+        self.assertIsNone(self.topic.first_message)
+        self.assertEqual(self.child_topic.last_message, child_message)
+        self.assertEqual(self.child_topic.first_message, child_message)
+        self.assertEqual(self.board.last_message, child_message)
+        self.assertEqual(self.board.first_message, child_message)
+
+    def test_should_reset_message_references_when_deleting_last_message_1(self):
+        # given
+        message = create_message(topic=self.topic, user_created=self.user)
+
+        # when
+        message.delete()
+
+        # then
+        self.topic.refresh_from_db()
+        self.board.refresh_from_db()
+        self.assertIsNone(self.topic.last_message)
+        self.assertIsNone(self.topic.first_message)
+        self.assertIsNone(self.board.last_message)
+        self.assertIsNone(self.board.first_message)
+
     def test_should_return_url_first_page(self):
         # given
-        message = Message.objects.create(
-            topic=self.topic, user_created=self.user, message="What is dark energy?"
-        )
+        message = create_message(topic=self.topic, user_created=self.user)
         url = message.get_absolute_url()
 
         # then
@@ -395,80 +514,48 @@ class TestTopic(TestCase):
         cls.user = create_fake_user(1001, "Bruce Wayne")
 
     def setUp(self) -> None:
-        category = Category.objects.create(name="Science")
+        category = create_category(name="Science")
 
-        self.board = Board.objects.create(name="Physics", category=category)
-        self.child_board = Board.objects.create(
-            name="Chemistry", category=category, parent_board=self.board
-        )
+        self.board = create_board(category=category, name="Physics")
+        self.child_board = create_board(category=category, parent_board=self.board)
 
     def test_model_string_names(self):
-        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        topic = create_topic(subject="Mysteries", board=self.board)
 
         self.assertEqual(str(topic), "Mysteries")
 
-    def test_should_update_last_message_normal(self):
+    def test_should_update_last_message_when_message_is_created(self):
         # given
-        topic = Topic.objects.create(subject="Mysteries", board=self.board)
-        message = Message.objects.create(
-            topic=topic, user_created=self.user, message="What is dark energy?"
-        )
-
-        topic.last_message = None
-        topic.save()
+        topic = create_topic(subject="Mysteries", board=self.board)
 
         # when
-        topic.update_last_message()
+        message = create_message(topic=topic, user_created=self.user)
 
         # then
         topic.refresh_from_db()
-
         self.assertEqual(topic.last_message, message)
 
-    def test_should_update_last_message_normal_from_child_board(self):
+    def test_should_update_last_message_when_message_is_created_child_board(self):
         # given
-        topic = Topic.objects.create(subject="Mysteries", board=self.child_board)
-        message = Message.objects.create(
-            topic=topic, user_created=self.user, message="What is dark energy?"
-        )
-
-        topic.last_message = None
-        topic.save()
+        child_topic = create_topic(board=self.child_board)
 
         # when
-        topic.update_last_message()
+        child_message = create_message(topic=child_topic, user_created=self.user)
 
         # then
-        topic.refresh_from_db()
-
-        self.assertEqual(topic.last_message, message)
-
-    def test_should_return_none_as_last_message(self):
-        # given
-        topic = Topic.objects.create(subject="Mysteries", board=self.board)
-
-        # when
-        topic.update_last_message()
-
-        # then
-        topic.refresh_from_db()
-
-        self.assertIsNone(topic.last_message)
+        child_topic.refresh_from_db()
+        self.assertEqual(child_topic.last_message, child_message)
 
     def test_should_update_last_message_after_topic_deletion(self):
         # given
-        topic_1 = Topic.objects.create(subject="Mysteries", board=self.board)
-        topic_2 = Topic.objects.create(subject="Recent Discoveries", board=self.board)
+        topic_1 = create_topic(board=self.board)
+        topic_2 = create_topic(board=self.board)
         my_now = now() - dt.timedelta(hours=1)
 
         with patch("django.utils.timezone.now", lambda: my_now):
-            message_1 = Message.objects.create(
-                topic=topic_1, user_created=self.user, message="What is dark matter?"
-            )
+            message_1 = create_message(topic=topic_1, user_created=self.user)
 
-        message_2 = Message.objects.create(
-            topic=topic_2, user_created=self.user, message="Energy of the Higgs boson"
-        )
+        message_2 = create_message(topic=topic_2, user_created=self.user)
 
         self.board.refresh_from_db()
         self.assertEqual(self.board.last_message, message_2)
@@ -482,18 +569,14 @@ class TestTopic(TestCase):
 
     def test_should_not_update_last_message_after_topic_deletion(self):
         # given
-        topic_1 = Topic.objects.create(subject="Mysteries", board=self.board)
-        topic_2 = Topic.objects.create(subject="Recent Discoveries", board=self.board)
+        topic_1 = create_topic(board=self.board)
+        topic_2 = create_topic(board=self.board)
         my_now = now() - dt.timedelta(hours=1)
 
         with patch("django.utils.timezone.now", lambda: my_now):
-            Message.objects.create(
-                topic=topic_1, user_created=self.user, message="What is dark matter?"
-            )
+            create_message(topic=topic_1, user_created=self.user)
 
-        message_2 = Message.objects.create(
-            topic=topic_2, user_created=self.user, message="Energy of the Higgs boson"
-        )
+        message_2 = create_message(topic=topic_2, user_created=self.user)
 
         self.board.refresh_from_db()
         self.assertEqual(self.board.last_message, message_2)
@@ -507,7 +590,7 @@ class TestTopic(TestCase):
 
     def test_should_return_url(self):
         # given
-        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        topic = create_topic(subject="Mysteries", board=self.board)
 
         # when
         url = topic.get_absolute_url()
@@ -520,19 +603,96 @@ class TestTopic(TestCase):
 
     def test_should_generate_new_slug_when_slug_already_exists(self):
         # given
-        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        topic = create_topic(board=self.board)
         topic.slug = "dummy"  # we are faking the same slug here
         topic.save()
 
         # when
-        topic = Topic.objects.create(subject="Dummy", board=self.board)
+        topic = create_topic(subject="Dummy", board=self.board)
 
         # then
         self.assertEqual(topic.slug, "dummy-1")
 
     def test_should_not_allow_creation_with_hyphen_slugs(self):
         # when
-        topic = Topic.objects.create(subject="Dummy", board=self.board, slug="-")
+        topic = create_topic(subject="Dummy", board=self.board, slug="-")
 
         # then
         self.assertEqual(topic.slug, "dummy")
+
+    @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
+    def test_should_create_slug_with_name_matching_internal_url_prefix(self):
+        # when
+        category = create_topic(subject="-", board=self.board)
+
+        # then
+        self.assertEqual(category.slug, "hyphen")
+
+
+class TestPersonalMessage(TestCase):
+    def test_str(self):
+        # with
+        message = create_personal_message(subject="Subject")
+
+        # then
+        self.assertEqual(str(message), "Subject")
+
+    @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
+    def test_can_create_personal_message(self):
+        # with
+        message = create_personal_message(subject="subject")
+
+        # then
+        self.assertEqual(message.subject, "subject")
+
+    def test_should_generate_new_slug_when_slug_already_exists(self):
+        # given
+        message_1 = create_personal_message()
+        message_1.slug = "dummy"  # we are faking the same slug here
+        message_1.save()
+
+        # when
+        message_2 = create_personal_message(subject="Dummy")
+
+        # then
+        self.assertEqual(message_2.slug, "dummy-1")
+
+    def test_should_not_allow_creation_with_hyphen_slugs(self):
+        # when
+        message = create_personal_message(subject="Dummy", slug="-")
+
+        # then
+        self.assertEqual(message.slug, "dummy")
+
+    def test_should_create_slug_with_name_matching_internal_url_prefix(self):
+        # when
+        message = create_personal_message(subject="-")
+
+        # then
+        self.assertEqual(message.slug, "hyphen")
+
+
+class LastMessageSeen(TestCase):
+    def test_str(self):
+        # given
+        topic = create_topic(subject="Alpha")
+        user = create_fake_user(1001, "Bruce Wayne")
+        message_time = dt.datetime(2022, 1, 12, 17, 30)
+        message = create_last_message_seen(
+            topic=topic, user=user, message_time=message_time
+        )
+
+        # when/then
+        result = str(message)
+
+        # then
+        self.assertEqual(result, "Alpha-Bruce_Wayne-2022-01-12 17:30:00")
+
+
+class TestSetting(TestCase):
+    def test_str(self):
+        # given
+        setting = create_setting(variable="alpha", value=1)
+
+        # when/then
+        self.assertEqual(str(setting), "alpha")

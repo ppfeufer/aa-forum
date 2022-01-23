@@ -31,28 +31,23 @@ class TestIndexViews(TestCase):
         self.board_1 = Board.objects.create(name="Physics", category=self.category)
         topic_1 = Topic.objects.create(subject="Mysteries", board=self.board_1)
         create_fake_messages(topic_1, 4)
-        topic_1.update_last_message()
         topic_2 = Topic.objects.create(subject="Recent Discoveries", board=self.board_1)
         create_fake_messages(topic_2, 2)
-        topic_2.update_last_message()
         LastMessageSeen.objects.create(
             topic=topic_2,
             user=self.user_1001,
             message_time=topic_2.messages.order_by("-time_posted")[0].time_posted,
         )
-        self.board_1.update_last_message()
 
         # board 2 has no unread topics
         self.board_2 = Board.objects.create(name="Math", category=self.category)
         topic = Topic.objects.create(subject="Unsolved Problems", board=self.board_2)
         create_fake_messages(topic, 2)
-        topic.update_last_message()
         LastMessageSeen.objects.create(
             topic=topic,
             user=self.user_1001,
             message_time=topic.messages.order_by("-time_posted")[0].time_posted,
         )
-        self.board_2.update_last_message()
 
     def test_should_show_index(self):
         # given
@@ -86,6 +81,61 @@ class TestIndexViews(TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertContains(res, f"aa-forum-link-on-{self.board_2.id}")
 
+    def test_should_show_counts(self):
+        # given
+        self.client.force_login(self.user_1001)
+        # when
+        res = self.client.get(reverse("aa_forum:forum_index"))
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, "6 Posts")
+        self.assertContains(res, "2 Topics")
+
+    def test_should_show_empty_counts_after_all_topics_are_deleted(self):
+        # given
+        Topic.objects.all().delete()
+        self.client.force_login(self.user_1001)
+        # when
+        res = self.client.get(reverse("aa_forum:forum_index"))
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, "0 Posts")
+        self.assertContains(res, "0 Topics")
+
+
+class TestIndexViewsSpecial(TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+        cls.user_1001 = create_fake_user(
+            1001, "Bruce Wayne", permissions=["aa_forum.basic_access"]
+        )
+        cls.user_1002 = create_fake_user(
+            1002, "Peter Parker", permissions=["aa_forum.basic_access"]
+        )
+        cls.category = Category.objects.create(name="Science")
+
+    def test_should_show_empty_counts_after_all_topics_are_deleted_with_child_board(
+        self,
+    ):
+        # given
+        board = Board.objects.create(name="Physics", category=self.category)
+        topic = Topic.objects.create(subject="alpha", board=board)
+        create_fake_messages(topic, 1)
+        child_board = Board.objects.create(
+            name="Thermodynamics", category=self.category, parent_board=board
+        )
+        child_topic = Topic.objects.create(subject="bravo", board=child_board)
+        create_fake_messages(child_topic, 1)
+        child_topic.delete()
+        self.client.force_login(self.user_1001)
+        # when
+        res = self.client.get(reverse("aa_forum:forum_index"))
+        # then
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, "1 Posts")
+        self.assertContains(res, "1 Topics")
+
 
 class TestBoardViews(TestCase):
     @classmethod
@@ -109,12 +159,9 @@ class TestBoardViews(TestCase):
         # topic 1 is completely new
         self.topic_1 = Topic.objects.create(subject="Mysteries", board=self.board)
         create_fake_messages(self.topic_1, 15)
-        self.topic_1.update_last_message()
         # topic 2 is read
         self.topic_2 = Topic.objects.create(subject="Off Topic", board=self.board)
         create_fake_messages(self.topic_2, 9)
-        self.topic_2.update_last_message()
-        self.board.update_last_message()
         LastMessageSeen.objects.create(
             topic=self.topic_2,
             user=self.user_1001,
@@ -415,8 +462,6 @@ class TestTopicViews(TestCase):
         self.board = Board.objects.create(name="Physics", category=self.category)
         self.topic = Topic.objects.create(subject="Mysteries", board=self.board)
         create_fake_messages(self.topic, 15)
-        self.topic.update_last_message()
-        self.board.update_last_message()
 
     def test_should_remember_last_message_seen_by_user_page_1(self):
         # given

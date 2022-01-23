@@ -25,7 +25,7 @@ def main_character_name(user: User) -> str:
     try:
         return_value = user.profile.main_character.character_name
     except AttributeError:
-        return_value = user.username
+        return str(user)
 
     return return_value
 

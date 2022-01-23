@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In development] - Unreleased
 
 
+## [1.4.2] - 2022-01-23
+
+### Fixed
+
+- Deleting the last topic of a child board results in a `NoReverseMatch` error on
+  the index page (Thanks @ErikKalkoken)
+
+### Changed
+
+- Refactoring of logic for updating first and last message on board and topic
+  (Thanks @ErikKalkoken)
+- Demoted `Board.update_last_message()` and `Topic.update_last_message()` to private
+  methods. Those should no longer be called from outside the module, because they
+  are called implicitly by `save()` and `delete()` when needed. Except for bulk
+  methods, where e.g. `save()` is not called automatically. Test now also no longer
+  test this method directly. (Thanks @ErikKalkoken)
+
+
 ## [1.4.1] - 2022-01-19
 
 ### Changed

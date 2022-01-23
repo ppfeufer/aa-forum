@@ -20,4 +20,4 @@ class AaForumConfig(AppConfig):
 
     def ready(self):
         # AA Forum
-        import aa_forum.signals  # noqa: F401 # pylint: disable=unused-import
+        import aa_forum.signals  # noqa: F401 # pylint: disable=unused-import, import-outside-toplevel
