@@ -17,7 +17,15 @@ from allianceauth.tests.auth_utils import AuthUtils
 
 # AA Forum
 from aa_forum.constants import SETTING_MESSAGESPERPAGE
-from aa_forum.models import Message, Setting, Topic
+from aa_forum.models import (
+    Board,
+    Category,
+    LastMessageSeen,
+    Message,
+    PersonalMessage,
+    Setting,
+    Topic,
+)
 
 MESSAGE_DATETIME_HOURS_INTO_PAST = 240
 MESSAGE_DATETIME_MINUTES_OFFSET = 2
@@ -122,3 +130,71 @@ def my_get_setting(setting_key: str) -> str:
         return "5"
 
     return Setting.objects.get_setting(setting_key=setting_key)
+
+
+"""
+Factories for test objects
+"""
+
+
+def create_category(**kwargs) -> Category:
+    if "name" not in kwargs:
+        kwargs["name"] = fake.name()
+    return Category.objects.create(**kwargs)
+
+
+def create_board(**kwargs) -> Board:
+    if "name" not in kwargs:
+        kwargs["name"] = fake.name()
+    if "category" not in kwargs:
+        kwargs["category"] = create_category()
+    return Board.objects.create(**kwargs)
+
+
+def create_topic(**kwargs) -> Category:
+    if "subject" not in kwargs:
+        kwargs["subject"] = fake.name()
+    if "board" not in kwargs:
+        kwargs["board"] = create_board()
+    return Topic.objects.create(**kwargs)
+
+
+def create_message(**kwargs) -> Message:
+    if "message" not in kwargs:
+        kwargs["message"] = f"<p>{fake.sentence()}</p>"
+    return Message.objects.create(**kwargs)
+
+
+def create_last_message_seen(**kwargs):
+    if "user" not in kwargs:
+        kwargs["user"] = get_or_create_fake_user(1001, "Bruce Wayne")
+    return LastMessageSeen.objects.create(**kwargs)
+
+
+def create_personal_message(**kwargs) -> PersonalMessage:
+    if "sender" not in kwargs:
+        kwargs["sender"] = get_or_create_fake_user(1001, "Bruce Wayne")
+    if "recipient" not in kwargs:
+        kwargs["recipient"] = get_or_create_fake_user(1011, "Lex Luthor")
+    if "subject" not in kwargs:
+        kwargs["subject"] = fake.sentence()
+    return PersonalMessage.objects.create(**kwargs)
+
+
+def create_setting(**kwargs) -> Setting:
+    return Setting.objects.create(**kwargs)
+
+
+def get_or_create_fake_user(*args, **kwargs) -> User:
+    """Same as create_fake_user but will not fail when user already exists."""
+    if len(args) > 1:
+        character_name = args[1]
+    elif "character_name" in kwargs:
+        character_name = kwargs["character_name"]
+    else:
+        ValueError("character_name is not defined")
+    username = character_name.replace("'", "").replace(" ", "_")
+    try:
+        return User.objects.get(username=username)
+    except User.DoesNotExist:
+        return create_fake_user(*args, **kwargs)

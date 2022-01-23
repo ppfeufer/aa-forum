@@ -166,6 +166,7 @@ class Board(models.Model):
         related_name="+",
         on_delete=models.SET_DEFAULT,
         help_text="Shortcut for better performance",
+        # for adding "Re:" if needed, must be within the same topic as last message
     )
     last_message = models.ForeignKey(
         "Message",
@@ -216,9 +217,9 @@ class Board(models.Model):
 
         return reverse("aa_forum:forum_board", args=[self.category.slug, self.slug])
 
-    def update_last_message(self):
+    def _update_message_references(self):
         """
-        Update the last message for this board.
+        Update the first and last message for this board - and parent board if needed.
         """
 
         self.last_message = (
@@ -228,7 +229,15 @@ class Board(models.Model):
             .order_by("-time_posted")
             .first()
         )
-        self.save(update_fields=["last_message"])
+        if self.last_message:
+            self.first_message = self.last_message.topic.messages.order_by(
+                "time_posted"
+            ).first()
+        else:
+            self.first_message = None
+        self.save(update_fields=["first_message", "last_message"])
+        if self.parent_board:
+            self.parent_board._update_message_references()
 
 
 class Topic(models.Model):
@@ -287,30 +296,25 @@ class Topic(models.Model):
         :type kwargs:
         """
 
+        if not self._state.adding and self.pk:
+            try:
+                old_instance = Topic.objects.get(pk=self.pk)
+            except Topic.DoesNotExist:
+                old_instance = None
+        else:
+            old_instance = None
+
+        board_needs_update = old_instance and (
+            old_instance.first_message != self.first_message
+            or old_instance.last_message != self.last_message
+        )
+
         if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
             self.slug = _generate_slug(type(self), self.subject)
 
         super().save(*args, **kwargs)
-
-        try:
-            self.board.first_message = self.first_message
-
-            if self.board.parent_board is not None:
-                self.board.parent_board.first_message = self.first_message
-                self.board.parent_board.save()
-        except Message.DoesNotExist:
-            self.board.first_message = None
-
-        try:
-            self.board.last_message = self.last_message
-
-            if self.board.parent_board is not None:
-                self.board.parent_board.last_message = self.last_message
-                self.board.parent_board.save()
-        except Message.DoesNotExist:
-            self.board.last_message = None
-
-        self.board.save(update_fields=["first_message", "last_message"])
+        if board_needs_update:
+            self.board._update_message_references()
 
     @transaction.atomic()
     def delete(self, *args, **kwargs):
@@ -321,13 +325,13 @@ class Topic(models.Model):
         :param kwargs:
         :type kwargs:
         """
-
-        board_needs_update = self.last_message = self.board.last_message
-
+        board_needs_update = (
+            self.first_message == self.board.first_message
+            or self.last_message == self.board.last_message
+        )
         super().delete(*args, **kwargs)
-
         if board_needs_update:
-            self.board.update_last_message()
+            self.board._update_message_references()
 
     def get_absolute_url(self) -> str:
         """
@@ -339,15 +343,18 @@ class Topic(models.Model):
             args=[self.board.category.slug, self.board.slug, self.slug],
         )
 
-    def update_last_message(self):
+    def _update_message_references(self):
         """
-        Update the last message for this topic.
+        Update the first and last message for this topic.
         """
 
+        self.first_message = (
+            Message.objects.filter(topic=self).order_by("time_posted").first()
+        )
         self.last_message = (
             Message.objects.filter(topic=self).order_by("-time_posted").first()
         )
-        self.save(update_fields=["last_message"])
+        self.save(update_fields=["first_message", "last_message"])
 
 
 class LastMessageSeen(models.Model):
@@ -451,16 +458,21 @@ class Message(models.Model):
         :type kwargs:
         """
 
-        topic_needs_update = self.topic.last_message == self
-        board_needs_update = self.topic.board.last_message == self
+        topic_needs_update = (
+            self.topic.first_message == self or self.topic.last_message == self
+        )
+        board_needs_update = (
+            self.topic.board.first_message == self
+            or self.topic.board.last_message == self
+        )
 
         super().delete(*args, **kwargs)
 
         if topic_needs_update:
-            self.topic.update_last_message()
+            self.topic._update_message_references()
 
         if board_needs_update:
-            self.topic.board.update_last_message()
+            self.topic.board._update_message_references()
 
     def get_absolute_url(self):
         """
