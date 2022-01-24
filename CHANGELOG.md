@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- `NoReverseMatch` error when slugs for category, board or topic that are generated
+- `NoReverseMatch` error when slugs for a category, board or topic that are generated
   from the name/subject ended up being empty when only entered special chars like
   "@#$%" as name/subject
 
