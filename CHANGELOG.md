@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In development] - Unreleased
 
+
+## [1.5.0] - 2022-01-24
+
 ### Added
 
 - Option: Use this Discord Webhook for replies as well? (This is a checkbox in the
