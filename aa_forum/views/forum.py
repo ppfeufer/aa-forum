@@ -5,9 +5,6 @@ Forum related views
 # Standard Library
 from typing import Optional
 
-# Third Party
-import requests
-
 # Django
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -19,7 +16,6 @@ from django.db.models import Count, Exists, OuterRef, Prefetch, Q
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -28,12 +24,12 @@ from allianceauth.services.hooks import get_extension_logger
 
 # Alliance Auth (External Libs)
 from app_utils.logging import LoggerAddTag
-from app_utils.urls import reverse_absolute
 
 # AA Forum
 from aa_forum import __title__
 from aa_forum.constants import SETTING_MESSAGESPERPAGE, SETTING_TOPICSPERPAGE
 from aa_forum.forms import EditMessageForm, EditTopicForm, NewTopicForm
+from aa_forum.helper.webhook import send_message_to_discord_webhook
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Setting, Topic
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
@@ -362,36 +358,12 @@ def board_new_topic(
 
             # Send to webhook if one is configured
             if board.discord_webhook is not None:
-                webhook_url = board.discord_webhook
-                topic_url = reverse_absolute(
-                    "aa_forum:forum_topic",
-                    args=[board.category.slug, board.slug, topic.slug],
+                send_message_to_discord_webhook(
+                    board=board,
+                    topic=topic,
+                    message=message,
+                    headline=f'**New topic has been started in board "{board.name}"**',
                 )
-
-                embed = {
-                    "description": strip_tags(
-                        message.message[:250] + "..."
-                        if len(message.message) > 250
-                        else message.message
-                    ),
-                    "title": topic.subject,
-                    "url": topic_url,
-                }
-
-                data = {
-                    "content": _(
-                        f'**New Topic has been posted in board "{board.name}"**'
-                    ),
-                    # "username": "custom username",
-                    "embeds": [embed],
-                }
-
-                result = requests.post(webhook_url, json=data)
-
-                try:
-                    result.raise_for_status()
-                except requests.exceptions.HTTPError as err:
-                    logger.info(f"Discord Webhook Error: {err}")
 
             return redirect(
                 "aa_forum:forum_topic",
@@ -811,6 +783,18 @@ def topic_reply(
                 message=form.cleaned_data["message"],
             )
             new_message.save()
+
+            # Send to webhook if one is configured
+            if (
+                topic.board.discord_webhook is not None
+                and topic.board.use_webhook_for_replies is not False
+            ):
+                send_message_to_discord_webhook(
+                    board=topic.board,
+                    topic=topic,
+                    message=new_message,
+                    headline=f'**New reply has been posted in topic "{topic.subject}"**',
+                )
 
             logger.info(f"{request.user} replied to topic {topic.subject}")
 

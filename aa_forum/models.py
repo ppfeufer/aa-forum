@@ -24,7 +24,7 @@ from aa_forum.constants import (
     INTERNAL_URL_PREFIX,
     SETTING_MESSAGESPERPAGE,
 )
-from aa_forum.helpers import string_cleanup
+from aa_forum.helper.text import string_cleanup
 from aa_forum.managers import (
     BoardManager,
     MessageManager,
@@ -148,6 +148,14 @@ class Board(models.Model):
     description = models.TextField(blank=True)
     discord_webhook = models.CharField(
         blank=True, null=True, default=None, max_length=254
+    )
+    use_webhook_for_replies = models.BooleanField(
+        default=False,
+        help_text=(
+            "Use this Discord Webhook for replies as well? When activated every reply "
+            "to any topic in this board will be posted to the defined Discord channel. "
+            "(Child boards are excluded) Chose wisely! (Default: NO)"
+        ),
     )
     parent_board = models.ForeignKey(
         "self",

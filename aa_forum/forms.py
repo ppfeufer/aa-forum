@@ -218,6 +218,16 @@ class EditBoardForm(ModelForm):
             }
         ),
     )
+    use_webhook_for_replies = forms.BooleanField(
+        initial=False,
+        required=False,
+        label=_("Use this Discord Webhook for replies as well?"),
+        help_text=_(
+            "When activated every reply to any topic in this board will be "
+            "posted to the defined Discord channel. (Child boards are excluded) "
+            "Chose wisely! (Default: NO)"
+        ),
+    )
 
     def __init__(self, *args, **kwargs):
         groups_queryset = kwargs.pop("groups_queryset", None)
@@ -233,7 +243,13 @@ class EditBoardForm(ModelForm):
         """
 
         model = Board
-        fields = ["name", "description", "groups", "discord_webhook"]
+        fields = [
+            "name",
+            "description",
+            "groups",
+            "discord_webhook",
+            "use_webhook_for_replies",
+        ]
 
 
 class EditMessageForm(ModelForm):

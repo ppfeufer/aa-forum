@@ -1,4 +1,9 @@
+# Standard Library
+import json
+from unittest.mock import patch
+
 # Third Party
+import requests
 from django_webtest import WebTest
 
 # Django
@@ -11,8 +16,6 @@ from aa_forum.tests.utils import (
     create_fake_messages,
     create_fake_user,
 )
-
-# from django.urls import reverse
 
 
 class TestForumUI(WebTest):
@@ -28,6 +31,17 @@ class TestForumUI(WebTest):
         cls.user_1003 = create_fake_user(1003, "Lex Luthor", permissions=[])
         cls.category = Category.objects.create(name="Science")
         cls.board = Board.objects.create(name="Physics", category=cls.category)
+        cls.board_with_webhook = Board.objects.create(
+            name="Chemistry",
+            category=cls.category,
+            discord_webhook="https://discord.com/webhook/",
+        )
+        cls.board_with_webhook_for_replies = Board.objects.create(
+            name="Biology",
+            category=cls.category,
+            discord_webhook="https://discord.com/webhook/",
+            use_webhook_for_replies=True,
+        )
 
     def test_should_show_forum_index(self):
         # given
@@ -51,11 +65,12 @@ class TestForumUI(WebTest):
         page = self.app.get(self.board.get_absolute_url())
         # when
         page = page.click(linkid="aa-forum-btn-new-topic-above-list")
-        # then
+
         form = page.forms["aa-forum-form-new-topic"]
         form["subject"] = "Recent Discoveries"
         form["message"] = "Energy of the Higgs boson"
         page = form.submit().follow()
+
         # then
         self.assertEqual(self.board.topics.count(), 1)
         self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
@@ -63,6 +78,104 @@ class TestForumUI(WebTest):
         self.assertEqual(new_topic.subject, "Recent Discoveries")
         new_message = Message.objects.last()
         self.assertEqual(new_message.message, "Energy of the Higgs boson")
+
+    @patch("requests.post")
+    def test_should_post_to_discord_webhook_on_create_new_topic(self, mock_post):
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(self.board_with_webhook.get_absolute_url())
+
+        # when
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Recent Discoveries"
+        form["message"] = "Energy of the Higgs boson"
+        page = form.submit().follow()
+
+        # then
+        self.assertEqual(self.board_with_webhook.topics.count(), 1)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
+        new_topic = Topic.objects.last()
+        self.assertEqual(new_topic.subject, "Recent Discoveries")
+        new_message = Message.objects.last()
+        self.assertEqual(new_message.message, "Energy of the Higgs boson")
+
+        info = {"test1": "value1", "test2": "value2"}
+        requests.post(self.board_with_webhook.discord_webhook, data=json.dumps(info))
+        mock_post.assert_called_with(
+            self.board_with_webhook.discord_webhook, data=json.dumps(info)
+        )
+
+    @patch("requests.post")
+    def test_should_post_to_discord_webhook_with_image_on_create_new_topic(
+        self, mock_post
+    ):
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(self.board_with_webhook.get_absolute_url())
+
+        # when
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Recent Discoveries"
+        form[
+            "message"
+        ] = "Energy of the Higgs boson <img src='/images/images/038/929/227/large/marc-bell-2a.jpg'>"
+        page = form.submit().follow()
+
+        # then
+        self.assertEqual(self.board_with_webhook.topics.count(), 1)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
+        new_topic = Topic.objects.last()
+        self.assertEqual(new_topic.subject, "Recent Discoveries")
+        new_message = Message.objects.last()
+        self.assertEqual(
+            new_message.message,
+            "Energy of the Higgs boson <img src='/images/images/038/929/227/large/marc-bell-2a.jpg'>",
+        )
+
+        info = {"test1": "value1", "test2": "value2"}
+        requests.post(self.board_with_webhook.discord_webhook, data=json.dumps(info))
+        mock_post.assert_called_with(
+            self.board_with_webhook.discord_webhook, data=json.dumps(info)
+        )
+
+    @patch("requests.post")
+    def test_should_post_to_discord_webhook_with_image_with_full_url_on_create_new_topic(
+        self, mock_post
+    ):
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(self.board_with_webhook.get_absolute_url())
+
+        # when
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Recent Discoveries"
+        form[
+            "message"
+        ] = "Energy of the Higgs boson <img src='https://cdnb.artstation.com/p/assets/images/images/038/929/227/large/marc-bell-2a.jpg'>"
+        page = form.submit().follow()
+
+        # then
+        self.assertEqual(self.board_with_webhook.topics.count(), 1)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
+        new_topic = Topic.objects.last()
+        self.assertEqual(new_topic.subject, "Recent Discoveries")
+        new_message = Message.objects.last()
+        self.assertEqual(
+            new_message.message,
+            "Energy of the Higgs boson <img src='https://cdnb.artstation.com/p/assets/images/images/038/929/227/large/marc-bell-2a.jpg'>",
+        )
+
+        info = {"test1": "value1", "test2": "value2"}
+        requests.post(self.board_with_webhook.discord_webhook, data=json.dumps(info))
+        mock_post.assert_called_with(
+            self.board_with_webhook.discord_webhook, data=json.dumps(info)
+        )
 
     def test_should_cancel_new_topic(self):
         # given
@@ -77,6 +190,26 @@ class TestForumUI(WebTest):
         self.assertTemplateUsed(page, "aa_forum/view/forum/board.html")
 
     def test_should_create_reply_in_topic(self):
+        # given
+        topic = Topic.objects.create(
+            subject="Mysteries", board=self.board_with_webhook_for_replies
+        )
+        create_fake_messages(topic=topic, amount=5)
+        self.app.set_user(self.user_1001)
+        page = self.app.get(topic.get_absolute_url())
+
+        # when
+        form = page.forms["aa-forum-form-message-reply"]
+        form["message"] = "What is dark matter?"
+        page = form.submit().follow().follow()
+
+        # then
+        self.assertEqual(topic.messages.count(), 6)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
+        new_message = Message.objects.last()
+        self.assertEqual(new_message.message, "What is dark matter?")
+
+    def test_should_post_to_webhook_on_create_reply_in_topic(self):
         # given
         topic = Topic.objects.create(subject="Mysteries", board=self.board)
         create_fake_messages(topic=topic, amount=5)

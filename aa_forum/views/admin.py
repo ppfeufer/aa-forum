@@ -31,7 +31,7 @@ from app_utils.logging import LoggerAddTag
 from aa_forum import __title__
 from aa_forum.constants import DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER
 from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm
-from aa_forum.helpers import message_form_errors
+from aa_forum.helper.forms import message_form_errors
 from aa_forum.models import Board, Category
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
@@ -259,6 +259,7 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
                 description=form.cleaned_data["description"],
                 category=board_category,
                 discord_webhook=discord_webhook,
+                use_webhook_for_replies=form.cleaned_data["use_webhook_for_replies"],
                 order=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
             )
             new_board.save()
@@ -308,6 +309,7 @@ def board_create_child(
                 name=form.cleaned_data["name"],
                 description=form.cleaned_data["description"],
                 discord_webhook=discord_webhook,
+                use_webhook_for_replies=form.cleaned_data["use_webhook_for_replies"],
                 parent_board=parent_board,
                 category=parent_board.category,
                 order=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
@@ -359,6 +361,7 @@ def board_edit(
             board.name = form.cleaned_data["name"]
             board.description = form.cleaned_data["description"]
             board.discord_webhook = discord_webhook
+            board.use_webhook_for_replies = form.cleaned_data["use_webhook_for_replies"]
             board.groups.set(form.cleaned_data["groups"])
             board.save()
 
