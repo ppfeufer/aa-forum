@@ -55,7 +55,9 @@ def string_cleanup(string: str) -> str:
     return string
 
 
-def send_message_to_discord_webhook(webhook_url: str, text_message: str, embeds: {}):
+def send_message_to_discord_webhook(
+    webhook_url: str, text_message: str, embeds: {} = None
+):
     """
     Send a message to a Discord Webhook
     :param webhook_url:
@@ -64,7 +66,10 @@ def send_message_to_discord_webhook(webhook_url: str, text_message: str, embeds:
     :return:
     """
 
-    data = {"content": text_message, "embeds": [embeds]}
+    data = {"content": text_message}
+
+    if embeds:
+        data = {"content": text_message, "embeds": [embeds]}
 
     result = requests.post(webhook_url, json=data)
 
