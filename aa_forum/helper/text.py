@@ -55,6 +55,7 @@ def get_image_url(text):
 
         if not first_image__src.startswith(("http://", "https://")):
             logger.debug("Image has no absolute URL, fixing!")
+
             absolute_site_url = site_absolute_url()
             first_image__src = f"{absolute_site_url}{first_image__src}"
 
