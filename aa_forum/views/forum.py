@@ -362,7 +362,7 @@ def board_new_topic(
                     board=board,
                     topic=topic,
                     message=message,
-                    headline=f'**New Topic has been started in board "{board.name}"**',
+                    headline=f'**New topic has been started in board "{board.name}"**',
                 )
 
             return redirect(
