@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In development] - Unreleased
 
+
+## [1.4.3] - 2022-01-24
+
 ### Fixed
 
 - `NoReverseMatch` error when slugs for category, board or topic that are generated
