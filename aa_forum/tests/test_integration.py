@@ -1,4 +1,9 @@
+# Standard Library
+import json
+from unittest.mock import patch
+
 # Third Party
+import requests
 from django_webtest import WebTest
 
 # Django
@@ -11,8 +16,6 @@ from aa_forum.tests.utils import (
     create_fake_messages,
     create_fake_user,
 )
-
-# from django.urls import reverse
 
 
 class TestForumUI(WebTest):
@@ -28,6 +31,11 @@ class TestForumUI(WebTest):
         cls.user_1003 = create_fake_user(1003, "Lex Luthor", permissions=[])
         cls.category = Category.objects.create(name="Science")
         cls.board = Board.objects.create(name="Physics", category=cls.category)
+        cls.board_with_webhook = Board.objects.create(
+            name="Chemistry",
+            category=cls.category,
+            discord_webhook="https://discord.com/webhook/",
+        )
 
     def test_should_show_forum_index(self):
         # given
@@ -63,6 +71,27 @@ class TestForumUI(WebTest):
         self.assertEqual(new_topic.subject, "Recent Discoveries")
         new_message = Message.objects.last()
         self.assertEqual(new_message.message, "Energy of the Higgs boson")
+
+    @patch("requests.post")
+    def test_should_post_to_discord_webhook_on_create_new_topic(self, mock_post):
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(self.board_with_webhook.get_absolute_url())
+
+        # when
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Recent Discoveries"
+        form["message"] = "Energy of the Higgs boson"
+        form.submit().follow()
+
+        # then
+        info = {"test1": "value1", "test2": "value2"}
+        requests.post(self.board_with_webhook.discord_webhook, data=json.dumps(info))
+        mock_post.assert_called_with(
+            self.board_with_webhook.discord_webhook, data=json.dumps(info)
+        )
 
     def test_should_cancel_new_topic(self):
         # given

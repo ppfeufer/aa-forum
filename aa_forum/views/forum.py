@@ -5,9 +5,6 @@ Forum related views
 # Standard Library
 from typing import Optional
 
-# Third Party
-import requests
-
 # Django
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -34,6 +31,7 @@ from app_utils.urls import reverse_absolute
 from aa_forum import __title__
 from aa_forum.constants import SETTING_MESSAGESPERPAGE, SETTING_TOPICSPERPAGE
 from aa_forum.forms import EditMessageForm, EditTopicForm, NewTopicForm
+from aa_forum.helpers import send_message_to_discord_webhook
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Setting, Topic
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
@@ -368,7 +366,7 @@ def board_new_topic(
                     args=[board.category.slug, board.slug, topic.slug],
                 )
 
-                embed = {
+                embeds = {
                     "description": strip_tags(
                         message.message[:250] + "..."
                         if len(message.message) > 250
@@ -378,20 +376,14 @@ def board_new_topic(
                     "url": topic_url,
                 }
 
-                data = {
-                    "content": _(
-                        f'**New Topic has been posted in board "{board.name}"**'
+                send_message_to_discord_webhook(
+                    webhook_url=webhook_url,
+                    text_message=(
+                        f'**New Topic has been started in board "{board.name}" by '
+                        f"{message.user_created.profile.main_character.character_name}**"
                     ),
-                    # "username": "custom username",
-                    "embeds": [embed],
-                }
-
-                result = requests.post(webhook_url, json=data)
-
-                try:
-                    result.raise_for_status()
-                except requests.exceptions.HTTPError as err:
-                    logger.info(f"Discord Webhook Error: {err}")
+                    embeds=embeds,
+                )
 
             return redirect(
                 "aa_forum:forum_topic",
