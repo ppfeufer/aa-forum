@@ -36,6 +36,12 @@ class TestForumUI(WebTest):
             category=cls.category,
             discord_webhook="https://discord.com/webhook/",
         )
+        cls.board_with_webhook_for_replies = Board.objects.create(
+            name="Biology",
+            category=cls.category,
+            discord_webhook="https://discord.com/webhook/",
+            use_webhook_for_replies=True,
+        )
 
     def test_should_show_forum_index(self):
         # given
@@ -184,6 +190,26 @@ class TestForumUI(WebTest):
         self.assertTemplateUsed(page, "aa_forum/view/forum/board.html")
 
     def test_should_create_reply_in_topic(self):
+        # given
+        topic = Topic.objects.create(
+            subject="Mysteries", board=self.board_with_webhook_for_replies
+        )
+        create_fake_messages(topic=topic, amount=5)
+        self.app.set_user(self.user_1001)
+        page = self.app.get(topic.get_absolute_url())
+
+        # when
+        form = page.forms["aa-forum-form-message-reply"]
+        form["message"] = "What is dark matter?"
+        page = form.submit().follow().follow()
+
+        # then
+        self.assertEqual(topic.messages.count(), 6)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
+        new_message = Message.objects.last()
+        self.assertEqual(new_message.message, "What is dark matter?")
+
+    def test_should_post_to_webhook_on_create_reply_in_topic(self):
         # given
         topic = Topic.objects.create(subject="Mysteries", board=self.board)
         create_fake_messages(topic=topic, amount=5)
