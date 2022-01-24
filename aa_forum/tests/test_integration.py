@@ -59,11 +59,12 @@ class TestForumUI(WebTest):
         page = self.app.get(self.board.get_absolute_url())
         # when
         page = page.click(linkid="aa-forum-btn-new-topic-above-list")
-        # then
+
         form = page.forms["aa-forum-form-new-topic"]
         form["subject"] = "Recent Discoveries"
         form["message"] = "Energy of the Higgs boson"
         page = form.submit().follow()
+
         # then
         self.assertEqual(self.board.topics.count(), 1)
         self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
@@ -84,9 +85,86 @@ class TestForumUI(WebTest):
         form = page.forms["aa-forum-form-new-topic"]
         form["subject"] = "Recent Discoveries"
         form["message"] = "Energy of the Higgs boson"
-        form.submit().follow()
+        page = form.submit().follow()
 
         # then
+        self.assertEqual(self.board_with_webhook.topics.count(), 1)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
+        new_topic = Topic.objects.last()
+        self.assertEqual(new_topic.subject, "Recent Discoveries")
+        new_message = Message.objects.last()
+        self.assertEqual(new_message.message, "Energy of the Higgs boson")
+
+        info = {"test1": "value1", "test2": "value2"}
+        requests.post(self.board_with_webhook.discord_webhook, data=json.dumps(info))
+        mock_post.assert_called_with(
+            self.board_with_webhook.discord_webhook, data=json.dumps(info)
+        )
+
+    @patch("requests.post")
+    def test_should_post_to_discord_webhook_with_image_on_create_new_topic(
+        self, mock_post
+    ):
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(self.board_with_webhook.get_absolute_url())
+
+        # when
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Recent Discoveries"
+        form[
+            "message"
+        ] = "Energy of the Higgs boson <img src='/images/images/038/929/227/large/marc-bell-2a.jpg'>"
+        page = form.submit().follow()
+
+        # then
+        self.assertEqual(self.board_with_webhook.topics.count(), 1)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
+        new_topic = Topic.objects.last()
+        self.assertEqual(new_topic.subject, "Recent Discoveries")
+        new_message = Message.objects.last()
+        self.assertEqual(
+            new_message.message,
+            "Energy of the Higgs boson <img src='/images/images/038/929/227/large/marc-bell-2a.jpg'>",
+        )
+
+        info = {"test1": "value1", "test2": "value2"}
+        requests.post(self.board_with_webhook.discord_webhook, data=json.dumps(info))
+        mock_post.assert_called_with(
+            self.board_with_webhook.discord_webhook, data=json.dumps(info)
+        )
+
+    @patch("requests.post")
+    def test_should_post_to_discord_webhook_with_image_with_full_url_on_create_new_topic(
+        self, mock_post
+    ):
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(self.board_with_webhook.get_absolute_url())
+
+        # when
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Recent Discoveries"
+        form[
+            "message"
+        ] = "Energy of the Higgs boson <img src='https://cdnb.artstation.com/p/assets/images/images/038/929/227/large/marc-bell-2a.jpg'>"
+        page = form.submit().follow()
+
+        # then
+        self.assertEqual(self.board_with_webhook.topics.count(), 1)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
+        new_topic = Topic.objects.last()
+        self.assertEqual(new_topic.subject, "Recent Discoveries")
+        new_message = Message.objects.last()
+        self.assertEqual(
+            new_message.message,
+            "Energy of the Higgs boson <img src='https://cdnb.artstation.com/p/assets/images/images/038/929/227/large/marc-bell-2a.jpg'>",
+        )
+
         info = {"test1": "value1", "test2": "value2"}
         requests.post(self.board_with_webhook.discord_webhook, data=json.dumps(info))
         mock_post.assert_called_with(

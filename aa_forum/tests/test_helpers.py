@@ -6,11 +6,12 @@ from django.test import RequestFactory, TestCase
 from django.urls import reverse
 
 # AA Forum
-from aa_forum import helpers
 from aa_forum.forms import NewCategoryForm
+from aa_forum.helper.forms import message_form_errors
+from aa_forum.helper.text import string_cleanup
 
 
-@patch("aa_forum.helpers.messages")
+@patch("aa_forum.helper.forms.messages")
 class TestHelpers(TestCase):
     def setUp(self) -> None:
         self.factory = RequestFactory()
@@ -22,7 +23,7 @@ class TestHelpers(TestCase):
         form.add_error(None, "error message 2")
         request = self.factory.get(reverse("aa_forum:forum_index"))
         # when
-        helpers.message_form_errors(request, form)
+        message_form_errors(request, form)
         # then
         args, _ = messages.error.call_args_list[0]
         self.assertIn("error message 1", args[1])
@@ -34,7 +35,7 @@ class TestHelpers(TestCase):
         form = NewCategoryForm({"name": "Dummy"})
         request = self.factory.get(reverse("aa_forum:forum_index"))
         # when
-        helpers.message_form_errors(request, form)
+        message_form_errors(request, form)
         # then
         self.assertFalse(messages.error.called)
 
@@ -45,7 +46,7 @@ class TestHelpers(TestCase):
             ".MathJax_Message, .MathJax_Preview{display: none}</style>end tests."
         )
 
-        cleaned_string = helpers.string_cleanup(string)
+        cleaned_string = string_cleanup(string)
 
         self.assertIn(
             "this is a script test. and this is style test. end tests.", cleaned_string

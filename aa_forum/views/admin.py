@@ -31,7 +31,7 @@ from app_utils.logging import LoggerAddTag
 from aa_forum import __title__
 from aa_forum.constants import DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER
 from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm
-from aa_forum.helpers import message_form_errors
+from aa_forum.helper.forms import message_form_errors
 from aa_forum.models import Board, Category
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
