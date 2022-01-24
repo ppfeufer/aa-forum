@@ -51,14 +51,19 @@ def get_image_url(text):
     if images:
         first_image__src = images[0]["src"]
 
+        logger.debug(f"First Image found: {first_image__src}")
+
         if not first_image__src.startswith(("http://", "https://")):
+            logger.debug("Image has no absolute URL, fixing!")
             absolute_site_url = site_absolute_url()
             first_image__src = f"{absolute_site_url}{first_image__src}"
 
         if verify_image_url(first_image__src):
-            logger.debug(first_image__src)
+            logger.debug(f"Image verified: {first_image__src}")
 
             return first_image__src
+
+    logger.debug("No images found.")
 
     return None
 
