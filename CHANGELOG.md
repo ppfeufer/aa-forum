@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In development] - Unreleased
 
+### Changed
+
+- Webhook handling changed to dhooks-lite, so we can make our Discord messages nicer
+
 
 ## [1.4.3] - 2022-01-24
 
