@@ -3,7 +3,7 @@ Discord webhook helper
 """
 
 # Third Party
-from dhooks_lite import Embed, Footer, Image, Thumbnail, Webhook
+from dhooks_lite import Embed, Footer, Image, Webhook
 
 # Django
 from django.utils.html import strip_tags
@@ -26,6 +26,7 @@ def send_message_to_discord_webhook(
     :param board:
     :param topic:
     :param message:
+    :param headline:
     :return:
     """
 
@@ -63,7 +64,7 @@ def send_message_to_discord_webhook(
         color=embed_color,
         footer=Footer(f"Posted by: {author_eve_name}", author_eve_avatar),
         image=Image(image_url) if image_url else None,
-        thumbnail=Thumbnail(author_eve_avatar),
+        # thumbnail=Thumbnail(author_eve_avatar),
         # author=Author(
         #     author_eve_name,
         #     # url="https://en.wikipedia.org/wiki/Albert_Einstein",
