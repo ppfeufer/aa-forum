@@ -16,7 +16,6 @@ from django.db.models import Count, Exists, OuterRef, Prefetch, Q
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -25,13 +24,12 @@ from allianceauth.services.hooks import get_extension_logger
 
 # Alliance Auth (External Libs)
 from app_utils.logging import LoggerAddTag
-from app_utils.urls import reverse_absolute
 
 # AA Forum
 from aa_forum import __title__
 from aa_forum.constants import SETTING_MESSAGESPERPAGE, SETTING_TOPICSPERPAGE
 from aa_forum.forms import EditMessageForm, EditTopicForm, NewTopicForm
-from aa_forum.helpers import send_message_to_discord_webhook
+from aa_forum.helper.webhook import send_message_to_discord_webhook
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Setting, Topic
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
@@ -360,29 +358,11 @@ def board_new_topic(
 
             # Send to webhook if one is configured
             if board.discord_webhook is not None:
-                webhook_url = board.discord_webhook
-                topic_url = reverse_absolute(
-                    "aa_forum:forum_topic",
-                    args=[board.category.slug, board.slug, topic.slug],
-                )
-
-                embeds = {
-                    "description": strip_tags(
-                        message.message[:250] + "..."
-                        if len(message.message) > 250
-                        else message.message
-                    ),
-                    "title": topic.subject,
-                    "url": topic_url,
-                }
-
                 send_message_to_discord_webhook(
-                    webhook_url=webhook_url,
-                    text_message=(
-                        f'**New Topic has been started in board "{board.name}" by '
-                        f"{message.user_created.profile.main_character.character_name}**"
-                    ),
-                    embeds=embeds,
+                    board=board,
+                    topic=topic,
+                    message=message,
+                    headline=f'**New Topic has been started in board "{board.name}"**',
                 )
 
             return redirect(

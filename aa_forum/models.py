@@ -24,7 +24,7 @@ from aa_forum.constants import (
     INTERNAL_URL_PREFIX,
     SETTING_MESSAGESPERPAGE,
 )
-from aa_forum.helpers import string_cleanup
+from aa_forum.helper.text import string_cleanup
 from aa_forum.managers import (
     BoardManager,
     MessageManager,
