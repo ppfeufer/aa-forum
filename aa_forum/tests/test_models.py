@@ -91,20 +91,6 @@ class TestBoard(TestCase):
         board.refresh_from_db()
         self.assertEqual(board.last_message, message_child_board)
 
-    # def test_should_update_last_message_when_message_is_deleted(self):
-    #     # given
-    #     board = create_board(name="Physics", category=self.category)
-    #     topic = create_topic(subject="Mysteries", board=board)
-    #     message = create_message(
-    #         topic=topic, user_created=self.user, message="What is dark energy?"
-    #     )
-    #     # when
-    #     message.delete()
-
-    #     # then
-    #     board.refresh_from_db()
-    #     self.assertIsNone(board.last_message)
-
     def test_should_return_url(self):
         # given
         board = create_board(category=self.category, name="Physics")
@@ -200,6 +186,20 @@ class TestBoard(TestCase):
         # then
         self.assertEqual(category.slug, "hyphen")
 
+    def test_should_handle_empty_board_slug(self):
+        """
+        Handling an empty slug that is returned by Board.save() when the board name is
+        just special characters, which are getting stripped by slug generation
+        :return:
+        """
+
+        # when
+        board = create_board(name="@#$%", category=self.category)
+
+        # then
+        expected_slug = f"{board.__class__.__name__}-{board.pk}".lower()
+        self.assertEqual(board.slug, expected_slug)
+
 
 class TestCategory(TestCase):
     @classmethod
@@ -269,6 +269,20 @@ class TestCategory(TestCase):
 
         # then
         self.assertEqual(category.slug, "hyphen")
+
+    def test_should_handle_empty_category_slug(self):
+        """
+        Handling an empty slug that is returned by Category.save() when the category
+        name is just special characters, which are getting stripped by slug generation
+        :return:
+        """
+
+        # when
+        category = create_category(name="@#$%")
+
+        # then
+        expected_slug = f"{category.__class__.__name__}-{category.pk}".lower()
+        self.assertEqual(category.slug, expected_slug)
 
 
 @patch(MODELS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
@@ -623,10 +637,24 @@ class TestTopic(TestCase):
     @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
     def test_should_create_slug_with_name_matching_internal_url_prefix(self):
         # when
-        category = create_topic(subject="-", board=self.board)
+        topic = create_topic(subject="-", board=self.board)
 
         # then
-        self.assertEqual(category.slug, "hyphen")
+        self.assertEqual(topic.slug, "hyphen")
+
+    def test_should_handle_empty_topic_slug(self):
+        """
+        Handling an empty slug that is returned by Topic.save() when the topic
+        name is just special characters, which are getting stripped by slug generation
+        :return:
+        """
+
+        # when
+        topic = create_topic(subject="@#$%", board=self.board)
+
+        # then
+        expected_slug = f"{topic.__class__.__name__}-{topic.pk}".lower()
+        self.assertEqual(topic.slug, expected_slug)
 
 
 class TestPersonalMessage(TestCase):
