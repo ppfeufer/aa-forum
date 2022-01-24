@@ -22,11 +22,11 @@ def get_character_portrait_from_evecharacter(
     portrait_url = character_portrait_url(
         character_id=character.character_id, size=size
     )
-    character_name = character.character_name
 
     return_value = portrait_url
 
     if as_html is True:
+        character_name = character.character_name
         return_value = (
             '<img class="aasrp-character-portrait img-rounded" '
             f'src="{portrait_url}" alt="{character_name}">'
