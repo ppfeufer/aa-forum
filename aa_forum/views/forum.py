@@ -784,6 +784,18 @@ def topic_reply(
             )
             new_message.save()
 
+            # Send to webhook if one is configured
+            if (
+                topic.board.discord_webhook is not None
+                and topic.board.use_webhook_for_replies is not False
+            ):
+                send_message_to_discord_webhook(
+                    board=topic.board,
+                    topic=topic,
+                    message=new_message,
+                    headline=f'**New reply has been posted in topic "{topic.subject}"**',
+                )
+
             logger.info(f"{request.user} replied to topic {topic.subject}")
 
             return redirect(
