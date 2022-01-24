@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In development] - Unreleased
 
 
+## [1.4.3] - 2022-01-24
+
+### Fixed
+
+- `NoReverseMatch` error when slugs for a category, board or topic that are generated
+  from the name/subject ended up being empty when only entered special chars like
+  "@#$%" as name/subject
+
+
 ## [1.4.2] - 2022-01-23
 
 ### Fixed

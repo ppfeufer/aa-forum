@@ -128,6 +128,12 @@ class Category(models.Model):
 
         super().save(*args, **kwargs)
 
+        if self.slug == "":
+            self.slug = _generate_slug(
+                type(self), f"{self.__class__.__name__} {self.pk}"
+            )
+            self.save()
+
 
 class Board(models.Model):
     """
@@ -209,6 +215,12 @@ class Board(models.Model):
             self.slug = _generate_slug(type(self), self.name)
 
         super().save(*args, **kwargs)
+
+        if self.slug == "":
+            self.slug = _generate_slug(
+                type(self), f"{self.__class__.__name__} {self.pk}"
+            )
+            self.save()
 
     def get_absolute_url(self) -> str:
         """
@@ -313,6 +325,13 @@ class Topic(models.Model):
             self.slug = _generate_slug(type(self), self.subject)
 
         super().save(*args, **kwargs)
+
+        if self.slug == "":
+            self.slug = _generate_slug(
+                type(self), f"{self.__class__.__name__} {self.pk}"
+            )
+            self.save()
+
         if board_needs_update:
             self.board._update_message_references()
 
