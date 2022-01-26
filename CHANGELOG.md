@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In development] - Unreleased
 
 
+## [1.5.1] - 2022-01-26
+
+### Fixed
+
+- Escaped HTML entities in webhook messages, so that this »`That&#39;s`« does not
+  happen anymore
+
+
 ## [1.5.0] - 2022-01-24
 
 ### Added

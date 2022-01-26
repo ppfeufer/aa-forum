@@ -2,6 +2,9 @@
 Discord webhook helper
 """
 
+# Standard Library
+import html
+
 # Third Party
 from dhooks_lite import Embed, Footer, Image, Webhook
 
@@ -18,6 +21,28 @@ from aa_forum.helper.text import get_image_url
 from aa_forum.models import Board, Message, Topic
 
 
+def _prepare_message_for_webhook(message: Message) -> str:
+    """
+    Preparing the message to be sent with a Discord Webhook
+
+    We have to run strip_tags() twice here.
+    1. To remove HTML tags from the text we want to send
+    2. After html.unescape() in case that unescaped former escaped HTML tags,
+    which now need to be removed as well
+    :param message:
+    :return:
+    """
+    return strip_tags(
+        html.unescape(
+            strip_tags(
+                message.message[:DISCORD_EMBED_MESSAGE_LENGTH] + "…"
+                if len(message.message) > DISCORD_EMBED_MESSAGE_LENGTH
+                else message.message
+            )
+        )
+    )
+
+
 def send_message_to_discord_webhook(
     board: Board, topic: Topic, message: Message, headline: str
 ):
@@ -31,11 +56,7 @@ def send_message_to_discord_webhook(
     """
 
     discord_webhook = Webhook(board.discord_webhook)
-    message_to_send = strip_tags(
-        message.message[:DISCORD_EMBED_MESSAGE_LENGTH] + "..."
-        if len(message.message) > DISCORD_EMBED_MESSAGE_LENGTH
-        else message.message
-    )
+    message_to_send = _prepare_message_for_webhook(message=message)
     embed_color = DISCORD_EMBED_COLOR_MAP.get("info", None)
     image_url = get_image_url(message.message)
     author_eve_avatar = get_character_portrait_from_evecharacter(
