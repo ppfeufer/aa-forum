@@ -10,7 +10,7 @@ from django import forms
 from django.contrib.auth.models import Group
 from django.forms import ModelForm
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 # AA Forum
 from aa_forum.models import Board, Category, Message, Topic

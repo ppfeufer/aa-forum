@@ -17,14 +17,15 @@ repos:
       - id: end-of-file-fixer
         exclude: \.(min\.css|min\.js|po|mo)$
       - id: mixed-line-ending
-        args: [ '--fix=lf' ]
+        args: [ --fix=lf ]
       - id: fix-encoding-pragma
-        args: [ '--remove' ]
+        args: [ --remove ]
       - id: detect-private-key
       - id: check-added-large-files
-        args: ['--maxkb=1000']
+        args: [ --maxkb=1000 ]
       - id: check-ast  # Is it valid Python?
       - id: debug-statements  # Check for debugger imports and py37+ breakpoint() calls
+      - id: check-merge-conflict
 
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: 2.4.0
@@ -54,12 +55,12 @@ repos:
       - id: isort
 
   - repo: https://github.com/psf/black
-    rev: 21.12b0
+    rev: 22.1.0
     hooks:
       - id: black
 
   - repo: https://github.com/asottile/blacken-docs
-    rev: v1.12.0
+    rev: v1.12.1
     hooks:
       - id: blacken-docs
-        additional_dependencies: [ black==21.12b0 ]
+        additional_dependencies: [ black==22.1.0 ]

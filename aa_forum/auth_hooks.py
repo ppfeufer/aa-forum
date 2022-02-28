@@ -3,7 +3,7 @@ Hook into AA
 """
 
 # Django
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 # Alliance Auth
 from allianceauth import hooks
