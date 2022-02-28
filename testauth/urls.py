@@ -1,25 +1,31 @@
-# Third Party
-from ckeditor_uploader import views
-
 # Django
-from django.conf.urls import include, url
-from django.contrib.auth.decorators import login_required
-
-# *** New Imports for cKeditor
-from django.urls import re_path
-from django.views.decorators.cache import never_cache
+from django.apps import apps
+from django.urls import include, re_path
 
 # Alliance Auth
 from allianceauth import urls
 
+# Alliance auth urls
 urlpatterns = [
-    # *** New URL override for cKeditor BEFORE THE MAIN IMPORT
-    re_path(r"^upload/", login_required(views.upload), name="ckeditor_upload"),
-    re_path(
-        r"^browse/",
-        never_cache(login_required(views.browse)),
-        name="ckeditor_browse",
-    ),
-    # Alliance Auth URLs
-    url(r"", include(urls)),
+    re_path(r"", include(urls)),
 ]
+
+# URL configuration for cKeditor
+if apps.is_installed("ckeditor"):
+    # Third Party
+    from ckeditor_uploader import views as ckeditor_views
+
+    # Django
+    from django.contrib.auth.decorators import login_required
+    from django.views.decorators.cache import never_cache
+
+    urlpatterns = [
+        re_path(
+            r"^upload/", login_required(ckeditor_views.upload), name="ckeditor_upload"
+        ),
+        re_path(
+            r"^browse/",
+            never_cache(login_required(ckeditor_views.browse)),
+            name="ckeditor_browse",
+        ),
+    ] + urlpatterns
