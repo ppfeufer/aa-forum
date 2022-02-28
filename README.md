@@ -264,7 +264,6 @@ following block right before the `handler` definitions:
 from django.apps import apps
 
 if apps.is_installed("ckeditor"):
-    from django.urls import re_path
     from django.contrib.auth.decorators import login_required
     from django.views.decorators.cache import never_cache
     from ckeditor_uploader import views as ckeditor_views
@@ -284,19 +283,19 @@ if apps.is_installed("ckeditor"):
 After this, your `urls.py` should look similar to this:
 
 ```python
-from django.conf.urls import include, url
+from django.conf.urls import include
+from django.urls import re_path
 from allianceauth import urls
 
 # Alliance auth urls
 urlpatterns = [
-    url(r"", include(urls)),
+    re_path(r"", include(urls)),
 ]
 
 # URL configuration for cKeditor
 from django.apps import apps
 
 if apps.is_installed("ckeditor"):
-    from django.urls import re_path
     from django.contrib.auth.decorators import login_required
     from django.views.decorators.cache import never_cache
     from ckeditor_uploader import views as ckeditor_views
