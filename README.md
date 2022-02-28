@@ -283,8 +283,8 @@ if apps.is_installed("ckeditor"):
 After this, your `urls.py` should look similar to this:
 
 ```python
-from django.conf.urls import include
-from django.urls import re_path
+from django.urls import include, re_path
+
 from allianceauth import urls
 
 # Alliance auth urls
