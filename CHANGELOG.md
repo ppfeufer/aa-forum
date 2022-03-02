@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In development] - Unreleased
 
+
+## [1.7.0] - 2022-03-02
+
 ### Added
 
 - Test suite for AA 3.x and Django 4
