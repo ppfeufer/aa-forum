@@ -344,10 +344,14 @@ def board_new_topic(
 
         logger.info(
             f"{request.user} tried to create a topic in an announcement board without "
-            f"the permissin to do so. Redirecting to forum index"
+            f"the permissin to do so. Redirecting to board index"
         )
 
-        return redirect("aa_forum:forum_index")
+        return redirect(
+            "aa_forum:forum_board",
+            category_slug=board.category.slug,
+            board_slug=board.slug,
+        )
 
     # If this is a POST request we need to process the form data ...
     if request.method == "POST":
