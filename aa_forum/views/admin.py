@@ -59,7 +59,7 @@ def index(request: WSGIRequest) -> HttpResponse:
     ).order_by("order", "id")
 
     groups_queryset = Group.objects.all()
-    category_loop = list()
+    category_loop = []
 
     for category in categories:
         boards_data = []
@@ -422,7 +422,7 @@ def ajax_category_order(request: WSGIRequest) -> JsonResponse:
     :type request:
     """
 
-    data = list()
+    data = []
 
     if request.method == "POST":
         categories = json.loads(request.POST.get("categories"))
@@ -453,7 +453,7 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
     :type request:
     """
 
-    data = list()
+    data = []
 
     if request.method == "POST":
         boards = json.loads(request.POST.get("boards"))

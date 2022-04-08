@@ -101,7 +101,7 @@ def index(request: WSGIRequest) -> HttpResponse:
         .order_by("category__order", "category__id", "order", "id")
     )
 
-    categories_map = dict()
+    categories_map = {}
 
     for board in boards:
         category = board.category
@@ -110,7 +110,7 @@ def index(request: WSGIRequest) -> HttpResponse:
             categories_map[category.pk] = {
                 "id": category.id,
                 "name": category.name,
-                "boards_sorted": list(),
+                "boards_sorted": [],
                 "order": category.order,
             }
 
@@ -247,7 +247,7 @@ def board(
 
         logger.info(
             f"{request.user} called board without having access to it. "
-            f"Redirecting to forum index"
+            "Redirecting to forum index"
         )
 
         return redirect("aa_forum:forum_index")
@@ -325,7 +325,7 @@ def board_new_topic(
 
         logger.info(
             f"{request.user} tried to create a topic in a board they have no access "
-            f"to. Redirecting to forum index"
+            "to. Redirecting to forum index"
         )
 
         return redirect("aa_forum:forum_index")
@@ -344,7 +344,7 @@ def board_new_topic(
 
         logger.info(
             f"{request.user} tried to create a topic in an announcement board without "
-            f"the permissin to do so. Redirecting to board index"
+            "the permission to do so. Redirecting to board index"
         )
 
         return redirect(
@@ -383,11 +383,11 @@ def board_new_topic(
                         mark_safe(
                             _(
                                 "<h4>Warning!</h4>"
-                                f"<p>There is already a topic with the exact same "
-                                f"subject in this board.</p><p>See here: "
+                                "<p>There is already a topic with the exact same "
+                                "subject in this board.</p><p>See here: "
                                 f'<a href="{existing_topic_url}">'
                                 f"{existing_topic.subject}</a>"
-                                f"</p>"
+                                "</p>"
                             )
                         ),
                     )
@@ -594,7 +594,7 @@ def topic_modify(
 
         logger.info(
             f'{request.user} tried to modify topic "{topic_to_modify.subject}" '
-            f"without the proper permissions. Redirecting to forum index"
+            "without the proper permissions. Redirecting to forum index"
         )
 
         return redirect(
@@ -1083,7 +1083,7 @@ def message_modify(
 
         logger.info(
             f"{request.user} trying to change a message in a topic that either does "
-            f"not exist or they have no access to"
+            "not exist or they have no access to"
         )
 
         return redirect("aa_forum:forum_index")
@@ -1228,7 +1228,7 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
 
         logger.info(
             f"{request.user} was trying to delete message ID {message_id} without "
-            f"permission to do so. Redirecting to forum index"
+            "permission to do so. Redirecting to forum index"
         )
 
         return redirect(

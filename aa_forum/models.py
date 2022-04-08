@@ -485,7 +485,7 @@ class Message(models.Model):
 
         super().save(*args, **kwargs)
 
-        update_fields = list()
+        update_fields = []
 
         if not self.topic.first_message:
             self.topic.first_message = self

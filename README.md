@@ -21,6 +21,7 @@ Auth. So please only install if you know what you're doing/feel comfortable to m
 these kind of changes. For you own sanity, and mine :-)
 
 ## Contents
+
 - [Overview](#overview)
     - [Features](#features)
     - [Screenshots](#screenshots)

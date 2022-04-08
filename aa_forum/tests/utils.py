@@ -94,7 +94,7 @@ def create_fake_messages(topic: Topic, amount) -> List[Message]:
     """
 
     users = list(User.objects.all())
-    messages = list()
+    messages = []
 
     with patch("django.utils.timezone.now", new=message_datetime):
         for _ in range(amount):
