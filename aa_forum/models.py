@@ -168,6 +168,29 @@ class Board(models.Model):
         Group,
         blank=True,
         related_name="aa_forum_boards_group_restriction",
+        help_text=(
+            "User in at least one of these groups have access to this board. If "
+            "no groups are selected, everyone with access to the forum has also "
+            "access to this board."
+        ),
+    )
+    is_announcement_board = models.BooleanField(
+        default=False,
+        help_text=(
+            "Mark this board as an 'Announcement Board', meaning that only certain "
+            "selected groups can start new topics. All others who have access to this "
+            "board will still be able to discuss in the topics though. (Default: NO)"
+        ),
+    )
+    announcement_groups = models.ManyToManyField(
+        Group,
+        blank=True,
+        related_name="aa_forum_boards_group_start_topic_restriction",
+        help_text=(
+            "User in at least one of the selected groups will be able to start topics "
+            "in 'Announcement Boards'. If no group is selected, only forum admins can "
+            "do so."
+        ),
     )
     order = models.IntegerField(
         default=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER, db_index=True

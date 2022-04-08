@@ -260,11 +260,13 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
                 category=board_category,
                 discord_webhook=discord_webhook,
                 use_webhook_for_replies=form.cleaned_data["use_webhook_for_replies"],
+                is_announcement_board=form.cleaned_data["is_announcement_board"],
                 order=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
             )
             new_board.save()
 
             new_board.groups.set(form.cleaned_data["groups"])
+            new_board.announcement_groups.set(form.cleaned_data["announcement_groups"])
 
             messages.success(
                 request, mark_safe(_("<h4>Success!</h4><p>Board created.</p>"))
@@ -363,6 +365,8 @@ def board_edit(
             board.discord_webhook = discord_webhook
             board.use_webhook_for_replies = form.cleaned_data["use_webhook_for_replies"]
             board.groups.set(form.cleaned_data["groups"])
+            board.is_announcement_board = form.cleaned_data["is_announcement_board"]
+            board.announcement_groups.set(form.cleaned_data["announcement_groups"])
             board.save()
 
             messages.success(

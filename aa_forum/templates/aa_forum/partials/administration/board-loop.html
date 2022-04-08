@@ -33,6 +33,8 @@
 
                     {% if not is_child_board %}
                         {{ board.board_forms.board_edit_form.groups|bootstrap }}
+                        {{ board.board_forms.board_edit_form.is_announcement_board|bootstrap }}
+                        {{ board.board_forms.board_edit_form.announcement_groups|bootstrap }}
                     {% endif %}
 
                     <div class="form-group aa-forum-form-new-category text-right clearfix">

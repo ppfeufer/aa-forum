@@ -124,6 +124,30 @@ def index(request: WSGIRequest) -> HttpResponse:
     return render(request, "aa_forum/view/forum/index.html", context)
 
 
+def _user_can_start_topic(request: WSGIRequest, current_board: Board) -> bool:
+    """
+    Determine if we have an Announcement Board and the current user can start a topic
+    :param request:
+    :param current_board:
+    :return:
+    """
+
+    user_can_start_topic = True
+
+    if current_board.is_announcement_board:
+        if (
+            request.user.has_perm("aa_forum.manage_forum")
+            or request.user.groups.filter(
+                pk__in=current_board.announcement_groups.all()
+            ).exists()
+        ):
+            user_can_start_topic = True
+        else:
+            user_can_start_topic = False
+
+    return user_can_start_topic
+
+
 @login_required
 @permission_required("aa_forum.basic_access")
 def board(
@@ -203,6 +227,9 @@ def board(
                     to_attr="topics_sorted",
                 )
             )
+            .prefetch_related(
+                Prefetch("announcement_groups", queryset=Group.objects.order_by("name"))
+            )
             .filter(category__slug=category_slug, slug=board_slug)
             .user_has_access(request.user)
             .get()
@@ -230,7 +257,14 @@ def board(
         int(Setting.objects.get_setting(setting_key=SETTING_TOPICSPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
-    context = {"board": board, "page_obj": page_obj}
+
+    context = {
+        "board": board,
+        "user_can_start_topic": _user_can_start_topic(
+            request=request, current_board=board
+        ),
+        "page_obj": page_obj,
+    }
 
     logger.info(f'{request.user} called board "{board.name}"')
 
@@ -292,6 +326,25 @@ def board_new_topic(
         logger.info(
             f"{request.user} tried to create a topic in a board they have no access "
             f"to. Redirecting to forum index"
+        )
+
+        return redirect("aa_forum:forum_index")
+
+    if not _user_can_start_topic(request=request, current_board=board):
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4><p>The board you were trying to post in is an "
+                    "Announcement Board and you don't have the permissions to start a "
+                    "topic there ...</p>"
+                )
+            ),
+        )
+
+        logger.info(
+            f"{request.user} tried to create a topic in an announcement board without "
+            f"the permissin to do so. Redirecting to forum index"
         )
 
         return redirect("aa_forum:forum_index")
