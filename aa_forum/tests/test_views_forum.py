@@ -456,10 +456,19 @@ class TestTopicViews(TestCase):
             permissions=["aa_forum.basic_access", "aa_forum.manage_forum"],
         )
         cls.group = Group.objects.create(name="Superhero")
+        cls.announcement_group = Group.objects.create(name="Justice League")
+
+        cls.user_1004 = create_fake_user(
+            1004, "Luke Skywalker", permissions=["aa_forum.basic_access"]
+        )
+        cls.user_1004.groups.add(cls.announcement_group)
 
     def setUp(self) -> None:
         self.category = Category.objects.create(name="Science")
         self.board = Board.objects.create(name="Physics", category=self.category)
+        self.announcement_board = Board.objects.create(
+            name="Chemistry", category=self.category, is_announcement_board=True
+        )
         self.topic = Topic.objects.create(subject="Mysteries", board=self.board)
         create_fake_messages(self.topic, 15)
 
@@ -983,3 +992,98 @@ class TestTopicViews(TestCase):
 
         # then
         self.assertEqual(response.status_code, 200)
+
+    def test_can_create_new_topic_in_announcement_board_with_permission(self):
+        # given
+        self.client.force_login(self.user_1003)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_board_new_topic",
+                args=[self.category.slug, self.announcement_board.slug],
+            ),
+        )
+
+        # then
+        self.assertEqual(response.status_code, 200)
+
+    def test_can_create_new_topic_in_announcement_board_with_group(self):
+        # given
+        self.announcement_board.announcement_groups.add(self.announcement_group)
+        self.client.force_login(self.user_1004)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_board_new_topic",
+                args=[self.category.slug, self.announcement_board.slug],
+            ),
+        )
+
+        # then
+        self.assertEqual(response.status_code, 200)
+
+    def test_cannot_create_new_topic_in_announcement_board_without_permission(self):
+        # given
+        self.client.force_login(self.user_1004)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_board_new_topic",
+                args=[self.category.slug, self.announcement_board.slug],
+            ),
+        )
+
+        messages = list(get_messages(response.wsgi_request))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.url,
+            reverse(
+                "aa_forum:forum_board",
+                args=[self.category.slug, self.announcement_board.slug],
+            ),
+        )
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            (
+                "<h4>Error!</h4><p>The board you were trying to post in is an "
+                "Announcement Board and you don't have the permissions to start a "
+                "topic there ...</p>"
+            ),
+        )
+
+    def test_cannot_create_new_topic_in_announcement_board(self):
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_board_new_topic",
+                args=[self.category.slug, self.announcement_board.slug],
+            ),
+        )
+
+        messages = list(get_messages(response.wsgi_request))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.url,
+            reverse(
+                "aa_forum:forum_board",
+                args=[self.category.slug, self.announcement_board.slug],
+            ),
+        )
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(
+            str(messages[0]),
+            (
+                "<h4>Error!</h4><p>The board you were trying to post in is an "
+                "Announcement Board and you don't have the permissions to start a "
+                "topic there ...</p>"
+            ),
+        )
