@@ -8,19 +8,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+
+## [1.8.0] - 2022-04-14
+
 ### Added
 
 - New Feature: Announcement Boards
   ![New Feature: Announcement Boards](aa_forum/docs/images/feature-announcement-board.jpg "New Feature: Announcement Boards")
-  - Boards marked as "Announcement Boards" has restrictions on who can start a topic
+  - Boards marked as "Announcement Boards" have restrictions on who can start a topic
     in them. This is the already known group restriction function that is already
     used to restrict access to boards in general
-  - Users with access to an announcement board still can discuss in the topic itself
-  - To start a topic, a user needs to be in (at least) on of the defined groups that
+  - Users with access to an announcement board still can discuss the topic itself
+  - To start a topic, a user needs to be in (at least) one of the defined groups that
     are allowed to start topics
   - If no groups are defined that are allowed to start topics in the announcement
     board, only users with the `manage_forum` permission (Forum Admins) can start topics
-  - These settings will not be inherited to child boards
+  - These settings will not be inherited in child boards
 
 
 ## [1.7.0] - 2022-03-02
