@@ -245,7 +245,9 @@ class EditBoardForm(ModelForm):
         help_text=_(
             "User in at least one of the selected groups will be able to start topics "
             "in 'Announcement Boards'. If no group is selected, only forum admins can "
-            "do so. This setting will not be inherited to child boards."
+            "do so. This setting will not be inherited to child boards. (Hint: These "
+            "restrictions only take effect when a board is marked as 'Announcement "
+            "Board', see checkbox above.)"
         ),
         queryset=Group.objects.all(),
     )
