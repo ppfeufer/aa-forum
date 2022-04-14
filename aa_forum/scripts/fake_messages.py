@@ -59,7 +59,7 @@ def run():
     board_count = boards.count()
 
     if board_count > 0:
-        topics = list()
+        topics = []
 
         for num, board in enumerate(boards):
             print(f"Generating topics for board {num + 1} / {board_count}")

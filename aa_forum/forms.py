@@ -228,6 +228,29 @@ class EditBoardForm(ModelForm):
             "Chose wisely! (Default: NO)"
         ),
     )
+    is_announcement_board = forms.BooleanField(
+        initial=False,
+        required=False,
+        label=_("Mark Board as 'Announcement Board'"),
+        help_text=_(
+            "Mark this board as an 'Announcement Board', meaning that only certain "
+            "selected groups can start new topics. All others who have access to this "
+            "board will still be able to discuss in the topics though. This setting "
+            "will not be inherited to child boards. (Default: NO)"
+        ),
+    )
+    announcement_groups = SpecialModelMultipleChoiceField(
+        required=False,
+        label=_("Start Topic Restrictions for 'Announcement Boards'"),
+        help_text=_(
+            "User in at least one of the selected groups will be able to start topics "
+            "in 'Announcement Boards'. If no group is selected, only forum admins can "
+            "do so. This setting will not be inherited to child boards. (Hint: These "
+            "restrictions only take effect when a board is marked as 'Announcement "
+            "Board', see checkbox above.)"
+        ),
+        queryset=Group.objects.all(),
+    )
 
     def __init__(self, *args, **kwargs):
         groups_queryset = kwargs.pop("groups_queryset", None)
@@ -249,6 +272,8 @@ class EditBoardForm(ModelForm):
             "groups",
             "discord_webhook",
             "use_webhook_for_replies",
+            "is_announcement_board",
+            "announcement_groups",
         ]
 
 
