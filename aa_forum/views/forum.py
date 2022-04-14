@@ -124,30 +124,6 @@ def index(request: WSGIRequest) -> HttpResponse:
     return render(request, "aa_forum/view/forum/index.html", context)
 
 
-def _user_can_start_topic(request: WSGIRequest, current_board: Board) -> bool:
-    """
-    Determine if we have an Announcement Board and the current user can start a topic
-    :param request:
-    :param current_board:
-    :return:
-    """
-
-    user_can_start_topic = True
-
-    if current_board.is_announcement_board:
-        if (
-            request.user.has_perm("aa_forum.manage_forum")
-            or request.user.groups.filter(
-                pk__in=current_board.announcement_groups.all()
-            ).exists()
-        ):
-            user_can_start_topic = True
-        else:
-            user_can_start_topic = False
-
-    return user_can_start_topic
-
-
 @login_required
 @permission_required("aa_forum.basic_access")
 def board(
@@ -260,9 +236,7 @@ def board(
 
     context = {
         "board": board,
-        "user_can_start_topic": _user_can_start_topic(
-            request=request, current_board=board
-        ),
+        "user_can_start_topic": board.user_can_start_topic(user=request.user),
         "page_obj": page_obj,
     }
 
@@ -330,7 +304,7 @@ def board_new_topic(
 
         return redirect("aa_forum:forum_index")
 
-    if not _user_can_start_topic(request=request, current_board=board):
+    if not board.user_can_start_topic(user=request.user):
         messages.error(
             request,
             mark_safe(

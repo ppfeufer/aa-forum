@@ -260,6 +260,26 @@ class Board(models.Model):
 
         return reverse("aa_forum:forum_board", args=[self.category.slug, self.slug])
 
+    def user_can_start_topic(self, user: User) -> bool:
+        """
+        Determine if we have an Announcement Board and the current user can start a topic
+        :param user:
+        :return:
+        """
+
+        user_can_start_topic = True
+
+        if self.is_announcement_board:
+            if (
+                user.has_perm("aa_forum.manage_forum")
+                or user.groups.filter(pk__in=self.announcement_groups.all()).exists()
+            ):
+                user_can_start_topic = True
+            else:
+                user_can_start_topic = False
+
+        return user_can_start_topic
+
     def _update_message_references(self):
         """
         Update the first and last message for this board - and parent board if needed.
