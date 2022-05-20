@@ -32,6 +32,7 @@ def _prepare_message_for_webhook(message: Message) -> str:
     :param message:
     :return:
     """
+
     return strip_tags(
         html.unescape(
             strip_tags(
