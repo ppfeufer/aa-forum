@@ -7,7 +7,6 @@ import math
 
 # Third Party
 import unidecode
-from ckeditor_uploader.fields import RichTextUploadingField
 
 # Django
 from django.contrib.auth.models import Group, User
@@ -17,6 +16,9 @@ from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+
+# ckEditor
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # AA Forum
 from aa_forum.constants import (

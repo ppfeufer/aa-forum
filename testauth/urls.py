@@ -12,12 +12,12 @@ urlpatterns = [
 
 # URL configuration for cKeditor
 if apps.is_installed("ckeditor"):
-    # Third Party
-    from ckeditor_uploader import views as ckeditor_views
-
     # Django
     from django.contrib.auth.decorators import login_required
     from django.views.decorators.cache import never_cache
+
+    # ckEditor
+    from ckeditor_uploader import views as ckeditor_views
 
     urlpatterns = [
         re_path(
