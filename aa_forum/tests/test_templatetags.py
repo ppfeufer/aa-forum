@@ -7,6 +7,7 @@ from allianceauth.tests.auth_utils import AuthUtils
 
 # AA Forum
 from aa_forum import __version__
+from aa_forum.models import get_sentinel_user
 from aa_forum.tests.utils import create_fake_user
 
 
@@ -36,6 +37,15 @@ class TestMainCharacterName(TestCase):
         # then
         self.assertEqual(result, "john")
 
+    def test_should_return_deleted_user_for_sentinel_user(self):
+        # given
+        user = get_sentinel_user()
+        context = Context({"user": user})
+        # when
+        result = self.template.render(context)
+        # then
+        self.assertEqual(result, "deleted")
+
     def test_should_be_empty_for_None(self):
         # given
         context = Context({"user": None})
@@ -63,6 +73,15 @@ class TestMainCharacterId(TestCase):
     def test_should_contain_dummy_id_for_users_without_main(self):
         # given
         user = AuthUtils.create_user("john")
+        context = Context({"user": user})
+        # when
+        result = self.template.render(context)
+        # then
+        self.assertEqual(result, "1")
+
+    def test_should_be_dummy_id_for_sentinel_user(self):
+        # given
+        user = get_sentinel_user()
         context = Context({"user": user})
         # when
         result = self.template.render(context)
@@ -104,6 +123,15 @@ class TestMainCharacterCorporationName(TestCase):
         # then
         self.assertEqual(result, "")
 
+    def test_should_be_empty_for_sentinel_user(self):
+        # given
+        user = get_sentinel_user()
+        context = Context({"user": user})
+        # when
+        result = self.template.render(context)
+        # then
+        self.assertEqual(result, "")
+
     def test_should_be_empty_for_None(self):
         # given
         context = Context({"user": None})
@@ -133,6 +161,15 @@ class TestMainCorporationId(TestCase):
     def test_should_be_dummy_id_for_users_without_main(self):
         # given
         user = AuthUtils.create_user("john")
+        context = Context({"user": user})
+        # when
+        result = self.template.render(context)
+        # then
+        self.assertEqual(result, "1")
+
+    def test_should_be_dummy_id_for_sentinel_user(self):
+        # given
+        user = get_sentinel_user()
         context = Context({"user": user})
         # when
         result = self.template.render(context)
@@ -182,6 +219,15 @@ class TestMainCharacterAllianceName(TestCase):
         # then
         self.assertEqual(result, "")
 
+    def test_should_be_empty_for_sentinel_user(self):
+        # given
+        user = get_sentinel_user()
+        context = Context({"user": user})
+        # when
+        result = self.template.render(context)
+        # then
+        self.assertEqual(result, "")
+
     def test_should_be_empty_for_None(self):
         # given
         context = Context({"user": None})
@@ -219,6 +265,15 @@ class TestMainAllianceId(TestCase):
     def test_should_be_dummy_id_for_users_without_main(self):
         # given
         user = AuthUtils.create_user("john")
+        context = Context({"user": user})
+        # when
+        result = self.template.render(context)
+        # then
+        self.assertEqual(result, "1")
+
+    def test_should_be_dummy_id_for_sentinel_user(self):
+        # given
+        user = get_sentinel_user()
         context = Context({"user": user})
         # when
         result = self.template.render(context)
