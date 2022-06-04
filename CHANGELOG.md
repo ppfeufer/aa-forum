@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Fixed
+
+- A CSS class in an image HTML tag
+
+### Added
+
+- Image sizes to the character portrait image HTML tags
+
 
 ## [1.8.0] - 2022-04-14
 
