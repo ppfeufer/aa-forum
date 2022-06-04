@@ -20,9 +20,9 @@ from aa_forum.helper.text import string_cleanup
 
 
 @patch("aa_forum.helper.forms.messages")
-class TestHelpers(TestCase):
+class TestHelperForms(TestCase):
     """
-    Testing the helpers
+    Testing the forms helper
     """
 
     def setUp(self) -> None:
@@ -70,7 +70,13 @@ class TestHelpers(TestCase):
         # then
         self.assertFalse(messages.error.called)
 
-    def test_should_return_cleaned_string(self, messages):
+
+class TestHelperText(TestCase):
+    """
+    Testing the text helper
+    """
+
+    def test_should_return_cleaned_string(self):
         """
         Test should return a clean/sanitized string
         :param messages:
@@ -89,7 +95,18 @@ class TestHelpers(TestCase):
             "this is a script test. and this is style test. end tests.", cleaned_string
         )
 
-    def test_should_return_character_portrait_url(self, messages):
+
+class TestHelperEveImages(TestCase):
+    """
+    Testing the eve_images helpers
+    """
+
+    def setUp(self) -> None:
+        self.user_1001 = create_fake_user(
+            1001, "Bruce Wayne", permissions=["aa_forum.basic_access"]
+        )
+
+    def test_should_return_character_portrait_url(self):
         """
         Test should return character portrait URL
         :return:
@@ -102,7 +119,7 @@ class TestHelpers(TestCase):
 
         self.assertEqual(portrait_url, expected_url)
 
-    def test_should_return_character_portrait_html(self, messages):
+    def test_should_return_character_portrait_html(self):
         """
         Test should return character portrait HTML image tag
         :param messages:
