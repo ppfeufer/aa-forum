@@ -1,5 +1,5 @@
 """
-Test for our help functions
+Test for our helper functions
 """
 
 # Standard Library
