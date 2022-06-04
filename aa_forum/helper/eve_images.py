@@ -1,5 +1,5 @@
 """
-eve images
+Eve images
 """
 
 # Alliance Auth
@@ -11,7 +11,7 @@ def get_character_portrait_from_evecharacter(
     character: EveCharacter, size: int = 32, as_html: bool = False
 ) -> str:
     """
-    get the character portrait from EveCharacter model
+    Get the character portrait URL from EveCharacter model
     :param size:
     :param character:
     :param size:
@@ -29,7 +29,8 @@ def get_character_portrait_from_evecharacter(
         character_name = character.character_name
         return_value = (
             '<img class="aa-forum-character-portrait img-rounded" '
-            f'src="{portrait_url}" alt="{character_name}">'
+            f'src="{portrait_url}" alt="{character_name}" '
+            f'width="{size}" height="{size}">'
         )
 
     return return_value
