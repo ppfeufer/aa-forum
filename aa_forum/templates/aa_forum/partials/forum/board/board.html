@@ -69,7 +69,7 @@
             {% set_template_variable board_last_message_author = board_last_message.user_created %}
 
             {% with author_maincharacter_id=board_last_message_author|main_character_id %}
-                <img class="img img-rounded img-last-post-avatar" src="{{ author_maincharacter_id|character_portrait_url:64 }}" alt="{{ board_last_message_author|main_character_name }}" width="64" height="64">
+                <img class="aa-forum-character-portrait img img-rounded img-last-post-avatar" src="{{ author_maincharacter_id|character_portrait_url:64 }}" alt="{{ board_last_message_author|main_character_name }}" width="64" height="64">
             {% endwith %}
 
             <p class="last-post-information small">
