@@ -27,9 +27,6 @@ class TestHelperForms(TestCase):
 
     def setUp(self) -> None:
         self.factory = RequestFactory()
-        self.user_1001 = create_fake_user(
-            1001, "Bruce Wayne", permissions=["aa_forum.basic_access"]
-        )
 
     def test_should_send_form_errors_as_messages(self, messages):
         """
