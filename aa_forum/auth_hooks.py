@@ -11,6 +11,7 @@ from allianceauth.services.hooks import MenuItemHook, UrlHook
 
 # AA Forum
 from aa_forum import __title__, urls
+from aa_forum.app_settings import allianceauth_discordbot_active
 from aa_forum.views.forum import unread_topics_count
 
 
@@ -71,3 +72,15 @@ def register_urls():
     """
 
     return UrlHook(urls, "aa_forum", r"^forum/")
+
+
+# Only register the cog when aadiscordbot is installed
+if allianceauth_discordbot_active():
+
+    @hooks.register("discord_cogs_hook")
+    def register_cogs():
+        """
+        Registering our discord cog
+        """
+
+        return ["aa_forum.aadiscordbot.cogs.aa_forum"]
