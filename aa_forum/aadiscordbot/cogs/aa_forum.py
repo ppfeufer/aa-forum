@@ -34,9 +34,7 @@ class AaForum(commands.Cog):
     """
 
     @classmethod
-    def show_search_results(
-        cls, auth_user: User, search_term: str = None, discord_user: int = None
-    ):
+    def show_search_results(cls, auth_user: User, search_term: str = None):
         """
         Return search results for the users search term
         :return:
@@ -107,8 +105,11 @@ class AaForum(commands.Cog):
                     },
                 )
 
+                message_excerpt = forum_post.excerpt(50)
+
                 post_content += (
-                    f"**{forum_post.topic.subject}**\n[Link]({message_link})\n\n"
+                    f"**[{forum_post.topic.subject}]({message_link})**\n"
+                    f"{message_excerpt}\n\n"
                 )
 
             post_content += f"\n**All search results:** {forum_search_url}"
@@ -139,9 +140,8 @@ class AaForum(commands.Cog):
         if search_term is None:
             return await ctx.respond("You need to pass a search term to me :-)")
 
-        discord_user = ctx.author.id
-
         try:
+            discord_user = ctx.author.id
             discord_user_object = DiscordUser.objects.filter(uid=discord_user).get()
             auth_user = discord_user_object.user
         except DiscordUser.DoesNotExist:
@@ -149,9 +149,7 @@ class AaForum(commands.Cog):
         else:
             return await ctx.respond(
                 embed=self.show_search_results(
-                    auth_user=auth_user,
-                    search_term=search_term,
-                    discord_user=discord_user,
+                    auth_user=auth_user, search_term=search_term
                 )
             )
 
