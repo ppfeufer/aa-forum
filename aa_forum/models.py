@@ -584,6 +584,24 @@ class Message(models.Model):
 
         return f"{redirect_path}#message-{self.pk}"
 
+    def excerpt(self, length: int = 250, with_end_marker: bool = True) -> str:
+        """
+        Returns an excerpt of a given length (default: 250) of a
+        messages' plaintext content
+        :param length:
+        :param with_end_marker:
+        :return:
+        """
+
+        end_marker = " […]" if with_end_marker is True else ""
+
+        if len(self.message_plaintext) >= length:
+            excerpt = self.message_plaintext[0:length] + end_marker
+        else:
+            excerpt = self.message_plaintext + end_marker
+
+        return excerpt
+
 
 class PersonalMessage(models.Model):
     """
