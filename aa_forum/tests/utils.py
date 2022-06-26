@@ -1,3 +1,7 @@
+"""
+Helper for our tests
+"""
+
 # Standard Library
 import datetime as dt
 import random
@@ -41,11 +45,20 @@ def create_fake_user(
     corporation_name: str = None,
     corporation_ticker: str = None,
     alliance_id: int = None,
-    alliance_name: str = None,
+    alliance_name: str = "",
     permissions: List[str] = None,
 ) -> User:
     """
     Create a fake user incl. main character and (optional) permissions.
+    :param character_id:
+    :param character_name:
+    :param corporation_id:
+    :param corporation_name:
+    :param corporation_ticker:
+    :param alliance_id:
+    :param alliance_name:
+    :param permissions:
+    :return:
     """
 
     username = re.sub(r"[^\w\d@\.\+-]", "_", character_name)
@@ -56,9 +69,9 @@ def create_fake_user(
         corporation_name = "Wayne Technologies Inc."
         corporation_ticker = "WTE"
 
-    if not alliance_id:
-        alliance_id = 3001
-        alliance_name = "Wayne Enterprises"
+    # if not alliance_id:
+    #     alliance_id = 3001
+    #     alliance_name = "Wayne Enterprises"
 
     AuthUtils.add_main_character_2(
         user=user,
@@ -81,6 +94,9 @@ def create_fake_user(
 def create_fake_message(topic: Topic, user: User):
     """
     Create a fake message.
+    :param topic:
+    :param user:
+    :return:
     """
 
     return Message.objects.create(
@@ -91,6 +107,9 @@ def create_fake_message(topic: Topic, user: User):
 def create_fake_messages(topic: Topic, amount) -> List[Message]:
     """
     Create a bunch of fake messages in given topic.
+    :param topic:
+    :param amount:
+    :return:
     """
 
     users = list(User.objects.all())
@@ -112,18 +131,20 @@ def message_datetime():
 
     global MESSAGE_DATETIME_MINUTES_OFFSET
 
-    message_datetime = NEW_MESSAGE_DATETIME + dt.timedelta(
+    new_message_datetime = NEW_MESSAGE_DATETIME + dt.timedelta(
         minutes=MESSAGE_DATETIME_MINUTES_OFFSET
     )
 
     MESSAGE_DATETIME_MINUTES_OFFSET += 2
 
-    return message_datetime
+    return new_message_datetime
 
 
 def my_get_setting(setting_key: str) -> str:
     """
     Overload settings for tests.
+    :param setting_key:
+    :return:
     """
 
     if setting_key == SETTING_MESSAGESPERPAGE:
@@ -132,68 +153,121 @@ def my_get_setting(setting_key: str) -> str:
     return Setting.objects.get_setting(setting_key=setting_key)
 
 
-"""
-Factories for test objects
-"""
-
-
+# Factories for test objects
 def create_category(**kwargs) -> Category:
+    """
+    Create category
+    :param kwargs:
+    :return:
+    """
+
     if "name" not in kwargs:
         kwargs["name"] = fake.name()
+
     return Category.objects.create(**kwargs)
 
 
 def create_board(**kwargs) -> Board:
+    """
+    Create board
+    :param kwargs:
+    :return:
+    """
+
     if "name" not in kwargs:
         kwargs["name"] = fake.name()
+
     if "category" not in kwargs:
         kwargs["category"] = create_category()
+
     return Board.objects.create(**kwargs)
 
 
-def create_topic(**kwargs) -> Category:
+def create_topic(**kwargs) -> Topic:
+    """
+    Create topic
+    :param kwargs:
+    :return:
+    """
+
     if "subject" not in kwargs:
         kwargs["subject"] = fake.name()
+
     if "board" not in kwargs:
         kwargs["board"] = create_board()
+
     return Topic.objects.create(**kwargs)
 
 
 def create_message(**kwargs) -> Message:
+    """
+    Create message
+    :param kwargs:
+    :return:
+    """
+
     if "message" not in kwargs:
         kwargs["message"] = f"<p>{fake.sentence()}</p>"
+
     return Message.objects.create(**kwargs)
 
 
 def create_last_message_seen(**kwargs):
+    """
+    Create last message seen
+    :param kwargs:
+    :return:
+    """
+
     if "user" not in kwargs:
         kwargs["user"] = get_or_create_fake_user(1001, "Bruce Wayne")
+
     return LastMessageSeen.objects.create(**kwargs)
 
 
 def create_personal_message(**kwargs) -> PersonalMessage:
+    """
+    Create personal message
+    :param kwargs:
+    :return:
+    """
+
     if "sender" not in kwargs:
         kwargs["sender"] = get_or_create_fake_user(1001, "Bruce Wayne")
+
     if "recipient" not in kwargs:
         kwargs["recipient"] = get_or_create_fake_user(1011, "Lex Luthor")
+
     if "subject" not in kwargs:
         kwargs["subject"] = fake.sentence()
+
     return PersonalMessage.objects.create(**kwargs)
 
 
 def create_setting(**kwargs) -> Setting:
+    """
+    Create setting
+    :param kwargs:
+    :return:
+    """
+
     return Setting.objects.create(**kwargs)
 
 
 def get_or_create_fake_user(*args, **kwargs) -> User:
-    """Same as create_fake_user but will not fail when user already exists."""
+    """
+    Same as create_fake_user but will not fail when user already exists.
+    """
+
     if len(args) > 1:
         character_name = args[1]
     elif "character_name" in kwargs:
         character_name = kwargs["character_name"]
     else:
         ValueError("character_name is not defined")
+
     username = character_name.replace("'", "").replace(" ", "_")
+
     try:
         return User.objects.get(username=username)
     except User.DoesNotExist:

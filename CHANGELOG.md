@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - A CSS class in an image HTML tag
 - Return dummy ID when user is not in an alliance
+- No default alliance for test fake user
 
 ### Added
 
