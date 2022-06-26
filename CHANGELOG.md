@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+
+## [1.8.1] - 2022-06-26
+
 ### Fixed
 
 - A CSS class in an image HTML tag
