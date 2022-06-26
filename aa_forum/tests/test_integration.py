@@ -38,6 +38,7 @@ class TestForumUI(WebTest):
             1002, "Peter Parker", permissions=["aa_forum.basic_access"]
         )
         cls.user_1003 = create_fake_user(1003, "Lex Luthor", permissions=[])
+
         cls.category = Category.objects.create(name="Science")
         cls.board = Board.objects.create(name="Physics", category=cls.category)
         cls.board_with_webhook = Board.objects.create(
@@ -106,6 +107,53 @@ class TestForumUI(WebTest):
         self.assertEqual(new_topic.subject, "Recent Discoveries")
         new_message = Message.objects.last()
         self.assertEqual(new_message.message, "Energy of the Higgs boson")
+
+    def test_should_not_create_topic_that_already_exists(self):
+        """
+        Test should not re-create an existing topic
+        :return:
+        """
+
+        # given
+        board = Board.objects.create(name="Space", category=self.category)
+        existing_topic = Topic.objects.create(subject="Mysteries", board=board)
+        create_fake_messages(existing_topic, 15)
+
+        existing_topic_url = reverse(
+            "aa_forum:forum_topic",
+            kwargs={
+                "category_slug": existing_topic.board.category.slug,
+                "board_slug": existing_topic.board.slug,
+                "topic_slug": existing_topic.slug,
+            },
+        )
+
+        self.app.set_user(self.user_1001)
+        page = self.app.get(board.get_absolute_url())
+
+        # when
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Mysteries"
+        form["message"] = "Energy of the Higgs boson"
+        page = form.submit()
+
+        # then
+        self.assertEqual(self.board.topics.count(), 0)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/new-topic.html")
+
+        messages = list(page.context["messages"])
+        expected_message = (
+            "<h4>Warning!</h4>"
+            "<p>There is already a topic with the exact same "
+            "subject in this board.</p><p>See here: "
+            f'<a href="{existing_topic_url}">'
+            f"{existing_topic.subject}</a>"
+            "</p>"
+        )
+
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
 
     @patch("requests.post")
     def test_should_post_to_discord_webhook_on_create_new_topic(self, mock_post):
