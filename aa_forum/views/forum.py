@@ -815,10 +815,22 @@ def topic_reply(
                 message_id=new_message.id,
             )
 
-    messages.warning(
-        request,
-        mark_safe(_("<h4>Warning!</h4><p>Something went wrong, please try again</p>.")),
-    )
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4>"
+                    "<p>Message field is mandatory and cannot be empty.</p>"
+                )
+            ),
+        )
+    else:
+        messages.error(
+            request,
+            mark_safe(
+                _("<h4>Error!</h4><p>Something went wrong, please try again.</p>")
+            ),
+        )
 
     return redirect("aa_forum:forum_topic", category_slug, board_slug, topic_slug)
 

@@ -11,6 +11,7 @@ import requests
 from django_webtest import WebTest
 
 # Django
+from django.contrib.messages import get_messages
 from django.urls import reverse
 
 # AA Forum
@@ -218,6 +219,38 @@ class TestForumUI(WebTest):
         self.assertEqual(str(messages[0]), expected_message)
 
     @patch("requests.post")
+    def test_should_post_to_webhook_on_create_reply_in_topic(self, mock_post):
+        """
+        Test should post to Discord webhook when reply in topic
+        :return:
+        """
+
+        # given
+        topic = Topic.objects.create(
+            subject="Mysteries", board=self.board_with_webhook_for_replies
+        )
+        create_fake_messages(topic=topic, amount=5)
+        self.app.set_user(self.user_1001)
+        page = self.app.get(topic.get_absolute_url())
+
+        # when
+        form = page.forms["aa-forum-form-message-reply"]
+        form["message"] = "What is dark matter?"
+        page = form.submit().follow().follow()
+
+        # then
+        self.assertEqual(topic.messages.count(), 6)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
+        new_message = Message.objects.last()
+        self.assertEqual(new_message.message, "What is dark matter?")
+
+        info = {"test1": "value1", "test2": "value2"}
+        requests.post(self.board_with_webhook.discord_webhook, data=json.dumps(info))
+        mock_post.assert_called_with(
+            self.board_with_webhook.discord_webhook, data=json.dumps(info)
+        )
+
+    @patch("requests.post")
     def test_should_post_to_discord_webhook_on_create_new_topic(self, mock_post):
         """
         Test should post to Discord webhook when new topic is created
@@ -361,31 +394,6 @@ class TestForumUI(WebTest):
         """
 
         # given
-        topic = Topic.objects.create(
-            subject="Mysteries", board=self.board_with_webhook_for_replies
-        )
-        create_fake_messages(topic=topic, amount=5)
-        self.app.set_user(self.user_1001)
-        page = self.app.get(topic.get_absolute_url())
-
-        # when
-        form = page.forms["aa-forum-form-message-reply"]
-        form["message"] = "What is dark matter?"
-        page = form.submit().follow().follow()
-
-        # then
-        self.assertEqual(topic.messages.count(), 6)
-        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
-        new_message = Message.objects.last()
-        self.assertEqual(new_message.message, "What is dark matter?")
-
-    def test_should_post_to_webhook_on_create_reply_in_topic(self):
-        """
-        Test should post to Discord webhook when reply in topic
-        :return:
-        """
-
-        # given
         topic = Topic.objects.create(subject="Mysteries", board=self.board)
         create_fake_messages(topic=topic, amount=5)
         self.app.set_user(self.user_1001)
@@ -401,6 +409,65 @@ class TestForumUI(WebTest):
         self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
         new_message = Message.objects.last()
         self.assertEqual(new_message.message, "What is dark matter?")
+
+    def test_should_not_create_reply_in_topic_due_to_missing_message(self):
+        """
+        Test should not create reply in topic, because message field is empty
+        :return:
+        """
+
+        # given
+        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        topic_messages = create_fake_messages(topic=topic, amount=5)
+        self.app.set_user(self.user_1001)
+        page = self.app.get(topic.get_absolute_url())
+
+        # when
+        form = page.forms["aa-forum-form-message-reply"]
+        form["message"] = ""  # Omit mandatory field
+        page = form.submit().follow()
+
+        # then
+        self.assertEqual(topic.messages.count(), 5)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
+        self.assertEqual(topic.last_message.message, topic_messages[-1].message)
+
+        expected_message = (
+            "<h4>Error!</h4><p>Message field is mandatory and cannot be empty.</p>"
+        )
+        messages = list(page.context["messages"])
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_trigger_error_message_when_trying_to_access_message_reply_directly(
+        self,
+    ):
+        """
+        Test should trigger an error message when trying to access
+        the reply endpoint of a topic directly
+        :return:
+        """
+
+        # given
+        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        create_fake_messages(topic=topic, amount=5)
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:forum_topic_reply",
+                args=[topic.board.category.slug, topic.board.slug, topic.slug],
+            ),
+        )
+
+        # then
+        expected_message = (
+            "<h4>Error!</h4><p>Something went wrong, please try again.</p>"
+        )
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
 
     def test_should_update_own_message(self):
         """
