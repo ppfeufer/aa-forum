@@ -957,6 +957,36 @@ class TestTopicViews(TestCase):
         self.assertEqual(res.url, self.topic.get_absolute_url())
         self.assertFalse(self.topic.messages.filter(pk=my_message.pk).exists())
 
+    def test_should_not_delete_message_because_missing_permissions(self):
+        """
+        Test should not delete message because of insufficient permissions
+        :return:
+
+        """
+
+        # given
+        message = Message(
+            message="Lorem Ipsum", topic=self.topic, user_created=self.user_1003
+        )
+        message.save()
+
+        # when
+        self.client.force_login(self.user_1001)
+        response = self.client.get(
+            reverse("aa_forum:forum_message_delete", args=[message.pk])
+        )
+
+        # then
+        self.assertEqual(response.status_code, 302)
+
+        expected_message = (
+            "<h4>Error!</h4><p>You are not allowed to delete this message.</p>"
+        )
+        messages = list(get_messages(response.wsgi_request))
+
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
+
     def test_should_delete_first_message(self):
         """
         Test should delete first message
