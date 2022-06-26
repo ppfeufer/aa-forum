@@ -121,7 +121,7 @@ class TestForumUI(WebTest):
         # when
         page = page.click(linkid="aa-forum-btn-new-topic-above-list")
         form = page.forms["aa-forum-form-new-topic"]
-        # form["subject"] = "Recent Discoveries"  # commented to create an invalid form
+        form["subject"] = ""  # Omitting mandatory field
         form["message"] = "Energy of the Higgs boson"
         page = form.submit()
 
