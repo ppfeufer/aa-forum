@@ -391,6 +391,19 @@ def board_new_topic(
                 board_slug=board.slug,
                 topic_slug=topic.slug,
             )
+
+        # Form is invalid
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4>"
+                    "<p>Either subject or message is missing. "
+                    "Please make sure you enter both fields, "
+                    "as both fields are mandatory.</p>"
+                )
+            ),
+        )
     # If not, we'll create a blank form
     else:
         form = NewTopicForm()

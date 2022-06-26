@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Image sizes to the character portrait image HTML tags
+- Error message when submitting an invalid form on topic creation
 
 ### Changed
 
