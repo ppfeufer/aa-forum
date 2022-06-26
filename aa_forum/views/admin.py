@@ -43,9 +43,7 @@ def index(request: WSGIRequest) -> HttpResponse:
     """
     Administration index view
     :param request:
-    :type request:
     :return:
-    :rtype:
     """
 
     categories = Category.objects.prefetch_related(
@@ -130,7 +128,7 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
     """
     Create a new category
     :param request:
-    :type request:
+    :return:
     """
 
     if request.method == "POST":
@@ -173,9 +171,8 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
     """
     Edit a category
     :param request:
-    :type request:
     :param category_id:
-    :type category_id:
+    :return:
     """
 
     if request.method == "POST":
@@ -206,9 +203,8 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
     """
     Edit a board
     :param request:
-    :type request:
     :param category_id:
-    :type category_id:
+    :return:
     """
 
     try:
@@ -233,9 +229,8 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
     """
     Create a new board
     :param request:
-    :type request:
     :param category_id:
-    :type category_id:
+    :return:
     """
 
     if request.method == "POST":
@@ -287,11 +282,9 @@ def board_create_child(
     """
     Create a child board
     :param request:
-    :type request:
     :param category_id:
-    :type category_id:
     :param board_id:
-    :type board_id:
+    :return:
     """
 
     if request.method == "POST":
@@ -340,11 +333,9 @@ def board_edit(
     """
     Edit a board
     :param request:
-    :type request:
     :param category_id:
-    :type category_id:
     :param board_id:
-    :type board_id:
+    :return:
     """
 
     if request.method == "POST":
@@ -388,11 +379,9 @@ def board_delete(
     """
     Delete a board
     :param request:
-    :type request:
     :param category_id:
-    :type category_id:
     :param board_id:
-    :type board_id:
+    :return:
     """
 
     try:
@@ -419,7 +408,7 @@ def ajax_category_order(request: WSGIRequest) -> JsonResponse:
     """
     Ajax call :: Save the category order
     :param request:
-    :type request:
+    :return:
     """
 
     data = []
@@ -450,7 +439,7 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
     """
     Ajax call :: Save the board order
     :param request:
-    :type request:
+    :return:
     """
 
     data = []

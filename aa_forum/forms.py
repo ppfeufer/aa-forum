@@ -2,15 +2,15 @@
 Forms
 """
 
-# Third Party
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
-
 # Django
 from django import forms
 from django.contrib.auth.models import Group
 from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
+
+# ckEditor
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 # AA Forum
 from aa_forum.models import Board, Category, Message, Topic
@@ -20,9 +20,7 @@ def get_mandatory_form_label_text(text):
     """
     Label text for mandatory form fields
     :param text:
-    :type text:
     :return:
-    :rtype:
     """
 
     required_text = _("This field is mandatory")
@@ -214,7 +212,7 @@ class EditBoardForm(ModelForm):
         max_length=254,
         widget=forms.TextInput(
             attrs={
-                "placeholder": "https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                "placeholder": "https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # , pylint: disable=line-too-long
             }
         ),
     )

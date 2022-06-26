@@ -13,11 +13,9 @@ from aa_forum import __version__
 @register.simple_tag
 def aa_forum_static(path: str) -> str:
     """
-    Versioned static URL
+    Return versioned static URL
     :param path:
-    :type path:
     :return:
-    :rtype:
     """
 
     static_url = static(path)

@@ -19,5 +19,10 @@ class AaForumConfig(AppConfig):
     verbose_name = f"AA Forum v{__version__}"
 
     def ready(self):
+        """
+        Make sure we can utilize signals
+        :return:
+        """
+
         # AA Forum
         import aa_forum.signals  # noqa: F401 # pylint: disable=unused-import, import-outside-toplevel

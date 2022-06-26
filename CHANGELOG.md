@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [1.8.1] - 2022-06-26
+
+### Fixed
+
+- A CSS class in an image HTML tag
+- Return dummy ID when user is not in an alliance
+- No default alliance for test fake user
+
+### Added
+
+- Image sizes to the character portrait image HTML tags
+- Error message when submitting an invalid form on topic creation
+- Better error messages for topic reply errors
+
+### Changed
+
+- Templates cleaned up
+
+
 ## [1.8.0] - 2022-04-14
 
 ### Added

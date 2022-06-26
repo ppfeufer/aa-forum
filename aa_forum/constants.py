@@ -8,10 +8,10 @@ from django.utils.text import slugify
 # AA Forum
 from aa_forum import __version__
 
-github_url = "https://github.com/ppfeufer/aa-forum"
-verbose_name = "AA-Forum - A simple forum for Alliance Auth"
-verbose_name_slug = slugify(verbose_name, allow_unicode=True)
-user_agent = f"{verbose_name_slug} v{__version__} {github_url}"
+github_url: str = "https://github.com/ppfeufer/aa-forum"
+verbose_name: str = "AA-Forum - A simple forum for Alliance Auth"
+verbose_name_slug: str = slugify(verbose_name, allow_unicode=True)
+user_agent: str = f"{verbose_name_slug} v{__version__} {github_url}"
 
 # Setting keys
 SETTING_MESSAGESPERPAGE = "defaultMaxMessages"

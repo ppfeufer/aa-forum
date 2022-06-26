@@ -34,11 +34,8 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     """
     Search results view
     :param request:
-    :type request:
     :param page_number:
-    :type page_number:
     :return:
-    :rtype:
     """
 
     if request.GET:

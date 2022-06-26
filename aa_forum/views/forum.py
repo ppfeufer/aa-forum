@@ -41,9 +41,7 @@ def index(request: WSGIRequest) -> HttpResponse:
     """
     Forum index view
     :param request:
-    :type request:
     :return:
-    :rtype:
     """
 
     has_read_all_messages = LastMessageSeen.objects.filter(
@@ -132,15 +130,10 @@ def board(
     """
     Forum board view
     :param request:
-    :type request:
     :param category_slug:
-    :type category_slug:
     :param board_slug:
-    :type board_slug:
     :param page_number:
-    :type page_number:
     :return:
-    :rtype:
     """
 
     has_read_all_messages = LastMessageSeen.objects.filter(
@@ -253,13 +246,9 @@ def board_new_topic(
     """
     Begin a new topic
     :param request:
-    :type request:
     :param category_slug:
-    :type category_slug:
     :param board_slug:
-    :type board_slug:
     :return:
-    :rtype:
     """
 
     try:
@@ -402,6 +391,19 @@ def board_new_topic(
                 board_slug=board.slug,
                 topic_slug=topic.slug,
             )
+
+        # Form is invalid
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4>"
+                    "<p>Either subject or message is missing. "
+                    "Please make sure you enter both fields, "
+                    "as both fields are mandatory.</p>"
+                )
+            ),
+        )
     # If not, we'll create a blank form
     else:
         form = NewTopicForm()
@@ -425,17 +427,11 @@ def topic(
     """
     View a topic
     :param request:
-    :type request:
     :param category_slug:
-    :type category_slug:
     :param board_slug:
-    :type board_slug:
     :param topic_slug:
-    :type topic_slug:
     :param page_number:
-    :type page_number:
     :return:
-    :rtype:
     """
 
     topic = _topic_from_slugs(
@@ -521,13 +517,10 @@ def topic_modify(
     """
     Modify the topics subject
     :param request:
-    :type request:
     :param category_slug:
-    :type category_slug:
     :param board_slug:
-    :type board_slug:
     :param topic_slug:
-    :type topic_slug:
+    :return:
     """
 
     topic_to_modify = _topic_from_slugs(
@@ -618,17 +611,12 @@ def _topic_from_slugs(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> Optional[Topic]:
     """
-    Fetch topic from given slug params.
+    Fetch topic from given slug params
     :param request:
-    :type request:
     :param category_slug:
-    :type category_slug:
     :param board_slug:
-    :type board_slug:
     :param topic_slug:
-    :type topic_slug:
     :return:
-    :rtype:
     """
 
     topic = Topic.objects.get_from_slugs(
@@ -647,17 +635,12 @@ def topic_first_unread_message(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
     """
-    Redirect to first unread message of a topic.
+    Redirect to first unread message of a topic
     :param request:
-    :type request:
     :param category_slug:
-    :type category_slug:
     :param board_slug:
-    :type board_slug:
     :param topic_slug:
-    :type topic_slug:
     :return:
-    :rtype:
     """
 
     topic = _topic_from_slugs(
@@ -708,7 +691,7 @@ def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
     """
     Show all available unread topics
     :param request:
-    :type request:
+    :return:
     """
 
     has_read_all_messages = LastMessageSeen.objects.filter(
@@ -767,15 +750,10 @@ def topic_reply(
     """
     Reply to a post in a topic
     :param request:
-    :type request:
     :param category_slug:
-    :type category_slug:
     :param board_slug:
-    :type board_slug:
     :param topic_slug:
-    :type topic_slug:
     :return:
-    :rtype:
     """
 
     topic = _topic_from_slugs(
@@ -837,10 +815,22 @@ def topic_reply(
                 message_id=new_message.id,
             )
 
-    messages.warning(
-        request,
-        mark_safe(_("<h4>Warning!</h4><p>Something went wrong, please try again</p>.")),
-    )
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4>"
+                    "<p>Message field is mandatory and cannot be empty.</p>"
+                )
+            ),
+        )
+    else:
+        messages.error(
+            request,
+            mark_safe(
+                _("<h4>Error!</h4><p>Something went wrong, please try again.</p>")
+            ),
+        )
 
     return redirect("aa_forum:forum_topic", category_slug, board_slug, topic_slug)
 
@@ -853,11 +843,8 @@ def topic_change_lock_state(
     """
     Change the lock state of the given topic
     :param request:
-    :type request:
     :param topic_id:
-    :type topic_id:
     :return:
-    :rtype:
     """
 
     try:
@@ -897,11 +884,8 @@ def topic_change_sticky_state(
     """
     Change the sticky state of the given topic
     :param request:
-    :type request:
     :param topic_id:
-    :type topic_id:
     :return:
-    :rtype:
     """
 
     try:
@@ -941,11 +925,8 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
     """
     Delete a given topic
     :param request:
-    :type request:
     :param topic_id:
-    :type topic_id:
     :return:
-    :rtype:
     """
 
     try:
@@ -980,17 +961,11 @@ def message(
     """
     Get a messages' entry point in a topic, so we end up on the right page with it
     :param request:
-    :type request:
     :param category_slug:
-    :type category_slug:
     :param board_slug:
-    :type board_slug:
     :param topic_slug:
-    :type topic_slug:
     :param message_id:
-    :type message_id:
     :return:
-    :rtype:
     """
 
     try:
@@ -1020,17 +995,11 @@ def message_modify(
     """
     Modify a given message
     :param request:
-    :type request:
     :param category_slug:
-    :type category_slug:
     :param board_slug:
-    :type board_slug:
     :param topic_slug:
-    :type topic_slug:
     :param message_id:
-    :type message_id:
     :return:
-    :rtype:
     """
 
     message_to_modify = _message_from_slugs(
@@ -1109,6 +1078,12 @@ def message_modify(
                 topic_slug=topic_slug,
                 message_id=message_id,
             )
+
+        # Form invalid
+        messages.error(
+            request,
+            mark_safe(_("<h4>Error!</h4><p>Mandatory form field is empty.</p>")),
+        )
     # If not, we'll fill the form with the information from the message object
     else:
         form = EditMessageForm(instance=message_to_modify)
@@ -1135,19 +1110,13 @@ def _message_from_slugs(
     message_id: int,
 ) -> Optional[Message]:
     """
-
+    Get message from slugs
     :param request:
-    :type request:
     :param category_slug:
-    :type category_slug:
     :param board_slug:
-    :type board_slug:
     :param topic_slug:
-    :type topic_slug:
     :param message_id:
-    :type message_id:
     :return:
-    :rtype:
     """
 
     message = Message.objects.get_from_slugs(
@@ -1168,11 +1137,8 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
     Delete a message from a topic
     If it is the last message in this topic, the topic will be removed as well
     :param request:
-    :type request:
     :param message_id:
-    :type message_id:
     :return:
-    :rtype:
     """
 
     try:
@@ -1267,9 +1233,7 @@ def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
     """
     Mark all available topics as read
     :param request:
-    :type request:
     :return:
-    :rtype:
     """
 
     has_read_all_messages = LastMessageSeen.objects.filter(
@@ -1311,9 +1275,7 @@ def unread_topics_count(request: WSGIRequest) -> int:
     """
     Get the number of unread messages for the user
     :param request:
-    :type request:
     :return:
-    :rtype:
     """
 
     has_read_all_messages = LastMessageSeen.objects.filter(

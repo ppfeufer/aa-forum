@@ -21,9 +21,7 @@ class SetVarNode(template.Node):
         """
         Render context
         :param context:
-        :type context:
         :return:
-        :rtype:
         """
 
         try:
@@ -39,7 +37,11 @@ class SetVarNode(template.Node):
 @register.tag(name="set_template_variable")
 def set_template_variable(parser, token):
     """
-    {% set_template_variable <var_name> = <var_value> %}
+    Set a template variable
+    Usage: {% set_template_variable <var_name> = <var_value> %}
+    :param parser:
+    :param token:
+    :return:
     """
 
     parts = token.split_contents()

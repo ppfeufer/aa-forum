@@ -19,9 +19,7 @@ class BaseReadOnlyAdminMixin:
         """
         Has add permissions
         :param request:
-        :type request:
         :return:
-        :rtype:
         """
 
         return False
@@ -30,11 +28,8 @@ class BaseReadOnlyAdminMixin:
         """
         Has change permissions
         :param request:
-        :type request:
         :param obj:
-        :type obj:
         :return:
-        :rtype:
         """
 
         return False
@@ -43,11 +38,8 @@ class BaseReadOnlyAdminMixin:
         """
         Has delete permissions
         :param request:
-        :type request:
         :param obj:
-        :type obj:
         :return:
-        :rtype:
         """
 
         return False
@@ -66,9 +58,7 @@ class CategoryAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
         """
         Return the board count per category
         :param obj:
-        :type obj:
         :return:
-        :rtype:
         """
 
         return obj.boards.count()
@@ -92,8 +82,8 @@ class BoardAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
     def _groups(self, obj):
         """
         Return the groups this board is restricted to as list
+        :param obj:
         :return:
-        :rtype:
         """
 
         groups = obj.groups.all()
@@ -107,9 +97,7 @@ class BoardAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
         """
         Return the topics count per board
         :param obj:
-        :type obj:
         :return:
-        :rtype:
         """
 
         return obj.topics.count()
@@ -127,9 +115,7 @@ class TopicAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
         """
         Return the message count per topic
         :param obj:
-        :type obj:
         :return:
-        :rtype:
         """
 
         return obj.messages.count()
