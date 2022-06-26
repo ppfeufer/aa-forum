@@ -371,7 +371,7 @@ class TestForumUI(WebTest):
 
     def test_should_cancel_new_topic(self):
         """
-        Test should cancel new topuc creation
+        Test should cancel new topic creation
         :return:
         """
 
@@ -492,6 +492,34 @@ class TestForumUI(WebTest):
         self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
         own_message.refresh_from_db()
         self.assertEqual(own_message.message, "What is dark matter?")
+
+    def test_should_trigger_error_on_message_edit_due_to_invalid_form_data(self):
+        """
+        Test should trigger an error message when updating a message
+        due to invalid form data
+        :return:
+        """
+
+        # given
+        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        own_message = create_fake_message(topic=topic, user=self.user_1001)
+        self.app.set_user(self.user_1001)
+        page = self.app.get(topic.get_absolute_url())
+
+        # when
+        page = page.click(linkid=f"aa-forum-btn-modify-message-{own_message.pk}")
+        form = page.forms["aa-forum-form-message-modify"]
+        form["message"] = ""  # Omit mandatory field
+        page = form.submit()
+
+        # then
+        self.assertEqual(topic.messages.count(), 1)
+        self.assertTemplateUsed(page, "aa_forum/view/forum/modify-message.html")
+
+        expected_message = "<h4>Error!</h4><p>Mandatory form field is empty.</p>"
+        messages = list(page.context["messages"])
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
 
     def test_should_not_be_able_to_edit_messages_from_others(self):
         """

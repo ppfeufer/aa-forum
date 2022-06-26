@@ -1078,6 +1078,12 @@ def message_modify(
                 topic_slug=topic_slug,
                 message_id=message_id,
             )
+
+        # Form invalid
+        messages.error(
+            request,
+            mark_safe(_("<h4>Error!</h4><p>Mandatory form field is empty.</p>")),
+        )
     # If not, we'll fill the form with the information from the message object
     else:
         form = EditMessageForm(instance=message_to_modify)
