@@ -919,6 +919,7 @@ class TestTopicViews(TestCase):
         # given
         self.client.force_login(self.user_1001)
         my_message = self.topic.messages.order_by("time_posted")[12]
+
         # when
         res = self.client.get(
             reverse(
