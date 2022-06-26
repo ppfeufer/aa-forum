@@ -20,9 +20,7 @@ def get_mandatory_form_label_text(text):
     """
     Label text for mandatory form fields
     :param text:
-    :type text:
     :return:
-    :rtype:
     """
 
     required_text = _("This field is mandatory")
@@ -214,7 +212,7 @@ class EditBoardForm(ModelForm):
         max_length=254,
         widget=forms.TextInput(
             attrs={
-                "placeholder": "https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                "placeholder": "https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # , pylint: disable=line-too-long
             }
         ),
     )

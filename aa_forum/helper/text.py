@@ -31,6 +31,8 @@ def verify_image_url(image_url):
     (like example.com/kitten.gif) might not pass this test. If you need to test that
     the URL is both valid AND an image suitable for the Incoming Webhook integration,
     run it through both verify_url() and verify_image_url().
+    :param image_url:
+    :return:
     """
 
     return re.match("http", image_url) and re.search(
@@ -42,6 +44,8 @@ def get_image_url(text):
     """
     Extract an image url from the passed text. If there are multiple image urls,
     only the first one will be returned.
+    :param text:
+    :return:
     """
 
     soup = BeautifulSoup(text, "html.parser")
@@ -73,7 +77,7 @@ def string_cleanup(string: str) -> str:
     """
     Clean up a string by removing JS, CSS and Head tags
     :param string:
-    :type string:
+    :return:
     """
 
     re_head = re.compile(r"<\s*head[^>]*>.*?<\s*/\s*head\s*>", re.S | re.I)

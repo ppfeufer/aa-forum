@@ -76,18 +76,20 @@ class TestHelperText(TestCase):
     def test_should_return_cleaned_string(self):
         """
         Test should return a clean/sanitized string
-        :param messages:
         :return:
         """
 
+        # given
         string = (
             'this is a script test. <script type="text/javascript">alert('
             "'test')</script>and this is style test. <style>.MathJax, "
             ".MathJax_Message, .MathJax_Preview{display: none}</style>end tests."
         )
 
+        # when
         cleaned_string = string_cleanup(string)
 
+        # then
         self.assertIn(
             "this is a script test. and this is style test. end tests.", cleaned_string
         )
@@ -112,14 +114,13 @@ class TestHelperEveImages(TestCase):
         character = self.user_1001.profile.main_character
 
         portrait_url = get_character_portrait_from_evecharacter(character=character)
-        expected_url = f"https://images.evetech.net/characters/{character.character_id}/portrait?size=32"
+        expected_url = f"https://images.evetech.net/characters/{character.character_id}/portrait?size=32"  # , pylint: disable=line-too-long
 
         self.assertEqual(portrait_url, expected_url)
 
     def test_should_return_character_portrait_html(self):
         """
         Test should return character portrait HTML image tag
-        :param messages:
         :return:
         """
 
@@ -128,7 +129,7 @@ class TestHelperEveImages(TestCase):
         portrait_html = get_character_portrait_from_evecharacter(
             character=character, as_html=True
         )
-        expected_url = f"https://images.evetech.net/characters/{character.character_id}/portrait?size=32"
+        expected_url = f"https://images.evetech.net/characters/{character.character_id}/portrait?size=32"  # , pylint: disable=line-too-long
         expected_html = (
             '<img class="aa-forum-character-portrait img-rounded" '
             f'src="{expected_url}" alt="{character.character_name}" '

@@ -12,7 +12,6 @@ def get_character_portrait_from_evecharacter(
 ) -> str:
     """
     Get the character portrait URL from EveCharacter model
-    :param size:
     :param character:
     :param size:
     :param as_html:

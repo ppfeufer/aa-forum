@@ -37,23 +37,19 @@ from aa_forum.managers import (
 
 def get_sentinel_user() -> User:
     """
-    Get user or create one
+    Get the sentinel user or create one
     :return:
-    :rtype:
     """
 
     return User.objects.get_or_create(username="deleted")[0]
 
 
-def _generate_slug(MyModel: models.Model, name: str) -> str:
+def _generate_slug(calling_model: models.Model, name: str) -> str:
     """
     Generate a valid slug and return it.
-    :param MyModel:
-    :type MyModel:
+    :param calling_model:
     :param name:
-    :type name:
     :return:
-    :rtype:
     """
 
     if name == INTERNAL_URL_PREFIX:
@@ -62,7 +58,7 @@ def _generate_slug(MyModel: models.Model, name: str) -> str:
     run = 0
     slug_name = slugify(unidecode.unidecode(name), allow_unicode=True)
 
-    while MyModel.objects.filter(slug=slug_name).exists():
+    while calling_model.objects.filter(slug=slug_name).exists():
         run += 1
         slug_name = slugify(unidecode.unidecode(f"{name}-{run}"), allow_unicode=True)
 
@@ -118,11 +114,10 @@ class Category(models.Model):
     @transaction.atomic()
     def save(self, *args, **kwargs):
         """
-        Generates the slug.
+        Generates the slug
         :param args:
-        :type args:
         :param kwargs:
-        :type kwargs:
+        :return:
         """
 
         if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
@@ -237,11 +232,10 @@ class Board(models.Model):
     @transaction.atomic()
     def save(self, *args, **kwargs):
         """
-        Generates the slug.
+        Generates the slug
         :param args:
-        :type args:
         :param kwargs:
-        :type kwargs:
+        :return:
         """
 
         if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
@@ -285,6 +279,7 @@ class Board(models.Model):
     def _update_message_references(self):
         """
         Update the first and last message for this board - and parent board if needed.
+        :return:
         """
 
         self.last_message = (
@@ -294,13 +289,16 @@ class Board(models.Model):
             .order_by("-time_posted")
             .first()
         )
+
         if self.last_message:
             self.first_message = self.last_message.topic.messages.order_by(
                 "time_posted"
             ).first()
         else:
             self.first_message = None
+
         self.save(update_fields=["first_message", "last_message"])
+
         if self.parent_board:
             self.parent_board._update_message_references()
 
@@ -356,9 +354,8 @@ class Topic(models.Model):
         """
         Generate slug for new objects and update first and last messages.
         :param args:
-        :type args:
         :param kwargs:
-        :type kwargs:
+        :return:
         """
 
         if not self._state.adding and self.pk:
@@ -393,21 +390,23 @@ class Topic(models.Model):
         """
         On delete
         :param args:
-        :type args:
         :param kwargs:
-        :type kwargs:
+        :return:
         """
+
         board_needs_update = (
             self.first_message == self.board.first_message
             or self.last_message == self.board.last_message
         )
         super().delete(*args, **kwargs)
+
         if board_needs_update:
             self.board._update_message_references()
 
     def get_absolute_url(self) -> str:
         """
         Calculate URL for this topic and return it.
+        :return:
         """
 
         return reverse(
@@ -418,6 +417,7 @@ class Topic(models.Model):
     def _update_message_references(self):
         """
         Update the first and last message for this topic.
+        :return:
         """
 
         self.first_message = (
@@ -442,6 +442,10 @@ class LastMessageSeen(models.Model):
         return f"{self.topic}-{self.user}-{self.message_time}"
 
     class Meta:
+        """
+        Meta definitions
+        """
+
         default_permissions = ()
         indexes = [
             models.Index(
@@ -497,9 +501,8 @@ class Message(models.Model):
         """
         Add the slug on save if it does not exist
         :param args:
-        :type args:
         :param kwargs:
-        :type kwargs:
+        :return:
         """
 
         self.message = string_cleanup(self.message)
@@ -525,9 +528,8 @@ class Message(models.Model):
         """
         On delete
         :param args:
-        :type args:
         :param kwargs:
-        :type kwargs:
+        :return:
         """
 
         topic_needs_update = (
@@ -549,6 +551,7 @@ class Message(models.Model):
     def get_absolute_url(self):
         """
         Calculate URL for this message and return it.
+        :return:
         """
 
         messages_per_topic = int(
@@ -623,9 +626,8 @@ class PersonalMessage(models.Model):
         """
         Generates the slug.
         :param args:
-        :type args:
         :param kwargs:
-        :type kwargs:
+        :return:
         """
 
         if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
@@ -645,7 +647,7 @@ class Setting(models.Model):
     objects = SettingsManager()
 
     def __str__(self) -> str:
-        return self.variable
+        return f"{self.variable}"
 
     class Meta:
         """

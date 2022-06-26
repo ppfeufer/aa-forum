@@ -31,22 +31,43 @@ MODELS_PATH = "aa_forum.models"
 
 
 class TestGetSentinelUser(TestCase):
+    """
+    Tests for the sentinel user
+    """
+
     def test_should_create_user_when_it_does_not_exist(self):
+        """
+        Test should create sentinel user when it doesn't exist
+        :return:
+        """
+
         # when
         user = get_sentinel_user()
+
         # then
         self.assertEqual(user.username, "deleted")
 
     def test_should_return_user_when_it_does(self):
+        """
+        Test should return sentinel user when it exists
+        :return:
+        """
+
         # given
         User.objects.create_user(username="deleted")
+
         # when
         user = get_sentinel_user()
+
         # then
         self.assertEqual(user.username, "deleted")
 
 
 class TestBoard(TestCase):
+    """
+    Tests for the board model
+    """
+
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
@@ -58,11 +79,21 @@ class TestBoard(TestCase):
         self.category = create_category(name="Science")
 
     def test_model_string_names(self):
+        """
+        Test model string names
+        :return:
+        """
+
         board = create_board(name="Physics", category=self.category)
 
         self.assertEqual(str(board), "Physics")
 
     def test_should_update_last_message_when_message_created(self):
+        """
+        Test should update last message when message created
+        :return:
+        """
+
         # given
         board = create_board(category=self.category)
         topic = create_topic(board=board)
@@ -75,6 +106,11 @@ class TestBoard(TestCase):
         self.assertEqual(board.last_message, message)
 
     def test_should_update_last_message_when_message_created_in_child_board(self):
+        """
+        Test should update last message when message created in child board
+        :return:
+        """
+
         # given
         board = create_board(category=self.category)
         child_board = create_board(category=self.category, parent_board=board)
@@ -92,6 +128,11 @@ class TestBoard(TestCase):
         self.assertEqual(board.last_message, message_child_board)
 
     def test_should_return_url(self):
+        """
+        Test should return board URL
+        :return:
+        """
+
         # given
         board = create_board(category=self.category, name="Physics")
 
@@ -105,6 +146,11 @@ class TestBoard(TestCase):
         )
 
     def test_should_return_board_with_no_groups(self):
+        """
+        Test should return board with no group restrictions
+        :return:
+        """
+
         # given
         board = create_board(category=self.category)
 
@@ -115,6 +161,11 @@ class TestBoard(TestCase):
         self.assertTrue(result)
 
     def test_should_return_board_for_group_member(self):
+        """
+        Test should return restricted board for group member
+        :return:
+        """
+
         # given
         board = create_board(category=self.category)
         board.groups.add(self.group)
@@ -128,6 +179,11 @@ class TestBoard(TestCase):
         self.assertTrue(result)
 
     def test_should_return_child_board_for_group_member(self):
+        """
+        Test should return restricted child board for group member
+        :return:
+        """
+
         # given
         board = create_board(category=self.category)
         board.groups.add(self.group)
@@ -143,6 +199,11 @@ class TestBoard(TestCase):
         self.assertTrue(result)
 
     def test_should_not_return_board_for_non_group_member(self):
+        """
+        Test should not return restricted biard for non group member
+        :return:
+        """
+
         # given
         board = create_board(category=self.category)
         board.groups.add(self.group)
@@ -151,6 +212,11 @@ class TestBoard(TestCase):
             Board.objects.user_has_access(self.user).get(pk=board.pk)
 
     def test_should_not_return_child_board_for_non_group_member(self):
+        """
+        Test should nopt return restricted child board for none group member
+        :return:
+        """
+
         # given
         board = create_board(category=self.category)
         board.groups.add(self.group)
@@ -160,6 +226,11 @@ class TestBoard(TestCase):
             Board.objects.user_has_access(self.user).get(pk=board_2.pk)
 
     def test_should_generate_new_slug_when_slug_already_exists(self):
+        """
+        Test should generate new slug when board-slug already exists
+        :return:
+        """
+
         # given
         board = create_board(category=self.category)
         board.slug = "dummy"  # we are faking the same slug here
@@ -172,6 +243,11 @@ class TestBoard(TestCase):
         self.assertEqual(board.slug, "dummy-1")
 
     def test_should_not_allow_creation_with_hyphen_slugs(self):
+        """
+        Test should not allow creation with hyphen slugs (reserved for admin pages)
+        :return:
+        """
+
         # when
         board = create_board(name="Dummy", category=self.category, slug="-")
 
@@ -180,6 +256,11 @@ class TestBoard(TestCase):
 
     @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
     def test_should_create_slug_with_name_matching_internal_url_prefix(self):
+        """
+        Test should create slug with name matching internal URL prefix
+        :return:
+        """
+
         # when
         category = create_board(name="-", category=self.category)
 
@@ -202,6 +283,10 @@ class TestBoard(TestCase):
 
 
 class TestCategory(TestCase):
+    """
+    Tests for Category
+    """
+
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
@@ -209,11 +294,21 @@ class TestCategory(TestCase):
         cls.user = create_fake_user(1001, "Bruce Wayne")
 
     def test_model_string_names(self):
+        """
+        Test model string names
+        :return:
+        """
+
         category = create_category(name="Science")
 
         self.assertEqual(str(category), "Science")
 
     def test_should_create_new_category_with_slug(self):
+        """
+        Tests should create new category with slug
+        :return:
+        """
+
         # when
         category = create_category(name="Science")
 
@@ -221,6 +316,11 @@ class TestCategory(TestCase):
         self.assertEqual(category.slug, "science")
 
     def test_should_keep_existing_slug_when_changing_name(self):
+        """
+        Test should keep existing slug when changing category name
+        :return:
+        """
+
         category = create_category(name="Science")
 
         # when
@@ -232,6 +332,11 @@ class TestCategory(TestCase):
         self.assertEqual(category.slug, "science")
 
     def test_should_generate_new_slug_when_slug_already_exists(self):
+        """
+        Test should generate new slug when category slug already exists
+        :return:
+        """
+
         # given
         category = create_category(name="Science")
         category.slug = "dummy"  # we are faking the same slug here
@@ -244,6 +349,11 @@ class TestCategory(TestCase):
         self.assertEqual(category.slug, "dummy-1")
 
     def test_should_not_allow_creation_with_hyphen_slugs(self):
+        """
+        Test should not allow creation with hyphen slug
+        :return:
+        """
+
         # when
         category = create_category(name="Science", slug="-")
 
@@ -251,6 +361,11 @@ class TestCategory(TestCase):
         self.assertEqual(category.slug, "science")
 
     def test_should_not_allow_to_update_slug_to_hyphen(self):
+        """
+        Test should not allow to update slug to hyphen
+        :return:
+        """
+
         # given
         category = create_category(name="Science")
 
@@ -264,6 +379,11 @@ class TestCategory(TestCase):
 
     @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
     def test_should_create_new_category_with_name_matching_internal_url_prefix(self):
+        """
+        Test should create new category with name matching internal URL prefix
+        :return:
+        """
+
         # when
         category = create_category(name="-")
 
@@ -287,6 +407,10 @@ class TestCategory(TestCase):
 
 @patch(MODELS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
 class TestMessage(TestCase):
+    """
+    Tests for Message model
+    """
+
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
@@ -302,6 +426,11 @@ class TestMessage(TestCase):
         self.child_topic = create_topic(board=self.child_board)
 
     def test_model_string_names(self):
+        """
+        Test model string names
+        :return:
+        """
+
         # when
         message = create_message(topic=self.topic, user_created=self.user)
 
@@ -309,6 +438,11 @@ class TestMessage(TestCase):
         self.assertEqual(str(message), str(message.pk))
 
     def test_should_update_first_and_last_messages_when_saving_1(self):
+        """
+        Test should update first and last message when saving
+        :return:
+        """
+
         # when
         message = create_message(topic=self.topic, user_created=self.user)
 
@@ -321,6 +455,11 @@ class TestMessage(TestCase):
         self.assertEqual(self.board.first_message, message)
 
     def test_should_update_first_and_last_messages_when_saving_2(self):
+        """
+        Test should update first and last message when saving multiple messages
+        :return:
+        """
+
         # given
         message_1 = create_message(topic=self.topic, user_created=self.user)
 
@@ -336,6 +475,11 @@ class TestMessage(TestCase):
         self.assertEqual(self.board.first_message, message_1)
 
     def test_should_update_first_and_last_messages_when_saving_3(self):
+        """
+        Test should update first and last message when saving
+        :return:
+        """
+
         # when
         message = create_message(topic=self.child_topic, user_created=self.user)
 
@@ -351,6 +495,11 @@ class TestMessage(TestCase):
         self.assertEqual(self.board.first_message, message)
 
     def test_should_update_first_and_last_messages_when_saving_4(self):
+        """
+        Test should update first and last message when saving
+        :return:
+        """
+
         # given
         message = create_message(topic=self.topic, user_created=self.user)
 
@@ -372,6 +521,11 @@ class TestMessage(TestCase):
         self.assertEqual(self.board.first_message, child_message)
 
     def test_should_update_first_and_last_messages_when_saving_5(self):
+        """
+        Test should update first and last message when saving
+        :return:
+        """
+
         # given
         message_1 = create_message(topic=self.topic, user_created=self.user)
         message_2 = create_message(topic=self.topic, user_created=self.user)
@@ -395,6 +549,11 @@ class TestMessage(TestCase):
         self.assertEqual(self.board.last_message, child_message_2)
 
     def test_should_update_message_references_when_deleting_last_message_1(self):
+        """
+        Test should update first and last message when deleting last message
+        :return:
+        """
+
         # given
         message_1 = create_message(topic=self.topic, user_created=self.user)
         message_2 = create_message(topic=self.topic, user_created=self.user)
@@ -411,6 +570,11 @@ class TestMessage(TestCase):
         self.assertEqual(self.board.first_message, message_1)
 
     def test_should_update_message_references_when_deleting_last_message_2(self):
+        """
+        Test should update first and last message when deleting last message
+        :return:
+        """
+
         # given
         message_1 = create_message(topic=self.topic, user_created=self.user)
         message_2 = create_message(topic=self.topic, user_created=self.user)
@@ -427,6 +591,11 @@ class TestMessage(TestCase):
         self.assertEqual(self.board.first_message, message_2)
 
     def test_should_update_message_references_when_deleting_last_message_3(self):
+        """
+        Test should update first and last message when deleting last message
+        :return:
+        """
+
         # given
         message = create_message(topic=self.topic, user_created=self.user)
         child_message = create_message(topic=self.child_topic, user_created=self.user)
@@ -446,6 +615,11 @@ class TestMessage(TestCase):
         self.assertEqual(self.board.first_message, message)
 
     def test_should_update_message_references_when_deleting_last_message_4(self):
+        """
+        Test should update first and last message when deleting last message
+        :return:
+        """
+
         # given
         message = create_message(topic=self.topic, user_created=self.user)
         child_message = create_message(topic=self.child_topic, user_created=self.user)
@@ -465,6 +639,11 @@ class TestMessage(TestCase):
         self.assertEqual(self.board.first_message, child_message)
 
     def test_should_reset_message_references_when_deleting_last_message_1(self):
+        """
+        Test should reset message references when deleting last message
+        :return:
+        """
+
         # given
         message = create_message(topic=self.topic, user_created=self.user)
 
@@ -480,6 +659,11 @@ class TestMessage(TestCase):
         self.assertIsNone(self.board.first_message)
 
     def test_should_return_url_first_page(self):
+        """
+        Test should return URL to first page
+        :return:
+        """
+
         # given
         message = create_message(topic=self.topic, user_created=self.user)
         url = message.get_absolute_url()
@@ -499,6 +683,11 @@ class TestMessage(TestCase):
         )
 
     def test_should_return_url_other_pages(self):
+        """
+        Test should return URL to other pages
+        :return:
+        """
+
         # given
         create_fake_messages(self.topic, 9)
         message = self.topic.messages.order_by("time_posted").last()
@@ -521,6 +710,10 @@ class TestMessage(TestCase):
 
 
 class TestTopic(TestCase):
+    """
+    Test for the Topic model
+    """
+
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
@@ -534,11 +727,21 @@ class TestTopic(TestCase):
         self.child_board = create_board(category=category, parent_board=self.board)
 
     def test_model_string_names(self):
+        """
+        Test model string names
+        :return:
+        """
+
         topic = create_topic(subject="Mysteries", board=self.board)
 
         self.assertEqual(str(topic), "Mysteries")
 
     def test_should_update_last_message_when_message_is_created(self):
+        """
+        Test should update last message when message is created
+        :return:
+        """
+
         # given
         topic = create_topic(subject="Mysteries", board=self.board)
 
@@ -550,6 +753,11 @@ class TestTopic(TestCase):
         self.assertEqual(topic.last_message, message)
 
     def test_should_update_last_message_when_message_is_created_child_board(self):
+        """
+        Test should update last message when message is created in child board
+        :return:
+        """
+
         # given
         child_topic = create_topic(board=self.child_board)
 
@@ -561,6 +769,11 @@ class TestTopic(TestCase):
         self.assertEqual(child_topic.last_message, child_message)
 
     def test_should_update_last_message_after_topic_deletion(self):
+        """
+        Test should update last message when topic is deleted
+        :return:
+        """
+
         # given
         topic_1 = create_topic(board=self.board)
         topic_2 = create_topic(board=self.board)
@@ -582,6 +795,11 @@ class TestTopic(TestCase):
         self.assertEqual(self.board.last_message, message_1)
 
     def test_should_not_update_last_message_after_topic_deletion(self):
+        """
+        Test should not update last message when topic is deleted
+        :return:
+        """
+
         # given
         topic_1 = create_topic(board=self.board)
         topic_2 = create_topic(board=self.board)
@@ -603,6 +821,11 @@ class TestTopic(TestCase):
         self.assertEqual(self.board.last_message, message_2)
 
     def test_should_return_url(self):
+        """
+        Test should return topic URL
+        :return:
+        """
+
         # given
         topic = create_topic(subject="Mysteries", board=self.board)
 
@@ -616,6 +839,11 @@ class TestTopic(TestCase):
         )
 
     def test_should_generate_new_slug_when_slug_already_exists(self):
+        """
+        Test should generate new slug when slug already exists
+        :return:
+        """
+
         # given
         topic = create_topic(board=self.board)
         topic.slug = "dummy"  # we are faking the same slug here
@@ -628,6 +856,11 @@ class TestTopic(TestCase):
         self.assertEqual(topic.slug, "dummy-1")
 
     def test_should_not_allow_creation_with_hyphen_slugs(self):
+        """
+        Test should not allow creation with hyphen slugs
+        :return:
+        """
+
         # when
         topic = create_topic(subject="Dummy", board=self.board, slug="-")
 
@@ -636,6 +869,11 @@ class TestTopic(TestCase):
 
     @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
     def test_should_create_slug_with_name_matching_internal_url_prefix(self):
+        """
+        Test should create slug with name matching internel URL prefix
+        :return:
+        """
+
         # when
         topic = create_topic(subject="-", board=self.board)
 
@@ -658,7 +896,16 @@ class TestTopic(TestCase):
 
 
 class TestPersonalMessage(TestCase):
+    """
+    Tests for PersonalMessage model
+    """
+
     def test_str(self):
+        """
+        Test model string names
+        :return:
+        """
+
         # with
         message = create_personal_message(subject="Subject")
 
@@ -667,6 +914,11 @@ class TestPersonalMessage(TestCase):
 
     @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
     def test_can_create_personal_message(self):
+        """
+        Test can create personal message
+        :return:
+        """
+
         # with
         message = create_personal_message(subject="subject")
 
@@ -674,6 +926,11 @@ class TestPersonalMessage(TestCase):
         self.assertEqual(message.subject, "subject")
 
     def test_should_generate_new_slug_when_slug_already_exists(self):
+        """
+        Test should create new slug when slug already ecists
+        :return:
+        """
+
         # given
         message_1 = create_personal_message()
         message_1.slug = "dummy"  # we are faking the same slug here
@@ -686,6 +943,11 @@ class TestPersonalMessage(TestCase):
         self.assertEqual(message_2.slug, "dummy-1")
 
     def test_should_not_allow_creation_with_hyphen_slugs(self):
+        """
+        Test should not allow creation with hyphen slugs
+        :return:
+        """
+
         # when
         message = create_personal_message(subject="Dummy", slug="-")
 
@@ -693,6 +955,11 @@ class TestPersonalMessage(TestCase):
         self.assertEqual(message.slug, "dummy")
 
     def test_should_create_slug_with_name_matching_internal_url_prefix(self):
+        """
+        Test should create slug with name matching internal URL prefix
+        :return:
+        """
+
         # when
         message = create_personal_message(subject="-")
 
@@ -701,7 +968,16 @@ class TestPersonalMessage(TestCase):
 
 
 class LastMessageSeen(TestCase):
+    """
+    Test for LastMessageSeen model
+    """
+
     def test_str(self):
+        """
+        Test model string names
+        :return:
+        """
+
         # given
         topic = create_topic(subject="Alpha")
         user = create_fake_user(1001, "Bruce Wayne")
@@ -718,7 +994,16 @@ class LastMessageSeen(TestCase):
 
 
 class TestSetting(TestCase):
+    """
+    Tests for Settings model
+    """
+
     def test_str(self):
+        """
+        Test model string names
+        :return:
+        """
+
         # given
         setting = create_setting(variable="alpha", value=1)
 

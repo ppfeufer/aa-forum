@@ -14,6 +14,10 @@ MODELS_PATH = "aa_forum.models"
 
 
 class TestBoard(TestCase):
+    """
+    Test Board signals
+    """
+
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()

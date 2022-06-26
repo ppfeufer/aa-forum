@@ -16,6 +16,8 @@ class SettingsManager(models.Manager):
     def get_setting(self, setting_key: str) -> str:
         """
         Return the value for given setting key
+        :param setting_key:
+        :return:
         """
 
         return self.get(variable=setting_key).value
@@ -25,6 +27,8 @@ class BoardQuerySet(models.QuerySet):
     def user_has_access(self, user: User) -> models.QuerySet:
         """
         Filter boards that given user has access to.
+        :param user:
+        :return:
         """
 
         # Forum manager have always access, so assign this permission wisely
@@ -52,6 +56,8 @@ class TopicQuerySet(models.QuerySet):
     def user_has_access(self, user: User) -> models.QuerySet:
         """
         Filter boards that given user has access to.
+        :param user:
+        :return:
         """
 
         # Forum manager have always access, so assign this permission wisely
@@ -72,6 +78,11 @@ class TopicQuerySet(models.QuerySet):
     ) -> models.Model:
         """
         Fetch topic from slugs for user. Return None if not found or no access.
+        :param category_slug:
+        :param board_slug:
+        :param topic_slug:
+        :param user:
+        :return:
         """
 
         # AA Forum
@@ -126,6 +137,8 @@ class MessageQuerySet(models.QuerySet):
     def user_has_access(self, user: User) -> models.QuerySet:
         """
         Filter boards that given user has access to.
+        :param user:
+        :return:
         """
 
         # Forum manager have always access, so assign this permission wisely
@@ -148,6 +161,12 @@ class MessageQuerySet(models.QuerySet):
     ) -> models.Model:
         """
         Fetch message from slugs for user. Return None if not found or no access.
+        :param category_slug:
+        :param board_slug:
+        :param topic_slug:
+        :param message_id:
+        :param user:
+        :return:
         """
 
         try:
