@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - A CSS class in an image HTML tag
 
+### Changed
+
+- Templates cleaned up
+
 
 ## [1.8.0] - 2022-04-14
 
