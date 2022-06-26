@@ -1,8 +1,6 @@
 {% extends "aa_forum/base.html" %}
 
 {% load aa_forum_versioned_static %}
-{% load evelinks %}
-{% load static %}
 {% load i18n %}
 
 {% block page_title %}{{ board.name }} » {% translate "Forum" %}{% endblock %}
@@ -25,7 +23,4 @@
 {% block extra_css %}
     <link rel="stylesheet" type="text/css" href="{% aa_forum_static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% aa_forum_static 'aa_forum/css/aa-forum.min.css' %}">
-{% endblock %}
-
-{% block extra_javascript %}
 {% endblock %}

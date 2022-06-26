@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Image sizes to the character portrait image HTML tags
 
+### Changed
+
+- Templates cleaned up
+
 
 ## [1.8.0] - 2022-04-14
 
