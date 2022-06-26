@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - A CSS class in an image HTML tag
+- Return dummy ID when user is not in an alliance
 
 ### Added
 
