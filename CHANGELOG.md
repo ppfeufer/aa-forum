@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Image sizes to the character portrait image HTML tags
 - Error message when submitting an invalid form on topic creation
+- Better error messages for topic reply errors
 
 ### Changed
 
