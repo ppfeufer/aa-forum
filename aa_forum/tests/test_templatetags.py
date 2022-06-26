@@ -340,8 +340,8 @@ class TestMainCharacterAllianceName(TestCase):
             2001,
             "Wayne Tech Inc.",
             "WYT",
-            3001,
-            "Wayne Enterprices",
+            alliance_id=3001,
+            alliance_name="Wayne Enterprices",
         )
 
         context = Context({"user": user})
@@ -375,7 +375,9 @@ class TestMainCharacterAllianceName(TestCase):
         """
 
         # given
-        user = create_fake_user(2012, "William Riker", 2012, "Starfleet", "SF")
+        user = create_fake_user(
+            2012, "William Riker", 2012, "Starfleet", "SF", alliance_id=None
+        )
 
         context = Context({"user": user})
 
@@ -442,8 +444,8 @@ class TestMainAllianceId(TestCase):
             2001,
             "Wayne Tech Inc.",
             "WYT",
-            3001,
-            "Wayne Enterprices",
+            alliance_id=3001,
+            alliance_name="Wayne Enterprises",
         )
         context = Context({"user": user})
 
@@ -476,7 +478,9 @@ class TestMainAllianceId(TestCase):
         """
 
         # given
-        user = create_fake_user(2012, "William Riker", 2012, "Starfleet", "SF")
+        user = create_fake_user(
+            2012, "William Riker", 2012, "Starfleet", "SF", alliance_id=None
+        )
 
         context = Context({"user": user})
 

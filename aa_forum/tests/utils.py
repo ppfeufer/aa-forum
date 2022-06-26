@@ -44,9 +44,8 @@ def create_fake_user(
     corporation_id: int = None,
     corporation_name: str = None,
     corporation_ticker: str = None,
-    alliance_id: int = None,
-    alliance_name: str = "",
     permissions: List[str] = None,
+    **kwargs,
 ) -> User:
     """
     Create a fake user incl. main character and (optional) permissions.
@@ -55,9 +54,8 @@ def create_fake_user(
     :param corporation_id:
     :param corporation_name:
     :param corporation_ticker:
-    :param alliance_id:
-    :param alliance_name:
     :param permissions:
+    :param kwargs:
     :return:
     """
 
@@ -69,9 +67,12 @@ def create_fake_user(
         corporation_name = "Wayne Technologies Inc."
         corporation_ticker = "WTE"
 
-    # if not alliance_id:
-    #     alliance_id = 3001
-    #     alliance_name = "Wayne Enterprises"
+    alliance_id = kwargs.get("alliance_id", 3001)
+    alliance_name = (
+        kwargs.get("alliance_name", "Wayne Enterprises")
+        if alliance_id is not None
+        else ""
+    )
 
     AuthUtils.add_main_character_2(
         user=user,
