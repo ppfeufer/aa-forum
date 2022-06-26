@@ -108,9 +108,9 @@ class TestForumUI(WebTest):
         new_message = Message.objects.last()
         self.assertEqual(new_message.message, "Energy of the Higgs boson")
 
-    def test_should_not_create_new_topic_doe_to_invalid_form(self):
+    def test_should_not_create_new_topic_doe_to_subject_missing(self):
         """
-        Test should not create new topic due to invalid form
+        Test should not create new topic due to missing/empty subject
         :return:
         """
 
@@ -123,6 +123,37 @@ class TestForumUI(WebTest):
         form = page.forms["aa-forum-form-new-topic"]
         form["subject"] = ""  # Omitting mandatory field
         form["message"] = "Energy of the Higgs boson"
+        page = form.submit()
+
+        # then
+        self.assertEqual(self.board.topics.count(), 0)  # No topic created
+        self.assertTemplateUsed(page, "aa_forum/view/forum/new-topic.html")
+
+        expected_message = (
+            "<h4>Error!</h4>"
+            "<p>Either subject or message is missing. "
+            "Please make sure you enter both fields, "
+            "as both fields are mandatory.</p>"
+        )
+        messages = list(page.context["messages"])
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_not_create_new_topic_doe_to_message_missing(self):
+        """
+        Test should not create new topic due to missing/empty message
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(self.board.get_absolute_url())
+
+        # when
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Recent Discoveries"
+        form["message"] = ""  # Omitting mandatory field
         page = form.submit()
 
         # then
