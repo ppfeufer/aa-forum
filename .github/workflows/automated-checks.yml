@@ -225,3 +225,10 @@ jobs:
           STACKMANAGER_VERSION: 9999
         run: |
           python -m build
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: dist
+          if-no-files-found: ignore
