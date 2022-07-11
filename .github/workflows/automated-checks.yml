@@ -23,13 +23,13 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
 
       - name: Run Pre Commit Checks
-        uses: pre-commit/action@v2.0.0
+        uses: pre-commit/action@v3.0.0
 
   # Codacy Security Scan
   codacy-security-scan:
@@ -199,7 +199,7 @@ jobs:
 
   # Pypi Build Test
   pypi-build-test:
-    #    needs: [ test-coverage-aa-stable ]
+#    needs: [ test-coverage-aa-stable ]
     needs: [ test-coverage-aa-stable, test-coverage-aa-dev ]
     name: PyPi Build Test
     runs-on: ubuntu-latest
@@ -225,3 +225,10 @@ jobs:
           STACKMANAGER_VERSION: 9999
         run: |
           python -m build
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: dist
+          if-no-files-found: ignore
