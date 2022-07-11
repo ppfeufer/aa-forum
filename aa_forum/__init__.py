@@ -2,5 +2,5 @@
 A couple of variables to use throughout the app
 """
 
-__version__ = "1.8.1"
+__version__ = "1.9.0"
 __title__ = "Forum"
