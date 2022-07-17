@@ -8,13 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Fixed
+
+- HTML syntax (missing mandatory label tag in global search form added)
+
 ### Added
 
 - "Required Fields" hint to the forms that were missing it
 
-### Fixed
+### Changed
 
-- HTML syntax (missing mandatory label tag in global search form added)
+- "New Category" form in admin page visually enhanced
 
 
 ## [1.9.0] - 2022-07-11
