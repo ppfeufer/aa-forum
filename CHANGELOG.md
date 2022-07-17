@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - "Required Fields" hint to the forms that were missing it
 
+### Fixed
+
+- HTML syntax (missing mandatory label tag in global search form added)
+
 
 ## [1.9.0] - 2022-07-11
 
