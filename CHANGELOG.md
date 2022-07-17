@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - HTML syntax (missing mandatory label tag in global search form added)
+- CSS classes in forms
 
 ### Added
 
