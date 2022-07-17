@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Added
+
+- "Required Fields" hint to the forms that were missing it
+
 
 ## [1.9.0] - 2022-07-11
 

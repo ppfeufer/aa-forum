@@ -37,7 +37,9 @@
                         {{ board.board_forms.board_edit_form.announcement_groups|bootstrap }}
                     {% endif %}
 
-                    <div class="form-group aa-forum-form-new-category text-right clearfix">
+                    {% include "aa_forum/partials/form/required-field-hint.html" %}
+
+                    <div class="form-group aa-forum-form-group aa-forum-form-change-board text-right clearfix">
                         <button class="btn btn-primary btn-sm" type="submit">
                             {% translate "Change Board" %}
                         </button>
@@ -70,7 +72,9 @@
                             {{ board.board_forms.new_child_board_form.discord_webhook|bootstrap }}
                             {{ board.board_forms.new_child_board_form.use_webhook_for_replies|bootstrap }}
 
-                            <div class="form-group aa-forum-form-new-category text-right clearfix">
+                            {% include "aa_forum/partials/form/required-field-hint.html" %}
+
+                            <div class="form-group aa-forum-form-group aa-forum-form-new-board text-right clearfix">
                                 <button class="btn btn-primary btn-sm" type="submit">
                                     {% translate "Create Board" %}
                                 </button>
