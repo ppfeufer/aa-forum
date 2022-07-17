@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - "New Category" form in admin page visually enhanced
 
+### Removed
+
+- Unused template tags
+
 
 ## [1.9.0] - 2022-07-11
 
