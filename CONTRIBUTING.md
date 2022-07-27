@@ -56,6 +56,7 @@ Commit headers should be prefixed to state what kind of commit it is.
 - `[CHANGE] Foobar` When Code or appearance has been changed that doesn't fit in any
   of the other categories. Usually for changes in templates or optimisations in the
   Python code itself
+- `[MISC] Foobar` When it doesn't fit in anything else
 
 
 ### Test Coverage
