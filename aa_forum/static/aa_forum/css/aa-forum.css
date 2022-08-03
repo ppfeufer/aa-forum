@@ -16,7 +16,7 @@
 ------------------------------------------------------------------------------------- */
 @media all {
     .aa-forum .aa-forum-search-box .form-control-feedback {
-        color: #cccccc;
+        color: rgb(204 204 204);
         left: 0;
         right: initial;
     }
@@ -46,33 +46,35 @@
 ------------------------------------------------------------------------------------- */
 @media all {
     .aa-forum .aa-forum-ui-placeholder {
-        outline: 1px dashed rgb(0, 0, 0);
+        outline: 1px dashed rgb(0 0 0);
     }
 
-    .aa-forum .categories-sortable, .aa-forum .boards-sortable {
+    .aa-forum .categories-sortable,
+    .aa-forum .boards-sortable {
         list-style-type: none;
         padding: 0;
     }
 
-    .aa-forum .categories-sortable > li, .aa-forum .boards-sortable > li {
+    .aa-forum .categories-sortable > li,
+    .aa-forum .boards-sortable > li {
         margin-bottom: 1rem;
     }
 
     .aa-forum .boards-sortable > li {
-        background-color: rgb(236, 240, 241);
+        background-color: rgb(236 240 241);
         padding: 1rem;
     }
 
     .aa-forum .child-boards-sortable > li {
-        background-color: rgb(213, 217, 218);
+        background-color: rgb(213 217 218);
     }
 
     .template-dark-mode .aa-forum .boards-sortable > li {
-        background-color: rgb(93, 89, 89);
+        background-color: rgb(93 89 89);
     }
 
     .template-dark-mode .aa-forum .child-boards-sortable > li {
-        background-color: rgb(70, 69, 69);
+        background-color: rgb(70 69 69);
     }
 
     .aa-forum .boards-sortable > li:first-child {
@@ -92,7 +94,7 @@
     }
 
     .aa-forum .aa-forum-admin-panel-aa-forum-category .panel-body {
-        padding: 0 1rem 0 1rem;
+        padding: 0 1rem;
     }
 
     .aa-forum .aa-forum-admin-panel-aa-forum-category .panel-body .collapse,
@@ -145,7 +147,7 @@
     }
 
     .aa-forum .panel-aa-forum-category .aa-forum-board:hover {
-        background: rgba(0, 0, 0, 0.05);
+        background: rgb(0 0 0 / 5%);
     }
 
     .aa-forum .panel-aa-forum-category .aa-forum-board-image {
@@ -209,7 +211,6 @@
     .aa-forum .aa-forum-topic-row .aa-forum-topic {
         align-content: center;
         align-items: center;
-        /*border-bottom: 1px solid #ecf0f1;*/
         display: flex;
         flex-direction: row;
         padding: 1rem;
@@ -221,12 +222,11 @@
     }
 
     .aa-forum .aa-forum-topic-row:last-child .aa-forum-topic {
-        /*border-bottom: 0;*/
         margin-bottom: 0;
     }
 
     .aa-forum .aa-forum-topic-row .aa-forum-topic:hover {
-        background: rgba(0, 0, 0, 0.05);
+        background: rgb(0 0 0 / 5%);
     }
 
     .aa-forum .aa-forum-topic-row .aa-forum-topic .aa-forum-topic-image {
@@ -255,11 +255,11 @@
     }
 
     .aa-forum .aa-forum-topic-locked {
-        background-color: rgba(185, 199, 219, 0.25);
+        background-color: rgb(185 199 219 / 25%);
     }
 
     .aa-forum .aa-forum-topic-sticky {
-        background-color: rgba(255, 220, 104, 0.25);
+        background-color: rgb(255 220 104 / 25%);
     }
 
     .aa-forum .aa-forum-topic-status-icon {
@@ -308,8 +308,8 @@
     }
 
     .aa-forum .aa-forum-message-body {
-        border-top: 1px solid rgb(236, 240, 241);
-        padding: 1em 0 0 0;
+        border-top: 1px solid rgb(236 240 241);
+        padding: 1em 0 0;
     }
 
     .aa-forum .aa-forum-message-body-last-edited {
@@ -329,8 +329,7 @@
         align-content: flex-start;
         align-items: flex-start;
         display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
+        flex-flow: row nowrap;
         justify-content: flex-start;
     }
 
@@ -353,7 +352,7 @@
     }
 
     .aa-forum .aa-forum-search-term-highlight {
-        color: rgb(255, 114, 0) !important;
+        color: rgb(255 114 0) !important;
         font-size: 1.1em;
         font-weight: bold;
     }
@@ -409,11 +408,11 @@
     /* For for Dark Mode
     --------------------------------------------------------------------------------- */
     .template-dark-mode .aa-forum .SumoSelect {
-        color: rgb(54, 54, 54);
+        color: rgb(54 54 54);
     }
 
     .template-dark-mode .aa-forum .SumoSelect > .CaptionCont > span.placeholder {
-        color: rgb(62, 68, 76);
+        color: rgb(62 68 76);
     }
 }
 
@@ -458,7 +457,6 @@
     .aa-forum .aa-forum-legend {
         display: flex;
     }
-
 }
 
 /* Board view (@media all and (min-width: 768px))

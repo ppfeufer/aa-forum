@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - "New Category" form in admin page visually enhanced
 - Contribution guidelines updated
+- CSS modernized
 
 ### Removed
 
