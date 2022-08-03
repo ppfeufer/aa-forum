@@ -22,10 +22,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - "New Category" form in admin page visually enhanced
 - Contribution guidelines updated
 - CSS modernized
+- Minimum requirements:
+  - Python >= 3.8
+  - Alliance Auth >= 2.15.1
+  - Django ckEditor >= 6.4.2
 
 ### Removed
 
 - Unused template tags
+- Tests for Alliance Auth Beta
 
 
 ## [1.9.0] - 2022-07-11

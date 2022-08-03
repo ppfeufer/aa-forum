@@ -1,3 +1,7 @@
+"""
+Setings for our tests
+"""
+
 # flake8: noqa
 
 # Standard Library
@@ -31,6 +35,8 @@ INSTALLED_APPS = [
 ]
 
 SECRET_KEY = "wow I'm a really bad default secret key"
+
+PACKAGE_NAME = "aa_forum"
 
 # Celery configuration
 BROKER_URL = "redis://localhost:6379/0"
@@ -141,20 +147,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, "static"),
+    os.path.join(PROJECT_DIR, f"{PACKAGE_NAME}/static"),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Bootstrap messaging css workaround
-MESSAGE_TAGS = {messages.ERROR: "danger"}
+MESSAGE_TAGS = {messages.ERROR: "danger error"}
 
 CACHES = {
     "default": {
-        "BACKEND": "redis_cache.RedisCache",
-        "LOCATION": "localhost:6379",
-        "OPTIONS": {
-            "DB": 1,
-        },
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
     }
 }
 
@@ -171,13 +174,16 @@ SITE_NAME = "Alliance Auth"
 
 LOGIN_URL = "auth_login_user"  # view that handles login logic
 
-LOGIN_REDIRECT_URL = "authentication:dashboard"  # default destination when logging in if no redirect specified
-LOGOUT_REDIRECT_URL = "authentication:dashboard"  # destination after logging out
 # Both of these redirects accept values as per the django redirect shortcut
 # https://docs.djangoproject.com/en/1.11/topics/http/shortcuts/#redirect
 # - url names eg 'authentication:dashboard'
 # - relative urls eg '/dashboard'
 # - absolute urls eg 'http://example.com/dashboard'
+#
+# default destination when logging in if no redirect specified
+LOGIN_REDIRECT_URL = "authentication:dashboard"
+# destination after logging out
+LOGOUT_REDIRECT_URL = "authentication:dashboard"
 
 # scopes required on new tokens when logging in. Cannot be blank.
 LOGIN_TOKEN_SCOPES = ["publicData"]
@@ -269,7 +275,7 @@ ESI_SSO_CLIENT_ID = "dummy"
 ESI_SSO_CLIENT_SECRET = "dummy"
 ESI_SSO_CALLBACK_URL = "http://localhost:8000"
 
-# By default emails are validated before new users can log in.
+# By default, emails are validated before new users can log in.
 # It's recommended to use a free service like SparkPost or Elastic Email to send email.
 # https://www.sparkpost.com/docs/integrations/django/
 # https://elasticemail.com/resources/settings/smtp-api/
