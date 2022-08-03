@@ -22,14 +22,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- "New Category" form in admin page visually enhanced
+- "New Category" form in the admin page visually enhanced
 - Contribution guidelines updated
 - CSS modernized
 - App CSS and JS moved to bundled HTML templates
 - Minimum requirements:
   - Python >= 3.8
   - Alliance Auth >= 2.15.1
-  - Django ckEditor >= 6.4.2
+  - Django CKEditor >= 6.4.2
 
 ### Removed
 
