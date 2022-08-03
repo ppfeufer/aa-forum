@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Unused template tags
 - Tests for Alliance Auth Beta
 - Deprecated `type` parameter from `script` tags
+- Deprecated `type` parameter from `style` tags
 
 
 ## [1.9.0] - 2022-07-11
