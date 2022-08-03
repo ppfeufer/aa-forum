@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+
+## [1.10.0] - 2022-08-03
+
 ### Fixed
 
 - HTML syntax (missing mandatory label tag in global search form added)
