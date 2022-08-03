@@ -125,7 +125,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Option: Use this Discord Webhook for replies as well? (This is a checkbox in the
   board settings. When checked, the provided Discord webhook will also be used to
   send a message for every reply in this board to Discord. Chose wisely!)
-  ![Admin Board Options](aa_forum/docs/images/admin-board-options.jpg)
+
+  ![Admin Board Options](aa_forum/docs/images/admin-board-options.jpg "Admin Board Options")
 
 ### Changed
 
