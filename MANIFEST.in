@@ -1,0 +1,9 @@
+include LICENSE
+include CODEOWNERS
+include README.md
+include CHANGELOG.md
+include MANIFEST.in
+graft aa_forum
+
+global-exclude __pycache__
+global-exclude *.py[co]
