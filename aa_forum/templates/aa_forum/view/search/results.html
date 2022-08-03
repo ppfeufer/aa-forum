@@ -1,6 +1,5 @@
 {% extends "aa_forum/base.html" %}
 
-{% load aa_forum_versioned_static %}
 {% load i18n %}
 
 {% block page_title %}{% translate "Search Results » Forum" %}{% endblock %}
@@ -33,6 +32,5 @@
 {% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" type="text/css" href="{% aa_forum_static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% aa_forum_static 'aa_forum/css/aa-forum.min.css' %}">
+    {% include "aa_forum/bundles/aa-forum-css.html" %}
 {% endblock %}

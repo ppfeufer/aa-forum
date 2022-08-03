@@ -37,7 +37,9 @@
 
                             {{ category.category_forms.edit_category|bootstrap }}
 
-                            <div class="form-group aa-forum-form-new-category text-right clearfix">
+                            {% include "aa_forum/partials/form/required-field-hint.html" %}
+
+                            <div class="form-group aa-forum-form-group aa-forum-form-new-category text-right clearfix">
                                 <button class="btn btn-primary btn-sm" type="submit">
                                     {% translate "Change Category" %}
                                 </button>
@@ -66,7 +68,9 @@
 
                                 {{ category.category_forms.new_board|bootstrap }}
 
-                                <div class="form-group aa-forum-form-new-category text-right clearfix">
+                                {% include "aa_forum/partials/form/required-field-hint.html" %}
+
+                                <div class="form-group aa-forum-form-group aa-forum-form-new-board text-right clearfix">
                                     <button class="btn btn-primary btn-sm" type="submit">
                                         {% translate "Create Board" %}
                                     </button>
@@ -83,7 +87,7 @@
                         {% endfor %}
                     </ul>
 
-                    <script type="application/javascript">
+                    <script>
                         categoriesWithBoards.push('#boards-sortable-category-{{ category.category_obj.pk }}')
                     </script>
                 {% endif %}

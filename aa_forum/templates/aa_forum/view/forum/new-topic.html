@@ -1,8 +1,6 @@
 {% extends "aa_forum/base.html" %}
 
-{% load aa_forum_versioned_static %}
 {% load bootstrap %}
-{% load static %}
 {% load i18n %}
 
 {% block page_title %}{% translate "New Topic » Forum" %}{% endblock %}
@@ -31,7 +29,7 @@
 
                 {% include "aa_forum/partials/form/required-field-hint.html" %}
 
-                <div class="form-group text-right clearfix">
+                <div class="form-group aa-forum-form-group aa-forum-form-new-topic text-right clearfix">
                     <a id="aa-forum-btn-cancel" class="btn btn-default btn-sm" href="{{ board.get_absolute_url }}">{% translate "Cancel" %}</a>
                     <button class="btn btn-default btn-sm" type="reset">{% translate "Clear Form" %}</button>
                     <button class="btn btn-primary btn-sm" type="submit">{% translate "Start Topic" %}</button>
@@ -42,12 +40,10 @@
 {% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" type="text/css" href="{% aa_forum_static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% aa_forum_static 'aa_forum/css/aa-forum.min.css' %}">
+    {% include "aa_forum/bundles/aa-forum-css.html" %}
 {% endblock %}
 
 {% block extra_javascript %}
-    <script type="application/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
-    <script type="application/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-    <script type="application/javascript" src="{% aa_forum_static 'aa_forum/javascript/aa-forum-ckeditor.min.js' %}"></script>
+    {% include "aa_forum/bundles/ckeditor-js.html" %}
+    {% include "aa_forum/bundles/aa-forum-ckeditor-js.html" %}
 {% endblock %}

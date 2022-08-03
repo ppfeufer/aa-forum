@@ -9,6 +9,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [1.10.0] - 2022-08-03
+
+### Fixed
+
+- HTML syntax (missing mandatory label tag in global search form added)
+- CSS classes in forms
+
+### Added
+
+- "Required Fields" hint to the forms that were missing it
+
+### Changed
+
+- "New Category" form in admin page visually enhanced
+- Contribution guidelines updated
+- CSS modernized
+- App CSS and JS moved to bundled HTML templates
+- Minimum requirements:
+  - Python >= 3.8
+  - Alliance Auth >= 2.15.1
+  - Django ckEditor >= 6.4.2
+
+### Removed
+
+- Unused template tags
+- Tests for Alliance Auth Beta
+- Deprecated `type` parameter from `script` tags
+- Deprecated `type` parameter from `style` tags
+
+
 ## [1.9.0] - 2022-07-11
 
 ### Changed
@@ -95,7 +125,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Option: Use this Discord Webhook for replies as well? (This is a checkbox in the
   board settings. When checked, the provided Discord webhook will also be used to
   send a message for every reply in this board to Discord. Chose wisely!)
-  ![Admin Board Options](aa_forum/docs/images/admin-board-options.jpg)
+
+  ![Admin Board Options](aa_forum/docs/images/admin-board-options.jpg "Admin Board Options")
 
 ### Changed
 

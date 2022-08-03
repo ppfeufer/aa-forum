@@ -61,27 +61,27 @@ these kind of changes. For you own sanity, and mine :-)
 
 #### Forum Index
 
-![Forum Index](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/forum-index.jpg)
+![Forum Index](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/forum-index.jpg "Forum Index")
 
 
 #### Topic Overview / Board Index
 
-![Topic Overview / Board Index](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-overview.jpg)
+![Topic Overview / Board Index](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-overview.jpg "Topic Overview / Board Index")
 
 
 #### Topic View
 
-![Topic View](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-view.jpg)
+![Topic View](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-view.jpg "Topic View")
 
 
 #### Start new Topic (ckEditor)
 
-![Start new Topic](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/start-new-topic.jpg)
+![Start new Topic](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/start-new-topic.jpg "Start new Topic")
 
 
 #### Admin View
 
-![Admin View](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/admin-view.jpg)
+![Admin View](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/admin-view.jpg "Admin View")
 
 
 ## Installation
@@ -424,9 +424,9 @@ about the available permissions.
 
 ## Permissions
 
-| ID             | Description | Notes|
-|----------------|-------------|------|
-| `basic_access` | Can access the AA-Forum module | Grants access to the forum |
+| ID             | Description                                                      | Notes                                                                                                                                                                                                                                                                                                                                             |
+|----------------|------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `basic_access` | Can access the AA-Forum module                                   | Grants access to the forum                                                                                                                                                                                                                                                                                                                        |
 | `manage_forum` | Can manage the AA-Forum module (Categories, topics and messages) | Users with this permission can create, edit and delete boards and categories in the "Administration" view. They can also modify and delete messages and topics in the "Forum" view. **Users with this permission are not bound by group restrictions and have access to all boards and topics, so choose wisely who is getting this permission.** |
 
 
