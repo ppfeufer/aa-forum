@@ -1035,9 +1035,10 @@ class TestSetting(TestCase):
         """
 
         # No pk given
-        with self.assertRaisesMessage(
-            IntegrityError, "(1062, \"Duplicate entry '1' for key 'PRIMARY'\")"
-        ):
+        # with self.assertRaisesMessage(
+        #     IntegrityError, "(1062, \"Duplicate entry '1' for key 'PRIMARY'\")"
+        # ):
+        with self.assertRaises(IntegrityError):
             create_setting()
 
     def test_setting_create_with_pk(self):
@@ -1048,9 +1049,10 @@ class TestSetting(TestCase):
         """
 
         # Set pk=2
-        with self.assertRaisesMessage(
-            IntegrityError, "(1062, \"Duplicate entry '1' for key 'PRIMARY'\")"
-        ):
+        # with self.assertRaisesMessage(
+        #     IntegrityError, "(1062, \"Duplicate entry '1' for key 'PRIMARY'\")"
+        # ):
+        with self.assertRaises(IntegrityError):
             create_setting(pk=2)
 
     # def test_cannot_be_deleted(self):
