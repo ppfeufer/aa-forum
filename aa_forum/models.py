@@ -72,16 +72,6 @@ class SingletonModel(models.Model):
 
         abstract = True
 
-    def delete(self, *args, **kwargs):
-        """
-        delete action
-        :param args:
-        :param kwargs:
-        :return:
-        """
-
-        pass
-
     def save(self, *args, **kwargs):
         """
         save action
@@ -92,6 +82,16 @@ class SingletonModel(models.Model):
 
         self.pk = 1
         super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        """
+        delete action
+        :param args:
+        :param kwargs:
+        :return:
+        """
+
+        pass
 
 
 class General(models.Model):
