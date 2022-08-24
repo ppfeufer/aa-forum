@@ -20,7 +20,6 @@ from django.utils.timezone import now
 from allianceauth.tests.auth_utils import AuthUtils
 
 # AA Forum
-from aa_forum.constants import SETTING_MESSAGESPERPAGE
 from aa_forum.models import (
     Board,
     Category,
@@ -148,7 +147,7 @@ def my_get_setting(setting_key: str) -> str:
     :return:
     """
 
-    if setting_key == SETTING_MESSAGESPERPAGE:
+    if setting_key == Setting.MESSAGESPERPAGE:
         return "5"
 
     return Setting.objects.get_setting(setting_key=setting_key)

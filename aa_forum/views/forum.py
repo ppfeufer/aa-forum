@@ -27,7 +27,6 @@ from app_utils.logging import LoggerAddTag
 
 # AA Forum
 from aa_forum import __title__
-from aa_forum.constants import SETTING_MESSAGESPERPAGE, SETTING_TOPICSPERPAGE
 from aa_forum.forms import EditMessageForm, EditTopicForm, NewTopicForm
 from aa_forum.helper.webhook import send_message_to_discord_webhook
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Setting, Topic
@@ -223,7 +222,7 @@ def board(
 
     paginator = Paginator(
         board.topics_sorted,
-        int(Setting.objects.get_setting(setting_key=SETTING_TOPICSPERPAGE)),
+        int(Setting.objects.get_setting(setting_key=Setting.TOPICSPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
 
@@ -468,7 +467,7 @@ def topic(
     # Set this topic as "read by" by the current user
     paginator = Paginator(
         topic.messages_sorted,
-        int(Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)),
+        int(Setting.objects.get_setting(setting_key=Setting.MESSAGESPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
 
