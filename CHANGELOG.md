@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Default forum settings to the admin backend
-- `related_name` to foreign keys that where missing them
+- `related_name` to foreign keys that were missing them
 
 ### Changed
 
