@@ -27,12 +27,7 @@ from aa_forum.constants import (
     SETTING_MESSAGESPERPAGE,
 )
 from aa_forum.helper.text import string_cleanup
-from aa_forum.managers import (
-    BoardManager,
-    MessageManager,
-    SettingsManager,
-    TopicManager,
-)
+from aa_forum.managers import BoardManager, MessageManager, SettingManager, TopicManager
 
 
 def get_sentinel_user() -> User:
@@ -63,6 +58,40 @@ def _generate_slug(calling_model: models.Model, name: str) -> str:
         slug_name = slugify(unidecode.unidecode(f"{name}-{run}"), allow_unicode=True)
 
     return slug_name
+
+
+class SingletonModel(models.Model):
+    """
+    SingletonModel
+    """
+
+    class Meta:
+        """
+        Model meta definitions
+        """
+
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        """
+        save action
+        :param args:
+        :param kwargs:
+        :return:
+        """
+
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        """
+        delete action
+        :param args:
+        :param kwargs:
+        :return:
+        """
+
+        pass
 
 
 class General(models.Model):
@@ -434,8 +463,12 @@ class LastMessageSeen(models.Model):
     Stores information about the last message seen by a user in a topic.
     """
 
-    topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    topic = models.ForeignKey(
+        "Topic", on_delete=models.CASCADE, related_name="last_message_seen"
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="aa_forum_last_message_seen"
+    )
     message_time = models.DateTimeField()
 
     def __str__(self) -> str:
@@ -636,18 +669,26 @@ class PersonalMessage(models.Model):
         super().save(*args, **kwargs)
 
 
-class Setting(models.Model):
+class Setting(SingletonModel):
     """
-    Setting
+    Default forum settings
     """
 
-    variable = models.CharField(max_length=254, blank=False, unique=True)
-    value = models.TextField(blank=False)
+    default_max_messages = models.IntegerField(
+        default=15,
+        verbose_name=_("Messages per page"),
+        help_text=_("Maximum number of messages per page in the topic view"),
+    )
+    default_max_topics = models.IntegerField(
+        default=10,
+        verbose_name=_("Topics per page"),
+        help_text=_("Maximum number of topics per page in the board view"),
+    )
 
-    objects = SettingsManager()
+    objects = SettingManager()
 
     def __str__(self) -> str:
-        return f"{self.variable}"
+        return "Forum Settings"
 
     class Meta:
         """
