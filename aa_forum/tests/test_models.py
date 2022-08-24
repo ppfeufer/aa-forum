@@ -1068,10 +1068,11 @@ class TestSetting(TestCase):
         Setting.objects.all().delete()
 
         # then
-        settings = Setting.objects.get(pk=1)
+        settings = Setting.objects.all()
+        settings_first = settings.first()
 
-        self.assertEqual(settings_old.pk, settings.pk)
-        self.assertEqual(
-            settings_old.default_max_messages, settings.default_max_messages
-        )
-        self.assertEqual(settings_old.default_max_topics, settings.default_max_topics)
+        # See if there is still only ONE Setting object
+        self.assertEqual(settings.count(), 1)
+
+        # Check if both of our objects are identical
+        self.assertEqual(settings_old, settings_first)
