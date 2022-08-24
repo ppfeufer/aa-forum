@@ -37,9 +37,7 @@ class SettingManager(models.Manager):
         :return:
         """
 
-        value = self.values(setting_key).first()
-
-        return value[setting_key]
+        return getattr(self.first(), setting_key)
 
     def get_queryset(self):
         """
