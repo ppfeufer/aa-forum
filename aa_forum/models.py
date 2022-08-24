@@ -674,12 +674,12 @@ class Setting(SingletonModel):
     Default forum settings
     """
 
-    default_max_messages = models.IntegerField(
+    messages_per_page = models.IntegerField(
         default=15,
         verbose_name=_("Messages per page"),
         help_text=_("Maximum number of messages per page in the topic view"),
     )
-    default_max_topics = models.IntegerField(
+    topics_per_page = models.IntegerField(
         default=10,
         verbose_name=_("Topics per page"),
         help_text=_("Maximum number of topics per page in the board view"),
