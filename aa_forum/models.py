@@ -27,12 +27,7 @@ from aa_forum.constants import (
     SETTING_MESSAGESPERPAGE,
 )
 from aa_forum.helper.text import string_cleanup
-from aa_forum.managers import (
-    BoardManager,
-    MessageManager,
-    SettingsManager,
-    TopicManager,
-)
+from aa_forum.managers import BoardManager, MessageManager, SettingManager, TopicManager
 
 
 def get_sentinel_user() -> User:
@@ -686,7 +681,7 @@ class Setting(SingletonModel):
         help_text=_("Maximum number of topics per page in the board view"),
     )
 
-    objects = SettingsManager()
+    objects = SettingManager()
 
     def __str__(self) -> str:
         return "Forum Settings"

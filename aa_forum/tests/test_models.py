@@ -1055,23 +1055,23 @@ class TestSetting(TestCase):
         with self.assertRaises(IntegrityError):
             create_setting(pk=2)
 
-    # def test_cannot_be_deleted(self):
-    #     """
-    #     Test that the settings object cannot be deleted
-    #     :return:
-    #     """
-    #
-    #     # given
-    #     settings_old = Setting.objects.get(pk=1)
-    #
-    #     # when
-    #     Setting.objects.all().delete()
-    #
-    #     # then
-    #     settings = Setting.objects.get(pk=1)
-    #
-    #     self.assertEqual(settings_old.pk, settings.pk)
-    #     self.assertEqual(
-    #         settings_old.default_max_messages, settings.default_max_messages
-    #     )
-    #     self.assertEqual(settings_old.default_max_topics, settings.default_max_topics)
+    def test_cannot_be_deleted(self):
+        """
+        Test that the settings object cannot be deleted
+        :return:
+        """
+
+        # given
+        settings_old = Setting.objects.get(pk=1)
+
+        # when
+        Setting.objects.all().delete()
+
+        # then
+        settings = Setting.objects.get(pk=1)
+
+        self.assertEqual(settings_old.pk, settings.pk)
+        self.assertEqual(
+            settings_old.default_max_messages, settings.default_max_messages
+        )
+        self.assertEqual(settings_old.default_max_topics, settings.default_max_topics)

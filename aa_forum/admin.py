@@ -18,6 +18,12 @@ class SingletonModelAdmin(admin.ModelAdmin):
     actions = None  # Removes the default delete action.
 
     def has_add_permission(self, request):
+        """
+        Has add permissions
+        :param request:
+        :return:
+        """
+
         return self.model.objects.all().count() == 0
 
     def has_change_permission(self, request, obj=None):

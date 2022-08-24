@@ -8,9 +8,26 @@ from django.db import models
 from django.db.models import Prefetch, Q
 
 
-class SettingsManager(models.Manager):
+class SettingQuerySet(models.QuerySet):
     """
-    SettingsManager
+    SettingQuerySet
+    """
+
+    def delete(self):
+        """
+        Delete action
+
+        Override :: We don't allow deletion here, so we make sure the object
+                    is saved again and not deleted
+        :return:
+        """
+
+        return super().update()
+
+
+class SettingManager(models.Manager):
+    """
+    SettingManager
     """
 
     def get_setting(self, setting_key: str) -> str:
@@ -24,8 +41,20 @@ class SettingsManager(models.Manager):
 
         return value[setting_key]
 
+    def get_queryset(self):
+        """
+        Get a Setting queryset
+        :return:
+        """
+
+        return SettingQuerySet(self.model)
+
 
 class BoardQuerySet(models.QuerySet):
+    """
+    BoardQuerySet
+    """
+
     def user_has_access(self, user: User) -> models.QuerySet:
         """
         Filter boards that given user has access to.
@@ -55,6 +84,10 @@ BoardManager = BoardManagerBase.from_queryset(BoardQuerySet)
 
 
 class TopicQuerySet(models.QuerySet):
+    """
+    TopicQuerySet
+    """
+
     def user_has_access(self, user: User) -> models.QuerySet:
         """
         Filter boards that given user has access to.
@@ -136,6 +169,10 @@ TopicManager = TopicManagerBase.from_queryset(TopicQuerySet)
 
 
 class MessageQuerySet(models.QuerySet):
+    """
+    MessageQuerySet
+    """
+
     def user_has_access(self, user: User) -> models.QuerySet:
         """
         Filter boards that given user has access to.
