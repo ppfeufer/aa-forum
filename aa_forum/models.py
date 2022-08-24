@@ -463,8 +463,12 @@ class LastMessageSeen(models.Model):
     Stores information about the last message seen by a user in a topic.
     """
 
-    topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    topic = models.ForeignKey(
+        "Topic", on_delete=models.CASCADE, related_name="last_message_seen"
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="aa_forum_last_message_seen"
+    )
     message_time = models.DateTimeField()
 
     def __str__(self) -> str:
