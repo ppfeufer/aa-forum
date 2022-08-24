@@ -10,11 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Default forum settings to admin backend
+- Default forum settings to the admin backend
 
 ### Changed
 
-- `Setting` model is now a singleton to prevent multiple setings of the same type
+- `Setting` model is now a singleton to prevent multiple settings of the same type
 
 
 ## [1.10.0] - 2022-08-03
