@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Changed
+
+- `Setting` model is now a singleton to prevent multiple setings of the same type
+
 
 ## [1.10.0] - 2022-08-03
 

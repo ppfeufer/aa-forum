@@ -10,6 +10,7 @@ import unidecode
 
 # Django
 from django.contrib.auth.models import Group, User
+from django.core.cache import cache
 from django.db import models, transaction
 from django.db.models import Q
 from django.urls import reverse
@@ -63,6 +64,65 @@ def _generate_slug(calling_model: models.Model, name: str) -> str:
         slug_name = slugify(unidecode.unidecode(f"{name}-{run}"), allow_unicode=True)
 
     return slug_name
+
+
+class SingletonModel(models.Model):
+    """
+    SingletonModel
+    """
+
+    class Meta:
+        """
+        Model meta definitions
+        """
+
+        abstract = True
+
+    def delete(self, *args, **kwargs):
+        """
+        delete action
+        :param args:
+        :param kwargs:
+        :return:
+        """
+
+        pass
+
+    def set_cache(self):
+        """
+        Setting cache
+        :return:
+        """
+
+        cache.set(self.__class__.__name__, self)
+
+    def save(self, *args, **kwargs):
+        """
+        save action
+        :param args:
+        :param kwargs:
+        :return:
+        """
+
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+        self.set_cache()
+
+    @classmethod
+    def load(cls):
+        """
+        Get cache
+        :return:
+        """
+
+        if cache.get(cls.__name__) is None:
+            obj, created = cls.objects.get_or_create(pk=1)
+
+            if not created:
+                obj.set_cache()
+
+        return cache.get(cls.__name__)
 
 
 class General(models.Model):
@@ -636,18 +696,26 @@ class PersonalMessage(models.Model):
         super().save(*args, **kwargs)
 
 
-class Setting(models.Model):
+class Setting(SingletonModel):
     """
-    Setting
+    Default forum settings
     """
 
-    variable = models.CharField(max_length=254, blank=False, unique=True)
-    value = models.TextField(blank=False)
+    default_max_messages = models.IntegerField(
+        default=15,
+        verbose_name=_("Messages per page"),
+        help_text=_("Maximum number of messages per page in the topic view"),
+    )
+    default_max_topics = models.IntegerField(
+        default=10,
+        verbose_name=_("Topics per page"),
+        help_text=_("Maximum number of topics per page in the board view"),
+    )
 
     objects = SettingsManager()
 
     def __str__(self) -> str:
-        return f"{self.variable}"
+        return "Forum Settings"
 
     class Meta:
         """

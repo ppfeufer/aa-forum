@@ -20,7 +20,9 @@ class SettingsManager(models.Manager):
         :return:
         """
 
-        return self.get(variable=setting_key).value
+        value = self.values(setting_key).first()
+
+        return value[setting_key]
 
 
 class BoardQuerySet(models.QuerySet):
