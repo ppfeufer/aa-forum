@@ -7,7 +7,37 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 # AA Forum
-from aa_forum.models import Board, Category, Topic
+from aa_forum.models import Board, Category, Setting, Topic
+
+
+class SingletonModelAdmin(admin.ModelAdmin):
+    """
+    Prevents Django admin users deleting the singleton or adding extra rows.
+    """
+
+    actions = None  # Removes the default delete action.
+
+    def has_add_permission(self, request):
+        """
+        Has add permissions
+        :param request:
+        :return:
+        """
+
+        return self.model.objects.all().count() == 0
+
+    def has_change_permission(self, request, obj=None):
+        """
+        Has change permissions
+        :param request:
+        :param obj:
+        :return:
+        """
+
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 class BaseReadOnlyAdminMixin:
@@ -119,3 +149,10 @@ class TopicAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
         """
 
         return obj.messages.count()
+
+
+@admin.register(Setting)
+class SettingAdmin(SingletonModelAdmin):
+    """
+    Setting Admin
+    """

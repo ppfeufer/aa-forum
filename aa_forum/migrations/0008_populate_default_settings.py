@@ -9,44 +9,35 @@ default_settings_to_migrate = [
 
 def on_migrate(apps, schema_editor):
     """
-    Add default settings on migration
+    Remove default settings on migration
     :param apps:
-    :type apps:
     :param schema_editor:
-    :type schema_editor:
+    :return:
     """
 
     Setting = apps.get_model("aa_forum", "Setting")
     db_alias = schema_editor.connection.alias
-    default_settings = [
-        Setting(variable=default_setting["variable"], value=default_setting["value"])
-        for default_setting in default_settings_to_migrate
-    ]
-    Setting.objects.using(db_alias).bulk_create(default_settings)
+
+    Setting.objects.using(db_alias).create(pk=1)
 
 
 def on_migrate_zero(apps, schema_editor):
     """
-    Remove default settings on migration to zero
+    Add default settings on migration to zero
     :param apps:
-    :type apps:
     :param schema_editor:
-    :type schema_editor:
+    :return:
     """
 
     Setting = apps.get_model("aa_forum", "Setting")
     db_alias = schema_editor.connection.alias
-
-    for default_setting in default_settings_to_migrate:
-        Setting.objects.using(db_alias).filter(
-            variable=default_setting["variable"]
-        ).delete()
+    Setting.objects.using(db_alias).delete()
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("aa_forum", "0001_initial"),
+        ("aa_forum", "0007_change_settings_to_singleton"),
     ]
 
     operations = [migrations.RunPython(on_migrate, on_migrate_zero)]
