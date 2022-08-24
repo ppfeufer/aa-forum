@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Added
+
+- Default forum settings to admin backend
+
 ### Changed
 
 - `Setting` model is now a singleton to prevent multiple setings of the same type
