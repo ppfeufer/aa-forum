@@ -1019,13 +1019,17 @@ class TestSetting(TestCase):
         """
 
         # given
-        setting = Setting(pk=2, default_max_messages=25, default_max_topics=25)
+        messages_per_page = 25
+        topics_per_page = 25
+        setting = Setting(
+            pk=2, messages_per_page=messages_per_page, topics_per_page=topics_per_page
+        )
         setting.save()
 
         # then
         self.assertEqual(setting.pk, 1)
-        self.assertEqual(setting.default_max_messages, 25)
-        self.assertEqual(setting.default_max_topics, 25)
+        self.assertEqual(setting.messages_per_page, messages_per_page)
+        self.assertEqual(setting.topics_per_page, topics_per_page)
 
     def test_setting_create(self):
         """
