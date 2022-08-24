@@ -10,7 +10,6 @@ import unidecode
 
 # Django
 from django.contrib.auth.models import Group, User
-from django.core.cache import cache
 from django.db import models, transaction
 from django.db.models import Q
 from django.urls import reverse
@@ -88,14 +87,6 @@ class SingletonModel(models.Model):
 
         pass
 
-    def set_cache(self):
-        """
-        Setting cache
-        :return:
-        """
-
-        cache.set(self.__class__.__name__, self)
-
     def save(self, *args, **kwargs):
         """
         save action
@@ -106,23 +97,6 @@ class SingletonModel(models.Model):
 
         self.pk = 1
         super().save(*args, **kwargs)
-
-        self.set_cache()
-
-    @classmethod
-    def load(cls):
-        """
-        Get cache
-        :return:
-        """
-
-        if cache.get(cls.__name__) is None:
-            obj, created = cls.objects.get_or_create(pk=1)
-
-            if not created:
-                obj.set_cache()
-
-        return cache.get(cls.__name__)
 
 
 class General(models.Model):
