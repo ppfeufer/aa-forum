@@ -700,3 +700,32 @@ class Setting(SingletonModel):
         default_permissions = ()
         verbose_name = _("setting")
         verbose_name_plural = _("settings")
+
+
+class UserProfile(models.Model):
+    """
+    A users forum profile
+    """
+
+    user = models.OneToOneField(
+        User,
+        related_name="aa_forum_user_profile",
+        on_delete=models.CASCADE,
+        unique=True,
+        primary_key=True,
+    )
+    signature = RichTextUploadingField(blank=True)
+    website_title = models.CharField(max_length=254, blank=True)
+    website_url = models.CharField(max_length=254, blank=True)
+
+    def __str__(self):
+        return f"Forum User Profile: {self.user}"
+
+    class Meta:
+        """
+        Meta definitions
+        """
+
+        default_permissions = ()
+        verbose_name = _("user profile")
+        verbose_name_plural = _("user profiles")
