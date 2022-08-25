@@ -381,7 +381,8 @@ def board_edit(
             board.save()
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Board changed.</p>"))
+                request,
+                mark_safe(_(f'<h4>Success!</h4><p>Board "{board.name}" changed.</p>')),
             )
 
             logger.info(f'{request.user} changed board "{board.name}"')
