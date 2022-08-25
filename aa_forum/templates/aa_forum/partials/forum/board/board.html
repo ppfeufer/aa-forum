@@ -12,19 +12,11 @@
     <div class="aa-forum-board-image">
         {% if board.num_unread > 0 %}
             <svg id="aa-forum-unread-in-{{ board.id }}">
-                {% if NIGHT_MODE %}
-                    <use href="#aa-forum-document-new-night-mode"></use>
-                {% else %}
-                    <use href="#aa-forum-document-new"></use>
-                {% endif %}
+                <use href="#aa-forum-icon-post-new"></use>
             </svg>
         {% else %}
             <svg>
-                {% if NIGHT_MODE %}
-                    <use href="#aa-forum-document-night-mode"></use>
-                {% else %}
-                    <use href="#aa-forum-document"></use>
-                {% endif %}
+                <use href="#aa-forum-icon-post"></use>
             </svg>
         {% endif %}
     </div>

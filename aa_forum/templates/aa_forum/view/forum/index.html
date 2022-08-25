@@ -22,11 +22,7 @@
             <span class="aa-forum-legend-new-post">
                 <span class="aa-forum-legend-image">
                     <svg>
-                        {% if NIGHT_MODE %}
-                            <use href="#aa-forum-document-new-night-mode"></use>
-                        {% else %}
-                            <use href="#aa-forum-document-new"></use>
-                        {% endif %}
+                        <use href="#aa-forum-icon-post-new"></use>
                     </svg>
                 </span>
                 <span class="aa-forum-legend-text">{% translate "New posts" %}</span>
@@ -35,11 +31,7 @@
             <span class="aa-forum-legend-no-new-post">
                 <span class="aa-forum-legend-image">
                     <svg>
-                        {% if NIGHT_MODE %}
-                            <use href="#aa-forum-document-night-mode"></use>
-                        {% else %}
-                            <use href="#aa-forum-document"></use>
-                        {% endif %}
+                        <use href="#aa-forum-icon-post"></use>
                     </svg>
                 </span>
                 <span class="aa-forum-legend-text">{% translate "No new posts" %}</span>
