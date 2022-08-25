@@ -26,7 +26,7 @@ def verify_image_url(image_url):
     Verify that the passed text is an image URL.
 
     We're verifying image URLs for inclusion in Slack/Discord Webhook integration,
-    which requires a scheme at the beginning (http(s)) and a file extention at the end
+    which requires a scheme at the beginning (http(s)) and a file extension at the end
     to render correctly. So, a URL which passes verify_url()
     (like example.com/kitten.gif) might not pass this test. If you need to test that
     the URL is both valid AND an image suitable for the Incoming Webhook integration,
@@ -35,8 +35,8 @@ def verify_image_url(image_url):
     :return:
     """
 
-    return re.match("http", image_url) and re.search(
-        r"[gif|jpg|jpeg|png|bmp|webp]$", image_url
+    return re.match(
+        r"(http(s?):)([\/|.|\w|\s|-])*\.(?:gif|jpg|jpeg|png|bmp|webp)", image_url
     )
 
 
