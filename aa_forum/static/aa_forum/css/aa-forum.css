@@ -10,6 +10,11 @@
     .aa-forum .aa-forum-header {
         margin-bottom: 2rem;
     }
+
+    .aa-forum .aa-forum-svg-wrapper {
+        height: 0;
+        width: 0;
+    }
 }
 
 /* Search Box
