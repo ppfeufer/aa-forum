@@ -183,14 +183,25 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
 
         if form.is_valid():
             category = Category.objects.get(pk=category_id)
+            category_name_old = category.name
+
+            # Set new name
             category.name = form.cleaned_data["name"]
             category.save()
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Category changed.</p>"))
+                request,
+                mark_safe(
+                    _(
+                        f'<h4>Success!</h4><p>Category name changed from "{category_name_old}" to "{category.name}".</p>'
+                    )
+                ),
             )
 
-            logger.info(f'{request.user} changed category "{category.name}"')
+            logger.info(
+                f"{request.user} changed category name "
+                f'from "{category_name_old}" to "{category.name}"'
+            )
         else:
             message_form_errors(request, form)
 
