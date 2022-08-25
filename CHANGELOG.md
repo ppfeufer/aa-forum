@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Some `<br>` tags that slipped through te cracks removed
 
+### Added
+
+- User's maximum signature length to global forum settings
+
 
 ## [1.12.0] - 2022-08-25
 

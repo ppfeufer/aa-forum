@@ -675,6 +675,7 @@ class Setting(SingletonModel):
 
     MESSAGESPERPAGE = "messages_per_page"
     TOPICSPERPAGE = "topics_per_page"
+    USERSIGNATURELENGTH = "user_signature_length"
 
     messages_per_page = models.IntegerField(
         default=15,
@@ -685,6 +686,11 @@ class Setting(SingletonModel):
         default=10,
         verbose_name=_("Topics per page"),
         help_text=_("Maximum number of topics per page in the board view"),
+    )
+    user_signature_length = models.IntegerField(
+        default=750,
+        verbose_name=_("User signature length"),
+        help_text=_("Maximum length of a users signature"),
     )
 
     objects = SettingManager()
