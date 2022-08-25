@@ -5,6 +5,8 @@ Forms
 # Django
 from django import forms
 from django.contrib.auth.models import Group
+from django.core.exceptions import ValidationError
+from django.core.validators import MaxLengthValidator, URLValidator
 from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
@@ -13,7 +15,8 @@ from django.utils.translation import gettext_lazy as _
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 # AA Forum
-from aa_forum.models import Board, Category, Message, Topic, UserProfile
+from aa_forum.helper.text import string_cleanup
+from aa_forum.models import Board, Category, Message, Setting, Topic, UserProfile
 
 
 def get_mandatory_form_label_text(text):
@@ -311,7 +314,6 @@ class UserProfileForm(ModelForm):
         required=False,
         label=_("Signature"),
         help_text=_("Your signature will appear below your posts."),
-        max_length=500,
     )
     website_title = forms.CharField(
         required=False,
@@ -338,3 +340,48 @@ class UserProfileForm(ModelForm):
 
         model = UserProfile
         fields = ["signature", "website_title", "website_url"]
+
+    def clean_signature(self):
+        """
+        Check that the signature is not longer than allowed
+        :return:
+        """
+
+        signature = self.cleaned_data["signature"]
+
+        if not signature:
+            return ""
+
+        max_signature_length = Setting.objects.get_setting(
+            setting_key=Setting.USERSIGNATURELENGTH
+        )
+
+        try:
+            MaxLengthValidator(max_signature_length)(signature)
+        except ValidationError as exc:
+            raise ValidationError(
+                _(
+                    f"Ensure your signature has at most {max_signature_length} "
+                    f"characters. (Currently: {len(signature)})"
+                )
+            ) from exc
+        else:
+            return signature
+
+    def clean_website_url(self):
+        """
+        Check if it's a valid URL
+        :return:
+        """
+
+        website_url = string_cleanup(self.cleaned_data["website_url"])
+
+        if not website_url:
+            return ""
+
+        try:
+            URLValidator()(website_url)
+        except ValidationError as exc:
+            raise ValidationError(_("This is not a valid URL")) from exc
+        else:
+            return website_url
