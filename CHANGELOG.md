@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Replaced all icons that were image files with an SVG sprite to reduce the number of
   HTTP requests to the web server.
 - Logic in image detection for posts posted to Discord to "First image to verify"
+- Moved search term delimiters to variables
 
 
 ## [1.11.0] - 2022-08-24
