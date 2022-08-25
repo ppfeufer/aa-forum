@@ -278,7 +278,10 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
             new_board.announcement_groups.set(form.cleaned_data["announcement_groups"])
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Board created.</p>"))
+                request,
+                mark_safe(
+                    _(f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>')
+                ),
             )
 
             logger.info(f'{request.user} created board "{new_board.name}"')
@@ -326,7 +329,10 @@ def board_create_child(
             new_board.save()
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Board created.</p>"))
+                request,
+                mark_safe(
+                    _(f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>')
+                ),
             )
 
             logger.info(
