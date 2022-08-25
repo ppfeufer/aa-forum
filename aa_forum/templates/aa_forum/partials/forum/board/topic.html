@@ -6,9 +6,21 @@
     <div class="aa-forum-topic">
         <div class="aa-forum-topic-image">
             {% if topic.has_unread_messages %}
-                <img src="{% static 'aa_forum/images/new_some.png' %}" alt="{% translate 'New posts' %}">
+                <svg>
+                    {% if NIGHT_MODE %}
+                        <use href="#aa-forum-document-new-night-mode"></use>
+                    {% else %}
+                        <use href="#aa-forum-document-new"></use>
+                    {% endif %}
+                </svg>
             {% else %}
-                <img src="{% static 'aa_forum/images/new_none.png' %}" alt="{% translate 'No new posts' %}">
+                <svg>
+                    {% if NIGHT_MODE %}
+                        <use href="#aa-forum-document-night-mode"></use>
+                    {% else %}
+                        <use href="#aa-forum-document"></use>
+                    {% endif %}
+                </svg>
             {% endif %}
         </div>
 
