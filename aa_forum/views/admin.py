@@ -416,7 +416,9 @@ def board_delete(
     board_name = board.name
     board.delete()
 
-    messages.success(request, mark_safe(_("<h4>Success!</h4><p>Board removed.</p>")))
+    messages.success(
+        request, mark_safe(_(f'<h4>Success!</h4><p>Board "{board_name}" removed.</p>'))
+    )
 
     logger.info(f'{request.user} removed board "{board_name}"')
 
