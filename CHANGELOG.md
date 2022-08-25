@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Fixed
+
+- Top margin of the forum navigation (`<br>` is not for styling ...)
+
 ### Changed
 
 - Better setting names

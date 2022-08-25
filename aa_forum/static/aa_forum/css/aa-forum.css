@@ -7,6 +7,10 @@
 /* General
 ------------------------------------------------------------------------------------- */
 @media all {
+    .aa-forum {
+        margin-top: 2rem;
+    }
+
     .aa-forum .aa-forum-header {
         margin-bottom: 2rem;
     }
