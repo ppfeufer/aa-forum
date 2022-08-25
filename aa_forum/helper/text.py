@@ -26,7 +26,7 @@ def verify_image_url(image_url):
     Verify that the passed text is an image URL.
 
     We're verifying image URLs for inclusion in Slack/Discord Webhook integration,
-    which requires a scheme at the beginning (http(s)) and a file extention at the end
+    which requires a scheme at the beginning (http(s)) and a file extension at the end
     to render correctly. So, a URL which passes verify_url()
     (like example.com/kitten.gif) might not pass this test. If you need to test that
     the URL is both valid AND an image suitable for the Incoming Webhook integration,
@@ -35,15 +35,15 @@ def verify_image_url(image_url):
     :return:
     """
 
-    return re.match("http", image_url) and re.search(
-        r"[gif|jpg|jpeg|png|bmp|webp]$", image_url
+    return re.match(
+        r"(http(s?):)([\/|.|\w|\s|-])*\.(?:gif|jpg|jpeg|png|bmp|webp)", image_url
     )
 
 
 def get_image_url(text):
     """
     Extract an image url from the passed text. If there are multiple image urls,
-    only the first one will be returned.
+    the first to verify will be returned.
     :param text:
     :return:
     """
@@ -52,21 +52,23 @@ def get_image_url(text):
 
     images = soup.findAll("img")
 
+    # The first image to verify we will use
     if images:
-        first_image__src = images[0]["src"]
+        for image in images:
+            image__src = image["src"]
 
-        logger.debug(f"First Image found: {first_image__src}")
+            logger.debug(f"Image found: {image__src}")
 
-        if not first_image__src.startswith(("http://", "https://")):
-            logger.debug("Image has no absolute URL, fixing!")
+            if not image__src.startswith(("http://", "https://")):
+                logger.debug("Image has no absolute URL, fixing!")
 
-            absolute_site_url = site_absolute_url()
-            first_image__src = f"{absolute_site_url}{first_image__src}"
+                absolute_site_url = site_absolute_url()
+                image__src = f"{absolute_site_url}{image__src}"
 
-        if verify_image_url(first_image__src):
-            logger.debug(f"Image verified: {first_image__src}")
+            if verify_image_url(image__src):
+                logger.debug(f"Image verified: {image__src}")
 
-            return first_image__src
+                return image__src
 
     logger.debug("No images found.")
 

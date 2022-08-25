@@ -24,7 +24,6 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from aa_forum.constants import (
     DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
     INTERNAL_URL_PREFIX,
-    SETTING_MESSAGESPERPAGE,
 )
 from aa_forum.helper.text import string_cleanup
 from aa_forum.managers import BoardManager, MessageManager, SettingManager, TopicManager
@@ -588,7 +587,7 @@ class Message(models.Model):
         """
 
         messages_per_topic = int(
-            Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)
+            Setting.objects.get_setting(setting_key=Setting.MESSAGESPERPAGE)
         )
         position = (
             self.topic.messages.order_by("time_posted")
@@ -674,12 +673,15 @@ class Setting(SingletonModel):
     Default forum settings
     """
 
-    default_max_messages = models.IntegerField(
+    MESSAGESPERPAGE = "messages_per_page"
+    TOPICSPERPAGE = "topics_per_page"
+
+    messages_per_page = models.IntegerField(
         default=15,
         verbose_name=_("Messages per page"),
         help_text=_("Maximum number of messages per page in the topic view"),
     )
-    default_max_topics = models.IntegerField(
+    topics_per_page = models.IntegerField(
         default=10,
         verbose_name=_("Topics per page"),
         help_text=_("Maximum number of topics per page in the board view"),

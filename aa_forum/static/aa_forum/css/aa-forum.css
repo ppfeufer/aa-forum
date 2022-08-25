@@ -7,8 +7,17 @@
 /* General
 ------------------------------------------------------------------------------------- */
 @media all {
+    .aa-forum {
+        margin-top: 2rem;
+    }
+
     .aa-forum .aa-forum-header {
         margin-bottom: 2rem;
+    }
+
+    .aa-forum .aa-forum-svg-wrapper {
+        height: 0;
+        width: 0;
     }
 }
 
@@ -134,8 +143,6 @@
 ------------------------------------------------------------------------------------- */
 @media all {
     .aa-forum .panel-aa-forum-category .aa-forum-board {
-        align-content: center;
-        align-items: baseline;
         display: flex;
         flex-direction: row;
         padding: 1rem;
@@ -152,6 +159,12 @@
 
     .aa-forum .panel-aa-forum-category .aa-forum-board-image {
         margin-right: 1rem;
+    }
+
+    .aa-forum .panel-aa-forum-category .aa-forum-board-image svg {
+        height: 65px;
+        margin-top: -1rem;
+        width: 65px;
     }
 
     .aa-forum .panel-aa-forum-category .aa-forum-board-name {
@@ -195,6 +208,11 @@
         margin-right: 0.5rem;
     }
 
+    .aa-forum .aa-forum-legend .aa-forum-legend-image svg {
+        height: 30px;
+        width: 30px;
+    }
+
     .aa-forum .aa-forum-legend .aa-forum-legend-text {
         display: inline-block;
         margin-top: 0.25rem;
@@ -231,6 +249,12 @@
 
     .aa-forum .aa-forum-topic-row .aa-forum-topic .aa-forum-topic-image {
         width: 40px;
+    }
+
+    .aa-forum .aa-forum-topic-row .aa-forum-topic .aa-forum-topic-image svg {
+        height: 35px;
+        margin-top: -1rem;
+        width: 35px;
     }
 
     .aa-forum .aa-forum-topic-row .aa-forum-topic .aa-forum-topic-name {

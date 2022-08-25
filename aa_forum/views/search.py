@@ -22,7 +22,7 @@ from app_utils.logging import LoggerAddTag
 
 # AA Forum
 from aa_forum import __title__
-from aa_forum.constants import SEARCH_STOPWORDS, SETTING_MESSAGESPERPAGE
+from aa_forum.constants import SEARCH_STOPWORDS
 from aa_forum.models import Board, Message, Setting
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
@@ -83,7 +83,7 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
 
         paginator = Paginator(
             search_results,
-            int(Setting.objects.get_setting(setting_key=SETTING_MESSAGESPERPAGE)),
+            int(Setting.objects.get_setting(setting_key=Setting.MESSAGESPERPAGE)),
         )
         page_obj = paginator.get_page(page_number)
 

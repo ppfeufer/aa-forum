@@ -9,12 +9,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [1.12.0] - 2022-08-25
+
+### Fixed
+
+- Top margin of the forum navigation (`<br>` is not for styling ...)
+
+### Changed
+
+- Better setting names
+- Setting constants moved to their model
+- Show pagination only when there is more than 1 page
+- Replaced all icons that were image files with an SVG sprite to reduce the number of
+  HTTP requests to the web server.
+- Logic in image detection for posts posted to Discord to "First image to verify"
+- Moved search term delimiters to variables
+- Some success message have been improved
+
+
 ## [1.11.0] - 2022-08-24
 
 ### Added
 
 - Default forum settings to the admin backend
-- `related_name` to foreign keys that where missing them
+- `related_name` to foreign keys that were missing them
 
 ### Changed
 

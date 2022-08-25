@@ -183,14 +183,25 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
 
         if form.is_valid():
             category = Category.objects.get(pk=category_id)
+            category_name_old = category.name
+
+            # Set new name
             category.name = form.cleaned_data["name"]
             category.save()
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Category changed.</p>"))
+                request,
+                mark_safe(
+                    _(
+                        f'<h4>Success!</h4><p>Category name changed from "{category_name_old}" to "{category.name}".</p>'
+                    )
+                ),
             )
 
-            logger.info(f'{request.user} changed category "{category.name}"')
+            logger.info(
+                f"{request.user} changed category name "
+                f'from "{category_name_old}" to "{category.name}"'
+            )
         else:
             message_form_errors(request, form)
 
@@ -216,7 +227,10 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
 
     category_name = category.name
     category.delete()
-    messages.success(request, mark_safe(_("<h4>Success!</h4><p>Category removed.</p>")))
+    messages.success(
+        request,
+        mark_safe(_(f'<h4>Success!</h4><p>Category "{category_name}" removed.</p>')),
+    )
 
     logger.info(f'{request.user} removed category "{category_name}"')
 
@@ -264,7 +278,10 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
             new_board.announcement_groups.set(form.cleaned_data["announcement_groups"])
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Board created.</p>"))
+                request,
+                mark_safe(
+                    _(f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>')
+                ),
             )
 
             logger.info(f'{request.user} created board "{new_board.name}"')
@@ -312,7 +329,10 @@ def board_create_child(
             new_board.save()
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Board created.</p>"))
+                request,
+                mark_safe(
+                    _(f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>')
+                ),
             )
 
             logger.info(
@@ -361,7 +381,8 @@ def board_edit(
             board.save()
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Board changed.</p>"))
+                request,
+                mark_safe(_(f'<h4>Success!</h4><p>Board "{board.name}" changed.</p>')),
             )
 
             logger.info(f'{request.user} changed board "{board.name}"')
@@ -395,7 +416,9 @@ def board_delete(
     board_name = board.name
     board.delete()
 
-    messages.success(request, mark_safe(_("<h4>Success!</h4><p>Board removed.</p>")))
+    messages.success(
+        request, mark_safe(_(f'<h4>Success!</h4><p>Board "{board_name}" removed.</p>'))
+    )
 
     logger.info(f'{request.user} removed board "{board_name}"')
 

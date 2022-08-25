@@ -13,10 +13,6 @@ verbose_name: str = "AA-Forum - A simple forum for Alliance Auth"
 verbose_name_slug: str = slugify(verbose_name, allow_unicode=True)
 user_agent: str = f"{verbose_name_slug} v{__version__} {github_url}"
 
-# Setting keys
-SETTING_MESSAGESPERPAGE = "default_max_messages"
-SETTING_TOPICSPERPAGE = "default_max_topics"
-
 # All internal URLs need to start with this prefix
 # to prevent conflicts with user generated forum URLs
 INTERNAL_URL_PREFIX = "-"

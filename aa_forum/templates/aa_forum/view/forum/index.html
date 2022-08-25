@@ -6,8 +6,6 @@
 {% block page_title %}{% translate "Forum" %}{% endblock %}
 
 {% block aa_forum_header %}
-    <br>
-
     {% include "aa_forum/partials/menu.html" %}
     {% include "aa_forum/partials/forum/unread-topic-buttons.html" with position="above-category-list" %}
     {% include "aa_forum/partials/breadcrumb.html" %}
@@ -21,14 +19,18 @@
         <div class="aa-forum-legend">
             <span class="aa-forum-legend-new-post">
                 <span class="aa-forum-legend-image">
-                    <img src="{% static 'aa_forum/images/new_some.png' %}" alt="{% translate 'New posts' %}">
+                    <svg>
+                        <use href="#aa-forum-icon-post-new"></use>
+                    </svg>
                 </span>
                 <span class="aa-forum-legend-text">{% translate "New posts" %}</span>
             </span>
 
             <span class="aa-forum-legend-no-new-post">
                 <span class="aa-forum-legend-image">
-                    <img src="{% static 'aa_forum/images/new_none.png' %}" alt="{% translate 'No new posts' %}">
+                    <svg>
+                        <use href="#aa-forum-icon-post"></use>
+                    </svg>
                 </span>
                 <span class="aa-forum-legend-text">{% translate "No new posts" %}</span>
             </span>
