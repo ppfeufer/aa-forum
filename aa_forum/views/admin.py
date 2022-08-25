@@ -227,7 +227,10 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
 
     category_name = category.name
     category.delete()
-    messages.success(request, mark_safe(_("<h4>Success!</h4><p>Category removed.</p>")))
+    messages.success(
+        request,
+        mark_safe(_(f'<h4>Success!</h4><p>Category "{category_name}" removed.</p>')),
+    )
 
     logger.info(f'{request.user} removed category "{category_name}"')
 
