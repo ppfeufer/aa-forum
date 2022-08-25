@@ -60,7 +60,7 @@ class BoardQuerySet(models.QuerySet):
         :return:
         """
 
-        # Forum manager have always access, so assign this permission wisely
+        # Forum manager always have access, so assign this permission wisely
         if user.has_perm("aa_forum.manage_forum"):
             return self
 
@@ -93,7 +93,7 @@ class TopicQuerySet(models.QuerySet):
         :return:
         """
 
-        # Forum manager have always access, so assign this permission wisely
+        # Forum manager always have access, so assign this permission wisely
         if user.has_perm("aa_forum.manage_forum"):
             return self
 
@@ -178,7 +178,7 @@ class MessageQuerySet(models.QuerySet):
         :return:
         """
 
-        # Forum manager have always access, so assign this permission wisely
+        # Forum manager always have access, so assign this permission wisely
         if user.has_perm("aa_forum.manage_forum"):
             return self
 
