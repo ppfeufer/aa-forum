@@ -1,0 +1,23 @@
+{% extends "aa_forum/base.html" %}
+{% load bootstrap %}
+
+{% load static %}
+{% load i18n %}
+
+{% block page_title %}{% translate "Forum (Profile)" %}{% endblock %}
+
+{% block aa_forum_header %}
+    {% include "aa_forum/partials/menu.html" %}
+{% endblock %}
+
+{% block aa_forum_body %}
+    {% include "aa_forum/partials/profile/form.html" %}
+{% endblock %}
+
+{% block extra_css %}
+    {% include "aa_forum/bundles/aa-forum-css.html" %}
+{% endblock %}
+
+{% block extra_javascript %}
+    {% include "aa_forum/bundles/ckeditor-js.html" %}
+{% endblock %}

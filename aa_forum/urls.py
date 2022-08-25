@@ -7,7 +7,7 @@ from django.urls import path
 
 # AA Forum
 from aa_forum.constants import INTERNAL_URL_PREFIX
-from aa_forum.views import admin, forum, search
+from aa_forum.views import admin, forum, profile, search
 
 app_name: str = "aa_forum"
 
@@ -72,6 +72,12 @@ urlpatterns = [
         f"{INTERNAL_URL_PREFIX}/ajax/admin/board-order/",
         admin.ajax_board_order,
         name="admin_ajax_board_order",
+    ),
+    # Profile URLs
+    path(
+        f"{INTERNAL_URL_PREFIX}/profile/",
+        profile.index,
+        name="profile_index",
     ),
     # Service URLs
     path(

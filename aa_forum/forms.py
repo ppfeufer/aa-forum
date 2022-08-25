@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 # AA Forum
-from aa_forum.models import Board, Category, Message, Topic
+from aa_forum.models import Board, Category, Message, Topic, UserProfile
 
 
 def get_mandatory_form_label_text(text):
@@ -296,3 +296,45 @@ class EditMessageForm(ModelForm):
 
         model = Message
         fields = ["message"]
+
+
+class UserProfileForm(ModelForm):
+    """
+    Edit message form
+    """
+
+    signature = forms.CharField(
+        widget=CKEditorUploadingWidget(
+            config_name="aa_forum",
+            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
+        ),
+        required=False,
+        label=_("Signature"),
+        help_text=_("Your signature will appear below your posts."),
+        max_length=500,
+    )
+    website_title = forms.CharField(
+        required=False,
+        label=_("Website Title"),
+        max_length=254,
+        widget=forms.TextInput(attrs={"placeholder": _("e.g.: My Homepage")}),
+        help_text=_("Your website's title."),
+    )
+    website_url = forms.CharField(
+        required=False,
+        label=_("Website URL"),
+        max_length=254,
+        widget=forms.TextInput(attrs={"placeholder": _("https://example.com")}),
+        help_text=_(
+            "Your website's URL. (Don't forget to also set a title for your website, "
+            "otherwise this field will be ignored.)"
+        ),
+    )
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        """
+        Meta definitions
+        """
+
+        model = UserProfile
+        fields = ["signature", "website_title", "website_url"]
