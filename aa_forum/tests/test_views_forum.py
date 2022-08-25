@@ -86,8 +86,8 @@ class TestIndexViews(TestCase):
 
         # then
         self.assertEqual(res.status_code, 200)
-        self.assertContains(res, f"aa-forum-link-on-{self.board_1.id}")
-        self.assertNotContains(res, f"aa-forum-link-on-{self.board_2.id}")
+        self.assertContains(res, f"aa-forum-unread-in-{self.board_1.id}")
+        self.assertNotContains(res, f"aa-forum-unread-in-{self.board_2.id}")
 
     def test_should_show_new_indicator_when_new_posts_are_made(self):
         """
@@ -108,7 +108,7 @@ class TestIndexViews(TestCase):
 
         # then
         self.assertEqual(res.status_code, 200)
-        self.assertContains(res, f"aa-forum-link-on-{self.board_2.id}")
+        self.assertContains(res, f"aa-forum-unread-in-{self.board_2.id}")
 
     def test_should_show_counts(self):
         """

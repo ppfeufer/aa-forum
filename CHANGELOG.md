@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Better setting names
 - Setting constants moved to their model
 - Show pagination only when there is more than 1 page
+- Replaced all icons that were image files with an SVG sprite
 
 
 ## [1.11.0] - 2022-08-24
