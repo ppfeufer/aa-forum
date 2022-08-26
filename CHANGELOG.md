@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- User Profile
 - User's maximum signature length to global forum settings
 
 
