@@ -9,7 +9,7 @@
     </div>
 
     <div class="panel-body">
-        <form id="aa-forum-form-message-modify" class="form-horizontal" autocomplete="off" action="{% url 'aa_forum:profile_index' %}" method="post">
+        <form id="aa-forum-form-userprofile-modify" class="form-horizontal" autocomplete="off" action="{% url 'aa_forum:profile_index' %}" method="post">
             {% csrf_token %}
             {{ form|bootstrap_horizontal }}
             {% include "aa_forum/partials/form/required-field-hint.html" %}
