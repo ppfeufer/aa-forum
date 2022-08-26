@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+## [1.13.0] - 2022-08-26
+
 ### Fixed
 
 - Some `<br>` tags that slipped through the cracks removed
