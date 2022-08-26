@@ -30,16 +30,16 @@ from app_utils.logging import LoggerAddTag
 # AA Forum
 from aa_forum import __title__
 from aa_forum.constants import DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER
-from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm
+from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm, SettingForm
 from aa_forum.helper.forms import message_form_errors
-from aa_forum.models import Board, Category
+from aa_forum.models import Board, Category, Setting
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def index(request: WSGIRequest) -> HttpResponse:
+def categories_and_boards(request: WSGIRequest) -> HttpResponse:
     """
     Administration index view
     :param request:
@@ -119,7 +119,9 @@ def index(request: WSGIRequest) -> HttpResponse:
 
     logger.info(f"{request.user} calling admin view")
 
-    return render(request, "aa_forum/view/administration/index.html", context)
+    return render(
+        request, "aa_forum/view/administration/categories-and-boards.html", context
+    )
 
 
 @login_required
@@ -162,7 +164,7 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
         else:
             message_form_errors(request, form)
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -205,7 +207,7 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
         else:
             message_form_errors(request, form)
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -234,7 +236,7 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
 
     logger.info(f'{request.user} removed category "{category_name}"')
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -288,7 +290,7 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
         else:
             message_form_errors(request, form)
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -342,7 +344,7 @@ def board_create_child(
         else:
             message_form_errors(request, form)
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -389,7 +391,7 @@ def board_edit(
         else:
             message_form_errors(request, form)
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -422,7 +424,7 @@ def board_delete(
 
     logger.info(f'{request.user} removed board "{board_name}"')
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -485,3 +487,52 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
         data.append({"success": True})
 
     return JsonResponse(data, safe=False)
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def forum_settings(request: WSGIRequest) -> HttpResponse:
+    """
+    Forum Settings
+    :param request:
+    :return:
+    """
+
+    logger.info(f"{request.user} called forum settings page")
+
+    settings = Setting.objects.get(pk=1)
+
+    # If this is a POST request we need to process the form data
+    if request.method == "POST":
+        settings_form = SettingForm(request.POST, instance=settings)
+
+        # Check whether it's valid:
+        if settings_form.is_valid():
+            settings.messages_per_page = settings_form.cleaned_data["messages_per_page"]
+            settings.topics_per_page = settings_form.cleaned_data["topics_per_page"]
+            settings.user_signature_length = settings_form.cleaned_data[
+                "user_signature_length"
+            ]
+            settings.save()
+
+            messages.success(
+                request, mark_safe(_("<h4>Success!</h4><p>Settings updated.<p>"))
+            )
+
+            return redirect("aa_forum:admin_forum_settings")
+        else:
+            messages.error(
+                request,
+                mark_safe(
+                    _(
+                        "<h4>Error!</h4>"
+                        "<p>Something went wrong, please check your input<p>"
+                    )
+                ),
+            )
+    else:
+        settings_form = SettingForm(instance=settings)
+
+    context = {"form": settings_form}
+
+    return render(request, "aa_forum/view/administration/forum-settings.html", context)

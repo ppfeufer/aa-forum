@@ -16,10 +16,12 @@
 
         <div class="collapse navbar-collapse nav navbar-left" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+                <li class="{% navactive request 'aa_forum:profile_index' %}">
+                    <a href="{% url 'aa_forum:profile_index' %}">{% translate "Profile" %}</a>
+                </li>
+
                 {% if perms.aa_forum.manage_forum %}
-                    <li class="{% navactive request 'aa_forum:admin_index' %}">
-                        <a href="{% url 'aa_forum:admin_index' %}">{% translate "Administration" %}</a>
-                    </li>
+                    {% include "aa_forum/partials/menu/menu-admin.html" %}
                 {% endif %}
             </ul>
         </div>

@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 # AA Forum
-from aa_forum.models import Board, Category, Setting, Topic
+from aa_forum.models import Board, Category, Setting, Topic, UserProfile
 
 
 class SingletonModelAdmin(admin.ModelAdmin):
@@ -156,3 +156,12 @@ class SettingAdmin(SingletonModelAdmin):
     """
     Setting Admin
     """
+
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    """
+    Setting Admin
+    """
+
+    list_display = ("user",)

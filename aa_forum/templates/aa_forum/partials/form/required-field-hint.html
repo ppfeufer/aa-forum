@@ -1,7 +1,15 @@
 {% load i18n %}
 
 <div class="form-group aa-forum-form-group text-{{ align|default:"right" }} clearfix">
+    {% if form_horizontal %}
+        <div class="col-xs-12">
+    {% endif %}
+
     <p class="text-muted">
         {% translate "Fields marked with an asterisk (*) are mandatory" %}
     </p>
+
+    {% if form_horizontal %}
+        </div>
+    {% endif %}
 </div>

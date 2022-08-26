@@ -2,15 +2,14 @@
 
 {% load i18n %}
 
-{% block page_title %}{% translate "Modify Topic » Forum" %}{% endblock %}
+{% block page_title %}{% translate "Forum (Administration » Forum Settings)" %}{% endblock %}
 
 {% block aa_forum_header %}
     {% include "aa_forum/partials/menu/menu.html" %}
-    {% include "aa_forum/partials/breadcrumb.html" with category=board.category board=board topic=message.topic modify_message=True %}
 {% endblock %}
 
 {% block aa_forum_body %}
-    {% include "aa_forum/partials/forum/topic/modify-topic.html" %}
+    {% include "aa_forum/partials/administration/settings-form.html" %}
 {% endblock %}
 
 {% block extra_css %}

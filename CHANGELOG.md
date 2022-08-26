@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+## [1.13.0] - 2022-08-26
+
+### Fixed
+
+- Some `<br>` tags that slipped through the cracks removed
+
+### Added
+
+- User Profile
+- User's maximum signature length to global forum settings
+- Forum settings made available to forum administrators
+
 
 ## [1.12.0] - 2022-08-25
 
@@ -24,7 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   HTTP requests to the web server.
 - Logic in image detection for posts posted to Discord to "First image to verify"
 - Moved search term delimiters to variables
-- Some success message have been improved
+- Some success messages have been improved
 
 
 ## [1.11.0] - 2022-08-24

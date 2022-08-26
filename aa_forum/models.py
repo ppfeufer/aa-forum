@@ -25,7 +25,6 @@ from aa_forum.constants import (
     DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
     INTERNAL_URL_PREFIX,
 )
-from aa_forum.helper.text import string_cleanup
 from aa_forum.managers import BoardManager, MessageManager, SettingManager, TopicManager
 
 
@@ -470,9 +469,6 @@ class LastMessageSeen(models.Model):
     )
     message_time = models.DateTimeField()
 
-    def __str__(self) -> str:
-        return f"{self.topic}-{self.user}-{self.message_time}"
-
     class Meta:
         """
         Meta definitions
@@ -485,6 +481,9 @@ class LastMessageSeen(models.Model):
                 name="lastmessageseen_compounded",
             ),
         ]
+
+    def __str__(self) -> str:
+        return f"{self.topic}-{self.user}-{self.message_time}"
 
 
 class Message(models.Model):
@@ -537,7 +536,7 @@ class Message(models.Model):
         :return:
         """
 
-        self.message = string_cleanup(self.message)
+        self.message = self.message
         self.message_plaintext = strip_tags(self.message)
 
         super().save(*args, **kwargs)
@@ -675,6 +674,7 @@ class Setting(SingletonModel):
 
     MESSAGESPERPAGE = "messages_per_page"
     TOPICSPERPAGE = "topics_per_page"
+    USERSIGNATURELENGTH = "user_signature_length"
 
     messages_per_page = models.IntegerField(
         default=15,
@@ -686,11 +686,13 @@ class Setting(SingletonModel):
         verbose_name=_("Topics per page"),
         help_text=_("Maximum number of topics per page in the board view"),
     )
+    user_signature_length = models.IntegerField(
+        default=750,
+        verbose_name=_("User signature length"),
+        help_text=_("Maximum length of a users signature"),
+    )
 
     objects = SettingManager()
-
-    def __str__(self) -> str:
-        return "Forum Settings"
 
     class Meta:
         """
@@ -700,3 +702,35 @@ class Setting(SingletonModel):
         default_permissions = ()
         verbose_name = _("setting")
         verbose_name_plural = _("settings")
+
+    def __str__(self) -> str:
+        return "Forum Settings"
+
+
+class UserProfile(models.Model):
+    """
+    A users forum profile
+    """
+
+    user = models.OneToOneField(
+        User,
+        related_name="aa_forum_user_profile",
+        on_delete=models.CASCADE,
+        unique=True,
+        primary_key=True,
+    )
+    signature = RichTextUploadingField(blank=True)
+    website_title = models.CharField(max_length=254, blank=True)
+    website_url = models.CharField(max_length=254, blank=True)
+
+    class Meta:
+        """
+        Meta definitions
+        """
+
+        default_permissions = ()
+        verbose_name = _("user profile")
+        verbose_name_plural = _("user profiles")
+
+    def __str__(self):
+        return f"Forum User Profile: {self.user}"

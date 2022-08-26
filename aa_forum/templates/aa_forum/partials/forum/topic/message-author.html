@@ -18,4 +18,16 @@
             {% endif %}
         {% endwith %}
     </p>
+
+    <p class="hidden-xs">
+        {% if message_author.aa_forum_user_profile %}
+            {% if message_author.aa_forum_user_profile.website_title and message_author.aa_forum_user_profile.website_url %}
+                <p class="hidden-xs">
+                    <a href="{{ message_author.aa_forum_user_profile.website_url }}" target="_blank" rel="noreferrer noopener">
+                        {{ message_author.aa_forum_user_profile.website_title }}
+                    </a>
+                </p>
+            {% endif %}
+        {% endif %}
+    </p>
 </div>

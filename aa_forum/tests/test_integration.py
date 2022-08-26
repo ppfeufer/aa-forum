@@ -9,18 +9,22 @@ from unittest.mock import patch
 # Third Party
 import requests
 from django_webtest import WebTest
+from faker import Faker
 
 # Django
 from django.contrib.messages import get_messages
 from django.urls import reverse
 
 # AA Forum
-from aa_forum.models import Board, Category, Message, Topic
+from aa_forum.helper.text import string_cleanup
+from aa_forum.models import Board, Category, Message, Setting, Topic, UserProfile
 from aa_forum.tests.utils import (
     create_fake_message,
     create_fake_messages,
     create_fake_user,
 )
+
+fake = Faker()
 
 
 class TestForumUI(WebTest):
@@ -108,6 +112,33 @@ class TestForumUI(WebTest):
         self.assertEqual(new_topic.subject, "Recent Discoveries")
         new_message = Message.objects.last()
         self.assertEqual(new_message.message, "Energy of the Higgs boson")
+
+    def test_should_return_cleaned_message_string_on_topic_creation(self):
+        """
+        Test should return a clean/sanitized message string when new topic is created
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(self.board.get_absolute_url())
+        dirty_message = (
+            'this is a script test. <script type="text/javascript">alert('
+            "'test')</script>and this is style test. <style>.MathJax, "
+            ".MathJax_Message, .MathJax_Preview{display: none}</style>end tests."
+        )
+        cleaned_message = string_cleanup(dirty_message)
+
+        # when
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Message Cleanup Test"
+        form["message"] = dirty_message
+        page = form.submit().follow()
+
+        # then
+        new_message = Message.objects.last()
+        self.assertEqual(new_message.message, cleaned_message)
 
     def test_should_not_create_new_topic_doe_to_subject_missing(self):
         """
@@ -410,6 +441,33 @@ class TestForumUI(WebTest):
         new_message = Message.objects.last()
         self.assertEqual(new_message.message, "What is dark matter?")
 
+    def test_should_return_cleaned_message_string_on_topic_reply(self):
+        """
+        Test should return a clean/sanitized message string on reply in topic
+        :return:
+        """
+
+        # given
+        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        create_fake_messages(topic=topic, amount=5)
+        self.app.set_user(self.user_1001)
+        page = self.app.get(topic.get_absolute_url())
+        dirty_message = (
+            'this is a script test. <script type="text/javascript">alert('
+            "'test')</script>and this is style test. <style>.MathJax, "
+            ".MathJax_Message, .MathJax_Preview{display: none}</style>end tests."
+        )
+        cleaned_message = string_cleanup(dirty_message)
+
+        # when
+        form = page.forms["aa-forum-form-message-reply"]
+        form["message"] = dirty_message
+        page = form.submit().follow().follow()
+
+        # then
+        new_message = Message.objects.last()
+        self.assertEqual(new_message.message, cleaned_message)
+
     def test_should_not_create_reply_in_topic_due_to_missing_message(self):
         """
         Test should not create reply in topic, because message field is empty
@@ -492,6 +550,34 @@ class TestForumUI(WebTest):
         self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
         own_message.refresh_from_db()
         self.assertEqual(own_message.message, "What is dark matter?")
+
+    def test_should_return_cleaned_message_string_on_update_own_message(self):
+        """
+        Test should return a clean/sanitized message string when updating own message
+        :return:
+        """
+
+        # given
+        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        own_message = create_fake_message(topic=topic, user=self.user_1001)
+        self.app.set_user(self.user_1001)
+        page = self.app.get(topic.get_absolute_url())
+        dirty_message = (
+            'this is a script test. <script type="text/javascript">alert('
+            "'test')</script>and this is style test. <style>.MathJax, "
+            ".MathJax_Message, .MathJax_Preview{display: none}</style>end tests."
+        )
+        cleaned_message = string_cleanup(dirty_message)
+
+        # when
+        page = page.click(linkid=f"aa-forum-btn-modify-message-{own_message.pk}")
+        form = page.forms["aa-forum-form-message-modify"]
+        form["message"] = dirty_message
+        page = form.submit().follow().follow()
+
+        # then
+        own_message.refresh_from_db()
+        self.assertEqual(own_message.message, cleaned_message)
 
     def test_should_trigger_error_on_message_edit_due_to_invalid_form_data(self):
         """
@@ -577,7 +663,7 @@ class TestForumUI(WebTest):
         )
 
 
-class TestAdminUI(WebTest):
+class TestAdminCategoriesAndBoardsUI(WebTest):
     """
     Tests for the Admin UI
     """
@@ -599,7 +685,7 @@ class TestAdminUI(WebTest):
 
         # given
         self.app.set_user(self.user)
-        page = self.app.get(reverse("aa_forum:admin_index"))
+        page = self.app.get(reverse("aa_forum:admin_categories_and_boards"))
 
         # when
         form = page.forms["aa-forum-form-admin-new-category"]
@@ -607,7 +693,9 @@ class TestAdminUI(WebTest):
         page = form.submit().follow()
 
         # then
-        self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/categories-and-boards.html"
+        )
         new_category = Category.objects.last()
         self.assertEqual(new_category.name, "Category")
 
@@ -620,7 +708,7 @@ class TestAdminUI(WebTest):
         # given
         category = Category.objects.create(name="Category")
         self.app.set_user(self.user)
-        page = self.app.get(reverse("aa_forum:admin_index"))
+        page = self.app.get(reverse("aa_forum:admin_categories_and_boards"))
 
         # when
         form = page.forms[f"aa-forum-form-admin-edit-category-{category.pk}"]
@@ -628,7 +716,9 @@ class TestAdminUI(WebTest):
         page = form.submit().follow()
 
         # then
-        self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/categories-and-boards.html"
+        )
         category.refresh_from_db()
         self.assertEqual(category.name, "Dummy")
 
@@ -641,7 +731,7 @@ class TestAdminUI(WebTest):
         # given
         category = Category.objects.create(name="Category")
         self.app.set_user(self.user)
-        page = self.app.get(reverse("aa_forum:admin_index"))
+        page = self.app.get(reverse("aa_forum:admin_categories_and_boards"))
 
         # when
         form = page.forms[f"aa-forum-form-admin-add-board-{category.id}"]
@@ -649,7 +739,9 @@ class TestAdminUI(WebTest):
         page = form.submit().follow()
 
         # then
-        self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/categories-and-boards.html"
+        )
         new_board = category.boards.last()
         self.assertEqual(new_board.name, "Board")
 
@@ -663,7 +755,7 @@ class TestAdminUI(WebTest):
         category = Category.objects.create(name="Category")
         board = Board.objects.create(name="Board", category=category)
         self.app.set_user(self.user)
-        page = self.app.get(reverse("aa_forum:admin_index"))
+        page = self.app.get(reverse("aa_forum:admin_categories_and_boards"))
 
         # when
         form = page.forms[f"aa-forum-form-edit-board-{board.pk}"]
@@ -671,6 +763,317 @@ class TestAdminUI(WebTest):
         page = form.submit().follow()
 
         # then
-        self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/categories-and-boards.html"
+        )
         board.refresh_from_db()
         self.assertEqual(board.name, "Dummy")
+
+
+class TestProfileUI(WebTest):
+    """
+    Tests for the Forum UI
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.user_1001 = create_fake_user(
+            1001, "Bruce Wayne", permissions=["aa_forum.basic_access"]
+        )
+        cls.user_1002 = create_fake_user(
+            1002, "Peter Parker", permissions=["aa_forum.basic_access"]
+        )
+        cls.user_1003 = create_fake_user(1003, "Lex Luthor", permissions=[])
+
+    def test_should_show_profile_index(self):
+        """
+        Test should show profile index
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+
+        # when
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
+
+    def test_should_not_show_profile_index(self):
+        """
+        Test should not show profile index
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1003)
+
+        # when
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # then
+        self.assertRedirects(page, "/account/login/?next=/forum/-/profile/")
+
+    def test_should_create_user_profile(self):
+        """
+        Test should create a user profile, since they are only
+        created when a user opens their profile page
+        :return:
+        """
+
+        # given (Should raise a DoesNotExist exception)
+        with self.assertRaises(UserProfile.DoesNotExist):
+            UserProfile.objects.get(pk=self.user_1002.pk)
+
+        # when (User loggs in and opens the profile page)
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # then (Right template should be loaded and UserProfile object created)
+        self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
+
+        user_profile = UserProfile.objects.get(pk=self.user_1002.pk)
+        self.assertEqual(user_profile.pk, self.user_1002.pk)
+
+    def test_should_update_user_profile(self):
+        """
+        Test should update the user profile
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+        user_profile = UserProfile.objects.get(pk=self.user_1002.pk)
+
+        # when
+        form = page.forms["aa-forum-form-userprofile-modify"]
+        form["signature"] = "What is dark matter?"
+        page = form.submit().follow()
+
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
+
+        user_profile_updated = UserProfile.objects.get(pk=self.user_1002.pk)
+
+        self.assertEqual(user_profile.signature, "")
+        self.assertEqual(user_profile_updated.signature, "What is dark matter?")
+
+    def test_should_throw_error_for_too_long_signature(self):
+        """
+        Test should throw an error because the signature is too long
+        :return:
+        """
+
+        # given
+        max_signature_length = Setting.objects.get_setting(
+            setting_key=Setting.USERSIGNATURELENGTH
+        )
+        signature = fake.text(max_signature_length * 2)
+
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # when
+        form = page.forms["aa-forum-form-userprofile-modify"]
+        form["signature"] = signature
+
+        # then
+        self.assertEqual(max_signature_length, 750)
+        self.assertGreater(len(signature), max_signature_length)
+
+        page = form.submit()
+        messages = list(page.context["messages"])
+
+        expected_message = (
+            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+        )
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_throw_error_for_invalid_url(self):
+        """
+        Test should throw an error because the url is not valid
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # when
+        form = page.forms["aa-forum-form-userprofile-modify"]
+        form["website_url"] = "foobar"
+
+        # then
+        page = form.submit()
+        messages = list(page.context["messages"])
+
+        expected_message = (
+            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+        )
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_return_valid_url(self):
+        """
+        Test should the validated URL
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # when
+        form = page.forms["aa-forum-form-userprofile-modify"]
+        form["website_url"] = "https://test.com"
+        page = form.submit().follow()
+
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
+        user_profile_updated = UserProfile.objects.get(pk=self.user_1002.pk)
+        self.assertEqual(user_profile_updated.website_url, "https://test.com")
+
+    def test_should_return_correct_model_string(self):
+        """
+        Test should return the correct model string
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        self.app.get(reverse("aa_forum:profile_index"))
+        user_profile = UserProfile.objects.get(pk=self.user_1002.pk)
+
+        # then
+        self.assertEqual(str(user_profile), f"Forum User Profile: {self.user_1002}")
+
+
+class TestAdminForumSettingsUI(WebTest):
+    """
+    Tests for the Admin UI
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.user_1001 = create_fake_user(
+            1001,
+            "Bruce Wayne",
+            permissions=["aa_forum.basic_access", "aa_forum.manage_forum"],
+        )
+        cls.user_1002 = create_fake_user(
+            1002, "Peter Parker", permissions=["aa_forum.basic_access"]
+        )
+
+    def test_should_show_forum_settings(self):
+        """
+        Test should show forum settings
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+
+        # when
+        page = self.app.get(reverse("aa_forum:admin_forum_settings"))
+
+        # then
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/forum-settings.html"
+        )
+
+    def test_should_not_show_forum_settings(self):
+        """
+        Test should not show forum settings
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+
+        # when
+        page = self.app.get(reverse("aa_forum:admin_forum_settings"))
+
+        # then
+        self.assertRedirects(
+            page, "/account/login/?next=/forum/-/admin/forum-settings/"
+        )
+
+    def test_should_update_forum_settings(self):
+        """
+        Test should update forum settings
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(reverse("aa_forum:admin_forum_settings"))
+        forum_settings = Setting.objects.get(pk=1)
+
+        # when
+        form = page.forms["aa-forum-form-settings-modify"]
+        form["user_signature_length"] = 500
+        page = form.submit().follow()
+
+        # then
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/forum-settings.html"
+        )
+
+        forum_settings_updated = Setting.objects.get(pk=1)
+
+        self.assertEqual(forum_settings.user_signature_length, 750)
+        self.assertEqual(forum_settings_updated.user_signature_length, 500)
+
+    def test_should_not_update_forum_settings_on_empty_value(self):
+        """
+        Test should update forum settings because of an empty value in a mandatory field
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(reverse("aa_forum:admin_forum_settings"))
+        forum_settings = Setting.objects.get(pk=1)
+
+        # when
+        form = page.forms["aa-forum-form-settings-modify"]
+        form["user_signature_length"] = ""
+        page = form.submit()
+
+        # then
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/forum-settings.html"
+        )
+
+        forum_settings_updated = Setting.objects.get(pk=1)
+
+        self.assertEqual(
+            forum_settings.user_signature_length,
+            forum_settings_updated.user_signature_length,
+        )
+
+        messages = list(page.context["messages"])
+
+        expected_message = (
+            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+        )
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_return_correct_model_string(self):
+        """
+        Test should return the correct model string
+        :return:
+        """
+
+        # given
+        forum_settings = Setting.objects.get(pk=1)
+
+        # then
+        self.assertEqual(str(forum_settings), "Forum Settings")

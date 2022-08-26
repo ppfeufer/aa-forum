@@ -5,7 +5,7 @@
 {% block page_title %}{{ topic.subject }} » {% translate "Forum" %}{% endblock %}
 
 {% block aa_forum_header %}
-    {% include "aa_forum/partials/menu.html" %}
+    {% include "aa_forum/partials/menu/menu.html" %}
     {% include "aa_forum/partials/breadcrumb.html" with category=topic.board.category board=topic.board topic=topic %}
 {% endblock %}
 
