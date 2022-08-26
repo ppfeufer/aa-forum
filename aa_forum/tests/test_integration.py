@@ -9,18 +9,21 @@ from unittest.mock import patch
 # Third Party
 import requests
 from django_webtest import WebTest
+from faker import Faker
 
 # Django
 from django.contrib.messages import get_messages
 from django.urls import reverse
 
 # AA Forum
-from aa_forum.models import Board, Category, Message, Topic
+from aa_forum.models import Board, Category, Message, Setting, Topic, UserProfile
 from aa_forum.tests.utils import (
     create_fake_message,
     create_fake_messages,
     create_fake_user,
 )
+
+fake = Faker()
 
 
 class TestForumUI(WebTest):
@@ -674,3 +677,186 @@ class TestAdminUI(WebTest):
         self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
         board.refresh_from_db()
         self.assertEqual(board.name, "Dummy")
+
+
+class TestProfileUI(WebTest):
+    """
+    Tests for the Forum UI
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.user_1001 = create_fake_user(
+            1001, "Bruce Wayne", permissions=["aa_forum.basic_access"]
+        )
+        cls.user_1002 = create_fake_user(
+            1002, "Peter Parker", permissions=["aa_forum.basic_access"]
+        )
+        cls.user_1003 = create_fake_user(1003, "Lex Luthor", permissions=[])
+
+    def test_should_show_profile_index(self):
+        """
+        Test should show profile index
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+
+        # when
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
+
+    def test_should_not_show_profile_index(self):
+        """
+        Test should not show profile index
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1003)
+
+        # when
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # then
+        self.assertRedirects(page, "/account/login/?next=/forum/-/profile/")
+
+    def test_should_create_user_profile(self):
+        """
+        Test should create a user profile, since they are only
+        created when a user opens their profile page
+        :return:
+        """
+
+        # given (Should raise a DoesNotExist exception)
+        with self.assertRaises(UserProfile.DoesNotExist):
+            UserProfile.objects.get(pk=self.user_1002.pk)
+
+        # when (User loggs in and opens the profile page)
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # then (Right template should be loaded and UserProfile object created)
+        self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
+
+        user_profile = UserProfile.objects.get(pk=self.user_1002.pk)
+        self.assertEqual(user_profile.pk, self.user_1002.pk)
+
+    def test_should_update_user_profile(self):
+        """
+        Test should create reply in topic
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+        user_profile = UserProfile.objects.get(pk=self.user_1002.pk)
+
+        # when
+        form = page.forms["aa-forum-form-userprofile-modify"]
+        form["signature"] = "What is dark matter?"
+        page = form.submit().follow()
+
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
+
+        user_profile_updated = UserProfile.objects.get(pk=self.user_1002.pk)
+
+        self.assertEqual(user_profile.signature, "")
+        self.assertEqual(user_profile_updated.signature, "What is dark matter?")
+
+    def test_should_throw_error_for_too_long_signature(self):
+        """
+        Test should throw an error because the signature is too long
+        :return:
+        """
+
+        # given
+        max_signature_length = Setting.objects.get_setting(
+            setting_key=Setting.USERSIGNATURELENGTH
+        )
+        signature = fake.text(max_signature_length * 2)
+
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # when
+        form = page.forms["aa-forum-form-userprofile-modify"]
+        form["signature"] = signature
+
+        # then
+        self.assertEqual(max_signature_length, 750)
+        self.assertGreater(len(signature), max_signature_length)
+
+        page = form.submit()
+        messages = list(page.context["messages"])
+
+        expected_message = (
+            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+        )
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_throw_error_for_invalid_url(self):
+        """
+        Test should throw an error because the signature is too long
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # when
+        form = page.forms["aa-forum-form-userprofile-modify"]
+        form["website_url"] = "foobar"
+
+        # then
+        page = form.submit()
+        messages = list(page.context["messages"])
+
+        expected_message = (
+            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+        )
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_return_valid_url(self):
+        """
+        Test should the validated URL
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # when
+        form = page.forms["aa-forum-form-userprofile-modify"]
+        form["website_url"] = "https://test.com"
+        page = form.submit().follow()
+
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
+        user_profile_updated = UserProfile.objects.get(pk=self.user_1002.pk)
+        self.assertEqual(user_profile_updated.website_url, "https://test.com")
+
+    def test_should_return_correct_model_string(self):
+        """
+        Test should return the correct model string
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        self.app.get(reverse("aa_forum:profile_index"))
+        user_profile = UserProfile.objects.get(pk=self.user_1002.pk)
+
+        # then
+        self.assertEqual(str(user_profile), f"Forum User Profile: {self.user_1002}")

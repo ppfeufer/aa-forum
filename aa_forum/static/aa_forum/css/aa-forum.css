@@ -336,6 +336,12 @@
         padding: 1em 0 0;
     }
 
+    .aa-forum .aa-forum-message-body-author-signature {
+        margin-top: 3em;
+        padding-top: 1em;
+        border-top: 1px solid rgb(236 240 241);
+    }
+
     .aa-forum .aa-forum-message-body-last-edited {
         margin-top: 5rem;
     }
