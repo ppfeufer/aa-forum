@@ -4,18 +4,18 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="panel-title">
-            {% translate "User Profile" %}
+            {% translate "Forum Settings" %}
         </div>
     </div>
 
     <div class="panel-body">
-        <form id="aa-forum-form-userprofile-modify" class="form-horizontal" autocomplete="off" action="{% url 'aa_forum:profile_index' %}" method="post">
+        <form id="aa-forum-form-settings-modify" class="form-horizontal" autocomplete="off" action="{% url 'aa_forum:admin_forum_settings' %}" method="post">
             {% csrf_token %}
             {{ form|bootstrap_horizontal }}
 
             {% include "aa_forum/partials/form/required-field-hint.html" with form_horizontal=True %}
 
-            <div class="form-group aa-forum-form-group aa-forum-form-modify-userprofile text-right clearfix">
+            <div class="form-group aa-forum-form-group aa-forum-form-modify-settings text-right clearfix">
                 <div class="col-xs-12">
                     <button class="btn btn-primary btn-sm" type="submit">
                         {% translate "Submit" %}

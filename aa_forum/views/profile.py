@@ -63,7 +63,8 @@ def index(request: WSGIRequest) -> HttpResponse:
                 request,
                 mark_safe(
                     _(
-                        "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+                        "<h4>Error!</h4>"
+                        "<p>Something went wrong, please check your input<p>"
                     )
                 ),
             )
