@@ -724,9 +724,6 @@ class UserProfile(models.Model):
     website_title = models.CharField(max_length=254, blank=True)
     website_url = models.CharField(max_length=254, blank=True)
 
-    def __str__(self):
-        return f"Forum User Profile: {self.user}"
-
     class Meta:
         """
         Meta definitions
@@ -735,3 +732,6 @@ class UserProfile(models.Model):
         default_permissions = ()
         verbose_name = _("user profile")
         verbose_name_plural = _("user profiles")
+
+    def __str__(self):
+        return f"Forum User Profile: {self.user}"
