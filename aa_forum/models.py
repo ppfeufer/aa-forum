@@ -470,9 +470,6 @@ class LastMessageSeen(models.Model):
     )
     message_time = models.DateTimeField()
 
-    def __str__(self) -> str:
-        return f"{self.topic}-{self.user}-{self.message_time}"
-
     class Meta:
         """
         Meta definitions
@@ -485,6 +482,9 @@ class LastMessageSeen(models.Model):
                 name="lastmessageseen_compounded",
             ),
         ]
+
+    def __str__(self) -> str:
+        return f"{self.topic}-{self.user}-{self.message_time}"
 
 
 class Message(models.Model):
@@ -695,9 +695,6 @@ class Setting(SingletonModel):
 
     objects = SettingManager()
 
-    def __str__(self) -> str:
-        return "Forum Settings"
-
     class Meta:
         """
         Meta definitions
@@ -706,6 +703,9 @@ class Setting(SingletonModel):
         default_permissions = ()
         verbose_name = _("setting")
         verbose_name_plural = _("settings")
+
+    def __str__(self) -> str:
+        return "Forum Settings"
 
 
 class UserProfile(models.Model):
