@@ -135,7 +135,9 @@ class TopicQuerySet(models.QuerySet):
                     Prefetch(
                         "messages",
                         queryset=Message.objects.select_related(
-                            "user_created", "user_created__profile__main_character"
+                            "user_created",
+                            "user_created__profile__main_character",
+                            "user_created__aa_forum_user_profile",
                         ).order_by("time_posted"),
                         to_attr="messages_sorted",
                     )
