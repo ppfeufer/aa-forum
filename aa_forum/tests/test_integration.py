@@ -580,7 +580,7 @@ class TestForumUI(WebTest):
         )
 
 
-class TestAdminUI(WebTest):
+class TestAdminCategoriesAndBoardsUI(WebTest):
     """
     Tests for the Admin UI
     """
@@ -602,7 +602,7 @@ class TestAdminUI(WebTest):
 
         # given
         self.app.set_user(self.user)
-        page = self.app.get(reverse("aa_forum:admin_index"))
+        page = self.app.get(reverse("aa_forum:admin_categories_and_boards"))
 
         # when
         form = page.forms["aa-forum-form-admin-new-category"]
@@ -610,7 +610,9 @@ class TestAdminUI(WebTest):
         page = form.submit().follow()
 
         # then
-        self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/categories-and-boards.html"
+        )
         new_category = Category.objects.last()
         self.assertEqual(new_category.name, "Category")
 
@@ -623,7 +625,7 @@ class TestAdminUI(WebTest):
         # given
         category = Category.objects.create(name="Category")
         self.app.set_user(self.user)
-        page = self.app.get(reverse("aa_forum:admin_index"))
+        page = self.app.get(reverse("aa_forum:admin_categories_and_boards"))
 
         # when
         form = page.forms[f"aa-forum-form-admin-edit-category-{category.pk}"]
@@ -631,7 +633,9 @@ class TestAdminUI(WebTest):
         page = form.submit().follow()
 
         # then
-        self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/categories-and-boards.html"
+        )
         category.refresh_from_db()
         self.assertEqual(category.name, "Dummy")
 
@@ -644,7 +648,7 @@ class TestAdminUI(WebTest):
         # given
         category = Category.objects.create(name="Category")
         self.app.set_user(self.user)
-        page = self.app.get(reverse("aa_forum:admin_index"))
+        page = self.app.get(reverse("aa_forum:admin_categories_and_boards"))
 
         # when
         form = page.forms[f"aa-forum-form-admin-add-board-{category.id}"]
@@ -652,7 +656,9 @@ class TestAdminUI(WebTest):
         page = form.submit().follow()
 
         # then
-        self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/categories-and-boards.html"
+        )
         new_board = category.boards.last()
         self.assertEqual(new_board.name, "Board")
 
@@ -666,7 +672,7 @@ class TestAdminUI(WebTest):
         category = Category.objects.create(name="Category")
         board = Board.objects.create(name="Board", category=category)
         self.app.set_user(self.user)
-        page = self.app.get(reverse("aa_forum:admin_index"))
+        page = self.app.get(reverse("aa_forum:admin_categories_and_boards"))
 
         # when
         form = page.forms[f"aa-forum-form-edit-board-{board.pk}"]
@@ -674,7 +680,9 @@ class TestAdminUI(WebTest):
         page = form.submit().follow()
 
         # then
-        self.assertTemplateUsed(page, "aa_forum/view/administration/index.html")
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/categories-and-boards.html"
+        )
         board.refresh_from_db()
         self.assertEqual(board.name, "Dummy")
 
@@ -749,7 +757,7 @@ class TestProfileUI(WebTest):
 
     def test_should_update_user_profile(self):
         """
-        Test should create reply in topic
+        Test should update the user profile
         :return:
         """
 
@@ -805,7 +813,7 @@ class TestProfileUI(WebTest):
 
     def test_should_throw_error_for_invalid_url(self):
         """
-        Test should throw an error because the signature is too long
+        Test should throw an error because the url is not valid
         :return:
         """
 
@@ -860,3 +868,129 @@ class TestProfileUI(WebTest):
 
         # then
         self.assertEqual(str(user_profile), f"Forum User Profile: {self.user_1002}")
+
+
+class TestAdminForumSettingsUI(WebTest):
+    """
+    Tests for the Admin UI
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.user_1001 = create_fake_user(
+            1001,
+            "Bruce Wayne",
+            permissions=["aa_forum.basic_access", "aa_forum.manage_forum"],
+        )
+        cls.user_1002 = create_fake_user(
+            1002, "Peter Parker", permissions=["aa_forum.basic_access"]
+        )
+
+    def test_should_show_forum_settings(self):
+        """
+        Test should show forum settings
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+
+        # when
+        page = self.app.get(reverse("aa_forum:admin_forum_settings"))
+
+        # then
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/forum-settings.html"
+        )
+
+    def test_should_not_show_forum_settings(self):
+        """
+        Test should not show forum settings
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+
+        # when
+        page = self.app.get(reverse("aa_forum:admin_forum_settings"))
+
+        # then
+        self.assertRedirects(
+            page, "/account/login/?next=/forum/-/admin/forum-settings/"
+        )
+
+    def test_should_update_forum_settings(self):
+        """
+        Test should update forum settings
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(reverse("aa_forum:admin_forum_settings"))
+        forum_settings = Setting.objects.get(pk=1)
+
+        # when
+        form = page.forms["aa-forum-form-settings-modify"]
+        form["user_signature_length"] = 500
+        page = form.submit().follow()
+
+        # then
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/forum-settings.html"
+        )
+
+        forum_settings_updated = Setting.objects.get(pk=1)
+
+        self.assertEqual(forum_settings.user_signature_length, 750)
+        self.assertEqual(forum_settings_updated.user_signature_length, 500)
+
+    def test_should_not_update_forum_settings_on_empty_value(self):
+        """
+        Test should update forum settings because of an empty value in a mandatory field
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(reverse("aa_forum:admin_forum_settings"))
+        forum_settings = Setting.objects.get(pk=1)
+
+        # when
+        form = page.forms["aa-forum-form-settings-modify"]
+        form["user_signature_length"] = ""
+        page = form.submit()
+
+        # then
+        self.assertTemplateUsed(
+            page, "aa_forum/view/administration/forum-settings.html"
+        )
+
+        forum_settings_updated = Setting.objects.get(pk=1)
+
+        self.assertEqual(
+            forum_settings.user_signature_length,
+            forum_settings_updated.user_signature_length,
+        )
+
+        messages = list(page.context["messages"])
+
+        expected_message = (
+            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+        )
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_return_correct_model_string(self):
+        """
+        Test should return the correct model string
+        :return:
+        """
+
+        # given
+        forum_settings = Setting.objects.get(pk=1)
+
+        # then
+        self.assertEqual(str(forum_settings), "Forum Settings")

@@ -385,3 +385,37 @@ class UserProfileForm(ModelForm):
             raise ValidationError(_("This is not a valid URL")) from exc
         else:
             return website_url
+
+
+class SettingForm(ModelForm):
+    """
+    Edit message form
+    """
+
+    messages_per_page = forms.IntegerField(
+        required=True,
+        label=get_mandatory_form_label_text(_("Messages per page")),
+        help_text=_("How many messages per page should be displayed in a forum topic?"),
+    )
+    topics_per_page = forms.IntegerField(
+        required=True,
+        label=get_mandatory_form_label_text(_("Topics per page")),
+        help_text=_(
+            "How many topics per page should be displayed in a forum category?"
+        ),
+    )
+    user_signature_length = forms.IntegerField(
+        required=True,
+        label=get_mandatory_form_label_text(_("User signature length")),
+        help_text=_(
+            "How long (Number of characters) is a user's signature allowed to be?"
+        ),
+    )
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        """
+        Meta definitions
+        """
+
+        model = Setting
+        fields = ["messages_per_page", "topics_per_page", "user_signature_length"]

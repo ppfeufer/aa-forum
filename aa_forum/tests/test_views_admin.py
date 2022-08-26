@@ -46,7 +46,7 @@ class TestAdminViews(TestCase):
         )
 
         # then
-        self.assertRedirects(res, reverse("aa_forum:admin_index"))
+        self.assertRedirects(res, reverse("aa_forum:admin_categories_and_boards"))
         self.assertFalse(Category.objects.filter(pk=category.pk).exists())
 
     def test_should_raise_404_when_delete_category_not_found(self):
@@ -82,7 +82,7 @@ class TestAdminViews(TestCase):
         )
 
         # then
-        self.assertRedirects(res, reverse("aa_forum:admin_index"))
+        self.assertRedirects(res, reverse("aa_forum:admin_categories_and_boards"))
         self.assertFalse(Board.objects.filter(pk=board.pk).exists())
 
     def test_should_raise_404_when_delete_board_not_found(self):
@@ -216,7 +216,7 @@ class TestAdminViews(TestCase):
 
         # then
         self.assertTrue(Board.objects.filter(pk=child_board.pk).exists())
-        self.assertRedirects(res, reverse("aa_forum:admin_index"))
+        self.assertRedirects(res, reverse("aa_forum:admin_categories_and_boards"))
 
     def test_should_save_boards_order_and_handle_errors(self):
         """
