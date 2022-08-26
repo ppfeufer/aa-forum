@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Some `<br>` tags that slipped through te cracks removed
+- Some `<br>` tags that slipped through the cracks removed
 
 ### Added
 
