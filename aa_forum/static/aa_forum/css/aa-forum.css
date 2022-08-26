@@ -19,6 +19,26 @@
         height: 0;
         width: 0;
     }
+
+    .aa-forum .aa-forum-admin-menu:hover .dropdown-menu {
+        display: block;
+    }
+
+    .aa-forum .aa-forum-admin-menu .aa-forum-admin-menu-item {
+        margin: 2.5px 0;
+    }
+
+    .aa-forum .aa-forum-admin-menu .aa-forum-admin-menu-item:first-child {
+        margin-top: 0;
+    }
+
+    .aa-forum .aa-forum-admin-menu .aa-forum-admin-menu-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .aa-forum .aa-forum-admin-menu .aa-forum-admin-menu-item a {
+        padding: 1rem 1.5rem;
+    }
 }
 
 /* Search Box

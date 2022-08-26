@@ -17,59 +17,72 @@ app_name: str = "aa_forum"
 
 urlpatterns = [
     path("", forum.index, name="forum_index"),
-    # Admin URLs
-    path(f"{INTERNAL_URL_PREFIX}/admin/", admin.index, name="admin_index"),
+    # Admin URLs (Menu Item :: Categories and Boards)
     path(
-        f"{INTERNAL_URL_PREFIX}/admin/category/create/",
+        f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/",
+        admin.categories_and_boards,
+        name="admin_categories_and_boards",
+    ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/create/",
         admin.category_create,
         name="admin_category_create",
     ),
     path(
-        f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/edit/",
+        (
+            f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/"
+            "<int:category_id>/edit/"
+        ),
         admin.category_edit,
         name="admin_category_edit",
     ),
     path(
-        f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/delete/",
+        (
+            f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/"
+            "<int:category_id>/delete/"
+        ),
         admin.category_delete,
         name="admin_category_delete",
     ),
     path(
-        f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/board/create/",
+        (
+            f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/"
+            "<int:category_id>/board/create/"
+        ),
         admin.board_create,
         name="admin_board_create",
     ),
     path(
         (
-            f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/board/"
-            "<int:board_id>/create-child-board/"
+            f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/"
+            "<int:category_id>/board/<int:board_id>/create-child-board/"
         ),
         admin.board_create_child,
         name="admin_board_create_child",
     ),
     path(
         (
-            f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/board/"
-            "<int:board_id>/edit/"
+            f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/"
+            "<int:category_id>/board/<int:board_id>/edit/"
         ),
         admin.board_edit,
         name="admin_board_edit",
     ),
     path(
         (
-            f"{INTERNAL_URL_PREFIX}/admin/category/<int:category_id>/board/"
-            "<int:board_id>/delete/"
+            f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/"
+            "<int:category_id>/board/<int:board_id>/delete/"
         ),
         admin.board_delete,
         name="admin_board_delete",
     ),
     path(
-        f"{INTERNAL_URL_PREFIX}/ajax/admin/category-order/",
+        f"{INTERNAL_URL_PREFIX}/ajax/admin/categories-and-boards/category-order/",
         admin.ajax_category_order,
         name="admin_ajax_category_order",
     ),
     path(
-        f"{INTERNAL_URL_PREFIX}/ajax/admin/board-order/",
+        f"{INTERNAL_URL_PREFIX}/ajax/admin/categories-and-boards/board-order/",
         admin.ajax_board_order,
         name="admin_ajax_board_order",
     ),

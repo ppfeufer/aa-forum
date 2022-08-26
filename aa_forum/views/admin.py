@@ -39,7 +39,7 @@ logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
 @login_required
 @permission_required("aa_forum.manage_forum")
-def index(request: WSGIRequest) -> HttpResponse:
+def categories_and_boards(request: WSGIRequest) -> HttpResponse:
     """
     Administration index view
     :param request:
@@ -119,7 +119,9 @@ def index(request: WSGIRequest) -> HttpResponse:
 
     logger.info(f"{request.user} calling admin view")
 
-    return render(request, "aa_forum/view/administration/index.html", context)
+    return render(
+        request, "aa_forum/view/administration/categories-and-boards.html", context
+    )
 
 
 @login_required
@@ -162,7 +164,7 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
         else:
             message_form_errors(request, form)
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -205,7 +207,7 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
         else:
             message_form_errors(request, form)
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -234,7 +236,7 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
 
     logger.info(f'{request.user} removed category "{category_name}"')
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -288,7 +290,7 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
         else:
             message_form_errors(request, form)
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -342,7 +344,7 @@ def board_create_child(
         else:
             message_form_errors(request, form)
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -389,7 +391,7 @@ def board_edit(
         else:
             message_form_errors(request, form)
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
@@ -422,7 +424,7 @@ def board_delete(
 
     logger.info(f'{request.user} removed board "{board_name}"')
 
-    return redirect("aa_forum:admin_index")
+    return redirect("aa_forum:admin_categories_and_boards")
 
 
 @login_required
