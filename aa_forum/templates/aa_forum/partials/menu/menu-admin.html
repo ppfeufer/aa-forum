@@ -1,0 +1,6 @@
+{% load i18n %}
+{% load navactive %}
+
+<li class="{% navactive request 'aa_forum:admin_index' %}">
+    <a href="{% url 'aa_forum:admin_index' %}">{% translate "Administration" %}</a>
+</li>

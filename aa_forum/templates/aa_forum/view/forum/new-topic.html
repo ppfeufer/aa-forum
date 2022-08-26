@@ -6,7 +6,7 @@
 {% block page_title %}{% translate "New Topic » Forum" %}{% endblock %}
 
 {% block aa_forum_header %}
-    {% include "aa_forum/partials/menu.html" %}
+    {% include "aa_forum/partials/menu/menu.html" %}
     {% include "aa_forum/partials/breadcrumb.html" with category=board.category board=board new_topic="yes" %}
 {% endblock %}
 
