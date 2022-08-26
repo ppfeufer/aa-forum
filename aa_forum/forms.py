@@ -91,6 +91,16 @@ class NewTopicForm(forms.Form):
         label=get_mandatory_form_label_text(_("Message")),
     )
 
+    def clean_message(self):
+        """
+        Cleanup the message
+        :return:
+        """
+
+        message = string_cleanup(self.cleaned_data["message"])
+
+        return message
+
 
 class EditTopicForm(ModelForm):
     """
@@ -300,6 +310,16 @@ class EditMessageForm(ModelForm):
         model = Message
         fields = ["message"]
 
+    def clean_message(self):
+        """
+        Cleanup the message
+        :return:
+        """
+
+        message = string_cleanup(self.cleaned_data["message"])
+
+        return message
+
 
 class UserProfileForm(ModelForm):
     """
@@ -347,7 +367,7 @@ class UserProfileForm(ModelForm):
         :return:
         """
 
-        signature = self.cleaned_data["signature"]
+        signature = string_cleanup(self.cleaned_data["signature"])
 
         if not signature:
             return ""
@@ -374,7 +394,7 @@ class UserProfileForm(ModelForm):
         :return:
         """
 
-        website_url = string_cleanup(self.cleaned_data["website_url"])
+        website_url = self.cleaned_data["website_url"]
 
         if not website_url:
             return ""

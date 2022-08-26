@@ -16,6 +16,7 @@ from django.contrib.messages import get_messages
 from django.urls import reverse
 
 # AA Forum
+from aa_forum.helper.text import string_cleanup
 from aa_forum.models import Board, Category, Message, Setting, Topic, UserProfile
 from aa_forum.tests.utils import (
     create_fake_message,
@@ -111,6 +112,33 @@ class TestForumUI(WebTest):
         self.assertEqual(new_topic.subject, "Recent Discoveries")
         new_message = Message.objects.last()
         self.assertEqual(new_message.message, "Energy of the Higgs boson")
+
+    def test_should_return_cleaned_message_string_on_topic_creation(self):
+        """
+        Test should return a clean/sanitized message string when new topic is created
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(self.board.get_absolute_url())
+        dirty_message = (
+            'this is a script test. <script type="text/javascript">alert('
+            "'test')</script>and this is style test. <style>.MathJax, "
+            ".MathJax_Message, .MathJax_Preview{display: none}</style>end tests."
+        )
+        cleaned_message = string_cleanup(dirty_message)
+
+        # when
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Message Cleanup Test"
+        form["message"] = dirty_message
+        page = form.submit().follow()
+
+        # then
+        new_message = Message.objects.last()
+        self.assertEqual(new_message.message, cleaned_message)
 
     def test_should_not_create_new_topic_doe_to_subject_missing(self):
         """
@@ -413,6 +441,33 @@ class TestForumUI(WebTest):
         new_message = Message.objects.last()
         self.assertEqual(new_message.message, "What is dark matter?")
 
+    def test_should_return_cleaned_message_string_on_topic_reply(self):
+        """
+        Test should return a clean/sanitized message string on reply in topic
+        :return:
+        """
+
+        # given
+        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        create_fake_messages(topic=topic, amount=5)
+        self.app.set_user(self.user_1001)
+        page = self.app.get(topic.get_absolute_url())
+        dirty_message = (
+            'this is a script test. <script type="text/javascript">alert('
+            "'test')</script>and this is style test. <style>.MathJax, "
+            ".MathJax_Message, .MathJax_Preview{display: none}</style>end tests."
+        )
+        cleaned_message = string_cleanup(dirty_message)
+
+        # when
+        form = page.forms["aa-forum-form-message-reply"]
+        form["message"] = dirty_message
+        page = form.submit().follow().follow()
+
+        # then
+        new_message = Message.objects.last()
+        self.assertEqual(new_message.message, cleaned_message)
+
     def test_should_not_create_reply_in_topic_due_to_missing_message(self):
         """
         Test should not create reply in topic, because message field is empty
@@ -495,6 +550,34 @@ class TestForumUI(WebTest):
         self.assertTemplateUsed(page, "aa_forum/view/forum/topic.html")
         own_message.refresh_from_db()
         self.assertEqual(own_message.message, "What is dark matter?")
+
+    def test_should_return_cleaned_message_string_on_update_own_message(self):
+        """
+        Test should return a clean/sanitized message string when updating own message
+        :return:
+        """
+
+        # given
+        topic = Topic.objects.create(subject="Mysteries", board=self.board)
+        own_message = create_fake_message(topic=topic, user=self.user_1001)
+        self.app.set_user(self.user_1001)
+        page = self.app.get(topic.get_absolute_url())
+        dirty_message = (
+            'this is a script test. <script type="text/javascript">alert('
+            "'test')</script>and this is style test. <style>.MathJax, "
+            ".MathJax_Message, .MathJax_Preview{display: none}</style>end tests."
+        )
+        cleaned_message = string_cleanup(dirty_message)
+
+        # when
+        page = page.click(linkid=f"aa-forum-btn-modify-message-{own_message.pk}")
+        form = page.forms["aa-forum-form-message-modify"]
+        form["message"] = dirty_message
+        page = form.submit().follow().follow()
+
+        # then
+        own_message.refresh_from_db()
+        self.assertEqual(own_message.message, cleaned_message)
 
     def test_should_trigger_error_on_message_edit_due_to_invalid_form_data(self):
         """

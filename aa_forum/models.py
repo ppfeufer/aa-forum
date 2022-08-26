@@ -25,7 +25,6 @@ from aa_forum.constants import (
     DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
     INTERNAL_URL_PREFIX,
 )
-from aa_forum.helper.text import string_cleanup
 from aa_forum.managers import BoardManager, MessageManager, SettingManager, TopicManager
 
 
@@ -537,7 +536,7 @@ class Message(models.Model):
         :return:
         """
 
-        self.message = string_cleanup(self.message)
+        self.message = self.message
         self.message_plaintext = strip_tags(self.message)
 
         super().save(*args, **kwargs)
