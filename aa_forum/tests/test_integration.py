@@ -829,7 +829,7 @@ class TestProfileUI(WebTest):
 
     def test_should_return_valid_url(self):
         """
-        Test should throw an error because the signature is too long
+        Test should the validated URL
         :return:
         """
 
@@ -846,3 +846,17 @@ class TestProfileUI(WebTest):
         self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
         user_profile_updated = UserProfile.objects.get(pk=self.user_1002.pk)
         self.assertEqual(user_profile_updated.website_url, "https://test.com")
+
+    def test_should_return_correct_model_string(self):
+        """
+        Test should return the correct model string
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        self.app.get(reverse("aa_forum:profile_index"))
+        user_profile = UserProfile.objects.get(pk=self.user_1002.pk)
+
+        # then
+        self.assertEqual(str(user_profile), f"Forum User Profile: {self.user_1002}")
