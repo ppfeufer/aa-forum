@@ -86,6 +86,12 @@ urlpatterns = [
         admin.ajax_board_order,
         name="admin_ajax_board_order",
     ),
+    # Admin URLs (Menu Item :: Forum Settings)
+    path(
+        f"{INTERNAL_URL_PREFIX}/admin/forum-settings/",
+        admin.forum_settings,
+        name="admin_forum_settings",
+    ),
     # Profile URLs
     path(
         f"{INTERNAL_URL_PREFIX}/profile/",

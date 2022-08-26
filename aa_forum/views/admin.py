@@ -487,3 +487,17 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
         data.append({"success": True})
 
     return JsonResponse(data, safe=False)
+
+
+@login_required
+@permission_required("aa_forum.manage_forum")
+def forum_settings(request: WSGIRequest) -> HttpResponse:
+    """
+    Forum Settings
+    :param request:
+    :return:
+    """
+
+    context = {}
+
+    return render(request, "aa_forum/view/administration/forum-settings.html", context)

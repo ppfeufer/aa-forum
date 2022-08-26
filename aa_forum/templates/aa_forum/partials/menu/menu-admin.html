@@ -12,8 +12,8 @@
             <a href="{% url 'aa_forum:admin_categories_and_boards' %}">{% translate "Categories and Boards" %}</a>
         </li>
 
-        <li class="aa-forum-admin-menu-item ">
-            <a href="">{% translate "Forum Settings" %}</a>
+        <li class="aa-forum-admin-menu-item {% navactive request 'aa_forum:admin_forum_settings' %}">
+            <a href="{% url 'aa_forum:admin_forum_settings' %}">{% translate "Forum Settings" %}</a>
         </li>
     </ul>
 </li>
