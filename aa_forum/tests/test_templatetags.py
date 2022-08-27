@@ -11,7 +11,10 @@ from allianceauth.tests.auth_utils import AuthUtils
 
 # AA Forum
 from aa_forum import __version__
-from aa_forum.models import get_sentinel_user
+from aa_forum.models import PersonalMessage, get_sentinel_user
+from aa_forum.templatetags.aa_forum_template_variables import (
+    personal_message_unread_count,
+)
 from aa_forum.tests.utils import create_fake_user
 
 
@@ -527,6 +530,18 @@ class TestForumTemplateVariables(TestCase):
     Tests for aa_forum_template_variables template tag
     """
 
+    def render_template(self, string, context=None):
+        """
+        Helper to render templates
+        :param string:
+        :param context:
+        :return:
+        """
+        context = context or {}
+        context = Context(context)
+
+        return Template(string).render(context)
+
     def test_set_template_variable(self):
         """
         Test set template variable
@@ -568,6 +583,73 @@ class TestForumTemplateVariables(TestCase):
                 "{% set_template_variable foo %}"
                 "{{ foo }}"
             )
+
+    def test_should_return_personal_message_unread_count_as_empty_string(self):
+        """
+        Test personal_message_unread_count to return zero
+        :return:
+        """
+
+        user = create_fake_user(
+            1001,
+            "Bruce Wayne",
+            2001,
+            "Wayne Tech Inc.",
+            "WYT",
+            alliance_id=3001,
+            alliance_name="Wayne Enterprises",
+        )
+
+        self.client.force_login(user)
+
+        rendered = self.render_template(
+            "{% load aa_forum_template_variables %}"
+            "{% personal_message_unread_count 1001 %}"
+        )
+
+        self.assertEqual(rendered, "")
+
+    def test_should_return_personal_message_unread_count_as_bootstrap_basge_with_number(
+        self,
+    ):
+        """
+        Test personal_message_unread_count to return a bootstrap badge with a number
+        :return:
+        """
+
+        # given (creating our presonal message)
+        user_sender = create_fake_user(
+            1001,
+            "Bruce Wayne",
+            2001,
+            "Wayne Tech Inc.",
+            "WYT",
+            alliance_id=3001,
+            alliance_name="Wayne Enterprises",
+        )
+
+        user_receiver = create_fake_user(
+            1002,
+            "Batman",
+            2001,
+            "Wayne Tech Inc.",
+            "WYT",
+            alliance_id=3001,
+            alliance_name="Wayne Enterprises",
+        )
+
+        PersonalMessage.objects.create(
+            sender=user_sender,
+            recipient=user_receiver,
+            subject="Foo",
+            message="Bar",
+        )
+
+        # when (template tage is triggered)
+        response = personal_message_unread_count(user_receiver)
+
+        # then
+        self.assertEqual(response, '<span class="badge">1</span>')
 
 
 class TestForumVersionedStatic(TestCase):
