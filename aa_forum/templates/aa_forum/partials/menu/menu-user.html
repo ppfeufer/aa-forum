@@ -1,10 +1,14 @@
 {% load i18n %}
 {% load navactive %}
+{% load aa_forum_template_variables %}
 
 <li class="{% navactive request 'aa_forum:profile_index' %}">
     <a href="{% url 'aa_forum:profile_index' %}">{% translate "Profile" %}</a>
 </li>
 
 <li class="{% navactive request 'aa_forum:messages_index' %}">
-    <a href="{% url 'aa_forum:messages_index' %}">{% translate "Messages" %}</a>
+    <a href="{% url 'aa_forum:messages_index' %}">
+        {% translate "Messages" %}
+        {% personal_message_unread_count request.user %}
+    </a>
 </li>
