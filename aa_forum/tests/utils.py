@@ -14,6 +14,7 @@ from faker import Faker
 
 # Django
 from django.contrib.auth.models import User
+from django.template import Context, Template
 from django.utils.timezone import now
 
 # Alliance Auth
@@ -272,3 +273,17 @@ def get_or_create_fake_user(*args, **kwargs) -> User:
         return User.objects.get(username=username)
     except User.DoesNotExist:
         return create_fake_user(*args, **kwargs)
+
+
+def render_template(string, context=None):
+    """
+    Helper to render templates
+    :param string:
+    :param context:
+    :return:
+    """
+
+    context = context or {}
+    context = Context(context)
+
+    return Template(string).render(context)

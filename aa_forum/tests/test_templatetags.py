@@ -3,7 +3,7 @@ Tests for the template tags
 """
 
 # Django
-from django.template import Context, Template, TemplateSyntaxError
+from django.template import TemplateSyntaxError
 from django.test import TestCase
 
 # Alliance Auth
@@ -15,7 +15,7 @@ from aa_forum.models import PersonalMessage, get_sentinel_user
 from aa_forum.templatetags.aa_forum_template_variables import (
     personal_message_unread_count,
 )
-from aa_forum.tests.utils import create_fake_user
+from aa_forum.tests.utils import create_fake_user, render_template
 
 
 class TestMainCharacterName(TestCase):
@@ -26,9 +26,7 @@ class TestMainCharacterName(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.template = Template(
-            "{% load aa_forum_user %}{{ user|main_character_name }}"
-        )
+        cls.template = "{% load aa_forum_user %}{{ user|main_character_name }}"
 
     def test_should_contain_character_name_for_users_with_main(self):
         """
@@ -38,26 +36,26 @@ class TestMainCharacterName(TestCase):
 
         # given
         user = create_fake_user(1001, "Bruce Wayne")
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "Bruce Wayne")
 
     def test_should_contain_user_character_name_for_users_without_main(self):
         """
-        Should return user name for users without a main character
+        Should return username for users without a main character
         :return:
         """
 
         # given
         user = AuthUtils.create_user("john")
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "john")
@@ -70,10 +68,10 @@ class TestMainCharacterName(TestCase):
 
         # given
         user = get_sentinel_user()
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "deleted")
@@ -85,9 +83,11 @@ class TestMainCharacterName(TestCase):
         """
 
         # given
-        context = Context({"user": None})
+        context = {"user": None}
+
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
+
         # then
         self.assertEqual(result, "")
 
@@ -100,7 +100,7 @@ class TestMainCharacterId(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.template = Template("{% load aa_forum_user %}{{ user|main_character_id }}")
+        cls.template = "{% load aa_forum_user %}{{ user|main_character_id }}"
 
     def test_should_contain_character_id_for_users_with_main(self):
         """
@@ -110,10 +110,10 @@ class TestMainCharacterId(TestCase):
 
         # given
         user = create_fake_user(1001, "Bruce Wayne")
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "1001")
@@ -126,10 +126,10 @@ class TestMainCharacterId(TestCase):
 
         # given
         user = AuthUtils.create_user("john")
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "1")
@@ -142,10 +142,10 @@ class TestMainCharacterId(TestCase):
 
         # given
         user = get_sentinel_user()
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "1")
@@ -157,10 +157,10 @@ class TestMainCharacterId(TestCase):
         """
 
         # given
-        context = Context({"user": None})
+        context = {"user": None}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "1")
@@ -174,22 +174,22 @@ class TestMainCharacterCorporationName(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.template = Template(
+        cls.template = (
             "{% load aa_forum_user %}{{ user|main_character_corporation_name }}"
         )
 
     def test_should_contain_corp_name_for_users_with_main(self):
         """
-        Test shoud return corporation name for users with main character
+        Test should return corporation name for users with main character
         :return:
         """
 
         # given
         user = create_fake_user(1001, "Bruce Wayne", 2001, "Wayne Tech Inc.", "WYT")
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "Wayne Tech Inc.")
@@ -202,10 +202,10 @@ class TestMainCharacterCorporationName(TestCase):
 
         # given
         user = AuthUtils.create_user("john")
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "")
@@ -218,10 +218,10 @@ class TestMainCharacterCorporationName(TestCase):
 
         # given
         user = get_sentinel_user()
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "")
@@ -233,10 +233,10 @@ class TestMainCharacterCorporationName(TestCase):
         """
 
         # given
-        context = Context({"user": None})
+        context = {"user": None}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "")
@@ -250,7 +250,7 @@ class TestMainCorporationId(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.template = Template(
+        cls.template = (
             "{% load aa_forum_user %}{{ user|main_character_corporation_id }}"
         )
 
@@ -262,10 +262,10 @@ class TestMainCorporationId(TestCase):
 
         # given
         user = create_fake_user(1001, "Bruce Wayne", 2001, "Wayne Tech Inc.", "WYT")
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "2001")
@@ -278,10 +278,10 @@ class TestMainCorporationId(TestCase):
 
         # given
         user = AuthUtils.create_user("john")
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
         # then
 
         self.assertEqual(result, "1")
@@ -294,10 +294,10 @@ class TestMainCorporationId(TestCase):
 
         # given
         user = get_sentinel_user()
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "1")
@@ -309,10 +309,10 @@ class TestMainCorporationId(TestCase):
         """
 
         # given
-        context = Context({"user": None})
+        context = {"user": None}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "1")
@@ -326,9 +326,7 @@ class TestMainCharacterAllianceName(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.template = Template(
-            "{% load aa_forum_user %}{{ user|main_character_alliance_name }}"
-        )
+        cls.template = "{% load aa_forum_user %}{{ user|main_character_alliance_name }}"
 
     def test_should_contain_alliance_name_for_users_with_main(self):
         """
@@ -347,10 +345,10 @@ class TestMainCharacterAllianceName(TestCase):
             alliance_name="Wayne Enterprices",
         )
 
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "Wayne Enterprices")
@@ -363,10 +361,10 @@ class TestMainCharacterAllianceName(TestCase):
 
         # given
         user = AuthUtils.create_user("john")
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "")
@@ -382,10 +380,10 @@ class TestMainCharacterAllianceName(TestCase):
             2012, "William Riker", 2012, "Starfleet", "SF", alliance_id=None
         )
 
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "")
@@ -398,10 +396,10 @@ class TestMainCharacterAllianceName(TestCase):
 
         # given
         user = get_sentinel_user()
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "")
@@ -413,10 +411,10 @@ class TestMainCharacterAllianceName(TestCase):
         """
 
         # given
-        context = Context({"user": None})
+        context = {"user": None}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "")
@@ -430,9 +428,7 @@ class TestMainAllianceId(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.template = Template(
-            "{% load aa_forum_user %}{{ user|main_character_alliance_id }}"
-        )
+        cls.template = "{% load aa_forum_user %}{{ user|main_character_alliance_id }}"
 
     def test_should_contain_alliance_id_for_users_with_main(self):
         """
@@ -450,10 +446,10 @@ class TestMainAllianceId(TestCase):
             alliance_id=3001,
             alliance_name="Wayne Enterprises",
         )
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "3001")
@@ -466,10 +462,10 @@ class TestMainAllianceId(TestCase):
 
         # given
         user = AuthUtils.create_user("john")
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "1")
@@ -485,10 +481,10 @@ class TestMainAllianceId(TestCase):
             2012, "William Riker", 2012, "Starfleet", "SF", alliance_id=None
         )
 
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "1")
@@ -501,10 +497,10 @@ class TestMainAllianceId(TestCase):
 
         # given
         user = get_sentinel_user()
-        context = Context({"user": user})
+        context = {"user": user}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "1")
@@ -516,10 +512,10 @@ class TestMainAllianceId(TestCase):
         """
 
         # given
-        context = Context({"user": None})
+        context = {"user": None}
 
         # when
-        result = self.template.render(context)
+        result = render_template(string=self.template, context=context)
 
         # then
         self.assertEqual(result, "1")
@@ -530,34 +526,23 @@ class TestForumTemplateVariables(TestCase):
     Tests for aa_forum_template_variables template tag
     """
 
-    def render_template(self, string, context=None):
-        """
-        Helper to render templates
-        :param string:
-        :param context:
-        :return:
-        """
-        context = context or {}
-        context = Context(context)
-
-        return Template(string).render(context)
-
     def test_set_template_variable(self):
         """
         Test set template variable
         :return:
         """
 
-        context = Context({"content": "bar"})
-        template_to_render = Template(
-            "{% load aa_forum_template_variables %}"
-            "{% set_template_variable foo = content %}"
-            "{{ foo }}"
+        rendered = render_template(
+            string=(
+                "{% load aa_forum_template_variables %}"
+                "{% set_template_variable foo = content %}"
+                "{{ foo }}"
+            ),
+            context={"content": "bar"},
         )
 
-        rendered_template = template_to_render.render(context)
-
-        self.assertInHTML("bar", rendered_template)
+        # self.assertInHTML("bar", rendered_template)
+        self.assertEqual(rendered, "bar")
 
     def test_should_raise_template_syntax_error(self):
         """
@@ -565,20 +550,12 @@ class TestForumTemplateVariables(TestCase):
         :return:
         """
 
-        self.assertRaises(
-            TemplateSyntaxError,
-            Template,
-            "{% load aa_forum_template_variables %}"
-            "{% set_template_variable foo %}"
-            "{{ foo }}",
-        )
-
         with self.assertRaisesMessage(
             TemplateSyntaxError,
             "'set_template_variable' tag must be of the form: "
             "{% set_template_variable <var_name> = <var_value> %}",
         ):
-            Template(
+            render_template(
                 "{% load aa_forum_template_variables %}"
                 "{% set_template_variable foo %}"
                 "{{ foo }}"
@@ -602,14 +579,14 @@ class TestForumTemplateVariables(TestCase):
 
         self.client.force_login(user)
 
-        rendered = self.render_template(
+        rendered = render_template(
             "{% load aa_forum_template_variables %}"
             "{% personal_message_unread_count 1001 %}"
         )
 
         self.assertEqual(rendered, "")
 
-    def test_should_return_personal_message_unread_count_as_bootstrap_basge_with_number(
+    def test_should_return_personal_message_unread_count_as_bootstrap_badge_with_number(
         self,
     ):
         """
@@ -617,7 +594,7 @@ class TestForumTemplateVariables(TestCase):
         :return:
         """
 
-        # given (creating our presonal message)
+        # given (creating our personal message)
         user_sender = create_fake_user(
             1001,
             "Bruce Wayne",
@@ -663,15 +640,17 @@ class TestForumVersionedStatic(TestCase):
         :return:
         """
 
-        context = Context({"version": __version__})
-        template_to_render = Template(
-            "{% load aa_forum_versioned_static %}"
-            "{% aa_forum_static 'aa_forum/css/aa-forum.min.css' %}"
+        context = {"version": __version__}
+
+        rendered_template = render_template(
+            string=(
+                "{% load aa_forum_versioned_static %}"
+                "{% aa_forum_static 'aa_forum/css/aa-forum.min.css' %}"
+            ),
+            context=context,
         )
 
-        rendered_template = template_to_render.render(context)
-
-        self.assertInHTML(
-            f'/static/aa_forum/css/aa-forum.min.css?v={context["version"]}',
+        self.assertEqual(
             rendered_template,
+            f'/static/aa_forum/css/aa-forum.min.css?v={context["version"]}',
         )
