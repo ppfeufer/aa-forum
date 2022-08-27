@@ -7,7 +7,7 @@ from django.urls import path
 
 # AA Forum
 from aa_forum.constants import INTERNAL_URL_PREFIX
-from aa_forum.views import admin, forum, profile, search
+from aa_forum.views import admin, forum, messages, profile, search
 
 app_name: str = "aa_forum"
 
@@ -97,6 +97,12 @@ urlpatterns = [
         f"{INTERNAL_URL_PREFIX}/profile/",
         profile.index,
         name="profile_index",
+    ),
+    # Messages URLs
+    path(
+        f"{INTERNAL_URL_PREFIX}/messages/",
+        messages.index,
+        name="messages_index",
     ),
     # Service URLs
     path(
