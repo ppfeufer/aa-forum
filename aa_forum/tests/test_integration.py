@@ -1077,3 +1077,51 @@ class TestAdminForumSettingsUI(WebTest):
 
         # then
         self.assertEqual(str(forum_settings), "Forum Settings")
+
+
+class TestPersonalMessageUI(WebTest):
+    """
+    Tests for the Forum UI
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.user_1001 = create_fake_user(
+            1001, "Bruce Wayne", permissions=["aa_forum.basic_access"]
+        )
+        cls.user_1002 = create_fake_user(
+            1002, "Peter Parker", permissions=["aa_forum.basic_access"]
+        )
+        cls.user_1003 = create_fake_user(1003, "Lex Luthor", permissions=[])
+
+    def test_should_show_messages_index(self):
+        """
+        Test should show personal messages index
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+
+        # when
+        page = self.app.get(reverse("aa_forum:messages_index"))
+
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/messages/index.html")
+
+    def test_should_not_show_messages_index(self):
+        """
+        Test should not show personal messages index
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1003)
+
+        # when
+        page = self.app.get(reverse("aa_forum:messages_index"))
+
+        # then
+        self.assertRedirects(page, "/account/login/?next=/forum/-/messages/")
