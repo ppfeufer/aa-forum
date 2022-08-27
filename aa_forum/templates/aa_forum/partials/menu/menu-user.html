@@ -1,0 +1,6 @@
+{% load i18n %}
+{% load navactive %}
+
+<li class="{% navactive request 'aa_forum:profile_index' %}">
+    <a href="{% url 'aa_forum:profile_index' %}">{% translate "Messages" %}</a>
+</li>
