@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load navactive %}
+
+<div class="col-sm-4 col-md-3 col-lg-2 col-sm-push-8 col-md-push-9 col-lg-push-10">
+    <ul id="aa-forum-messages-sidebar-menu" class="nav nav-pills nav-stacked">
+    {#    <li class="aa-forum-messages-sidebar-menu-item">#}
+    {#        <a class="{% navactive request 'aa_forum:admin_categories_and_boards' %}" href="#">#}
+    {#            {% translate "New Message" %}#}
+    {#        </a>#}
+    {#    </li>#}
+
+        <li class="aa-forum-messages-sidebar-menu-item">
+            <a class="{% navactive request 'aa_forum:messages_index' %}" href="#">
+                {% translate "Inbox" %}
+            </a>
+        </li>
+
+    {#    <li class="aa-forum-messages-sidebar-menu-item">#}
+    {#        <a class="{% navactive request 'aa_forum:admin_categories_and_boards' %}" href="#">#}
+    {#            {% translate "Sent Items" %}#}
+    {#        </a>#}
+    {#    </li>#}
+    </ul>
+</div>

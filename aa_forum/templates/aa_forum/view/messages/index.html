@@ -11,7 +11,10 @@
 {% endblock %}
 
 {% block aa_forum_body %}
-
+    <div class="row">
+        {% include "aa_forum/partials/messages/sidebar.html" %}
+        {% include "aa_forum/partials/messages/content.html" %}
+    </div>
 {% endblock %}
 
 {% block extra_css %}
