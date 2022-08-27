@@ -636,7 +636,7 @@ class PersonalMessage(models.Model):
     )
     time_sent = models.DateTimeField(auto_now_add=True)
     subject = models.CharField(max_length=254)
-    message = models.TextField(blank=True)
+    message = RichTextUploadingField(blank=False)
     is_read = models.BooleanField(default=False)
 
     class Meta:
