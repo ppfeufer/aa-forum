@@ -22,10 +22,6 @@ from aa_forum import __title__
 from aa_forum.forms import UserProfileForm
 from aa_forum.helper.user import get_user_profile
 
-# from django.contrib import messages
-# from django.utils.translation import gettext as _
-
-
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
 
