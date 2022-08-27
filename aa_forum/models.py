@@ -636,7 +636,6 @@ class PersonalMessage(models.Model):
     )
     time_sent = models.DateTimeField(auto_now_add=True)
     subject = models.CharField(max_length=254)
-    slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
     message = models.TextField(blank=True)
     is_read = models.BooleanField(default=False)
 
@@ -650,21 +649,7 @@ class PersonalMessage(models.Model):
         verbose_name_plural = _("personal messages")
 
     def __str__(self) -> str:
-        return str(self.subject)
-
-    @transaction.atomic()
-    def save(self, *args, **kwargs):
-        """
-        Generates the slug.
-        :param args:
-        :param kwargs:
-        :return:
-        """
-
-        if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
-            self.slug = _generate_slug(type(self), self.subject)
-
-        super().save(*args, **kwargs)
+        return f'"{self.subject}" from {self.sender} to {self.recipient}'
 
 
 class Setting(SingletonModel):
