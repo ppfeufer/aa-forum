@@ -12,11 +12,11 @@
 
         <div class="panel-body">
             <ul id="aa-forum-messages-sidebar-menu" class="nav nav-pills nav-stacked">
-{#                <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:admin_categories_and_boards' %}">#}
-{#                    <a href="#">#}
-{#                        {% translate "New Message" %}#}
-{#                    </a>#}
-{#                </li>#}
+                <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:personal_messages_new_message' %}">
+                    <a href="{% url 'aa_forum:personal_messages_new_message' %}">
+                        {% translate "New Message" %}
+                    </a>
+                </li>
 
                 <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:personal_messages_inbox' %}">
                     <a href="{% url 'aa_forum:personal_messages_inbox' %}">

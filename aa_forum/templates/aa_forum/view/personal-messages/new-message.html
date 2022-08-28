@@ -1,0 +1,25 @@
+{% extends "aa_forum/base.html" %}
+{% load bootstrap %}
+
+{% load static %}
+{% load i18n %}
+
+{% block page_title %}{% translate "Forum (Messages » New)" %}{% endblock %}
+
+{% block aa_forum_header %}
+    {% include "aa_forum/partials/menu.html" %}
+{% endblock %}
+
+{% block aa_forum_body %}
+    <div class="row">
+        {% include "aa_forum/partials/personal-messages/sidebar.html" %}
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    {% include "aa_forum/bundles/aa-forum-css.html" %}
+{% endblock %}
+
+{% block extra_javascript %}
+    {% include "aa_forum/bundles/ckeditor-js.html" %}
+{% endblock %}

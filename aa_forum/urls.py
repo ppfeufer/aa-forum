@@ -109,6 +109,11 @@ urlpatterns = [
         personal_messages.inbox,
         name="personal_messages_inbox",
     ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/personal-messages/new-message/",
+        personal_messages.new_message,
+        name="personal_messages_new_message",
+    ),
     # Service URLs
     path(
         f"{INTERNAL_URL_PREFIX}/message/<int:message_id>/delete/",

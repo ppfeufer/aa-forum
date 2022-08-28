@@ -1125,3 +1125,37 @@ class TestPersonalMessageUI(WebTest):
 
         # then
         self.assertRedirects(page, "/account/login/?next=/forum/-/personal-messages/")
+
+    def test_should_show_messages_new_message(self):
+        """
+        Test should show personal messages - new message
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+
+        # when
+        page = self.app.get(reverse("aa_forum:personal_messages_new_message"))
+
+        # then
+        self.assertTemplateUsed(
+            page, "aa_forum/view/personal-messages/new-message.html"
+        )
+
+    def test_should_not_show_messages_new_messages(self):
+        """
+        Test should not show personal messages - new message
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1003)
+
+        # when
+        page = self.app.get(reverse("aa_forum:personal_messages_new_message"))
+
+        # then
+        self.assertRedirects(
+            page, "/account/login/?next=/forum/-/personal-messages/new-message/"
+        )

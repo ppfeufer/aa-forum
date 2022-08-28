@@ -47,3 +47,19 @@ def inbox(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     context = {"page_obj": page_obj}
 
     return render(request, "aa_forum/view/personal-messages/inbox.html", context)
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def new_message(request: WSGIRequest) -> HttpResponse:
+    """
+    Create a new personal message
+    :param request:
+    :return:
+    """
+
+    logger.info(f"{request.user} called the new personal message page")
+
+    context = {}
+
+    return render(request, "aa_forum/view/personal-messages/new-message.html", context)
