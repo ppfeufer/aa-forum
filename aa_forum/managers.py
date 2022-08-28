@@ -268,6 +268,23 @@ class PersonalMessageQuerySet(models.QuerySet):
 
         return messages
 
+    def get_personal_messages_sent_for_user(self, user: User) -> QuerySet:
+        """
+        Get a user's personal messages sent
+        :param user:
+        :return:
+        """
+
+        messages = (
+            self.filter(sender=user, deleted_by_sender=False)
+            .select_related(
+                "recipient", "recipient__profile", "recipient__profile__main_character"
+            )
+            .order_by("-time_sent")
+        )
+
+        return messages
+
     def get_personal_message_unread_count_for_user(self, user: User) -> int:
         """
         Get personal message unread count for a given user

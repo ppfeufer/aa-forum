@@ -77,7 +77,17 @@ def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse
 
     logger.info(f"{request.user} called the their sent personal message page")
 
-    context = {}
+    personal_messages = PersonalMessage.objects.get_personal_messages_sent_for_user(
+        request.user
+    )
+
+    paginator = Paginator(
+        personal_messages,
+        int(Setting.objects.get_setting(setting_key=Setting.MESSAGESPERPAGE)),
+    )
+    page_obj = paginator.get_page(page_number)
+
+    context = {"page_obj": page_obj}
 
     return render(
         request, "aa_forum/view/personal-messages/sent-messages.html", context

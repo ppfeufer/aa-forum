@@ -1,0 +1,71 @@
+{% load i18n %}
+{% load evelinks %}
+{% load aa_forum_user %}
+
+<div class="col-sm-8 col-md-9 col-lg-10 col-sm-pull-3 col-md-pull-3 col-lg-pull-2">
+    <div class="panel panel-default panel-aa-forum-personal-messages-list">
+        <div class="panel-heading">
+            <div class="panel-title">
+                {% translate "Sent Messages" %}
+            </div>
+        </div>
+
+        <div class="panel-body">
+            {% if page_obj %}
+                <div class="panel-aa-forum-personal-messages-item panel-aa-forum-personal-messages-item-header">
+                    <div class="aa-forum-personal-message-date">
+                        {% translate "Date" %}
+                    </div>
+
+                    <div class="aa-forum-personal-message-recipient">
+                        {% translate "Recipient" %}
+                    </div>
+
+                    <div class="aa-forum-personal-message-subject">
+                        {% translate "Subject" %}
+                    </div>
+                </div>
+
+                {% for message in page_obj %}
+                    <div id="aa-forum-personal-message-id-{{ message.pk }}" class="panel-aa-forum-personal-messages-item">
+                        <div class="aa-forum-personal-message-date">
+                            {{ message.time_sent|date }}, {{ message.time_sent|time:"G:i:s" }}
+                        </div>
+
+                        <div class="aa-forum-personal-message-recipient">
+                            {% with recipient_maincharacter_id=message.recipient|main_character_id %}
+                                <img
+                                    class="aa-forum-character-portrait img img-rounded img-last-post-avatar"
+                                    src="{{ recipient_maincharacter_id|character_portrait_url:32 }}"
+                                    alt="{{ message.recipient|main_character_name }}"
+                                    width="32"
+                                    height="32"
+                                >
+                            {% endwith %}
+
+                            {{ message.recipient|main_character_name  }}
+                        </div>
+
+                        <div class="aa-forum-personal-message-subject">
+                            {{ message.subject }}
+
+                            <span class="pull-right">
+                                <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Read message' %}">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                </button>
+
+                                <button class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-delete" title="{% translate 'Delete message' %}">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-info">
+                    <p>{% translate "No personal messages sent" %}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

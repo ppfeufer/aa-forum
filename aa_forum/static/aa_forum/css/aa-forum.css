@@ -433,7 +433,8 @@
         min-width: 200px;
     }
 
-    .aa-forum .aa-forum-personal-message-sender {
+    .aa-forum .aa-forum-personal-message-sender,
+    .aa-forum .aa-forum-personal-message-recipient {
         min-width: 350px;
     }
 
