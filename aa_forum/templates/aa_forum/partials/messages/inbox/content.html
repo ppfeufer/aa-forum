@@ -1,3 +1,19 @@
+{% load i18n %}
+
 <div class="col-sm-8 col-md-9 col-lg-10 col-sm-pull-3 col-md-pull-3 col-lg-pull-2">
-    <p>Foobar</p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                {% translate "Inbox" %}
+            </div>
+        </div>
+
+        <div class="panel-body">
+            {% for message in page_obj %}
+                <div>
+                    <p>{{ message.subject }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>

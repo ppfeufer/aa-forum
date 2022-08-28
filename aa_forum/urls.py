@@ -104,6 +104,11 @@ urlpatterns = [
         messages.inbox,
         name="messages_inbox",
     ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/messages/page/<int:page_number>/",
+        messages.inbox,
+        name="messages_inbox",
+    ),
     # Service URLs
     path(
         f"{INTERNAL_URL_PREFIX}/message/<int:message_id>/delete/",
