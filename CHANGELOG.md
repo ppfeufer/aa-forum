@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - HTML syntax in `message-author` template
+- "Message modified" info should be before the user's signature
 
 
 ## [1.13.0] - 2022-08-26

@@ -75,18 +75,18 @@
                         {% endif %}
                     </div>
 
+                    {% if message.user_updated %}
+                        <div class="aa-forum-message-body-last-edited text-muted small">
+                            « {% translate "Last Modified:" %} {{ message.time_modified|date }}, {{ message.time_modified|time:"G:i:s" }} by {{ message.user_updated|main_character_name }} »
+                        </div>
+                    {% endif %}
+
                     {% if message_author.aa_forum_user_profile %}
                         {% if message_author.aa_forum_user_profile.signature %}
                             <div class="aa-forum-message-body-author-signature text-muted small hidden-xs">
                                 {{ message_author.aa_forum_user_profile.signature|safe }}
                             </div>
                         {% endif %}
-                    {% endif %}
-
-                    {% if message.user_updated %}
-                        <div class="aa-forum-message-body-last-edited text-muted small">
-                            « {% translate "Last Modified:" %} {{ message.time_modified|date }}, {{ message.time_modified|time:"G:i:s" }} by {{ message.user_updated|main_character_name }} »
-                        </div>
                     {% endif %}
                 </div>
             </div>
