@@ -16,13 +16,14 @@ from app_utils.logging import LoggerAddTag
 
 # AA Forum
 from aa_forum import __title__
+from aa_forum.models import PersonalMessage
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
 
 @login_required
 @permission_required("aa_forum.basic_access")
-def index(request: WSGIRequest) -> HttpResponse:
+def inbox(request: WSGIRequest) -> HttpResponse:
     """
     Messages overview
     :return:
@@ -30,6 +31,10 @@ def index(request: WSGIRequest) -> HttpResponse:
 
     logger.info(f"{request.user} called their messages overview")
 
-    context = {}
+    personal_messages = PersonalMessage.objects.filter(
+        recipient=request.user
+    ).select_related("sender", "sender__profile", "sender__profile__main_character")
 
-    return render(request, "aa_forum/view/messages/index.html", context)
+    context = {"personal_messages": personal_messages}
+
+    return render(request, "aa_forum/view/messages/inbox.html", context)

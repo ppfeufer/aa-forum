@@ -101,8 +101,8 @@ urlpatterns = [
     # Messages URLs
     path(
         f"{INTERNAL_URL_PREFIX}/messages/",
-        messages.index,
-        name="messages_index",
+        messages.inbox,
+        name="messages_inbox",
     ),
     # Service URLs
     path(

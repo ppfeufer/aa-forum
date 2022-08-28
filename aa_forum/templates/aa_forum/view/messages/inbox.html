@@ -4,7 +4,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block page_title %}{% translate "Forum (Messages)" %}{% endblock %}
+{% block page_title %}{% translate "Forum (Messages » Inbox)" %}{% endblock %}
 
 {% block aa_forum_header %}
     {% include "aa_forum/partials/menu.html" %}
@@ -13,7 +13,7 @@
 {% block aa_forum_body %}
     <div class="row">
         {% include "aa_forum/partials/messages/sidebar.html" %}
-        {% include "aa_forum/partials/messages/content.html" %}
+        {% include "aa_forum/partials/messages/inbox/content.html" %}
     </div>
 {% endblock %}
 

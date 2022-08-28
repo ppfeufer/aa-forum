@@ -1096,9 +1096,9 @@ class TestPersonalMessageUI(WebTest):
         )
         cls.user_1003 = create_fake_user(1003, "Lex Luthor", permissions=[])
 
-    def test_should_show_messages_index(self):
+    def test_should_show_messages_inbox(self):
         """
-        Test should show personal messages index
+        Test should show personal messages inbox
         :return:
         """
 
@@ -1106,14 +1106,14 @@ class TestPersonalMessageUI(WebTest):
         self.app.set_user(self.user_1001)
 
         # when
-        page = self.app.get(reverse("aa_forum:messages_index"))
+        page = self.app.get(reverse("aa_forum:messages_inbox"))
 
         # then
-        self.assertTemplateUsed(page, "aa_forum/view/messages/index.html")
+        self.assertTemplateUsed(page, "aa_forum/view/messages/inbox.html")
 
-    def test_should_not_show_messages_index(self):
+    def test_should_not_show_messages_inbox(self):
         """
-        Test should not show personal messages index
+        Test should not show personal messages inbox
         :return:
         """
 
@@ -1121,7 +1121,7 @@ class TestPersonalMessageUI(WebTest):
         self.app.set_user(self.user_1003)
 
         # when
-        page = self.app.get(reverse("aa_forum:messages_index"))
+        page = self.app.get(reverse("aa_forum:messages_inbox"))
 
         # then
         self.assertRedirects(page, "/account/login/?next=/forum/-/messages/")
