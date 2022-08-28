@@ -16,7 +16,7 @@ from app_utils.testing import create_fake_user
 from aa_forum.forms import NewCategoryForm
 from aa_forum.helper.eve_images import get_character_portrait_from_evecharacter
 from aa_forum.helper.forms import message_form_errors
-from aa_forum.helper.text import string_cleanup
+from aa_forum.helper.text import get_image_url, string_cleanup
 
 
 @patch("aa_forum.helper.forms.messages")
@@ -93,6 +93,84 @@ class TestHelperText(TestCase):
         self.assertIn(
             "this is a script test. and this is style test. end tests.", cleaned_string
         )
+
+    def test_should_return_none_for_get_image_url(self):
+        """
+        Test should return none for get_image_url
+        :return:
+        """
+
+        text = (
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris "
+            "vehicula viverra diam at ultrices. Donec accumsan metus vitae sapien "
+            "malesuada, quis molestie quam euismod. Vestibulum malesuada non felis "
+            "id pellentesque. Proin in sollicitudin massa. Vestibulum vitae ante "
+            "quis dolor placerat feugiat. Praesent id gravida nulla, sed malesuada "
+            "arcu. Fusce eu erat feugiat, tincidunt dolor varius, tincidunt velit. "
+            "Mauris iaculis elit luctus nunc scelerisque mollis. Etiam imperdiet "
+            "mi lacus, at sodales eros aliquet a. Maecenas pretium, odio et "
+            "ultricies venenatis, nisl dui volutpat dui, vitae feugiat turpis "
+            "dolor vel nisi. Mauris consequat, nulla id mattis ullamcorper, "
+            "enim elit convallis erat, eget tempor velit mauris ac nisl. Praesent "
+            "sit amet facilisis purus, mattis dictum dolor. Nam id ex sollicitudin "
+            "nulla dictum rutrum."
+        )
+
+        image_url = get_image_url(text)
+
+        self.assertIsNone(image_url)
+
+    def test_should_return_none_for_get_image_url_2(self):
+        """
+        Test should return none for get_image_url because it's invalid
+        :return:
+        """
+
+        text = (
+            'Lorem ipsum dolor sit amet, <img src="consectetur adipiscing elit">. Mauris '
+            "vehicula viverra diam at ultrices. Donec accumsan metus vitae sapien "
+            "malesuada, quis molestie quam euismod. Vestibulum malesuada non felis "
+            "id pellentesque. Proin in sollicitudin massa. Vestibulum vitae ante "
+            "quis dolor placerat feugiat. Praesent id gravida nulla, sed malesuada "
+            "arcu. Fusce eu erat feugiat, tincidunt dolor varius, tincidunt velit. "
+            "Mauris iaculis elit luctus nunc scelerisque mollis. Etiam imperdiet "
+            "mi lacus, at sodales eros aliquet a. Maecenas pretium, odio et "
+            "ultricies venenatis, nisl dui volutpat dui, vitae feugiat turpis "
+            "dolor vel nisi. Mauris consequat, nulla id mattis ullamcorper, "
+            "enim elit convallis erat, eget tempor velit mauris ac nisl. Praesent "
+            "sit amet facilisis purus, mattis dictum dolor. Nam id ex sollicitudin "
+            "nulla dictum rutrum."
+        )
+
+        image_url = get_image_url(text)
+
+        self.assertIsNone(image_url)
+
+    def test_should_return_first_image_url_for_get_image_url(self):
+        """
+        Test should return none for get_image_url because it's invalid
+        :return:
+        """
+
+        text = (
+            'Lorem ipsum dolor sit amet, <img src="https://test.de/foobar.jpg">. Mauris '
+            "vehicula viverra diam at ultrices. Donec accumsan metus vitae sapien "
+            "malesuada, quis molestie quam euismod. Vestibulum malesuada non felis "
+            "id pellentesque. Proin in sollicitudin massa. Vestibulum vitae ante "
+            "quis dolor placerat feugiat. Praesent id gravida nulla, sed malesuada "
+            "arcu. Fusce eu erat feugiat, tincidunt dolor varius, tincidunt velit. "
+            "Mauris iaculis elit luctus nunc scelerisque mollis. Etiam imperdiet "
+            'mi lacus, at sodales eros <img src="https://test.de/barfoo.jpg"> aliquet '
+            "a. Maecenas pretium, odio et ultricies venenatis, nisl dui volutpat dui, "
+            "vitae feugiat turpis dolor vel nisi. Mauris consequat, nulla id mattis "
+            "ullamcorper, enim elit convallis erat, eget tempor velit mauris ac nisl. "
+            "Praesent sit amet facilisis purus, mattis dictum dolor. Nam id ex "
+            "sollicitudin nulla dictum rutrum. "
+        )
+
+        image_url = get_image_url(text)
+
+        self.assertEqual(image_url, "https://test.de/foobar.jpg")
 
 
 class TestHelperEveImages(TestCase):
