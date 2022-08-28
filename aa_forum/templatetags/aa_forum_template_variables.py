@@ -69,7 +69,7 @@ def personal_message_unread_count(user: User) -> str:
     """
 
     return_value = ""
-    message_count = PersonalMessage.objects.get_presonal_message_unread_count_for_user(
+    message_count = PersonalMessage.objects.get_personal_message_unread_count_for_user(
         user
     )
 

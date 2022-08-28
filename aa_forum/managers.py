@@ -268,7 +268,7 @@ class PersonalMessageQuerySet(models.QuerySet):
 
         return messages
 
-    def get_presonal_message_unread_count_for_user(self, user: User) -> int:
+    def get_personal_message_unread_count_for_user(self, user: User) -> int:
         """
         Get personal message unread count for a given user
         :param user:
