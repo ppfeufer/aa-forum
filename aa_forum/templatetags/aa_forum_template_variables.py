@@ -69,7 +69,9 @@ def personal_message_unread_count(user: User) -> str:
     """
 
     return_value = ""
-    message_count = PersonalMessage.objects.filter(recipient=user).count()
+    message_count = PersonalMessage.objects.filter(
+        recipient=user, is_read=False
+    ).count()
 
     if message_count > 0:
         return_value = mark_safe(f'<span class="badge">{message_count}</span>')
