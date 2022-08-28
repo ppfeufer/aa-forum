@@ -263,7 +263,7 @@ class PersonalMessageQuerySet(models.QuerySet):
             .select_related(
                 "sender", "sender__profile", "sender__profile__main_character"
             )
-            .order_by("time_sent")
+            .order_by("-time_sent")
         )
 
         return messages
