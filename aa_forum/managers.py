@@ -244,3 +244,39 @@ class MessageManagerBase(models.Manager):
 
 
 MessageManager = MessageManagerBase.from_queryset(MessageQuerySet)
+
+
+class PersonalMessageQuerySet(models.QuerySet):
+    """
+    PersonalMessageQuerySet
+    """
+
+    def get_users_personal_messages(self, user: User) -> models.Model:
+        """
+        Get a user's personal messages
+        :param user:
+        :return:
+        """
+
+        messages = (
+            self.filter(recipient=user, deleted_by_recipient=False)
+            .select_related(
+                "sender", "sender__profile", "sender__profile__main_character"
+            )
+            .order_by("time_sent")
+        )
+
+        return messages
+
+
+class PersonalMessageManagerBase(models.Manager):
+    """
+    PersonalMessageManagerBase
+    """
+
+    pass
+
+
+PersonalMessageManager = PersonalMessageManagerBase.from_queryset(
+    PersonalMessageQuerySet
+)

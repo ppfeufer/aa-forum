@@ -25,7 +25,13 @@ from aa_forum.constants import (
     DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
     INTERNAL_URL_PREFIX,
 )
-from aa_forum.managers import BoardManager, MessageManager, SettingManager, TopicManager
+from aa_forum.managers import (
+    BoardManager,
+    MessageManager,
+    PersonalMessageManager,
+    SettingManager,
+    TopicManager,
+)
 
 
 def get_sentinel_user() -> User:
@@ -627,17 +633,28 @@ class PersonalMessage(models.Model):
     sender = models.ForeignKey(
         User,
         related_name="+",
-        on_delete=models.SET(get_sentinel_user),
+        on_delete=models.CASCADE,
     )
     recipient = models.ForeignKey(
         User,
         related_name="+",
-        on_delete=models.SET(get_sentinel_user),
+        on_delete=models.CASCADE,
     )
     time_sent = models.DateTimeField(auto_now_add=True)
     subject = models.CharField(max_length=254)
     message = RichTextUploadingField(blank=False)
+    message_head = models.ForeignKey(
+        "self",
+        blank=True,
+        null=True,
+        related_name="replies",
+        on_delete=models.CASCADE,
+    )
     is_read = models.BooleanField(default=False)
+    deleted_by_sender = models.BooleanField(default=False)
+    deleted_by_recipient = models.BooleanField(default=False)
+
+    objects = PersonalMessageManager()
 
     class Meta:
         """

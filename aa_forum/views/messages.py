@@ -34,10 +34,8 @@ def inbox(request: WSGIRequest, page_number: int = None) -> HttpResponse:
 
     logger.info(f"{request.user} called their messages overview")
 
-    personal_messages = (
-        PersonalMessage.objects.filter(recipient=request.user)
-        .select_related("sender", "sender__profile", "sender__profile__main_character")
-        .order_by("time_sent")
+    personal_messages = PersonalMessage.objects.get_users_personal_messages(
+        request.user
     )
 
     paginator = Paginator(
