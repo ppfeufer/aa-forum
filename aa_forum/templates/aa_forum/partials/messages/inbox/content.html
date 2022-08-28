@@ -11,20 +11,21 @@
         </div>
 
         <div class="panel-body">
-            <div class="panel-aa-forum-personal-messages-item panel-aa-forum-personal-messages-item-header">
-                <div class="aa-forum-personal-message-date">
-                    {% translate "Date" %}
-                </div>
-
-                <div class="aa-forum-personal-message-sender">
-                    {% translate "Sender" %}
-                </div>
-
-                <div class="aa-forum-personal-message-subject">
-                    {% translate "Subject" %}
-                </div>
-            </div>
             {% if page_obj %}
+                <div class="panel-aa-forum-personal-messages-item panel-aa-forum-personal-messages-item-header">
+                    <div class="aa-forum-personal-message-date">
+                        {% translate "Date" %}
+                    </div>
+
+                    <div class="aa-forum-personal-message-sender">
+                        {% translate "Sender" %}
+                    </div>
+
+                    <div class="aa-forum-personal-message-subject">
+                        {% translate "Subject" %}
+                    </div>
+                </div>
+
                 {% for message in page_obj %}
                     <div id="aa-forum-personal-message-id-{{ message.pk }}" class="panel-aa-forum-personal-messages-item {% if not message.is_read %}panel-aa-forum-personal-messages-item-unread{% endif %}">
                         <div class="aa-forum-personal-message-date">
