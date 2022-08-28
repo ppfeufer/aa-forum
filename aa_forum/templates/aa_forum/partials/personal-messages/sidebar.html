@@ -25,11 +25,11 @@
                     </a>
                 </li>
 
-{#                <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:admin_categories_and_boards' %}">#}
-{#                    <a href="#">#}
-{#                        {% translate "Sent Items" %}#}
-{#                    </a>#}
-{#                </li>#}
+                <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:personal_messages_sent_messages' %}">
+                    <a href="{% url 'aa_forum:personal_messages_sent_messages' %}">
+                        {% translate "Sent Messages" %}
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

@@ -114,6 +114,16 @@ urlpatterns = [
         personal_messages.new_message,
         name="personal_messages_new_message",
     ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/personal-messages/sent-messages/",
+        personal_messages.sent_messages,
+        name="personal_messages_sent_messages",
+    ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/personal-messages/sent-messages/page/<int:page_number>/",
+        personal_messages.sent_messages,
+        name="personal_messages_sent_messages",
+    ),
     # Service URLs
     path(
         f"{INTERNAL_URL_PREFIX}/message/<int:message_id>/delete/",

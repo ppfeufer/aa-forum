@@ -63,3 +63,22 @@ def new_message(request: WSGIRequest) -> HttpResponse:
     context = {}
 
     return render(request, "aa_forum/view/personal-messages/new-message.html", context)
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse:
+    """
+    Overview of all messages sent by a user
+    :param request:
+    :param page_number:
+    :return:
+    """
+
+    logger.info(f"{request.user} called the their sent personal message page")
+
+    context = {}
+
+    return render(
+        request, "aa_forum/view/personal-messages/sent-messages.html", context
+    )
