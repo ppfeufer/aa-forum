@@ -5,7 +5,7 @@ Managers for our models
 # Django
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models import Prefetch, Q
+from django.db.models import Prefetch, Q, QuerySet
 
 
 class SettingQuerySet(models.QuerySet):
@@ -251,7 +251,7 @@ class PersonalMessageQuerySet(models.QuerySet):
     PersonalMessageQuerySet
     """
 
-    def get_personal_messages_for_user(self, user: User) -> models.Model:
+    def get_personal_messages_for_user(self, user: User) -> QuerySet:
         """
         Get a user's personal messages
         :param user:
