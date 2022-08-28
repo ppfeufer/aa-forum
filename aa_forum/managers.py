@@ -275,7 +275,9 @@ class PersonalMessageQuerySet(models.QuerySet):
         :return:
         """
 
-        unread_count = self.filter(recipient=user, is_read=False).count()
+        unread_count = self.filter(
+            recipient=user, is_read=False, deleted_by_recipient=False
+        ).count()
 
         return unread_count
 
