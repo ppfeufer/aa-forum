@@ -626,7 +626,10 @@ class TestForumTemplateVariables(TestCase):
         response = personal_message_unread_count(user_receiver)
 
         # then
-        self.assertEqual(response, '<span class="badge">1</span>')
+        self.assertEqual(
+            response,
+            '<span class="badge aa-forum-badge-personal-messages-unread-count">1</span>',
+        )
 
 
 class TestForumVersionedStatic(TestCase):

@@ -69,11 +69,13 @@ def personal_message_unread_count(user: User) -> str:
     """
 
     return_value = ""
-    message_count = PersonalMessage.objects.filter(
-        recipient=user, is_read=False
-    ).count()
+    message_count = PersonalMessage.objects.get_presonal_message_unread_count_for_user(
+        user
+    )
 
     if message_count > 0:
-        return_value = mark_safe(f'<span class="badge">{message_count}</span>')
+        return_value = mark_safe(
+            f'<span class="badge aa-forum-badge-personal-messages-unread-count">{message_count}</span>'  # pylint: disable=line-too-long
+        )
 
     return return_value
