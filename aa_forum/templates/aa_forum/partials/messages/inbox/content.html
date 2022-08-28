@@ -1,7 +1,9 @@
 {% load i18n %}
+{% load evelinks %}
+{% load aa_forum_user %}
 
 <div class="col-sm-8 col-md-9 col-lg-10 col-sm-pull-3 col-md-pull-3 col-lg-pull-2">
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-aa-forum-personal-messages-list">
         <div class="panel-heading">
             <div class="panel-title">
                 {% translate "Inbox" %}
@@ -9,11 +11,62 @@
         </div>
 
         <div class="panel-body">
-            {% for message in page_obj %}
-                <div>
-                    <p>{{ message.subject }}</p>
+            <div class="panel-aa-forum-personal-messages-item panel-aa-forum-personal-messages-item-header">
+                <div class="aa-forum-personal-message-date">
+                    {% translate "Date" %}
                 </div>
-            {% endfor %}
+
+                <div class="aa-forum-personal-message-sender">
+                    {% translate "Sender" %}
+                </div>
+
+                <div class="aa-forum-personal-message-subject">
+                    {% translate "Subject" %}
+                </div>
+            </div>
+            {% if page_obj %}
+                {% for message in page_obj %}
+                    <div id="aa-forum-personal-message-id-{{ message.pk }}" class="panel-aa-forum-personal-messages-item {% if not message.is_read %}panel-aa-forum-personal-messages-item-unread{% endif %}">
+                        <div class="aa-forum-personal-message-date">
+                            {{ message.time_sent|date }}, {{ message.time_sent|time:"G:i:s" }}
+                        </div>
+
+                        <div class="aa-forum-personal-message-sender">
+                            {% with sender_maincharacter_id=message.sender|main_character_id %}
+                                <img
+                                    class="aa-forum-character-portrait img img-rounded img-last-post-avatar"
+                                    src="{{ sender_maincharacter_id|character_portrait_url:32 }}"
+                                    alt="{{ message.sender|main_character_name }}"
+                                    width="32"
+                                    height="32"
+                                >
+                            {% endwith %}
+
+                            {{ message.sender|main_character_name  }}
+                        </div>
+
+                        <div class="aa-forum-personal-message-subject">
+                            {{ message.subject }}
+
+                            <span class="pull-right">
+                                <a href="" title="{% translate 'Read message' %}">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                </a>
+
+                                {% if not message.is_read %}
+                                    <a href="" title="{% translate 'Mark as read' %}">
+                                        <i class="fas fa-check-double"></i>
+                                    </a>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-info">
+                    <p>{% translate "No personal messages" %}</p>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

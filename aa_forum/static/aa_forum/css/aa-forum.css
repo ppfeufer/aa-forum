@@ -408,6 +408,40 @@
     }
 }
 
+/* Personal messages view
+------------------------------------------------------------------------------------- */
+@media all {
+    .aa-forum .panel-aa-forum-personal-messages-item-header {
+        font-weight: 700;
+        border-bottom: 1px solid rgb(236 240 241);
+    }
+
+    .aa-forum .panel-aa-forum-personal-messages-item {
+        align-content: flex-start;
+        align-items: center;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        padding: 1rem;
+    }
+
+    .aa-forum .panel-aa-forum-personal-messages-item-unread {
+        font-weight: 700;
+    }
+
+    .aa-forum .aa-forum-personal-message-date {
+        min-width: 200px;
+    }
+
+    .aa-forum .aa-forum-personal-message-sender {
+        min-width: 350px;
+    }
+
+    .aa-forum .aa-forum-personal-message-subject {
+        width: 100%;
+    }
+}
+
 /* Lightbox
 ------------------------------------------------------------------------------------- */
 @media all {
