@@ -6,18 +6,18 @@
             <ul class="pagination pagination-sm">
                 {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a href="{% url 'aa_forum:messages_inbox' %}" class="page-link">
+                        <a href="{% url 'aa_forum:personal_messages_inbox' %}" class="page-link">
                             {% translate "First" %}
                         </a>
                     </li>
 
                     <li class="page-item">
                         {% if page_obj.previous_page_number == 1 %}
-                            <a href="{% url 'aa_forum:messages_inbox' %}" class="page-link">
+                            <a href="{% url 'aa_forum:personal_messages_inbox' %}" class="page-link">
                                 {% translate "Previous" %}
                             </a>
                         {% else %}
-                            <a href="{% url 'aa_forum:messages_inbox' page_obj.previous_page_number %}" class="page-link">
+                            <a href="{% url 'aa_forum:personal_messages_inbox' page_obj.previous_page_number %}" class="page-link">
                                 {% translate "Previous" %}
                             </a>
                         {% endif %}
@@ -25,11 +25,11 @@
 
                     <li>
                         {% if page_obj.previous_page_number == 1 %}
-                            <a class="page-link" href="{% url 'aa_forum:messages_inbox' %}">
+                            <a class="page-link" href="{% url 'aa_forum:personal_messages_inbox' %}">
                                 {{ page_obj.previous_page_number }}
                             </a>
                         {% else %}
-                            <a href="{% url 'aa_forum:messages_inbox' page_obj.previous_page_number %}" class="page-link">
+                            <a href="{% url 'aa_forum:personal_messages_inbox' page_obj.previous_page_number %}" class="page-link">
                                 {{ page_obj.previous_page_number }}
                             </a>
                         {% endif %}
@@ -50,19 +50,19 @@
 
                 {% if page_obj.has_next %}
                     <li class="page-item">
-                        <a href="{% url 'aa_forum:messages_inbox' page_obj.next_page_number %}" class="page-link">
+                        <a href="{% url 'aa_forum:personal_messages_inbox' page_obj.next_page_number %}" class="page-link">
                             {{ page_obj.next_page_number }}
                         </a>
                     </li>
 
                     <li class="page-item ">
-                        <a href="{% url 'aa_forum:messages_inbox' page_obj.next_page_number %}" class="page-link">
+                        <a href="{% url 'aa_forum:personal_messages_inbox' page_obj.next_page_number %}" class="page-link">
                             {% translate "Next" %}
                         </a>
                     </li>
 
                     <li class="page-item ">
-                        <a href="{% url 'aa_forum:messages_inbox' page_obj.paginator.num_pages %}" class="page-link">
+                        <a href="{% url 'aa_forum:personal_messages_inbox' page_obj.paginator.num_pages %}" class="page-link">
                             {% translate "Last" %}
                         </a>
                     </li>

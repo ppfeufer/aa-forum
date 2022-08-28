@@ -18,8 +18,8 @@
 {#                    </a>#}
 {#                </li>#}
 
-                <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:messages_inbox' %}">
-                    <a href="{% url 'aa_forum:messages_inbox' %}">
+                <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:personal_messages_inbox' %}">
+                    <a href="{% url 'aa_forum:personal_messages_inbox' %}">
                         {% translate "Inbox" %}
                         {% personal_message_unread_count request.user %}
                     </a>

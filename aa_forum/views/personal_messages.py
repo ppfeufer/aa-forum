@@ -46,4 +46,4 @@ def inbox(request: WSGIRequest, page_number: int = None) -> HttpResponse:
 
     context = {"page_obj": page_obj}
 
-    return render(request, "aa_forum/view/messages/inbox.html", context)
+    return render(request, "aa_forum/view/personal-messages/inbox.html", context)

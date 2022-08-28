@@ -6,8 +6,8 @@
     <a href="{% url 'aa_forum:profile_index' %}">{% translate "Profile" %}</a>
 </li>
 
-<li class="{% navactive request 'aa_forum:messages_inbox' %}">
-    <a href="{% url 'aa_forum:messages_inbox' %}">
+<li class="{% navactive request 'aa_forum:personal_messages_inbox' %}">
+    <a href="{% url 'aa_forum:personal_messages_inbox' %}">
         {% translate "Messages" %}
         {% personal_message_unread_count request.user %}
     </a>
