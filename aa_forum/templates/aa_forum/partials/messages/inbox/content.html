@@ -49,19 +49,19 @@
                             {{ message.subject }}
 
                             <span class="pull-right">
-                                <a class="btn btn-aa-forum-topic-moderation btn-xs" href="" title="{% translate 'Read message' %}">
+                                <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Read message' %}">
                                     <i class="fas fa-sign-in-alt"></i>
-                                </a>
+                                </button>
 
                                 {% if not message.is_read %}
-                                    <a class="btn btn-aa-forum-topic-moderation btn-xs" href="" title="{% translate 'Mark message as read' %}">
+                                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Mark message as read' %}">
                                         <i class="fas fa-check-double"></i>
-                                    </a>
+                                    </button>
                                 {% endif %}
 
-                                <a class="btn btn-aa-forum-topic-moderation btn-xs" href="" title="{% translate 'Delete message' %}">
+                                <button class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-delete" title="{% translate 'Delete message' %}">
                                     <i class="far fa-trash-alt"></i>
-                                </a>
+                                </button>
                             </span>
                         </div>
                     </div>
