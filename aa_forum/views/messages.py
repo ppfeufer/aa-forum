@@ -34,7 +34,7 @@ def inbox(request: WSGIRequest, page_number: int = None) -> HttpResponse:
 
     logger.info(f"{request.user} called their messages overview")
 
-    personal_messages = PersonalMessage.objects.get_users_personal_messages(
+    personal_messages = PersonalMessage.objects.get_personal_messages_for_user(
         request.user
     )
 

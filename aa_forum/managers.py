@@ -251,7 +251,7 @@ class PersonalMessageQuerySet(models.QuerySet):
     PersonalMessageQuerySet
     """
 
-    def get_users_personal_messages(self, user: User) -> models.Model:
+    def get_personal_messages_for_user(self, user: User) -> models.Model:
         """
         Get a user's personal messages
         :param user:
