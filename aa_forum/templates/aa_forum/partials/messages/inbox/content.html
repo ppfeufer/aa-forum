@@ -49,15 +49,19 @@
                             {{ message.subject }}
 
                             <span class="pull-right">
-                                <a href="" title="{% translate 'Read message' %}">
+                                <a class="btn btn-aa-forum-topic-moderation btn-xs" href="" title="{% translate 'Read message' %}">
                                     <i class="fas fa-sign-in-alt"></i>
                                 </a>
 
                                 {% if not message.is_read %}
-                                    <a href="" title="{% translate 'Mark as read' %}">
+                                    <a class="btn btn-aa-forum-topic-moderation btn-xs" href="" title="{% translate 'Mark message as read' %}">
                                         <i class="fas fa-check-double"></i>
                                     </a>
                                 {% endif %}
+
+                                <a class="btn btn-aa-forum-topic-moderation btn-xs" href="" title="{% translate 'Delete message' %}">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
                             </span>
                         </div>
                     </div>
