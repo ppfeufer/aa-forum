@@ -3,11 +3,14 @@ Messages views
 """
 
 # Django
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.utils.safestring import mark_safe
+from django.utils.translation import gettext as _
 
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
@@ -17,6 +20,7 @@ from app_utils.logging import LoggerAddTag
 
 # AA Forum
 from aa_forum import __title__
+from aa_forum.forms import PersonalMessageForm
 from aa_forum.models import PersonalMessage, Setting
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
@@ -60,7 +64,44 @@ def new_message(request: WSGIRequest) -> HttpResponse:
 
     logger.info(f"{request.user} called the new personal message page")
 
-    context = {}
+    # If this is a POST request we need to process the form data
+    if request.method == "POST":
+        new_private_message_form = PersonalMessageForm(request.POST)
+
+        # Check whether it's valid:
+        if new_private_message_form.is_valid():
+            sender = request.user
+            recipient = new_private_message_form.cleaned_data["recipient"]
+            subject = new_private_message_form.cleaned_data["subject"]
+            message = new_private_message_form.cleaned_data["message"]
+
+            PersonalMessage(
+                sender=sender,
+                recipient=recipient,
+                subject=subject,
+                message=message,
+            ).save()
+
+            messages.success(
+                request,
+                mark_safe(_(f"<h4>Success!</h4><p>Message to {recipient} sent.<p>")),
+            )
+
+            return redirect("aa_forum:personal_messages_inbox")
+
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4>"
+                    "<p>Something went wrong, please check your input<p>"
+                )
+            ),
+        )
+    else:
+        new_private_message_form = PersonalMessageForm()
+
+    context = {"form": new_private_message_form}
 
     return render(request, "aa_forum/view/personal-messages/new-message.html", context)
 

@@ -16,7 +16,16 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 # AA Forum
 from aa_forum.helper.text import string_cleanup
-from aa_forum.models import Board, Category, Message, Setting, Topic, UserProfile
+from aa_forum.models import (
+    Board,
+    Category,
+    General,
+    Message,
+    PersonalMessage,
+    Setting,
+    Topic,
+    UserProfile,
+)
 
 
 def get_mandatory_form_label_text(text):
@@ -439,3 +448,43 @@ class SettingForm(ModelForm):
 
         model = Setting
         fields = ["messages_per_page", "topics_per_page", "user_signature_length"]
+
+
+class PersonalMessageForm(ModelForm):
+    recipient = forms.ModelChoiceField(
+        queryset=General.users_with_basic_access(),
+        required=True,
+        label=get_mandatory_form_label_text(_("Recipient")),
+    )
+    subject = forms.CharField(
+        required=True,
+        label=get_mandatory_form_label_text(_("Subject")),
+        max_length=254,
+        widget=forms.TextInput(attrs={"placeholder": _("Hello there ...")}),
+    )
+    message = forms.CharField(
+        widget=CKEditorUploadingWidget(
+            config_name="aa_forum",
+            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
+        ),
+        required=True,
+        label=get_mandatory_form_label_text(_("Message")),
+    )
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        """
+        Meta definitions
+        """
+
+        model = PersonalMessage
+        fields = ["recipient", "subject", "message"]
+
+    def clean_message(self):
+        """
+        Cleanup the message
+        :return:
+        """
+
+        message = string_cleanup(self.cleaned_data["message"])
+
+        return message

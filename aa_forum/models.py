@@ -9,13 +9,16 @@ import math
 import unidecode
 
 # Django
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group, Permission, User
 from django.db import models, transaction
 from django.db.models import Q
 from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+
+# Alliance Auth (External Libs)
+from app_utils.django import users_with_permission
 
 # ckEditor
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -118,6 +121,25 @@ class General(models.Model):
                 _("Can manage the AA-Forum module (Category, topics and messages)"),
             ),
         )
+
+    @classmethod
+    def basic_permission(cls):
+        """
+        Return basic permission needed to use this app
+        """
+
+        return Permission.objects.select_related("content_type").get(
+            content_type__app_label=cls._meta.app_label, codename="basic_access"
+        )
+
+    @classmethod
+    def users_with_basic_access(cls) -> models.QuerySet:
+        """
+        Return a queryset with users with basic access
+        :return:
+        """
+
+        return users_with_permission(cls.basic_permission())
 
 
 class Category(models.Model):
