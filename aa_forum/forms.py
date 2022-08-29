@@ -4,7 +4,7 @@ Forms
 
 # Django
 from django import forms
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxLengthValidator, URLValidator
 from django.forms import ModelForm
@@ -451,8 +451,12 @@ class SettingForm(ModelForm):
 
 
 class PersonalMessageForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["recipient"].queryset = General.users_with_basic_access()
+
     recipient = forms.ModelChoiceField(
-        queryset=General.users_with_basic_access(),
+        queryset=User.objects.none(),
         required=True,
         label=get_mandatory_form_label_text(_("Recipient")),
     )
