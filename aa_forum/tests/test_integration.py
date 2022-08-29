@@ -1228,3 +1228,99 @@ class TestPersonalMessageUI(WebTest):
         self.assertEqual(personal_message.recipient, self.user_1002)
         self.assertEqual(personal_message.subject, "Foobar")
         self.assertEqual(personal_message.message, "Foobar")
+
+    def test_should_not_send_personal_message_ad_rais_an_error_due_to_empty_recipient(
+        self,
+    ):
+        """
+        Test should not send a personal message and raise an error
+        because of empty recipient
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(reverse("aa_forum:personal_messages_new_message"))
+
+        # when
+        form = page.forms["aa-forum-form-new-personal-message"]
+        form["subject"] = "Foobar"
+        form["message"] = "Foobar"
+        page = form.submit()
+
+        # then
+        self.assertTemplateUsed(
+            page, "aa_forum/view/personal-messages/new-message.html"
+        )
+
+        messages = list(page.context["messages"])
+
+        expected_message = (
+            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+        )
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_not_send_personal_message_ad_rais_an_error_due_to_empty_subject(
+        self,
+    ):
+        """
+        Test should not send a personal message and raise an error
+        because of empty subject
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(reverse("aa_forum:personal_messages_new_message"))
+
+        # when
+        form = page.forms["aa-forum-form-new-personal-message"]
+        form["recipient"] = self.user_1002.pk
+        form["message"] = "Foobar"
+        page = form.submit()
+
+        # then
+        self.assertTemplateUsed(
+            page, "aa_forum/view/personal-messages/new-message.html"
+        )
+
+        messages = list(page.context["messages"])
+
+        expected_message = (
+            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+        )
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_not_send_personal_message_ad_rais_an_error_due_to_empty_message(
+        self,
+    ):
+        """
+        Test should not send a personal message and raise an error
+        because of empty message
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(reverse("aa_forum:personal_messages_new_message"))
+
+        # when
+        form = page.forms["aa-forum-form-new-personal-message"]
+        form["recipient"] = self.user_1002.pk
+        form["subject"] = "Foobar"
+        page = form.submit()
+
+        # then
+        self.assertTemplateUsed(
+            page, "aa_forum/view/personal-messages/new-message.html"
+        )
+
+        messages = list(page.context["messages"])
+
+        expected_message = (
+            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+        )
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)

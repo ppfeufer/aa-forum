@@ -273,6 +273,12 @@ class EditBoardForm(ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
+        """
+        When form is initialized
+        :param args:
+        :param kwargs:
+        """
+
         groups_queryset = kwargs.pop("groups_queryset", None)
 
         super().__init__(*args, **kwargs)
@@ -450,10 +456,10 @@ class SettingForm(ModelForm):
         fields = ["messages_per_page", "topics_per_page", "user_signature_length"]
 
 
-class PersonalMessageForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["recipient"].queryset = General.users_with_basic_access()
+class NewPersonalMessageForm(ModelForm):
+    """
+    New personal message form
+    """
 
     recipient = forms.ModelChoiceField(
         queryset=User.objects.none(),
@@ -474,6 +480,17 @@ class PersonalMessageForm(ModelForm):
         required=True,
         label=get_mandatory_form_label_text(_("Message")),
     )
+
+    def __init__(self, *args, **kwargs):
+        """
+        When form is initialized
+        :param args:
+        :param kwargs:
+        """
+
+        super().__init__(*args, **kwargs)
+
+        self.fields["recipient"].queryset = General.users_with_basic_access()
 
     class Meta:  # pylint: disable=too-few-public-methods
         """

@@ -20,7 +20,7 @@ from app_utils.logging import LoggerAddTag
 
 # AA Forum
 from aa_forum import __title__
-from aa_forum.forms import PersonalMessageForm
+from aa_forum.forms import NewPersonalMessageForm
 from aa_forum.models import PersonalMessage, Setting
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
@@ -66,7 +66,7 @@ def new_message(request: WSGIRequest) -> HttpResponse:
 
     # If this is a POST request we need to process the form data
     if request.method == "POST":
-        new_private_message_form = PersonalMessageForm(request.POST)
+        new_private_message_form = NewPersonalMessageForm(request.POST)
 
         # Check whether it's valid:
         if new_private_message_form.is_valid():
@@ -99,7 +99,7 @@ def new_message(request: WSGIRequest) -> HttpResponse:
             ),
         )
     else:
-        new_private_message_form = PersonalMessageForm()
+        new_private_message_form = NewPersonalMessageForm()
 
     context = {"form": new_private_message_form}
 
