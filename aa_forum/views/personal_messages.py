@@ -133,3 +133,41 @@ def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse
     return render(
         request, "aa_forum/view/personal-messages/sent-messages.html", context
     )
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def ajax_read_message(request: WSGIRequest, folder: str) -> HttpResponse:
+    """
+    Ajax :: Read a personal message
+    :param request:
+    :param folder:
+    :return:
+    """
+
+    data = {}
+
+    if request.method == "POST":
+        sender_id = int(request.POST["sender"])
+        recipient_id = int(request.POST["recipient"])
+        message_id = int(request.POST["message"])
+
+        if (folder == "inbox" and request.user.id == recipient_id) or (
+            folder == "sent-messages" and request.user.id == sender_id
+        ):
+            try:
+                message = PersonalMessage.objects.get(
+                    pk=message_id, sender_id=sender_id, recipient_id=recipient_id
+                )
+            except PersonalMessage.DoesNotExist:
+                # Fail silently
+                pass
+            else:
+                # Mark message as read
+                if folder == "inbox" and message.is_read is False:
+                    message.is_read = True
+                    message.save()
+
+                data["message"] = message
+
+    return render(request, "aa_forum/ajax-render/personal-message/message.html", data)

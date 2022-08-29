@@ -17,6 +17,8 @@
     </div>
 
     {% include "aa_forum/partials/personal-messages/inbox/pagination.html" %}
+
+    <div class="aa-forum-personal-messages-message"></div>
 {% endblock %}
 
 {% block extra_css %}
@@ -25,4 +27,5 @@
 
 {% block extra_javascript %}
     {% include "aa_forum/bundles/ckeditor-js.html" %}
+    {% include "aa_forum/bundles/aa-forum-personal-messages-js.html" %}
 {% endblock %}

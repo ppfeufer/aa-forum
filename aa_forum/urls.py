@@ -124,6 +124,11 @@ urlpatterns = [
         personal_messages.sent_messages,
         name="personal_messages_sent_messages",
     ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/ajax/personal-messages/<str:folder>/read-message/",
+        personal_messages.ajax_read_message,
+        name="personal_messages_ajax_read_message",
+    ),
     # Service URLs
     path(
         f"{INTERNAL_URL_PREFIX}/message/<int:message_id>/delete/",

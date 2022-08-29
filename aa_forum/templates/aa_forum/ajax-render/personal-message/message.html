@@ -1,0 +1,5 @@
+{% if message %}
+    <div class="aa-forum-personal-messages-message-item aa-forum-personal-messages-message-message-{{ message.pk }}">
+        {{ message.message|safe }}
+    </div>
+{% endif %}
