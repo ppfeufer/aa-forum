@@ -17,7 +17,15 @@ from django.urls import reverse
 
 # AA Forum
 from aa_forum.helper.text import string_cleanup
-from aa_forum.models import Board, Category, Message, Setting, Topic, UserProfile
+from aa_forum.models import (
+    Board,
+    Category,
+    Message,
+    PersonalMessage,
+    Setting,
+    Topic,
+    UserProfile,
+)
 from aa_forum.tests.utils import (
     create_fake_message,
     create_fake_messages,
@@ -1193,3 +1201,30 @@ class TestPersonalMessageUI(WebTest):
         self.assertRedirects(
             page, "/account/login/?next=/forum/-/personal-messages/sent-messages/"
         )
+
+    def test_should_send_personal_message(self):
+        """
+        Test should send a personal message
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+        page = self.app.get(reverse("aa_forum:personal_messages_new_message"))
+
+        # when
+        form = page.forms["aa-forum-form-new-personal-message"]
+        form["recipient"] = self.user_1002.pk
+        form["subject"] = "Foobar"
+        form["message"] = "Foobar"
+        page = form.submit().follow()
+
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/personal-messages/inbox.html")
+
+        personal_message = PersonalMessage.objects.last()
+
+        self.assertEqual(personal_message.sender, self.user_1001)
+        self.assertEqual(personal_message.recipient, self.user_1002)
+        self.assertEqual(personal_message.subject, "Foobar")
+        self.assertEqual(personal_message.message, "Foobar")
