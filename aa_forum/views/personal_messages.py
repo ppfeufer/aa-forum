@@ -2,6 +2,9 @@
 Messages views
 """
 
+# Standard Library
+from http import HTTPStatus
+
 # Django
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -9,6 +12,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -148,26 +152,36 @@ def ajax_read_message(request: WSGIRequest, folder: str) -> HttpResponse:
     data = {}
 
     if request.method == "POST":
-        sender_id = int(request.POST["sender"])
-        recipient_id = int(request.POST["recipient"])
-        message_id = int(request.POST["message"])
+        try:
+            sender_id = int(request.POST["sender"])
+            recipient_id = int(request.POST["recipient"])
+            message_id = int(request.POST["message"])
+        except MultiValueDictKeyError:
+            # Fail silently
+            pass
+        else:
+            if (folder == "inbox" and request.user.id == recipient_id) or (
+                folder == "sent-messages" and request.user.id == sender_id
+            ):
+                try:
+                    message = PersonalMessage.objects.get(
+                        pk=message_id, sender_id=sender_id, recipient_id=recipient_id
+                    )
+                except PersonalMessage.DoesNotExist:
+                    # Fail silently
+                    pass
+                else:
+                    # Mark message as read
+                    if folder == "inbox" and message.is_read is False:
+                        message.is_read = True
+                        message.save()
 
-        if (folder == "inbox" and request.user.id == recipient_id) or (
-            folder == "sent-messages" and request.user.id == sender_id
-        ):
-            try:
-                message = PersonalMessage.objects.get(
-                    pk=message_id, sender_id=sender_id, recipient_id=recipient_id
-                )
-            except PersonalMessage.DoesNotExist:
-                # Fail silently
-                pass
-            else:
-                # Mark message as read
-                if folder == "inbox" and message.is_read is False:
-                    message.is_read = True
-                    message.save()
+                    data["message"] = message
 
-                data["message"] = message
+                    return render(
+                        request,
+                        "aa_forum/ajax-render/personal-message/message.html",
+                        data,
+                    )
 
-    return render(request, "aa_forum/ajax-render/personal-message/message.html", data)
+    return HttpResponse(status=HTTPStatus.NO_CONTENT)

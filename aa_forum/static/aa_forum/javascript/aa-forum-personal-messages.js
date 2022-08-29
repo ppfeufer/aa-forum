@@ -24,7 +24,7 @@ $(function () {
         );
 
         posting.done((data) => {
-            if (data.replace(/\s/g, '') === '') {
+            if (undefined === data || data === '') {
                 return;
             }
 

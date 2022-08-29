@@ -4,6 +4,7 @@ Integration and UI tests
 
 # Standard Library
 import json
+from http import HTTPStatus
 from unittest.mock import patch
 
 # Third Party
@@ -1324,3 +1325,151 @@ class TestPersonalMessageUI(WebTest):
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_return_empty_response_for_template_for_ajax_read_message_with_get(
+        self,
+    ):
+        """
+        Test should return empty response HTTP code
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1001)
+
+        # when
+        page = self.app.get(
+            reverse("aa_forum:personal_messages_ajax_read_message", args=["inbox"])
+        )
+
+        # then
+        self.assertEqual(page.status_code, HTTPStatus.NO_CONTENT)
+
+    def test_should_fail_silently_for_ajax_read_message_with_no_post_data(
+        self,
+    ):
+        """
+        Test should fail silently with no POST data and return empty response HTTP code
+        :return:
+        """
+
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        page = self.client.post(
+            reverse("aa_forum:personal_messages_ajax_read_message", args=["inbox"]),
+        )
+
+        # then
+        self.assertEqual(page.status_code, HTTPStatus.NO_CONTENT)
+
+    def test_should_not_return_inbox_message_when_recipient_and_user_dont_match(
+        self,
+    ):
+        """
+        Test should not return an inbox message when recipient and user don't match
+        and return empty response HTTP code
+        :return:
+        """
+
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        page = self.client.post(
+            reverse("aa_forum:personal_messages_ajax_read_message", args=["inbox"]),
+            data={"sender": 1, "recipient": 1, "message": 1},
+        )
+
+        # then
+        self.assertEqual(page.status_code, HTTPStatus.NO_CONTENT)
+
+    def test_should_not_return_inbox_message_when_message_doesnt_exist(
+        self,
+    ):
+        """
+        Test should not return an inbox message when recipient and user don't match
+        and return empty response HTTP code
+        :return:
+        """
+
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        page = self.client.post(
+            reverse("aa_forum:personal_messages_ajax_read_message", args=["inbox"]),
+            data={"sender": 1, "recipient": self.user_1001.pk, "message": 1},
+        )
+
+        # then
+        self.assertEqual(page.status_code, HTTPStatus.NO_CONTENT)
+
+    def test_should_return_inbox_message(self):
+        """
+        Test should return an inbox message
+        :return:
+        """
+
+        # given
+        PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+        ).save()
+        message = PersonalMessage.objects.last()
+        self.client.force_login(self.user_1001)
+
+        # when
+        page = self.client.post(
+            reverse("aa_forum:personal_messages_ajax_read_message", args=["inbox"]),
+            data={
+                "sender": self.user_1002.pk,
+                "recipient": self.user_1001.pk,
+                "message": message.pk,
+            },
+        )
+
+        # then
+        self.assertEqual(page.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(
+            page, "aa_forum/ajax-render/personal-message/message.html"
+        )
+
+        def test_should_mark_message_as_read(self):
+            """
+            Test should unread message as read upron return
+            :return:
+            """
+
+            # given
+            PersonalMessage(
+                subject="Test Message",
+                sender=self.user_1002,
+                recipient=self.user_1001,
+                message="FOOBAR",
+            ).save()
+            message_sent = PersonalMessage.objects.last()
+            self.client.force_login(self.user_1001)
+
+            # when
+            page = self.client.post(
+                reverse("aa_forum:personal_messages_ajax_read_message", args=["inbox"]),
+                data={
+                    "sender": self.user_1002.pk,
+                    "recipient": self.user_1001.pk,
+                    "message": message_sent.pk,
+                },
+            )
+
+            # then
+            message_returned = PersonalMessage.objects.get(
+                sender=self.user_1002, recipient=self.user_1001, message=message_sent
+            )
+            self.assertEqual(page.status_code, HTTPStatus.OK)
+            self.assertTemplateUsed(
+                page, "aa_forum/ajax-render/personal-message/message.html"
+            )
+            self.assertTrue(message_returned.is_read)
