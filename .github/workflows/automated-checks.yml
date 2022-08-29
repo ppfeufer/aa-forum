@@ -67,18 +67,47 @@ jobs:
   # Run Test Coverage
   test-coverage-aa-stable:
     needs: [ codacy-security-scan ]
-    name: Test Coverage (AA Stable, Python ${{ matrix.python-version }}, Django ${{ matrix.django-version }})
+    name: Test Coverage (AA Stable, Python ${{ matrix.python-version }}, DB ${{ matrix.database }}, Django ${{ matrix.django-version }})
     runs-on: ubuntu-latest
 
     strategy:
       # Set Python and Django version to test for the stable release of AllianceAuth
       matrix:
         # Don't forget to change the Python version for [upload-coverage] as well
-        python-version: [ '3.8', '3.9', '3.10', '3.11-dev' ]
+        python-version:
+          - 3.8
+          - 3.9
+          - '3.10'
+          - '3.11-dev'
         # Don't forget to change the Django version for [upload-coverage] as well
-        django-version: [ '4.0' ]
+        django-version:
+          - 4.0
+        database:
+          - mysql:5.7
+          - mysql:8.0
+          - mariadb:10.3
+          - mariadb:10.4
+          - mariadb:10.5
+          - mariadb:10.6
+          - mariadb:10.7
+          - mariadb:10.8
 
     continue-on-error: ${{ matrix.python-version == '3.11-dev' }}
+
+    services:
+      database:
+        image: ${{ matrix.database }}
+        env:
+          MYSQL_ROOT_PASSWORD: foobar
+          MYSQL_DATABASE: tox_allianceauth
+        ports:
+          - 3306:3306
+        options: --tmpfs /var/lib/mysql
+
+    env:
+      DB_HOST: 127.0.0.1
+      DB_USER: root
+      DB_PASSWORD: foobar
 
     steps:
       - name: Checkout
