@@ -18,9 +18,20 @@
 {% endblock %}
 
 {% block extra_css %}
+    {% include "aa_forum/bundles/select2-css.html" %}
+    {% include "aa_forum/bundles/select2-bootstrap-theme-css.html" %}
     {% include "aa_forum/bundles/aa-forum-css.html" %}
 {% endblock %}
 
 {% block extra_javascript %}
     {% include "aa_forum/bundles/ckeditor-js.html" %}
+    {% include "aa_forum/bundles/select2-js.html" %}
+
+    <script>
+        $("#id_recipient").select2({
+            theme: "bootstrap",
+            minimumInputLength: 3,
+            placeholder: "{% translate 'Enter the recipients name' %}",
+        });
+    </script>
 {% endblock %}

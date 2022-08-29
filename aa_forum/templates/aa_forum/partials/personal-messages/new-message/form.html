@@ -11,18 +11,20 @@
 
         <div class="panel-body">
             <form id="aa-forum-form-new-personal-message" class="form-horizontal" autocomplete="off" action="{% url 'aa_forum:personal_messages_new_message' %}" method="post">
-                {% csrf_token %}
-                {{ form|bootstrap_horizontal }}
+                <fieldset>
+                    {% csrf_token %}
+                    {{ form|bootstrap_horizontal }}
 
-                {% include "aa_forum/partials/form/required-field-hint.html" with form_horizontal=True %}
+                    {% include "aa_forum/partials/form/required-field-hint.html" with form_horizontal=True %}
 
-                <div class="form-group aa-forum-form-group aa-forum-form-modify-userprofile text-right clearfix">
-                    <div class="col-xs-12">
-                        <button class="btn btn-primary btn-sm" type="submit">
-                            {% translate "Submit" %}
-                        </button>
+                    <div class="form-group aa-forum-form-group aa-forum-form-modify-userprofile text-right clearfix">
+                        <div class="col-xs-12">
+                            <button class="btn btn-primary btn-sm" type="submit">
+                                {% translate "Submit" %}
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </fieldset>
             </form>
         </div>
     </div>
