@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.safestring import mark_safe
@@ -185,3 +185,21 @@ def ajax_read_message(request: WSGIRequest, folder: str) -> HttpResponse:
                     )
 
     return HttpResponse(status=HTTPStatus.NO_CONTENT)
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def ajax_unread_messages_count(request: WSGIRequest) -> JsonResponse:
+    """
+    Get unread messages count for a user
+    :param request:
+    :return:
+    """
+
+    unread_messages_count = (
+        PersonalMessage.objects.get_personal_message_unread_count_for_user(request.user)
+    )
+
+    data = {"unread_messages_count": unread_messages_count}
+
+    return JsonResponse(data, safe=False)

@@ -56,12 +56,13 @@
                                     data-sender="{{ message.sender.pk }}"
                                     data-recipient="{{ message.recipient.pk }}"
                                     data-message="{{ message.pk }}"
+                                    data-message-folder="inbox"
                                 >
                                     <i class="fas fa-sign-in-alt"></i>
                                 </button>
 
                                 {% if not message.is_read %}
-                                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Mark message as read' %}">
+                                    <button class="btn btn-aa-forum-topic-moderation btn-xs btn-mark-personal-message-as-read" title="{% translate 'Mark message as read' %}">
                                         <i class="fas fa-check-double"></i>
                                     </button>
                                 {% endif %}
@@ -84,7 +85,8 @@
 
 <script>
     const personalMessagesSettings = {
-        csrfToken: "{{ csrf_token }}",
-        urlReadMessage: "{% url 'aa_forum:personal_messages_ajax_read_message' 'inbox' %}"
+        csrfToken: '{{ csrf_token }}',
+        urlReadMessage: '{% url "aa_forum:personal_messages_ajax_read_message" "inbox" %}',
+        urlUnreadMessagesCount: '{% url "aa_forum:personal_messages_ajax_unread_messages_count" %}'
     };
 </script>

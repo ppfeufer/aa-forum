@@ -10,6 +10,7 @@ $(function () {
         const sender = element.data('sender');
         const recipient = element.data('recipient');
         const message = element.data('message');
+        const messageFolder = element.data('message-folder');
         const url = personalMessagesSettings.urlReadMessage;
         const csrfMiddlewareToken = personalMessagesSettings.csrfToken;
 
@@ -37,9 +38,34 @@ $(function () {
                 {scrollTop: messageContainer.offset().top - 50}, 500
             );
 
-            // Remove unread marking (bold font)
-            $('#aa-forum-personal-message-id-' + message)
-                .removeClass('panel-aa-forum-personal-messages-item-unread');
+            if (messageFolder === 'inbox') {
+                const urlUnreadMessagesCount = personalMessagesSettings.urlUnreadMessagesCount;
+
+                $('#aa-forum-personal-message-id-' + message)
+                    .removeClass('panel-aa-forum-personal-messages-item-unread');
+
+                $('#aa-forum-personal-message-id-' + message + ' .btn-mark-personal-message-as-read')
+                    .remove();
+
+                // Get new unread count
+                const posting = $.post(
+                    urlUnreadMessagesCount,
+                    {
+                        csrfmiddlewaretoken: csrfMiddlewareToken
+                    }
+                );
+
+                posting.done((data) => {
+                    if (data.unread_messages_count > 0) {
+                        $('.aa-forum-badge-personal-messages-unread-count')
+                            .html(data.unread_messages_count);
+                    }
+
+                    if (data.unread_messages_count === 0) {
+                        $('.aa-forum-badge-personal-messages-unread-count').remove();
+                    }
+                });
+            }
         });
     });
 });

@@ -1507,3 +1507,29 @@ class TestPersonalMessageUI(WebTest):
             page, "aa_forum/ajax-render/personal-message/message.html"
         )
         self.assertTrue(message_returned.is_read)
+
+    def test_should_return_inbox_message_unread_count(self):
+        """
+        Test should return an inbox message
+        :return:
+        """
+
+        # given
+        PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+        ).save()
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.post(
+            reverse("aa_forum:personal_messages_ajax_unread_messages_count"),
+        )
+
+        # then
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertJSONEqual(
+            str(response.content, encoding="utf8"), {"unread_messages_count": 1}
+        )
