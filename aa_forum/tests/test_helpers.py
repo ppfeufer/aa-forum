@@ -6,17 +6,23 @@ Test for our helper functions
 from unittest.mock import patch
 
 # Django
+from django.contrib.auth.models import Group
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
 
+# Alliance Auth
+from allianceauth.tests.auth_utils import AuthUtils
+
 # Alliance Auth (External Libs)
-from app_utils.testing import create_fake_user
+from app_utils.testing import create_eve_character, create_fake_user
 
 # AA Forum
 from aa_forum.forms import NewCategoryForm
 from aa_forum.helper.eve_images import get_character_portrait_from_evecharacter
 from aa_forum.helper.forms import message_form_errors
 from aa_forum.helper.text import get_image_url, string_cleanup
+from aa_forum.helper.user import get_main_character_from_user
+from aa_forum.models import get_sentinel_user
 
 
 @patch("aa_forum.helper.forms.messages")
@@ -215,3 +221,72 @@ class TestHelperEveImages(TestCase):
         )
 
         self.assertEqual(portrait_html, expected_html)
+
+
+class TestGetMainCharacterFromUser(TestCase):
+    """
+    Tests for get_main_character_from_user
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        """
+        Set up groups and users
+        """
+
+        super().setUpClass()
+        cls.group = Group.objects.create(name="Enterprise Crew")
+
+        cls.user_main_character = create_fake_user(
+            character_id=1001, character_name="William T. Riker"
+        )
+
+        cls.character_without_profile = create_eve_character(
+            character_id=1003, character_name="Christopher Pike"
+        )
+
+    def test_get_main_character_from_user_should_return_character_name(self):
+        """
+        Test should return the main character name for a regular user
+        :return:
+        """
+
+        character_name = get_main_character_from_user(self.user_main_character)
+
+        self.assertEqual(character_name, "William T. Riker")
+
+    def test_get_main_character_from_user_should_return_user_name(self):
+        """
+        Test should return just the username for a user without a character
+        :return:
+        """
+
+        user = AuthUtils.create_user("John Doe")
+
+        character_name = get_main_character_from_user(user)
+
+        self.assertEqual(character_name, "John Doe")
+
+    def test_get_main_character_from_user_should_return_sentinel_user(self):
+        """
+        Test should return "deleted" as username (Sentinel User)
+        :return:
+        """
+
+        user = get_sentinel_user()
+
+        character_name = get_main_character_from_user(user)
+
+        self.assertEqual(character_name, "deleted")
+
+    def test_get_main_character_from_user_should_return_sentinel_user_for_none(self):
+        """
+        Test should return "deleted" (Sentinel User) if user is None
+        :return:
+        """
+
+        user = None
+
+        character_name = get_main_character_from_user(user)
+
+        self.assertEqual(character_name, "deleted")

@@ -1593,40 +1593,34 @@ class TestPersonalMessageUI(WebTest):
         with self.assertRaises(PersonalMessage.DoesNotExist):
             PersonalMessage.objects.get(pk=message.pk)
 
-    # def test_should_not_delete_inbox_message(self):
-    #     """
-    #     Test should not delete an inbox message and throw an error message
-    #     :return:
-    #     """
-    #
-    #     # given
-    #     message = PersonalMessage(
-    #         subject="Test Message",
-    #         sender=self.user_1002,
-    #         recipient=self.user_1001,
-    #         message="FOOBAR",
-    #         deleted_by_sender=True,
-    #     )
-    #     message.save()
-    #
-    #     self.client.force_login(self.user_1002)
-    #
-    #     # when
-    #     response = self.app.get(
-    #         reverse(
-    #             "aa_forum:personal_messages_message_delete", args=["inbox", message.pk]
-    #         ),
-    #     )
-    #
-    #     # then
-    #     expected_message = (
-    #         "<h4>Error!</h4>"
-    #         "<p>The message you tried to remove does either not exist "
-    #         "or is not yours to remove.<p>"
-    #     )
-    #     messages = list(response.context["messages"])
-    #     self.assertEqual(len(messages), 1)
-    #     self.assertEqual(str(messages[0]), expected_message)
+    def test_should_not_delete_inbox_message_and_redirect(self):
+        """
+        Test should not delete an inbox message and throw an error message
+        :return:
+        """
+
+        # given
+        message = PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+            deleted_by_sender=True,
+        )
+        message.save()
+
+        self.client.force_login(self.user_1002)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:personal_messages_message_delete", args=["inbox", message.pk]
+            ),
+        )
+
+        # then
+        self.assertTrue(PersonalMessage.objects.get(pk=message.pk))
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
     def test_should_remove_sent_message(self):
         """
@@ -1686,3 +1680,181 @@ class TestPersonalMessageUI(WebTest):
         # then
         with self.assertRaises(PersonalMessage.DoesNotExist):
             PersonalMessage.objects.get(pk=message.pk)
+
+    def test_should_open_reply_view(self):
+        """
+        Test should show reply view
+        :return:
+        """
+
+        # given
+        message = PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+        )
+        message.save()
+
+        # when
+        self.client.force_login(self.user_1001)
+        response = self.client.get(
+            reverse("aa_forum:personal_messages_message_reply", args=[message.pk]),
+        )
+
+        # then
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(
+            response, "aa_forum/view/personal-messages/reply-message.html"
+        )
+
+    def test_should_not_open_reply_view(self):
+        """
+        Test should show reply view
+        :return:
+        """
+
+        # given
+        message = PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+        )
+        message.save()
+
+        # when
+        self.client.force_login(self.user_1002)
+        response = self.client.get(
+            reverse("aa_forum:personal_messages_message_reply", args=[message.pk]),
+        )
+
+        # then
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+
+    def test_should_send_reply(self):
+        """
+        Test should send a reply to a personal message
+        :return:
+        """
+
+        # given
+        message = PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+        )
+        message.save()
+
+        # when
+        self.app.set_user(self.user_1001)
+        page = self.app.get(
+            reverse("aa_forum:personal_messages_message_reply", args=[message.pk]),
+        )
+
+        form = page.forms["aa-forum-form-new-personal-message-reply"]
+        form["message"] = "BARFOO"
+        response = form.submit().follow()
+
+        # then
+        reply = PersonalMessage.objects.last()
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(reply.subject, "Re: Test Message")
+        self.assertEqual(reply.message, "BARFOO")
+        self.assertEqual(reply.sender, self.user_1001)
+        self.assertEqual(reply.recipient, self.user_1002)
+        self.assertTemplateUsed(response, "aa_forum/view/personal-messages/inbox.html")
+
+    def test_should_not_send_reply_with_missing_form_field(self):
+        """
+        Test should not send a reply to a personal message because form field is missing
+        :return:
+        """
+
+        # given
+        message = PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+        )
+        message.save()
+
+        # when
+        self.app.set_user(self.user_1001)
+        page = self.app.get(
+            reverse("aa_forum:personal_messages_message_reply", args=[message.pk]),
+        )
+
+        form = page.forms["aa-forum-form-new-personal-message-reply"]
+        response = form.submit()
+
+        # then
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        expected_message = (
+            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+        )
+        messages = list(response.context["messages"])
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_change_topic_on_reply(self):
+        """
+        Test should add "Re:" to the topic on first reply
+        :return:
+        """
+
+        # given
+        message = PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+        )
+        message.save()
+
+        # when
+        self.app.set_user(self.user_1001)
+        page = self.app.get(
+            reverse("aa_forum:personal_messages_message_reply", args=[message.pk]),
+        )
+
+        form = page.forms["aa-forum-form-new-personal-message-reply"]
+        form["message"] = "BARFOO"
+        response = form.submit().follow()
+
+        # then
+        reply = PersonalMessage.objects.last()
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(reply.subject, "Re: Test Message")
+
+    def test_should_not_change_topic_on_reply(self):
+        """
+        Test should not add another "Re:" to the topic on reply to a reply
+        :return:
+        """
+
+        # given
+        message = PersonalMessage(
+            subject="Re: Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+        )
+        message.save()
+
+        # when
+        self.app.set_user(self.user_1001)
+        page = self.app.get(
+            reverse("aa_forum:personal_messages_message_reply", args=[message.pk]),
+        )
+
+        form = page.forms["aa-forum-form-new-personal-message-reply"]
+        form["message"] = "BARFOO"
+        response = form.submit().follow()
+
+        # then
+        reply = PersonalMessage.objects.last()
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(reply.subject, "Re: Test Message")

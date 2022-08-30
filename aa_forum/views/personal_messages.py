@@ -24,7 +24,8 @@ from app_utils.logging import LoggerAddTag
 
 # AA Forum
 from aa_forum import __title__
-from aa_forum.forms import NewPersonalMessageForm
+from aa_forum.forms import NewPersonalMessageForm, ReplyPersonalMessageForm
+from aa_forum.helper.user import get_main_character_from_user
 from aa_forum.models import PersonalMessage, Setting
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
@@ -86,9 +87,12 @@ def new_message(request: WSGIRequest) -> HttpResponse:
                 message=message,
             ).save()
 
+            recipient_main_char = get_main_character_from_user(recipient)
             messages.success(
                 request,
-                mark_safe(_(f"<h4>Success!</h4><p>Message to {recipient} sent.<p>")),
+                mark_safe(
+                    _(f"<h4>Success!</h4><p>Message to {recipient_main_char} sent.<p>")
+                ),
             )
 
             return redirect("aa_forum:personal_messages_inbox")
@@ -136,6 +140,92 @@ def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse
 
     return render(
         request, "aa_forum/view/personal-messages/sent-messages.html", context
+    )
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
+def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
+    """
+    Reply to a message
+    :param request:
+    :param message_id:
+    :return:
+    """
+
+    context = {}
+
+    try:
+        personal_message = PersonalMessage.objects.get(
+            pk=message_id, recipient=request.user, deleted_by_recipient=False
+        )
+    except PersonalMessage.DoesNotExist:
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4>"
+                    "<p>The message you were trying to reply to does either not exist "
+                    "or you are not the recipient.<p>"
+                )
+            ),
+        )
+
+        return redirect("aa_forum:personal_messages_inbox")
+    else:
+        # If this is a POST request we need to process the form data
+        if request.method == "POST":
+            reply_private_message_form = ReplyPersonalMessageForm(request.POST)
+
+            # Check whether it's valid:
+            if reply_private_message_form.is_valid():
+                sender = request.user
+                recipient = personal_message.sender
+
+                subject = personal_message.subject
+                if not subject.startswith("Re:"):
+                    subject = "Re: " + subject
+
+                subject = subject
+                message = reply_private_message_form.cleaned_data["message"]
+
+                PersonalMessage(
+                    sender=sender,
+                    recipient=recipient,
+                    subject=subject,
+                    message=message,
+                ).save()
+
+                recipient_main_char = get_main_character_from_user(recipient)
+                messages.success(
+                    request,
+                    mark_safe(
+                        _(
+                            "<h4>Success!</h4>"
+                            f"<p>Reply to {recipient_main_char} sent.<p>"
+                        )
+                    ),
+                )
+
+                return redirect("aa_forum:personal_messages_inbox")
+
+            messages.error(
+                request,
+                mark_safe(
+                    _(
+                        "<h4>Error!</h4>"
+                        "<p>Something went wrong, please check your input<p>"
+                    )
+                ),
+            )
+        else:
+            reply_private_message_form = ReplyPersonalMessageForm()
+
+        context["message"] = personal_message
+        context["form"] = reply_private_message_form
+
+    return render(
+        request, "aa_forum/view/personal-messages/reply-message.html", context
     )
 
 

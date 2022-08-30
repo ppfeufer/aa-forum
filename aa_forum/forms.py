@@ -509,3 +509,36 @@ class NewPersonalMessageForm(ModelForm):
         message = string_cleanup(self.cleaned_data["message"])
 
         return message
+
+
+class ReplyPersonalMessageForm(ModelForm):
+    """
+    Reply personal message form
+    """
+
+    message = forms.CharField(
+        widget=CKEditorUploadingWidget(
+            config_name="aa_forum",
+            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
+        ),
+        required=True,
+        label=get_mandatory_form_label_text(_("Message")),
+    )
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        """
+        Meta definitions
+        """
+
+        model = PersonalMessage
+        fields = ["message"]
+
+    def clean_message(self):
+        """
+        Cleanup the message
+        :return:
+        """
+
+        message = string_cleanup(self.cleaned_data["message"])
+
+        return message
