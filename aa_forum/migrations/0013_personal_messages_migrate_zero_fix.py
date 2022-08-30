@@ -4,7 +4,7 @@ from django.db import migrations
 
 def on_migrate(apps, schema_editor):
     """
-    Remove default settings on migration
+    Just pass through this one
     :param apps:
     :param schema_editor:
     :return:
@@ -15,7 +15,7 @@ def on_migrate(apps, schema_editor):
 
 def on_migrate_zero(apps, schema_editor):
     """
-    Add default settings on migration to zero
+    Remove all personal messages before jumping back to 0012
     :param apps:
     :param schema_editor:
     :return:
