@@ -169,8 +169,6 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
                     )
                 ),
             )
-
-            return redirect("aa_forum:personal_messages_sent_messages")
         else:
             if message.deleted_by_sender is True:
                 message.delete()
@@ -204,8 +202,6 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
                     )
                 ),
             )
-
-            return redirect("aa_forum:personal_messages_sent_messages")
         else:
             if message.deleted_by_recipient is True:
                 message.delete()
