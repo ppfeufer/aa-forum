@@ -141,6 +141,98 @@ def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse
 
 @login_required
 @permission_required("aa_forum.basic_access")
+def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpResponse:
+    """
+    Delete a personal message
+    :param request:
+    :param folder:
+    :param message_id:
+    :return:
+    """
+
+    def foler_inbox() -> HttpResponse:
+        """
+        Remove message from inbox
+        :return:
+        """
+
+        try:
+            message = PersonalMessage.objects.get(pk=message_id, recipient=request.user)
+        except PersonalMessage.DoesNotExist:
+            messages.error(
+                request=request,
+                message=mark_safe(
+                    _(
+                        "<h4>Error!</h4>"
+                        "<p>The message you tried to remove does either not exist "
+                        "or is not yours to remove.<p>"
+                    )
+                ),
+            )
+
+            return redirect("aa_forum:personal_messages_sent_messages")
+        else:
+            if message.deleted_by_sender is True:
+                message.delete()
+            else:
+                message.deleted_by_recipient = True
+                message.save()
+
+            messages.success(
+                request=request,
+                message=mark_safe(_("<h4>Success!</h4><p>Message removed.<p>")),
+            )
+
+        return redirect("aa_forum:personal_messages_inbox")
+
+    def folder_sent_messages() -> HttpResponse:
+        """
+        Remove message from sent messages
+        :return:
+        """
+
+        try:
+            message = PersonalMessage.objects.get(pk=message_id, sender=request.user)
+        except PersonalMessage.DoesNotExist:
+            messages.error(
+                request=request,
+                message=mark_safe(
+                    _(
+                        "<h4>Error!</h4>"
+                        "<p>The message you tried to remove does either not exist "
+                        "or is not yours to remove.<p>"
+                    )
+                ),
+            )
+
+            return redirect("aa_forum:personal_messages_sent_messages")
+        else:
+            if message.deleted_by_recipient is True:
+                message.delete()
+            else:
+                message.deleted_by_sender = True
+                message.save()
+
+            messages.success(
+                request=request,
+                message=mark_safe(_("<h4>Success!</h4><p>Message removed.<p>")),
+            )
+
+        return redirect("aa_forum:personal_messages_sent_messages")
+
+    switch = {"inbox": foler_inbox, "sent-messages": folder_sent_messages}
+    switch[folder]()
+
+    messages.error(
+        request=request,
+        message=mark_safe(_("<h4>Error!</h4><p>Something went wrong.<p>")),
+    )
+
+    return redirect("aa_forum:personal_messages_inbox")
+
+
+@login_required
+@permission_required("aa_forum.basic_access")
 def ajax_read_message(request: WSGIRequest, folder: str) -> HttpResponse:
     """
     Ajax :: Read a personal message

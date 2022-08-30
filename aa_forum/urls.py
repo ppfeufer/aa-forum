@@ -100,12 +100,12 @@ urlpatterns = [
     ),
     # Messages URLs
     path(
-        f"{INTERNAL_URL_PREFIX}/personal-messages/",
+        f"{INTERNAL_URL_PREFIX}/personal-messages/inbox/",
         personal_messages.inbox,
         name="personal_messages_inbox",
     ),
     path(
-        f"{INTERNAL_URL_PREFIX}/personal-messages/page/<int:page_number>/",
+        f"{INTERNAL_URL_PREFIX}/personal-messages/inbox/page/<int:page_number>/",
         personal_messages.inbox,
         name="personal_messages_inbox",
     ),
@@ -123,6 +123,14 @@ urlpatterns = [
         f"{INTERNAL_URL_PREFIX}/personal-messages/sent-messages/page/<int:page_number>/",
         personal_messages.sent_messages,
         name="personal_messages_sent_messages",
+    ),
+    path(
+        (
+            f"{INTERNAL_URL_PREFIX}/personal-messages/<str:folder>/message/"
+            f"<int:message_id>/delete/"
+        ),
+        personal_messages.delete_message,
+        name="personal_messages_message_delete",
     ),
     path(
         f"{INTERNAL_URL_PREFIX}/ajax/personal-messages/<str:folder>/read-message/",

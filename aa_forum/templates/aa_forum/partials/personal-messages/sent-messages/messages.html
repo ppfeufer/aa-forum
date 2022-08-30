@@ -56,16 +56,23 @@
                                     data-sender="{{ message.sender.pk }}"
                                     data-recipient="{{ message.recipient.pk }}"
                                     data-message="{{ message.pk }}"
-                                    data-message-folder="sent"
+                                    data-message-folder="sent-messages"
                                 >
                                     <i class="fas fa-sign-in-alt"></i>
                                 </button>
 
-                                <button class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-delete" title="{% translate 'Delete message' %}">
+                                <button
+                                    class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-delete"
+                                    title="{% translate 'Delete message' %}"
+                                    data-toggle="modal"
+                                    data-target="#delete-message-{{ message.pk }}"
+                                >
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </span>
                         </div>
+
+                        {% include "aa_forum/modals/personal-messages/message-delete.html" with message_folder='sent-messages' %}
                     </div>
                 {% endfor %}
             {% else %}

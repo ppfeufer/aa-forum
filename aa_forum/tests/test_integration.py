@@ -1133,7 +1133,9 @@ class TestPersonalMessageUI(WebTest):
         page = self.app.get(reverse("aa_forum:personal_messages_inbox"))
 
         # then
-        self.assertRedirects(page, "/account/login/?next=/forum/-/personal-messages/")
+        self.assertRedirects(
+            page, "/account/login/?next=/forum/-/personal-messages/inbox/"
+        )
 
     def test_should_show_messages_new_message(self):
         """
@@ -1533,3 +1535,154 @@ class TestPersonalMessageUI(WebTest):
         self.assertJSONEqual(
             str(response.content, encoding="utf8"), {"unread_messages_count": 1}
         )
+
+    def test_should_remove_inbox_message(self):
+        """
+        Test should mark an inbox message as deleted_by_recipient
+        :return:
+        """
+
+        # given
+        message = PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+        )
+        message.save()
+
+        self.client.force_login(self.user_1001)
+
+        # when
+        self.client.post(
+            reverse(
+                "aa_forum:personal_messages_message_delete", args=["inbox", message.pk]
+            ),
+        )
+
+        # then
+        message_removed = PersonalMessage.objects.get(pk=message.pk)
+        self.assertTrue(message_removed.deleted_by_recipient)
+
+    def test_should_delete_inbox_message(self):
+        """
+        Test should delete an inbox message
+        :return:
+        """
+
+        # given
+        message = PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+            deleted_by_sender=True,
+        )
+        message.save()
+
+        self.client.force_login(self.user_1001)
+
+        # when
+        self.client.post(
+            reverse(
+                "aa_forum:personal_messages_message_delete", args=["inbox", message.pk]
+            ),
+        )
+
+        # then
+        with self.assertRaises(PersonalMessage.DoesNotExist):
+            PersonalMessage.objects.get(pk=message.pk)
+
+    # def test_should_not_delete_inbox_message(self):
+    #     """
+    #     Test should not delete an inbox message and throw an error message
+    #     :return:
+    #     """
+    #
+    #     # given
+    #     message = PersonalMessage(
+    #         subject="Test Message",
+    #         sender=self.user_1002,
+    #         recipient=self.user_1001,
+    #         message="FOOBAR",
+    #         deleted_by_sender=True,
+    #     )
+    #     message.save()
+    #
+    #     self.client.force_login(self.user_1002)
+    #
+    #     # when
+    #     response = self.app.get(
+    #         reverse(
+    #             "aa_forum:personal_messages_message_delete", args=["inbox", message.pk]
+    #         ),
+    #     )
+    #
+    #     # then
+    #     expected_message = (
+    #         "<h4>Error!</h4>"
+    #         "<p>The message you tried to remove does either not exist "
+    #         "or is not yours to remove.<p>"
+    #     )
+    #     messages = list(response.context["messages"])
+    #     self.assertEqual(len(messages), 1)
+    #     self.assertEqual(str(messages[0]), expected_message)
+
+    def test_should_remove_sent_message(self):
+        """
+        Test should mark a sent message as deleted_by_sender
+        :return:
+        """
+
+        # given
+        message = PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+        )
+        message.save()
+
+        self.client.force_login(self.user_1002)
+
+        # when
+        self.client.post(
+            reverse(
+                "aa_forum:personal_messages_message_delete",
+                args=["sent-messages", message.pk],
+            ),
+        )
+
+        # then
+        message_removed = PersonalMessage.objects.get(pk=message.pk)
+        self.assertTrue(message_removed.deleted_by_sender)
+
+    def test_should_delete_sent_message(self):
+        """
+        Test should delete a sent message
+        :return:
+        """
+
+        # given
+        message = PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+            deleted_by_recipient=True,
+        )
+        message.save()
+
+        self.client.force_login(self.user_1002)
+
+        # when
+        self.client.post(
+            reverse(
+                "aa_forum:personal_messages_message_delete",
+                args=["sent-messages", message.pk],
+            ),
+        )
+
+        # then
+        with self.assertRaises(PersonalMessage.DoesNotExist):
+            PersonalMessage.objects.get(pk=message.pk)
