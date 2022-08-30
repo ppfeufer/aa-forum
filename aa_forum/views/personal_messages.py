@@ -150,7 +150,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
     :return:
     """
 
-    def foler_inbox() -> HttpResponse:
+    def folder_inbox() -> HttpResponse:
         """
         Remove message from inbox
         :return:
@@ -220,7 +220,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
 
         return redirect("aa_forum:personal_messages_sent_messages")
 
-    switch = {"inbox": foler_inbox, "sent-messages": folder_sent_messages}
+    switch = {"inbox": folder_inbox, "sent-messages": folder_sent_messages}
     switch[folder]()
 
     messages.error(
