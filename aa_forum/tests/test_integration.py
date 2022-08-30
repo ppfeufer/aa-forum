@@ -1437,7 +1437,7 @@ class TestPersonalMessageUI(WebTest):
         # then
         self.assertEqual(page.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(
-            page, "aa_forum/ajax-render/personal-message/message.html"
+            page, "aa_forum/ajax-render/personal-messages/message.html"
         )
 
     def test_should_return_sent_item_message(self):
@@ -1471,7 +1471,7 @@ class TestPersonalMessageUI(WebTest):
         # then
         self.assertEqual(page.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(
-            page, "aa_forum/ajax-render/personal-message/message.html"
+            page, "aa_forum/ajax-render/personal-messages/message.html"
         )
 
     def test_should_mark_message_as_read(self):
@@ -1506,7 +1506,7 @@ class TestPersonalMessageUI(WebTest):
         )
         self.assertEqual(page.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(
-            page, "aa_forum/ajax-render/personal-message/message.html"
+            page, "aa_forum/ajax-render/personal-messages/message.html"
         )
         self.assertTrue(message_returned.is_read)
 

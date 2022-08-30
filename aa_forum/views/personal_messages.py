@@ -265,10 +265,11 @@ def ajax_read_message(request: WSGIRequest, folder: str) -> HttpResponse:
                         message.save()
 
                     data["message"] = message
+                    data["folder"] = folder
 
                     return render(
                         request,
-                        "aa_forum/ajax-render/personal-message/message.html",
+                        "aa_forum/ajax-render/personal-messages/message.html",
                         data,
                     )
 
