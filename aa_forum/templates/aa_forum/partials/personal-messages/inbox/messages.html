@@ -12,7 +12,7 @@
 
         <div class="panel-body">
             {% if page_obj %}
-                <div class="panel-aa-forum-personal-messages-item panel-aa-forum-personal-messages-item-header">
+                <div class="panel-aa-forum-personal-messages-item-header">
                     <div class="aa-forum-personal-message-date">
                         {% translate "Date" %}
                     </div>
@@ -60,12 +60,6 @@
                                 >
                                     <i class="fas fa-sign-in-alt"></i>
                                 </button>
-
-                                {% if not message.is_read %}
-                                    <button class="btn btn-aa-forum-topic-moderation btn-xs btn-mark-personal-message-as-read" title="{% translate 'Mark message as read' %}">
-                                        <i class="fas fa-check-double"></i>
-                                    </button>
-                                {% endif %}
 
                                 <button
                                     class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-delete"
