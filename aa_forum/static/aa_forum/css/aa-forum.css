@@ -412,7 +412,7 @@
 ------------------------------------------------------------------------------------- */
 @media all {
     .aa-forum .panel-aa-forum-personal-messages-item {
-        padding: 1rem 0;
+        padding: 1rem;
     }
 
     .aa-forum .panel-aa-forum-personal-messages-item:hover {
@@ -577,7 +577,7 @@
 -------------------------------------------------------------------------------------
 */
 
-/* Personal message view (@media all and (min-width: 992px))
+/* Personal messages view (@media all and (min-width: 992px))
 ------------------------------------------------------------------------------------- */
 @media all and (min-width: 992px) {
     .panel-aa-forum-personal-messages-item-header,
