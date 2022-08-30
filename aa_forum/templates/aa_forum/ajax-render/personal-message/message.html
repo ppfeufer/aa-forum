@@ -1,5 +1,42 @@
+{% load i18n %}
+{% load aa_forum_template_variables %}
+
 {% if message %}
-    <div class="aa-forum-personal-messages-message-item aa-forum-personal-messages-message-{{ message.pk }}">
-        {{ message.message|safe }}
+    <div id="message-{{ message.pk }}" class="panel panel-default">
+        <div class="panel-body">
+            <div class="aa-forum-message">
+                <div class="hidden-xs">
+                    {% include "aa_forum/partials/forum/topic/message-author.html" with message_author=message.sender %}
+                </div>
+
+                <div class="aa-forum-message-wrapper">
+                    <div class="aa-forum-message-header row">
+                        <div class="hidden-lg hidden-md hidden-sm">
+                            {% include "aa_forum/partials/forum/topic/message-author.html" with message_author=message.sender %}
+                        </div>
+
+                        <div class="aa-forum-message-keyinfo col-md-6">
+                            {{ message.subject }}
+                            <br>
+                            <small>« <b>{% translate "on:" %}</b> {{ message.time_sent|date }}, {{ message.time_sent|time:"G:i:s" }} »</small>
+                        </div>
+                    </div>
+
+                    <div class="aa-forum-message-body">
+                        <div class="aa-forum-message-body-inner">
+                            {{ message.message|safe }}
+                        </div>
+
+                        {% if message_author.aa_forum_user_profile %}
+                            {% if message_author.aa_forum_user_profile.signature %}
+                                <div class="aa-forum-message-body-author-signature text-muted small hidden-xs">
+                                    {{ message_sender.aa_forum_user_profile.signature|safe }}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endif %}
