@@ -1438,38 +1438,72 @@ class TestPersonalMessageUI(WebTest):
             page, "aa_forum/ajax-render/personal-message/message.html"
         )
 
-        def test_should_mark_message_as_read(self):
-            """
-            Test should unread message as read upron return
-            :return:
-            """
+    def test_should_return_sent_item_message(self):
+        """
+        Test should return a message sent
+        :return:
+        """
 
-            # given
-            PersonalMessage(
-                subject="Test Message",
-                sender=self.user_1002,
-                recipient=self.user_1001,
-                message="FOOBAR",
-            ).save()
-            message_sent = PersonalMessage.objects.last()
-            self.client.force_login(self.user_1001)
+        # given
+        PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+        ).save()
+        message = PersonalMessage.objects.last()
+        self.client.force_login(self.user_1002)
 
-            # when
-            page = self.client.post(
-                reverse("aa_forum:personal_messages_ajax_read_message", args=["inbox"]),
-                data={
-                    "sender": self.user_1002.pk,
-                    "recipient": self.user_1001.pk,
-                    "message": message_sent.pk,
-                },
-            )
+        # when
+        page = self.client.post(
+            reverse(
+                "aa_forum:personal_messages_ajax_read_message", args=["sent-messages"]
+            ),
+            data={
+                "sender": self.user_1002.pk,
+                "recipient": self.user_1001.pk,
+                "message": message.pk,
+            },
+        )
 
-            # then
-            message_returned = PersonalMessage.objects.get(
-                sender=self.user_1002, recipient=self.user_1001, message=message_sent
-            )
-            self.assertEqual(page.status_code, HTTPStatus.OK)
-            self.assertTemplateUsed(
-                page, "aa_forum/ajax-render/personal-message/message.html"
-            )
-            self.assertTrue(message_returned.is_read)
+        # then
+        self.assertEqual(page.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(
+            page, "aa_forum/ajax-render/personal-message/message.html"
+        )
+
+    def test_should_mark_message_as_read(self):
+        """
+        Test should unread message as read upon return
+        :return:
+        """
+
+        # given
+        PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+        ).save()
+        message_sent = PersonalMessage.objects.last()
+        self.client.force_login(self.user_1001)
+
+        # when
+        page = self.client.post(
+            reverse("aa_forum:personal_messages_ajax_read_message", args=["inbox"]),
+            data={
+                "sender": self.user_1002.pk,
+                "recipient": self.user_1001.pk,
+                "message": message_sent.pk,
+            },
+        )
+
+        # then
+        message_returned = PersonalMessage.objects.get(
+            sender=self.user_1002, recipient=self.user_1001, pk=message_sent.pk
+        )
+        self.assertEqual(page.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(
+            page, "aa_forum/ajax-render/personal-message/message.html"
+        )
+        self.assertTrue(message_returned.is_read)

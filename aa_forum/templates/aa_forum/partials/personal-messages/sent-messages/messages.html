@@ -50,7 +50,13 @@
                             {{ message.subject }}
 
                             <span class="pull-right">
-                                <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Read message' %}">
+                                <button
+                                    class="btn btn-aa-forum-topic-moderation btn-xs btn-read-personal-message"
+                                    title="{% translate 'Read message' %}"
+                                    data-sender="{{ message.sender.pk }}"
+                                    data-recipient="{{ message.recipient.pk }}"
+                                    data-message="{{ message.pk }}"
+                                >
                                     <i class="fas fa-sign-in-alt"></i>
                                 </button>
 
@@ -69,3 +75,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    const personalMessagesSettings = {
+        csrfToken: "{{ csrf_token }}",
+        urlReadMessage: "{% url 'aa_forum:personal_messages_ajax_read_message' 'sent-messages' %}"
+    };
+</script>
