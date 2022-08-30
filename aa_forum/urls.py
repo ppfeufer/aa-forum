@@ -127,7 +127,7 @@ urlpatterns = [
     path(
         (
             f"{INTERNAL_URL_PREFIX}/personal-messages/inbox/message/"
-            f"<int:message_id>/reply/"
+            "<int:message_id>/reply/"
         ),
         personal_messages.reply_message,
         name="personal_messages_message_reply",
@@ -135,7 +135,7 @@ urlpatterns = [
     path(
         (
             f"{INTERNAL_URL_PREFIX}/personal-messages/<str:folder>/message/"
-            f"<int:message_id>/delete/"
+            "<int:message_id>/delete/"
         ),
         personal_messages.delete_message,
         name="personal_messages_message_delete",
