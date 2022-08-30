@@ -446,6 +446,10 @@
     .aa-forum .aa-forum-personal-message-subject {
         width: 100%;
     }
+
+    .aa-forum .aa-forum-personal-messages-message .panel {
+        margin-top: 2rem;
+    }
 }
 
 /* Lightbox
