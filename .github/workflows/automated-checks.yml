@@ -67,7 +67,7 @@ jobs:
   # Run Test Coverage
   test-coverage-aa-stable:
     needs: [ codacy-security-scan ]
-    name: Test Coverage (AA Stable, Python ${{ matrix.python-version }}, DB ${{ matrix.database }}, Django ${{ matrix.django-version }})
+    name: Test (AA Latest, Py ${{ matrix.python-version }}, Django ${{ matrix.django-version }} with ${{ matrix.database }})
     runs-on: ubuntu-latest
 
     strategy:
