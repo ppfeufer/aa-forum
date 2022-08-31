@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - New Feature: Personal Messages
 
+### Change
+
+- Spacing for moderation icons
+
 
 ## [1.13.0] - 2022-08-26
 
