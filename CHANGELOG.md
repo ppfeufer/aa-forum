@@ -142,7 +142,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - New Feature: Announcement Boards
+
   ![New Feature: Announcement Boards](aa_forum/docs/images/feature-announcement-board.jpg "New Feature: Announcement Boards")
+
   - Boards marked as "Announcement Boards" have restrictions on who can start a topic
     in them. This is the already known group restriction function that is already
     used to restrict access to boards in general
