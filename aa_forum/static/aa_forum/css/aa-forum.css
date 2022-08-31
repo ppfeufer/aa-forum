@@ -413,6 +413,7 @@
 @media all {
     .aa-forum .panel-aa-forum-personal-messages-item {
         padding: 1rem;
+        transition: var(--bg-hover-transition);
     }
 
     .aa-forum .panel-aa-forum-personal-messages-item:hover {

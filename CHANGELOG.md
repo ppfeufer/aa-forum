@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Fixed
+
+- Missing transition added for hover state on personal messages
+
 
 ## [1.14.0] - 2022-08-31
 
