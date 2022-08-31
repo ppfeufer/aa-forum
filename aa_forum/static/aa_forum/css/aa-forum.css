@@ -357,9 +357,9 @@
     }
 
     .aa-forum .aa-forum-message-body-author-signature {
+        border-top: 1px solid rgb(236 240 241);
         margin-top: 3em;
         padding-top: 1em;
-        border-top: 1px solid rgb(236 240 241);
     }
 
     .aa-forum .aa-forum-message-body-last-edited {
@@ -420,8 +420,8 @@
     }
 
     .aa-forum .panel-aa-forum-personal-messages-item-header {
-        font-weight: 700;
         border-bottom: 1px solid rgb(236 240 241);
+        font-weight: 700;
     }
 
     .aa-forum .panel-aa-forum-personal-messages-item-unread {
