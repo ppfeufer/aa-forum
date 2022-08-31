@@ -4,7 +4,7 @@ Forms
 
 # Django
 from django import forms
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxLengthValidator, URLValidator
 from django.forms import ModelForm
@@ -16,7 +16,16 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 # AA Forum
 from aa_forum.helper.text import string_cleanup
-from aa_forum.models import Board, Category, Message, Setting, Topic, UserProfile
+from aa_forum.models import (
+    Board,
+    Category,
+    General,
+    Message,
+    PersonalMessage,
+    Setting,
+    Topic,
+    UserProfile,
+)
 
 
 def get_mandatory_form_label_text(text):
@@ -264,6 +273,12 @@ class EditBoardForm(ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
+        """
+        When form is initialized
+        :param args:
+        :param kwargs:
+        """
+
         groups_queryset = kwargs.pop("groups_queryset", None)
 
         super().__init__(*args, **kwargs)
@@ -439,3 +454,91 @@ class SettingForm(ModelForm):
 
         model = Setting
         fields = ["messages_per_page", "topics_per_page", "user_signature_length"]
+
+
+class NewPersonalMessageForm(ModelForm):
+    """
+    New personal message form
+    """
+
+    recipient = forms.ModelChoiceField(
+        queryset=User.objects.none(),
+        required=True,
+        label=get_mandatory_form_label_text(_("Recipient")),
+    )
+    subject = forms.CharField(
+        required=True,
+        label=get_mandatory_form_label_text(_("Subject")),
+        max_length=254,
+        widget=forms.TextInput(attrs={"placeholder": _("Hello there ...")}),
+    )
+    message = forms.CharField(
+        widget=CKEditorUploadingWidget(
+            config_name="aa_forum",
+            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
+        ),
+        required=True,
+        label=get_mandatory_form_label_text(_("Message")),
+    )
+
+    def __init__(self, *args, **kwargs):
+        """
+        When form is initialized
+        :param args:
+        :param kwargs:
+        """
+
+        super().__init__(*args, **kwargs)
+
+        self.fields["recipient"].queryset = General.users_with_basic_access()
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        """
+        Meta definitions
+        """
+
+        model = PersonalMessage
+        fields = ["recipient", "subject", "message"]
+
+    def clean_message(self):
+        """
+        Cleanup the message
+        :return:
+        """
+
+        message = string_cleanup(self.cleaned_data["message"])
+
+        return message
+
+
+class ReplyPersonalMessageForm(ModelForm):
+    """
+    Reply personal message form
+    """
+
+    message = forms.CharField(
+        widget=CKEditorUploadingWidget(
+            config_name="aa_forum",
+            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
+        ),
+        required=True,
+        label=get_mandatory_form_label_text(_("Message")),
+    )
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        """
+        Meta definitions
+        """
+
+        model = PersonalMessage
+        fields = ["message"]
+
+    def clean_message(self):
+        """
+        Cleanup the message
+        :return:
+        """
+
+        message = string_cleanup(self.cleaned_data["message"])
+
+        return message

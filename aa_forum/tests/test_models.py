@@ -911,7 +911,7 @@ class TestPersonalMessage(TestCase):
         message = create_personal_message(subject="Subject")
 
         # then
-        self.assertEqual(str(message), "Subject")
+        self.assertEqual(str(message), '"Subject" from Bruce_Wayne to Lex_Luthor')
 
     @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
     def test_can_create_personal_message(self):
@@ -925,47 +925,6 @@ class TestPersonalMessage(TestCase):
 
         # then
         self.assertEqual(message.subject, "subject")
-
-    def test_should_generate_new_slug_when_slug_already_exists(self):
-        """
-        Test should create new slug when slug already ecists
-        :return:
-        """
-
-        # given
-        message_1 = create_personal_message()
-        message_1.slug = "dummy"  # we are faking the same slug here
-        message_1.save()
-
-        # when
-        message_2 = create_personal_message(subject="Dummy")
-
-        # then
-        self.assertEqual(message_2.slug, "dummy-1")
-
-    def test_should_not_allow_creation_with_hyphen_slugs(self):
-        """
-        Test should not allow creation with hyphen slugs
-        :return:
-        """
-
-        # when
-        message = create_personal_message(subject="Dummy", slug="-")
-
-        # then
-        self.assertEqual(message.slug, "dummy")
-
-    def test_should_create_slug_with_name_matching_internal_url_prefix(self):
-        """
-        Test should create slug with name matching internal URL prefix
-        :return:
-        """
-
-        # when
-        message = create_personal_message(subject="-")
-
-        # then
-        self.assertEqual(message.slug, "hyphen")
 
 
 class LastMessageSeen(TestCase):

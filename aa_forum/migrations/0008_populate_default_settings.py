@@ -9,7 +9,7 @@ default_settings_to_migrate = [
 
 def on_migrate(apps, schema_editor):
     """
-    Remove default settings on migration
+    Create default settings on migration
     :param apps:
     :param schema_editor:
     :return:
@@ -23,7 +23,7 @@ def on_migrate(apps, schema_editor):
 
 def on_migrate_zero(apps, schema_editor):
     """
-    Add default settings on migration to zero
+    Remove default settings on migratio to zero
     :param apps:
     :param schema_editor:
     :return:

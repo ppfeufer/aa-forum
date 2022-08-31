@@ -7,7 +7,7 @@
 <li class="aa-forum-admin-menu dropdown{% if "admin_" in url_name %} active{% endif %}">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">{% translate "Administration" %}</a>
 
-    <ul id="products-menu" class="dropdown-menu clearfix" role="menu">
+    <ul id="aa-forum-admin-menu" class="dropdown-menu clearfix" role="menu">
         <li class="aa-forum-admin-menu-item {% navactive request 'aa_forum:admin_categories_and_boards' %}">
             <a href="{% url 'aa_forum:admin_categories_and_boards' %}">{% translate "Categories and Boards" %}</a>
         </li>

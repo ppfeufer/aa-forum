@@ -1,0 +1,7 @@
+{% load aa_forum_versioned_static %}
+
+{% if debug %}
+    <script src="{% aa_forum_static 'aa_forum/javascript/aa-forum-personal-messages.js' %}"></script>
+{% else %}
+    <script src="{% aa_forum_static 'aa_forum/javascript/aa-forum-personal-messages.min.js' %}"></script>
+{% endif %}

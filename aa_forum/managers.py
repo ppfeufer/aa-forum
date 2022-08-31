@@ -5,7 +5,7 @@ Managers for our models
 # Django
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models import Prefetch, Q
+from django.db.models import Prefetch, Q, QuerySet
 
 
 class SettingQuerySet(models.QuerySet):
@@ -244,3 +244,69 @@ class MessageManagerBase(models.Manager):
 
 
 MessageManager = MessageManagerBase.from_queryset(MessageQuerySet)
+
+
+class PersonalMessageQuerySet(models.QuerySet):
+    """
+    PersonalMessageQuerySet
+    """
+
+    def get_personal_messages_for_user(self, user: User) -> QuerySet:
+        """
+        Get a user's personal messages
+        :param user:
+        :return:
+        """
+
+        messages = (
+            self.filter(recipient=user, deleted_by_recipient=False)
+            .select_related(
+                "sender", "sender__profile", "sender__profile__main_character"
+            )
+            .order_by("-time_sent")
+        )
+
+        return messages
+
+    def get_personal_messages_sent_for_user(self, user: User) -> QuerySet:
+        """
+        Get a user's personal messages sent
+        :param user:
+        :return:
+        """
+
+        messages = (
+            self.filter(sender=user, deleted_by_sender=False)
+            .select_related(
+                "recipient", "recipient__profile", "recipient__profile__main_character"
+            )
+            .order_by("-time_sent")
+        )
+
+        return messages
+
+    def get_personal_message_unread_count_for_user(self, user: User) -> int:
+        """
+        Get personal message unread count for a given user
+        :param user:
+        :return:
+        """
+
+        unread_count = self.filter(
+            recipient=user, is_read=False, deleted_by_recipient=False
+        ).count()
+
+        return unread_count
+
+
+class PersonalMessageManagerBase(models.Manager):
+    """
+    PersonalMessageManagerBase
+    """
+
+    pass
+
+
+PersonalMessageManager = PersonalMessageManagerBase.from_queryset(
+    PersonalMessageQuerySet
+)

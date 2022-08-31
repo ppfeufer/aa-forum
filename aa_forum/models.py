@@ -9,13 +9,16 @@ import math
 import unidecode
 
 # Django
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group, Permission, User
 from django.db import models, transaction
 from django.db.models import Q
 from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+
+# Alliance Auth (External Libs)
+from app_utils.django import users_with_permission
 
 # ckEditor
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -25,7 +28,13 @@ from aa_forum.constants import (
     DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
     INTERNAL_URL_PREFIX,
 )
-from aa_forum.managers import BoardManager, MessageManager, SettingManager, TopicManager
+from aa_forum.managers import (
+    BoardManager,
+    MessageManager,
+    PersonalMessageManager,
+    SettingManager,
+    TopicManager,
+)
 
 
 def get_sentinel_user() -> User:
@@ -112,6 +121,25 @@ class General(models.Model):
                 _("Can manage the AA-Forum module (Category, topics and messages)"),
             ),
         )
+
+    @classmethod
+    def basic_permission(cls):
+        """
+        Return basic permission needed to use this app
+        """
+
+        return Permission.objects.select_related("content_type").get(
+            content_type__app_label=cls._meta.app_label, codename="basic_access"
+        )
+
+    @classmethod
+    def users_with_basic_access(cls) -> models.QuerySet:
+        """
+        Return a queryset with users with basic access
+        :return:
+        """
+
+        return users_with_permission(cls.basic_permission())
 
 
 class Category(models.Model):
@@ -627,18 +655,28 @@ class PersonalMessage(models.Model):
     sender = models.ForeignKey(
         User,
         related_name="+",
-        on_delete=models.SET(get_sentinel_user),
+        on_delete=models.CASCADE,
     )
     recipient = models.ForeignKey(
         User,
         related_name="+",
-        on_delete=models.SET(get_sentinel_user),
+        on_delete=models.CASCADE,
     )
     time_sent = models.DateTimeField(auto_now_add=True)
     subject = models.CharField(max_length=254)
-    slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
-    message = models.TextField(blank=True)
+    message = RichTextUploadingField(blank=False)
+    message_head = models.ForeignKey(
+        "self",
+        blank=True,
+        null=True,
+        related_name="replies",
+        on_delete=models.CASCADE,
+    )
     is_read = models.BooleanField(default=False)
+    deleted_by_sender = models.BooleanField(default=False)
+    deleted_by_recipient = models.BooleanField(default=False)
+
+    objects = PersonalMessageManager()
 
     class Meta:
         """
@@ -650,21 +688,7 @@ class PersonalMessage(models.Model):
         verbose_name_plural = _("personal messages")
 
     def __str__(self) -> str:
-        return str(self.subject)
-
-    @transaction.atomic()
-    def save(self, *args, **kwargs):
-        """
-        Generates the slug.
-        :param args:
-        :param kwargs:
-        :return:
-        """
-
-        if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
-            self.slug = _generate_slug(type(self), self.subject)
-
-        super().save(*args, **kwargs)
+        return f'"{self.subject}" from {self.sender} to {self.recipient}'
 
 
 class Setting(SingletonModel):

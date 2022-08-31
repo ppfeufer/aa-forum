@@ -1,0 +1,37 @@
+{% extends "aa_forum/base.html" %}
+{% load bootstrap %}
+
+{% load static %}
+{% load i18n %}
+
+{% block page_title %}{% translate "Forum (Personal Messages » New)" %}{% endblock %}
+
+{% block aa_forum_header %}
+    {% include "aa_forum/partials/menu.html" %}
+{% endblock %}
+
+{% block aa_forum_body %}
+    <div class="row">
+        {% include "aa_forum/partials/personal-messages/sidebar.html" %}
+        {% include "aa_forum/partials/personal-messages/new-message/form.html" %}
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    {% include "aa_forum/bundles/select2-css.html" %}
+    {% include "aa_forum/bundles/select2-bootstrap-theme-css.html" %}
+    {% include "aa_forum/bundles/aa-forum-css.html" %}
+{% endblock %}
+
+{% block extra_javascript %}
+    {% include "aa_forum/bundles/ckeditor-js.html" %}
+    {% include "aa_forum/bundles/select2-js.html" %}
+
+    <script>
+        $("#id_recipient").select2({
+            theme: "bootstrap",
+            minimumInputLength: 3,
+            placeholder: "{% translate 'Enter the recipients name' %}",
+        });
+    </script>
+{% endblock %}

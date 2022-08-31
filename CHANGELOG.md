@@ -8,6 +8,33 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+
+## [1.14.0] - 2022-08-31
+
+### Fixed
+
+- HTML syntax in `message-author` template
+- "Message modified" info should be before the user's signature
+
+### Added
+
+- New Feature: Personal Messages
+
+### Change
+
+- Spacing for moderation icons
+- Automated tests set to use MySQL instead of SQLite to test against:
+  - mysql:5.7
+  - mysql:8.0
+  - mariadb:10.3
+  - mariadb:10.4
+  - mariadb:10.5
+  - mariadb:10.6
+  - mariadb:10.7
+  - mariadb:10.8
+  - mariadb:10.9
+
+
 ## [1.13.0] - 2022-08-26
 
 ### Fixed

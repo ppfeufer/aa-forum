@@ -1,0 +1,36 @@
+{% load i18n %}
+{% load navactive %}
+{% load aa_forum_template_variables %}
+
+<div class="col-sm-4 col-md-3 col-lg-2 col-sm-push-8 col-md-push-9 col-lg-push-10">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                {% translate "Messages" %}
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <ul id="aa-forum-messages-sidebar-menu" class="nav nav-pills nav-stacked">
+                <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:personal_messages_new_message' %}">
+                    <a href="{% url 'aa_forum:personal_messages_new_message' %}">
+                        {% translate "New Message" %}
+                    </a>
+                </li>
+
+                <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:personal_messages_inbox' %}">
+                    <a href="{% url 'aa_forum:personal_messages_inbox' %}">
+                        {% translate "Inbox" %}
+                        {% personal_message_unread_count request.user %}
+                    </a>
+                </li>
+
+                <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:personal_messages_sent_messages' %}">
+                    <a href="{% url 'aa_forum:personal_messages_sent_messages' %}">
+                        {% translate "Sent Messages" %}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
