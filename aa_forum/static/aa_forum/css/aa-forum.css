@@ -461,7 +461,6 @@
 @media all {
     .aa-forum .btn-aa-forum-topic-moderation {
         background: none;
-        width: 25px;
     }
 
     .aa-forum .btn-aa-forum-topic-moderation.focus,
