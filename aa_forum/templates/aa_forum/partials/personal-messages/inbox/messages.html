@@ -1,0 +1,103 @@
+{% load i18n %}
+{% load evelinks %}
+{% load aa_forum_user %}
+
+<div class="col-sm-8 col-md-9 col-lg-10 col-sm-pull-4 col-md-pull-3 col-lg-pull-2">
+    <div class="panel panel-default panel-aa-forum-personal-messages-list">
+        <div class="panel-heading">
+            <div class="panel-title">
+                {% translate "Inbox" %}
+            </div>
+        </div>
+
+        <div class="panel-body">
+            {% if page_obj %}
+                <div class="panel-aa-forum-personal-messages-item-header hidden-xs hidden-sm">
+                    <div class="aa-forum-personal-message-date">
+                        {% translate "Date" %}
+                    </div>
+
+                    <div class="aa-forum-personal-message-sender">
+                        {% translate "Sender" %}
+                    </div>
+
+                    <div class="aa-forum-personal-message-subject">
+                        {% translate "Subject" %}
+                    </div>
+                </div>
+
+                {% for message in page_obj %}
+                    <div id="aa-forum-personal-message-id-{{ message.pk }}" class="panel-aa-forum-personal-messages-item {% if not message.is_read %}panel-aa-forum-personal-messages-item-unread{% endif %}">
+                        <div class="aa-forum-personal-message-date">
+                            {{ message.time_sent|date }}, {{ message.time_sent|time:"G:i:s" }}
+                        </div>
+
+                        <div class="aa-forum-personal-message-sender">
+                            {% with sender_maincharacter_id=message.sender|main_character_id %}
+                                <img
+                                    class="aa-forum-character-portrait img img-rounded img-last-post-avatar"
+                                    src="{{ sender_maincharacter_id|character_portrait_url:32 }}"
+                                    alt="{{ message.sender|main_character_name }}"
+                                    width="32"
+                                    height="32"
+                                >
+                            {% endwith %}
+
+                            {{ message.sender|main_character_name  }}
+                        </div>
+
+                        <div class="aa-forum-personal-message-subject">
+                            {{ message.subject }}
+
+{#                            {% if not message.is_read %}#}
+{#                                <span class="label label-warning label label-new-message label-aa-forum-topic-new-message small">#}
+{#                                    {% translate "New" %}#}
+{#                                </span>#}
+{#                            {% endif %}#}
+
+                            <span class="pull-right">
+                                <button
+                                    class="btn btn-aa-forum-topic-moderation btn-xs btn-read-personal-message"
+                                    title="{% translate 'Read message' %}"
+                                    data-sender="{{ message.sender.pk }}"
+                                    data-recipient="{{ message.recipient.pk }}"
+                                    data-message="{{ message.pk }}"
+                                    data-message-folder="inbox"
+                                >
+                                    <i class="fas fa-sign-in-alt"></i>
+                                </button>
+
+                                <button
+                                    class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-delete"
+                                    title="{% translate 'Delete message' %}"
+                                    data-toggle="modal"
+                                    data-target="#delete-message-{{ message.pk }}"
+                                >
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </span>
+                        </div>
+
+                        {% include "aa_forum/modals/personal-messages/message-delete.html" with message_folder='inbox' %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-info">
+                    <p>{% translate "No personal messages" %}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% include "aa_forum/partials/personal-messages/inbox/pagination.html" %}
+
+    <div class="aa-forum-personal-messages-message"></div>
+</div>
+
+<script>
+    const personalMessagesSettings = {
+        csrfToken: '{{ csrf_token }}',
+        urlReadMessage: '{% url "aa_forum:personal_messages_ajax_read_message" "inbox" %}',
+        urlUnreadMessagesCount: '{% url "aa_forum:personal_messages_ajax_unread_messages_count" %}'
+    };
+</script>

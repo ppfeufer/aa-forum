@@ -4,6 +4,11 @@ Set custom variables in a Django template
 
 # Django
 from django import template
+from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
+
+# AA Forum
+from aa_forum.models import PersonalMessage
 
 register = template.Library()
 
@@ -53,3 +58,24 @@ def set_template_variable(parser, token):
         )
 
     return SetVarNode(parts[1], parts[3])
+
+
+@register.simple_tag
+def personal_message_unread_count(user: User) -> str:
+    """
+    Return the number of new/unread personal messages
+    :param user:
+    :return:
+    """
+
+    return_value = ""
+    message_count = PersonalMessage.objects.get_personal_message_unread_count_for_user(
+        user
+    )
+
+    if message_count > 0:
+        return_value = mark_safe(
+            f'<span class="badge aa-forum-badge-personal-messages-unread-count">{message_count}</span>'  # pylint: disable=line-too-long
+        )
+
+    return return_value

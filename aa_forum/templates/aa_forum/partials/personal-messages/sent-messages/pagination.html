@@ -1,0 +1,81 @@
+{% load i18n %}
+
+{% if page_obj.paginator.num_pages > 1 %}
+    <div class="col-4 offset-4">
+        <nav aria-label="{% translate 'Message Pagination' %}">
+            <ul class="pagination pagination-sm">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a href="{% url 'aa_forum:personal_messages_sent_messages' %}" class="page-link">
+                            {% translate "First" %}
+                        </a>
+                    </li>
+
+                    <li class="page-item">
+                        {% if page_obj.previous_page_number == 1 %}
+                            <a href="{% url 'aa_forum:personal_messages_sent_messages' %}" class="page-link">
+                                {% translate "Previous" %}
+                            </a>
+                        {% else %}
+                            <a href="{% url 'aa_forum:personal_messages_sent_messages' page_obj.previous_page_number %}" class="page-link">
+                                {% translate "Previous" %}
+                            </a>
+                        {% endif %}
+                    </li>
+
+                    <li>
+                        {% if page_obj.previous_page_number == 1 %}
+                            <a class="page-link" href="{% url 'aa_forum:personal_messages_sent_messages' %}">
+                                {{ page_obj.previous_page_number }}
+                            </a>
+                        {% else %}
+                            <a href="{% url 'aa_forum:personal_messages_sent_messages' page_obj.previous_page_number %}" class="page-link">
+                                {{ page_obj.previous_page_number }}
+                            </a>
+                        {% endif %}
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">{% translate "First" %}</span>
+                    </li>
+
+                    <li class="page-item disabled">
+                        <span class="page-link">{% translate "Previous" %}</span>
+                    </li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <span class="page-link">{{ page_obj.number }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a href="{% url 'aa_forum:personal_messages_sent_messages' page_obj.next_page_number %}" class="page-link">
+                            {{ page_obj.next_page_number }}
+                        </a>
+                    </li>
+
+                    <li class="page-item ">
+                        <a href="{% url 'aa_forum:personal_messages_sent_messages' page_obj.next_page_number %}" class="page-link">
+                            {% translate "Next" %}
+                        </a>
+                    </li>
+
+                    <li class="page-item ">
+                        <a href="{% url 'aa_forum:personal_messages_sent_messages' page_obj.paginator.num_pages %}" class="page-link">
+                            {% translate "Last" %}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">{% translate "Next" %}</span>
+                    </li>
+
+                    <li class="page-item disabled">
+                        <span class="page-link">{% translate "Last" %}</span>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endif %}

@@ -408,6 +408,31 @@
     }
 }
 
+/* Personal messages view
+------------------------------------------------------------------------------------- */
+@media all {
+    .aa-forum .panel-aa-forum-personal-messages-item {
+        padding: 1rem;
+    }
+
+    .aa-forum .panel-aa-forum-personal-messages-item:hover {
+        background: rgb(0 0 0 / 5%);
+    }
+
+    .aa-forum .panel-aa-forum-personal-messages-item-header {
+        font-weight: 700;
+        border-bottom: 1px solid rgb(236 240 241);
+    }
+
+    .aa-forum .panel-aa-forum-personal-messages-item-unread {
+        font-weight: 700;
+    }
+
+    .aa-forum .aa-forum-personal-messages-message .panel {
+        margin-top: 2rem;
+    }
+}
+
 /* Lightbox
 ------------------------------------------------------------------------------------- */
 @media all {
@@ -445,6 +470,10 @@
         color: inherit;
         outline: 5px auto -webkit-focus-ring-color;
         outline-offset: -2px;
+    }
+
+    .aa-forum .btn-aa-forum-delete {
+        color: rgb(255 0 0);
     }
 }
 
@@ -538,6 +567,38 @@
     }
 
     .aa-forum .aa-forum-message-wrapper {
+        width: 100%;
+    }
+}
+
+/*
+-------------------------------------------------------------------------------------
+                Responsive (@media all and (min-width: 992px))
+-------------------------------------------------------------------------------------
+*/
+
+/* Personal messages view (@media all and (min-width: 992px))
+------------------------------------------------------------------------------------- */
+@media all and (min-width: 992px) {
+    .panel-aa-forum-personal-messages-item-header,
+    .aa-forum .panel-aa-forum-personal-messages-item {
+        align-content: flex-start;
+        align-items: center;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+    }
+
+    .aa-forum .aa-forum-personal-message-date {
+        min-width: 200px;
+    }
+
+    .aa-forum .aa-forum-personal-message-sender,
+    .aa-forum .aa-forum-personal-message-recipient {
+        min-width: 200px;
+    }
+
+    .aa-forum .aa-forum-personal-message-subject {
         width: 100%;
     }
 }

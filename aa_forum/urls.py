@@ -7,7 +7,7 @@ from django.urls import path
 
 # AA Forum
 from aa_forum.constants import INTERNAL_URL_PREFIX
-from aa_forum.views import admin, forum, profile, search
+from aa_forum.views import admin, forum, personal_messages, profile, search
 
 app_name: str = "aa_forum"
 
@@ -97,6 +97,58 @@ urlpatterns = [
         f"{INTERNAL_URL_PREFIX}/profile/",
         profile.index,
         name="profile_index",
+    ),
+    # Messages URLs
+    path(
+        f"{INTERNAL_URL_PREFIX}/personal-messages/inbox/",
+        personal_messages.inbox,
+        name="personal_messages_inbox",
+    ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/personal-messages/inbox/page/<int:page_number>/",
+        personal_messages.inbox,
+        name="personal_messages_inbox",
+    ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/personal-messages/new-message/",
+        personal_messages.new_message,
+        name="personal_messages_new_message",
+    ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/personal-messages/sent-messages/",
+        personal_messages.sent_messages,
+        name="personal_messages_sent_messages",
+    ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/personal-messages/sent-messages/page/<int:page_number>/",
+        personal_messages.sent_messages,
+        name="personal_messages_sent_messages",
+    ),
+    path(
+        (
+            f"{INTERNAL_URL_PREFIX}/personal-messages/inbox/message/"
+            "<int:message_id>/reply/"
+        ),
+        personal_messages.reply_message,
+        name="personal_messages_message_reply",
+    ),
+    path(
+        (
+            f"{INTERNAL_URL_PREFIX}/personal-messages/<str:folder>/message/"
+            "<int:message_id>/delete/"
+        ),
+        personal_messages.delete_message,
+        name="personal_messages_message_delete",
+    ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/ajax/personal-messages/<str:folder>/read-message/",
+        personal_messages.ajax_read_message,
+        name="personal_messages_ajax_read_message",
+    ),
+    path(
+        f"{INTERNAL_URL_PREFIX}/ajax/personal-messages/unread-messages-count/",
+        personal_messages.ajax_unread_messages_count,
+        name="personal_messages_ajax_unread_messages_count",
     ),
     # Service URLs
     path(
