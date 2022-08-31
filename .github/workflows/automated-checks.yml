@@ -91,6 +91,7 @@ jobs:
           - mariadb:10.6
           - mariadb:10.7
           - mariadb:10.8
+          - mariadb:10.9
 
     continue-on-error: ${{ matrix.python-version == '3.11-dev' }}
 
