@@ -1554,7 +1554,7 @@ class TestPersonalMessageUI(WebTest):
         self.client.force_login(self.user_1001)
 
         # when
-        self.client.post(
+        response = self.client.get(
             reverse(
                 "aa_forum:personal_messages_message_delete", args=["inbox", message.pk]
             ),
@@ -1563,6 +1563,11 @@ class TestPersonalMessageUI(WebTest):
         # then
         message_removed = PersonalMessage.objects.get(pk=message.pk)
         self.assertTrue(message_removed.deleted_by_recipient)
+        self.assertRedirects(
+            response,
+            "/forum/-/personal-messages/inbox/",
+            status_code=HTTPStatus.FOUND,
+        )
 
     def test_should_delete_inbox_message(self):
         """
@@ -1583,13 +1588,19 @@ class TestPersonalMessageUI(WebTest):
         self.client.force_login(self.user_1001)
 
         # when
-        self.client.post(
+        response = self.client.get(
             reverse(
                 "aa_forum:personal_messages_message_delete", args=["inbox", message.pk]
             ),
         )
 
         # then
+        self.assertRedirects(
+            response,
+            "/forum/-/personal-messages/inbox/",
+            status_code=HTTPStatus.FOUND,
+        )
+
         with self.assertRaises(PersonalMessage.DoesNotExist):
             PersonalMessage.objects.get(pk=message.pk)
 
@@ -1621,6 +1632,11 @@ class TestPersonalMessageUI(WebTest):
         # then
         self.assertTrue(PersonalMessage.objects.get(pk=message.pk))
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(
+            response,
+            "/forum/-/personal-messages/inbox/",
+            status_code=HTTPStatus.FOUND,
+        )
 
     def test_should_remove_sent_message(self):
         """
@@ -1640,7 +1656,7 @@ class TestPersonalMessageUI(WebTest):
         self.client.force_login(self.user_1002)
 
         # when
-        self.client.post(
+        response = self.client.get(
             reverse(
                 "aa_forum:personal_messages_message_delete",
                 args=["sent-messages", message.pk],
@@ -1650,6 +1666,11 @@ class TestPersonalMessageUI(WebTest):
         # then
         message_removed = PersonalMessage.objects.get(pk=message.pk)
         self.assertTrue(message_removed.deleted_by_sender)
+        self.assertRedirects(
+            response,
+            "/forum/-/personal-messages/sent-messages/",
+            status_code=HTTPStatus.FOUND,
+        )
 
     def test_should_delete_sent_message(self):
         """
@@ -1670,7 +1691,7 @@ class TestPersonalMessageUI(WebTest):
         self.client.force_login(self.user_1002)
 
         # when
-        self.client.post(
+        response = self.client.get(
             reverse(
                 "aa_forum:personal_messages_message_delete",
                 args=["sent-messages", message.pk],
@@ -1678,8 +1699,75 @@ class TestPersonalMessageUI(WebTest):
         )
 
         # then
+        self.assertRedirects(
+            response,
+            "/forum/-/personal-messages/sent-messages/",
+            status_code=HTTPStatus.FOUND,
+        )
+
         with self.assertRaises(PersonalMessage.DoesNotExist):
             PersonalMessage.objects.get(pk=message.pk)
+
+    def test_should_not_delete_sent_message_and_redirect(self):
+        """
+        Test should not delete an inbox message and throw an error message
+        :return:
+        """
+
+        # given
+        message = PersonalMessage(
+            subject="Test Message",
+            sender=self.user_1002,
+            recipient=self.user_1001,
+            message="FOOBAR",
+            deleted_by_sender=True,
+        )
+        message.save()
+
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:personal_messages_message_delete",
+                args=["sent-messages", message.pk],
+            ),
+        )
+
+        # then
+        self.assertTrue(PersonalMessage.objects.get(pk=message.pk))
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(
+            response,
+            "/forum/-/personal-messages/sent-messages/",
+            status_code=HTTPStatus.FOUND,
+        )
+
+    def test_should_simply_redirect_because_wrong_url_parameter(self):
+        """
+        Test should simply redirect to personal messages
+        inbox, because wrong URL parameter
+        :return:
+        """
+
+        # given
+        self.client.force_login(self.user_1001)
+
+        # when
+        response = self.client.get(
+            reverse(
+                "aa_forum:personal_messages_message_delete",
+                args=["wrong-parameter", 9999],
+            ),
+        )
+
+        # then
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(
+            response,
+            "/forum/-/personal-messages/inbox/",
+            status_code=HTTPStatus.FOUND,
+        )
 
     def test_should_open_reply_view(self):
         """
@@ -1710,7 +1798,7 @@ class TestPersonalMessageUI(WebTest):
 
     def test_should_not_open_reply_view(self):
         """
-        Test should show reply view
+        Test not should show reply view
         :return:
         """
 
@@ -1731,6 +1819,11 @@ class TestPersonalMessageUI(WebTest):
 
         # then
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(
+            response,
+            "/forum/-/personal-messages/inbox/",
+            status_code=HTTPStatus.FOUND,
+        )
 
     def test_should_send_reply(self):
         """

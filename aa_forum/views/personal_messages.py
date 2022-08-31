@@ -268,7 +268,9 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
 
             messages.success(
                 request=request,
-                message=mark_safe(_("<h4>Success!</h4><p>Message removed.<p>")),
+                message=mark_safe(
+                    _("<h4>Success!</h4><p>Message removed from your inbox.<p>")
+                ),
             )
 
         return redirect("aa_forum:personal_messages_inbox")
@@ -301,13 +303,20 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
 
             messages.success(
                 request=request,
-                message=mark_safe(_("<h4>Success!</h4><p>Message removed.<p>")),
+                message=mark_safe(
+                    _(
+                        "<h4>Success!</h4>"
+                        "<p>Message has been removed from your sent messages.<p>"
+                    )
+                ),
             )
 
         return redirect("aa_forum:personal_messages_sent_messages")
 
     switch = {"inbox": folder_inbox, "sent-messages": folder_sent_messages}
-    switch[folder]()
+
+    if folder in switch:
+        return switch[folder]()
 
     messages.error(
         request=request,
