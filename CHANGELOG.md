@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Missing transition added for hover state on personal messages
 
+### Changed
+
+- Minumum requirements
+  - `allianceauth-app-utils`>=1.14.2
+  - `django-ckeditor`>=6.5.0
+
 ### Removed
 
 - Bundled YouTube plugin for CKEditor in favor of `django-ckeditor-youtube-plugin`
