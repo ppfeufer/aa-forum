@@ -17,56 +17,56 @@ on:
 
 jobs:
   # pre-commit Checks
-#  pre-commit:
-#    name: Pre Commit Checks
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#
-#      - name: Set up Python
-#        uses: actions/setup-python@v3
-#
-#      - name: Run Pre Commit Checks
-#        uses: pre-commit/action@v3.0.0
-#
-#  # Codacy Security Scan
-#  codacy-security-scan:
-#    needs: [pre-commit]
-#    name: Codacy Security Scan
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      # Checkout the repository to the GitHub Actions runner
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#
-#      # Execute Codacy Analysis CLI and generate a SARIF output with the security issues identified during the analysis
-#      - name: Run Codacy Analysis CLI
-#        uses: codacy/codacy-analysis-cli-action@1.1.0
-#        with:
-#          # Check https://github.com/codacy/codacy-analysis-cli#project-token to get your project token from your Codacy repository
-#          # You can also omit the token and run the tools that support default configurations
-#          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-#          verbose: true
-#          output: results.sarif
-#          format: sarif
-#          # Adjust severity of non-security issues
-#          gh-code-scanning-compat: true
-#          # Force 0 exit code to allow SARIF file generation
-#          # This will handover control about PR rejection to the GitHub side
-#          max-allowed-issues: 2147483647
-#
-#      # Upload the SARIF file generated in the previous step
-#      - name: Upload SARIF results file
-#        uses: github/codeql-action/upload-sarif@v2
-#        with:
-#          sarif_file: results.sarif
+  pre-commit:
+    name: Pre Commit Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+
+      - name: Run Pre Commit Checks
+        uses: pre-commit/action@v3.0.0
+
+  # Codacy Security Scan
+  codacy-security-scan:
+    needs: [pre-commit]
+    name: Codacy Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Execute Codacy Analysis CLI and generate a SARIF output with the security issues identified during the analysis
+      - name: Run Codacy Analysis CLI
+        uses: codacy/codacy-analysis-cli-action@1.1.0
+        with:
+          # Check https://github.com/codacy/codacy-analysis-cli#project-token to get your project token from your Codacy repository
+          # You can also omit the token and run the tools that support default configurations
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          verbose: true
+          output: results.sarif
+          format: sarif
+          # Adjust severity of non-security issues
+          gh-code-scanning-compat: true
+          # Force 0 exit code to allow SARIF file generation
+          # This will hand over control about PR rejection to the GitHub side
+          max-allowed-issues: 2147483647
+
+      # Upload the SARIF file generated in the previous step
+      - name: Upload SARIF results file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: results.sarif
 
   # Run Test Coverage
   test-coverage-aa-stable:
-#    needs: [ codacy-security-scan ]
+    needs: [ codacy-security-scan ]
     name: AA Latest (Python ${{ matrix.python-version }}, Django ${{ matrix.django-version }} with ${{ matrix.database }})
     runs-on: ubuntu-latest
 
@@ -75,8 +75,8 @@ jobs:
       matrix:
         # Don't forget to change the Python version for [upload-coverage] as well
         python-version:
-#          - '3.8'
-#          - '3.9'
+          - '3.8'
+          - '3.9'
           - '3.10'
           - '3.11-dev'
         # Don't forget to change the Django version for [upload-coverage] as well
@@ -84,15 +84,15 @@ jobs:
           - '4.0'
         # MySQL versions to test against
         database:
-#          - mysql:5.7
-#          - mysql:8.0
-#          - mariadb:10.3
-#          - mariadb:10.4
-#          - mariadb:10.5
+          - mysql:5.7
+          - mysql:8.0
+          - mariadb:10.3
+          - mariadb:10.4
+          - mariadb:10.5
           - mariadb:10.6
-#          - mariadb:10.7
-#          - mariadb:10.8
-#          - mariadb:10.9
+          - mariadb:10.7
+          - mariadb:10.8
+          - mariadb:10.9
 
     continue-on-error: ${{ matrix.python-version == '3.11-dev' }}
 
@@ -142,7 +142,6 @@ jobs:
         if: ${{ github.event_name == 'pull_request' && matrix.python-version == '3.10' && matrix.django-version == '4.0' }}
         uses: actions/upload-artifact@v2
         with:
-#          name: coverage-aa-stable-python-${{ matrix.python-version }}-django-${{ matrix.django-version }}
           name: coverage-${{ github.event_name }}-${{ github.sha }}
           path: coverage.xml
           if-no-files-found: ignore
@@ -229,7 +228,6 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-#          files: artifacts/coverage-aa-stable-python-3.10-django-4.0/coverage.xml # optional
           files: artifacts/coverage-${{ github.event_name }}-${{ github.sha }}/coverage.xml # optional
 #          flags: unittests # optional
 #          name: codecov-umbrella # optional
@@ -240,7 +238,6 @@ jobs:
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-#          coverage-reports: artifacts/coverage-aa-stable-python-3.10-django-4.0/coverage.xml
           coverage-reports: artifacts/coverage-${{ github.event_name }}-${{ github.sha }}/coverage.xml
 
   # Pypi Build Test
