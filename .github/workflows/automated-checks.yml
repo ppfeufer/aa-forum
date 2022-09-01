@@ -1,4 +1,4 @@
-name: Checks
+name: Tests
 
 on:
   push:
@@ -55,7 +55,7 @@ jobs:
           # Adjust severity of non-security issues
           gh-code-scanning-compat: true
           # Force 0 exit code to allow SARIF file generation
-          # This will handover control about PR rejection to the GitHub side
+          # This will hand over control about PR rejection to the GitHub side
           max-allowed-issues: 2147483647
 
       # Upload the SARIF file generated in the previous step
@@ -67,7 +67,7 @@ jobs:
   # Run Test Coverage
   test-coverage-aa-stable:
     needs: [ codacy-security-scan ]
-    name: Test (AA Latest, Py ${{ matrix.python-version }}, Django ${{ matrix.django-version }} with ${{ matrix.database }})
+    name: AA Latest (Python ${{ matrix.python-version }}, Django ${{ matrix.django-version }} with ${{ matrix.database }})
     runs-on: ubuntu-latest
 
     strategy:
@@ -82,6 +82,7 @@ jobs:
         # Don't forget to change the Django version for [upload-coverage] as well
         django-version:
           - '4.0'
+        # MySQL versions to test against
         database:
           - mysql:5.7
           - mysql:8.0
@@ -138,22 +139,40 @@ jobs:
           ALLIANCEAUTH: stable
 
       - name: Upload Coverage Artifacts
+        if: ${{ github.event_name == 'pull_request' && matrix.python-version == '3.10' && matrix.django-version == '4.0' }}
         uses: actions/upload-artifact@v2
         with:
-          name: coverage-aa-stable-python-${{ matrix.python-version }}-django-${{ matrix.django-version }}
+          name: coverage-${{ github.event_name }}-${{ github.sha }}
           path: coverage.xml
           if-no-files-found: ignore
 
 #  test-coverage-aa-dev:
-#    needs: [ codacy-security-scan ]
-#    name: Test Coverage (AA Alpha/Beta, Python ${{ matrix.python-version }}, Django ${{ matrix.django-version }})
+#    needs: [ test-coverage-aa-stable ]
+#    name: AA Dev (Python ${{ matrix.python-version }}, Django ${{ matrix.django-version }} with ${{ matrix.database }})
 #    runs-on: ubuntu-latest
 #
 #    strategy:
 #      # Set Python and Django version to test for the alpha/beta release of AllianceAuth
 #      matrix:
-#        python-version: [ '3.8', '3.9', '3.10', '3.11-dev' ]
-#        django-version: [ '4.0' ]
+#        python-version:
+#          - '3.8'
+#          - '3.9'
+#          - '3.10'
+#          - '3.11-dev'
+#        # Django versions
+#        django-version:
+#          - '4.0'
+#        # MySQL versions to test against
+#        database:
+#          - mysql:5.7
+#          - mysql:8.0
+#          - mariadb:10.3
+#          - mariadb:10.4
+#          - mariadb:10.5
+#          - mariadb:10.6
+#          - mariadb:10.7
+#          - mariadb:10.8
+#          - mariadb:10.9
 #
 #    continue-on-error: ${{ matrix.python-version == '3.11-dev' }}
 #
@@ -183,16 +202,10 @@ jobs:
 #        env:
 #          DJANGO: ${{ matrix.django-version }}
 #          ALLIANCEAUTH: testing
-#
-#      - name: Upload Coverage Artifacts
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: coverage-aa-dev-python-${{ matrix.python-version }}-django-${{ matrix.django-version }}
-#          path: coverage.xml
-#          if-no-files-found: ignore
 
   # Coverage upload to Codecov and Codacy
   upload-coverage:
+    if: ${{ github.event_name == 'pull_request' }}
     needs: [ test-coverage-aa-stable ]
 #    needs: [ test-coverage-aa-stable, test-coverage-aa-dev ]
     name: Upload Coverage
@@ -207,7 +220,7 @@ jobs:
         with:
           path: artifacts
 
-      - name: Display structure of downloaded files
+      - name: Display the structure of the downloaded files
         run: ls -Rrtlh
         working-directory: artifacts
 
@@ -215,7 +228,7 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          files: artifacts/coverage-aa-stable-python-3.10-django-4.0/coverage.xml # optional
+          files: artifacts/coverage-${{ github.event_name }}-${{ github.sha }}/coverage.xml # optional
 #          flags: unittests # optional
 #          name: codecov-umbrella # optional
 #          fail_ci_if_error: true # optional (default = false)
@@ -225,7 +238,7 @@ jobs:
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: artifacts/coverage-aa-stable-python-3.10-django-4.0/coverage.xml
+          coverage-reports: artifacts/coverage-${{ github.event_name }}-${{ github.sha }}/coverage.xml
 
   # Pypi Build Test
   pypi-build-test:
@@ -259,6 +272,6 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: build
+          name: build-${{ github.event_name }}-${{ github.sha }}
           path: dist
           if-no-files-found: ignore
