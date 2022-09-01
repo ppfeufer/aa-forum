@@ -12,9 +12,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Missing transition added for hover state on personal messages
 
-### Change
+### Removed
 
-- YouTube plugin updated
+- Bundled YouTube plugin for CKEditor in favor of `django-ckeditor-youtube-plugin`
+  - Apply the following changes in your `local.py`:
+    - Add `"django_ckeditor_youtube_plugin",` to `INSTALLED_APPS`
+    - Search for the line:
+      ```python
+      "/static/aa_forum/ckeditor/plugins/youtube/"
+      ```
+
+      And replace it with:
+      ```python
+      "/static/ckeditor/ckeditor/plugins/youtube/"
+      ```
 
 
 ## [1.14.0] - 2022-08-31
