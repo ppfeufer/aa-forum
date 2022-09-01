@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Missing transition added for hover state on personal messages
 
+### Change
+
+- YouTube plugin updated
+
 
 ## [1.14.0] - 2022-08-31
 

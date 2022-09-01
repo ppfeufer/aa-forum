@@ -2,10 +2,10 @@
 * Youtube Embed Plugin
 *
 * @author Jonnas Fonini <jonnasfonini@gmail.com>
-* @version 2.1.18
+* @version 2.1.19
 */
 
-/* global CKEDITOR */
+/* global CKEDITOR, alert */
 
 (function () {
     'use strict';
@@ -80,10 +80,10 @@
                                     validate: function () {
                                         if (this.isEnabled()) {
                                             if (!this.getValue()) {
-                                                window.alert(editor.lang.youtube.noCode);
+                                                alert(editor.lang.youtube.noCode);
                                                 return false;
                                             } else if (this.getValue().length === 0 || this.getValue().indexOf('//') === -1) {
-                                                window.alert(editor.lang.youtube.invalidEmbed);
+                                                alert(editor.lang.youtube.invalidEmbed);
                                                 return false;
                                             }
                                         }
@@ -111,13 +111,13 @@
                                                     validate: function () {
                                                         if (this.isEnabled()) {
                                                             if (!this.getValue()) {
-                                                                window.alert(editor.lang.youtube.noCode);
+                                                                alert(editor.lang.youtube.noCode);
                                                                 return false;
                                                             } else {
                                                                 video = ytVidId(this.getValue());
 
                                                                 if (this.getValue().length === 0 || video === false) {
-                                                                    window.alert(editor.lang.youtube.invalidUrl);
+                                                                    alert(editor.lang.youtube.invalidUrl);
                                                                     return false;
                                                                 }
                                                             }
@@ -129,17 +129,17 @@
                                                     id: 'txtWidth',
                                                     width: '60px',
                                                     label: editor.lang.youtube.txtWidth,
-                                                    'default': editor.config.youtube_width != null ? editor.config.youtube_width : '640',
+                                                    'default': editor.config.youtube_width !== undefined ? editor.config.youtube_width : '640',
                                                     validate: function () {
                                                         if (this.getValue()) {
                                                             var width = Number(this.getValue());
 
                                                             if (isNaN(width)) {
-                                                                window.alert(editor.lang.youtube.invalidWidth);
+                                                                alert(editor.lang.youtube.invalidWidth);
                                                                 return false;
                                                             }
                                                         } else {
-                                                            window.alert(editor.lang.youtube.noWidth);
+                                                            alert(editor.lang.youtube.noWidth);
                                                             return false;
                                                         }
                                                     }
@@ -149,17 +149,17 @@
                                                     id: 'txtHeight',
                                                     width: '60px',
                                                     label: editor.lang.youtube.txtHeight,
-                                                    'default': editor.config.youtube_height != null ? editor.config.youtube_height : '360',
+                                                    'default': editor.config.youtube_height !== undefined ? editor.config.youtube_height : '360',
                                                     validate: function () {
                                                         if (this.getValue()) {
                                                             var height = Number(this.getValue());
 
                                                             if (isNaN(height)) {
-                                                                window.alert(editor.lang.youtube.invalidHeight);
+                                                                alert(editor.lang.youtube.invalidHeight);
                                                                 return false;
                                                             }
                                                         } else {
-                                                            window.alert(editor.lang.youtube.noHeight);
+                                                            alert(editor.lang.youtube.noHeight);
                                                             return false;
                                                         }
                                                     }
@@ -175,13 +175,13 @@
                                                     id: 'chkResponsive',
                                                     type: 'checkbox',
                                                     label: editor.lang.youtube.txtResponsive,
-                                                    'default': editor.config.youtube_responsive != null ? editor.config.youtube_responsive : false
+                                                    'default': editor.config.youtube_responsive !== undefined ? editor.config.youtube_responsive : false
                                                 },
                                                 {
                                                     id: 'chkNoEmbed',
                                                     type: 'checkbox',
                                                     label: editor.lang.youtube.txtNoEmbed,
-                                                    'default': editor.config.youtube_noembed != null ? editor.config.youtube_noembed : false
+                                                    'default': editor.config.youtube_noembed !== undefined ? editor.config.youtube_noembed : false
                                                 }
                                             ]
                                     },
@@ -193,13 +193,13 @@
                                                 {
                                                     id: 'chkRelated',
                                                     type: 'checkbox',
-                                                    'default': editor.config.youtube_related != null ? editor.config.youtube_related : true,
+                                                    'default': editor.config.youtube_related !== undefined ? editor.config.youtube_related : true,
                                                     label: editor.lang.youtube.chkRelated
                                                 },
                                                 {
                                                     id: 'chkOlderCode',
                                                     type: 'checkbox',
-                                                    'default': editor.config.youtube_older != null ? editor.config.youtube_older : false,
+                                                    'default': editor.config.youtube_older !== undefined ? editor.config.youtube_older : false,
                                                     label: editor.lang.youtube.chkOlderCode
                                                 }
                                             ]
@@ -213,12 +213,12 @@
                                                     id: 'chkPrivacy',
                                                     type: 'checkbox',
                                                     label: editor.lang.youtube.chkPrivacy,
-                                                    'default': editor.config.youtube_privacy != null ? editor.config.youtube_privacy : false
+                                                    'default': editor.config.youtube_privacy !== undefined ? editor.config.youtube_privacy : false
                                                 },
                                                 {
                                                     id: 'chkAutoplay',
                                                     type: 'checkbox',
-                                                    'default': editor.config.youtube_autoplay != null ? editor.config.youtube_autoplay : false,
+                                                    'default': editor.config.youtube_autoplay !== undefined ? editor.config.youtube_autoplay : false,
                                                     label: editor.lang.youtube.chkAutoplay
                                                 }
                                             ]
@@ -237,7 +237,7 @@
                                                             var str = this.getValue();
 
                                                             if (!/^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/i.test(str)) {
-                                                                window.alert(editor.lang.youtube.invalidTime);
+                                                                alert(editor.lang.youtube.invalidTime);
                                                                 return false;
                                                             }
                                                         }
@@ -246,7 +246,7 @@
                                                 {
                                                     id: 'chkControls',
                                                     type: 'checkbox',
-                                                    'default': editor.config.youtube_controls != null ? editor.config.youtube_controls : true,
+                                                    'default': editor.config.youtube_controls !== undefined ? editor.config.youtube_controls : true,
                                                     label: editor.lang.youtube.chkControls
                                                 }
                                             ]
@@ -258,8 +258,13 @@
                         var content = '';
                         var responsiveStyle = '';
 
+                        if (this.getContentElement('youtubePlugin', 'chkResponsive').getValue() === true) {
+                            content += '<div class="youtube-embed-wrapper" style="position:relative;padding-bottom:56.25%;padding-top:30px;height:0;overflow:hidden">';
+                            responsiveStyle = 'style="position:absolute;top:0;left:0;width:100%;height:100%"';
+                        }
+
                         if (this.getContentElement('youtubePlugin', 'txtEmbed').isEnabled()) {
-                            content = this.getValueOf('youtubePlugin', 'txtEmbed');
+                            content += this.getValueOf('youtubePlugin', 'txtEmbed');
                         } else {
                             var url = 'https://', params = [], startSecs,
                                 paramAutoplay = '';
@@ -299,11 +304,6 @@
                                 url = url + '?' + params.join('&');
                             }
 
-                            if (this.getContentElement('youtubePlugin', 'chkResponsive').getValue() === true) {
-                                content += '<div class="youtube-embed-wrapper" style="position:relative;padding-bottom:56.25%;padding-top:30px;height:0;overflow:hidden">';
-                                responsiveStyle = 'style="position:absolute;top:0;left:0;width:100%;height:100%"';
-                            }
-
                             if (this.getContentElement('youtubePlugin', 'chkOlderCode').getValue() === true) {
                                 url = url.replace('embed/', 'v/');
                                 url = url.replace(/&/g, '&amp;');
@@ -331,9 +331,10 @@
                                 content += 'frameborder="0" allowfullscreen></iframe>';
                             }
 
-                            if (this.getContentElement('youtubePlugin', 'chkResponsive').getValue() === true) {
-                                content += '</div>';
-                            }
+                        }
+
+                        if (this.getContentElement('youtubePlugin', 'chkResponsive').getValue() === true) {
+                            content += '</div>';
                         }
 
                         var element = CKEDITOR.dom.element.createFromHtml(content);
@@ -418,7 +419,7 @@ function timeParamToSeconds (param) {
         return param.match(regex) ? parseInt(RegExp.$1, 10) : 0;
     };
 
-    return componentValue('h') * 3600 + componentValue('m') * 60 + componentValue('s');
+    return componentValue('s') + componentValue('m') * 60 + componentValue('h') * 3600;
 }
 
 /**

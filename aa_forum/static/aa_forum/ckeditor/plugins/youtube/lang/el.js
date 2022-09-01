@@ -1,3 +1,5 @@
+/* global CKEDITOR */
+
 CKEDITOR.plugins.setLang('youtube', 'el', {
     button: 'Ενσωμάτωση Youtube βίντεο',
     title: 'Ενσωμάτωση Youtube βίντεο',

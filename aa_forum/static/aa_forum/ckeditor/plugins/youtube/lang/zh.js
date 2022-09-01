@@ -1,3 +1,5 @@
+/* global CKEDITOR */
+
 CKEDITOR.plugins.setLang('youtube', 'zh', {
     button: '嵌入 Youtube 影片',
     title: '嵌入 Youtube 影片',

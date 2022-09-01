@@ -1,3 +1,5 @@
+/* global CKEDITOR */
+
 CKEDITOR.plugins.setLang('youtube', 'cs', {
 	button : 'Vložit video YouTube',
 	title : 'Vložit video YouTube',
