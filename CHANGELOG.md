@@ -9,6 +9,34 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [1.15.0] - 2022-09-01
+
+### Fixed
+
+- Missing transition added for hover state on personal messages
+
+### Changed
+
+- Minumum requirements
+  - `allianceauth-app-utils`>=1.14.2
+  - `django-ckeditor`>=6.5.0
+
+### Removed
+
+- Bundled YouTube plugin for CKEditor in favor of `django-ckeditor-youtube-plugin`
+  - Apply the following changes in your `local.py`:
+    - Add `"django_ckeditor_youtube_plugin",` to `INSTALLED_APPS`
+    - Search for the line:
+      ```python
+      "/static/aa_forum/ckeditor/plugins/youtube/"
+      ```
+
+      And replace it with:
+      ```python
+      "/static/ckeditor/ckeditor/plugins/youtube/"
+      ```
+
+
 ## [1.14.0] - 2022-08-31
 
 ### Fixed
@@ -142,7 +170,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - New Feature: Announcement Boards
+
   ![New Feature: Announcement Boards](aa_forum/docs/images/feature-announcement-board.jpg "New Feature: Announcement Boards")
+
   - Boards marked as "Announcement Boards" have restrictions on who can start a topic
     in them. This is the already known group restriction function that is already
     used to restrict access to boards in general

@@ -118,6 +118,7 @@ This is fairly simple, configure your AA settings (`local.py`) as follows:
 INSTALLED_APPS += [
     "ckeditor",
     "ckeditor_uploader",
+    "django_ckeditor_youtube_plugin",
     "aa_forum",  # https://github.com/ppfeufer/aa-forum
 ]
 
@@ -242,20 +243,24 @@ if "ckeditor" in INSTALLED_APPS:
         ],
     }
 
+    # Add the external YouTube plugin
+    aa_forum__external_plugin_resources = [
+        (
+            "youtube",
+            "/static/ckeditor/ckeditor/plugins/youtube/",
+            "plugin.min.js",
+        )
+    ]
+
     # Put it all together
     CKEDITOR_CONFIGS = {
         "default": ckeditor.configs.DEFAULT_CONFIG,
         "aa_forum": ckeditor_default_config,
     }
 
-    # Add the external YouTube plugin
-    CKEDITOR_CONFIGS["aa_forum"]["external_plugin_resources"] = [
-        (
-            "youtube",
-            "/static/aa_forum/ckeditor/plugins/youtube/",
-            "plugin.min.js",
-        )
-    ]
+    CKEDITOR_CONFIGS["aa_forum"][
+        "external_plugin_resources"
+    ] = aa_forum__external_plugin_resources
 ```
 
 #### Settings in `/home/allianceserver/myauth/myauth/urls.py`
