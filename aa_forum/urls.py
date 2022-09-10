@@ -3,7 +3,7 @@ AA-Forum path config
 """
 
 # Django
-from django.urls import path
+from django.urls import include, path
 
 # AA Forum
 from aa_forum.constants import INTERNAL_URL_PREFIX
@@ -11,49 +11,37 @@ from aa_forum.views import admin, forum, personal_messages, profile, search
 
 app_name: str = "aa_forum"
 
-# IMPORTANT
-# All internal URLs need to start with the designated prefix `{INTERNAL_URL_PREFIX}` to
-# prevent conflicts with user generated forum URLs
-urlpatterns = [
-    path(route="", view=forum.index, name="forum_index"),
+# Internal URLs
+internal_urls = [
     # Admin URLs (Menu Item :: Categories and Boards)
     path(
-        route=f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/",
+        route="admin/categories-and-boards/",
         view=admin.categories_and_boards,
         name="admin_categories_and_boards",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/create/",
+        route="admin/categories-and-boards/category/create/",
         view=admin.category_create,
         name="admin_category_create",
     ),
     path(
-        route=(
-            f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/"
-            "<int:category_id>/edit/"
-        ),
+        route="admin/categories-and-boards/category/<int:category_id>/edit/",
         view=admin.category_edit,
         name="admin_category_edit",
     ),
     path(
-        route=(
-            f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/"
-            "<int:category_id>/delete/"
-        ),
+        route="admin/categories-and-boards/category/<int:category_id>/delete/",
         view=admin.category_delete,
         name="admin_category_delete",
     ),
     path(
-        route=(
-            f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/"
-            "<int:category_id>/board/create/"
-        ),
+        route="admin/categories-and-boards/category/<int:category_id>/board/create/",
         view=admin.board_create,
         name="admin_board_create",
     ),
     path(
         route=(
-            f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/"
+            "admin/categories-and-boards/category/"
             "<int:category_id>/board/<int:board_id>/create-child-board/"
         ),
         view=admin.board_create_child,
@@ -61,7 +49,7 @@ urlpatterns = [
     ),
     path(
         route=(
-            f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/"
+            "admin/categories-and-boards/category/"
             "<int:category_id>/board/<int:board_id>/edit/"
         ),
         view=admin.board_edit,
@@ -69,130 +57,128 @@ urlpatterns = [
     ),
     path(
         route=(
-            f"{INTERNAL_URL_PREFIX}/admin/categories-and-boards/category/"
+            "admin/categories-and-boards/category/"
             "<int:category_id>/board/<int:board_id>/delete/"
         ),
         view=admin.board_delete,
         name="admin_board_delete",
     ),
+    # Admin Ajax URLs (Menu Item :: Categories and Boards)
     path(
-        route=f"{INTERNAL_URL_PREFIX}/ajax/admin/categories-and-boards/category-order/",
+        route="ajax/admin/categories-and-boards/category-order/",
         view=admin.ajax_category_order,
         name="admin_ajax_category_order",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/ajax/admin/categories-and-boards/board-order/",
+        route="ajax/admin/categories-and-boards/board-order/",
         view=admin.ajax_board_order,
         name="admin_ajax_board_order",
     ),
     # Admin URLs (Menu Item :: Forum Settings)
     path(
-        route=f"{INTERNAL_URL_PREFIX}/admin/forum-settings/",
+        route="admin/forum-settings/",
         view=admin.forum_settings,
         name="admin_forum_settings",
     ),
     # Profile URLs
     path(
-        route=f"{INTERNAL_URL_PREFIX}/profile/",
+        route="profile/",
         view=profile.index,
         name="profile_index",
     ),
-    # Messages URLs
+    # Personal Messages URLs
     path(
-        route=f"{INTERNAL_URL_PREFIX}/personal-messages/inbox/",
+        route="personal-messages/inbox/",
         view=personal_messages.inbox,
         name="personal_messages_inbox",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/personal-messages/inbox/page/<int:page_number>/",
+        route="personal-messages/inbox/page/<int:page_number>/",
         view=personal_messages.inbox,
         name="personal_messages_inbox",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/personal-messages/new-message/",
+        route="personal-messages/new-message/",
         view=personal_messages.new_message,
         name="personal_messages_new_message",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/personal-messages/sent-messages/",
+        route="personal-messages/sent-messages/",
         view=personal_messages.sent_messages,
         name="personal_messages_sent_messages",
     ),
     path(
-        route=(
-            f"{INTERNAL_URL_PREFIX}/personal-messages/sent-messages/"
-            "page/<int:page_number>/"
-        ),
+        route="personal-messages/sent-messages/page/<int:page_number>/",
         view=personal_messages.sent_messages,
         name="personal_messages_sent_messages",
     ),
     path(
-        route=(
-            f"{INTERNAL_URL_PREFIX}/personal-messages/inbox/message/"
-            "<int:message_id>/reply/"
-        ),
+        route="personal-messages/inbox/message/<int:message_id>/reply/",
         view=personal_messages.reply_message,
         name="personal_messages_message_reply",
     ),
     path(
-        route=(
-            f"{INTERNAL_URL_PREFIX}/personal-messages/<str:folder>/message/"
-            "<int:message_id>/delete/"
-        ),
+        route="personal-messages/<str:folder>/message/<int:message_id>/delete/",
         view=personal_messages.delete_message,
         name="personal_messages_message_delete",
     ),
+    # Personal Messages Ajax URLs
     path(
-        route=f"{INTERNAL_URL_PREFIX}/ajax/personal-messages/<str:folder>/read-message/",
+        route="ajax/personal-messages/<str:folder>/read-message/",
         view=personal_messages.ajax_read_message,
         name="personal_messages_ajax_read_message",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/ajax/personal-messages/unread-messages-count/",
+        route="ajax/personal-messages/unread-messages-count/",
         view=personal_messages.ajax_unread_messages_count,
         name="personal_messages_ajax_unread_messages_count",
     ),
     # Service URLs
     path(
-        route=f"{INTERNAL_URL_PREFIX}/message/<int:message_id>/delete/",
+        route="message/<int:message_id>/delete/",
         view=forum.message_delete,
         name="forum_message_delete",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/topic/<int:topic_id>/change-lock-state/",
+        route="topic/<int:topic_id>/change-lock-state/",
         view=forum.topic_change_lock_state,
         name="forum_topic_change_lock_state",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/topic/<int:topic_id>/change-sticky-state/",
+        route="topic/<int:topic_id>/change-sticky-state/",
         view=forum.topic_change_sticky_state,
         name="forum_topic_change_sticky_state",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/topic/<int:topic_id>/delete/",
+        route="topic/<int:topic_id>/delete/",
         view=forum.topic_delete,
         name="forum_topic_delete",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/search/",
+        route="search/",
         view=search.results,
         name="search_results",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/search/page/<int:page_number>/",
+        route="search/page/<int:page_number>/",
         view=search.results,
         name="search_results",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/unread/",
+        route="unread/",
         view=forum.topic_show_all_unread,
         name="forum_topic_show_all_unread",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/mark-all-as-read/",
+        route="mark-all-as-read/",
         view=forum.mark_all_as_read,
         name="forum_mark_all_as_read",
     ),
+]
+
+# Forum "public" URLs
+forum_urls = [
+    path(route="", view=forum.index, name="forum_index"),
     # Forum URLs :: Board
     path(
         route="<slug:category_slug>/<slug:board_slug>/",
@@ -205,7 +191,9 @@ urlpatterns = [
         name="forum_board",
     ),
     path(
-        route=f"{INTERNAL_URL_PREFIX}/<slug:category_slug>/<slug:board_slug>/new-topic/",
+        route=(
+            f"{INTERNAL_URL_PREFIX}/<slug:category_slug>/<slug:board_slug>/new-topic/"
+        ),
         view=forum.board_new_topic,
         name="forum_board_new_topic",
     ),
@@ -254,4 +242,15 @@ urlpatterns = [
         view=forum.message_modify,
         name="forum_message_modify",
     ),
+]
+
+# Out it all together
+# IMPORTANT
+# All internal URLs need to start with the designated prefix `{INTERNAL_URL_PREFIX}` to
+# prevent conflicts with user generated forum URLs
+urlpatterns = [
+    # Forum internal URLs (Need to be first in line)
+    path(f"{INTERNAL_URL_PREFIX}/", include(internal_urls)),
+    # Forum "public" URLs
+    path("", include(forum_urls)),
 ]
