@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Positional arguments to URL patterns
 
+### Changed
+
+- System messages and log messages improved
+
 
 ## [1.15.0] - 2022-09-01
 

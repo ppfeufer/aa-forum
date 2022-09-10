@@ -93,6 +93,6 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
         "search_results_count": 0 if search_results is None else search_results.count(),
     }
 
-    logger.info(f'{request.user} calling search view, searching for "{search_phrase}"')
+    logger.info(f'{request.user} calling search view, searching for "{search_phrase}".')
 
     return render(request, "aa_forum/view/search/results.html", context)

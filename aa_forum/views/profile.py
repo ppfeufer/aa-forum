@@ -34,7 +34,7 @@ def index(request: WSGIRequest) -> HttpResponse:
     :return:
     """
 
-    logger.info(f"{request.user} called their user profile")
+    logger.info(f"{request.user} called their user profile.")
 
     user_profile = get_user_profile(user=request.user)
 
@@ -60,7 +60,7 @@ def index(request: WSGIRequest) -> HttpResponse:
                 mark_safe(
                     _(
                         "<h4>Error!</h4>"
-                        "<p>Something went wrong, please check your input<p>"
+                        "<p>Something went wrong, please check your input.<p>"
                     )
                 ),
             )

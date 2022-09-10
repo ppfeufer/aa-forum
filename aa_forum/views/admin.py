@@ -117,7 +117,7 @@ def categories_and_boards(request: WSGIRequest) -> HttpResponse:
         "category_loop": category_loop,
     }
 
-    logger.info(f"{request.user} calling admin view")
+    logger.info(f"{request.user} calling admin view.")
 
     return render(
         request, "aa_forum/view/administration/categories-and-boards.html", context
@@ -160,7 +160,7 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
                 request, mark_safe(_("<h4>Success!</h4><p>Category created.</p>"))
             )
 
-            logger.info(f'{request.user} created category "{new_category.name}"')
+            logger.info(f'{request.user} created category "{new_category.name}".')
         else:
             message_form_errors(request, form)
 
@@ -195,14 +195,14 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
                 request,
                 mark_safe(
                     _(
-                        f'<h4>Success!</h4><p>Category name changed from "{category_name_old}" to "{category.name}".</p>'
+                        f'<h4>Success!</h4><p>Category name changed from "{category_name_old}" to "{category.name}".</p>'  # pylint: disable=line-too-long
                     )
                 ),
             )
 
             logger.info(
                 f"{request.user} changed category name "
-                f'from "{category_name_old}" to "{category.name}"'
+                f'from "{category_name_old}" to "{category.name}".'
             )
         else:
             message_form_errors(request, form)
@@ -234,7 +234,7 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
         mark_safe(_(f'<h4>Success!</h4><p>Category "{category_name}" removed.</p>')),
     )
 
-    logger.info(f'{request.user} removed category "{category_name}"')
+    logger.info(f'{request.user} removed category "{category_name}".')
 
     return redirect("aa_forum:admin_categories_and_boards")
 
@@ -286,7 +286,7 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
                 ),
             )
 
-            logger.info(f'{request.user} created board "{new_board.name}"')
+            logger.info(f'{request.user} created board "{new_board.name}".')
         else:
             message_form_errors(request, form)
 
@@ -339,7 +339,7 @@ def board_create_child(
 
             logger.info(
                 f'{request.user} created board "{new_board.name}" '
-                f'as child board of "{parent_board.name}"'
+                f'as child board of "{parent_board.name}".'
             )
         else:
             message_form_errors(request, form)
@@ -387,7 +387,7 @@ def board_edit(
                 mark_safe(_(f'<h4>Success!</h4><p>Board "{board.name}" changed.</p>')),
             )
 
-            logger.info(f'{request.user} changed board "{board.name}"')
+            logger.info(f'{request.user} changed board "{board.name}".')
         else:
             message_form_errors(request, form)
 
@@ -422,7 +422,7 @@ def board_delete(
         request, mark_safe(_(f'<h4>Success!</h4><p>Board "{board_name}" removed.</p>'))
     )
 
-    logger.info(f'{request.user} removed board "{board_name}"')
+    logger.info(f'{request.user} removed board "{board_name}".')
 
     return redirect("aa_forum:admin_categories_and_boards")
 
@@ -446,7 +446,7 @@ def ajax_category_order(request: WSGIRequest) -> JsonResponse:
                 category_obj = Category.objects.get(pk=category["catId"])
             except Category.DoesNotExist:
                 logger.warning(
-                    "Tried to change order for non existing category with ID %s",
+                    "Tried to change order for non existing category with ID %s.",
                     category["catId"],
                 )
             else:
@@ -477,7 +477,7 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
                 board_obj = Board.objects.get(pk=board["boardId"])
             except Board.DoesNotExist:
                 logger.warning(
-                    "Tried to change order for non existing board with ID %s",
+                    "Tried to change order for non existing board with ID %s.",
                     board["boardId"],
                 )
             else:
@@ -498,7 +498,7 @@ def forum_settings(request: WSGIRequest) -> HttpResponse:
     :return:
     """
 
-    logger.info(f"{request.user} called forum settings page")
+    logger.info(f"{request.user} called forum settings page.")
 
     settings = Setting.objects.get(pk=1)
 
@@ -526,7 +526,7 @@ def forum_settings(request: WSGIRequest) -> HttpResponse:
                 mark_safe(
                     _(
                         "<h4>Error!</h4>"
-                        "<p>Something went wrong, please check your input<p>"
+                        "<p>Something went wrong, please check your input.<p>"
                     )
                 ),
             )
