@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+### Added
+
+- Positional arguments to URL patterns
+
 
 ## [1.15.0] - 2022-09-01
 
