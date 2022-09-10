@@ -244,7 +244,7 @@ forum_urls = [
     ),
 ]
 
-# Out it all together
+# Put it all together
 # IMPORTANT
 # All internal URLs need to start with the designated prefix `{INTERNAL_URL_PREFIX}` to
 # prevent conflicts with user generated forum URLs
