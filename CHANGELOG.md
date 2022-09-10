@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [1.15.1] - 2022-09-10
+
+### Added
+
+- Positional arguments to URL patterns
+
+### Changed
+
+- System messages and log messages improved
+
+
 ## [1.15.0] - 2022-09-01
 
 ### Fixed
@@ -17,13 +28,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Minumum requirements
+- Minimum requirements
   - `allianceauth-app-utils`>=1.14.2
   - `django-ckeditor`>=6.5.0
 
 ### Removed
 
-- Bundled YouTube plugin for CKEditor in favor of `django-ckeditor-youtube-plugin`
+- Bundled YouTube plugin for CKEditor in favour of `django-ckeditor-youtube-plugin`
   - Apply the following changes in your `local.py`:
     - Add `"django_ckeditor_youtube_plugin",` to `INSTALLED_APPS`
     - Search for the line:

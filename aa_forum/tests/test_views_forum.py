@@ -537,7 +537,7 @@ class TestBoardViews(TestCase):
             str(messages[0]),
             (
                 "<h4>Error!</h4><p>The board you were trying to visit does "
-                "either not exist, or you don't have access to it ...</p>"
+                "either not exist, or you don't have access to it.</p>"
             ),
         )
 
@@ -569,7 +569,7 @@ class TestBoardViews(TestCase):
             str(messages[0]),
             (
                 "<h4>Error!</h4><p>The category you were trying to post in does "
-                "not exist ...</p>"
+                "not exist.</p>"
             ),
         )
 
@@ -601,7 +601,7 @@ class TestBoardViews(TestCase):
             str(messages[0]),
             (
                 "<h4>Error!</h4><p>The board you were trying to post in does "
-                "either not exist, or you don't have access to it ...</p>"
+                "either not exist, or you don't have access to it.</p>"
             ),
         )
 
@@ -980,7 +980,7 @@ class TestTopicViews(TestCase):
         self.assertEqual(response.status_code, 302)
 
         expected_message = (
-            "<h4>Error!</h4><p>You are not allowed to delete this message.</p>"
+            "<h4>Error!</h4><p>You are not allowed to delete this message!</p>"
         )
         messages = list(get_messages(response.wsgi_request))
 
@@ -1243,7 +1243,7 @@ class TestTopicViews(TestCase):
         self.assertEqual(len(messages), 1)
         self.assertEqual(
             str(messages[0]),
-            "<h4>Error!</h4><p>The message doesn't exist ...</p>",
+            "<h4>Error!</h4><p>The message doesn't exist.</p>",
         )
 
     def test_should_show_all_unread_messages_view(self):
@@ -1427,7 +1427,7 @@ class TestTopicViews(TestCase):
             (
                 "<h4>Error!</h4><p>The board you were trying to post in is an "
                 "Announcement Board and you don't have the permissions to start a "
-                "topic there ...</p>"
+                "topic there.</p>"
             ),
         )
 
@@ -1464,6 +1464,6 @@ class TestTopicViews(TestCase):
             (
                 "<h4>Error!</h4><p>The board you were trying to post in is an "
                 "Announcement Board and you don't have the permissions to start a "
-                "topic there ...</p>"
+                "topic there.</p>"
             ),
         )

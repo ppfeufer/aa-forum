@@ -41,7 +41,7 @@ def inbox(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     :return:
     """
 
-    logger.info(f"{request.user} called their messages overview")
+    logger.info(f"{request.user} called their messages overview.")
 
     personal_messages = PersonalMessage.objects.get_personal_messages_for_user(
         request.user
@@ -67,7 +67,7 @@ def new_message(request: WSGIRequest) -> HttpResponse:
     :return:
     """
 
-    logger.info(f"{request.user} called the new personal message page")
+    logger.info(f"{request.user} called the new personal message page.")
 
     # If this is a POST request we need to process the form data
     if request.method == "POST":
@@ -102,7 +102,7 @@ def new_message(request: WSGIRequest) -> HttpResponse:
             mark_safe(
                 _(
                     "<h4>Error!</h4>"
-                    "<p>Something went wrong, please check your input<p>"
+                    "<p>Something went wrong, please check your input.<p>"
                 )
             ),
         )
@@ -124,7 +124,7 @@ def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse
     :return:
     """
 
-    logger.info(f"{request.user} called the their sent personal message page")
+    logger.info(f"{request.user} called the their sent personal message page.")
 
     personal_messages = PersonalMessage.objects.get_personal_messages_sent_for_user(
         request.user
@@ -214,7 +214,7 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
                 mark_safe(
                     _(
                         "<h4>Error!</h4>"
-                        "<p>Something went wrong, please check your input<p>"
+                        "<p>Something went wrong, please check your input.<p>"
                     )
                 ),
             )

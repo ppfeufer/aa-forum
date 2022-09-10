@@ -898,7 +898,7 @@ class TestProfileUI(WebTest):
         messages = list(page.context["messages"])
 
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
@@ -922,7 +922,7 @@ class TestProfileUI(WebTest):
         messages = list(page.context["messages"])
 
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
@@ -1070,7 +1070,7 @@ class TestAdminForumSettingsUI(WebTest):
         messages = list(page.context["messages"])
 
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
@@ -1259,7 +1259,7 @@ class TestPersonalMessageUI(WebTest):
         messages = list(page.context["messages"])
 
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
@@ -1291,7 +1291,7 @@ class TestPersonalMessageUI(WebTest):
         messages = list(page.context["messages"])
 
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
@@ -1323,7 +1323,7 @@ class TestPersonalMessageUI(WebTest):
         messages = list(page.context["messages"])
 
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
@@ -1886,7 +1886,7 @@ class TestPersonalMessageUI(WebTest):
         # then
         self.assertEqual(response.status_code, HTTPStatus.OK)
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
         )
         messages = list(response.context["messages"])
         self.assertEqual(len(messages), 1)
