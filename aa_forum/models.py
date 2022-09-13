@@ -322,13 +322,10 @@ class Board(models.Model):
         user_can_start_topic = True
 
         if self.is_announcement_board:
-            if (
+            user_can_start_topic = bool(
                 user.has_perm("aa_forum.manage_forum")
                 or user.groups.filter(pk__in=self.announcement_groups.all()).exists()
-            ):
-                user_can_start_topic = True
-            else:
-                user_can_start_topic = False
+            )
 
         return user_can_start_topic
 
