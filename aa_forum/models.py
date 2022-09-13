@@ -72,7 +72,7 @@ class SingletonModel(models.Model):
     SingletonModel
     """
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Model meta definitions
         """
@@ -106,7 +106,7 @@ class General(models.Model):
     Meta model for app permissions
     """
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -154,7 +154,7 @@ class Category(models.Model):
         default=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER, db_index=True
     )
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -269,7 +269,7 @@ class Board(models.Model):
 
     objects = BoardManager()
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -313,7 +313,8 @@ class Board(models.Model):
 
     def user_can_start_topic(self, user: User) -> bool:
         """
-        Determine if we have an Announcement Board and the current user can start a topic
+        Determine if we have an Announcement Board
+        and the current user can start a topic
         :param user:
         :return:
         """
@@ -389,7 +390,7 @@ class Topic(models.Model):
 
     objects = TopicManager()
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -497,7 +498,7 @@ class LastMessageSeen(models.Model):
     )
     message_time = models.DateTimeField()
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -543,7 +544,7 @@ class Message(models.Model):
 
     objects = MessageManager()
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -678,7 +679,7 @@ class PersonalMessage(models.Model):
 
     objects = PersonalMessageManager()
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -718,7 +719,7 @@ class Setting(SingletonModel):
 
     objects = SettingManager()
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -747,7 +748,7 @@ class UserProfile(models.Model):
     website_title = models.CharField(max_length=254, blank=True)
     website_url = models.CharField(max_length=254, blank=True)
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
