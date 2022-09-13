@@ -20,7 +20,7 @@
 
                     <div class="aa-forum-message-keyinfo col-md-6">
                         <a href="{% url 'aa_forum:forum_message' message.topic.board.category.slug message.topic.board.slug message.topic.slug message.pk %}" title="{{ board_latest_topic.subject }}">
-                            {% if not forloop.first %}
+                            {% if topic.first_message.pk != message.pk %}
                                 {% translate "Re:" %}
                             {% endif %}
 
