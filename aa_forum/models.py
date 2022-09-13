@@ -98,7 +98,7 @@ class SingletonModel(models.Model):
         :return:
         """
 
-        pass
+        pass  # pylint: disable=unnecessary-pass
 
 
 class General(models.Model):
