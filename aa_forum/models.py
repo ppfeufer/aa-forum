@@ -490,7 +490,7 @@ class LastMessageSeen(models.Model):
     """
 
     topic = models.ForeignKey(
-        "Topic", on_delete=models.CASCADE, related_name="last_message_seen"
+        Topic, on_delete=models.CASCADE, related_name="last_message_seen"
     )
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="aa_forum_last_message_seen"
