@@ -174,6 +174,8 @@ SITE_NAME = "Alliance Auth"
 SITE_URL = "https://example.com"
 CSRF_TRUSTED_ORIGINS = [SITE_URL]
 
+DISCORD_BOT_TOKEN = "My_Dummy_Token"
+
 LOGIN_URL = "auth_login_user"  # view that handles login logic
 
 # Both of these redirects accept values as per the django redirect shortcut
