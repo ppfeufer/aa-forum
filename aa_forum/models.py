@@ -744,6 +744,7 @@ class UserProfile(models.Model):
     signature = RichTextUploadingField(blank=True)
     website_title = models.CharField(max_length=254, blank=True)
     website_url = models.CharField(max_length=254, blank=True)
+    discord_dm_on_new_personal_message = models.BooleanField(default=False)
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
