@@ -171,6 +171,8 @@ DATABASES = {
 }
 
 SITE_NAME = "Alliance Auth"
+SITE_URL = "https://example.com"
+CSRF_TRUSTED_ORIGINS = [SITE_URL]
 
 LOGIN_URL = "auth_login_user"  # view that handles login logic
 
