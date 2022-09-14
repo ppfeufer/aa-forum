@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [In Development] - Unreleased
 
+
+## [1.15.2] - 2022-09-14
+
 ### Fixed
 
 - Detection of first message in message loop in topic and search result view
