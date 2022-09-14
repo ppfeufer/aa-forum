@@ -688,6 +688,17 @@ class PersonalMessage(models.Model):
     def __str__(self) -> str:
         return f'"{self.subject}" from {self.sender} to {self.recipient}'
 
+    @transaction.atomic()
+    def save(self, *args, **kwargs) -> None:
+        super().save(*args, **kwargs)
+
+        # Needs to be imported here, otherwise it's a circular import
+        # AA Forum
+        from aa_forum.helper.discord import send_new_personal_message_notification
+
+        # Sending Discord PM for new personal message, if the user wants it
+        send_new_personal_message_notification(message=self)
+
 
 class Setting(SingletonModel):
     """
