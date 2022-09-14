@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [In Development] - Unreleased
 
 
+## [1.15.2] - 2022-09-14
+
+### Fixed
+
+- Detection of the first message in the message loop in the topic and search result view
+- Highlighting search terms breaks image and link tags in the search result view
+
+
 ## [1.15.1] - 2022-09-10
 
 ### Added

@@ -5,6 +5,9 @@ Template filter for search views
 # Standard Library
 import re
 
+# Third Party
+from bs4 import BeautifulSoup
+
 # Django
 from django.template.defaulttags import register
 from django.utils.safestring import mark_safe
@@ -38,8 +41,70 @@ def highlight_search_term(text: str, search_phrase: str) -> str:
             highlighted,
         )
 
+    highlighted = BeautifulSoup(highlighted, "html.parser")
+
+    for hyperlink in highlighted.findAll("a"):
+        try:
+            hyperlink["href"] = (
+                hyperlink["href"]
+                .replace(delimiter_search_term_start, "")
+                .replace(delimiter_search_term_end, "")
+            )
+        except KeyError:
+            # this should never happen, but in case it does, add a dummy href
+            hyperlink["href"] = "#"
+
+        try:
+            hyperlink["title"] = (
+                hyperlink["title"]
+                .replace(delimiter_search_term_start, "")
+                .replace(delimiter_search_term_end, "")
+            )
+        except KeyError:
+            pass
+
+        try:
+            hyperlink["name"] = (
+                hyperlink["name"]
+                .replace(delimiter_search_term_start, "")
+                .replace(delimiter_search_term_end, "")
+            )
+        except KeyError:
+            pass
+
+    for image in highlighted.findAll("img"):
+        try:
+            image["src"] = (
+                image["src"]
+                .replace(delimiter_search_term_start, "")
+                .replace(delimiter_search_term_end, "")
+            )
+        except KeyError:
+            # this should never happen, but in case it does, add a dummy src
+            image["src"] = "#"
+
+        try:
+            image["alt"] = (
+                image["alt"]
+                .replace(delimiter_search_term_start, "")
+                .replace(delimiter_search_term_end, "")
+            )
+        except KeyError:
+            pass
+
+        try:
+            image["title"] = (
+                image["title"]
+                .replace(delimiter_search_term_start, "")
+                .replace(delimiter_search_term_end, "")
+            )
+        except KeyError:
+            pass
+
     return mark_safe(
-        highlighted.replace(
+        str(highlighted)
+        .replace(
             delimiter_search_term_start, '<span class="aa-forum-search-term-highlight">'
-        ).replace(delimiter_search_term_end, "</span>")
+        )
+        .replace(delimiter_search_term_end, "</span>")
     )

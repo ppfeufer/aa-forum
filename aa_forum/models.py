@@ -72,7 +72,7 @@ class SingletonModel(models.Model):
     SingletonModel
     """
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Model meta definitions
         """
@@ -98,7 +98,7 @@ class SingletonModel(models.Model):
         :return:
         """
 
-        pass
+        pass  # pylint: disable=unnecessary-pass
 
 
 class General(models.Model):
@@ -106,7 +106,7 @@ class General(models.Model):
     Meta model for app permissions
     """
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -154,7 +154,7 @@ class Category(models.Model):
         default=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER, db_index=True
     )
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -269,7 +269,7 @@ class Board(models.Model):
 
     objects = BoardManager()
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -313,7 +313,8 @@ class Board(models.Model):
 
     def user_can_start_topic(self, user: User) -> bool:
         """
-        Determine if we have an Announcement Board and the current user can start a topic
+        Determine if we have an Announcement Board
+        and the current user can start a topic
         :param user:
         :return:
         """
@@ -321,13 +322,10 @@ class Board(models.Model):
         user_can_start_topic = True
 
         if self.is_announcement_board:
-            if (
+            user_can_start_topic = bool(
                 user.has_perm("aa_forum.manage_forum")
                 or user.groups.filter(pk__in=self.announcement_groups.all()).exists()
-            ):
-                user_can_start_topic = True
-            else:
-                user_can_start_topic = False
+            )
 
         return user_can_start_topic
 
@@ -389,7 +387,7 @@ class Topic(models.Model):
 
     objects = TopicManager()
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -490,14 +488,14 @@ class LastMessageSeen(models.Model):
     """
 
     topic = models.ForeignKey(
-        "Topic", on_delete=models.CASCADE, related_name="last_message_seen"
+        Topic, on_delete=models.CASCADE, related_name="last_message_seen"
     )
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="aa_forum_last_message_seen"
     )
     message_time = models.DateTimeField()
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -543,7 +541,7 @@ class Message(models.Model):
 
     objects = MessageManager()
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -678,7 +676,7 @@ class PersonalMessage(models.Model):
 
     objects = PersonalMessageManager()
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -718,7 +716,7 @@ class Setting(SingletonModel):
 
     objects = SettingManager()
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
@@ -747,7 +745,7 @@ class UserProfile(models.Model):
     website_title = models.CharField(max_length=254, blank=True)
     website_url = models.CharField(max_length=254, blank=True)
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """

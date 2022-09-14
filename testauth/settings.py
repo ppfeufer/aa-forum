@@ -263,6 +263,20 @@ SITE_NAME = "testauth"
 # useful error messages but can leak sensitive data.
 DEBUG = False
 
+DATABASES["default"] = {
+    "ENGINE": "django.db.backends.mysql",
+    "NAME": "tox_allianceauth",
+    "USER": os.environ.get("DB_USER", "user"),
+    "PASSWORD": os.environ.get("DB_PASSWORD", "password"),
+    "HOST": os.environ.get("DB_HOST", ""),
+    "PORT": os.environ.get("DB_PORT", ""),
+    "OPTIONS": {"charset": "utf8mb4"},
+    "TEST": {
+        "charset": "utf8mb4",
+        "NAME": "test_tox_allianceauth",
+    },
+}
+
 # Add any additional apps to this list.
 INSTALLED_APPS += ["ckeditor", "ckeditor_uploader", "aa_forum"]
 
