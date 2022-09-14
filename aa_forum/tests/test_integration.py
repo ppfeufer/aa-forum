@@ -961,6 +961,50 @@ class TestProfileUI(WebTest):
         # then
         self.assertEqual(str(user_profile), f"Forum User Profile: {self.user_1002}")
 
+    def test_should_set_discord_dm_on_new_personal_message_to_true(self):
+        """
+        Test should set discord_dm_on_new_personal_message to True
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # when
+        form = page.forms["aa-forum-form-userprofile-modify"]
+        form["discord_dm_on_new_personal_message"] = True
+        page = form.submit().follow()
+
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
+
+        user_profile_updated = UserProfile.objects.get(pk=self.user_1002.pk)
+
+        self.assertTrue(user_profile_updated.discord_dm_on_new_personal_message)
+
+    def test_should_set_discord_dm_on_new_personal_message_to_false(self):
+        """
+        Test should set discord_dm_on_new_personal_message to False
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # when
+        form = page.forms["aa-forum-form-userprofile-modify"]
+        form["discord_dm_on_new_personal_message"] = ""
+        page = form.submit().follow()
+
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
+
+        user_profile_updated = UserProfile.objects.get(pk=self.user_1002.pk)
+
+        self.assertFalse(user_profile_updated.discord_dm_on_new_personal_message)
+
 
 class TestAdminForumSettingsUI(WebTest):
     """
