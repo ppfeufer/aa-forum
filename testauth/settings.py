@@ -267,7 +267,7 @@ SITE_NAME = "testauth"
 # useful error messages but can leak sensitive data.
 DEBUG = False
 
-if os.environ.get("USE_MYSQL", True) is True:
+if os.environ.get("USE_MYSQL", False) is True:
     DATABASES["default"] = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "tox_allianceauth",
