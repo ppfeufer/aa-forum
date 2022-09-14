@@ -694,7 +694,9 @@ class PersonalMessage(models.Model):
 
         # Needs to be imported here, otherwise it's a circular import
         # AA Forum
-        from aa_forum.helper.discord import send_new_personal_message_notification
+        from aa_forum.helper.discord_messages import (
+            send_new_personal_message_notification,
+        )
 
         # Sending Discord PM for new personal message, if the user wants it
         send_new_personal_message_notification(message=self)
