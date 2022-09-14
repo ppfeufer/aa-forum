@@ -657,3 +657,240 @@ class TestForumVersionedStatic(TestCase):
             rendered_template,
             f'/static/aa_forum/css/aa-forum.min.css?v={context["version"]}',
         )
+
+
+class TestHighlightSearchTerm(TestCase):
+    """
+    Tests for aa_forum_versioned_static template tag
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+
+        cls.message_text = "Lorem Ipsum"
+        cls.message_with_link = '<a href="https://lorem-ipsum.com">Lorem Ipsum</a>'
+        cls.message_with_link_without_href = '<a title="Lorem Ipsum">Lorem Ipsum</a>'
+        cls.message_with_link_and_title = (
+            '<a href="https://lorem-ipsum.com" title="Lorem Ipsum">Lorem Ipsum</a>'
+        )
+        cls.message_with_link_and_name = (
+            '<a href="https://lorem-ipsum.com" name="Lorem Ipsum">Lorem Ipsum</a>'
+        )
+        cls.message_with_image = (
+            '<img src="https://lorem-ipsum.com/lorem-ipsum.jpg"> Lorem Ipsum'
+        )
+        cls.message_with_image_without_src = '<img alt="Lorem Ipsum"> Lorem Ipsum'
+        cls.message_with_image_and_alt = (
+            '<img src="https://lorem-ipsum.com/lorem-ipsum.jpg" alt="Lorem Ipsum"> '
+            "Lorem Ipsum"
+        )
+        cls.message_with_image_and_title = (
+            '<img src="https://lorem-ipsum.com/lorem-ipsum.jpg" title="Lorem Ipsum"> '
+            "Lorem Ipsum"
+        )
+        cls.search_term = "Lorem"
+        cls.template = (
+            "{% load aa_forum_search %}"
+            "{{ message|highlight_search_term:search_term  }}"
+        )
+
+    def test_should_highlight_with_just_text(self):
+        """
+        Test should highlight search term
+        :return:
+        """
+
+        context = {"message": self.message_text, "search_term": self.search_term}
+
+        rendered_template = render_template(
+            string=self.template,
+            context=context,
+        )
+
+        expected_result = (
+            '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum'
+        )
+
+        self.assertEqual(rendered_template, expected_result)
+
+    def test_should_add_dummy_href(self):
+        """
+        Test should add a dummy href
+        :return:
+        """
+
+        context = {
+            "message": self.message_with_link_without_href,
+            "search_term": self.search_term,
+        }
+
+        rendered_template = render_template(
+            string=self.template,
+            context=context,
+        )
+
+        expected_result = (
+            '<a href="#" title="Lorem Ipsum">'
+            '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum</a>'
+        )
+
+        self.assertEqual(rendered_template, expected_result)
+
+    def test_should_not_highlight_in_link_href(self):
+        """
+        Test should not highlight in an a-tag's href attribute
+        :return:
+        """
+
+        context = {"message": self.message_with_link, "search_term": self.search_term}
+
+        rendered_template = render_template(
+            string=self.template,
+            context=context,
+        )
+
+        expected_result = (
+            '<a href="https://lorem-ipsum.com">'
+            '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum</a>'
+        )
+
+        self.assertEqual(rendered_template, expected_result)
+
+    def test_should_not_highlight_in_link_title(self):
+        """
+        Test should not highlight in an a-tag's title attribute
+        :return:
+        """
+
+        context = {
+            "message": self.message_with_link_and_title,
+            "search_term": self.search_term,
+        }
+
+        rendered_template = render_template(
+            string=self.template,
+            context=context,
+        )
+
+        expected_result = (
+            '<a href="https://lorem-ipsum.com" title="Lorem Ipsum">'
+            '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum</a>'
+        )
+
+        self.assertEqual(rendered_template, expected_result)
+
+    def test_should_not_highlight_in_link_name(self):
+        """
+        Test should not highlight in an a-tag's name attribute
+        :return:
+        """
+
+        context = {
+            "message": self.message_with_link_and_name,
+            "search_term": self.search_term,
+        }
+
+        rendered_template = render_template(
+            string=self.template,
+            context=context,
+        )
+
+        expected_result = (
+            '<a href="https://lorem-ipsum.com" name="Lorem Ipsum">'
+            '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum</a>'
+        )
+
+        self.assertEqual(rendered_template, expected_result)
+
+    def test_should_not_highlight_in_img_src(self):
+        """
+        Test should not highlight in an img-tag's src attribute
+        :return:
+        """
+
+        context = {
+            "message": self.message_with_image,
+            "search_term": self.search_term,
+        }
+
+        rendered_template = render_template(
+            string=self.template,
+            context=context,
+        )
+
+        expected_result = (
+            '<img src="https://lorem-ipsum.com/lorem-ipsum.jpg"/> '
+            '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum'
+        )
+
+        self.assertEqual(rendered_template, expected_result)
+
+    def test_should_add_dummy_image_src(self):
+        """
+        Test should add a dummy image src
+        :return:
+        """
+
+        context = {
+            "message": self.message_with_image_without_src,
+            "search_term": self.search_term,
+        }
+
+        rendered_template = render_template(
+            string=self.template,
+            context=context,
+        )
+
+        expected_result = (
+            '<img alt="Lorem Ipsum" src="#"/> '
+            '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum'
+        )
+
+        self.assertEqual(rendered_template, expected_result)
+
+    def test_should_not_highlight_in_img_alt(self):
+        """
+        Test should not highlight in an img-tag's alt attribute
+        :return:
+        """
+
+        context = {
+            "message": self.message_with_image_and_alt,
+            "search_term": self.search_term,
+        }
+
+        rendered_template = render_template(
+            string=self.template,
+            context=context,
+        )
+
+        expected_result = (
+            '<img alt="Lorem Ipsum" src="https://lorem-ipsum.com/lorem-ipsum.jpg"/> '
+            '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum'
+        )
+
+        self.assertEqual(rendered_template, expected_result)
+
+    def test_should_not_highlight_in_img_title(self):
+        """
+        Test should not highlight in an img-tag's title attribute
+        :return:
+        """
+
+        context = {
+            "message": self.message_with_image_and_title,
+            "search_term": self.search_term,
+        }
+
+        rendered_template = render_template(
+            string=self.template,
+            context=context,
+        )
+
+        expected_result = (
+            '<img src="https://lorem-ipsum.com/lorem-ipsum.jpg" title="Lorem Ipsum"/> '
+            '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum'
+        )
+
+        self.assertEqual(rendered_template, expected_result)
