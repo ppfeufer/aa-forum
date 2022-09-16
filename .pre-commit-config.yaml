@@ -28,7 +28,7 @@ repos:
       - id: check-merge-conflict
 
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 2.4.0
+    rev: 2.6.1
     hooks:
       - id: editorconfig-checker
         exclude: ^(LICENSE|aa_forum/static/aa_forum/libs/|aa_forum/static/aa_forum/ckeditor)
@@ -42,13 +42,13 @@ repos:
       - id: text-unicode-replacement-char
 
   - repo: https://github.com/adamchainz/django-upgrade
-    rev: 1.9.0
+    rev: 1.10.0
     hooks:
       - id: django-upgrade
         args: [ --target-version=4.0 ]
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.37.3
+    rev: v2.38.0
     hooks:
       - id: pyupgrade
         args: [ --py38-plus ]
