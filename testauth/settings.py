@@ -277,7 +277,7 @@ if os.environ.get("USE_MYSQL", True) is True:
         "PORT": os.environ.get("DB_PORT", ""),
         "OPTIONS": {"charset": "utf8mb4"},
         "TEST": {
-            "charset": "utf8mb4",
+            "CHARSET": "utf8mb4",
             "NAME": "test_tox_allianceauth",
         },
     }
