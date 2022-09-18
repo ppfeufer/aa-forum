@@ -61,8 +61,7 @@ these kinds of changes. For your own sanity, and mine :-)
       This feature is disabled by default, can be enabled by each user in their forum
       profile. Needs one of the following applications installed:<br>
         - [discordproxy]
-        - [allianceauth-discordbot]<br>
-
+        - [AA-Discordbot]
 
 
 ### Screenshots
@@ -478,7 +477,7 @@ Please make sure to read the [Contribution Guidelines]
 [Alliance Auth]: https://gitlab.com/allianceauth/allianceauth
 [AA installation guide]: https://allianceauth.readthedocs.io/en/latest/installation/allianceauth.html
 [discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy
-[allianceauth-discordbot]: https://github.com/pvyParts/allianceauth-discordbot
+[AA-Discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
 [CHANGELOG.md]: https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md
 [Contribution Guidelines]: https://github.com/ppfeufer/aa-forum/blob/master/CONTRIBUTING.md
 [AA-Forum on Pypi]: https://pypi.org/project/aa-forum/
