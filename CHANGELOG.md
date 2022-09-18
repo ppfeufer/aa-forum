@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning].
 
 - New Feature: Discord PM for new personal messages<br>
   This feature is disabled by default, can be enabled by each user in their forum
-  profile. Needs one of the following applications installed:<br>
+  profile. Needs one of the following applications installed:
   - [discordproxy]
   - [AA-Discordbot]
 
