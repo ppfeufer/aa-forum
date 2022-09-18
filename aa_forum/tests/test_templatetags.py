@@ -30,7 +30,7 @@ class TestMainCharacterName(TestCase):
 
     def test_should_contain_character_name_for_users_with_main(self):
         """
-        test should contain character name for user with main set
+        Test should contain character name for user with main set
         :return:
         """
 
@@ -507,7 +507,7 @@ class TestMainAllianceId(TestCase):
 
     def test_should_be_dummy_id_for_none(self):
         """
-        test should return dummy ID (1) for None
+        Test should return dummy ID (1) for None
         :return:
         """
 

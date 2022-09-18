@@ -15,6 +15,7 @@ from django.utils.translation import gettext_lazy as _
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 # AA Forum
+from aa_forum.app_settings import discord_messaging_proxy_available
 from aa_forum.helper.text import string_cleanup
 from aa_forum.models import (
     Board,
@@ -53,7 +54,7 @@ class SpecialModelChoiceIterator(forms.models.ModelChoiceIterator):
 
     def __iter__(self):
         if self.field.empty_label is not None:
-            yield ("", self.field.empty_label)
+            yield "", self.field.empty_label
 
         queryset = self.queryset
 
@@ -234,7 +235,7 @@ class EditBoardForm(ModelForm):
         max_length=254,
         widget=forms.TextInput(
             attrs={
-                "placeholder": "https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # , pylint: disable=line-too-long
+                "placeholder": "https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # pylint: disable=line-too-long
             }
         ),
     )
@@ -367,6 +368,16 @@ class UserProfileForm(ModelForm):
             "otherwise this field will be ignored.)"
         ),
     )
+    discord_dm_on_new_personal_message = forms.BooleanField(
+        required=False,
+        label=_("PM me on Discord when I get a new personal message"),
+        help_text=_(
+            "Information: There is currently no module installed that can handle "
+            "Discord direct messages. Have a chat with your IT guys to remedy this."
+        )
+        if discord_messaging_proxy_available() is False
+        else "",
+    )
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -374,7 +385,12 @@ class UserProfileForm(ModelForm):
         """
 
         model = UserProfile
-        fields = ["signature", "website_title", "website_url"]
+        fields = [
+            "signature",
+            "website_title",
+            "website_url",
+            "discord_dm_on_new_personal_message",
+        ]
 
     def clean_signature(self):
         """

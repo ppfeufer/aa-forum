@@ -72,5 +72,5 @@ make coverage
 
 The full tox-test suite can be run via:
 ```shell
-tox
+make tox_tests
 ```

@@ -2,11 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
+The format is based on [Keep a Changelog]
+and this project adheres to [Semantic Versioning].
 
 
 ## [In Development] - Unreleased
+
+
+## [1.16.0] - 2022-09-18
+
+### Added
+
+- New Feature: Discord PM for new personal messages<br>
+  This feature is disabled by default but can be enabled by each user in their forum
+  profile. Needs one of the following applications installed:
+  - [discordproxy]
+  - [AA-Discordbot]
 
 
 ## [1.15.2] - 2022-09-14
@@ -190,7 +201,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - New Feature: Announcement Boards
 
-  ![New Feature: Announcement Boards](aa_forum/docs/images/feature-announcement-board.jpg "New Feature: Announcement Boards")
+  ![New Feature: Announcement Boards]
 
   - Boards marked as "Announcement Boards" have restrictions on who can start a topic
     in them. This is the already known group restriction function that is already
@@ -244,7 +255,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   board settings. When checked, the provided Discord webhook will also be used to
   send a message for every reply in this board to Discord. Chose wisely!)
 
-  ![Admin Board Options](aa_forum/docs/images/admin-board-options.jpg "Admin Board Options")
+  ![Admin Board Options]
 
 ### Changed
 
@@ -525,7 +536,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - CKEditor config changed to prevent possible collisions in static files (see
-  [Readme](README.md) for details)
+  [README.md] for details)
 
 
 ## [0.1.0-beta.4] - 2021-07-14
@@ -553,7 +564,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Default config for CKEditor (see [Readme](README.md) for details) to implement the
+- Default config for CKEditor (see [README.md] for details) to implement the
   YouTube embed plugin and to remove the obsolete Flash embed
 
 
@@ -748,3 +759,15 @@ python manage.py migrate aa_forum
 ### Added
 
 - First version for Alpha testing
+
+
+<!-- Images -->
+[New Feature: Announcement Boards]: aa_forum/docs/images/feature-announcement-board.jpg "New Feature: Announcement Boards"
+[Admin Board Options]: aa_forum/docs/images/admin-board-options.jpg "Admin Board Options"
+
+<!-- Hyperlinks -->
+[Keep a Changelog]: http://keepachangelog.com/ "Keep a Changelog"
+[Semantic Versioning]: http://semver.org/ "Semantic Versioning"
+[discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy "discordproxy"
+[AA-Discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
+[README.md]: README.md "README.md"

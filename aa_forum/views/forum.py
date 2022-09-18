@@ -28,7 +28,7 @@ from app_utils.logging import LoggerAddTag
 # AA Forum
 from aa_forum import __title__
 from aa_forum.forms import EditMessageForm, EditTopicForm, NewTopicForm
-from aa_forum.helper.webhook import send_message_to_discord_webhook
+from aa_forum.helper.discord_messages import send_message_to_discord_webhook
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Setting, Topic
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)

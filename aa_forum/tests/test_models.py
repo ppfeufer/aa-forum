@@ -282,6 +282,19 @@ class TestBoard(TestCase):
         expected_slug = f"{board.__class__.__name__}-{board.pk}".lower()
         self.assertEqual(board.slug, expected_slug)
 
+    def test_should_translate_nonlatin_letters_in_slug(self):
+        """
+        Test that non latin letters in a slug are translated
+        :return:
+        :rtype:
+        """
+
+        board = create_board(name="дрифтерке, рорки в док", category=self.category)
+
+        expected_slug = "drifterke-rorki-v-dok"
+
+        self.assertEqual(board.slug, expected_slug)
+
 
 class TestCategory(TestCase):
     """
@@ -377,6 +390,19 @@ class TestCategory(TestCase):
         # then
         category.refresh_from_db()
         self.assertEqual(category.slug, "science-1")
+
+    def test_should_translate_nonlatin_letters_in_slug(self):
+        """
+        Test that non latin letters in a slug are translated
+        :return:
+        :rtype:
+        """
+
+        category = create_category(name="дрифтерке, рорки в док")
+
+        expected_slug = "drifterke-rorki-v-dok"
+
+        self.assertEqual(category.slug, expected_slug)
 
     @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
     def test_should_create_new_category_with_name_matching_internal_url_prefix(self):
@@ -893,6 +919,19 @@ class TestTopic(TestCase):
 
         # then
         expected_slug = f"{topic.__class__.__name__}-{topic.pk}".lower()
+        self.assertEqual(topic.slug, expected_slug)
+
+    def test_should_translate_nonlatin_letters_in_slug(self):
+        """
+        Test that non latin letters in a slug are translated
+        :return:
+        :rtype:
+        """
+
+        topic = create_topic(subject="дрифтерке, рорки в док", board=self.board)
+
+        expected_slug = "drifterke-rorki-v-dok"
+
         self.assertEqual(topic.slug, expected_slug)
 
 

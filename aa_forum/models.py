@@ -28,6 +28,7 @@ from aa_forum.constants import (
     DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
     INTERNAL_URL_PREFIX,
 )
+from aa_forum.helper.text import string_cleanup
 from aa_forum.managers import (
     BoardManager,
     MessageManager,
@@ -562,7 +563,7 @@ class Message(models.Model):
         :return:
         """
 
-        self.message = self.message
+        self.message = string_cleanup(self.message)
         self.message_plaintext = strip_tags(self.message)
 
         super().save(*args, **kwargs)
@@ -688,6 +689,26 @@ class PersonalMessage(models.Model):
     def __str__(self) -> str:
         return f'"{self.subject}" from {self.sender} to {self.recipient}'
 
+    @transaction.atomic()
+    def save(self, *args, **kwargs) -> None:
+        # See if it's a new message and set our status bit accordingly
+        is_new_message = self._state.adding
+
+        self.message = string_cleanup(self.message)
+
+        super().save(*args, **kwargs)
+
+        # Try to send a Discord PM when we have a new message
+        if is_new_message is True:
+            # Needs to be imported here, otherwise it's a circular import
+            # AA Forum
+            from aa_forum.helper.discord_messages import (
+                send_new_personal_message_notification,
+            )
+
+            # Sending Discord PM for new personal message, if the user wants it
+            send_new_personal_message_notification(message=self)
+
 
 class Setting(SingletonModel):
     """
@@ -744,6 +765,7 @@ class UserProfile(models.Model):
     signature = RichTextUploadingField(blank=True)
     website_title = models.CharField(max_length=254, blank=True)
     website_url = models.CharField(max_length=254, blank=True)
+    discord_dm_on_new_personal_message = models.BooleanField(default=False)
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -756,3 +778,15 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"Forum User Profile: {self.user}"
+
+    def save(self, *args, **kwargs) -> None:
+        """
+        Cleanup the signature on save
+        :param args:
+        :param kwargs:
+        :return:
+        """
+
+        self.signature = string_cleanup(self.signature)
+
+        super().save(*args, **kwargs)

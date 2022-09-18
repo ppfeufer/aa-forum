@@ -47,6 +47,9 @@ def index(request: WSGIRequest) -> HttpResponse:
             user_profile.signature = user_profile_form.cleaned_data["signature"]
             user_profile.website_title = user_profile_form.cleaned_data["website_title"]
             user_profile.website_url = user_profile_form.cleaned_data["website_url"]
+            user_profile.discord_dm_on_new_personal_message = (
+                user_profile_form.cleaned_data["discord_dm_on_new_personal_message"]
+            )
             user_profile.save()
 
             messages.success(

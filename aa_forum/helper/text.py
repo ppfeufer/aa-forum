@@ -3,10 +3,14 @@ Text helper
 """
 
 # Standard Library
+import html
 import re
 
 # Third Party
 from bs4 import BeautifulSoup
+
+# Django
+from django.utils.html import strip_tags
 
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
@@ -17,6 +21,7 @@ from app_utils.urls import site_absolute_url
 
 # AA Forum
 from aa_forum import __title__
+from aa_forum.constants import DISCORD_EMBED_MESSAGE_LENGTH
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
@@ -92,3 +97,32 @@ def string_cleanup(string: str) -> str:
     string = re_css.sub("", string)
 
     return string
+
+
+def prepare_message_for_discord(
+    message: str, message_length=DISCORD_EMBED_MESSAGE_LENGTH
+) -> str:
+    """
+    Preparing the message to be sent with a Discord Webhook
+
+    We have to run strip_tags() twice here.
+    1. To remove HTML tags from the text we want to send
+    2. After html.unescape() in case that unescaped former escaped HTML tags,
+    which now need to be removed as well
+    :param message:
+    :type message:
+    :param message_length:
+    :type message_length:
+    :return:
+    :rtype:
+    """
+
+    return strip_tags(
+        html.unescape(
+            strip_tags(
+                message[:message_length] + "…"
+                if len(message) > message_length
+                else message
+            )
+        )
+    )
