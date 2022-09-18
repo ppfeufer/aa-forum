@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning].
 
 ## [In Development] - Unreleased
 
+
+## [1.16.0] - 2022-09-18
+
 ### Added
 
 - New Feature: Discord PM for new personal messages<br>
