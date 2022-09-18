@@ -28,6 +28,7 @@ from aa_forum.constants import (
     DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
     INTERNAL_URL_PREFIX,
 )
+from aa_forum.helper.text import string_cleanup
 from aa_forum.managers import (
     BoardManager,
     MessageManager,
@@ -562,7 +563,7 @@ class Message(models.Model):
         :return:
         """
 
-        self.message = self.message
+        self.message = string_cleanup(self.message)
         self.message_plaintext = strip_tags(self.message)
 
         super().save(*args, **kwargs)
@@ -693,6 +694,8 @@ class PersonalMessage(models.Model):
         # See if it's a new message and set our status bit accordingly
         is_new_message = self._state.adding
 
+        self.message = string_cleanup(self.message)
+
         super().save(*args, **kwargs)
 
         # Try to send a Discord PM when we have a new message
@@ -775,3 +778,15 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"Forum User Profile: {self.user}"
+
+    def save(self, *args, **kwargs) -> None:
+        """
+        Cleanup the signature on save
+        :param args:
+        :param kwargs:
+        :return:
+        """
+
+        self.signature = string_cleanup(self.signature)
+
+        super().save(*args, **kwargs)

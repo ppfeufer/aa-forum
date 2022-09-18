@@ -54,7 +54,7 @@ class SpecialModelChoiceIterator(forms.models.ModelChoiceIterator):
 
     def __iter__(self):
         if self.field.empty_label is not None:
-            yield ("", self.field.empty_label)
+            yield "", self.field.empty_label
 
         queryset = self.queryset
 
@@ -235,7 +235,7 @@ class EditBoardForm(ModelForm):
         max_length=254,
         widget=forms.TextInput(
             attrs={
-                "placeholder": "https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # , pylint: disable=line-too-long
+                "placeholder": "https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # pylint: disable=line-too-long
             }
         ),
     )

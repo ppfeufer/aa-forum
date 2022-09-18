@@ -109,9 +109,12 @@ def prepare_message_for_discord(
     1. To remove HTML tags from the text we want to send
     2. After html.unescape() in case that unescaped former escaped HTML tags,
     which now need to be removed as well
+    :param message:
+    :type message:
     :param message_length:
-    :param length:
+    :type message_length:
     :return:
+    :rtype:
     """
 
     return strip_tags(
