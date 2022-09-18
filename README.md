@@ -1,26 +1,26 @@
 # AA Forum
 
-[![Version](https://img.shields.io/pypi/v/aa-forum?label=release)](https://pypi.org/project/aa-forum/)
-[![License](https://img.shields.io/github/license/ppfeufer/aa-forum)](https://github.com/ppfeufer/aa-forum/blob/master/LICENSE)
-[![Python](https://img.shields.io/pypi/pyversions/aa-forum)](https://pypi.org/project/aa-forum/)
-[![Django](https://img.shields.io/pypi/djversions/aa-forum?label=django)](https://pypi.org/project/aa-forum/)
-![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)
-[![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](http://black.readthedocs.io/en/latest/)
-[![Discord](https://img.shields.io/discord/790364535294132234?label=discord)](https://discord.gg/zmh52wnfvM)
-[![Checks](https://github.com/ppfeufer/aa-forum/actions/workflows/automated-checks.yml/badge.svg)](https://github.com/ppfeufer/aa-forum/actions/workflows/automated-checks.yml)
-[![codecov](https://codecov.io/gh/ppfeufer/aa-forum/branch/master/graph/badge.svg)](https://codecov.io/gh/ppfeufer/aa-forum)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/ppfeufer/aa-forum/blob/master/CODE_OF_CONDUCT.md)
+[![Badge: Version]][AA-Forum on Pypi]
+[![Badge: License]][AA-Forum License]
+[![Badge: Supported Python Versions]][AA-Forum on Pypi]
+[![Badge: Supported Django Versions]][AA-Forum on Pypi]
+![Badge: pre-commit]
+[![Badge: Code Style: black]][black code formatter documentation]
+[![Badge: Support Discord]][Support Discord]
+[![Badge: Automated Tests]][Automated Tests on GitHub]
+[![Badge: Code Coverage]][AA-Forum on Codecov]
+[![Badge: Contributer Covenant]][Code of Conduct]
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/N4N8CL1BY)
+[![Badge: Buy me a coffee]][ppfeufer on ko-fi]
 
-Simple forum app for [Alliance Auth](https://gitlab.com/allianceauth/allianceauth)
+Simple forum app for [Alliance Auth]
 
 ## ⚠️ Before you install this module ⚠️
 
 This module needs quite some configuration done before working properly. You need to
 modify your Apache/Nginx configuration as well as the global URL config of Alliance
-Auth. So please only install if you know what you're doing/feel comfortable to make
-these kind of changes. For you own sanity, and mine :-)
+Auth. So please only install if you know what you're doing/feel comfortable making
+these kinds of changes. For your own sanity, and mine :-)
 
 ## Contents
 
@@ -44,44 +44,52 @@ these kind of changes. For you own sanity, and mine :-)
 
 ### Features
 
-- Simple permission system. Only 2 permissions ("has_access" and "can_manage")
-- Simple administration, no maze to click through to get where you wantet to go
-- Categories and boards are sortable via drag and drop in admin view
-- Mass creation of boards with a new categoy
+- Simple permission system. Only 2 permissions. ("has_access" and "can_manage")
+- Simple administration, no maze to click through to get where you want to go.
+- Categories and boards are sortable via drag and drop in the admin view.
+- Mass creation of boards with a new category.
 - Boards can be restricted to 1 or more groups, bards without restrictions are
-  visible for everyone who has access to the forum
-- Announcement boards where only certain users can start topics
-- Child boards (1 Level), which inherit their access restrictions from their parent
-- ckEditor with image upload
-- Unread topics counter as number on the "Forum" link in the left navigation
-- Optional notifications about new topics in a board via Discord webhooks
+  visible for everyone who has access to the forum.
+- Announcement boards where only certain users can start topics.
+- Child boards (1 Level), which inherit their access restrictions from their parent.
+- CKEditor with image upload.
+- Unread topics counter as a number on the "Forum" link in the left navigation.
+- Optional notifications about new topics in a board via Discord webhooks.
+- Forum profile for each user.
+- Personal Messages.
+    - Optional Discord PM for new personal messages.<br>
+      This feature is disabled by default, can be enabled by each user in their forum
+      profile. Needs one of the following applications installed:<br>
+        - [discordproxy]
+        - [allianceauth-discordbot]<br>
+
 
 
 ### Screenshots
 
 #### Forum Index
 
-![Forum Index](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/forum-index.jpg "Forum Index")
+![Screenshot: Forum Index]
 
 
 #### Topic Overview / Board Index
 
-![Topic Overview / Board Index](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-overview.jpg "Topic Overview / Board Index")
+![Screenshot: Topic Overview / Board Index]
 
 
 #### Topic View
 
-![Topic View](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-view.jpg "Topic View")
+![Screenshot: Topic View]
 
 
 #### Start new Topic (ckEditor)
 
-![Start new Topic](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/start-new-topic.jpg "Start new Topic")
+![Screenshot: Start new Topic]
 
 
 #### Admin View
 
-![Admin View](https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/admin-view.jpg "Admin View")
+![Screenshot: Admin View]
 
 
 ## Installation
@@ -90,8 +98,7 @@ these kind of changes. For you own sanity, and mine :-)
 
 - AA Forum is a plugin for Alliance Auth. If you don't have Alliance Auth running
   already, please install it first before proceeding. (see the official
-  [AA installation guide](https://allianceauth.readthedocs.io/en/latest/installation/allianceauth.html)
-  or details)
+  [AA installation guide] for details)
 - AA Forum needs a couple of changes made to your Webserver and Alliance Auth
   configuration. So make sure you know how to do so. The steps needed will be
   described in this document, but you need to understand what will be changed.
@@ -341,7 +348,7 @@ have to tell it.
 
 #### Apache
 
-In your vhost configuration you have a line `ProxyPassMatch ^/static !`, which tells
+In your vhost configuration, you have a line `ProxyPassMatch ^/static !`, which tells
 the server where to find all the static files. We are adding a similar line for the
 media, right below that one.
 
@@ -359,7 +366,7 @@ be done right below the already existing Alias for `/static`:
 Alias "/media" "/var/www/myauth/media/"
 ```
 
-At last a "Directory" rule is needed as well. Add the following below the already
+At last, a "Directory" rule is needed as well. Add the following below the already
 existing Directory rule for the static files:
 
 ```apache
@@ -437,12 +444,48 @@ about the available permissions.
 
 ## Changelog
 
-See [CHANGELOG.md](https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md)
+See [CHANGELOG.md]
 
 
 ## Contributing
 
-You want to contribute to this project? That's cool!
+Do you want to contribute to this project? That's cool!
 
-Please make sure to read the [contribution guidelines](https://github.com/ppfeufer/aa-forum/blob/master/CONTRIBUTING.md)
+Please make sure to read the [Contribution Guidelines]
 (I promise, it's not much, just some basics)
+
+
+<!-- Images -->
+[Badge: Version]: https://img.shields.io/pypi/v/aa-forum?label=release "Version"
+[Badge: License]: https://img.shields.io/github/license/ppfeufer/aa-forum "License"
+[Badge: Supported Python Versions]: https://img.shields.io/pypi/pyversions/aa-forum "Supported Python Versions"
+[Badge: Supported Django Versions]: https://img.shields.io/pypi/djversions/aa-forum?label=django "Supported Django Versions"
+[Badge: pre-commit]: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white "pre-commit"
+[Badge: Code Style: black]: https://img.shields.io/badge/code%20style-black-000000.svg "Code Style: black"
+[Badge: Support Discord]: https://img.shields.io/discord/790364535294132234?label=discord "Support Discord"
+[Badge: Automated Tests]: https://github.com/ppfeufer/aa-forum/actions/workflows/automated-checks.yml/badge.svg "Automated Tests"
+[Badge: Code Coverage]: https://codecov.io/gh/ppfeufer/aa-forum/branch/master/graph/badge.svg "Code Coverage"
+[Badge: Contributer Covenant]: https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg "Contributor Covenant"
+[Badge: Buy me a coffee]: https://ko-fi.com/img/githubbutton_sm.svg "Buy me a coffee"
+
+[Screenshot: Forum Index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/forum-index.jpg "Forum Index"
+[Screenshot: Topic Overview / Board Index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-overview.jpg "Topic Overview / Board Index"
+[Screenshot: Topic View]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-view.jpg "Topic View"
+[Screenshot: Start new Topic]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/start-new-topic.jpg "Start new Topic (ckEditor)"
+[Screenshot: Admin View]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/admin-view.jpg "Admin View"
+
+<!-- Hyperlinks -->
+[Alliance Auth]: https://gitlab.com/allianceauth/allianceauth
+[AA installation guide]: https://allianceauth.readthedocs.io/en/latest/installation/allianceauth.html
+[discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy
+[allianceauth-discordbot]: https://github.com/pvyParts/allianceauth-discordbot
+[CHANGELOG.md]: https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md
+[Contribution Guidelines]: https://github.com/ppfeufer/aa-forum/blob/master/CONTRIBUTING.md
+[AA-Forum on Pypi]: https://pypi.org/project/aa-forum/
+[AA-Forum on Codecov]: https://codecov.io/gh/ppfeufer/aa-forum
+[AA-Forum License]: https://github.com/ppfeufer/aa-forum/blob/master/LICENSE
+[black code formatter documentation]: http://black.readthedocs.io/en/latest/
+[Support Discord]: https://discord.gg/zmh52wnfvM
+[Automated Tests on GitHub]: https://github.com/ppfeufer/aa-forum/actions/workflows/automated-checks.yml
+[Code of Conduct]: https://github.com/ppfeufer/aa-forum/blob/master/CODE_OF_CONDUCT.md
+[ppfeufer on ko-fi]: https://ko-fi.com/N4N8CL1BY

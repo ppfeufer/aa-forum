@@ -11,15 +11,15 @@ $(function () {
         connectWith: '.categories_sortable',
         containment: 'parent',
         start (e, ui) {
-            // get the instance of the sortable.
-            // instance method is new to jquery ui 1.11, for previous versions
+            // Get the instance of the sortable.
+            // Instance method is new to jquery ui 1.11, for previous versions
             // you can use $(this).data()['ui-sortable'];
             const sort = $(this).sortable('instance');
 
             // this makes the placeholder fit with the row that's being dragged
             ui.placeholder.height(ui.helper.height());
 
-            // containment property of the sortable instance is different
+            // Containment property of the sortable instance is different
             // as the containment option. The property is calculated
             // from the option. You need to adjust bottom coordinates
             // to take into account the row you just removed from it, and the click offset.
@@ -68,15 +68,15 @@ $(function () {
                 connectWith: categoriesWithBoards[key],
                 containment: 'parent',
                 start (e, ui) {
-                    // get the instance of the sortable.
-                    // instance method is new to jquery ui 1.11, for previous versions
+                    // Get the instance of the sortable.
+                    // Instance method is new to jquery ui 1.11, for previous versions
                     // you can use $(this).data()['ui-sortable'];
                     const sort = $(this).sortable('instance');
 
                     // this makes the placeholder fit with the row that's being dragged
                     ui.placeholder.height(ui.helper.height());
 
-                    // containment property of the sortable instance is different
+                    // Containment property of the sortable instance is different
                     // as the containment option. The property is calculated
                     // from the option. You need to adjust bottom coordinates
                     // to take into account the row you just removed from it, and the click offset.
@@ -123,15 +123,15 @@ $(function () {
                 connectWith: boardsWithChildren[key],
                 containment: 'parent',
                 start (e, ui) {
-                    // get the instance of the sortable.
-                    // instance method is new to jquery ui 1.11, for previous versions
+                    // Get the instance of the sortable.
+                    // Instance method is new to jquery ui 1.11, for previous versions
                     // you can use $(this).data()['ui-sortable'];
                     const sort = $(this).sortable('instance');
 
                     // this makes the placeholder fit with the row that's being dragged
                     ui.placeholder.height(ui.helper.height());
 
-                    // containment property of the sortable instance is different
+                    // Containment property of the sortable instance is different
                     // as the containment option. The property is calculated
                     // from the option. You need to adjust bottom coordinates
                     // to take into account the row you just removed from it, and the click offset.

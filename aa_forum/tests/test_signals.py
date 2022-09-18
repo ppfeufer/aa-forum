@@ -43,7 +43,8 @@ class TestBoard(TestCase):
 
     def test_should_set_child_board_access_restriction(self):
         """
-        Test that a child parent board passes down its group restriction to its child on save
+        Test that a child parent board passes down its group restriction to
+        its child on save
         :return:
         """
 

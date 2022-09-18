@@ -37,13 +37,13 @@ def message_datetime() -> dt.datetime:
 
     global MESSAGE_DATETIME_MINUTES_OFFSET
 
-    message_datetime = NEW_MESSAGE_DATETIME + dt.timedelta(
+    message_date_time = NEW_MESSAGE_DATETIME + dt.timedelta(
         minutes=MESSAGE_DATETIME_MINUTES_OFFSET
     )
 
     MESSAGE_DATETIME_MINUTES_OFFSET += 2
 
-    return message_datetime
+    return message_date_time
 
 
 def run():
