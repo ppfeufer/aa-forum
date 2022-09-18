@@ -77,10 +77,11 @@ class TestForumUI(WebTest):
         self.app.set_user(self.user_1001)
 
         # when
-        page = self.app.get(reverse("aa_forum:forum_index"))
+        response = self.app.get(reverse("aa_forum:forum_index"))
 
         # then
-        self.assertTemplateUsed(page, "aa_forum/view/forum/index.html")
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, "aa_forum/view/forum/index.html")
 
     def test_should_not_show_forum_index(self):
         """
@@ -92,10 +93,11 @@ class TestForumUI(WebTest):
         self.app.set_user(self.user_1003)
 
         # when
-        page = self.app.get(reverse("aa_forum:forum_index"))
+        response = self.app.get(reverse("aa_forum:forum_index"))
 
         # then
-        self.assertRedirects(page, "/account/login/?next=/forum/")
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(response, "/account/login/?next=/forum/")
 
     def test_should_create_new_topic(self):
         """
@@ -345,7 +347,7 @@ class TestForumUI(WebTest):
         form["subject"] = "Recent Discoveries"
         form[
             "message"
-        ] = "Energy of the Higgs boson <img src='/images/images/038/929/227/large/marc-bell-2a.jpg'>"  # , pylint: disable=line-too-long
+        ] = "Energy of the Higgs boson <img src='/images/images/038/929/227/large/marc-bell-2a.jpg'>"  # pylint: disable=line-too-long
         page = form.submit().follow()
 
         # then
@@ -358,7 +360,7 @@ class TestForumUI(WebTest):
         new_message = Message.objects.last()
         self.assertEqual(
             new_message.message,
-            "Energy of the Higgs boson <img src='/images/images/038/929/227/large/marc-bell-2a.jpg'>",  # , pylint: disable=line-too-long
+            "Energy of the Higgs boson <img src='/images/images/038/929/227/large/marc-bell-2a.jpg'>",  # pylint: disable=line-too-long
         )
 
         info = {"test1": "value1", "test2": "value2"}
@@ -368,7 +370,7 @@ class TestForumUI(WebTest):
         )
 
     @patch("requests.post")
-    def test_should_post_to_discord_webhook_with_image_with_full_url_on_create_new_topic(  # , pylint: disable=line-too-long
+    def test_should_post_to_discord_webhook_with_image_with_full_url_on_create_new_topic(  # pylint: disable=line-too-long
         self, mock_post
     ):
         """
@@ -389,7 +391,7 @@ class TestForumUI(WebTest):
         form["subject"] = "Recent Discoveries"
         form[
             "message"
-        ] = "Energy of the Higgs boson <img src='https://cdnb.artstation.com/p/assets/images/images/038/929/227/large/marc-bell-2a.jpg'>"  # , pylint: disable=line-too-long
+        ] = "Energy of the Higgs boson <img src='https://cdnb.artstation.com/p/assets/images/images/038/929/227/large/marc-bell-2a.jpg'>"  # pylint: disable=line-too-long
         page = form.submit().follow()
 
         # then
@@ -400,7 +402,7 @@ class TestForumUI(WebTest):
         new_message = Message.objects.last()
         self.assertEqual(
             new_message.message,
-            "Energy of the Higgs boson <img src='https://cdnb.artstation.com/p/assets/images/images/038/929/227/large/marc-bell-2a.jpg'>",  # , pylint: disable=line-too-long
+            "Energy of the Higgs boson <img src='https://cdnb.artstation.com/p/assets/images/images/038/929/227/large/marc-bell-2a.jpg'>",  # pylint: disable=line-too-long
         )
 
         info = {"test1": "value1", "test2": "value2"}
@@ -961,6 +963,50 @@ class TestProfileUI(WebTest):
         # then
         self.assertEqual(str(user_profile), f"Forum User Profile: {self.user_1002}")
 
+    def test_should_set_discord_dm_on_new_personal_message_to_true(self):
+        """
+        Test should set discord_dm_on_new_personal_message to True
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # when
+        form = page.forms["aa-forum-form-userprofile-modify"]
+        form["discord_dm_on_new_personal_message"] = True
+        page = form.submit().follow()
+
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
+
+        user_profile_updated = UserProfile.objects.get(pk=self.user_1002.pk)
+
+        self.assertTrue(user_profile_updated.discord_dm_on_new_personal_message)
+
+    def test_should_set_discord_dm_on_new_personal_message_to_false(self):
+        """
+        Test should set discord_dm_on_new_personal_message to False
+        :return:
+        """
+
+        # given
+        self.app.set_user(self.user_1002)
+        page = self.app.get(reverse("aa_forum:profile_index"))
+
+        # when
+        form = page.forms["aa-forum-form-userprofile-modify"]
+        form["discord_dm_on_new_personal_message"] = ""
+        page = form.submit().follow()
+
+        # then
+        self.assertTemplateUsed(page, "aa_forum/view/profile/index.html")
+
+        user_profile_updated = UserProfile.objects.get(pk=self.user_1002.pk)
+
+        self.assertFalse(user_profile_updated.discord_dm_on_new_personal_message)
+
 
 class TestAdminForumSettingsUI(WebTest):
     """
@@ -1088,7 +1134,7 @@ class TestAdminForumSettingsUI(WebTest):
         self.assertEqual(str(forum_settings), "Forum Settings")
 
 
-class TestPersonalMessageUI(WebTest):
+class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
     """
     Tests for the Forum UI
     """

@@ -197,7 +197,7 @@ class TestAdminViews(TestCase):
 
     def test_should_create_child_board(self):
         """
-        Test shoulod create child board
+        Test should create child board
         :return:
         """
 

@@ -663,7 +663,7 @@ class TestTopicViews(TestCase):
             topic=self.topic, user=self.user_1001
         )
 
-        # view has 2 pages á 5 messages. this is last message on 1st page
+        # View has 2 pages á 5 messages. This is last message on 1st page
         last_message = self.topic.messages.order_by("time_posted")[4]
         self.assertEqual(last_message_seen.message_time, last_message.time_posted)
 
@@ -690,7 +690,7 @@ class TestTopicViews(TestCase):
             topic=self.topic, user=self.user_1001
         )
 
-        # view has 2 pages á 5 messages. this is last message on 2nd page
+        # View has 2 pages á 5 messages. This is last message on 2nd page
         last_message = Message.objects.order_by("time_posted")[9]
         self.assertEqual(last_message_seen.message_time, last_message.time_posted)
 
@@ -698,7 +698,7 @@ class TestTopicViews(TestCase):
         self,
     ):
         """
-        test should remember last message seen by user when opening previous pages
+        Test should remember last message seen by user when opening previous pages
         :return:
         """
 
@@ -725,7 +725,7 @@ class TestTopicViews(TestCase):
             topic=self.topic, user=self.user_1001
         )
 
-        # view has 2 pages á 5 messages. this is last message on 2nd page
+        # View has 2 pages á 5 messages. This is last message on 2nd page
         last_message = Message.objects.order_by("time_posted")[9]
         self.assertEqual(last_message_seen.message_time, last_message.time_posted)
 
@@ -1116,11 +1116,11 @@ class TestTopicViews(TestCase):
         self.assertEqual(alien_message.message, "old text")
         self.assertTrue(messages.error.called)
 
-    def test_should_return_redirect_to_forum_index_if_topic_does_not_exist_on_topic_view(  # , pylint: disable=line-too-long
+    def test_should_return_redirect_to_forum_index_if_topic_does_not_exist_on_topic_view(  # pylint: disable=line-too-long
         self,
     ):
         """
-        test should redirect to forum index if topic is unavailable
+        Test should redirect to forum index if topic is unavailable
         :return:
         """
 
@@ -1149,7 +1149,7 @@ class TestTopicViews(TestCase):
             ),
         )
 
-    def test_should_return_redirect_to_forum_index_if_topic_does_not_exist_on_topic_modify_view(  # , pylint: disable=line-too-long
+    def test_should_return_redirect_to_forum_index_if_topic_does_not_exist_on_topic_modify_view(  # pylint: disable=line-too-long
         self,
     ):
         """
@@ -1182,7 +1182,7 @@ class TestTopicViews(TestCase):
             ),
         )
 
-    def test_should_return_redirect_to_forum_index_if_topic_does_not_exist_on_topic_reply(  # , pylint: disable=line-too-long
+    def test_should_return_redirect_to_forum_index_if_topic_does_not_exist_on_topic_reply(  # pylint: disable=line-too-long
         self,
     ):
         """
@@ -1215,7 +1215,7 @@ class TestTopicViews(TestCase):
             ),
         )
 
-    def test_should_return_redirect_to_forum_index_if_message_does_not_exist_on_message_view(  # , pylint: disable=line-too-long
+    def test_should_return_redirect_to_forum_index_if_message_does_not_exist_on_message_view(  # pylint: disable=line-too-long
         self,
     ):
         """

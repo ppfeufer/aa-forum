@@ -688,6 +688,24 @@ class PersonalMessage(models.Model):
     def __str__(self) -> str:
         return f'"{self.subject}" from {self.sender} to {self.recipient}'
 
+    @transaction.atomic()
+    def save(self, *args, **kwargs) -> None:
+        # See if it's a new message and set our status bit accordingly
+        is_new_message = self._state.adding
+
+        super().save(*args, **kwargs)
+
+        # Try to send a Discord PM when we have a new message
+        if is_new_message is True:
+            # Needs to be imported here, otherwise it's a circular import
+            # AA Forum
+            from aa_forum.helper.discord_messages import (
+                send_new_personal_message_notification,
+            )
+
+            # Sending Discord PM for new personal message, if the user wants it
+            send_new_personal_message_notification(message=self)
+
 
 class Setting(SingletonModel):
     """
@@ -744,6 +762,7 @@ class UserProfile(models.Model):
     signature = RichTextUploadingField(blank=True)
     website_title = models.CharField(max_length=254, blank=True)
     website_url = models.CharField(max_length=254, blank=True)
+    discord_dm_on_new_personal_message = models.BooleanField(default=False)
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
