@@ -13,9 +13,21 @@ repos:
       - id: check-yaml
       - id: fix-byte-order-marker
       - id: trailing-whitespace
-        exclude: \.(min\.css|min\.js|po|mo)$
+        exclude: |
+          (?x)(
+            .min\.css|
+            .min\.js|
+            .po|
+            .mo
+          )
       - id: end-of-file-fixer
-        exclude: \.(min\.css|min\.js|po|mo)$
+        exclude: |
+          (?x)(
+            .min\.css|
+            .min\.js|
+            .po|
+            .mo
+          )
       - id: mixed-line-ending
         args: [ --fix=lf ]
       - id: fix-encoding-pragma
@@ -31,7 +43,12 @@ repos:
     rev: 2.6.1
     hooks:
       - id: editorconfig-checker
-        exclude: ^(LICENSE|aa_forum/static/aa_forum/libs/|aa_forum/static/aa_forum/ckeditor)
+        exclude: |
+          (?x)(
+            LICENSE|
+            static/aa_forum/libs/|
+            static/aa_forum/ckeditor
+          )
 
   - repo: https://github.com/pre-commit/pygrep-hooks
     rev: v1.9.0

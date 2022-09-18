@@ -690,16 +690,21 @@ class PersonalMessage(models.Model):
 
     @transaction.atomic()
     def save(self, *args, **kwargs) -> None:
+        # See if it's a new message and set our status bit accordingly
+        is_new_message = self._state.adding
+
         super().save(*args, **kwargs)
 
-        # Needs to be imported here, otherwise it's a circular import
-        # AA Forum
-        from aa_forum.helper.discord_messages import (
-            send_new_personal_message_notification,
-        )
+        # Try to send a Discord PM when we have a new message
+        if is_new_message is True:
+            # Needs to be imported here, otherwise it's a circular import
+            # AA Forum
+            from aa_forum.helper.discord_messages import (
+                send_new_personal_message_notification,
+            )
 
-        # Sending Discord PM for new personal message, if the user wants it
-        send_new_personal_message_notification(message=self)
+            # Sending Discord PM for new personal message, if the user wants it
+            send_new_personal_message_notification(message=self)
 
 
 class Setting(SingletonModel):
