@@ -9,7 +9,7 @@
 [![Badge: Support Discord]][Support Discord]
 [![Badge: Automated Tests]][Automated Tests on GitHub]
 [![Badge: Code Coverage]][AA-Forum on Codecov]
-[![Badge: Contributer Covenant]][Code of Conduct]
+[![Badge: Contributor Covenant]][Code of Conduct]
 
 [![Badge: Buy me a coffee]][ppfeufer on ko-fi]
 
@@ -464,7 +464,7 @@ Please make sure to read the [Contribution Guidelines]
 [Badge: Support Discord]: https://img.shields.io/discord/790364535294132234?label=discord "Support Discord"
 [Badge: Automated Tests]: https://github.com/ppfeufer/aa-forum/actions/workflows/automated-checks.yml/badge.svg "Automated Tests"
 [Badge: Code Coverage]: https://codecov.io/gh/ppfeufer/aa-forum/branch/master/graph/badge.svg "Code Coverage"
-[Badge: Contributer Covenant]: https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg "Contributor Covenant"
+[Badge: Contributor Covenant]: https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg "Contributor Covenant"
 [Badge: Buy me a coffee]: https://ko-fi.com/img/githubbutton_sm.svg "Buy me a coffee"
 
 [Screenshot: Forum Index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/forum-index.jpg "Forum Index"
