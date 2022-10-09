@@ -57,16 +57,16 @@ def index(request: WSGIRequest) -> HttpResponse:
             )
 
             return redirect("aa_forum:profile_index")
-        else:
-            messages.error(
-                request,
-                mark_safe(
-                    _(
-                        "<h4>Error!</h4>"
-                        "<p>Something went wrong, please check your input.<p>"
-                    )
-                ),
-            )
+
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4>"
+                    "<p>Something went wrong, please check your input.<p>"
+                )
+            ),
+        )
     else:
         user_profile_form = UserProfileForm(instance=user_profile)
 
