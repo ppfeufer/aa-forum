@@ -8,9 +8,12 @@ and this project adheres to [Semantic Versioning].
 
 ## [In Development] - Unreleased
 
+
+## [1.17.0] - 2022-10-11
+
 ### Added
 
-- New Feature: Support for `aa-timezones` for time zone conversions of message
+- New Feature: Support for [AA Time Zones] time zone conversions of message
   date/time information ([#125])
   ![New Feature: Support for aa-timezones]
 
@@ -783,8 +786,8 @@ python manage.py migrate aa_forum
 [Semantic Versioning]: http://semver.org/ "Semantic Versioning"
 [discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy "discordproxy"
 [AA-Discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
+[AA Time Zones]: https://github.com/ppfeufer/aa-timezones "AA Time Zones"
 [README.md]: README.md "README.md"
-
 
 <!-- Issue Links -->
 [#125]: https://github.com/ppfeufer/aa-forum/issues/125 "Localization of forum time"
