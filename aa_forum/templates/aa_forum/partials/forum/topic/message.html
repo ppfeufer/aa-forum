@@ -36,7 +36,7 @@
                                 <button
                                     class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-copy-to-clipboard"
                                     title="{% translate 'Copy message link to clipboard' %}"
-                                    data-clipboard-text="{{ request.scheme }}://{{ request.get_host }}{% url 'aa_forum:forum_message' message.topic.board.category.slug message.topic.board.slug message.topic.slug message.pk %}"
+                                    data-clipboard-text="{{ SITE_URL }}{% url 'aa_forum:forum_message' message.topic.board.category.slug message.topic.board.slug message.topic.slug message.pk %}"
                                 >
                                     <i class="far fa-copy"></i>
                                 </button>
