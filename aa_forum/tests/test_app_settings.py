@@ -7,6 +7,7 @@ from django.test import TestCase, modify_settings
 
 # AA Forum
 from aa_forum.app_settings import (
+    aa_timezones_installed,
     allianceauth_discordbot_installed,
     discord_messaging_proxy_available,
 )
@@ -43,3 +44,21 @@ class TestModulesInstalled(TestCase):
         """
 
         self.assertTrue(discord_messaging_proxy_available())
+
+    @modify_settings(INSTALLED_APPS={"append": "timezones"})
+    def test_aa_timezones_installed_should_return_true(self):
+        """
+        Test aa_timezones_installed should return True
+        :return:
+        """
+
+        self.assertTrue(aa_timezones_installed())
+
+    @modify_settings(INSTALLED_APPS={"remove": "timezones"})
+    def test_aa_timezones_installed_should_return_false(self):
+        """
+        Test aa_timezones_installed should return False
+        :return:
+        """
+
+        self.assertFalse(aa_timezones_installed())

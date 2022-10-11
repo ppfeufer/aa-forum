@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load evelinks %}
+{% load aa_forum_datetime %}
 {% load aa_forum_user %}
 
 <div class="col-sm-8 col-md-9 col-lg-10 col-sm-pull-4 col-md-pull-3 col-lg-pull-2">
@@ -29,7 +30,7 @@
                 {% for message in page_obj %}
                     <div id="aa-forum-personal-message-id-{{ message.pk }}" class="panel-aa-forum-personal-messages-item {% if not message.is_read %}panel-aa-forum-personal-messages-item-unread{% endif %}">
                         <div class="aa-forum-personal-message-date">
-                            {{ message.time_sent|date }}, {{ message.time_sent|time:"G:i:s" }}
+                            {{ message.time_sent|forum_time }}
                         </div>
 
                         <div class="aa-forum-personal-message-sender">
