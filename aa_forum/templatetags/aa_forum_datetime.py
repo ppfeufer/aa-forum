@@ -30,9 +30,6 @@ def forum_time(db_datetime: datetime) -> str:
     :rtype:
     """
 
-    formatted_time_string = db_datetime.strftime("%H:%M:%S")
-    timestamp_from_db_datetime = int(datetime.timestamp(db_datetime))
-
     # If empty, return empty
     if db_datetime in (None, ""):
         return ""
@@ -46,11 +43,13 @@ def forum_time(db_datetime: datetime) -> str:
         except AttributeError:
             formatted_date_string = ""
 
+    formatted_time_string = db_datetime.strftime("%H:%M:%S")
     formatted_forum_date = f"{formatted_date_string}, {formatted_time_string}"
 
     # If `aa-timezones` is installed, add (?) to the date-time string
     # and link to the time zones conversion
     if aa_timezones_installed():
+        timestamp_from_db_datetime = int(datetime.timestamp(db_datetime))
         timezones_url = reverse_url(
             "timezones:index", args=[timestamp_from_db_datetime]
         )
