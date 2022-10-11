@@ -19,30 +19,30 @@ from aa_forum.app_settings import aa_timezones_installed
 
 
 @register.filter
-def forum_time(db_time, arg=None) -> str:
+def forum_time(db_datetime: datetime) -> str:
     """
     Convert DB time into a formatted date-time string we use in our templates
-    :param db_time:
-    :type db_time:
+    :param db_datetime:
+    :type db_datetime:
     :param arg:
     :type arg:
     :return:
     :rtype:
     """
 
-    formatted_time_string = db_time.strftime("%H:%M:%S")
-    timestamp_from_db_time = int(datetime.timestamp(db_time))
+    formatted_time_string = db_datetime.strftime("%H:%M:%S")
+    timestamp_from_db_datetime = int(datetime.timestamp(db_datetime))
 
     # If empty, return empty
-    if db_time in (None, ""):
+    if db_datetime in (None, ""):
         return ""
 
-    # try to format the date
+    # Try to format the date for a localised output
     try:
-        formatted_date_string = formats.date_format(db_time, arg)
+        formatted_date_string = formats.date_format(db_datetime)
     except AttributeError:
         try:
-            formatted_date_string = format(db_time, arg)
+            formatted_date_string = format(db_datetime)
         except AttributeError:
             formatted_date_string = ""
 
@@ -51,7 +51,9 @@ def forum_time(db_time, arg=None) -> str:
     # If `aa-timezones` is installed, add (?) to the date-time string
     # and link to the time zones conversion
     if aa_timezones_installed():
-        timezones_url = reverse_url("timezones:index", args=[timestamp_from_db_time])
+        timezones_url = reverse_url(
+            "timezones:index", args=[timestamp_from_db_datetime]
+        )
         link_title = _("Timezone Conversion")
 
         return mark_safe(
