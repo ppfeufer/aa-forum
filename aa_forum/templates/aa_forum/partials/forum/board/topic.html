@@ -1,6 +1,7 @@
-{% load aa_forum_template_variables %}
 {% load i18n %}
 {% load static %}
+{% load aa_forum_datetime %}
+{% load aa_forum_template_variables %}
 
 <div class="aa-forum-topic-row {% if topic.is_locked %}aa-forum-topic-locked{% endif %} {% if topic.is_sticky %}aa-forum-topic-sticky{% endif %} row">
     <div class="aa-forum-topic">
@@ -65,7 +66,7 @@
 
         <div class="aa-forum-topic-last-post hidden-xs">
             <span class="small">
-                {% translate "Last post" %} {{ topic.last_message.time_posted|date }}, {{ topic.last_message.time_posted|time:"G:i:s" }}
+                {% translate "Last post" %} {{ topic.last_message.time_posted|forum_time }}
 
                 <a href="{% url 'aa_forum:forum_message' topic.board.category.slug topic.board.slug topic.slug topic.last_message_id %}" title="{% translate 'Go to last message' %}" style="margin-left: 0.5rem;">
                     <i class="fas fa-sign-in-alt"></i>

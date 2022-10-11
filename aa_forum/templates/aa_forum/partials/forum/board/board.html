@@ -1,7 +1,8 @@
-{% load aa_forum_template_variables %}
 {% load i18n %}
 {% load static %}
 {% load evelinks %}
+{% load aa_forum_datetime %}
+{% load aa_forum_template_variables %}
 
 {% set_template_variable category_slug = board.category.slug %}
 {% set_template_variable board_slug = board.slug %}
@@ -89,7 +90,7 @@
 
                 <br>
                 <b>{% translate "posted by:" %}</b> {{ board_last_message_author|main_character_name }}<br>
-                <b>{% translate "posted at:" %}</b> {{ board_last_message.time_posted|date }}, {{ board_last_message.time_posted|time:"G:i:s" }}
+                <b>{% translate "posted at:" %}</b> {{ board_last_message.time_posted|forum_time }}
             </p>
         {% endif %}
     </div>
