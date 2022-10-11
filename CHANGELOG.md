@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning].
 ## [In Development] - Unreleased
 
 
+## [1.17.0] - 2022-10-11
+
+### Added
+
+- New Feature: Support for [AA Time Zones] time zone conversions of message
+  date/time information ([#125])
+  ![New Feature: Support for aa-timezones]
+
+### Changed
+
+- Switched to `SITE_URL` instead of `{{ request.scheme }}://{{ request.get_host }}`
+- Minimum requirements
+  - `allianceauth`>=3.2.0
+
+
 ## [1.16.0] - 2022-09-18
 
 ### Added
@@ -762,6 +777,7 @@ python manage.py migrate aa_forum
 
 
 <!-- Images -->
+[New Feature: Support for aa-timezones]: https://user-images.githubusercontent.com/2989985/195106607-8caf39c1-7343-404b-a926-e3253558b1ce.png "New Feature: Support for aa-timezones"
 [New Feature: Announcement Boards]: aa_forum/docs/images/feature-announcement-board.jpg "New Feature: Announcement Boards"
 [Admin Board Options]: aa_forum/docs/images/admin-board-options.jpg "Admin Board Options"
 
@@ -770,4 +786,8 @@ python manage.py migrate aa_forum
 [Semantic Versioning]: http://semver.org/ "Semantic Versioning"
 [discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy "discordproxy"
 [AA-Discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
+[AA Time Zones]: https://github.com/ppfeufer/aa-timezones "AA Time Zones"
 [README.md]: README.md "README.md"
+
+<!-- Issue Links -->
+[#125]: https://github.com/ppfeufer/aa-forum/issues/125 "Localization of forum time"

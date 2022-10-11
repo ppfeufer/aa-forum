@@ -520,16 +520,16 @@ def forum_settings(request: WSGIRequest) -> HttpResponse:
             )
 
             return redirect("aa_forum:admin_forum_settings")
-        else:
-            messages.error(
-                request,
-                mark_safe(
-                    _(
-                        "<h4>Error!</h4>"
-                        "<p>Something went wrong, please check your input.<p>"
-                    )
-                ),
-            )
+
+        messages.error(
+            request,
+            mark_safe(
+                _(
+                    "<h4>Error!</h4>"
+                    "<p>Something went wrong, please check your input.<p>"
+                )
+            ),
+        )
     else:
         settings_form = SettingForm(instance=settings)
 

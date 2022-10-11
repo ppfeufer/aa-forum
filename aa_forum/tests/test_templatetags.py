@@ -2,12 +2,21 @@
 Tests for the template tags
 """
 
+# Standard Library
+from datetime import datetime
+
+# Third Party
+from dateutil import parser
+
 # Django
 from django.template import TemplateSyntaxError
-from django.test import TestCase
+from django.test import TestCase, modify_settings
 
 # Alliance Auth
 from allianceauth.tests.auth_utils import AuthUtils
+
+# Alliance Auth (External Libs)
+from app_utils.urls import reverse as reverse_url
 
 # AA Forum
 from aa_forum import __version__
@@ -661,7 +670,7 @@ class TestForumVersionedStatic(TestCase):
 
 class TestHighlightSearchTerm(TestCase):
     """
-    Tests for aa_forum_versioned_static template tag
+    Tests for highlight_search_term template tag
     """
 
     @classmethod
@@ -703,10 +712,7 @@ class TestHighlightSearchTerm(TestCase):
 
         context = {"message": self.message_text, "search_term": self.search_term}
 
-        rendered_template = render_template(
-            string=self.template,
-            context=context,
-        )
+        rendered_template = render_template(string=self.template, context=context)
 
         expected_result = (
             '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum'
@@ -725,10 +731,7 @@ class TestHighlightSearchTerm(TestCase):
             "search_term": self.search_term,
         }
 
-        rendered_template = render_template(
-            string=self.template,
-            context=context,
-        )
+        rendered_template = render_template(string=self.template, context=context)
 
         expected_result = (
             '<a href="#" title="Lorem Ipsum">'
@@ -745,10 +748,7 @@ class TestHighlightSearchTerm(TestCase):
 
         context = {"message": self.message_with_link, "search_term": self.search_term}
 
-        rendered_template = render_template(
-            string=self.template,
-            context=context,
-        )
+        rendered_template = render_template(string=self.template, context=context)
 
         expected_result = (
             '<a href="https://lorem-ipsum.com">'
@@ -768,10 +768,7 @@ class TestHighlightSearchTerm(TestCase):
             "search_term": self.search_term,
         }
 
-        rendered_template = render_template(
-            string=self.template,
-            context=context,
-        )
+        rendered_template = render_template(string=self.template, context=context)
 
         expected_result = (
             '<a href="https://lorem-ipsum.com" title="Lorem Ipsum">'
@@ -791,10 +788,7 @@ class TestHighlightSearchTerm(TestCase):
             "search_term": self.search_term,
         }
 
-        rendered_template = render_template(
-            string=self.template,
-            context=context,
-        )
+        rendered_template = render_template(string=self.template, context=context)
 
         expected_result = (
             '<a href="https://lorem-ipsum.com" name="Lorem Ipsum">'
@@ -814,10 +808,7 @@ class TestHighlightSearchTerm(TestCase):
             "search_term": self.search_term,
         }
 
-        rendered_template = render_template(
-            string=self.template,
-            context=context,
-        )
+        rendered_template = render_template(string=self.template, context=context)
 
         expected_result = (
             '<img src="https://lorem-ipsum.com/lorem-ipsum.jpg"/> '
@@ -837,10 +828,7 @@ class TestHighlightSearchTerm(TestCase):
             "search_term": self.search_term,
         }
 
-        rendered_template = render_template(
-            string=self.template,
-            context=context,
-        )
+        rendered_template = render_template(string=self.template, context=context)
 
         expected_result = (
             '<img alt="Lorem Ipsum" src="#"/> '
@@ -860,10 +848,7 @@ class TestHighlightSearchTerm(TestCase):
             "search_term": self.search_term,
         }
 
-        rendered_template = render_template(
-            string=self.template,
-            context=context,
-        )
+        rendered_template = render_template(string=self.template, context=context)
 
         expected_result = (
             '<img alt="Lorem Ipsum" src="https://lorem-ipsum.com/lorem-ipsum.jpg"/> '
@@ -883,14 +868,92 @@ class TestHighlightSearchTerm(TestCase):
             "search_term": self.search_term,
         }
 
-        rendered_template = render_template(
-            string=self.template,
-            context=context,
-        )
+        rendered_template = render_template(string=self.template, context=context)
 
         expected_result = (
             '<img src="https://lorem-ipsum.com/lorem-ipsum.jpg" title="Lorem Ipsum"/> '
             '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum'
         )
+
+        self.assertEqual(rendered_template, expected_result)
+
+
+# 2021-08-17 05:38:13.887496
+
+
+class TestForumDatetime(TestCase):
+    """
+    Tests for forum_time template tag
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+
+        cls.db_datetime = parser.parse("2021-08-17 05:38:13.887496")
+        cls.template = "{% load aa_forum_datetime %}{{ message_date|forum_time }}"
+
+    @modify_settings(INSTALLED_APPS={"remove": "timezones"})
+    def test_should_return_formatted_date_and_time(self):
+        """
+        Test should return formatted date and time without aa-timezones support
+        :return:
+        :rtype:
+        """
+
+        context = {"message_date": self.db_datetime}
+        rendered_template = render_template(string=self.template, context=context)
+        expected_result = "Aug. 17, 2021, 05:38:13"
+
+        self.assertEqual(rendered_template, expected_result)
+
+    @modify_settings(INSTALLED_APPS={"append": "timezones"})
+    def test_should_return_formatted_date_and_time_with_aa_timezones_support(self):
+        """
+        Test should return formatted date and time with aa-timezones support
+        :return:
+        :rtype:
+        """
+
+        context = {"message_date": self.db_datetime}
+        rendered_template = render_template(string=self.template, context=context)
+        timestamp_from_db_datetime = int(datetime.timestamp(self.db_datetime))
+        timezones_url = reverse_url(
+            "timezones:index", args=[timestamp_from_db_datetime]
+        )
+        link_title = "Timezone Conversion"
+        formatted_forum_date = "Aug. 17, 2021, 05:38:13"
+
+        expected_result = (
+            f"{formatted_forum_date} "
+            f'<sup>(<a href="{timezones_url}" target="_blank" rel="noopener noreferer" '
+            f'title="{link_title}"><i class="fas fa-question-circle"></i></a>)</sup>'
+        )
+
+        self.assertEqual(rendered_template, expected_result)
+
+    def test_should_return_empty_date_and_time_string(self):
+        """
+        Test should return empty date and time string for message_date = ""
+        :return:
+        :rtype:
+        """
+
+        context = {"message_date": ""}
+        rendered_template = render_template(string=self.template, context=context)
+        expected_result = ""
+
+        self.assertEqual(rendered_template, expected_result)
+
+    def test_should_return_empty_date_and_time_string_for_none(self):
+        """
+        Test should return empty date and time string for message_date = None
+        :return:
+        :rtype:
+        """
+
+        context = {"message_date": None}
+        rendered_template = render_template(string=self.template, context=context)
+        expected_result = ""
 
         self.assertEqual(rendered_template, expected_result)

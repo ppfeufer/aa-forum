@@ -40,3 +40,13 @@ def discord_messaging_proxy_available() -> bool:
     """
 
     return discordproxy_installed() or allianceauth_discordbot_installed()
+
+
+def aa_timezones_installed() -> bool:
+    """
+    Check if aa-timezones is installed and active
+    :return:
+    :rtype:
+    """
+
+    return apps.is_installed("timezones")
