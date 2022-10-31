@@ -80,7 +80,7 @@ jobs:
           - '3.8'
           - '3.9'
           - '3.10'
-          - '3.11-dev'
+          - '3.11'
         # Don't forget to change the Django version for [upload-coverage] as well
         django-version:
           - '4.0'
@@ -96,7 +96,7 @@ jobs:
           - mariadb:10.8
           - mariadb:10.9
 
-    continue-on-error: ${{ matrix.python-version == '3.11-dev' }}
+#    continue-on-error: ${{ matrix.python-version == '3.11-dev' }}
 
     services:
       database:
@@ -159,7 +159,7 @@ jobs:
 #          - '3.8'
 #          - '3.9'
 #          - '3.10'
-#          - '3.11-dev'
+#          - '3.11'
 #        # Django versions
 #        django-version:
 #          - '4.0'
@@ -175,7 +175,7 @@ jobs:
 #          - mariadb:10.8
 #          - mariadb:10.9
 #
-#    continue-on-error: ${{ matrix.python-version == '3.11-dev' }}
+#    continue-on-error: ${{ matrix.python-version == '3.11' }}
 #
 #    services:
 #      database:
