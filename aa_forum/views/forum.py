@@ -222,7 +222,7 @@ def board(
 
     paginator = Paginator(
         board.topics_sorted,
-        int(Setting.objects.get_setting(setting_key=Setting.TOPICSPERPAGE)),
+        int(Setting.objects.get_setting(setting_key=Setting.Field.TOPICSPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
 
@@ -470,7 +470,7 @@ def topic(
     # Set this topic as "read by" by the current user
     paginator = Paginator(
         topic.messages_sorted,
-        int(Setting.objects.get_setting(setting_key=Setting.MESSAGESPERPAGE)),
+        int(Setting.objects.get_setting(setting_key=Setting.Field.MESSAGESPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
 
