@@ -881,7 +881,7 @@ class TestProfileUI(WebTest):
 
         # given
         max_signature_length = Setting.objects.get_setting(
-            setting_key=Setting.USERSIGNATURELENGTH
+            setting_key=Setting.Field.USERSIGNATURELENGTH
         )
         signature = fake.text(max_signature_length * 2)
 

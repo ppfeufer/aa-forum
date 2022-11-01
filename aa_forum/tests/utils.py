@@ -148,7 +148,7 @@ def my_get_setting(setting_key: str) -> str:
     :return:
     """
 
-    if setting_key == Setting.MESSAGESPERPAGE:
+    if setting_key == Setting.Field.MESSAGESPERPAGE:
         return "5"
 
     return Setting.objects.get_setting(setting_key=setting_key)

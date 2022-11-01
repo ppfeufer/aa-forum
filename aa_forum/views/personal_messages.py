@@ -49,7 +49,7 @@ def inbox(request: WSGIRequest, page_number: int = None) -> HttpResponse:
 
     paginator = Paginator(
         personal_messages,
-        int(Setting.objects.get_setting(setting_key=Setting.MESSAGESPERPAGE)),
+        int(Setting.objects.get_setting(setting_key=Setting.Field.MESSAGESPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
 
@@ -132,7 +132,7 @@ def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse
 
     paginator = Paginator(
         personal_messages,
-        int(Setting.objects.get_setting(setting_key=Setting.MESSAGESPERPAGE)),
+        int(Setting.objects.get_setting(setting_key=Setting.Field.MESSAGESPERPAGE)),
     )
     page_obj = paginator.get_page(page_number)
 
