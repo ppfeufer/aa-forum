@@ -9,7 +9,6 @@ from http import HTTPStatus
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
-from django.core.paginator import Paginator
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.datastructures import MultiValueDictKeyError
@@ -25,6 +24,7 @@ from app_utils.logging import LoggerAddTag
 # AA Forum
 from aa_forum import __title__
 from aa_forum.forms import NewPersonalMessageForm, ReplyPersonalMessageForm
+from aa_forum.helper.pagination import get_paginated_page_object
 from aa_forum.helper.user import get_main_character_from_user
 from aa_forum.models import PersonalMessage, Setting
 
@@ -47,11 +47,13 @@ def inbox(request: WSGIRequest, page_number: int = None) -> HttpResponse:
         request.user
     )
 
-    paginator = Paginator(
-        personal_messages,
-        int(Setting.objects.get_setting(setting_key=Setting.Field.MESSAGESPERPAGE)),
+    page_obj = get_paginated_page_object(
+        queryset=personal_messages,
+        items_per_page=Setting.objects.get_setting(
+            setting_key=Setting.Field.MESSAGESPERPAGE
+        ),
+        page_number=page_number,
     )
-    page_obj = paginator.get_page(page_number)
 
     context = {"page_obj": page_obj}
 
@@ -130,11 +132,13 @@ def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse
         request.user
     )
 
-    paginator = Paginator(
-        personal_messages,
-        int(Setting.objects.get_setting(setting_key=Setting.Field.MESSAGESPERPAGE)),
+    page_obj = get_paginated_page_object(
+        queryset=personal_messages,
+        items_per_page=Setting.objects.get_setting(
+            setting_key=Setting.Field.MESSAGESPERPAGE
+        ),
+        page_number=page_number,
     )
-    page_obj = paginator.get_page(page_number)
 
     context = {"page_obj": page_obj}
 
