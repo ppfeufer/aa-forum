@@ -978,12 +978,12 @@ msgid "<h4>Success!</h4><p>Board \"{board_name}\" removed.</p>"
 msgstr ""
 
 #: views/admin.py:519
-msgid "<h4>Success!</h4><p>Settings updated.<p>"
+msgid "<h4>Success!</h4><p>Settings updated.</p>"
 msgstr ""
 
 #: views/admin.py:528 views/personal_messages.py:106
 #: views/personal_messages.py:220 views/profile.py:65
-msgid "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
+msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
 msgstr ""
 
 #: views/forum.py:210
@@ -1117,34 +1117,34 @@ msgstr ""
 
 #: views/personal_messages.py:96
 #, python-brace-format
-msgid "<h4>Success!</h4><p>Message to {recipient_main_char} sent.<p>"
+msgid "<h4>Success!</h4><p>Message to {recipient_main_char} sent.</p>"
 msgstr ""
 
 #: views/personal_messages.py:171
 msgid ""
 "<h4>Error!</h4><p>The message you were trying to reply to does either not "
-"exist or you are not the recipient.<p>"
+"exist or you are not the recipient.</p>"
 msgstr ""
 
 #: views/personal_messages.py:260 views/personal_messages.py:295
 msgid ""
 "<h4>Error!</h4><p>The message you tried to remove does either not exist or "
-"is not yours to remove.<p>"
+"is not yours to remove.</p>"
 msgstr ""
 
 #: views/personal_messages.py:276
-msgid "<h4>Success!</h4><p>Message removed from your inbox.<p>"
+msgid "<h4>Success!</h4><p>Message removed from your inbox.</p>"
 msgstr ""
 
 #: views/personal_messages.py:312
 msgid ""
-"<h4>Success!</h4><p>Message has been removed from your sent messages.<p>"
+"<h4>Success!</h4><p>Message has been removed from your sent messages.</p>"
 msgstr ""
 
 #: views/personal_messages.py:327
-msgid "<h4>Error!</h4><p>Something went wrong.<p>"
+msgid "<h4>Error!</h4><p>Something went wrong.</p>"
 msgstr ""
 
 #: views/profile.py:56
-msgid "<h4>Success!</h4><p>Profile saved.<p>"
+msgid "<h4>Success!</h4><p>Profile saved.</p>"
 msgstr ""

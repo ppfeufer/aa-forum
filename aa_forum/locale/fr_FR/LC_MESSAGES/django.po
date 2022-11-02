@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-02 01:44+0100\n"
+"POT-Creation-Date: 2022-11-02 03:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,13 +21,13 @@ msgstr ""
 msgid "This field is mandatory"
 msgstr ""
 
-#: forms.py:90 forms.py:92 forms.py:122 forms.py:124 forms.py:492
+#: forms.py:90 forms.py:92 forms.py:122 forms.py:124 forms.py:491
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:26
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:26
 msgid "Subject"
 msgstr ""
 
-#: forms.py:101 forms.py:318 forms.py:502 forms.py:546
+#: forms.py:101 forms.py:318 forms.py:501 forms.py:545
 msgid "Message"
 msgstr ""
 
@@ -163,38 +163,39 @@ msgid ""
 msgstr ""
 
 #: forms.py:415
-#, python-brace-format
-msgid "Ensure your signature has at most {max_signature_length} "
+msgid ""
+"Ensure your signature has at most {max_signature_length} characters. "
+"(Currently: {len(signature)})"
 msgstr ""
 
-#: forms.py:436
+#: forms.py:435
 msgid "This is not a valid URL"
 msgstr ""
 
-#: forms.py:450
+#: forms.py:449
 msgid ""
 "How many messages per page should be displayed in a forum topic? (Default: "
 "15)"
 msgstr ""
 
-#: forms.py:458
+#: forms.py:457
 msgid ""
 "How many topics per page should be displayed in a forum category? (Default: "
 "10)"
 msgstr ""
 
-#: forms.py:466
+#: forms.py:465
 msgid ""
 "How long (Number of characters) is a user's signature allowed to be? "
 "(Default: 750)"
 msgstr ""
 
-#: forms.py:488
+#: forms.py:487
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:22
 msgid "Recipient"
 msgstr ""
 
-#: forms.py:494
+#: forms.py:493
 msgid "Hello there ..."
 msgstr ""
 
@@ -977,12 +978,12 @@ msgid "<h4>Success!</h4><p>Board \"{board_name}\" removed.</p>"
 msgstr ""
 
 #: views/admin.py:519
-msgid "<h4>Success!</h4><p>Settings updated.<p>"
+msgid "<h4>Success!</h4><p>Settings updated.</p>"
 msgstr ""
 
 #: views/admin.py:528 views/personal_messages.py:106
 #: views/personal_messages.py:220 views/profile.py:65
-msgid "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
+msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
 msgstr ""
 
 #: views/forum.py:210
@@ -1116,34 +1117,34 @@ msgstr ""
 
 #: views/personal_messages.py:96
 #, python-brace-format
-msgid "<h4>Success!</h4><p>Message to {recipient_main_char} sent.<p>"
+msgid "<h4>Success!</h4><p>Message to {recipient_main_char} sent.</p>"
 msgstr ""
 
 #: views/personal_messages.py:171
 msgid ""
 "<h4>Error!</h4><p>The message you were trying to reply to does either not "
-"exist or you are not the recipient.<p>"
+"exist or you are not the recipient.</p>"
 msgstr ""
 
 #: views/personal_messages.py:260 views/personal_messages.py:295
 msgid ""
 "<h4>Error!</h4><p>The message you tried to remove does either not exist or "
-"is not yours to remove.<p>"
+"is not yours to remove.</p>"
 msgstr ""
 
 #: views/personal_messages.py:276
-msgid "<h4>Success!</h4><p>Message removed from your inbox.<p>"
+msgid "<h4>Success!</h4><p>Message removed from your inbox.</p>"
 msgstr ""
 
 #: views/personal_messages.py:312
 msgid ""
-"<h4>Success!</h4><p>Message has been removed from your sent messages.<p>"
+"<h4>Success!</h4><p>Message has been removed from your sent messages.</p>"
 msgstr ""
 
 #: views/personal_messages.py:327
-msgid "<h4>Error!</h4><p>Something went wrong.<p>"
+msgid "<h4>Error!</h4><p>Something went wrong.</p>"
 msgstr ""
 
 #: views/profile.py:56
-msgid "<h4>Success!</h4><p>Profile saved.<p>"
+msgid "<h4>Success!</h4><p>Profile saved.</p>"
 msgstr ""
