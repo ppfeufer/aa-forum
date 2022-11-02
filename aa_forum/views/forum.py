@@ -349,12 +349,7 @@ def board_new_topic(
                         request,
                         mark_safe(
                             _(
-                                "<h4>Warning!</h4>"
-                                "<p>There is already a topic with the exact same "
-                                "subject in this board.</p><p>See here: "
-                                f'<a href="{existing_topic_url}">'
-                                f"{existing_topic.subject}</a>"
-                                "</p>"
+                                f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{existing_topic_url}">{existing_topic.subject}</a></p>'
                             )
                         ),
                     )
