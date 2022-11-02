@@ -47,7 +47,9 @@ repos:
           (?x)(
             LICENSE|
             static/aa_forum/libs/|
-            static/aa_forum/ckeditor
+            static/aa_forum/ckeditor|
+            .po|
+            .mo
           )
 
   - repo: https://github.com/pre-commit/pygrep-hooks
