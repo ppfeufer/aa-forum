@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning].
 ### Added
 
 - Pagination helper to reduce code duplication
+- German translation
 
 ### Changed
 
