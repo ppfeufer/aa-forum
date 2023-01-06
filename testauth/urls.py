@@ -1,13 +1,13 @@
 # Django
 from django.apps import apps
-from django.urls import include, re_path
+from django.urls import include, path, re_path
 
 # Alliance Auth
 from allianceauth import urls
 
 # Alliance auth urls
 urlpatterns = [
-    re_path(r"", include(urls)),
+    path("", include(urls)),
 ]
 
 # URL configuration for cKeditor
