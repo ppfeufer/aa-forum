@@ -219,7 +219,7 @@ jobs:
 
   # Coverage upload to Codecov and Codacy
   upload-coverage:
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     needs: [ test-coverage-aa-stable ]
 #    needs: [ test-coverage-aa-stable, test-coverage-aa-dev ]
     name: Upload Coverage
