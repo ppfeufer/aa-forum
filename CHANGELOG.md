@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning].
 
 ## [In Development] - Unreleased
 
+
+## [1.17.1] - 2023-01-06
+
 ### Added
 
 - Pagination helper to reduce code duplication
