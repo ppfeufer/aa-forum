@@ -404,7 +404,7 @@ class UserProfileForm(ModelForm):
             return ""
 
         max_signature_length = Setting.objects.get_setting(
-            setting_key=Setting.USERSIGNATURELENGTH
+            setting_key=Setting.Field.USERSIGNATURELENGTH
         )
 
         try:
@@ -412,8 +412,7 @@ class UserProfileForm(ModelForm):
         except ValidationError as exc:
             raise ValidationError(
                 _(
-                    f"Ensure your signature has at most {max_signature_length} "
-                    f"characters. (Currently: {len(signature)})"
+                    f"Ensure your signature has at most {max_signature_length} characters. (Currently: {len(signature)})"
                 )
             ) from exc
         else:
@@ -445,21 +444,26 @@ class SettingForm(ModelForm):
 
     messages_per_page = forms.IntegerField(
         required=True,
-        label=get_mandatory_form_label_text(_("Messages per page")),
-        help_text=_("How many messages per page should be displayed in a forum topic?"),
+        label=get_mandatory_form_label_text(Setting.Field.MESSAGESPERPAGE.label),
+        help_text=_(
+            "How many messages per page should be displayed in a forum topic? "
+            "(Default: 15)"
+        ),
     )
     topics_per_page = forms.IntegerField(
         required=True,
-        label=get_mandatory_form_label_text(_("Topics per page")),
+        label=get_mandatory_form_label_text(Setting.Field.TOPICSPERPAGE.label),
         help_text=_(
-            "How many topics per page should be displayed in a forum category?"
+            "How many topics per page should be displayed in a forum category? "
+            "(Default: 10)"
         ),
     )
     user_signature_length = forms.IntegerField(
         required=True,
-        label=get_mandatory_form_label_text(_("User signature length")),
+        label=get_mandatory_form_label_text(Setting.Field.USERSIGNATURELENGTH.label),
         help_text=_(
-            "How long (Number of characters) is a user's signature allowed to be?"
+            "How long (Number of characters) is a user's signature allowed to be? "
+            "(Default: 750)"
         ),
     )
 

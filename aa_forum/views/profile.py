@@ -53,7 +53,7 @@ def index(request: WSGIRequest) -> HttpResponse:
             user_profile.save()
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Profile saved.<p>"))
+                request, mark_safe(_("<h4>Success!</h4><p>Profile saved.</p>"))
             )
 
             return redirect("aa_forum:profile_index")
@@ -63,7 +63,7 @@ def index(request: WSGIRequest) -> HttpResponse:
             mark_safe(
                 _(
                     "<h4>Error!</h4>"
-                    "<p>Something went wrong, please check your input.<p>"
+                    "<p>Something went wrong, please check your input.</p>"
                 )
             ),
         )

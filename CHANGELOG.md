@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning].
 ## [In Development] - Unreleased
 
 
+## [1.17.1] - 2023-01-06
+
+### Added
+
+- Pagination helper to reduce code duplication
+- German translation
+
+### Changed
+
+- Use `models.TextChoices` for `Setting` fields
+
+
 ## [1.17.0] - 2022-10-11
 
 ### Added

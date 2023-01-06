@@ -10,7 +10,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
 from django.core.handlers.wsgi import WSGIRequest
-from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Count, Exists, OuterRef, Prefetch, Q
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
@@ -29,6 +28,7 @@ from app_utils.logging import LoggerAddTag
 from aa_forum import __title__
 from aa_forum.forms import EditMessageForm, EditTopicForm, NewTopicForm
 from aa_forum.helper.discord_messages import send_message_to_discord_webhook
+from aa_forum.helper.pagination import get_paginated_page_object
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Setting, Topic
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
@@ -220,11 +220,13 @@ def board(
 
         return redirect("aa_forum:forum_index")
 
-    paginator = Paginator(
-        board.topics_sorted,
-        int(Setting.objects.get_setting(setting_key=Setting.TOPICSPERPAGE)),
+    page_obj = get_paginated_page_object(
+        queryset=board.topics_sorted,
+        items_per_page=Setting.objects.get_setting(
+            setting_key=Setting.Field.TOPICSPERPAGE
+        ),
+        page_number=page_number,
     )
-    page_obj = paginator.get_page(page_number)
 
     context = {
         "board": board,
@@ -347,12 +349,7 @@ def board_new_topic(
                         request,
                         mark_safe(
                             _(
-                                "<h4>Warning!</h4>"
-                                "<p>There is already a topic with the exact same "
-                                "subject in this board.</p><p>See here: "
-                                f'<a href="{existing_topic_url}">'
-                                f"{existing_topic.subject}</a>"
-                                "</p>"
+                                f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{existing_topic_url}">{existing_topic.subject}</a></p>'
                             )
                         ),
                     )
@@ -467,13 +464,15 @@ def topic(
     ):
         can_modify_subject = True
 
-    # Set this topic as "read by" by the current user
-    paginator = Paginator(
-        topic.messages_sorted,
-        int(Setting.objects.get_setting(setting_key=Setting.MESSAGESPERPAGE)),
+    page_obj = get_paginated_page_object(
+        queryset=topic.messages_sorted,
+        items_per_page=Setting.objects.get_setting(
+            setting_key=Setting.Field.MESSAGESPERPAGE
+        ),
+        page_number=page_number,
     )
-    page_obj = paginator.get_page(page_number)
 
+    # Set this topic as "read by" by the current user
     try:
         last_message_on_page = page_obj.object_list[-1]
     except IndexError:

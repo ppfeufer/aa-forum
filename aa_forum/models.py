@@ -613,7 +613,7 @@ class Message(models.Model):
         """
 
         messages_per_topic = int(
-            Setting.objects.get_setting(setting_key=Setting.MESSAGESPERPAGE)
+            Setting.objects.get_setting(setting_key=Setting.Field.MESSAGESPERPAGE)
         )
         position = (
             self.topic.messages.order_by("time_posted")
@@ -715,23 +715,28 @@ class Setting(SingletonModel):
     Default forum settings
     """
 
-    MESSAGESPERPAGE = "messages_per_page"
-    TOPICSPERPAGE = "topics_per_page"
-    USERSIGNATURELENGTH = "user_signature_length"
+    class Field(models.TextChoices):
+        """
+        Choices for Setting.Field
+        """
+
+        MESSAGESPERPAGE = "messages_per_page", _("Messages per page")
+        TOPICSPERPAGE = "topics_per_page", _("Topics per page")
+        USERSIGNATURELENGTH = "user_signature_length", _("User signature length")
 
     messages_per_page = models.IntegerField(
         default=15,
-        verbose_name=_("Messages per page"),
+        verbose_name=Field.MESSAGESPERPAGE.label,
         help_text=_("Maximum number of messages per page in the topic view"),
     )
     topics_per_page = models.IntegerField(
         default=10,
-        verbose_name=_("Topics per page"),
+        verbose_name=Field.TOPICSPERPAGE.label,
         help_text=_("Maximum number of topics per page in the board view"),
     )
     user_signature_length = models.IntegerField(
         default=750,
-        verbose_name=_("User signature length"),
+        verbose_name=Field.USERSIGNATURELENGTH.label,
         help_text=_("Maximum length of a users signature"),
     )
 

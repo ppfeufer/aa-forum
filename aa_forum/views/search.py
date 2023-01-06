@@ -9,7 +9,6 @@ from operator import or_
 # Django
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
-from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -23,6 +22,7 @@ from app_utils.logging import LoggerAddTag
 # AA Forum
 from aa_forum import __title__
 from aa_forum.constants import SEARCH_STOPWORDS
+from aa_forum.helper.pagination import get_paginated_page_object
 from aa_forum.models import Board, Message, Setting
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
@@ -81,11 +81,13 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
             .distinct()
         )
 
-        paginator = Paginator(
-            search_results,
-            int(Setting.objects.get_setting(setting_key=Setting.MESSAGESPERPAGE)),
+        page_obj = get_paginated_page_object(
+            queryset=search_results,
+            items_per_page=Setting.objects.get_setting(
+                setting_key=Setting.Field.MESSAGESPERPAGE
+            ),
+            page_number=page_number,
         )
-        page_obj = paginator.get_page(page_number)
 
     context = {
         "search_term": search_phrase,

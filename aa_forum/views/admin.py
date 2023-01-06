@@ -516,7 +516,7 @@ def forum_settings(request: WSGIRequest) -> HttpResponse:
             settings.save()
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Settings updated.<p>"))
+                request, mark_safe(_("<h4>Success!</h4><p>Settings updated.</p>"))
             )
 
             return redirect("aa_forum:admin_forum_settings")
@@ -526,7 +526,7 @@ def forum_settings(request: WSGIRequest) -> HttpResponse:
             mark_safe(
                 _(
                     "<h4>Error!</h4>"
-                    "<p>Something went wrong, please check your input.<p>"
+                    "<p>Something went wrong, please check your input.</p>"
                 )
             ),
         )

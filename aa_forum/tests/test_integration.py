@@ -881,7 +881,7 @@ class TestProfileUI(WebTest):
 
         # given
         max_signature_length = Setting.objects.get_setting(
-            setting_key=Setting.USERSIGNATURELENGTH
+            setting_key=Setting.Field.USERSIGNATURELENGTH
         )
         signature = fake.text(max_signature_length * 2)
 
@@ -900,7 +900,7 @@ class TestProfileUI(WebTest):
         messages = list(page.context["messages"])
 
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
@@ -924,7 +924,7 @@ class TestProfileUI(WebTest):
         messages = list(page.context["messages"])
 
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
@@ -1116,7 +1116,7 @@ class TestAdminForumSettingsUI(WebTest):
         messages = list(page.context["messages"])
 
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
@@ -1305,7 +1305,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         messages = list(page.context["messages"])
 
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
@@ -1337,7 +1337,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         messages = list(page.context["messages"])
 
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
@@ -1369,7 +1369,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         messages = list(page.context["messages"])
 
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
         )
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), expected_message)
@@ -1932,7 +1932,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         # then
         self.assertEqual(response.status_code, HTTPStatus.OK)
         expected_message = (
-            "<h4>Error!</h4><p>Something went wrong, please check your input.<p>"
+            "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
         )
         messages = list(response.context["messages"])
         self.assertEqual(len(messages), 1)

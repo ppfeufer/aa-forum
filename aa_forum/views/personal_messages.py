@@ -9,7 +9,6 @@ from http import HTTPStatus
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
-from django.core.paginator import Paginator
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.datastructures import MultiValueDictKeyError
@@ -25,6 +24,7 @@ from app_utils.logging import LoggerAddTag
 # AA Forum
 from aa_forum import __title__
 from aa_forum.forms import NewPersonalMessageForm, ReplyPersonalMessageForm
+from aa_forum.helper.pagination import get_paginated_page_object
 from aa_forum.helper.user import get_main_character_from_user
 from aa_forum.models import PersonalMessage, Setting
 
@@ -47,11 +47,13 @@ def inbox(request: WSGIRequest, page_number: int = None) -> HttpResponse:
         request.user
     )
 
-    paginator = Paginator(
-        personal_messages,
-        int(Setting.objects.get_setting(setting_key=Setting.MESSAGESPERPAGE)),
+    page_obj = get_paginated_page_object(
+        queryset=personal_messages,
+        items_per_page=Setting.objects.get_setting(
+            setting_key=Setting.Field.MESSAGESPERPAGE
+        ),
+        page_number=page_number,
     )
-    page_obj = paginator.get_page(page_number)
 
     context = {"page_obj": page_obj}
 
@@ -91,7 +93,7 @@ def new_message(request: WSGIRequest) -> HttpResponse:
             messages.success(
                 request,
                 mark_safe(
-                    _(f"<h4>Success!</h4><p>Message to {recipient_main_char} sent.<p>")
+                    _(f"<h4>Success!</h4><p>Message to {recipient_main_char} sent.</p>")
                 ),
             )
 
@@ -102,7 +104,7 @@ def new_message(request: WSGIRequest) -> HttpResponse:
             mark_safe(
                 _(
                     "<h4>Error!</h4>"
-                    "<p>Something went wrong, please check your input.<p>"
+                    "<p>Something went wrong, please check your input.</p>"
                 )
             ),
         )
@@ -130,11 +132,13 @@ def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse
         request.user
     )
 
-    paginator = Paginator(
-        personal_messages,
-        int(Setting.objects.get_setting(setting_key=Setting.MESSAGESPERPAGE)),
+    page_obj = get_paginated_page_object(
+        queryset=personal_messages,
+        items_per_page=Setting.objects.get_setting(
+            setting_key=Setting.Field.MESSAGESPERPAGE
+        ),
+        page_number=page_number,
     )
-    page_obj = paginator.get_page(page_number)
 
     context = {"page_obj": page_obj}
 
@@ -166,7 +170,7 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
                 _(
                     "<h4>Error!</h4>"
                     "<p>The message you were trying to reply to does either not exist "
-                    "or you are not the recipient.<p>"
+                    "or you are not the recipient.</p>"
                 )
             ),
         )
@@ -202,7 +206,7 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
                     mark_safe(
                         _(
                             "<h4>Success!</h4>"
-                            f"<p>Reply to {recipient_main_char} sent.<p>"
+                            f"<p>Reply to {recipient_main_char} sent.</p>"
                         )
                     ),
                 )
@@ -214,7 +218,7 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
                 mark_safe(
                     _(
                         "<h4>Error!</h4>"
-                        "<p>Something went wrong, please check your input.<p>"
+                        "<p>Something went wrong, please check your input.</p>"
                     )
                 ),
             )
@@ -255,7 +259,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
                     _(
                         "<h4>Error!</h4>"
                         "<p>The message you tried to remove does either not exist "
-                        "or is not yours to remove.<p>"
+                        "or is not yours to remove.</p>"
                     )
                 ),
             )
@@ -269,7 +273,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
             messages.success(
                 request=request,
                 message=mark_safe(
-                    _("<h4>Success!</h4><p>Message removed from your inbox.<p>")
+                    _("<h4>Success!</h4><p>Message removed from your inbox.</p>")
                 ),
             )
 
@@ -290,7 +294,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
                     _(
                         "<h4>Error!</h4>"
                         "<p>The message you tried to remove does either not exist "
-                        "or is not yours to remove.<p>"
+                        "or is not yours to remove.</p>"
                     )
                 ),
             )
@@ -306,7 +310,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
                 message=mark_safe(
                     _(
                         "<h4>Success!</h4>"
-                        "<p>Message has been removed from your sent messages.<p>"
+                        "<p>Message has been removed from your sent messages.</p>"
                     )
                 ),
             )
@@ -320,7 +324,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
 
     messages.error(
         request=request,
-        message=mark_safe(_("<h4>Error!</h4><p>Something went wrong.<p>")),
+        message=mark_safe(_("<h4>Error!</h4><p>Something went wrong.</p>")),
     )
 
     return redirect("aa_forum:personal_messages_inbox")
