@@ -230,7 +230,7 @@ class EditBoardForm(ModelForm):
         label=_("Discord Webhook (Optional)"),
         help_text=_(
             "Discord Webhook URL for the channel to post about new topics in this "
-            "board. (This setting is optional) "
+            "board. (This setting is optional)"
         ),
         max_length=254,
         widget=forms.TextInput(
