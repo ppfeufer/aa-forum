@@ -6,20 +6,21 @@
 # Translators:
 # Peter Pfeufer, 2022
 # 
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-11-02 03:41+0100\n"
-"PO-Revision-Date: 2022-11-02 00:59+0000\n"
-"Last-Translator: Peter Pfeufer, 2022\n"
-"Language-Team: German (https://www.transifex.com/ppfeufer/teams/113732/de/)\n"
+"PO-Revision-Date: 2023-04-09 17:16+0000\n"
+"Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
+"Language-Team: German <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: forms.py:39
 msgid "This field is mandatory"
@@ -1134,7 +1135,7 @@ msgstr ""
 
 #: views/forum.py:588
 msgid "<h4>Success!</h4><p>The topic subject has been updated.</p>"
-msgstr "<h4>Erfolg!</h4><p>Das Thema Thema wurde aktualisiert.</p>"
+msgstr "<h4>Erfolg!</h4><p>Das Thema wurde aktualisiert.</p>"
 
 #: views/forum.py:772
 msgid ""
