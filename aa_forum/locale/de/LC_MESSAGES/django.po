@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-11 13:54+0200\n"
+"POT-Creation-Date: 2023-04-11 15:13+0200\n"
 "PO-Revision-Date: 2023-04-09 17:16+0000\n"
 "Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
 "Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -242,7 +242,9 @@ msgid "Recipient"
 msgstr "Empfänger"
 
 #: forms.py:493
-msgid "Hello there ..."
+#, fuzzy
+#| msgid "Hello there ..."
+msgid "Hello there …"
 msgstr "Hallo ..."
 
 #: models.py:119
@@ -638,7 +640,9 @@ msgid "Fields marked with an asterisk (*) are mandatory"
 msgstr "Mit einem Sternchen (*) gekennzeichnete Felder sind Pflichtfelder"
 
 #: templates/aa_forum/partials/forum/board/board-index.html:27
-msgid "No topics have been started in this board ..."
+#, fuzzy
+#| msgid "No topics have been started in this board ..."
+msgid "No topics have been started in this board …"
 msgstr "In diesem Board wurden keine Themen begonnen ..."
 
 #: templates/aa_forum/partials/forum/board/board.html:34
@@ -923,8 +927,10 @@ msgid "User Profile"
 msgstr "Benutzerprofil"
 
 #: templates/aa_forum/partials/search/search-form.html:7
-msgid "Search ..."
-msgstr "Suche ..."
+#, fuzzy
+#| msgid "Search"
+msgid "Search …"
+msgstr "Suche"
 
 #: templates/aa_forum/view/administration/categories-and-boards.html:5
 msgid "Forum (Administration » Categories and Boards)"
@@ -975,7 +981,9 @@ msgid "Unread Topics"
 msgstr "Ungelesene Themen"
 
 #: templates/aa_forum/view/forum/unread-topics.html:26
-msgid "You have no unread topics ..."
+#, fuzzy
+#| msgid "You have no unread topics ..."
+msgid "You have no unread topics …"
 msgstr "Du hast keine ungelesenen Themen ..."
 
 #: templates/aa_forum/view/personal-messages/inbox.html:7
@@ -1011,7 +1019,9 @@ msgid "Result(s)"
 msgstr "Resultat(e)"
 
 #: templates/aa_forum/view/search/results.html:27
-msgid "Nothing found ..."
+#, fuzzy
+#| msgid "Nothing found ..."
+msgid "Nothing found …"
 msgstr "Nichts gefunden ..."
 
 #: templatetags/aa_forum_datetime.py:56
@@ -1260,3 +1270,6 @@ msgstr "<h4>Fehler!</h4><p>Etwas ist schief gelaufen.</p>"
 #: views/profile.py:56
 msgid "<h4>Success!</h4><p>Profile saved.</p>"
 msgstr "<h4>Erfolg!</h4><p>Profil gespeichert.</p>"
+
+#~ msgid "Search ..."
+#~ msgstr "Suche ..."
