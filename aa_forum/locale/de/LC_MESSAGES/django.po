@@ -1256,23 +1256,3 @@ msgstr "<h4>Fehler!</h4><p>Etwas ist schief gelaufen.</p>"
 #: views/profile.py:56
 msgid "<h4>Success!</h4><p>Profile saved.</p>"
 msgstr "<h4>Erfolg!</h4><p>Profil gespeichert.</p>"
-
-#: templates/aa_forum/partials/search/search-form.html:7
-msgid "Search ..."
-msgstr "Suche ..."
-
-#: forms.py:493
-msgid "Hello there ..."
-msgstr "Hallo ..."
-
-#: templates/aa_forum/partials/forum/board/board-index.html:27
-msgid "No topics have been started in this board ..."
-msgstr "In diesem Board wurden keine Themen begonnen ..."
-
-#: templates/aa_forum/view/forum/unread-topics.html:26
-msgid "You have no unread topics ..."
-msgstr "Du hast keine ungelesenen Themen ..."
-
-#: templates/aa_forum/view/search/results.html:27
-msgid "Nothing found ..."
-msgstr "Nichts gefunden ..."
