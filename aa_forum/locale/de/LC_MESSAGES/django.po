@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# "H. Peter Pfeufer" <info@ppfeufer.de>, 2023.
 #
 # Translators:
 # Peter Pfeufer, 2022
@@ -11,10 +11,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-11 15:13+0200\n"
-"PO-Revision-Date: 2023-04-09 17:16+0000\n"
+"PO-Revision-Date: 2023-04-12 13:41+0000\n"
 "Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
-"Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/de/>\n"
+"Language-Team: German <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -89,10 +89,6 @@ msgid "Discord Webhook (Optional)"
 msgstr "Discord-Webhook (Optional)"
 
 #: forms.py:232
-#, fuzzy
-#| msgid ""
-#| "Discord Webhook URL for the channel to post about new topics in this "
-#| "board. (This setting is optional) "
 msgid ""
 "Discord Webhook URL for the channel to post about new topics in this board. "
 "(This setting is optional)"
@@ -242,10 +238,8 @@ msgid "Recipient"
 msgstr "Empfänger"
 
 #: forms.py:493
-#, fuzzy
-#| msgid "Hello there ..."
 msgid "Hello there …"
-msgstr "Hallo ..."
+msgstr "Hallo …"
 
 #: models.py:119
 msgid "Can access the AA-Forum module"
@@ -640,10 +634,8 @@ msgid "Fields marked with an asterisk (*) are mandatory"
 msgstr "Mit einem Sternchen (*) gekennzeichnete Felder sind Pflichtfelder"
 
 #: templates/aa_forum/partials/forum/board/board-index.html:27
-#, fuzzy
-#| msgid "No topics have been started in this board ..."
 msgid "No topics have been started in this board …"
-msgstr "In diesem Board wurden keine Themen begonnen ..."
+msgstr "In diesem Board wurden keine Themen begonnen …"
 
 #: templates/aa_forum/partials/forum/board/board.html:34
 msgid "This board is restricted to the following group(s):"
@@ -927,10 +919,8 @@ msgid "User Profile"
 msgstr "Benutzerprofil"
 
 #: templates/aa_forum/partials/search/search-form.html:7
-#, fuzzy
-#| msgid "Search"
 msgid "Search …"
-msgstr "Suche"
+msgstr "Suche …"
 
 #: templates/aa_forum/view/administration/categories-and-boards.html:5
 msgid "Forum (Administration » Categories and Boards)"
@@ -981,10 +971,8 @@ msgid "Unread Topics"
 msgstr "Ungelesene Themen"
 
 #: templates/aa_forum/view/forum/unread-topics.html:26
-#, fuzzy
-#| msgid "You have no unread topics ..."
 msgid "You have no unread topics …"
-msgstr "Du hast keine ungelesenen Themen ..."
+msgstr "Du hast keine ungelesenen Themen …"
 
 #: templates/aa_forum/view/personal-messages/inbox.html:7
 msgid "Forum (Personal Messages » Inbox)"
@@ -1019,10 +1007,8 @@ msgid "Result(s)"
 msgstr "Resultat(e)"
 
 #: templates/aa_forum/view/search/results.html:27
-#, fuzzy
-#| msgid "Nothing found ..."
 msgid "Nothing found …"
-msgstr "Nichts gefunden ..."
+msgstr "Nichts gefunden …"
 
 #: templatetags/aa_forum_datetime.py:56
 msgid "Timezone Conversion"
@@ -1112,8 +1098,8 @@ msgid ""
 "subject}</a></p>"
 msgstr ""
 "<h4>Warnung!</h4><p>Es gibt bereits ein Thema mit genau demselben Thema in "
-"diesem Board.</p><p>Siehe hier: <a "
-"href=\"{existing_topic_url}\">{existing_topic.subject}</a></p>"
+"diesem Board.</p><p>Siehe hier: <a href="
+"\"{existing_topic_url}\">{existing_topic.subject}</a></p>"
 
 #: views/forum.py:399
 msgid ""
@@ -1271,5 +1257,22 @@ msgstr "<h4>Fehler!</h4><p>Etwas ist schief gelaufen.</p>"
 msgid "<h4>Success!</h4><p>Profile saved.</p>"
 msgstr "<h4>Erfolg!</h4><p>Profil gespeichert.</p>"
 
-#~ msgid "Search ..."
-#~ msgstr "Suche ..."
+#: templates/aa_forum/partials/search/search-form.html:7
+msgid "Search ..."
+msgstr "Suche ..."
+
+#: forms.py:493
+msgid "Hello there ..."
+msgstr "Hallo ..."
+
+#: templates/aa_forum/partials/forum/board/board-index.html:27
+msgid "No topics have been started in this board ..."
+msgstr "In diesem Board wurden keine Themen begonnen ..."
+
+#: templates/aa_forum/view/forum/unread-topics.html:26
+msgid "You have no unread topics ..."
+msgstr "Du hast keine ungelesenen Themen ..."
+
+#: templates/aa_forum/view/search/results.html:27
+msgid "Nothing found ..."
+msgstr "Nichts gefunden ..."
