@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning].
 ## [In Development] - Unreleased
 
 
+## [1.17.2] - 2023-04-13
+
+### Changed
+
+- German translation updated
+
+
 ## [1.17.1] - 2023-01-06
 
 ### Added
