@@ -105,7 +105,7 @@ these kinds of changes. For your own sanity, and mine :-)
 
 ### Step 1 - Install the package
 
-Make sure you are in the virtual environment (venv) of your Alliance Auth
+Make sure you're in the virtual environment (venv) of your Alliance Auth
 installation Then install the latest release directly from PyPi.
 
 ```shell
@@ -342,13 +342,13 @@ handler400 = "allianceauth.views.Generic400Redirect"
 
 ### Step 3 - Configure your webserver
 
-Your webserver needs to know from where to serve the uploaded mages of course, so we
+Your webserver needs to know from where to serve the uploaded images, of course, so we
 have to tell it.
 
 #### Apache
 
 In your vhost configuration, you have a line `ProxyPassMatch ^/static !`, which tells
-the server where to find all the static files. We are adding a similar line for the
+the server where to find all the static files. We're adding a similar line for the
 media, right below that one.
 
 Add the following right below the static proxy match:

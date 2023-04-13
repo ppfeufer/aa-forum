@@ -1,25 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+# "H. Peter Pfeufer" <info@ppfeufer.de>, 2023.
+#
 # Translators:
 # Peter Pfeufer, 2022
-# 
-#, fuzzy
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-02 03:41+0100\n"
-"PO-Revision-Date: 2022-11-02 00:59+0000\n"
-"Last-Translator: Peter Pfeufer, 2022\n"
-"Language-Team: German (https://www.transifex.com/ppfeufer/teams/113732/de/)\n"
+"POT-Creation-Date: 2023-04-11 15:13+0200\n"
+"PO-Revision-Date: 2023-04-12 13:41+0000\n"
+"Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
+"Language-Team: German <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: forms.py:39
 msgid "This field is mandatory"
@@ -74,9 +75,9 @@ msgstr "Gruppenbeschränkungen"
 
 #: forms.py:222
 msgid ""
-"This will restrict access to this board to the selected groups. If no groups"
-" are selected, everyone who can access the forum can also access this board."
-" (This setting is optional)"
+"This will restrict access to this board to the selected groups. If no groups "
+"are selected, everyone who can access the forum can also access this board. "
+"(This setting is optional)"
 msgstr ""
 "Dadurch wird der Zugriff auf dieses Board auf die ausgewählten Gruppen "
 "beschränkt. Wenn keine Gruppen ausgewählt sind, kann jeder, der auf das "
@@ -90,7 +91,7 @@ msgstr "Discord-Webhook (Optional)"
 #: forms.py:232
 msgid ""
 "Discord Webhook URL for the channel to post about new topics in this board. "
-"(This setting is optional) "
+"(This setting is optional)"
 msgstr ""
 "Discord-Webhook URL für den Kanal, um über neue Themen in diesem Board zu "
 "posten. (Diese Einstellung ist optional)"
@@ -102,8 +103,8 @@ msgstr "Auch für Antworten nutzen?"
 #: forms.py:247
 msgid ""
 "When activated every reply to any topic in this board will be posted to the "
-"defined Discord channel. (Child boards are excluded) Chose wisely! (Default:"
-" NO)"
+"defined Discord channel. (Child boards are excluded) Chose wisely! (Default: "
+"NO)"
 msgstr ""
 "Wenn aktiviert, wird jede Antwort auf ein beliebiges Thema in diesem Board "
 "im definierten Discord-Kanal gepostet. (Child-Boards sind ausgeschlossen) "
@@ -133,8 +134,8 @@ msgstr "\"Starte Thema\" Einschränkungen für 'Ankündigungs-Board'"
 #: forms.py:267
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
-"'Announcement Boards'. If no group is selected, only forum admins can do so."
-" This setting will not be inherited to child boards. (Hint: These "
+"'Announcement Boards'. If no group is selected, only forum admins can do so. "
+"This setting will not be inherited to child boards. (Hint: These "
 "restrictions only take effect when a board is marked as 'Announcement "
 "Board', see checkbox above.)"
 msgstr ""
@@ -228,8 +229,8 @@ msgid ""
 "How long (Number of characters) is a user's signature allowed to be? "
 "(Default: 750)"
 msgstr ""
-"Wie lang (Anzahl Zeichen) darf die Signatur eines Benutzers sein? (Standard:"
-" 750)"
+"Wie lang (Anzahl Zeichen) darf die Signatur eines Benutzers sein? (Standard: "
+"750)"
 
 #: forms.py:487
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:22
@@ -237,8 +238,8 @@ msgid "Recipient"
 msgstr "Empfänger"
 
 #: forms.py:493
-msgid "Hello there ..."
-msgstr "Hallo ..."
+msgid "Hello there …"
+msgstr "Hallo …"
 
 #: models.py:119
 msgid "Can access the AA-Forum module"
@@ -366,8 +367,7 @@ msgstr "Möchtest Du dieses Board wirklich löschen?"
 
 #: templates/aa_forum/modals/administration/delete-board.html:19
 msgid "This will also remove all topics and messages in this board."
-msgstr ""
-"Dadurch werden auch alle Themen und Beiträge in diesem Board entfernt."
+msgstr "Dadurch werden auch alle Themen und Beiträge in diesem Board entfernt."
 
 #: templates/aa_forum/modals/administration/delete-board.html:21
 #: templates/aa_forum/modals/administration/delete-category.html:21
@@ -407,8 +407,7 @@ msgid "Are you sure you want to delete this category?"
 msgstr "Möchtest Du diese Kategorie wirklich löschen?"
 
 #: templates/aa_forum/modals/administration/delete-category.html:19
-msgid ""
-"This will also remove all boards, topics and messages in this category."
+msgid "This will also remove all boards, topics and messages in this category."
 msgstr ""
 "Dadurch werden auch alle Foren, Themen und Beiträge in dieser Kategorie "
 "entfernt."
@@ -458,8 +457,8 @@ msgid ""
 "Are you sure you want to make this topic sticky, so it always shows up on "
 "top of the topic list?"
 msgstr ""
-"Möchtest Du dieses Thema wirklich fixieren, sodass es immer ganz oben in der"
-" Themenliste angezeigt wird?"
+"Möchtest Du dieses Thema wirklich fixieren, sodass es immer ganz oben in der "
+"Themenliste angezeigt wird?"
 
 #: templates/aa_forum/modals/forum/board/topic-change-sticky-state.html:39
 msgid "Unset Sticky"
@@ -591,8 +590,8 @@ msgid ""
 "New categories will be added at the bottom of the category list. You can "
 "move them via drag and drop to a position of your liking."
 msgstr ""
-"Neue Kategorien werden am Ende der Kategorieliste hinzugefügt. Du kannst sie"
-" per Drag and Drop an eine Position Deiner Wahl verschieben."
+"Neue Kategorien werden am Ende der Kategorieliste hinzugefügt. Du kannst sie "
+"per Drag and Drop an eine Position Deiner Wahl verschieben."
 
 #: templates/aa_forum/partials/administration/new-category.html:35
 msgid "Create Category"
@@ -635,8 +634,8 @@ msgid "Fields marked with an asterisk (*) are mandatory"
 msgstr "Mit einem Sternchen (*) gekennzeichnete Felder sind Pflichtfelder"
 
 #: templates/aa_forum/partials/forum/board/board-index.html:27
-msgid "No topics have been started in this board ..."
-msgstr "In diesem Board wurden keine Themen begonnen ..."
+msgid "No topics have been started in this board …"
+msgstr "In diesem Board wurden keine Themen begonnen …"
 
 #: templates/aa_forum/partials/forum/board/board.html:34
 msgid "This board is restricted to the following group(s):"
@@ -688,8 +687,8 @@ msgstr "Neues Thema"
 msgid ""
 "You either don't have access to this board, or this board doesn't exist."
 msgstr ""
-"Du hast entweder keinen Zugriff auf dieses Board oder dieses Board existiert"
-" nicht."
+"Du hast entweder keinen Zugriff auf dieses Board oder dieses Board existiert "
+"nicht."
 
 #: templates/aa_forum/partials/forum/board/pagination.html:8
 #: templates/aa_forum/partials/forum/topic/pagination.html:10
@@ -920,8 +919,8 @@ msgid "User Profile"
 msgstr "Benutzerprofil"
 
 #: templates/aa_forum/partials/search/search-form.html:7
-msgid "Search ..."
-msgstr "Suche ..."
+msgid "Search …"
+msgstr "Suche …"
 
 #: templates/aa_forum/view/administration/categories-and-boards.html:5
 msgid "Forum (Administration » Categories and Boards)"
@@ -972,8 +971,8 @@ msgid "Unread Topics"
 msgstr "Ungelesene Themen"
 
 #: templates/aa_forum/view/forum/unread-topics.html:26
-msgid "You have no unread topics ..."
-msgstr "Du hast keine ungelesenen Themen ..."
+msgid "You have no unread topics …"
+msgstr "Du hast keine ungelesenen Themen …"
 
 #: templates/aa_forum/view/personal-messages/inbox.html:7
 msgid "Forum (Personal Messages » Inbox)"
@@ -1008,8 +1007,8 @@ msgid "Result(s)"
 msgstr "Resultat(e)"
 
 #: templates/aa_forum/view/search/results.html:27
-msgid "Nothing found ..."
-msgstr "Nichts gefunden ..."
+msgid "Nothing found …"
+msgstr "Nichts gefunden …"
 
 #: templatetags/aa_forum_datetime.py:56
 msgid "Timezone Conversion"
@@ -1056,8 +1055,8 @@ msgstr "<h4>Erfolg!</h4><p>Einstellungen aktualisiert.</p>"
 #: views/personal_messages.py:220 views/profile.py:65
 msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte überprüfe Deine "
-"Eingabe.</p>"
+"<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte überprüfe Deine Eingabe."
+"</p>"
 
 #: views/forum.py:210
 msgid ""
@@ -1069,11 +1068,10 @@ msgstr ""
 
 #: views/forum.py:262
 msgid ""
-"<h4>Error!</h4><p>The category you were trying to post in does not "
-"exist.</p>"
+"<h4>Error!</h4><p>The category you were trying to post in does not exist.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Die Kategorie, in der Du posten willst, existiert "
-"nicht.</p>"
+"<h4>Fehler!</h4><p>Die Kategorie, in der Du posten willst, existiert nicht.</"
+"p>"
 
 #: views/forum.py:287
 msgid ""
@@ -1096,36 +1094,36 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "<h4>Warning!</h4><p>There is already a topic with the exact same subject in "
-"this board.</p><p>See here: <a "
-"href=\"{existing_topic_url}\">{existing_topic.subject}</a></p>"
+"this board.</p><p>See here: <a href=\"{existing_topic_url}\">{existing_topic."
+"subject}</a></p>"
 msgstr ""
 "<h4>Warnung!</h4><p>Es gibt bereits ein Thema mit genau demselben Thema in "
-"diesem Board.</p><p>Siehe hier: <a "
-"href=\"{existing_topic_url}\">{existing_topic.subject}</a></p>"
+"diesem Board.</p><p>Siehe hier: <a href="
+"\"{existing_topic_url}\">{existing_topic.subject}</a></p>"
 
 #: views/forum.py:399
 msgid ""
-"<h4>Error!</h4><p>Either subject or message is missing. Please make sure you"
-" enter both fields, as both fields are mandatory.</p>"
+"<h4>Error!</h4><p>Either subject or message is missing. Please make sure you "
+"enter both fields, as both fields are mandatory.</p>"
 msgstr ""
 "<h4>Fehler!</h4><p>Theme oder Beitrag fehlt. Bitte stelle sicher, dass Du "
 "beide Felder ausfüllst, da beide Felder Pflichtfelder sind.</p>"
 
 #: views/forum.py:448 views/forum.py:659
 msgid ""
-"<h4>Error!</h4><p>The topic you were trying to view does not exist or you do"
-" not have access to it.</p>"
+"<h4>Error!</h4><p>The topic you were trying to view does not exist or you do "
+"not have access to it.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Das Thema, das Du öffnen wollten, existiert nicht oder Du"
-" hast keinen Zugriff darauf.</p>"
+"<h4>Fehler!</h4><p>Das Thema, das Du öffnen wollten, existiert nicht oder Du "
+"hast keinen Zugriff darauf.</p>"
 
 #: views/forum.py:539
 msgid ""
 "<h4>Error!</h4><p>The topic you were trying to modify does not exist or you "
 "do not have access to it.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Das Thema, das Du bearbeiten willst, existiert nicht oder"
-" Du hast keinen Zugriff darauf.</p>"
+"<h4>Fehler!</h4><p>Das Thema, das Du bearbeiten willst, existiert nicht oder "
+"Du hast keinen Zugriff darauf.</p>"
 
 #: views/forum.py:559
 msgid "<h4>Error!</h4><p>You are not allowed to modify this topic!</p>"
@@ -1134,7 +1132,7 @@ msgstr ""
 
 #: views/forum.py:588
 msgid "<h4>Success!</h4><p>The topic subject has been updated.</p>"
-msgstr "<h4>Erfolg!</h4><p>Das Thema Thema wurde aktualisiert.</p>"
+msgstr "<h4>Erfolg!</h4><p>Das Thema wurde aktualisiert.</p>"
 
 #: views/forum.py:772
 msgid ""

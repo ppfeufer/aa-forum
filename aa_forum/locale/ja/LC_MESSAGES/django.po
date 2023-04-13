@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-02 03:41+0100\n"
+"POT-Creation-Date: 2023-04-11 15:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,7 +80,7 @@ msgstr ""
 #: forms.py:232
 msgid ""
 "Discord Webhook URL for the channel to post about new topics in this board. "
-"(This setting is optional) "
+"(This setting is optional)"
 msgstr ""
 
 #: forms.py:245
@@ -197,7 +197,7 @@ msgid "Recipient"
 msgstr ""
 
 #: forms.py:493
-msgid "Hello there ..."
+msgid "Hello there …"
 msgstr ""
 
 #: models.py:119
@@ -572,7 +572,7 @@ msgid "Fields marked with an asterisk (*) are mandatory"
 msgstr ""
 
 #: templates/aa_forum/partials/forum/board/board-index.html:27
-msgid "No topics have been started in this board ..."
+msgid "No topics have been started in this board …"
 msgstr ""
 
 #: templates/aa_forum/partials/forum/board/board.html:34
@@ -852,7 +852,7 @@ msgid "User Profile"
 msgstr ""
 
 #: templates/aa_forum/partials/search/search-form.html:7
-msgid "Search ..."
+msgid "Search …"
 msgstr ""
 
 #: templates/aa_forum/view/administration/categories-and-boards.html:5
@@ -904,7 +904,7 @@ msgid "Unread Topics"
 msgstr ""
 
 #: templates/aa_forum/view/forum/unread-topics.html:26
-msgid "You have no unread topics ..."
+msgid "You have no unread topics …"
 msgstr ""
 
 #: templates/aa_forum/view/personal-messages/inbox.html:7
@@ -940,7 +940,7 @@ msgid "Result(s)"
 msgstr ""
 
 #: templates/aa_forum/view/search/results.html:27
-msgid "Nothing found ..."
+msgid "Nothing found …"
 msgstr ""
 
 #: templatetags/aa_forum_datetime.py:56

@@ -175,7 +175,7 @@ def send_new_personal_message_notification(
         dm_text += f"[Your Personal Messages]({forum_pm_url})"
 
         if discordproxy_installed():
-            logger.debug("discordproxy seems to be available ...")
+            logger.debug("discordproxy seems to be available …")
 
             _discordproxy_send_private_message(
                 user_id=int(message.recipient.discord.uid),
