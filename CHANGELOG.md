@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning].
 
 ## [In Development] - Unreleased
 
+### Fixed
+
+- Warning message in a modal window
+
 
 ## [1.17.2] - 2023-04-13
 
