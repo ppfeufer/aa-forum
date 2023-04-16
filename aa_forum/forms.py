@@ -412,7 +412,7 @@ class UserProfileForm(ModelForm):
         except ValidationError as exc:
             raise ValidationError(
                 _(
-                    f"Ensure your signature has at most {max_signature_length} characters. (Currently: {len(signature)})"
+                    f"Ensure your signature has at most {max_signature_length} characters. (Currently: {len(signature)})"  # pylint: disable=line-too-long
                 )
             ) from exc
         else:

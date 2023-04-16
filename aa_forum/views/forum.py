@@ -349,7 +349,7 @@ def board_new_topic(
                         request,
                         mark_safe(
                             _(
-                                f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{existing_topic_url}">{existing_topic.subject}</a></p>'
+                                f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{existing_topic_url}">{existing_topic.subject}</a></p>'  # pylint: disable=line-too-long
                             )
                         ),
                     )
@@ -516,7 +516,7 @@ def topic_modify(
     topic_slug: str,
 ) -> HttpResponse:
     """
-    Modify the topics subject
+    Modify the topic's subject
     :param request:
     :param category_slug:
     :param board_slug:
@@ -636,7 +636,7 @@ def topic_first_unread_message(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
     """
-    Redirect to first unread message of a topic
+    Redirect to the first unread message of a topic
     :param request:
     :param category_slug:
     :param board_slug:
@@ -860,8 +860,7 @@ def topic_change_lock_state(
             request,
             mark_safe(
                 _(
-                    "<h4>Success!</h4>"
-                    f'<p>Topic "{topic}" has been unlocked/re-opened.</p>'
+                    f'<h4>Success!</h4><p>Topic "{topic}" has been unlocked/re-opened.</p>'  # pylint: disable=line-too-long
                 )
             ),
         )
@@ -1020,7 +1019,7 @@ def message_modify(
 
     # Check if the message exists.
     # If not, the user doesn't have access to its board, or it doesn't exist.
-    # Either way, message can't be edited
+    # Either way, the message can't be edited
     if not message_to_modify:
         messages.error(
             request,
