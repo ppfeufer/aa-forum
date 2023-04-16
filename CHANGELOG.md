@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning].
 
 ## [In Development] - Unreleased
 
+
+## [1.18.0] - 2023-04-13
+
+### Added
+
+- Russian translation
+
 ### Fixed
 
 - Warning message in a modal window
