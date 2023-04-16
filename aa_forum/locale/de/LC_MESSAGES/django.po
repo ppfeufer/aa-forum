@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-15 22:01+0200\n"
+"POT-Creation-Date: 2023-04-16 12:55+0200\n"
 "PO-Revision-Date: 2023-04-12 13:41+0000\n"
 "Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
 "Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -343,10 +343,15 @@ msgid "Reply"
 msgstr "Antwort"
 
 #: templates/aa_forum/ajax-render/personal-messages/message.html:38
+#: templates/aa_forum/modals/forum/topic/message-delete.html:3
+#: templates/aa_forum/modals/forum/topic/message-delete.html:12
+#: templates/aa_forum/modals/personal-messages/message-delete.html:3
+#: templates/aa_forum/modals/personal-messages/message-delete.html:12
+#: templates/aa_forum/partials/forum/topic/message.html:56
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:73
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:67
-msgid "Delete message"
-msgstr "Nachricht löschen"
+msgid "Delete Message"
+msgstr "Beitrag löschen"
 
 #: templates/aa_forum/base.html:5 templates/aa_forum/partials/menu.html:14
 #: templates/aa_forum/view/forum/board.html:5
@@ -418,11 +423,13 @@ msgstr "Sperrstatus des Themas ändern"
 
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:13
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:39
+#: templates/aa_forum/partials/forum/board/topic.html:84
 msgid "Unlock/Re-Open Topic"
 msgstr "Thema entsperren/erneut öffnen"
 
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:16
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:42
+#: templates/aa_forum/partials/forum/board/topic.html:88
 msgid "Lock/Close Topic"
 msgstr "Thema sperren/schließen"
 
@@ -470,6 +477,7 @@ msgstr "Sticky setzen"
 
 #: templates/aa_forum/modals/forum/board/topic-delete.html:3
 #: templates/aa_forum/modals/forum/board/topic-delete.html:12
+#: templates/aa_forum/partials/forum/board/topic.html:97
 msgid "Delete Topic"
 msgstr "Thema löschen"
 
@@ -483,14 +491,6 @@ msgstr "Möchtest Du dieses Thema wirklich löschen?"
 msgid "This will also remove all messages in this topic."
 msgstr ""
 "Dadurch werden auch alle Themen und Nachrichten in diesem Thema entfernt."
-
-#: templates/aa_forum/modals/forum/topic/message-delete.html:3
-#: templates/aa_forum/modals/forum/topic/message-delete.html:12
-#: templates/aa_forum/modals/personal-messages/message-delete.html:3
-#: templates/aa_forum/modals/personal-messages/message-delete.html:12
-#: templates/aa_forum/partials/forum/topic/message.html:56
-msgid "Delete Message"
-msgstr "Beitrag löschen"
 
 #: templates/aa_forum/modals/forum/topic/message-delete.html:17
 #: templates/aa_forum/modals/personal-messages/message-delete.html:17
@@ -758,11 +758,15 @@ msgid "Last"
 msgstr "Letzter"
 
 #: templates/aa_forum/partials/forum/board/topic.html:38
-msgid "Topic is always on top"
+#, fuzzy
+#| msgid "Topic is always on top"
+msgid "Topic Is Always on Top"
 msgstr "Das Thema steht immer oben"
 
 #: templates/aa_forum/partials/forum/board/topic.html:44
-msgid "Topic is locked"
+#, fuzzy
+#| msgid "Topic is locked"
+msgid "Topic Is Locked"
 msgstr "Thema ist gesperrt"
 
 #: templates/aa_forum/partials/forum/board/topic.html:48
@@ -779,24 +783,16 @@ msgid "Last post"
 msgstr "Letzter Beitrag"
 
 #: templates/aa_forum/partials/forum/board/topic.html:71
-msgid "Go to last message"
+#, fuzzy
+#| msgid "Go to last message"
+msgid "Go to Last Message"
 msgstr "Gehe zum letzten Beitrag"
 
-#: templates/aa_forum/partials/forum/board/topic.html:84
-msgid "Unlock/Re-Open topic"
-msgstr "Thema entsperren/erneut öffnen"
-
-#: templates/aa_forum/partials/forum/board/topic.html:88
-msgid "Lock/Close topic"
-msgstr "Thema sperren/schließen"
-
 #: templates/aa_forum/partials/forum/board/topic.html:93
-msgid "Change topics sticky state"
+#, fuzzy
+#| msgid "Change topics sticky state"
+msgid "Change Topics Sticky State"
 msgstr "Sticky-Status vom Thema ändern"
-
-#: templates/aa_forum/partials/forum/board/topic.html:97
-msgid "Delete topic"
-msgstr "Thema löschen"
 
 #: templates/aa_forum/partials/forum/mark-unread-button.html:7
 #: templates/aa_forum/partials/forum/unread-topic-buttons.html:12
@@ -804,7 +800,9 @@ msgid "Mark all topics as read"
 msgstr "Alle Themen als gelesen markieren"
 
 #: templates/aa_forum/partials/forum/topic/message.html:38
-msgid "Copy message link to clipboard"
+#, fuzzy
+#| msgid "Copy message link to clipboard"
+msgid "Copy Message Link to Clipboard"
 msgstr "Beitragslink in die Zwischenablage kopieren"
 
 #: templates/aa_forum/partials/forum/topic/message.html:81
@@ -880,7 +878,9 @@ msgstr "Absender"
 
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:62
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:56
-msgid "Read message"
+#, fuzzy
+#| msgid "Read message"
+msgid "Read Message"
 msgstr "Nachricht lesen"
 
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:87
@@ -1258,3 +1258,15 @@ msgstr "<h4>Fehler!</h4><p>Etwas ist schief gelaufen.</p>"
 #: views/profile.py:56
 msgid "<h4>Success!</h4><p>Profile saved.</p>"
 msgstr "<h4>Erfolg!</h4><p>Profil gespeichert.</p>"
+
+#~ msgid "Delete message"
+#~ msgstr "Nachricht löschen"
+
+#~ msgid "Unlock/Re-Open topic"
+#~ msgstr "Thema entsperren/erneut öffnen"
+
+#~ msgid "Lock/Close topic"
+#~ msgstr "Thema sperren/schließen"
+
+#~ msgid "Delete topic"
+#~ msgstr "Thema löschen"

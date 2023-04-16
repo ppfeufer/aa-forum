@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-15 22:01+0200\n"
+"POT-Creation-Date: 2023-04-16 12:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -302,9 +302,14 @@ msgid "Reply"
 msgstr ""
 
 #: templates/aa_forum/ajax-render/personal-messages/message.html:38
+#: templates/aa_forum/modals/forum/topic/message-delete.html:3
+#: templates/aa_forum/modals/forum/topic/message-delete.html:12
+#: templates/aa_forum/modals/personal-messages/message-delete.html:3
+#: templates/aa_forum/modals/personal-messages/message-delete.html:12
+#: templates/aa_forum/partials/forum/topic/message.html:56
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:73
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:67
-msgid "Delete message"
+msgid "Delete Message"
 msgstr ""
 
 #: templates/aa_forum/base.html:5 templates/aa_forum/partials/menu.html:14
@@ -375,11 +380,13 @@ msgstr ""
 
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:13
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:39
+#: templates/aa_forum/partials/forum/board/topic.html:84
 msgid "Unlock/Re-Open Topic"
 msgstr ""
 
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:16
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:42
+#: templates/aa_forum/partials/forum/board/topic.html:88
 msgid "Lock/Close Topic"
 msgstr ""
 
@@ -423,6 +430,7 @@ msgstr ""
 
 #: templates/aa_forum/modals/forum/board/topic-delete.html:3
 #: templates/aa_forum/modals/forum/board/topic-delete.html:12
+#: templates/aa_forum/partials/forum/board/topic.html:97
 msgid "Delete Topic"
 msgstr ""
 
@@ -432,14 +440,6 @@ msgstr ""
 
 #: templates/aa_forum/modals/forum/board/topic-delete.html:19
 msgid "This will also remove all messages in this topic."
-msgstr ""
-
-#: templates/aa_forum/modals/forum/topic/message-delete.html:3
-#: templates/aa_forum/modals/forum/topic/message-delete.html:12
-#: templates/aa_forum/modals/personal-messages/message-delete.html:3
-#: templates/aa_forum/modals/personal-messages/message-delete.html:12
-#: templates/aa_forum/partials/forum/topic/message.html:56
-msgid "Delete Message"
 msgstr ""
 
 #: templates/aa_forum/modals/forum/topic/message-delete.html:17
@@ -692,11 +692,11 @@ msgid "Last"
 msgstr ""
 
 #: templates/aa_forum/partials/forum/board/topic.html:38
-msgid "Topic is always on top"
+msgid "Topic Is Always on Top"
 msgstr ""
 
 #: templates/aa_forum/partials/forum/board/topic.html:44
-msgid "Topic is locked"
+msgid "Topic Is Locked"
 msgstr ""
 
 #: templates/aa_forum/partials/forum/board/topic.html:48
@@ -713,23 +713,11 @@ msgid "Last post"
 msgstr ""
 
 #: templates/aa_forum/partials/forum/board/topic.html:71
-msgid "Go to last message"
-msgstr ""
-
-#: templates/aa_forum/partials/forum/board/topic.html:84
-msgid "Unlock/Re-Open topic"
-msgstr ""
-
-#: templates/aa_forum/partials/forum/board/topic.html:88
-msgid "Lock/Close topic"
+msgid "Go to Last Message"
 msgstr ""
 
 #: templates/aa_forum/partials/forum/board/topic.html:93
-msgid "Change topics sticky state"
-msgstr ""
-
-#: templates/aa_forum/partials/forum/board/topic.html:97
-msgid "Delete topic"
+msgid "Change Topics Sticky State"
 msgstr ""
 
 #: templates/aa_forum/partials/forum/mark-unread-button.html:7
@@ -738,7 +726,7 @@ msgid "Mark all topics as read"
 msgstr ""
 
 #: templates/aa_forum/partials/forum/topic/message.html:38
-msgid "Copy message link to clipboard"
+msgid "Copy Message Link to Clipboard"
 msgstr ""
 
 #: templates/aa_forum/partials/forum/topic/message.html:81
@@ -811,7 +799,7 @@ msgstr ""
 
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:62
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:56
-msgid "Read message"
+msgid "Read Message"
 msgstr ""
 
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:87
