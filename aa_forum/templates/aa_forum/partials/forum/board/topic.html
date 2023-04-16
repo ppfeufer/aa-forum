@@ -35,13 +35,13 @@
                 <span class="small">
                     {% if topic.is_sticky %}
                         <span class="aa-forum-topic-status-icon aa-forum-topic-status-sticky">
-                            <i class="fas fa-thumbtack" title="{% translate 'Topic is always on top' %}"></i>
+                            <i class="fas fa-thumbtack" title="{% translate 'Topic Is Always on Top' %}"></i>
                         </span>
                     {% endif %}
 
                     {% if topic.is_locked %}
                         <span class="aa-forum-topic-status-icon aa-forum-topic-status-locked">
-                            <i class="fas fa-lock" title="{% translate 'Topic is locked' %}"></i>
+                            <i class="fas fa-lock" title="{% translate 'Topic Is Locked' %}"></i>
                         </span>
                     {% endif %}
 
@@ -68,7 +68,7 @@
             <span class="small">
                 {% translate "Last post" %} {{ topic.last_message.time_posted|forum_time }}
 
-                <a href="{% url 'aa_forum:forum_message' topic.board.category.slug topic.board.slug topic.slug topic.last_message_id %}" title="{% translate 'Go to last message' %}" style="margin-left: 0.5rem;">
+                <a href="{% url 'aa_forum:forum_message' topic.board.category.slug topic.board.slug topic.slug topic.last_message_id %}" title="{% translate 'Go to Last Message' %}" style="margin-left: 0.5rem;">
                     <i class="fas fa-sign-in-alt"></i>
                 </a>
 
@@ -81,20 +81,20 @@
             {% if perms.aa_forum.manage_forum %}
                 <div class="text-right">
                     {% if topic.is_locked %}
-                        <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Unlock/Re-Open topic' %}" data-toggle="modal" data-target="#topic-lock-state-change-{{ topic.pk }}">
+                        <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Unlock/Re-Open Topic' %}" data-toggle="modal" data-target="#topic-lock-state-change-{{ topic.pk }}">
                             <i class="fas fa-unlock"></i>
                         </button>
                     {% else %}
-                        <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Lock/Close topic' %}" data-toggle="modal" data-target="#topic-lock-state-change-{{ topic.pk }}">
+                        <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Lock/Close Topic' %}" data-toggle="modal" data-target="#topic-lock-state-change-{{ topic.pk }}">
                             <i class="fas fa-lock"></i>
                         </button>
                     {% endif %}
 
-                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Change topics sticky state' %}" data-toggle="modal" data-target="#topic-sticky-state-change-{{ topic.pk }}">
+                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Change Topics Sticky State' %}" data-toggle="modal" data-target="#topic-sticky-state-change-{{ topic.pk }}">
                         <i class="fas fa-thumbtack"></i>
                     </button>
 
-                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Delete topic' %}" data-toggle="modal" data-target="#delete-topic-{{ topic.pk }}">
+                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Delete Topic' %}" data-toggle="modal" data-target="#delete-topic-{{ topic.pk }}">
                         <i class="far fa-trash-alt"></i>
                     </button>
                 </div>

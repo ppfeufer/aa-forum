@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning].
 ## [In Development] - Unreleased
 
 
+## [1.18.0] - 2023-04-13
+
+### Added
+
+- Russian translation
+
+### Fixed
+
+- Warning message in a modal window
+
+
 ## [1.17.2] - 2023-04-13
 
 ### Changed
@@ -153,7 +164,7 @@ and this project adheres to [Semantic Versioning].
 - Show pagination only when there is more than 1 page
 - Replaced all icons that were image files with an SVG sprite to reduce the number of
   HTTP requests to the web server.
-- Logic in image detection for posts posted to Discord to "First image to verify"
+- Logic in image detection for posts to Discord to "First image to verify"
 - Moved search term delimiters to variables
 - Some success messages have been improved
 
@@ -277,7 +288,7 @@ and this project adheres to [Semantic Versioning].
 
 ### Fixed
 
-- Escaped HTML entities in webhook messages, so that this »`That&#39;s`« does not
+- Escaped HTML entities in webhook messages, so that this »`That&#39;s`« doesn't
   happen anymore
 
 
@@ -287,7 +298,7 @@ and this project adheres to [Semantic Versioning].
 
 - Option: Use this Discord Webhook for replies as well? (This is a checkbox in the
   board settings. When checked, the provided Discord webhook will also be used to
-  send a message for every reply in this board to Discord. Chose wisely!)
+  send a message for every reply in this board to Discord. Choose wisely!)
 
   ![Admin Board Options]
 
@@ -314,11 +325,10 @@ and this project adheres to [Semantic Versioning].
 
 ### Changed
 
-- Refactoring of logic for updating first and last message on board and topic
+- Refactoring of logic for updating the first and last message on board and topic
   (Thanks @ErikKalkoken)
 - Demoted `Board.update_last_message()` and `Topic.update_last_message()` to private
-  methods. Those should no longer be called from outside the module, because they
-  are called implicitly by `save()` and `delete()` when needed. Except for bulk
+  methods. Those should no longer be called from outside the module, because they're called implicitly by `save()` and `delete()` when needed. Except for bulk
   methods, where e.g. `save()` is not called automatically. Test now also no longer
   test this method directly. (Thanks @ErikKalkoken)
 
@@ -358,7 +368,7 @@ and this project adheres to [Semantic Versioning].
 
 ### Fixed
 
-- Posts in child boards were not considered for possibly being the latest post (#78)
+- Posts in a child boards weren't considered for possibly being the latest post (#78)
 
 
 ## [1.2.1] - 2021-12-01
@@ -417,7 +427,7 @@ and this project adheres to [Semantic Versioning].
 
 ### Added
 
-- More details to the admin views
+- More details added to the admin views
 
 ### Fixed
 
@@ -428,7 +438,7 @@ and this project adheres to [Semantic Versioning].
 
 ### Fixed
 
-- Admin models are now read-only, to prevent users from creating new entries via the
+- Admin models are now read-only to prevent users from creating new entries via the
   Django admin backend, which will cause issues (see issue #47)
 
 
@@ -534,9 +544,10 @@ and this project adheres to [Semantic Versioning].
 
 - "Show all unread topics" and "Mark all topics as read" buttons above the category
   list in forum index
-- "Mark all topics as read" in unread topics view above and below board list
+- "Mark all topics as read" in unread topics view above and below the board list
 - More logging
-- Access check when someone tries to reply to a topic they lost access to while viewing
+- Access check if when someone tries to reply to a topic, they lost access to while
+  viewing
 
 ### Removed
 
@@ -577,7 +588,7 @@ and this project adheres to [Semantic Versioning].
 
 ### Added
 
-- Ability to change the subject of the topic (User need to be the original poster or
+- Ability to change the subject of the topic (User needs to be the original poster or
   forum admin to change a topic's subject)
 
 ### Changed
@@ -618,7 +629,7 @@ and this project adheres to [Semantic Versioning].
 
 - Title attribute to last message in forum index
 - "Mark all messages as read" button to forum index
-- Counter for unread topics on forum link in navigation
+- Counter for unread topics on a forum link in navigation
 
 
 ## [0.0.1-alpha.11] - 2021-06-28
@@ -676,7 +687,8 @@ python manage.py migrate aa_forum
 
 ### Fixed
 
-- A bug that prevented the forum index to load after removing a message or even a topic
+- A bug that prevented the forum index from loading after removing a message or even
+  a topic
 
 
 ## [0.0.1-alpha.8] - 2021-06-16
@@ -747,7 +759,7 @@ python manage.py migrate aa_forum
 ### Fixed
 
 - `time_modified` timestamps for messages
-- Topic does not exist error when trying to view a topic that indeed does not exist
+- Topic doesn't exist error when trying to view a topic that indeed doesn't exist
   (anymore)
 - An issue where the initialization of the lightbox modal would interfere with other
   modals in a topic view. Even when there was no image that needs a lightbox.
@@ -775,10 +787,10 @@ python manage.py migrate aa_forum
 
 - Topic pagination in board view
 
-### Changed
+### REMOVED
 
-- Removed the page number from pagination links when navigating to the first page.
-  It's not needed there ...
+- Page number from pagination links when navigating to the first page. It's not
+  needed there ...
 
 
 ## [0.0.1-alpha.2] - 2021-06-11

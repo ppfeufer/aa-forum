@@ -71,7 +71,7 @@ def new_message(request: WSGIRequest) -> HttpResponse:
 
     logger.info(f"{request.user} called the new personal message page.")
 
-    # If this is a POST request we need to process the form data
+    # If this is a POST request, we need to process the form data
     if request.method == "POST":
         new_private_message_form = NewPersonalMessageForm(request.POST)
 
@@ -177,7 +177,7 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
 
         return redirect("aa_forum:personal_messages_inbox")
     else:
-        # If this is a POST request we need to process the form data
+        # If this is a POST request, we need to process the form data
         if request.method == "POST":
             reply_private_message_form = ReplyPersonalMessageForm(request.POST)
 
@@ -205,8 +205,7 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
                     request,
                     mark_safe(
                         _(
-                            "<h4>Success!</h4>"
-                            f"<p>Reply to {recipient_main_char} sent.</p>"
+                            f"<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>"  # pylint: disable=line-too-long
                         )
                     ),
                 )

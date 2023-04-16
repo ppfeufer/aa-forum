@@ -1,3 +1,13 @@
+<!-- TOC -->
+* [Contributing](#contributing)
+  * [Code Formatting](#code-formatting)
+  * [Contributing via Pull Requests](#contributing-via-pull-requests)
+    * [Commits](#commits)
+    * [Test Coverage](#test-coverage)
+  * [Translation](#translation)
+<!-- TOC -->
+
+
 # Contributing
 
 ## Code Formatting
@@ -31,7 +41,7 @@ The following will be checked by `pre-commit`:
 - code conforms with flake8
 
 
-## Contributing via pull requests
+## Contributing via Pull Requests
 
 To contribute code via pull request, make sure that you fork the repository and branch
 your changes from the `development` branch. Only pull requests towards the development

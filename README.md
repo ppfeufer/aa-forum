@@ -15,29 +15,40 @@
 
 Simple forum app for [Alliance Auth]
 
-## ⚠️ Before you install this module ⚠️
+
+<!-- TOC -->
+* [AA Forum](#aa-forum)
+  * [⚠️ Before You Install This Module ⚠️](#-before-you-install-this-module-)
+  * [Overview](#overview)
+    * [Features](#features)
+    * [Screenshots](#screenshots)
+      * [Forum Index](#forum-index)
+      * [Topic Overview / Board Index](#topic-overview--board-index)
+      * [Topic View](#topic-view)
+      * [Start New Topic (ckEditor)](#start-new-topic-ckeditor)
+      * [Admin View](#admin-view)
+  * [Installation](#installation)
+      * [Important: Please Make Sure You Meet All Preconditions Before You Proceed:](#important-please-make-sure-you-meet-all-preconditions-before-you-proceed)
+    * [Step 1: Install the Package](#step-1-install-the-package)
+    * [Step 2: Configure Alliance Auth](#step-2-configure-alliance-auth)
+      * [Settings in `/home/allianceserver/myauth/myauth/settings/local.py`](#settings-in-homeallianceservermyauthmyauthsettingslocalpy)
+      * [Settings in `/home/allianceserver/myauth/myauth/urls.py`](#settings-in-homeallianceservermyauthmyauthurlspy)
+    * [Step 3: Configure Your Webserver](#step-3-configure-your-webserver)
+      * [Apache](#apache)
+      * [Nginx](#nginx)
+    * [Step 4: Finalizing the Installation](#step-4-finalizing-the-installation)
+    * [Step 5: Setting up Permissions](#step-5-setting-up-permissions)
+  * [Changelog](#changelog)
+  * [Contributing](#contributing)
+<!-- TOC -->
+
+
+## ⚠️ Before You Install This Module ⚠️
 
 This module needs quite some configuration done before working properly. You need to
 modify your Apache/Nginx configuration as well as the global URL config of Alliance
 Auth. So please only install if you know what you're doing/feel comfortable making
 these kinds of changes. For your own sanity, and mine :-)
-
-## Contents
-
-- [Overview](#overview)
-    - [Features](#features)
-    - [Screenshots](#screenshots)
-- [Installation](#installation)
-    - [Step 1 - Install the package](#step-1---install-the-package)
-    - [Step 2 - Configure Alliance Auth](#step-2---configure-alliance-auth)
-        - [local.py](#settings-in-homeallianceservermyauthmyauthsettingslocalpy)
-        - [urls.py](#settings-in-homeallianceservermyauthmyauthurlspy)
-    - [Step 3 - Configure your webserver](#step-3---configure-your-webserver)
-    - [Step 4 - Finalize the installation](#step-4---finalize-the-installation)
-    - [Step 5 - Set up permissions](#step-5---set-up-permissions)
-- [Permissions](#permissions)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
 
 
 ## Overview
@@ -48,7 +59,7 @@ these kinds of changes. For your own sanity, and mine :-)
 - Simple administration, no maze to click through to get where you want to go.
 - Categories and boards are sortable via drag and drop in the admin view.
 - Mass creation of boards with a new category.
-- Boards can be restricted to 1 or more groups, bards without restrictions are
+- Boards can be restricted to 1 or more groups, boards without restrictions are
   visible for everyone who has access to the forum.
 - Announcement boards where only certain users can start topics.
 - Child boards (1 Level), which inherit their access restrictions from their parent.
@@ -81,7 +92,7 @@ these kinds of changes. For your own sanity, and mine :-)
 ![Screenshot: Topic View]
 
 
-#### Start new Topic (ckEditor)
+#### Start New Topic (ckEditor)
 
 ![Screenshot: Start new Topic]
 
@@ -93,7 +104,7 @@ these kinds of changes. For your own sanity, and mine :-)
 
 ## Installation
 
-#### Important: Please make sure you meet all preconditions before you proceed:
+#### Important: Please Make Sure You Meet All Preconditions Before You Proceed:
 
 - AA Forum is a plugin for Alliance Auth. If you don't have Alliance Auth running
   already, please install it first before proceeding. (see the official
@@ -103,7 +114,7 @@ these kinds of changes. For your own sanity, and mine :-)
   described in this document, but you need to understand what will be changed.
 
 
-### Step 1 - Install the package
+### Step 1: Install the Package
 
 Make sure you're in the virtual environment (venv) of your Alliance Auth
 installation Then install the latest release directly from PyPi.
@@ -113,7 +124,7 @@ pip install aa-forum
 ```
 
 
-### Step 2 - Configure Alliance Auth
+### Step 2: Configure Alliance Auth
 
 #### Settings in `/home/allianceserver/myauth/myauth/settings/local.py`
 
@@ -340,7 +351,7 @@ handler400 = "allianceauth.views.Generic400Redirect"
 ```
 
 
-### Step 3 - Configure your webserver
+### Step 3: Configure Your Webserver
 
 Your webserver needs to know from where to serve the uploaded images, of course, so we
 have to tell it.
@@ -365,7 +376,7 @@ be done right below the already existing Alias for `/static`:
 Alias "/media" "/var/www/myauth/media/"
 ```
 
-At last, a "Directory" rule is needed as well. Add the following below the already
+At last, a "Directory" rule is needed as well. Add the following code below the already
 existing Directory rule for the static files:
 
 ```apache
@@ -397,7 +408,6 @@ Alias "/media" "/var/www/myauth/media/"
 
 Restart your Apache webserver.
 
-
 #### Nginx
 
 In order to let Nginx know where to find the uploaded files, you need to add a new
@@ -414,7 +424,7 @@ location /media {
 Restart your Nginx webserver.
 
 
-### Step 4 - Finalize the installation
+### Step 4: Finalizing the Installation
 
 Run static files collection and migrations
 
@@ -426,17 +436,13 @@ python manage.py migrate
 Restart your supervisor services for Auth
 
 
-### Step 5 - Set up permissions
+### Step 5: Setting up Permissions
 
 Now it's time to set up access permissions for your new module. You can do so in
-your admin backend. Read the [Permissions](#permissions) section for more information
-about the available permissions.
-
-
-## Permissions
+your admin backend.
 
 | ID             | Description                                                      | Notes                                                                                                                                                                                                                                                                                                                                             |
-|----------------|------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|:---------------|:-----------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `basic_access` | Can access the AA-Forum module                                   | Grants access to the forum                                                                                                                                                                                                                                                                                                                        |
 | `manage_forum` | Can manage the AA-Forum module (Categories, topics and messages) | Users with this permission can create, edit and delete boards and categories in the "Administration" view. They can also modify and delete messages and topics in the "Forum" view. **Users with this permission are not bound by group restrictions and have access to all boards and topics, so choose wisely who is getting this permission.** |
 

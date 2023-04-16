@@ -502,7 +502,7 @@ def forum_settings(request: WSGIRequest) -> HttpResponse:
 
     settings = Setting.objects.get(pk=1)
 
-    # If this is a POST request we need to process the form data
+    # If this is a POST request, we need to process the form data
     if request.method == "POST":
         settings_form = SettingForm(request.POST, instance=settings)
 
