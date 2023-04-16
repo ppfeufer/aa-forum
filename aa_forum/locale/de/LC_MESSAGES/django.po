@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-16 14:29+0200\n"
+"POT-Creation-Date: 2023-04-16 14:36+0200\n"
 "PO-Revision-Date: 2023-04-12 13:41+0000\n"
 "Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
 "Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -1042,7 +1042,9 @@ msgstr "<h4>Erfolg!</h4><p>Einstellungen aktualisiert.</p>"
 #: views/admin.py:528 views/personal_messages.py:106
 #: views/personal_messages.py:219 views/profile.py:65
 msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
-msgstr "<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte überprüfe Deine Eingabe.</p>"
+msgstr ""
+"<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte überprüfe Deine Eingabe."
+"</p>"
 
 #: views/forum.py:210
 msgid ""
@@ -1140,6 +1142,7 @@ msgstr ""
 "<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte versuche es erneut.</p>"
 
 #: views/forum.py:863
+#, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{topic}\" has been unlocked/re-opened.</p>"
 msgstr ""
 
@@ -1219,6 +1222,7 @@ msgstr ""
 "entweder nicht oder Du bist nicht der Empfänger.</p>"
 
 #: views/personal_messages.py:208
+#, python-brace-format
 msgid "<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>"
 msgstr "<h4>Erfolg!</h4><p>Nachricht an {recipient_main_char} gesendet.</p>"
 
