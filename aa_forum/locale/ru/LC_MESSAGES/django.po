@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-16 14:36+0200\n"
+"POT-Creation-Date: 2023-04-16 15:05+0200\n"
 "PO-Revision-Date: 2023-04-11 11:35+0000\n"
 "Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
 "Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -15,9 +15,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
-"%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 4.16.4\n"
 
 #: forms.py:39
@@ -329,11 +329,14 @@ msgstr ""
 msgid "Reply"
 msgstr "Ответить"
 
+#: templates/aa_forum/ajax-render/personal-messages/message.html:38
 #: templates/aa_forum/modals/forum/topic/message-delete.html:3
 #: templates/aa_forum/modals/forum/topic/message-delete.html:12
 #: templates/aa_forum/modals/personal-messages/message-delete.html:3
 #: templates/aa_forum/modals/personal-messages/message-delete.html:12
 #: templates/aa_forum/partials/forum/topic/message.html:56
+#: templates/aa_forum/partials/personal-messages/inbox/messages.html:73
+#: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:67
 msgid "Delete Message"
 msgstr "Удалить сообщение"
 
@@ -405,11 +408,13 @@ msgstr "Изменить блокировку темы"
 
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:13
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:39
+#: templates/aa_forum/partials/forum/board/topic.html:84
 msgid "Unlock/Re-Open Topic"
 msgstr "Разблокировать/открыть тему"
 
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:16
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:42
+#: templates/aa_forum/partials/forum/board/topic.html:88
 msgid "Lock/Close Topic"
 msgstr "Заблокировать/закрыть тему"
 
@@ -455,6 +460,7 @@ msgstr "Установить свойство 'sticky'"
 
 #: templates/aa_forum/modals/forum/board/topic-delete.html:3
 #: templates/aa_forum/modals/forum/board/topic-delete.html:12
+#: templates/aa_forum/partials/forum/board/topic.html:97
 msgid "Delete Topic"
 msgstr "Удалить тему"
 
@@ -1185,49 +1191,35 @@ msgstr "<h4>Упс!</h4><p>Что-то пошло не так!</p>"
 msgid "<h4>Success!</h4><p>Profile saved.</p>"
 msgstr ""
 
-#: templates/aa_forum/ajax-render/personal-messages/message.html:38
-#: templates/aa_forum/partials/personal-messages/inbox/messages.html:73
-#: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:67
-msgid "Delete message"
-msgstr "Удалить сообщение"
+#~ msgid "Delete message"
+#~ msgstr "Удалить сообщение"
 
-#: templates/aa_forum/partials/forum/board/topic.html:38
-msgid "Topic is always on top"
-msgstr "Эта тема всегда в начале"
+#~ msgid "Topic is always on top"
+#~ msgstr "Эта тема всегда в начале"
 
-#: templates/aa_forum/partials/forum/board/topic.html:44
-msgid "Topic is locked"
-msgstr "Тема закрыта"
+#~ msgid "Topic is locked"
+#~ msgstr "Тема закрыта"
 
-#: templates/aa_forum/partials/forum/board/topic.html:71
-msgid "Go to last message"
-msgstr "Перейти к последнему сообщению"
+#~ msgid "Go to last message"
+#~ msgstr "Перейти к последнему сообщению"
 
-#: templates/aa_forum/partials/forum/board/topic.html:84
-msgid "Unlock/Re-Open topic"
-msgstr "Разблокировать/открыть тему"
+#~ msgid "Unlock/Re-Open topic"
+#~ msgstr "Разблокировать/открыть тему"
 
-#: templates/aa_forum/partials/forum/board/topic.html:88
-msgid "Lock/Close topic"
-msgstr "Заблокировать/закрыть тему"
+#~ msgid "Lock/Close topic"
+#~ msgstr "Заблокировать/закрыть тему"
 
-#: templates/aa_forum/partials/forum/board/topic.html:93
-msgid "Change topics sticky state"
-msgstr "Изменить свойство 'sticky' для темы"
+#~ msgid "Change topics sticky state"
+#~ msgstr "Изменить свойство 'sticky' для темы"
 
-#: templates/aa_forum/partials/forum/board/topic.html:97
-msgid "Delete topic"
-msgstr "Удалить тему"
+#~ msgid "Delete topic"
+#~ msgstr "Удалить тему"
 
-#: templates/aa_forum/partials/forum/topic/message.html:38
-msgid "Copy message link to clipboard"
-msgstr "Скопировать ссылку на сообщение в буфер обмена"
+#~ msgid "Copy message link to clipboard"
+#~ msgstr "Скопировать ссылку на сообщение в буфер обмена"
 
-#: templates/aa_forum/partials/personal-messages/inbox/messages.html:62
-#: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:56
-msgid "Read message"
-msgstr "Прочитать сообщение"
+#~ msgid "Read message"
+#~ msgstr "Прочитать сообщение"
 
-#: templates/aa_forum/modals/forum/board/topic-delete.html:19
-msgid "This will also remove all topics and messages in this topic."
-msgstr "Это также удалит все сообщения в теме."
+#~ msgid "This will also remove all topics and messages in this topic."
+#~ msgstr "Это также удалит все сообщения в теме."

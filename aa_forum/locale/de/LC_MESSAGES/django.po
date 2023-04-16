@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-16 14:36+0200\n"
+"POT-Creation-Date: 2023-04-16 15:05+0200\n"
 "PO-Revision-Date: 2023-04-12 13:41+0000\n"
 "Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
 "Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -1250,18 +1250,3 @@ msgstr "<h4>Fehler!</h4><p>Etwas ist schief gelaufen.</p>"
 #: views/profile.py:56
 msgid "<h4>Success!</h4><p>Profile saved.</p>"
 msgstr "<h4>Erfolg!</h4><p>Profil gespeichert.</p>"
-
-#~ msgid "<h4>Success!</h4>"
-#~ msgstr "<h4>Erfolg!</h4>"
-
-#~ msgid "Delete message"
-#~ msgstr "Nachricht löschen"
-
-#~ msgid "Unlock/Re-Open topic"
-#~ msgstr "Thema entsperren/erneut öffnen"
-
-#~ msgid "Lock/Close topic"
-#~ msgstr "Thema sperren/schließen"
-
-#~ msgid "Delete topic"
-#~ msgstr "Thema löschen"
