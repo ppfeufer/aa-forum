@@ -1,3 +1,7 @@
+# Contributor Covenant Code of Conduct
+
+---
+
 <!-- TOC -->
 * [Contributor Covenant Code of Conduct](#contributor-covenant-code-of-conduct)
   * [Our Pledge](#our-pledge)
@@ -13,8 +17,8 @@
   * [Attribution](#attribution)
 <!-- TOC -->
 
+---
 
-# Contributor Covenant Code of Conduct
 
 ## Our Pledge
 
