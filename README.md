@@ -15,6 +15,7 @@
 
 Simple forum app for [Alliance Auth]
 
+---
 
 <!-- TOC -->
 * [AA Forum](#aa-forum)
@@ -41,6 +42,8 @@ Simple forum app for [Alliance Auth]
   * [Changelog](#changelog)
   * [Contributing](#contributing)
 <!-- TOC -->
+
+---
 
 
 ## ⚠️ Before You Install This Module ⚠️
