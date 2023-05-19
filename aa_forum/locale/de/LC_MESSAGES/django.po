@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-16 15:05+0200\n"
-"PO-Revision-Date: 2023-04-16 16:46+0000\n"
+"PO-Revision-Date: 2023-05-19 23:43+0000\n"
 "Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
 "Language-Team: German <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-forum/de/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.17\n"
 
 #: forms.py:39
 msgid "This field is mandatory"
@@ -669,7 +669,7 @@ msgstr "Letzter Beitrag:"
 #: templates/aa_forum/partials/forum/board/board.html:85
 #: templates/aa_forum/partials/forum/topic/message.html:25
 msgid "Re:"
-msgstr "Re:"
+msgstr "Betreffend:"
 
 #: templates/aa_forum/partials/forum/board/board.html:92
 msgid "posted by:"
@@ -1012,8 +1012,8 @@ msgid ""
 "<h4>Success!</h4><p>Category name changed from \"{category_name_old}\" to "
 "\"{category.name}\".</p>"
 msgstr ""
-"<h4>Erfolg!</h4><p>Der Kategoriename wurde von „{category_name_old}“ in "
-"„{category.name}“ geändert.</p>"
+"<h4>Erfolg!</h4><p>Der Kategoriename wurde von \"{category_name_old}\" in \""
+"{category.name}\" geändert.</p>"
 
 #: views/admin.py:234
 #, python-brace-format
@@ -1043,8 +1043,8 @@ msgstr "<h4>Erfolg!</h4><p>Einstellungen aktualisiert.</p>"
 #: views/personal_messages.py:219 views/profile.py:65
 msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte überprüfe Deine Eingabe."
-"</p>"
+"<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte überprüfe Deine "
+"Eingabe.</p>"
 
 #: views/forum.py:210
 msgid ""
@@ -1058,8 +1058,8 @@ msgstr ""
 msgid ""
 "<h4>Error!</h4><p>The category you were trying to post in does not exist.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Die Kategorie, in der Du posten willst, existiert nicht.</"
-"p>"
+"<h4>Fehler!</h4><p>Die Kategorie, in der Du posten willst, existiert "
+"nicht.</p>"
 
 #: views/forum.py:287
 msgid ""
@@ -1086,8 +1086,8 @@ msgid ""
 "subject}</a></p>"
 msgstr ""
 "<h4>Warnung!</h4><p>Es gibt bereits ein Thema mit genau demselben Thema in "
-"diesem Board.</p><p>Siehe hier: <a "
-"href=\"{existing_topic_url}\">{existing_topic.subject}</a></p>"
+"diesem Board.</p><p>Siehe hier: <a href=\"{existing_topic_url}\""
+">{existing_topic.subject}</a></p>"
 
 #: views/forum.py:399
 msgid ""
