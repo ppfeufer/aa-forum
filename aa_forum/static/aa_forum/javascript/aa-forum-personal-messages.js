@@ -1,6 +1,6 @@
 /* global personalMessagesSettings */
 
-$(function () {
+$(document).ready(() => {
     'use strict';
 
     const buttonReadMessage = $('button.btn-read-personal-message');
