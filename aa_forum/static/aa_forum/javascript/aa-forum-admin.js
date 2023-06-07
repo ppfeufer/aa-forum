@@ -19,15 +19,15 @@ $(function () {
             // this makes the placeholder fit with the row that's being dragged
             ui.placeholder.height(ui.helper.height());
 
-            // Containment property of the sortable instance is different
+            // The Containment property of the sortable instance is different
             // as the containment option. The property is calculated
             // from the option. You need to adjust bottom coordinates
             // to take into account the row you just removed from it, and the click offset.
             sort.containment[3] += ui.helper.height() * 2.5;
 
             // Since your handle is centered, and pointer coordinates are used
-            // for sortable, but top coordinates are used for containment
-            // you can have issues with top row. Adjusting with the click offset
+            // for sortable, but top coordinates are used for containment,
+            // you can have issues with the top row. Adjusting with the click offset
             // will resolve the issue.
             sort.containment[1] -= sort.offset.click.top;
         },
@@ -76,15 +76,15 @@ $(function () {
                     // this makes the placeholder fit with the row that's being dragged
                     ui.placeholder.height(ui.helper.height());
 
-                    // Containment property of the sortable instance is different
+                    // The Containment property of the sortable instance is different
                     // as the containment option. The property is calculated
                     // from the option. You need to adjust bottom coordinates
                     // to take into account the row you just removed from it, and the click offset.
                     sort.containment[3] += ui.helper.height() * 2.5;
 
                     // Since your handle is centered, and pointer coordinates are used
-                    // for sortable, but top coordinates are used for containment
-                    // you can have issues with top row. Adjusting with the click offset
+                    // for sortable, but top coordinates are used for containment,
+                    // you can have issues with the top row. Adjusting with the click offset
                     // will resolve the issue.
                     sort.containment[1] -= sort.offset.click.top;
                 },
@@ -131,15 +131,15 @@ $(function () {
                     // this makes the placeholder fit with the row that's being dragged
                     ui.placeholder.height(ui.helper.height());
 
-                    // Containment property of the sortable instance is different
+                    // The Containment property of the sortable instance is different
                     // as the containment option. The property is calculated
                     // from the option. You need to adjust bottom coordinates
                     // to take into account the row you just removed from it, and the click offset.
                     sort.containment[3] += ui.helper.height() * 2.5;
 
                     // Since your handle is centered, and pointer coordinates are used
-                    // for sortable, but top coordinates are used for containment
-                    // you can have issues with top row. Adjusting with the click offset
+                    // for sortable, but top coordinates are used for containment,
+                    // you can have issues with the top row. Adjusting with the click offset
                     // will resolve the issue.
                     sort.containment[1] -= sort.offset.click.top;
                 },
