@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning].
 
 ## [In Development] - Unreleased
 
+### Changed
+
+- JavaScript modernised
+
 
 ## [1.19.0] - 2023-04-24
 
@@ -761,7 +765,7 @@ python manage.py migrate aa_forum
 
 - Messages can now be modified by their author or anyone with the `manage_forum`
   permission
-- Messages can now be deleted by users with the `manage_forum` permission. Keep in
+- Users with the `manage_forum` permission can now delete messages. Keep in
   mind, if the last message of a topic is deleted, the topic will be removed as well.
 
 ### Fixed
