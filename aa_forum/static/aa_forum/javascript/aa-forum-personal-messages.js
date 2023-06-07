@@ -5,8 +5,8 @@ $(function () {
 
     const buttonReadMessage = $('button.btn-read-personal-message');
 
-    $(buttonReadMessage).on('click', function () {
-        const element = $(this);
+    $(buttonReadMessage).on('click', (event) => {
+        const element = $(event.currentTarget);
         const sender = element.data('sender');
         const recipient = element.data('recipient');
         const message = element.data('message');
