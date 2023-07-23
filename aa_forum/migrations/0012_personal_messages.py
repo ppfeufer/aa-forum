@@ -10,7 +10,6 @@ import ckeditor_uploader.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ("aa_forum", "0011_userprofile"),

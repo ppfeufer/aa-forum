@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("aa_forum", "0013_personal_messages_migrate_zero_fix"),
     ]
