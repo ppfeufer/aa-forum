@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning].
 ### Changed
 
 - JavaScript modernised
+- German translation improved
+- Ukrainian translation improved
 
 
 ## [1.19.0] - 2023-04-24
