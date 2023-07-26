@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-19 01:24+0200\n"
-"PO-Revision-Date: 2023-06-02 07:57+0000\n"
-"Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
+"PO-Revision-Date: 2023-07-26 12:39+0000\n"
+"Last-Translator: \"Andrii M.\" <elfleg0las88@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-forum/uk/>\n"
 "Language: uk\n"
@@ -18,17 +18,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : (n%10==1 && n%100!=11 ? 0 : "
 "n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #: forms.py:39
 msgid "This field is mandatory"
-msgstr ""
+msgstr "Це поле обовʼязкове"
 
 #: forms.py:90 forms.py:92 forms.py:122 forms.py:124 forms.py:491
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:26
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:26
 msgid "Subject"
-msgstr ""
+msgstr "Тема"
 
 #: forms.py:101 forms.py:318 forms.py:501 forms.py:545
 msgid "Message"
@@ -44,7 +44,7 @@ msgstr "Назва категорії"
 
 #: forms.py:149 forms.py:160
 msgid "Boards"
-msgstr ""
+msgstr "Дошки"
 
 #: forms.py:151
 msgid ""
