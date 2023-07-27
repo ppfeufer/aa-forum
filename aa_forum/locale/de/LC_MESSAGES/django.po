@@ -10,11 +10,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-16 15:05+0200\n"
+"POT-Creation-Date: 2023-07-27 23:45+0200\n"
 "PO-Revision-Date: 2023-05-19 23:43+0000\n"
 "Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
-"Language-Team: German <https://weblate.ppfeufer.de/projects/"
-"alliance-auth-apps/aa-forum/de/>\n"
+"Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
+"apps/aa-forum/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -629,6 +629,19 @@ msgstr "Suche"
 msgid "Search for:"
 msgstr "Suche nach:"
 
+#: templates/aa_forum/partials/footer/app-translation-footer.html:4
+msgid "Join our team of translators!"
+msgstr ""
+
+#: templates/aa_forum/partials/footer/app-translation-footer.html:7
+#, python-format
+msgid ""
+"\n"
+"            Do you want to help translate this app into your language or "
+"improve the existing translation? - %(weblate_link)s\n"
+"        "
+msgstr ""
+
 #: templates/aa_forum/partials/form/required-field-hint.html:9
 msgid "Fields marked with an asterisk (*) are mandatory"
 msgstr "Mit einem Sternchen (*) gekennzeichnete Felder sind Pflichtfelder"
@@ -1012,8 +1025,8 @@ msgid ""
 "<h4>Success!</h4><p>Category name changed from \"{category_name_old}\" to "
 "\"{category.name}\".</p>"
 msgstr ""
-"<h4>Erfolg!</h4><p>Der Kategoriename wurde von \"{category_name_old}\" in \""
-"{category.name}\" geändert.</p>"
+"<h4>Erfolg!</h4><p>Der Kategoriename wurde von \"{category_name_old}\" in "
+"\"{category.name}\" geändert.</p>"
 
 #: views/admin.py:234
 #, python-brace-format
@@ -1043,8 +1056,8 @@ msgstr "<h4>Erfolg!</h4><p>Einstellungen aktualisiert.</p>"
 #: views/personal_messages.py:219 views/profile.py:65
 msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte überprüfe Deine "
-"Eingabe.</p>"
+"<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte überprüfe Deine Eingabe."
+"</p>"
 
 #: views/forum.py:210
 msgid ""
@@ -1058,8 +1071,8 @@ msgstr ""
 msgid ""
 "<h4>Error!</h4><p>The category you were trying to post in does not exist.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Die Kategorie, in der Du posten willst, existiert "
-"nicht.</p>"
+"<h4>Fehler!</h4><p>Die Kategorie, in der Du posten willst, existiert nicht.</"
+"p>"
 
 #: views/forum.py:287
 msgid ""
@@ -1086,8 +1099,8 @@ msgid ""
 "subject}</a></p>"
 msgstr ""
 "<h4>Warnung!</h4><p>Es gibt bereits ein Thema mit genau demselben Thema in "
-"diesem Board.</p><p>Siehe hier: <a href=\"{existing_topic_url}\""
-">{existing_topic.subject}</a></p>"
+"diesem Board.</p><p>Siehe hier: <a "
+"href=\"{existing_topic_url}\">{existing_topic.subject}</a></p>"
 
 #: views/forum.py:399
 msgid ""

@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning].
 
 ## [In Development] - Unreleased
 
+### Added
+
+- Footer to promote help with the app translation
+
 ### Changed
 
 - JavaScript modernised
@@ -240,7 +244,7 @@ and this project adheres to [Semantic Versioning].
 ### Fixed
 
 - A CSS class in an image HTML tag
-- Return dummy ID when user is not in an alliance
+- Return a dummy ID when the user is not in an alliance
 - No default alliance for test fake user
 
 ### Added
@@ -382,7 +386,7 @@ and this project adheres to [Semantic Versioning].
 
 ### Fixed
 
-- Posts in a child boards weren't considered for possibly being the latest post (#78)
+- Posts on a child boards weren't considered for possibly being the latest post (#78)
 
 
 ## [1.2.1] - 2021-12-01
@@ -467,7 +471,7 @@ and this project adheres to [Semantic Versioning].
 - Marked `forum_board_new_topic` as internal URL to prevent conflicts with a possible
   topic called "New Topic"
 - Error 500 when trying to create a new topic with the exact same name of a topic
-  that already exists in this board
+  that already exists on this board
 
 
 ## [1.0.0] - 2021-08-21
@@ -558,7 +562,7 @@ and this project adheres to [Semantic Versioning].
 
 - "Show all unread topics" and "Mark all topics as read" buttons above the category
   list in forum index
-- "Mark all topics as read" in unread topics view above and below the board list
+- "Mark all topics as read" in the unread topics view above and below the board list
 - More logging
 - Access check if when someone tries to reply to a topic, they lost access to while
   viewing
@@ -832,7 +836,7 @@ python manage.py migrate aa_forum
 [discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy "discordproxy"
 [AA-Discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
 [AA Time Zones]: https://github.com/ppfeufer/aa-timezones "AA Time Zones"
-[README.md]: README.md "README.md"
+[README.md]: https://github.com/ppfeufer/aa-forum/blob/development/README.md "README.md"
 
 <!-- Issue Links -->
 [#125]: https://github.com/ppfeufer/aa-forum/issues/125 "Localization of forum time"

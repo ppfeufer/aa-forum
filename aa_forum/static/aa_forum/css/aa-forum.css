@@ -39,6 +39,17 @@
     .aa-forum .aa-forum-admin-menu .aa-forum-admin-menu-item a {
         padding: 1rem 1.5rem;
     }
+
+    .aa-forum-footer {
+        border-top: 1px solid rgb(236 240 241);
+        font-size: 85%;
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+
+    .template-dark-mode .aa-forum-footer {
+        border-color: rgb(70 69 69);
+    }
 }
 
 /* Search Box
