@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning].
 
 ## [In Development] - Unreleased
 
+
+## [1.19.1] - 2023-07-30
+
 ### Added
 
 - Footer to promote help with the app translation
