@@ -1,10 +1,10 @@
 /* global CKEDITOR */
 
-$(function () {
+$(document).ready(() => {
     'use strict';
 
     if ('undefined' !== typeof CKEDITOR) {
-        $('form').on('reset', function (e) {
+        $('form').on('reset', (e) => {
             if ($(CKEDITOR.instances).length) {
                 for (let key in CKEDITOR.instances) {
                     if ({}.hasOwnProperty.call(CKEDITOR.instances, key)) {

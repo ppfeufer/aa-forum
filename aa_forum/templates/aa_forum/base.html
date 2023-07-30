@@ -14,6 +14,10 @@
             {% block aa_forum_body %}{% endblock %}
         </div>
 
+        <div class="aa-forum-footer">
+            {% include "aa_forum/partials/footer/app-translation-footer.html" %}
+        </div>
+
         <div class="aa-forum-svg-wrapper">
             {% if NIGHT_MODE %}
                 {% include "aa_forum/bundles/svg/aa-forum-icons-night-mode.svg" %}

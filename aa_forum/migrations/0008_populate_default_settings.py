@@ -35,7 +35,6 @@ def on_migrate_zero(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("aa_forum", "0007_change_settings_to_singleton"),
     ]

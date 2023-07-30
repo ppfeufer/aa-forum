@@ -1,12 +1,14 @@
 /* global categoriesWithBoards, boardsWithChildren, aaForumAdminSettings */
 
-$(function () {
+$(document).ready(() => {
     'use strict';
+
+    const sortableCategories = $('.categories-sortable');
 
     /**
      * Sort categories via drag and drop
      */
-    $('.categories-sortable').sortable({
+    sortableCategories.sortable({
         placeholder: 'aa-forum-ui-placeholder',
         connectWith: '.categories_sortable',
         containment: 'parent',
@@ -14,31 +16,31 @@ $(function () {
             // Get the instance of the sortable.
             // Instance method is new to jquery ui 1.11, for previous versions
             // you can use $(this).data()['ui-sortable'];
-            const sort = $(this).sortable('instance');
+            const sort = sortableCategories.sortable('instance');
 
             // this makes the placeholder fit with the row that's being dragged
             ui.placeholder.height(ui.helper.height());
 
-            // Containment property of the sortable instance is different
+            // The Containment property of the sortable instance is different
             // as the containment option. The property is calculated
             // from the option. You need to adjust bottom coordinates
             // to take into account the row you just removed from it, and the click offset.
             sort.containment[3] += ui.helper.height() * 2.5;
 
             // Since your handle is centered, and pointer coordinates are used
-            // for sortable, but top coordinates are used for containment
-            // you can have issues with top row. Adjusting with the click offset
+            // for sortable, but top coordinates are used for containment,
+            // you can have issues with the top row. Adjusting with the click offset
             // will resolve the issue.
             sort.containment[1] -= sort.offset.click.top;
         },
         update () {
             const categories = [];
 
-            $('.categories-sortable .category-sortable').each(function (index) {
-                $(this).attr('data-position', index);
+            $('.categories-sortable .category-sortable').each((index, element) => {
+                $(element).attr('data-position', index);
 
                 categories.push({
-                    catId: $(this).data('category-id'),
+                    catId: $(element).data('category-id'),
                     catOrder: index
                 });
             });
@@ -62,7 +64,7 @@ $(function () {
      * Sort boards via drag and drop
      */
     if ('undefined' !== typeof categoriesWithBoards && categoriesWithBoards.length > 0) {
-        $(categoriesWithBoards).each(function (key) {
+        $(categoriesWithBoards).each((key, element) => {
             $(categoriesWithBoards[key]).sortable({
                 placeholder: 'aa-forum-ui-placeholder',
                 connectWith: categoriesWithBoards[key],
@@ -71,31 +73,31 @@ $(function () {
                     // Get the instance of the sortable.
                     // Instance method is new to jquery ui 1.11, for previous versions
                     // you can use $(this).data()['ui-sortable'];
-                    const sort = $(this).sortable('instance');
+                    const sort = $(element).sortable('instance');
 
                     // this makes the placeholder fit with the row that's being dragged
                     ui.placeholder.height(ui.helper.height());
 
-                    // Containment property of the sortable instance is different
+                    // The Containment property of the sortable instance is different
                     // as the containment option. The property is calculated
                     // from the option. You need to adjust bottom coordinates
                     // to take into account the row you just removed from it, and the click offset.
                     sort.containment[3] += ui.helper.height() * 2.5;
 
                     // Since your handle is centered, and pointer coordinates are used
-                    // for sortable, but top coordinates are used for containment
-                    // you can have issues with top row. Adjusting with the click offset
+                    // for sortable, but top coordinates are used for containment,
+                    // you can have issues with the top row. Adjusting with the click offset
                     // will resolve the issue.
                     sort.containment[1] -= sort.offset.click.top;
                 },
                 update () {
                     const boards = [];
 
-                    $(categoriesWithBoards[key] + ' li.board-sortable').each(function (index) {
-                        $(this).attr('data-position', index);
+                    $(categoriesWithBoards[key] + ' li.board-sortable').each((index, element) => {
+                        $(element).attr('data-position', index);
 
                         boards.push({
-                            boardId: $(this).data('board-id'),
+                            boardId: $(element).data('board-id'),
                             boardOrder: index
                         });
                     });
@@ -117,7 +119,7 @@ $(function () {
      * Sort child boards via drag and drop
      */
     if ('undefined' !== typeof boardsWithChildren && boardsWithChildren.length > 0) {
-        $(boardsWithChildren).each(function (key) {
+        $(boardsWithChildren).each((key, element) => {
             $(boardsWithChildren[key]).sortable({
                 placeholder: 'aa-forum-ui-placeholder',
                 connectWith: boardsWithChildren[key],
@@ -126,31 +128,31 @@ $(function () {
                     // Get the instance of the sortable.
                     // Instance method is new to jquery ui 1.11, for previous versions
                     // you can use $(this).data()['ui-sortable'];
-                    const sort = $(this).sortable('instance');
+                    const sort = $(element).sortable('instance');
 
                     // this makes the placeholder fit with the row that's being dragged
                     ui.placeholder.height(ui.helper.height());
 
-                    // Containment property of the sortable instance is different
+                    // The Containment property of the sortable instance is different
                     // as the containment option. The property is calculated
                     // from the option. You need to adjust bottom coordinates
                     // to take into account the row you just removed from it, and the click offset.
                     sort.containment[3] += ui.helper.height() * 2.5;
 
                     // Since your handle is centered, and pointer coordinates are used
-                    // for sortable, but top coordinates are used for containment
-                    // you can have issues with top row. Adjusting with the click offset
+                    // for sortable, but top coordinates are used for containment,
+                    // you can have issues with the top row. Adjusting with the click offset
                     // will resolve the issue.
                     sort.containment[1] -= sort.offset.click.top;
                 },
                 update () {
                     const childBoards = [];
 
-                    $(boardsWithChildren[key] + ' li.child-board-sortable').each(function (index) {
-                        $(this).attr('data-position', index);
+                    $(boardsWithChildren[key] + ' li.child-board-sortable').each((index, element) => {
+                        $(element).attr('data-position', index);
 
                         childBoards.push({
-                            boardId: $(this).data('board-id'),
+                            boardId: $(element).data('board-id'),
                             boardOrder: index
                         });
                     });

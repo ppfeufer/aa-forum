@@ -27,7 +27,6 @@ def on_migrate_zero(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("aa_forum", "0012_personal_messages"),
     ]

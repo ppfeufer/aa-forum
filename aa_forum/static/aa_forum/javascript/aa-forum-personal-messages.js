@@ -1,12 +1,12 @@
 /* global personalMessagesSettings */
 
-$(function () {
+$(document).ready(() => {
     'use strict';
 
     const buttonReadMessage = $('button.btn-read-personal-message');
 
-    $(buttonReadMessage).on('click', function () {
-        const element = $(this);
+    $(buttonReadMessage).on('click', (event) => {
+        const element = $(event.currentTarget);
         const sender = element.data('sender');
         const recipient = element.data('recipient');
         const message = element.data('message');
@@ -14,7 +14,7 @@ $(function () {
         const url = personalMessagesSettings.urlReadMessage;
         const csrfMiddlewareToken = personalMessagesSettings.csrfToken;
 
-        const posting = $.post(
+        const getMessageToRead = $.post(
             url,
             {
                 csrfmiddlewaretoken: csrfMiddlewareToken,
@@ -24,14 +24,12 @@ $(function () {
             }
         );
 
-        posting.done((data) => {
+        getMessageToRead.done((data) => {
             if (undefined === data || data === '') {
                 return;
             }
 
             const messageContainer = $('.aa-forum-personal-messages-message');
-
-            messageContainer.html('');
             messageContainer.html(data);
 
             $('html, body').animate(
@@ -48,14 +46,9 @@ $(function () {
                     .remove();
 
                 // Get new unread count
-                const posting = $.post(
-                    urlUnreadMessagesCount,
-                    {
-                        csrfmiddlewaretoken: csrfMiddlewareToken
-                    }
-                );
+                const getUnreadMessageCount = $.get(urlUnreadMessagesCount);
 
-                posting.done((data) => {
+                getUnreadMessageCount.done((data) => {
                     if (data.unread_messages_count > 0) {
                         $('.aa-forum-badge-personal-messages-unread-count')
                             .html(data.unread_messages_count);

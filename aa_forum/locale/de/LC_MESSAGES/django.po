@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-16 15:05+0200\n"
-"PO-Revision-Date: 2023-04-16 16:46+0000\n"
-"Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
+"POT-Creation-Date: 2023-07-27 23:45+0200\n"
+"PO-Revision-Date: 2023-07-28 22:39+0000\n"
+"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: German <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-forum/de/>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #: forms.py:39
 msgid "This field is mandatory"
@@ -629,6 +629,23 @@ msgstr "Suche"
 msgid "Search for:"
 msgstr "Suche nach:"
 
+#: templates/aa_forum/partials/footer/app-translation-footer.html:4
+msgid "Join our team of translators!"
+msgstr "Tritt unserm Team von Übersetzern bei!"
+
+#: templates/aa_forum/partials/footer/app-translation-footer.html:7
+#, python-format
+msgid ""
+"\n"
+"            Do you want to help translate this app into your language or "
+"improve the existing translation? - %(weblate_link)s\n"
+"        "
+msgstr ""
+"\n"
+"            Du möchtest helfen diese App in Deine Sprache zu übersetzen oder "
+"die bestehende Übersetzung verbessern? - %(weblate_link)s\n"
+"        "
+
 #: templates/aa_forum/partials/form/required-field-hint.html:9
 msgid "Fields marked with an asterisk (*) are mandatory"
 msgstr "Mit einem Sternchen (*) gekennzeichnete Felder sind Pflichtfelder"
@@ -669,7 +686,7 @@ msgstr "Letzter Beitrag:"
 #: templates/aa_forum/partials/forum/board/board.html:85
 #: templates/aa_forum/partials/forum/topic/message.html:25
 msgid "Re:"
-msgstr "Re:"
+msgstr "Betreffend:"
 
 #: templates/aa_forum/partials/forum/board/board.html:92
 msgid "posted by:"
@@ -1012,8 +1029,8 @@ msgid ""
 "<h4>Success!</h4><p>Category name changed from \"{category_name_old}\" to "
 "\"{category.name}\".</p>"
 msgstr ""
-"<h4>Erfolg!</h4><p>Der Kategoriename wurde von „{category_name_old}“ in "
-"„{category.name}“ geändert.</p>"
+"<h4>Erfolg!</h4><p>Der Kategoriename wurde von \"{category_name_old}\" in "
+"\"{category.name}\" geändert.</p>"
 
 #: views/admin.py:234
 #, python-brace-format
