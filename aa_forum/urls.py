@@ -247,7 +247,7 @@ forum_urls = [
 # Put it all together
 # IMPORTANT
 # All internal URLs need to start with the designated prefix `{INTERNAL_URL_PREFIX}` to
-# prevent conflicts with user generated forum URLs
+# prevent conflicts with user-generated forum URLs
 urlpatterns = [
     # Forum internal URLs (Need to be first in line)
     path(f"{INTERNAL_URL_PREFIX}/", include(internal_urls)),
