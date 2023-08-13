@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-27 23:45+0200\n"
+"POT-Creation-Date: 2023-07-30 18:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -565,17 +565,14 @@ msgstr ""
 msgid "Search for:"
 msgstr ""
 
-#: templates/aa_forum/partials/footer/app-translation-footer.html:4
-msgid "Join our team of translators!"
+#: templates/aa_forum/partials/footer/app-translation-footer.html:5
+msgid ""
+"Do you want to help translate this app into your language or improve the "
+"existing translation?"
 msgstr ""
 
-#: templates/aa_forum/partials/footer/app-translation-footer.html:7
-#, python-format
-msgid ""
-"\n"
-"            Do you want to help translate this app into your language or "
-"improve the existing translation? - %(weblate_link)s\n"
-"        "
+#: templates/aa_forum/partials/footer/app-translation-footer.html:8
+msgid "Join our team of translators!"
 msgstr ""
 
 #: templates/aa_forum/partials/form/required-field-hint.html:9

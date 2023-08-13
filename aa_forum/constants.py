@@ -14,7 +14,7 @@ verbose_name_slug: str = slugify(verbose_name, allow_unicode=True)
 user_agent: str = f"{verbose_name_slug} v{__version__} {github_url}"
 
 # All internal URLs need to start with this prefix
-# to prevent conflicts with user generated forum URLs
+# to prevent conflicts with user-generated forum URLs
 INTERNAL_URL_PREFIX = "-"
 
 # Default sort order for new categories and boards
