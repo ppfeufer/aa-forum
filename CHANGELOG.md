@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning].
 
 ## [In Development] - Unreleased
 
+### Fixed
+
+- Bootstrap CSS fix
+
 
 ## [1.19.1] - 2023-07-30
 
