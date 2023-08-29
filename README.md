@@ -1,62 +1,62 @@
-# AA Forum
+# AA Forum<a name="aa-forum"></a>
 
-[![Badge: Version]][AA-Forum on Pypi]
-[![Badge: License]][AA-Forum License]
-[![Badge: Supported Python Versions]][AA-Forum on Pypi]
-[![Badge: Supported Django Versions]][AA-Forum on Pypi]
+[![Badge: Version]][aa-forum on pypi]
+[![Badge: License]][aa-forum license]
+[![Badge: Supported Python Versions]][aa-forum on pypi]
+[![Badge: Supported Django Versions]][aa-forum on pypi]
 ![Badge: pre-commit]
 [![Badge: Code Style: black]][black code formatter documentation]
-[![Badge: Support Discord]][Support Discord]
-[![Badge: Automated Tests]][Automated Tests on GitHub]
-[![Badge: Code Coverage]][AA-Forum on Codecov]
-[![Badge: Contributor Covenant]][Code of Conduct]
+[![Badge: Support Discord]][support discord]
+[![Badge: Automated Tests]][automated tests on github]
+[![Badge: Code Coverage]][aa-forum on codecov]
+[![Badge: Contributor Covenant]][code of conduct]
 
 [![Badge: Buy me a coffee]][ppfeufer on ko-fi]
 
 Simple forum app for [Alliance Auth]
 
----
+______________________________________________________________________
 
-<!-- TOC -->
-* [AA Forum](#aa-forum)
-  * [⚠️ Before You Install This Module ⚠️](#-before-you-install-this-module-)
-  * [Overview](#overview)
-    * [Features](#features)
-    * [Screenshots](#screenshots)
-      * [Forum Index](#forum-index)
-      * [Topic Overview / Board Index](#topic-overview--board-index)
-      * [Topic View](#topic-view)
-      * [Start New Topic (ckEditor)](#start-new-topic-ckeditor)
-      * [Admin View](#admin-view)
-  * [Installation](#installation)
-      * [Important: Please Make Sure You Meet All Preconditions Before You Proceed:](#important-please-make-sure-you-meet-all-preconditions-before-you-proceed)
-    * [Step 1: Install the Package](#step-1-install-the-package)
-    * [Step 2: Configure Alliance Auth](#step-2-configure-alliance-auth)
-      * [Settings in `/home/allianceserver/myauth/myauth/settings/local.py`](#settings-in-homeallianceservermyauthmyauthsettingslocalpy)
-      * [Settings in `/home/allianceserver/myauth/myauth/urls.py`](#settings-in-homeallianceservermyauthmyauthurlspy)
-    * [Step 3: Configure Your Webserver](#step-3-configure-your-webserver)
-      * [Apache](#apache)
-      * [Nginx](#nginx)
-    * [Step 4: Finalizing the Installation](#step-4-finalizing-the-installation)
-    * [Step 5: Setting up Permissions](#step-5-setting-up-permissions)
-  * [Changelog](#changelog)
-  * [Contributing](#contributing)
-<!-- TOC -->
+<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=1 -->
 
----
+- [AA Forum](#aa-forum)
+  - [⚠️ Before You Install This Module ⚠️](#%E2%9A%A0%EF%B8%8F-before-you-install-this-module-%E2%9A%A0%EF%B8%8F)
+  - [Overview](#overview)
+    - [Features](#features)
+    - [Screenshots](#screenshots)
+      - [Forum Index](#forum-index)
+      - [Topic Overview / Board Index](#topic-overview--board-index)
+      - [Topic View](#topic-view)
+      - [Start New Topic (ckEditor)](#start-new-topic-ckeditor)
+      - [Admin View](#admin-view)
+  - [Installation](#installation)
+    - [Important: Please Make Sure You Meet All Preconditions Before You Proceed:](#important-please-make-sure-you-meet-all-preconditions-before-you-proceed)
+    - [Step 1: Install the Package](#step-1-install-the-package)
+    - [Step 2: Configure Alliance Auth](#step-2-configure-alliance-auth)
+      - [Settings in `/home/allianceserver/myauth/myauth/settings/local.py`](#settings-in-homeallianceservermyauthmyauthsettingslocalpy)
+      - [Settings in `/home/allianceserver/myauth/myauth/urls.py`](#settings-in-homeallianceservermyauthmyauthurlspy)
+    - [Step 3: Configure Your Webserver](#step-3-configure-your-webserver)
+      - [Apache](#apache)
+      - [Nginx](#nginx)
+    - [Step 4: Finalizing the Installation](#step-4-finalizing-the-installation)
+    - [Step 5: Setting up Permissions](#step-5-setting-up-permissions)
+  - [Changelog](#changelog)
+  - [Contributing](#contributing)
 
+<!-- mdformat-toc end -->
 
-## ⚠️ Before You Install This Module ⚠️
+______________________________________________________________________
+
+## ⚠️ Before You Install This Module ⚠️<a name="%E2%9A%A0%EF%B8%8F-before-you-install-this-module-%E2%9A%A0%EF%B8%8F"></a>
 
 This module needs quite some configuration done before working properly. You need to
 modify your Apache/Nginx configuration as well as the global URL config of Alliance
 Auth. So please only install if you know what you're doing/feel comfortable making
 these kinds of changes. For your own sanity, and mine :-)
 
+## Overview<a name="overview"></a>
 
-## Overview
-
-### Features
+### Features<a name="features"></a>
 
 - Simple permission system. Only 2 permissions. ("has_access" and "can_manage")
 - Simple administration, no maze to click through to get where you want to go.
@@ -71,43 +71,37 @@ these kinds of changes. For your own sanity, and mine :-)
 - Optional notifications about new topics in a board via Discord webhooks.
 - Forum profile for each user.
 - Personal Messages.
-    - Optional Discord PM for new personal messages.<br>
-      This feature is disabled by default, can be enabled by each user in their forum
-      profile. Needs one of the following applications installed:
-        - [discordproxy]
-        - [AA-Discordbot]
+  - Optional Discord PM for new personal messages.<br>
+    This feature is disabled by default, can be enabled by each user in their forum
+    profile. Needs one of the following applications installed:
+    - [discordproxy]
+    - [AA-Discordbot]
 
+### Screenshots<a name="screenshots"></a>
 
-### Screenshots
-
-#### Forum Index
+#### Forum Index<a name="forum-index"></a>
 
 ![Screenshot: Forum Index]
 
-
-#### Topic Overview / Board Index
+#### Topic Overview / Board Index<a name="topic-overview--board-index"></a>
 
 ![Screenshot: Topic Overview / Board Index]
 
-
-#### Topic View
+#### Topic View<a name="topic-view"></a>
 
 ![Screenshot: Topic View]
 
-
-#### Start New Topic (ckEditor)
+#### Start New Topic (ckEditor)<a name="start-new-topic-ckeditor"></a>
 
 ![Screenshot: Start new Topic]
 
-
-#### Admin View
+#### Admin View<a name="admin-view"></a>
 
 ![Screenshot: Admin View]
 
+## Installation<a name="installation"></a>
 
-## Installation
-
-#### Important: Please Make Sure You Meet All Preconditions Before You Proceed:
+#### Important: Please Make Sure You Meet All Preconditions Before You Proceed:<a name="important-please-make-sure-you-meet-all-preconditions-before-you-proceed"></a>
 
 - AA Forum is a plugin for Alliance Auth. If you don't have Alliance Auth running
   already, please install it first before proceeding. (see the official
@@ -116,8 +110,7 @@ these kinds of changes. For your own sanity, and mine :-)
   configuration. So make sure you know how to do so. The steps needed will be
   described in this document, but you need to understand what will be changed.
 
-
-### Step 1: Install the Package
+### Step 1: Install the Package<a name="step-1-install-the-package"></a>
 
 Make sure you're in the virtual environment (venv) of your Alliance Auth
 installation Then install the latest release directly from PyPi.
@@ -126,10 +119,9 @@ installation Then install the latest release directly from PyPi.
 pip install aa-forum
 ```
 
+### Step 2: Configure Alliance Auth<a name="step-2-configure-alliance-auth"></a>
 
-### Step 2: Configure Alliance Auth
-
-#### Settings in `/home/allianceserver/myauth/myauth/settings/local.py`
+#### Settings in `/home/allianceserver/myauth/myauth/settings/local.py`<a name="settings-in-homeallianceservermyauthmyauthsettingslocalpy"></a>
 
 This is fairly simple, configure your AA settings (`local.py`) as follows:
 
@@ -283,7 +275,7 @@ if "ckeditor" in INSTALLED_APPS:
     ] = aa_forum__external_plugin_resources
 ```
 
-#### Settings in `/home/allianceserver/myauth/myauth/urls.py`
+#### Settings in `/home/allianceserver/myauth/myauth/urls.py`<a name="settings-in-homeallianceservermyauthmyauthurlspy"></a>
 
 Now let's move on to editing the global URL configuration of Alliance Auth. To do so,
 you need to open `/home/allianceserver/myauth/myauth/urls.py` and change the
@@ -353,13 +345,12 @@ handler403 = "allianceauth.views.Generic403Redirect"
 handler400 = "allianceauth.views.Generic400Redirect"
 ```
 
-
-### Step 3: Configure Your Webserver
+### Step 3: Configure Your Webserver<a name="step-3-configure-your-webserver"></a>
 
 Your webserver needs to know from where to serve the uploaded images, of course, so we
 have to tell it.
 
-#### Apache
+#### Apache<a name="apache"></a>
 
 In your vhost configuration, you have a line `ProxyPassMatch ^/static !`, which tells
 the server where to find all the static files. We're adding a similar line for the
@@ -411,7 +402,7 @@ Alias "/media" "/var/www/myauth/media/"
 
 Restart your Apache webserver.
 
-#### Nginx
+#### Nginx<a name="nginx"></a>
 
 In order to let Nginx know where to find the uploaded files, you need to add a new
 location rule to the configuration. Add the following right below the definition for
@@ -426,8 +417,7 @@ location /media {
 
 Restart your Nginx webserver.
 
-
-### Step 4: Finalizing the Installation
+### Step 4: Finalizing the Installation<a name="step-4-finalizing-the-installation"></a>
 
 Run static files collection and migrations
 
@@ -438,62 +428,58 @@ python manage.py migrate
 
 Restart your supervisor services for Auth
 
-
-### Step 5: Setting up Permissions
+### Step 5: Setting up Permissions<a name="step-5-setting-up-permissions"></a>
 
 Now it's time to set up access permissions for your new module. You can do so in
 your admin backend.
 
 | ID             | Description                                                      | Notes                                                                                                                                                                                                                                                                                                                                             |
-|:---------------|:-----------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :------------- | :--------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `basic_access` | Can access the AA-Forum module                                   | Grants access to the forum                                                                                                                                                                                                                                                                                                                        |
 | `manage_forum` | Can manage the AA-Forum module (Categories, topics and messages) | Users with this permission can create, edit and delete boards and categories in the "Administration" view. They can also modify and delete messages and topics in the "Forum" view. **Users with this permission are not bound by group restrictions and have access to all boards and topics, so choose wisely who is getting this permission.** |
 
-
-## Changelog
+## Changelog<a name="changelog"></a>
 
 See [CHANGELOG.md]
 
-
-## Contributing
+## Contributing<a name="contributing"></a>
 
 Do you want to contribute to this project? That's cool!
 
 Please make sure to read the [Contribution Guidelines]
 (I promise, it's not much, just some basics)
 
-
 <!-- Images -->
-[Badge: Version]: https://img.shields.io/pypi/v/aa-forum?label=release "Version"
-[Badge: License]: https://img.shields.io/github/license/ppfeufer/aa-forum "License"
-[Badge: Supported Python Versions]: https://img.shields.io/pypi/pyversions/aa-forum "Supported Python Versions"
-[Badge: Supported Django Versions]: https://img.shields.io/pypi/djversions/aa-forum?label=django "Supported Django Versions"
-[Badge: pre-commit]: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white "pre-commit"
-[Badge: Code Style: black]: https://img.shields.io/badge/code%20style-black-000000.svg "Code Style: black"
-[Badge: Support Discord]: https://img.shields.io/discord/790364535294132234?label=discord "Support Discord"
-[Badge: Automated Tests]: https://github.com/ppfeufer/aa-forum/actions/workflows/automated-checks.yml/badge.svg "Automated Tests"
-[Badge: Code Coverage]: https://codecov.io/gh/ppfeufer/aa-forum/branch/master/graph/badge.svg "Code Coverage"
-[Badge: Contributor Covenant]: https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg "Contributor Covenant"
-[Badge: Buy me a coffee]: https://ko-fi.com/img/githubbutton_sm.svg "Buy me a coffee"
-
-[Screenshot: Forum Index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/forum-index.jpg "Forum Index"
-[Screenshot: Topic Overview / Board Index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-overview.jpg "Topic Overview / Board Index"
-[Screenshot: Topic View]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-view.jpg "Topic View"
-[Screenshot: Start new Topic]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/start-new-topic.jpg "Start new Topic (ckEditor)"
-[Screenshot: Admin View]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/admin-view.jpg "Admin View"
 
 <!-- Hyperlinks -->
-[Alliance Auth]: https://gitlab.com/allianceauth/allianceauth
-[AA installation guide]: https://allianceauth.readthedocs.io/en/latest/installation/allianceauth.html
-[discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy
-[AA-Discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
-[CHANGELOG.md]: https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md
-[Contribution Guidelines]: https://github.com/ppfeufer/aa-forum/blob/master/CONTRIBUTING.md
-[AA-Forum on Pypi]: https://pypi.org/project/aa-forum/
-[AA-Forum on Codecov]: https://codecov.io/gh/ppfeufer/aa-forum
-[AA-Forum License]: https://github.com/ppfeufer/aa-forum/blob/master/LICENSE
+
+[aa installation guide]: https://allianceauth.readthedocs.io/en/latest/installation/allianceauth.html
+[aa-discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
+[aa-forum license]: https://github.com/ppfeufer/aa-forum/blob/master/LICENSE
+[aa-forum on codecov]: https://codecov.io/gh/ppfeufer/aa-forum
+[aa-forum on pypi]: https://pypi.org/project/aa-forum/
+[alliance auth]: https://gitlab.com/allianceauth/allianceauth
+[automated tests on github]: https://github.com/ppfeufer/aa-forum/actions/workflows/automated-checks.yml
+[badge: automated tests]: https://github.com/ppfeufer/aa-forum/actions/workflows/automated-checks.yml/badge.svg "Automated Tests"
+[badge: buy me a coffee]: https://ko-fi.com/img/githubbutton_sm.svg "Buy me a coffee"
+[badge: code coverage]: https://codecov.io/gh/ppfeufer/aa-forum/branch/master/graph/badge.svg "Code Coverage"
+[badge: code style: black]: https://img.shields.io/badge/code%20style-black-000000.svg "Code Style: black"
+[badge: contributor covenant]: https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg "Contributor Covenant"
+[badge: license]: https://img.shields.io/github/license/ppfeufer/aa-forum "License"
+[badge: pre-commit]: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white "pre-commit"
+[badge: support discord]: https://img.shields.io/discord/790364535294132234?label=discord "Support Discord"
+[badge: supported django versions]: https://img.shields.io/pypi/djversions/aa-forum?label=django "Supported Django Versions"
+[badge: supported python versions]: https://img.shields.io/pypi/pyversions/aa-forum "Supported Python Versions"
+[badge: version]: https://img.shields.io/pypi/v/aa-forum?label=release "Version"
 [black code formatter documentation]: http://black.readthedocs.io/en/latest/
-[Support Discord]: https://discord.gg/zmh52wnfvM
-[Automated Tests on GitHub]: https://github.com/ppfeufer/aa-forum/actions/workflows/automated-checks.yml
-[Code of Conduct]: https://github.com/ppfeufer/aa-forum/blob/master/CODE_OF_CONDUCT.md
+[changelog.md]: https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md
+[code of conduct]: https://github.com/ppfeufer/aa-forum/blob/master/CODE_OF_CONDUCT.md
+[contribution guidelines]: https://github.com/ppfeufer/aa-forum/blob/master/CONTRIBUTING.md
+[discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy
 [ppfeufer on ko-fi]: https://ko-fi.com/N4N8CL1BY
+[screenshot: admin view]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/admin-view.jpg "Admin View"
+[screenshot: forum index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/forum-index.jpg "Forum Index"
+[screenshot: start new topic]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/start-new-topic.jpg "Start new Topic (ckEditor)"
+[screenshot: topic overview / board index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-overview.jpg "Topic Overview / Board Index"
+[screenshot: topic view]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-view.jpg "Topic View"
+[support discord]: https://discord.gg/zmh52wnfvM
