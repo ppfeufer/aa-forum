@@ -2,21 +2,22 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # "H. Peter Pfeufer" <info@ppfeufer.de>, 2023.
+# Zigor Fernandez Moreno <sietehierros@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-30 18:47+0200\n"
-"PO-Revision-Date: 2023-04-19 09:00+0000\n"
-"Last-Translator: \"H. Peter Pfeufer\" <info@ppfeufer.de>\n"
-"Language-Team: Spanish <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/es/>\n"
+"PO-Revision-Date: 2023-09-02 14:40+0000\n"
+"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
+"Language-Team: Spanish <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 5.0\n"
 
 #: forms.py:39
 msgid "This field is mandatory"
@@ -26,45 +27,48 @@ msgstr "Este campo es obligatorio"
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:26
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:26
 msgid "Subject"
-msgstr ""
+msgstr "Asunto"
 
 #: forms.py:101 forms.py:318 forms.py:501 forms.py:545
 msgid "Message"
-msgstr ""
+msgstr "Mensaje"
 
 #: forms.py:143 forms.py:181 forms.py:202
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: forms.py:145 forms.py:183
 msgid "Category Name"
-msgstr ""
+msgstr "Nombre de la Categoría"
 
 #: forms.py:149 forms.py:160
 msgid "Boards"
-msgstr ""
+msgstr "Tableros"
 
 #: forms.py:151
 msgid ""
 "Boards to be created with this category (One board per line). These boards "
 "will have no group restrictions, so you have to add them later where needed."
 msgstr ""
+"Tableros a crear con esta categoría (Un tablero por línea). Estos tableros "
+"no tendrán restricciones de grupo, por lo que debe agregarlos más adelante "
+"cuando sea necesario."
 
 #: forms.py:204
 msgid "Board Name"
-msgstr ""
+msgstr "Nombre del Tablón"
 
 #: forms.py:208
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #: forms.py:214
 msgid "Board Description (Optional)"
-msgstr ""
+msgstr "Descripción del Tablero (opcional)"
 
 #: forms.py:220
 msgid "Group Restrictions"
-msgstr ""
+msgstr "Restricciones de grupo"
 
 #: forms.py:222
 msgid ""
@@ -72,6 +76,9 @@ msgid ""
 "are selected, everyone who can access the forum can also access this board. "
 "(This setting is optional)"
 msgstr ""
+"Esto restringirá el acceso a este tablero a los grupos seleccionados. Si no "
+"se selecciona ningún grupo, todos los que puedan acceder al foro también "
+"podrán acceder a este foro. (Esta configuración es opcional)"
 
 #: forms.py:230
 msgid "Discord Webhook (Optional)"
@@ -93,10 +100,13 @@ msgid ""
 "defined Discord channel. (Child boards are excluded) Chose wisely! (Default: "
 "NO)"
 msgstr ""
+"Cuando se active, cada respuesta a cualquier tema en este foro se publicará "
+"en el canal de Discord definido. (los sub-tablones están excluidos) ¡Elija "
+"sabiamente! (Predeterminado: NO)"
 
 #: forms.py:255
 msgid "Mark Board as 'Announcement Board'"
-msgstr ""
+msgstr "Marcar tablero como 'Tablero de anuncios'"
 
 #: forms.py:257
 msgid ""
@@ -105,10 +115,15 @@ msgid ""
 "board will still be able to discuss in the topics though. This setting will "
 "not be inherited to child boards. (Default: NO)"
 msgstr ""
+"Marque este foro como 'Tablero de anuncios', lo que significa que solo "
+"ciertos grupos seleccionados pueden iniciar nuevos temas. Sin embargo, todos "
+"los demás que tengan acceso a este foro aún podrán discutir los temas. Esta "
+"configuración no se heredará en los tableros secundarios. (Predeterminado: "
+"NO)"
 
 #: forms.py:265
 msgid "Start Topic Restrictions for 'Announcement Boards'"
-msgstr ""
+msgstr "Restricciones del tema inicial para los 'tablón de anuncios'"
 
 #: forms.py:267
 msgid ""
@@ -118,18 +133,24 @@ msgid ""
 "restrictions only take effect when a board is marked as 'Announcement "
 "Board', see checkbox above.)"
 msgstr ""
+"Los usuarios de al menos uno de los grupos seleccionados podrán iniciar "
+"temas en los 'Tableros de anuncios'. Si no se selecciona ningún grupo, sólo "
+"los administradores del foro podrán hacerlo. Esta configuración no se "
+"heredará en los tableros secundarios. (Sugerencia: estas restricciones solo "
+"entran en vigor cuando un tablero está marcado como \"Tablero de anuncios\", "
+"consulte la casilla de verificación arriba.)"
 
 #: forms.py:351
 msgid "Signature"
-msgstr ""
+msgstr "Firma"
 
 #: forms.py:352
 msgid "Your signature will appear below your posts."
-msgstr ""
+msgstr "Tu firma aparecerá debajo de tus publicaciones."
 
 #: forms.py:356
 msgid "Website Title"
-msgstr ""
+msgstr "Título de la página"
 
 #: forms.py:358
 msgid "e.g.: My Homepage"
@@ -274,11 +295,11 @@ msgstr ""
 
 #: models.py:751
 msgid "setting"
-msgstr ""
+msgstr "ajuste"
 
 #: models.py:752
 msgid "settings"
-msgstr ""
+msgstr "ajustes"
 
 #: models.py:781
 msgid "user profile"
@@ -358,7 +379,7 @@ msgstr ""
 #: templates/aa_forum/modals/forum/topic/message-delete.html:33
 #: templates/aa_forum/modals/personal-messages/message-delete.html:33
 msgid "Delete"
-msgstr ""
+msgstr "Borrar"
 
 #: templates/aa_forum/modals/administration/delete-category.html:3
 #: templates/aa_forum/modals/administration/delete-category.html:12
@@ -543,7 +564,7 @@ msgstr ""
 #: templates/aa_forum/partials/administration/settings-form.html:21
 #: templates/aa_forum/partials/profile/form.html:21
 msgid "Submit"
-msgstr ""
+msgstr "Enviar"
 
 #: templates/aa_forum/partials/breadcrumb.html:6
 msgid "Forum Index"
@@ -572,10 +593,12 @@ msgid ""
 "Do you want to help translate this app into your language or improve the "
 "existing translation?"
 msgstr ""
+"¿Quieres ayudar a traducir esta aplicación a tu idioma o mejorar la "
+"traducción existente?"
 
 #: templates/aa_forum/partials/footer/app-translation-footer.html:8
 msgid "Join our team of translators!"
-msgstr ""
+msgstr "¡Únete a nuestro equipo de traductores!"
 
 #: templates/aa_forum/partials/form/required-field-hint.html:9
 msgid "Fields marked with an asterisk (*) are mandatory"
@@ -774,7 +797,7 @@ msgstr ""
 
 #: templates/aa_forum/partials/menu.html:8
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Alternar la navegación"
 
 #: templates/aa_forum/partials/menu/menu-admin.html:8
 msgid "Administration"
