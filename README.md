@@ -9,6 +9,7 @@
 [![Badge: Support Discord]][support discord]
 [![Badge: Automated Tests]][automated tests on github]
 [![Badge: Code Coverage]][aa-forum on codecov]
+[![Badge: Translation Status]][weblate engage]
 [![Badge: Contributor Covenant]][code of conduct]
 
 [![Badge: Buy me a coffee]][ppfeufer on ko-fi]
@@ -41,6 +42,7 @@ ______________________________________________________________________
     - [Step 4: Finalizing the Installation](#step-4-finalizing-the-installation)
     - [Step 5: Setting up Permissions](#step-5-setting-up-permissions)
   - [Changelog](#changelog)
+  - [Translation Status](#translation-status)
   - [Contributing](#contributing)
 
 <!-- mdformat-toc end -->
@@ -442,16 +444,21 @@ your admin backend.
 
 See [CHANGELOG.md]
 
+## Translation Status<a name="translation-status"></a>
+
+[![Translation status](https://weblate.ppfeufer.de/widget/alliance-auth-apps/aa-forum/multi-auto.svg)](https://weblate.ppfeufer.de/engage/alliance-auth-apps/)
+
+Do you want to help translate this app into your language or improve the existing
+translation? - [Join our team of translators][weblate engage]!
+
 ## Contributing<a name="contributing"></a>
 
 Do you want to contribute to this project? That's cool!
 
-Please make sure to read the [Contribution Guidelines]
+Please make sure to read the [Contribution Guidelines].
 (I promise, it's not much, just some basics)
 
-<!-- Images -->
-
-<!-- Hyperlinks -->
+<!-- Inline Links -->
 
 [aa installation guide]: https://allianceauth.readthedocs.io/en/latest/installation/allianceauth.html
 [aa-discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
@@ -470,6 +477,7 @@ Please make sure to read the [Contribution Guidelines]
 [badge: support discord]: https://img.shields.io/discord/790364535294132234?label=discord "Support Discord"
 [badge: supported django versions]: https://img.shields.io/pypi/djversions/aa-forum?label=django "Supported Django Versions"
 [badge: supported python versions]: https://img.shields.io/pypi/pyversions/aa-forum "Supported Python Versions"
+[badge: translation status]: https://weblate.ppfeufer.de/widget/alliance-auth-apps/aa-forum/svg-badge.svg "Translation Status"
 [badge: version]: https://img.shields.io/pypi/v/aa-forum?label=release "Version"
 [black code formatter documentation]: http://black.readthedocs.io/en/latest/
 [changelog.md]: https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md
@@ -483,3 +491,4 @@ Please make sure to read the [Contribution Guidelines]
 [screenshot: topic overview / board index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-overview.jpg "Topic Overview / Board Index"
 [screenshot: topic view]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-view.jpg "Topic View"
 [support discord]: https://discord.gg/zmh52wnfvM
+[weblate engage]: https://weblate.ppfeufer.de/engage/alliance-auth-apps/ "Weblate Translations"
