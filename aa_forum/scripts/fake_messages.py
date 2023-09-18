@@ -35,7 +35,7 @@ def message_datetime() -> dt.datetime:
     Return random datetime between now and x hours into the past.
     """
 
-    global MESSAGE_DATETIME_MINUTES_OFFSET
+    global MESSAGE_DATETIME_MINUTES_OFFSET  # pylint: disable=global-statement
 
     message_date_time = NEW_MESSAGE_DATETIME + dt.timedelta(
         minutes=MESSAGE_DATETIME_MINUTES_OFFSET

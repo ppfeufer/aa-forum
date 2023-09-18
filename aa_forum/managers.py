@@ -2,6 +2,8 @@
 Managers for our models
 """
 
+# pylint: disable=cyclic-import
+
 # Django
 from django.contrib.auth.models import User
 from django.db import models
@@ -75,7 +77,7 @@ class BoardManagerBase(models.Manager):
     BoardManagerBase
     """
 
-    pass
+    pass  # pylint: disable=unnecessary-pass
 
 
 BoardManager = BoardManagerBase.from_queryset(BoardQuerySet)
@@ -119,7 +121,7 @@ class TopicQuerySet(models.QuerySet):
         """
 
         # AA Forum
-        from aa_forum.models import Message
+        from aa_forum.models import Message  # pylint: disable=import-outside-toplevel
 
         try:
             topic = (
@@ -162,7 +164,7 @@ class TopicManagerBase(models.Manager):
     TopicManagerBase
     """
 
-    pass
+    pass  # pylint: disable=unnecessary-pass
 
 
 TopicManager = TopicManagerBase.from_queryset(TopicQuerySet)
@@ -190,7 +192,7 @@ class MessageQuerySet(models.QuerySet):
             | Q(topic__board__groups__isnull=True)
         ).distinct()
 
-    def get_from_slugs(
+    def get_from_slugs(  # pylint: disable=too-many-arguments
         self,
         category_slug: str,
         board_slug: str,
@@ -240,7 +242,7 @@ class MessageManagerBase(models.Manager):
     MessageManagerBase
     """
 
-    pass
+    pass  # pylint: disable=unnecessary-pass
 
 
 MessageManager = MessageManagerBase.from_queryset(MessageQuerySet)
@@ -304,7 +306,7 @@ class PersonalMessageManagerBase(models.Manager):
     PersonalMessageManagerBase
     """
 
-    pass
+    pass  # pylint: disable=unnecessary-pass
 
 
 PersonalMessageManager = PersonalMessageManagerBase.from_queryset(

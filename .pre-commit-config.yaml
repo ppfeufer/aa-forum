@@ -188,9 +188,9 @@ repos:
     hooks:
       - id: validate-pyproject
 
-#  - repo: https://github.com/pylint-dev/pylint
-#    rev: v3.0.0a7
-#    hooks:
-#      - id: pylint
-#        args:
-#          - --py-version=3.8.0
+  - repo: https://github.com/pylint-dev/pylint
+    rev: v3.0.0a7
+    hooks:
+      - id: pylint
+        args:
+          - --py-version=3.8.0

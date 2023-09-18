@@ -40,7 +40,7 @@ class SetVarNode(template.Node):
 
 
 @register.tag(name="set_template_variable")
-def set_template_variable(parser, token):
+def set_template_variable(parser, token):  # pylint: disable=unused-argument
     """
     Set a template variable
     Usage: {% set_template_variable <var_name> = <var_value> %}

@@ -415,8 +415,8 @@ class UserProfileForm(ModelForm):
                     f"Ensure your signature has at most {max_signature_length} characters. (Currently: {len(signature)})"  # pylint: disable=line-too-long
                 )
             ) from exc
-        else:
-            return signature
+
+        return signature
 
     def clean_website_url(self):
         """
@@ -433,8 +433,8 @@ class UserProfileForm(ModelForm):
             URLValidator()(website_url)
         except ValidationError as exc:
             raise ValidationError(_("This is not a valid URL")) from exc
-        else:
-            return website_url
+
+        return website_url
 
 
 class SettingForm(ModelForm):
@@ -444,7 +444,9 @@ class SettingForm(ModelForm):
 
     messages_per_page = forms.IntegerField(
         required=True,
-        label=get_mandatory_form_label_text(Setting.Field.MESSAGESPERPAGE.label),
+        label=get_mandatory_form_label_text(
+            Setting.Field.MESSAGESPERPAGE.label  # pylint: disable=no-member
+        ),
         help_text=_(
             "How many messages per page should be displayed in a forum topic? "
             "(Default: 15)"
@@ -452,7 +454,9 @@ class SettingForm(ModelForm):
     )
     topics_per_page = forms.IntegerField(
         required=True,
-        label=get_mandatory_form_label_text(Setting.Field.TOPICSPERPAGE.label),
+        label=get_mandatory_form_label_text(
+            Setting.Field.TOPICSPERPAGE.label  # pylint: disable=no-member
+        ),
         help_text=_(
             "How many topics per page should be displayed in a forum category? "
             "(Default: 10)"
@@ -460,7 +464,9 @@ class SettingForm(ModelForm):
     )
     user_signature_length = forms.IntegerField(
         required=True,
-        label=get_mandatory_form_label_text(Setting.Field.USERSIGNATURELENGTH.label),
+        label=get_mandatory_form_label_text(
+            Setting.Field.USERSIGNATURELENGTH.label  # pylint: disable=no-member
+        ),
         help_text=_(
             "How long (Number of characters) is a user's signature allowed to be? "
             "(Default: 750)"

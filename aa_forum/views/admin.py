@@ -296,7 +296,9 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
 @login_required
 @permission_required("aa_forum.manage_forum")
 def board_create_child(
-    request: WSGIRequest, category_id: int, board_id: int
+    request: WSGIRequest,
+    category_id: int,  # pylint: disable=unused-argument
+    board_id: int,
 ) -> HttpResponseRedirect:
     """
     Create a child board
@@ -397,7 +399,9 @@ def board_edit(
 @login_required
 @permission_required("aa_forum.manage_forum")
 def board_delete(
-    request: WSGIRequest, category_id: int, board_id: int
+    request: WSGIRequest,
+    category_id: int,  # pylint: disable=unused-argument
+    board_id: int,
 ) -> HttpResponseRedirect:
     """
     Delete a board
@@ -524,6 +528,7 @@ def forum_settings(request: WSGIRequest) -> HttpResponse:
         messages.error(
             request,
             mark_safe(
+                # pylint: disable=duplicate-code
                 _(
                     "<h4>Error!</h4>"
                     "<p>Something went wrong, please check your input.</p>"

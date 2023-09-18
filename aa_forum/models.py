@@ -590,12 +590,10 @@ class Message(models.Model):
         :return:
         """
 
-        topic_needs_update = (
-            self.topic.first_message == self or self.topic.last_message == self
-        )
-        board_needs_update = (
-            self.topic.board.first_message == self
-            or self.topic.board.last_message == self
+        topic_needs_update = self in (self.topic.first_message, self.topic.last_message)
+        board_needs_update = self in (
+            self.topic.board.first_message,
+            self.topic.board.last_message,
         )
 
         super().delete(*args, **kwargs)
@@ -691,6 +689,17 @@ class PersonalMessage(models.Model):
 
     @transaction.atomic()
     def save(self, *args, **kwargs) -> None:
+        """
+        Saving
+
+        :param args:
+        :type args:
+        :param kwargs:
+        :type kwargs:
+        :return:
+        :rtype:
+        """
+
         # See if it's a new message and set our status bit accordingly
         is_new_message = self._state.adding
 
@@ -702,7 +711,7 @@ class PersonalMessage(models.Model):
         if is_new_message is True:
             # Needs to be imported here, otherwise it's a circular import
             # AA Forum
-            from aa_forum.helper.discord_messages import (
+            from aa_forum.helper.discord_messages import (  # pylint: disable=import-outside-toplevel
                 send_new_personal_message_notification,
             )
 
@@ -726,17 +735,17 @@ class Setting(SingletonModel):
 
     messages_per_page = models.IntegerField(
         default=15,
-        verbose_name=Field.MESSAGESPERPAGE.label,
+        verbose_name=Field.MESSAGESPERPAGE.label,  # pylint: disable=no-member
         help_text=_("Maximum number of messages per page in the topic view"),
     )
     topics_per_page = models.IntegerField(
         default=10,
-        verbose_name=Field.TOPICSPERPAGE.label,
+        verbose_name=Field.TOPICSPERPAGE.label,  # pylint: disable=no-member
         help_text=_("Maximum number of topics per page in the board view"),
     )
     user_signature_length = models.IntegerField(
         default=750,
-        verbose_name=Field.USERSIGNATURELENGTH.label,
+        verbose_name=Field.USERSIGNATURELENGTH.label,  # pylint: disable=no-member
         help_text=_("Maximum length of a users signature"),
     )
 

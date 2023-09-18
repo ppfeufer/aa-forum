@@ -102,6 +102,7 @@ def new_message(request: WSGIRequest) -> HttpResponse:
         messages.error(
             request,
             mark_safe(
+                # pylint: disable=duplicate-code
                 _(
                     "<h4>Error!</h4>"
                     "<p>Something went wrong, please check your input.</p>"
@@ -167,6 +168,7 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
         messages.error(
             request,
             mark_safe(
+                # pylint: disable=duplicate-code
                 _(
                     "<h4>Error!</h4>"
                     "<p>The message you were trying to reply to does either not exist "
@@ -176,56 +178,56 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
         )
 
         return redirect("aa_forum:personal_messages_inbox")
-    else:
-        # If this is a POST request, we need to process the form data
-        if request.method == "POST":
-            reply_private_message_form = ReplyPersonalMessageForm(request.POST)
 
-            # Check whether it's valid:
-            if reply_private_message_form.is_valid():
-                sender = request.user
-                recipient = personal_message.sender
+    # If this is a POST request, we need to process the form data
+    if request.method == "POST":
+        reply_private_message_form = ReplyPersonalMessageForm(request.POST)
 
-                subject = personal_message.subject
-                if not subject.startswith("Re:"):
-                    subject = "Re: " + subject
+        # Check whether it's valid:
+        if reply_private_message_form.is_valid():
+            sender = request.user
+            recipient = personal_message.sender
 
-                subject = subject
-                message = reply_private_message_form.cleaned_data["message"]
+            subject = personal_message.subject
+            if not subject.startswith("Re:"):
+                subject = "Re: " + subject
 
-                PersonalMessage(
-                    sender=sender,
-                    recipient=recipient,
-                    subject=subject,
-                    message=message,
-                ).save()
+            message = reply_private_message_form.cleaned_data["message"]
 
-                recipient_main_char = get_main_character_from_user(recipient)
-                messages.success(
-                    request,
-                    mark_safe(
-                        _(
-                            f"<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>"  # pylint: disable=line-too-long
-                        )
-                    ),
-                )
+            PersonalMessage(
+                sender=sender,
+                recipient=recipient,
+                subject=subject,
+                message=message,
+            ).save()
 
-                return redirect("aa_forum:personal_messages_inbox")
-
-            messages.error(
+            recipient_main_char = get_main_character_from_user(recipient)
+            messages.success(
                 request,
                 mark_safe(
                     _(
-                        "<h4>Error!</h4>"
-                        "<p>Something went wrong, please check your input.</p>"
+                        f"<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>"  # pylint: disable=line-too-long
                     )
                 ),
             )
-        else:
-            reply_private_message_form = ReplyPersonalMessageForm()
 
-        context["message"] = personal_message
-        context["form"] = reply_private_message_form
+            return redirect("aa_forum:personal_messages_inbox")
+
+        messages.error(
+            request,
+            mark_safe(
+                # pylint: disable=duplicate-code
+                _(
+                    "<h4>Error!</h4>"
+                    "<p>Something went wrong, please check your input.</p>"
+                )
+            ),
+        )
+    else:
+        reply_private_message_form = ReplyPersonalMessageForm()
+
+    context["message"] = personal_message
+    context["form"] = reply_private_message_form
 
     return render(
         request, "aa_forum/view/personal-messages/reply-message.html", context
@@ -255,6 +257,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
             messages.error(
                 request=request,
                 message=mark_safe(
+                    # pylint: disable=duplicate-code
                     _(
                         "<h4>Error!</h4>"
                         "<p>The message you tried to remove does either not exist "
@@ -290,6 +293,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
             messages.error(
                 request=request,
                 message=mark_safe(
+                    # pylint: disable=duplicate-code
                     _(
                         "<h4>Error!</h4>"
                         "<p>The message you tried to remove does either not exist "

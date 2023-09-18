@@ -21,6 +21,7 @@ def get_user_profile(user: User) -> UserProfile:
     return user_profile
 
 
+# pylint: disable=duplicate-code
 def get_main_character_from_user(user: User) -> str:
     """
     Get the main character from a user
