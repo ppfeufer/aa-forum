@@ -41,7 +41,8 @@ def verify_image_url(image_url):
     """
 
     return re.match(
-        r"(http(s?):)([\/|.|\w|\s|-])*\.(?:gif|jpg|jpeg|png|bmp|webp)", image_url
+        pattern=r"(https?:\/\/.*\.(?:gif|jpg|jpeg|png|bmp|webp))",
+        string=image_url,
     )
 
 
