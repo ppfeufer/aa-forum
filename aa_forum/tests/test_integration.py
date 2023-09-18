@@ -173,6 +173,7 @@ class TestForumUI(WebTest):
         self.assertTemplateUsed(page, "aa_forum/view/forum/new-topic.html")
 
         expected_message = (
+            # pylint: disable=duplicate-code
             "<h4>Error!</h4>"
             "<p>Either subject or message is missing. "
             "Please make sure you enter both fields, "
@@ -204,6 +205,7 @@ class TestForumUI(WebTest):
         self.assertTemplateUsed(page, "aa_forum/view/forum/new-topic.html")
 
         expected_message = (
+            # pylint: disable=duplicate-code
             "<h4>Error!</h4>"
             "<p>Either subject or message is missing. "
             "Please make sure you enter both fields, "

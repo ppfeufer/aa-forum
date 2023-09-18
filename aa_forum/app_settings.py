@@ -2,11 +2,8 @@
 Our app setting
 """
 
-
 # Django
 from django.apps import apps
-
-# pylint: disable=import-outside-toplevel unused-import
 
 
 def discordproxy_installed() -> bool:
@@ -17,11 +14,13 @@ def discordproxy_installed() -> bool:
 
     try:
         # Third Party
-        from discordproxy.client import DiscordClient  # noqa: F401
+        from discordproxy.client import (  # pylint: disable=import-outside-toplevel unused-import  # noqa: F401
+            DiscordClient,
+        )
     except ModuleNotFoundError:
         return False
-    else:
-        return True
+
+    return True
 
 
 def allianceauth_discordbot_installed() -> bool:

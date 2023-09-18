@@ -100,8 +100,8 @@ def index(request: WSGIRequest) -> HttpResponse:
 
     categories_map = {}
 
-    for board in boards:
-        category = board.category
+    for board_in_loop in boards:
+        category = board_in_loop.category
 
         if category.pk not in categories_map:
             categories_map[category.pk] = {
@@ -111,7 +111,7 @@ def index(request: WSGIRequest) -> HttpResponse:
                 "order": category.order,
             }
 
-        categories_map[category.pk]["boards_sorted"].append(board)
+        categories_map[category.pk]["boards_sorted"].append(board_in_loop)
 
     categories = sorted(categories_map.values(), key=lambda k: k["order"])
     context = {"categories": categories}
@@ -145,7 +145,7 @@ def board(
     )
 
     try:
-        board = (
+        current_board = (
             Board.objects.select_related("category")
             .select_related("parent_board")
             .prefetch_related(
@@ -221,7 +221,7 @@ def board(
         return redirect("aa_forum:forum_index")
 
     page_obj = get_paginated_page_object(
-        queryset=board.topics_sorted,
+        queryset=current_board.topics_sorted,
         items_per_page=Setting.objects.get_setting(
             setting_key=Setting.Field.TOPICSPERPAGE
         ),
@@ -229,12 +229,12 @@ def board(
     )
 
     context = {
-        "board": board,
-        "user_can_start_topic": board.user_can_start_topic(user=request.user),
+        "board": current_board,
+        "user_can_start_topic": current_board.user_can_start_topic(user=request.user),
         "page_obj": page_obj,
     }
 
-    logger.info(f'{request.user} called board "{board.name}".')
+    logger.info(f'{request.user} called board "{current_board.name}".')
 
     return render(request, "aa_forum/view/forum/board.html", context)
 
@@ -273,7 +273,7 @@ def board_new_topic(
         return redirect("aa_forum:forum_index")
 
     try:
-        board = (
+        current_board = (
             Board.objects.select_related("category")
             .user_has_access(request.user)
             .filter(category__slug=category_slug, slug=board_slug)
@@ -297,7 +297,7 @@ def board_new_topic(
 
         return redirect("aa_forum:forum_index")
 
-    if not board.user_can_start_topic(user=request.user):
+    if not current_board.user_can_start_topic(user=request.user):
         messages.error(
             request,
             mark_safe(
@@ -316,8 +316,8 @@ def board_new_topic(
 
         return redirect(
             "aa_forum:forum_board",
-            category_slug=board.category.slug,
-            board_slug=board.slug,
+            category_slug=current_board.category.slug,
+            board_slug=current_board.slug,
         )
 
     # If this is a POST request we need to process the form data …
@@ -330,7 +330,7 @@ def board_new_topic(
             with transaction.atomic():
                 # Check if a topic with the same subject already exists in this board
                 existing_topic = Topic.objects.filter(
-                    board=board, subject__iexact=form.cleaned_data["subject"]
+                    board=current_board, subject__iexact=form.cleaned_data["subject"]
                 )
 
                 if existing_topic.exists():
@@ -357,44 +357,47 @@ def board_new_topic(
                     return render(
                         request,
                         "aa_forum/view/forum/new-topic.html",
-                        {"board": board, "form": form},
+                        {"board": current_board, "form": form},
                     )
 
-                topic = Topic(board=board, subject=form.cleaned_data["subject"])
-                topic.save()
+                new_topic = Topic(
+                    board=current_board, subject=form.cleaned_data["subject"]
+                )
+                new_topic.save()
 
-                message = Message(
-                    topic=topic,
+                new_message = Message(
+                    topic=new_topic,
                     user_created=request.user,
                     message=form.cleaned_data["message"],
                 )
-                message.save()
+                new_message.save()
 
             logger.info(
-                f'{request.user} started a new topic "{topic.subject}" '
-                f'in board "{board.name}".'
+                f'{request.user} started a new topic "{new_topic.subject}" '
+                f'in board "{current_board.name}".'
             )
 
             # Send to webhook if one is configured
-            if board.discord_webhook is not None:
+            if current_board.discord_webhook is not None:
                 send_message_to_discord_webhook(
-                    board=board,
-                    topic=topic,
-                    message=message,
-                    headline=f'**New topic has been started in board "{board.name}"**',
+                    board=current_board,
+                    topic=new_topic,
+                    message=new_message,
+                    headline=f'**New topic has been started in board "{current_board.name}"**',
                 )
 
             return redirect(
                 "aa_forum:forum_topic",
-                category_slug=board.category.slug,
-                board_slug=board.slug,
-                topic_slug=topic.slug,
+                category_slug=current_board.category.slug,
+                board_slug=current_board.slug,
+                topic_slug=new_topic.slug,
             )
 
         # Form is invalid
         messages.error(
             request,
             mark_safe(
+                # pylint: disable=duplicate-code
                 _(
                     "<h4>Error!</h4>"
                     "<p>Either subject or message is missing. "
@@ -407,9 +410,11 @@ def board_new_topic(
     else:
         form = NewTopicForm()
 
-    context = {"board": board, "form": form}
+    context = {"board": current_board, "form": form}
 
-    logger.info(f'{request.user} is starting a new topic in board "{board.name}".')
+    logger.info(
+        f'{request.user} is starting a new topic in board "{current_board.name}".'
+    )
 
     return render(request, "aa_forum/view/forum/new-topic.html", context)
 
@@ -433,14 +438,14 @@ def topic(
     :return:
     """
 
-    topic = _topic_from_slugs(
+    current_topic = _topic_from_slugs(
         request=request,
         category_slug=category_slug,
         board_slug=board_slug,
         topic_slug=topic_slug,
     )
 
-    if not topic:
+    if not current_topic:
         messages.error(
             request,
             mark_safe(
@@ -459,13 +464,14 @@ def topic(
 
     # Determine if the current user can modify the topics subject
     can_modify_subject = False
-    if request.user == topic.first_message.user_created or request.user.has_perm(
-        "aa_forum.manage_forum"
+    if (
+        request.user == current_topic.first_message.user_created
+        or request.user.has_perm("aa_forum.manage_forum")
     ):
         can_modify_subject = True
 
     page_obj = get_paginated_page_object(
-        queryset=topic.messages_sorted,
+        queryset=current_topic.messages_sorted,
         items_per_page=Setting.objects.get_setting(
             setting_key=Setting.Field.MESSAGESPERPAGE
         ),
@@ -480,7 +486,7 @@ def topic(
     else:
         try:
             last_message_seen = LastMessageSeen.objects.get(
-                topic=topic, user=request.user
+                topic=current_topic, user=request.user
             )
         except LastMessageSeen.DoesNotExist:
             last_message_seen = None
@@ -490,19 +496,19 @@ def topic(
             or last_message_seen.message_time < last_message_on_page.time_posted
         ):
             LastMessageSeen.objects.update_or_create(
-                topic=topic,
+                topic=current_topic,
                 user=request.user,
                 defaults={"message_time": last_message_on_page.time_posted},
             )
 
     context = {
-        "topic": topic,
+        "topic": current_topic,
         "can_modify_subject": can_modify_subject,
         "page_obj": page_obj,
         "reply_form": EditMessageForm(),
     }
 
-    logger.info(f'{request.user} called topic "{topic.subject}".')
+    logger.info(f'{request.user} called topic "{current_topic.subject}".')
 
     return render(request, "aa_forum/view/forum/topic.html", context)
 
@@ -620,14 +626,14 @@ def _topic_from_slugs(
     :return:
     """
 
-    topic = Topic.objects.get_from_slugs(
+    current_topic = Topic.objects.get_from_slugs(
         category_slug=category_slug,
         board_slug=board_slug,
         topic_slug=topic_slug,
         user=request.user,
     )
 
-    return topic
+    return current_topic
 
 
 @login_required
@@ -644,14 +650,14 @@ def topic_first_unread_message(
     :return:
     """
 
-    topic = _topic_from_slugs(
+    current_topic = _topic_from_slugs(
         request=request,
         category_slug=category_slug,
         board_slug=board_slug,
         topic_slug=topic_slug,
     )
 
-    if not topic:
+    if not current_topic:
         messages.error(
             request,
             mark_safe(
@@ -664,11 +670,11 @@ def topic_first_unread_message(
 
         return redirect("aa_forum:forum_index")
 
-    messages_sorted = topic.messages.order_by("time_posted")
+    messages_sorted = current_topic.messages.order_by("time_posted")
 
     try:
         last_message_seen = LastMessageSeen.objects.filter(
-            topic=topic, user=request.user
+            topic=current_topic, user=request.user
         ).get()
     except LastMessageSeen.DoesNotExist:
         redirect_message = messages_sorted.first()
@@ -683,7 +689,7 @@ def topic_first_unread_message(
     if redirect_message:
         return redirect(redirect_message.get_absolute_url())
 
-    return redirect(topic.get_absolute_url())
+    return redirect(current_topic.get_absolute_url())
 
 
 @login_required
@@ -757,14 +763,14 @@ def topic_reply(
     :return:
     """
 
-    topic = _topic_from_slugs(
+    current_topic = _topic_from_slugs(
         request=request,
         category_slug=category_slug,
         board_slug=board_slug,
         topic_slug=topic_slug,
     )
 
-    if not topic:
+    if not current_topic:
         messages.error(
             request,
             mark_safe(
@@ -788,7 +794,7 @@ def topic_reply(
         # Check whether it's valid:
         if form.is_valid():
             new_message = Message(
-                topic=topic,
+                topic=current_topic,
                 user_created=request.user,
                 message=form.cleaned_data["message"],
             )
@@ -796,17 +802,17 @@ def topic_reply(
 
             # Send to webhook if one is configured
             if (
-                topic.board.discord_webhook is not None
-                and topic.board.use_webhook_for_replies is not False
+                current_topic.board.discord_webhook is not None
+                and current_topic.board.use_webhook_for_replies is not False
             ):
                 send_message_to_discord_webhook(
-                    board=topic.board,
-                    topic=topic,
+                    board=current_topic.board,
+                    topic=current_topic,
                     message=new_message,
-                    headline=f'**New reply has been posted in topic "{topic.subject}"**',
+                    headline=f'**New reply has been posted in topic "{current_topic.subject}"**',
                 )
 
-            logger.info(f'{request.user} replied to topic "{topic.subject}".')
+            logger.info(f'{request.user} replied to topic "{current_topic.subject}".')
 
             return redirect(
                 "aa_forum:forum_message",
@@ -819,6 +825,7 @@ def topic_reply(
         messages.error(
             request,
             mark_safe(
+                # pylint: disable=duplicate-code
                 _(
                     "<h4>Error!</h4>"
                     "<p>Message field is mandatory and cannot be empty.</p>"
@@ -849,38 +856,44 @@ def topic_change_lock_state(
     """
 
     try:
-        topic = Topic.objects.select_related("board").get(pk=topic_id)
+        current_topic = Topic.objects.select_related("board").get(pk=topic_id)
     except Topic.DoesNotExist:
         return HttpResponseNotFound("Could not find topic.")
 
-    if topic.is_locked:
-        topic.is_locked = False
+    if current_topic.is_locked:
+        current_topic.is_locked = False
 
         messages.success(
             request,
             mark_safe(
                 _(
-                    f'<h4>Success!</h4><p>Topic "{topic}" has been unlocked/re-opened.</p>'  # pylint: disable=line-too-long
+                    f'<h4>Success!</h4><p>Topic "{current_topic}" has been unlocked/re-opened.</p>'  # pylint: disable=line-too-long
                 )
             ),
         )
 
-        logger.info(f'{request.user} unlocked/re-opened topic "{topic}".')
+        logger.info(f'{request.user} unlocked/re-opened topic "{current_topic}".')
     else:
-        topic.is_locked = True
+        current_topic.is_locked = True
 
         messages.success(
             request,
             mark_safe(
-                _(f'<h4>Success!</h4><p>Topic "{topic}" has been locked/closed.</p>')
+                _(
+                    f'<h4>Success!</h4><p>Topic "{current_topic}" has been locked/closed.</p>'
+                )
             ),
         )
 
-        logger.info(f'{request.user} locked/closed "{topic}".')
+        logger.info(f'{request.user} locked/closed "{current_topic}".')
 
-    topic.save(update_fields=["is_locked"])
+    current_topic.save(update_fields=["is_locked"])
 
-    return redirect("aa_forum:forum_board", topic.board.category.slug, topic.board.slug)
+    return redirect(
+        "aa_forum:forum_board",
+        current_topic.board.category.slug,
+        current_topic.board.slug,
+    )
 
 
 @login_required
@@ -896,34 +909,40 @@ def topic_change_sticky_state(
     """
 
     try:
-        topic = Topic.objects.select_related("board").get(pk=topic_id)
+        curent_topic = Topic.objects.select_related("board").get(pk=topic_id)
     except Topic.DoesNotExist:
         return HttpResponseNotFound("Could not find topic.")
 
-    if topic.is_sticky:
-        topic.is_sticky = False
+    if curent_topic.is_sticky:
+        curent_topic.is_sticky = False
 
         messages.success(
             request,
             mark_safe(
-                _(f'<h4>Success!</h4><p>Topic "{topic}" is no longer "Sticky".</p>')
+                _(
+                    f'<h4>Success!</h4><p>Topic "{curent_topic}" is no longer "Sticky".</p>'
+                )
             ),
         )
 
-        logger.info(f'{request.user} changed topic "{topic}" to be no longer sticky.')
+        logger.info(
+            f'{request.user} changed topic "{curent_topic}" to be no longer sticky.'
+        )
     else:
-        topic.is_sticky = True
+        curent_topic.is_sticky = True
 
         messages.success(
             request,
-            mark_safe(_(f'<h4>Success!</h4><p>Topic "{topic}" is now "Sticky".</p>')),
+            mark_safe(
+                _(f'<h4>Success!</h4><p>Topic "{curent_topic}" is now "Sticky".</p>')
+            ),
         )
 
-        logger.info(f'{request.user} changed topic "{topic}" to be sticky.')
+        logger.info(f'{request.user} changed topic "{curent_topic}" to be sticky.')
 
-    topic.save(update_fields=["is_sticky"])
+    curent_topic.save(update_fields=["is_sticky"])
 
-    return redirect(topic.board.get_absolute_url())
+    return redirect(curent_topic.board.get_absolute_url())
 
 
 @login_required
@@ -937,32 +956,32 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
     """
 
     try:
-        topic = Topic.objects.select_related("board").get(pk=topic_id)
+        current_topic = Topic.objects.select_related("board").get(pk=topic_id)
     except Topic.DoesNotExist:
         return HttpResponseNotFound("Could not find topic.")
 
-    board = topic.board
-    topic_subject = topic.subject
+    topic__board = current_topic.board
+    topic__subject = current_topic.subject
 
-    topic.delete()
+    current_topic.delete()
 
     messages.success(
         request,
-        mark_safe(_(f'<h4>Success!</h4><p>Topic "{topic_subject}" removed.</p>')),
+        mark_safe(_(f'<h4>Success!</h4><p>Topic "{topic__subject}" removed.</p>')),
     )
 
-    logger.info(f'{request.user} removed topic "{topic_subject}".')
+    logger.info(f'{request.user} removed topic "{topic__subject}".')
 
-    return redirect(board.get_absolute_url())
+    return redirect(topic__board.get_absolute_url())
 
 
 @login_required
 @permission_required("aa_forum.basic_access")
 def message(
     request: WSGIRequest,
-    category_slug: str,
-    board_slug: str,
-    topic_slug: str,
+    category_slug: str,  # pylint: disable=unused-argument
+    board_slug: str,  # pylint: disable=unused-argument
+    topic_slug: str,  # pylint: disable=unused-argument
     message_id: int,
 ) -> HttpResponseRedirect:
     """
@@ -976,7 +995,7 @@ def message(
     """
 
     try:
-        message = Message.objects.select_related(
+        current_message = Message.objects.select_related(
             "topic", "topic__board", "topic__board__category"
         ).get(pk=message_id)
     except Message.DoesNotExist:
@@ -987,7 +1006,7 @@ def message(
 
         return redirect("aa_forum:forum_index")
 
-    return redirect(message.get_absolute_url())
+    return redirect(current_message.get_absolute_url())
 
 
 @login_required
@@ -1126,7 +1145,7 @@ def _message_from_slugs(
     :return:
     """
 
-    message = Message.objects.get_from_slugs(
+    current_message = Message.objects.get_from_slugs(
         category_slug=category_slug,
         board_slug=board_slug,
         topic_slug=topic_slug,
@@ -1134,7 +1153,7 @@ def _message_from_slugs(
         user=request.user,
     )
 
-    return message
+    return current_message
 
 
 @login_required
@@ -1149,7 +1168,7 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
     """
 
     try:
-        message = (
+        current_message = (
             Message.objects.select_related(
                 "topic", "topic__board", "topic__board__category"
             )
@@ -1159,12 +1178,13 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
     except Message.DoesNotExist:
         return HttpResponseNotFound("Message not found.")
 
-    topic = message.topic
-    topic_subject = topic.subject
+    current_message__topic = current_message.topic
+    current_message__topic__subject = current_message__topic.subject
 
     # Safety check to make sure the user is allowed to delete this message
-    if message.user_created_id != request.user.id and not request.user.has_perm(
-        "aa_forum.manage_forum"
+    if (
+        current_message.user_created_id != request.user.id
+        and not request.user.has_perm("aa_forum.manage_forum")
     ):
         messages.error(
             request,
@@ -1180,16 +1200,19 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
 
         return redirect(
             "aa_forum:forum_topic",
-            category_slug=topic.board.category.slug,
-            board_slug=topic.board.slug,
-            topic_slug=topic.slug,
+            category_slug=current_message__topic.board.category.slug,
+            board_slug=current_message__topic.board.slug,
+            topic_slug=current_message__topic.slug,
         )
 
     # Let's check if we have more than one message in this topic
     # and the message we want to delete is not the first
     # If so, remove just that message and return to the topic
-    if topic.first_message.pk != message.pk and topic.messages.all().count() > 1:
-        message.delete()
+    if (
+        current_message__topic.first_message.pk != current_message.pk
+        and current_message__topic.messages.all().count() > 1
+    ):
+        current_message.delete()
 
         messages.success(
             request,
@@ -1198,18 +1221,18 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
 
         logger.info(
             f"{request.user} removed message ID {message_id} "
-            f'from topic "{topic_subject}".'
+            f'from topic "{current_message__topic__subject}".'
         )
 
         return redirect(
             "aa_forum:forum_topic",
-            category_slug=topic.board.category.slug,
-            board_slug=topic.board.slug,
-            topic_slug=topic.slug,
+            category_slug=current_message__topic.board.category.slug,
+            board_slug=current_message__topic.board.slug,
+            topic_slug=current_message__topic.slug,
         )
 
     # If it is the topics opening post …
-    topic.delete()
+    current_message__topic.delete()
 
     messages.success(
         request,
@@ -1224,13 +1247,13 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
 
     logger.info(
         f"{request.user} removed message ID {message_id}. This was the original post, "
-        f'so the topic "{topic_subject}" has been removed as well.'
+        f'so the topic "{current_message__topic__subject}" has been removed as well.'
     )
 
     return redirect(
         "aa_forum:forum_board",
-        category_slug=topic.board.category.slug,
-        board_slug=topic.board.slug,
+        category_slug=current_message__topic.board.category.slug,
+        board_slug=current_message__topic.board.slug,
     )
 
 
@@ -1263,12 +1286,12 @@ def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
     )
 
     if boards.count() > 0:
-        for board in boards:
-            for topic in board.topics.all():
+        for board_in_loop in boards:
+            for topic_in_loop in board_in_loop.topics.all():
                 LastMessageSeen.objects.update_or_create(
-                    topic=topic,
+                    topic=topic_in_loop,
                     user=request.user,
-                    defaults={"message_time": topic.last_message.time_posted},
+                    defaults={"message_time": topic_in_loop.last_message.time_posted},
                 )
 
     logger.info(f"{request.user} marked all topics as read.")
@@ -1307,7 +1330,7 @@ def unread_topics_count(request: WSGIRequest) -> int:
     count_unread_topics = 0
 
     if boards.count() > 0:
-        for board in boards:
-            count_unread_topics += board.num_unread_topics
+        for board_in_loop in boards:
+            count_unread_topics += board_in_loop.num_unread_topics
 
     return count_unread_topics

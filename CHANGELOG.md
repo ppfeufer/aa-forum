@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning].
 
 ## \[In Development\] - Unreleased
 
+### Fixed
+
+- pylint issues
+
 ## \[1.19.3\] - 2023-09-02
 
 ### Changed

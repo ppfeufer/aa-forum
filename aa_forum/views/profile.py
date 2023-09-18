@@ -61,6 +61,7 @@ def index(request: WSGIRequest) -> HttpResponse:
         messages.error(
             request,
             mark_safe(
+                # pylint: disable=duplicate-code
                 _(
                     "<h4>Error!</h4>"
                     "<p>Something went wrong, please check your input.</p>"

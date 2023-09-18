@@ -6,7 +6,8 @@ Helper to handle Discord messaging to users (Discord DM)
 from datetime import datetime
 
 # Third Party
-from dhooks_lite import Embed, Footer, Image, Webhook
+from dhooks_lite import Embed as DhooksLiteEmbed
+from dhooks_lite import Footer, Image, Webhook
 
 # Django
 from django.utils import timezone
@@ -51,10 +52,13 @@ def _aadiscordbot_send_private_message(
         )
 
         # Third Party
+        # pylint: disable=import-outside-toplevel
         from aadiscordbot.tasks import send_message
-        from discord import Embed
 
-        embed = Embed(
+        # pylint: disable=import-outside-toplevel
+        from discord import Embed as DiscordEmbed
+
+        embed = DiscordEmbed(
             title=str(title),
             description=message,
             color=DISCORD_EMBED_COLOR_MAP.get(level, None),
@@ -87,8 +91,12 @@ def _discordproxy_send_private_message(
     """
 
     # Third Party
-    from discordproxy.client import DiscordClient
-    from discordproxy.exceptions import DiscordProxyException
+    from discordproxy.client import (  # pylint: disable=import-outside-toplevel
+        DiscordClient,
+    )
+    from discordproxy.exceptions import (  # pylint: disable=import-outside-toplevel
+        DiscordProxyException,
+    )
 
     client = DiscordClient()
 
@@ -97,10 +105,11 @@ def _discordproxy_send_private_message(
 
         if embed_message is True:
             # Third Party
-            from discordproxy.discord_api_pb2 import Embed
+            # pylint: disable=import-outside-toplevel
+            from discordproxy.discord_api_pb2 import Embed as DiscordProxyEmbed
 
-            footer = Embed.Footer(text=__title__)
-            embed = Embed(
+            footer = DiscordProxyEmbed.Footer(text=__title__)
+            embed = DiscordProxyEmbed(
                 title=str(title),
                 description=message,
                 color=DISCORD_EMBED_COLOR_MAP.get(level, None),
@@ -144,7 +153,10 @@ def send_new_personal_message_notification(
 
     # Needs to be imported here, otherwise it's a circular import
     # AA Forum
-    from aa_forum.helper.user import get_main_character_from_user, get_user_profile
+    from aa_forum.helper.user import (  # pylint: disable=import-outside-toplevel
+        get_main_character_from_user,
+        get_user_profile,
+    )
 
     recipient_forum_settings = get_user_profile(message.recipient)
 
@@ -235,7 +247,7 @@ def send_message_to_discord_webhook(
             args=[board.category.slug, board.slug, topic.slug, message.pk],
         )
 
-    embed = Embed(
+    embed = DhooksLiteEmbed(
         description=message_to_send,
         title=title,
         url=url,
