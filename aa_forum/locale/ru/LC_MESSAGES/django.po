@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-30 18:47+0200\n"
+"POT-Creation-Date: 2023-09-19 11:44+0200\n"
 "PO-Revision-Date: 2023-07-31 17:39+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: Russian <https://weblate.ppfeufer.de/projects/"
-"alliance-auth-apps/aa-forum/ru/>\n"
+"Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-"
+"apps/aa-forum/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,33 +20,33 @@ msgstr ""
 "n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 4.18.2\n"
 
-#: forms.py:39
+#: forms.py:40
 msgid "This field is mandatory"
 msgstr "Обязательное поле"
 
-#: forms.py:90 forms.py:92 forms.py:122 forms.py:124 forms.py:491
+#: forms.py:91 forms.py:93 forms.py:124 forms.py:126 forms.py:502
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:26
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:26
 msgid "Subject"
 msgstr "Тема"
 
-#: forms.py:101 forms.py:318 forms.py:501 forms.py:545
+#: forms.py:102 forms.py:321 forms.py:512 forms.py:558
 msgid "Message"
 msgstr "Сообщение"
 
-#: forms.py:143 forms.py:181 forms.py:202
+#: forms.py:145 forms.py:183 forms.py:204
 msgid "Name"
 msgstr "Название"
 
-#: forms.py:145 forms.py:183
+#: forms.py:147 forms.py:185
 msgid "Category Name"
 msgstr "Название категории"
 
-#: forms.py:149 forms.py:160
+#: forms.py:151 forms.py:162
 msgid "Boards"
 msgstr "Доски"
 
-#: forms.py:151
+#: forms.py:153
 msgid ""
 "Boards to be created with this category (One board per line). These boards "
 "will have no group restrictions, so you have to add them later where needed."
@@ -54,23 +54,23 @@ msgstr ""
 "Доски, создаваемые в этой категории (Одна доска в строке). Для досок не "
 "будут установлены ограничения по группам, их нужно добавить отдельно."
 
-#: forms.py:204
+#: forms.py:206
 msgid "Board Name"
 msgstr "Название доски"
 
-#: forms.py:208
+#: forms.py:210
 msgid "Description"
 msgstr "Описание"
 
-#: forms.py:214
+#: forms.py:216
 msgid "Board Description (Optional)"
 msgstr "Описание доски (не обязательно)"
 
-#: forms.py:220
+#: forms.py:222
 msgid "Group Restrictions"
 msgstr "Ограничения групп"
 
-#: forms.py:222
+#: forms.py:224
 msgid ""
 "This will restrict access to this board to the selected groups. If no groups "
 "are selected, everyone who can access the forum can also access this board. "
@@ -80,11 +80,11 @@ msgstr ""
 "выбраны, все пользователи форума будут иметь доступ к доске. (Настройка не "
 "обязательна)"
 
-#: forms.py:230
+#: forms.py:232
 msgid "Discord Webhook (Optional)"
 msgstr "Discord вебхук (не обязательно)"
 
-#: forms.py:232
+#: forms.py:234
 msgid ""
 "Discord Webhook URL for the channel to post about new topics in this board. "
 "(This setting is optional)"
@@ -92,11 +92,11 @@ msgstr ""
 "Discord вебхук URL канала для сообщений о новых темах на доске. (Настройка "
 "не обязательна)"
 
-#: forms.py:245
+#: forms.py:247
 msgid "Use this Discord Webhook for replies as well?"
 msgstr "Использовать этот же Discord вебхук для ответов?"
 
-#: forms.py:247
+#: forms.py:249
 msgid ""
 "When activated every reply to any topic in this board will be posted to the "
 "defined Discord channel. (Child boards are excluded) Chose wisely! (Default: "
@@ -106,11 +106,11 @@ msgstr ""
 "Discord. (Дочерние доски не учитываются) Использовать с умом! (По умолчанию: "
 "ВЫКЛ)"
 
-#: forms.py:255
+#: forms.py:257
 msgid "Mark Board as 'Announcement Board'"
 msgstr "Пометить доску как 'Доска оповещений'"
 
-#: forms.py:257
+#: forms.py:259
 msgid ""
 "Mark this board as an 'Announcement Board', meaning that only certain "
 "selected groups can start new topics. All others who have access to this "
@@ -122,11 +122,11 @@ msgstr ""
 "обсуждениях. Эта настройка не распространяется на дочерние доски. (По "
 "умолчанию: НЕТ)"
 
-#: forms.py:265
+#: forms.py:267
 msgid "Start Topic Restrictions for 'Announcement Boards'"
 msgstr "Ограничения создания новых тем для 'Доски оповещений'"
 
-#: forms.py:267
+#: forms.py:269
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
 "'Announcement Boards'. If no group is selected, only forum admins can do so. "
@@ -139,35 +139,31 @@ msgstr ""
 "Эта настройка не распространяется на дочерние доски. (Подсказка: Это "
 "ограничение работает только для 'Досок оповещений', см. настройку выше.)"
 
-#: forms.py:351
+#: forms.py:354
 msgid "Signature"
 msgstr "Подпись"
 
-#: forms.py:352
+#: forms.py:355
 msgid "Your signature will appear below your posts."
 msgstr "Ваша подпись будет отображаться под Вашими сообщениями."
 
-#: forms.py:356
+#: forms.py:359
 msgid "Website Title"
 msgstr "Заголовок вебсайта"
 
-#: forms.py:358
+#: forms.py:361
 msgid "e.g.: My Homepage"
 msgstr "например: Моя Веб Страница"
 
-#: forms.py:359
+#: forms.py:362
 msgid "Your website's title."
 msgstr "Заголовок Вашего вебсайта."
 
-#: forms.py:363
+#: forms.py:366
 msgid "Website URL"
 msgstr "URL вебсайта"
 
-#: forms.py:365
-msgid "https://example.com"
-msgstr "https://example.ru"
-
-#: forms.py:367
+#: forms.py:370
 msgid ""
 "Your website's URL. (Don't forget to also set a title for your website, "
 "otherwise this field will be ignored.)"
@@ -175,11 +171,11 @@ msgstr ""
 "URL Вашего вебсайта. (Не забудьте также указать название, иначе это поле "
 "будет проигнорировано.)"
 
-#: forms.py:373
+#: forms.py:376
 msgid "PM me on Discord when I get a new personal message"
 msgstr "Отправлять ЛС в Discord при получении личного сообщения"
 
-#: forms.py:375
+#: forms.py:378
 msgid ""
 "Information: There is currently no module installed that can handle Discord "
 "direct messages. Have a chat with your IT guys to remedy this."
@@ -187,7 +183,7 @@ msgstr ""
 "Информация: в настоящее время не установлены модуля для передачи ЛС в "
 "Discord. Обратитесь в IT поддержку."
 
-#: forms.py:415
+#: forms.py:419
 msgid ""
 "Ensure your signature has at most {max_signature_length} characters. "
 "(Currently: {len(signature)})"
@@ -195,23 +191,23 @@ msgstr ""
 "Убедитесь, что ваша подпись не более {max_signature_length} символов. "
 "(Сейчас: {len(signature)})"
 
-#: forms.py:435
+#: forms.py:440
 msgid "This is not a valid URL"
 msgstr "Некорректный URL"
 
-#: forms.py:449
+#: forms.py:456
 msgid ""
 "How many messages per page should be displayed in a forum topic? (Default: "
 "15)"
 msgstr "Сколько сообщений отображать на странице? (По умолчанию: 15)"
 
-#: forms.py:457
+#: forms.py:466
 msgid ""
 "How many topics per page should be displayed in a forum category? (Default: "
 "10)"
 msgstr "Сколько тем отображать на странице в категории? (По умолчанию: 10)"
 
-#: forms.py:465
+#: forms.py:476
 msgid ""
 "How long (Number of characters) is a user's signature allowed to be? "
 "(Default: 750)"
@@ -219,100 +215,164 @@ msgstr ""
 "Какой длины (количество символов) может быть подпись пользователя? (По "
 "умолчанию: 750)"
 
-#: forms.py:487
+#: forms.py:498
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:22
 msgid "Recipient"
 msgstr "Получатель"
 
-#: forms.py:493
+#: forms.py:504
 msgid "Hello there …"
 msgstr "Привет…"
 
-#: models.py:119
+#: models.py:123
 msgid "Can access the AA-Forum module"
 msgstr "Имеет доступ к модулю АА-форум"
 
-#: models.py:122
+#: models.py:126
 msgid "Can manage the AA-Forum module (Category, topics and messages)"
 msgstr "Может управлять модулем АА-форум (категории, темы и сообщения)"
 
-#: models.py:164
+#: models.py:169
 msgid "category"
 msgstr "категория"
 
-#: models.py:165
+#: models.py:170
 msgid "categories"
 msgstr "категории"
 
-#: models.py:279
+#: models.py:214
+#, fuzzy
+#| msgid ""
+#| "When activated every reply to any topic in this board will be posted to "
+#| "the defined Discord channel. (Child boards are excluded) Chose wisely! "
+#| "(Default: NO)"
+msgid ""
+"Use this Discord Webhook for replies as well? When activated every reply to "
+"any topic in this board will be posted to the defined Discord channel. "
+"(Child boards are excluded) Chose wisely! (Default: NO)"
+msgstr ""
+"При включении каждый ответ в любой теме доски будет отправлен в канал "
+"Discord. (Дочерние доски не учитываются) Использовать с умом! (По умолчанию: "
+"ВЫКЛ)"
+
+#: models.py:232
+#, fuzzy
+#| msgid ""
+#| "This will restrict access to this board to the selected groups. If no "
+#| "groups are selected, everyone who can access the forum can also access "
+#| "this board. (This setting is optional)"
+msgid ""
+"User in at least one of these groups have access to this board. If no groups "
+"are selected, everyone with access to the forum has also access to this "
+"board."
+msgstr ""
+"Только перечисленные группы будут иметь доступ к доске. Если группы не "
+"выбраны, все пользователи форума будут иметь доступ к доске. (Настройка не "
+"обязательна)"
+
+#: models.py:240
+#, fuzzy
+#| msgid ""
+#| "Mark this board as an 'Announcement Board', meaning that only certain "
+#| "selected groups can start new topics. All others who have access to this "
+#| "board will still be able to discuss in the topics though. This setting "
+#| "will not be inherited to child boards. (Default: NO)"
+msgid ""
+"Mark this board as an 'Announcement Board', meaning that only certain "
+"selected groups can start new topics. All others who have access to this "
+"board will still be able to discuss in the topics though. (Default: NO)"
+msgstr ""
+"Пометка 'Доска оповещений' обозначает, что только определенные группы могут "
+"начинать новые темы. Все остальные, кто имеет доступ, могут участвовать в "
+"обсуждениях. Эта настройка не распространяется на дочерние доски. (По "
+"умолчанию: НЕТ)"
+
+#: models.py:251
+#, fuzzy
+#| msgid ""
+#| "User in at least one of the selected groups will be able to start topics "
+#| "in 'Announcement Boards'. If no group is selected, only forum admins can "
+#| "do so. This setting will not be inherited to child boards. (Hint: These "
+#| "restrictions only take effect when a board is marked as 'Announcement "
+#| "Board', see checkbox above.)"
+msgid ""
+"User in at least one of the selected groups will be able to start topics in "
+"'Announcement Boards'. If no group is selected, only forum admins can do so."
+msgstr ""
+"Пользователи из перечисленных групп смогут создавать новые темы на 'Досках "
+"оповещений'. Если группы не указаны, только админы форума смогут это делать. "
+"Эта настройка не распространяется на дочерние доски. (Подсказка: Это "
+"ограничение работает только для 'Досок оповещений', см. настройку выше.)"
+
+#: models.py:287
 msgid "board"
 msgstr "доска"
 
-#: models.py:280
+#: models.py:288
 msgid "boards"
 msgstr "доски"
 
-#: models.py:397
+#: models.py:410
 msgid "topic"
 msgstr "тема"
 
-#: models.py:398
+#: models.py:411
 msgid "topics"
 msgstr "темы"
 
-#: models.py:551
+#: models.py:568
 msgid "message"
 msgstr "сообщение"
 
-#: models.py:552
+#: models.py:569
 msgid "messages"
 msgstr "сообщения"
 
-#: models.py:686
+#: models.py:704
 msgid "personal message"
 msgstr "личное сообщение"
 
-#: models.py:687
+#: models.py:705
 msgid "personal messages"
 msgstr "личные сообщения"
 
-#: models.py:723
+#: models.py:752
 msgid "Messages per page"
 msgstr "Сообщений на странице"
 
-#: models.py:724
+#: models.py:753
 msgid "Topics per page"
 msgstr "Тем на странице"
 
-#: models.py:725
+#: models.py:754
 msgid "User signature length"
 msgstr "Длина подписи пользователя"
 
-#: models.py:730
+#: models.py:759
 msgid "Maximum number of messages per page in the topic view"
 msgstr "Максимальное количество сообщений на странице при просмотре темы"
 
-#: models.py:735
+#: models.py:764
 msgid "Maximum number of topics per page in the board view"
 msgstr "Максимальное количество тем на странице при просмотре доски"
 
-#: models.py:740
+#: models.py:769
 msgid "Maximum length of a users signature"
 msgstr "Максимальная длина подписи пользователя"
 
-#: models.py:751
+#: models.py:780
 msgid "setting"
 msgstr "настройка"
 
-#: models.py:752
+#: models.py:781
 msgid "settings"
 msgstr "настройки"
 
-#: models.py:781
+#: models.py:810
 msgid "user profile"
 msgstr "профиль пользователя"
 
-#: models.py:782
+#: models.py:811
 msgid "user profiles"
 msgstr "профили пользователей"
 
@@ -988,15 +1048,15 @@ msgstr "Результаты"
 msgid "Nothing found …"
 msgstr "Ничего не найдено…"
 
-#: templatetags/aa_forum_datetime.py:56
+#: templatetags/aa_forum_datetime.py:57
 msgid "Timezone Conversion"
 msgstr "Преобразование временной зоны"
 
-#: views/admin.py:160
+#: views/admin.py:165
 msgid "<h4>Success!</h4><p>Category created.</p>"
 msgstr "<h4>Успех!</h4><p>Категория создана.</p>"
 
-#: views/admin.py:198
+#: views/admin.py:205
 #, python-brace-format
 msgid ""
 "<h4>Success!</h4><p>Category name changed from \"{category_name_old}\" to "
@@ -1005,36 +1065,36 @@ msgstr ""
 "<h4>Успех!</h4><p>Имя категории изменено с \"{category_name_old}\" на "
 "\"{category.name}\".</p>"
 
-#: views/admin.py:234
+#: views/admin.py:245
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Category \"{category_name}\" removed.</p>"
 msgstr "<h4>Успех!</h4><p>Категория \"{category_name}\" удалена.</p>"
 
-#: views/admin.py:285 views/admin.py:336
+#: views/admin.py:298 views/admin.py:354
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{new_board.name}\" created.</p>"
 msgstr "<h4>Успех!</h4><p>Доска \"{new_board.name}\" создана.</p>"
 
-#: views/admin.py:387
+#: views/admin.py:409
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{board.name}\" changed.</p>"
 msgstr "<h4>Успех!</h4><p>Доска \"{board.name}\" изменена.</p>"
 
-#: views/admin.py:422
+#: views/admin.py:450
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{board_name}\" removed.</p>"
 msgstr "<h4>Успех!</h4><p>Доска \"{board_name}\" удалена.</p>"
 
-#: views/admin.py:519
+#: views/admin.py:556
 msgid "<h4>Success!</h4><p>Settings updated.</p>"
 msgstr "<h4>Успех!</h4><p>Настройки обновлены.</p>"
 
-#: views/admin.py:528 views/personal_messages.py:106
-#: views/personal_messages.py:219 views/profile.py:65
+#: views/admin.py:566 views/personal_messages.py:116
+#: views/personal_messages.py:237 views/profile.py:68
 msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
 msgstr "<h4>Ошибка!</h4><p>Что-то сломалось, проверьте введенные данные.</p>"
 
-#: views/forum.py:210
+#: views/forum.py:227
 msgid ""
 "<h4>Error!</h4><p>The board you were trying to visit does either not exist, "
 "or you don't have access to it.</p>"
@@ -1042,14 +1102,14 @@ msgstr ""
 "<h4>Ошибка!</h4><p>Доска, на которую вы пытаетесь попасть, не существует или "
 "Вам не доступна.</p>"
 
-#: views/forum.py:262
+#: views/forum.py:284
 msgid ""
 "<h4>Error!</h4><p>The category you were trying to post in does not exist.</p>"
 msgstr ""
 "<h4>Ошибка!</h4><p>Категория, в которую в попытались написать, не существует."
 "</p>"
 
-#: views/forum.py:287
+#: views/forum.py:311
 msgid ""
 "<h4>Error!</h4><p>The board you were trying to post in does either not "
 "exist, or you don't have access to it.</p>"
@@ -1057,7 +1117,7 @@ msgstr ""
 "<h4>Ошибка!</h4><p>Доска, на которую вы пытаетесь написать, не существует "
 "или Вам не доступна.</p>"
 
-#: views/forum.py:305
+#: views/forum.py:331
 msgid ""
 "<h4>Error!</h4><p>The board you were trying to post in is an Announcement "
 "Board and you don't have the permissions to start a topic there.</p>"
@@ -1065,7 +1125,7 @@ msgstr ""
 "<h4>Ошибка!</h4><p>Доска, на которую вы пытаетесь написать, - это доска "
 "объявлений и у вас нет прав начинать тему там.</p>"
 
-#: views/forum.py:352
+#: views/forum.py:380
 #, python-brace-format
 msgid ""
 "<h4>Warning!</h4><p>There is already a topic with the exact same subject in "
@@ -1075,7 +1135,7 @@ msgstr ""
 "<h4>Предупреждение!</h4><p>На доске уже есть тема с таким же названием.</"
 "p><p>См.: <a href=\"{existing_topic_url}\">{existing_topic.subject}</a></p>"
 
-#: views/forum.py:399
+#: views/forum.py:432
 msgid ""
 "<h4>Error!</h4><p>Either subject or message is missing. Please make sure you "
 "enter both fields, as both fields are mandatory.</p>"
@@ -1083,7 +1143,7 @@ msgstr ""
 "<h4>Ошибка!</h4><p>Отсутствует название или текст сообщения. Заполните оба "
 "поля.</p>"
 
-#: views/forum.py:448 views/forum.py:659
+#: views/forum.py:488 views/forum.py:718
 msgid ""
 "<h4>Error!</h4><p>The topic you were trying to view does not exist or you do "
 "not have access to it.</p>"
@@ -1091,7 +1151,7 @@ msgstr ""
 "<h4>Ошибка!</h4><p>Тема, которую вы пытаетесь посмотреть, не существует или "
 "Вам не доступна.</p>"
 
-#: views/forum.py:539
+#: views/forum.py:585
 msgid ""
 "<h4>Error!</h4><p>The topic you were trying to modify does not exist or you "
 "do not have access to it.</p>"
@@ -1099,15 +1159,15 @@ msgstr ""
 "<h4>Ошибка!</h4><p>Тема, которую вы пытаетесь изменить, не существует или "
 "Вам не доступна.</p>"
 
-#: views/forum.py:559
+#: views/forum.py:607
 msgid "<h4>Error!</h4><p>You are not allowed to modify this topic!</p>"
 msgstr "<h4>Ошибка!</h4><p>Вам не разрешается изменять эту тему!</p>"
 
-#: views/forum.py:588
+#: views/forum.py:639
 msgid "<h4>Success!</h4><p>The topic subject has been updated.</p>"
 msgstr "<h4>Успех!</h4><p>Название темы изменено.</p>"
 
-#: views/forum.py:772
+#: views/forum.py:837
 msgid ""
 "<h4>Error!</h4><p>The topic you were trying to reply does not exist or you "
 "do not have access to it.</p>"
@@ -1115,46 +1175,56 @@ msgstr ""
 "<h4>Ошибка!</h4><p>Тема, в которой вы пытаетесь ответить, не существует или "
 "Вам не доступна.</p>"
 
-#: views/forum.py:823
+#: views/forum.py:893
 msgid "<h4>Error!</h4><p>Message field is mandatory and cannot be empty.</p>"
 msgstr ""
 "<h4>Ошибка!</h4><p>Текст сообщения должен присутствовать и не может быть "
 "пустым.</p>"
 
-#: views/forum.py:832
+#: views/forum.py:902
 msgid "<h4>Error!</h4><p>Something went wrong, please try again.</p>"
 msgstr "<h4>Ошибка!</h4><p>Что-то пошло не так, попробуйте еще раз.</p>"
 
-#: views/forum.py:863
-#, python-brace-format
-msgid "<h4>Success!</h4><p>Topic \"{topic}\" has been unlocked/re-opened.</p>"
+#: views/forum.py:940
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "<h4>Success!</h4><p>Topic \"{topic}\" has been unlocked/re-opened.</p>"
+msgid ""
+"<h4>Success!</h4><p>Topic \"{current_topic}\" has been unlocked/re-opened.</"
+"p>"
 msgstr "<h4>Успех!</h4><p>Тема \"{topic}\" была открыта.</p>"
 
-#: views/forum.py:875
-#, python-brace-format
-msgid "<h4>Success!</h4><p>Topic \"{topic}\" has been locked/closed.</p>"
+#: views/forum.py:954
+#, fuzzy, python-brace-format
+#| msgid "<h4>Success!</h4><p>Topic \"{topic}\" has been locked/closed.</p>"
+msgid ""
+"<h4>Success!</h4><p>Topic \"{current_topic}\" has been locked/closed.</p>"
 msgstr "<h4>Успех!</h4><p>Тема \"{topic}\" была закрыта.</p>"
 
-#: views/forum.py:909
-#, python-brace-format
-msgid "<h4>Success!</h4><p>Topic \"{topic}\" is no longer \"Sticky\".</p>"
+#: views/forum.py:995
+#, fuzzy, python-brace-format
+#| msgid "<h4>Success!</h4><p>Topic \"{topic}\" is no longer \"Sticky\".</p>"
+msgid ""
+"<h4>Success!</h4><p>Topic \"{curent_topic}\" is no longer \"Sticky\".</p>"
 msgstr "<h4>Успех!</h4><p>Тема \"{topic}\" больше не \"Sticky\".</p>"
 
-#: views/forum.py:919
-#, python-brace-format
-msgid "<h4>Success!</h4><p>Topic \"{topic}\" is now \"Sticky\".</p>"
+#: views/forum.py:1009
+#, fuzzy, python-brace-format
+#| msgid "<h4>Success!</h4><p>Topic \"{topic}\" is now \"Sticky\".</p>"
+msgid "<h4>Success!</h4><p>Topic \"{curent_topic}\" is now \"Sticky\".</p>"
 msgstr "<h4>Успех!</h4><p>Тема \"{topic}\" теперь \"Sticky\".</p>"
 
-#: views/forum.py:951
-#, python-brace-format
-msgid "<h4>Success!</h4><p>Topic \"{topic_subject}\" removed.</p>"
+#: views/forum.py:1044
+#, fuzzy, python-brace-format
+#| msgid "<h4>Success!</h4><p>Topic \"{topic_subject}\" removed.</p>"
+msgid "<h4>Success!</h4><p>Topic \"{topic__subject}\" removed.</p>"
 msgstr "<h4>Успех!</h4><p>Тема \"{topic_subject}\" удалена.</p>"
 
-#: views/forum.py:985
+#: views/forum.py:1080
 msgid "<h4>Error!</h4><p>The message doesn't exist.</p>"
 msgstr "<h4>Ошибка!</h4><p>Сообщение не существует.</p>"
 
-#: views/forum.py:1028
+#: views/forum.py:1124
 msgid ""
 "<h4>Error!</h4><p>The message you were trying to modify does either not "
 "exist, or you don't have access to it.</p>"
@@ -1162,27 +1232,27 @@ msgstr ""
 "<h4>Ошибка!</h4><p>Сообщение, которое Вы пытаетесь изменить, не существует "
 "или Вам не доступно.</p>"
 
-#: views/forum.py:1049
+#: views/forum.py:1147
 msgid "<h4>Error!</h4><p>You are not allowed to modify this message!</p>"
 msgstr "<h4>Ошибка!</h4><p>Вам не разрешается изменять это сообщение!</p>"
 
-#: views/forum.py:1073
+#: views/forum.py:1174
 msgid "<h4>Success!</h4><p>The message has been updated.</p>"
 msgstr "<h4>Успех!</h4><p>Сообщение изменено.</p>"
 
-#: views/forum.py:1092
+#: views/forum.py:1197
 msgid "<h4>Error!</h4><p>Mandatory form field is empty.</p>"
 msgstr "<h4>Ошибка!</h4><p>Необходимые поля формы не заполнены.</p>"
 
-#: views/forum.py:1172
+#: views/forum.py:1287
 msgid "<h4>Error!</h4><p>You are not allowed to delete this message!</p>"
 msgstr "<h4>Ошибка!</h4><p>Вам не разрешается удалять это сообщение!</p>"
 
-#: views/forum.py:1196
+#: views/forum.py:1317
 msgid "<h4>Success!</h4><p>The message has been deleted.</p>"
 msgstr "<h4>Успех!</h4><p>Сообщение удалено.</p>"
 
-#: views/forum.py:1218
+#: views/forum.py:1342
 msgid ""
 "<h4>Success!</h4><p>The message has been deleted.</p><p>This was the topics "
 "opening post, so the topic has been deleted as well.</p>"
@@ -1190,14 +1260,14 @@ msgstr ""
 "<h4>Успех!</h4><p>Сообщение удалено.</p><p>Это было стартовое сообщение "
 "темы, так что вся тема также удалена.</p>"
 
-#: views/personal_messages.py:96
+#: views/personal_messages.py:104
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Message to {recipient_main_char} sent.</p>"
 msgstr ""
 "<h4>Успех!</h4><p>Сообщение пользователю \"{recipient_main_char}\" "
 "отправлено.</p>"
 
-#: views/personal_messages.py:171
+#: views/personal_messages.py:190
 msgid ""
 "<h4>Error!</h4><p>The message you were trying to reply to does either not "
 "exist or you are not the recipient.</p>"
@@ -1205,13 +1275,13 @@ msgstr ""
 "<h4>Ошибка!</h4><p>Сообщение, на которое Вы пытаетесь ответить, не "
 "существует или Вы не являетесь получателем.</p>"
 
-#: views/personal_messages.py:208
+#: views/personal_messages.py:226
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>"
 msgstr ""
 "<h4>Успех!</h4><p>Ответ пользователю \"{recipient_main_char}\" отправлен.</p>"
 
-#: views/personal_messages.py:259 views/personal_messages.py:294
+#: views/personal_messages.py:282 views/personal_messages.py:319
 msgid ""
 "<h4>Error!</h4><p>The message you tried to remove does either not exist or "
 "is not yours to remove.</p>"
@@ -1219,19 +1289,19 @@ msgstr ""
 "<h4>Ошибка!</h4><p>Сообщение, которое Вы пытаетесь удалить, не существует "
 "или оно не Ваше.</p>"
 
-#: views/personal_messages.py:275
+#: views/personal_messages.py:298
 msgid "<h4>Success!</h4><p>Message removed from your inbox.</p>"
 msgstr "<h4>Успех!</h4><p>Сообщение удалено из входящих.</p>"
 
-#: views/personal_messages.py:311
+#: views/personal_messages.py:337
 msgid ""
 "<h4>Success!</h4><p>Message has been removed from your sent messages.</p>"
 msgstr "<h4>Успех!</h4><p>Сообщение удалено из отправленных.</p>"
 
-#: views/personal_messages.py:326
+#: views/personal_messages.py:352
 msgid "<h4>Error!</h4><p>Something went wrong.</p>"
 msgstr "<h4>Упс!</h4><p>Что-то пошло не так!</p>"
 
-#: views/profile.py:56
+#: views/profile.py:58
 msgid "<h4>Success!</h4><p>Profile saved.</p>"
 msgstr "<h4>Успех!</h4><p>Профиль сохранен.</p>"
