@@ -295,9 +295,7 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
             messages.success(
                 request=request,
                 message=mark_safe(
-                    s=_(
-                        f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>'  # pylint: disable=line-too-long
-                    )
+                    s=_(f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>')
                 ),
             )
 
@@ -353,9 +351,7 @@ def board_create_child(
             messages.success(
                 request=request,
                 message=mark_safe(
-                    s=_(
-                        f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>'  # pylint: disable=line-too-long
-                    )
+                    s=_(f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>')
                 ),
             )
 
