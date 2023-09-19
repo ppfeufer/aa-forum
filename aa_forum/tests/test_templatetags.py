@@ -40,22 +40,24 @@ class TestMainCharacterName(TestCase):
     def test_should_contain_character_name_for_users_with_main(self):
         """
         Test should contain character name for user with main set
+
         :return:
         """
 
         # given
-        user = create_fake_user(1001, "Bruce Wayne")
+        user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
         context = {"user": user}
 
         # when
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "Bruce Wayne")
+        self.assertEqual(first=result, second="Bruce Wayne")
 
     def test_should_contain_user_character_name_for_users_without_main(self):
         """
         Should return username for users without a main character
+
         :return:
         """
 
@@ -67,11 +69,12 @@ class TestMainCharacterName(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "john")
+        self.assertEqual(first=result, second="john")
 
     def test_should_return_deleted_user_for_sentinel_user(self):
         """
         Should return "deleted" for sentinel user
+
         :return:
         """
 
@@ -83,11 +86,12 @@ class TestMainCharacterName(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "deleted")
+        self.assertEqual(first=result, second="deleted")
 
     def test_should_be_empty_for_none(self):
         """
         Test should be empty
+
         :return:
         """
 
@@ -98,7 +102,7 @@ class TestMainCharacterName(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(first=result, second="")
 
 
 class TestMainCharacterId(TestCase):
@@ -114,22 +118,24 @@ class TestMainCharacterId(TestCase):
     def test_should_contain_character_id_for_users_with_main(self):
         """
         Test should contain main character ID for users with main
+
         :return:
         """
 
         # given
-        user = create_fake_user(1001, "Bruce Wayne")
+        user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
         context = {"user": user}
 
         # when
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "1001")
+        self.assertEqual(first=result, second="1001")
 
     def test_should_contain_dummy_id_for_users_without_main(self):
         """
         Test should contain dummy ID (1) for users without main character
+
         :return:
         """
 
@@ -141,11 +147,12 @@ class TestMainCharacterId(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "1")
+        self.assertEqual(first=result, second="1")
 
     def test_should_be_dummy_id_for_sentinel_user(self):
         """
         Test should return dummy ID (1) for sentinel user
+
         :return:
         """
 
@@ -157,11 +164,12 @@ class TestMainCharacterId(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "1")
+        self.assertEqual(first=result, second="1")
 
     def test_should_be_dummy_id_for_none(self):
         """
         Test should return dummy ID (1) for None
+
         :return:
         """
 
@@ -172,7 +180,7 @@ class TestMainCharacterId(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "1")
+        self.assertEqual(first=result, second="1")
 
 
 class TestMainCharacterCorporationName(TestCase):
@@ -190,22 +198,30 @@ class TestMainCharacterCorporationName(TestCase):
     def test_should_contain_corp_name_for_users_with_main(self):
         """
         Test should return corporation name for users with main character
+
         :return:
         """
 
         # given
-        user = create_fake_user(1001, "Bruce Wayne", 2001, "Wayne Tech Inc.", "WYT")
+        user = create_fake_user(
+            character_id=1001,
+            character_name="Bruce Wayne",
+            corporation_id=2001,
+            corporation_name="Wayne Tech Inc.",
+            corporation_ticker="WYT",
+        )
         context = {"user": user}
 
         # when
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "Wayne Tech Inc.")
+        self.assertEqual(first=result, second="Wayne Tech Inc.")
 
     def test_should_be_empty_for_users_without_main(self):
         """
         Test should be empty for users without main character
+
         :return:
         """
 
@@ -217,11 +233,12 @@ class TestMainCharacterCorporationName(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(first=result, second="")
 
     def test_should_be_empty_for_sentinel_user(self):
         """
         Test should be empty for sentinel user
+
         :return:
         """
 
@@ -233,11 +250,12 @@ class TestMainCharacterCorporationName(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(first=result, second="")
 
     def test_should_be_empty_for_none(self):
         """
         Test should be empty for None
+
         :return:
         """
 
@@ -248,12 +266,13 @@ class TestMainCharacterCorporationName(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(first=result, second="")
 
 
 class TestMainCorporationId(TestCase):
     """
     Tests for main_character_corporation_id template tag
+
     """
 
     @classmethod
@@ -266,38 +285,47 @@ class TestMainCorporationId(TestCase):
     def test_should_contain_corporation_id_for_users_with_main(self):
         """
         Test should return main character corp ID for users with main character
+
         :return:
         """
 
         # given
-        user = create_fake_user(1001, "Bruce Wayne", 2001, "Wayne Tech Inc.", "WYT")
+        user = create_fake_user(
+            character_id=1001,
+            character_name="Bruce Wayne",
+            corporation_id=2001,
+            corporation_name="Wayne Tech Inc.",
+            corporation_ticker="WYT",
+        )
         context = {"user": user}
 
         # when
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "2001")
+        self.assertEqual(first=result, second="2001")
 
     def test_should_be_dummy_id_for_users_without_main(self):
         """
         Test should return dummy ID (1) for users without main character
+
         :return:
         """
 
         # given
-        user = AuthUtils.create_user("john")
+        user = AuthUtils.create_user(username="john")
         context = {"user": user}
 
         # when
         result = render_template(string=self.template, context=context)
         # then
 
-        self.assertEqual(result, "1")
+        self.assertEqual(first=result, second="1")
 
     def test_should_be_dummy_id_for_sentinel_user(self):
         """
         Test should return dummy ID (1) for sentinel user
+
         :return:
         """
 
@@ -309,11 +337,12 @@ class TestMainCorporationId(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "1")
+        self.assertEqual(first=result, second="1")
 
     def test_should_be_dummy_id_for_none(self):
         """
         Test should return dummy ID (1) for None
+
         :return:
         """
 
@@ -324,7 +353,7 @@ class TestMainCorporationId(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "1")
+        self.assertEqual(first=result, second="1")
 
 
 class TestMainCharacterAllianceName(TestCase):
@@ -340,16 +369,17 @@ class TestMainCharacterAllianceName(TestCase):
     def test_should_contain_alliance_name_for_users_with_main(self):
         """
         Test should return main character alliance name for users with min character
+
         :return:
         """
 
         # given
         user = create_fake_user(
-            1001,
-            "Bruce Wayne",
-            2001,
-            "Wayne Tech Inc.",
-            "WYT",
+            character_id=1001,
+            character_name="Bruce Wayne",
+            corporation_id=2001,
+            corporation_name="Wayne Tech Inc.",
+            corporation_ticker="WYT",
             alliance_id=3001,
             alliance_name="Wayne Enterprices",
         )
@@ -360,11 +390,12 @@ class TestMainCharacterAllianceName(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "Wayne Enterprices")
+        self.assertEqual(first=result, second="Wayne Enterprices")
 
     def test_should_be_empty_for_users_without_main(self):
         """
         Test should be empty for users without main character
+
         :return:
         """
 
@@ -376,17 +407,23 @@ class TestMainCharacterAllianceName(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(first=result, second="")
 
     def test_should_be_empty_when_main_is_not_in_an_alliance(self):
         """
         Test should be empty when main character is not in an alliance
+
         :return:
         """
 
         # given
         user = create_fake_user(
-            2012, "William Riker", 2012, "Starfleet", "SF", alliance_id=None
+            character_id=2012,
+            character_name="William Riker",
+            corporation_id=2012,
+            corporation_name="Starfleet",
+            corporation_ticker="SF",
+            alliance_id=None,
         )
 
         context = {"user": user}
@@ -395,11 +432,12 @@ class TestMainCharacterAllianceName(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(first=result, second="")
 
     def test_should_be_empty_for_sentinel_user(self):
         """
         Test should be empty for sentinel user
+
         :return:
         """
 
@@ -411,11 +449,12 @@ class TestMainCharacterAllianceName(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(first=result, second="")
 
     def test_should_be_empty_for_none(self):
         """
         Test should be empty for None
+
         :return:
         """
 
@@ -426,7 +465,7 @@ class TestMainCharacterAllianceName(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "")
+        self.assertEqual(first=result, second="")
 
 
 class TestMainAllianceId(TestCase):
@@ -442,16 +481,17 @@ class TestMainAllianceId(TestCase):
     def test_should_contain_alliance_id_for_users_with_main(self):
         """
         Test should return main character alliance ID for user with main character
+
         :return:
         """
 
         # given
         user = create_fake_user(
-            1001,
-            "Bruce Wayne",
-            2001,
-            "Wayne Tech Inc.",
-            "WYT",
+            character_id=1001,
+            character_name="Bruce Wayne",
+            corporation_id=2001,
+            corporation_name="Wayne Tech Inc.",
+            corporation_ticker="WYT",
             alliance_id=3001,
             alliance_name="Wayne Enterprises",
         )
@@ -461,11 +501,12 @@ class TestMainAllianceId(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "3001")
+        self.assertEqual(first=result, second="3001")
 
     def test_should_be_dummy_id_for_users_without_main(self):
         """
         Test should return dummy ID (1) for user without main character
+
         :return:
         """
 
@@ -477,17 +518,23 @@ class TestMainAllianceId(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "1")
+        self.assertEqual(first=result, second="1")
 
     def test_should_dummy_id_when_main_is_not_in_an_alliance(self):
         """
         Test should dummy ID (1) when main character is not in an alliance
+
         :return:
         """
 
         # given
         user = create_fake_user(
-            2012, "William Riker", 2012, "Starfleet", "SF", alliance_id=None
+            character_id=2012,
+            character_name="William Riker",
+            corporation_id=2012,
+            corporation_name="Starfleet",
+            corporation_ticker="SF",
+            alliance_id=None,
         )
 
         context = {"user": user}
@@ -496,11 +543,12 @@ class TestMainAllianceId(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "1")
+        self.assertEqual(first=result, second="1")
 
     def test_should_be_dummy_id_for_sentinel_user(self):
         """
         Test should return dummy ID (1) for sentinel user
+
         :return:
         """
 
@@ -512,11 +560,12 @@ class TestMainAllianceId(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "1")
+        self.assertEqual(first=result, second="1")
 
     def test_should_be_dummy_id_for_none(self):
         """
         Test should return dummy ID (1) for None
+
         :return:
         """
 
@@ -527,7 +576,7 @@ class TestMainAllianceId(TestCase):
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(result, "1")
+        self.assertEqual(first=result, second="1")
 
 
 class TestForumTemplateVariables(TestCase):
@@ -550,8 +599,7 @@ class TestForumTemplateVariables(TestCase):
             context={"content": "bar"},
         )
 
-        # self.assertInHTML("bar", rendered_template)
-        self.assertEqual(rendered, "bar")
+        self.assertEqual(first=rendered, second="bar")
 
     def test_should_raise_template_syntax_error(self):
         """
@@ -560,28 +608,33 @@ class TestForumTemplateVariables(TestCase):
         """
 
         with self.assertRaisesMessage(
-            TemplateSyntaxError,
-            "'set_template_variable' tag must be of the form: "
-            "{% set_template_variable <var_name> = <var_value> %}",
+            expected_exception=TemplateSyntaxError,
+            expected_message=(
+                "'set_template_variable' tag must be of the form: "
+                "{% set_template_variable <var_name> = <var_value> %}"
+            ),
         ):
             render_template(
-                "{% load aa_forum_template_variables %}"
-                "{% set_template_variable foo %}"
-                "{{ foo }}"
+                string=(
+                    "{% load aa_forum_template_variables %}"
+                    "{% set_template_variable foo %}"
+                    "{{ foo }}"
+                )
             )
 
     def test_should_return_personal_message_unread_count_as_empty_string(self):
         """
         Test personal_message_unread_count to return zero
+
         :return:
         """
 
         user = create_fake_user(
-            1001,
-            "Bruce Wayne",
-            2001,
-            "Wayne Tech Inc.",
-            "WYT",
+            character_id=1001,
+            character_name="Bruce Wayne",
+            corporation_id=2001,
+            corporation_name="Wayne Tech Inc.",
+            corporation_ticker="WYT",
             alliance_id=3001,
             alliance_name="Wayne Enterprises",
         )
@@ -589,37 +642,40 @@ class TestForumTemplateVariables(TestCase):
         self.client.force_login(user)
 
         rendered = render_template(
-            "{% load aa_forum_template_variables %}"
-            "{% personal_message_unread_count 1001 %}"
+            string=(
+                "{% load aa_forum_template_variables %}"
+                "{% personal_message_unread_count 1001 %}"
+            )
         )
 
-        self.assertEqual(rendered, "")
+        self.assertEqual(first=rendered, second="")
 
     def test_should_return_personal_message_unread_count_as_bootstrap_badge_with_number(
         self,
     ):
         """
         Test personal_message_unread_count to return a bootstrap badge with a number
+
         :return:
         """
 
         # given (creating our personal message)
         user_sender = create_fake_user(
-            1001,
-            "Bruce Wayne",
-            2001,
-            "Wayne Tech Inc.",
-            "WYT",
+            character_id=1001,
+            character_name="Bruce Wayne",
+            corporation_id=2001,
+            corporation_name="Wayne Tech Inc.",
+            corporation_ticker="WYT",
             alliance_id=3001,
             alliance_name="Wayne Enterprises",
         )
 
         user_receiver = create_fake_user(
-            1002,
-            "Batman",
-            2001,
-            "Wayne Tech Inc.",
-            "WYT",
+            character_id=1002,
+            character_name="Batman",
+            corporation_id=2001,
+            corporation_name="Wayne Tech Inc.",
+            corporation_ticker="WYT",
             alliance_id=3001,
             alliance_name="Wayne Enterprises",
         )
@@ -636,8 +692,10 @@ class TestForumTemplateVariables(TestCase):
 
         # then
         self.assertEqual(
-            response,
-            '<span class="badge aa-forum-badge-personal-messages-unread-count">1</span>',
+            first=response,
+            second=(
+                '<span class="badge aa-forum-badge-personal-messages-unread-count">1</span>'  # pylint: disable=line-too-long
+            ),
         )
 
 
@@ -649,6 +707,7 @@ class TestForumVersionedStatic(TestCase):
     def test_versioned_static(self):
         """
         Test should return static URL string with version
+
         :return:
         """
 
@@ -663,8 +722,8 @@ class TestForumVersionedStatic(TestCase):
         )
 
         self.assertEqual(
-            rendered_template,
-            f'/static/aa_forum/css/aa-forum.min.css?v={context["version"]}',
+            first=rendered_template,
+            second=f'/static/aa_forum/css/aa-forum.min.css?v={context["version"]}',
         )
 
 
@@ -707,6 +766,7 @@ class TestHighlightSearchTerm(TestCase):
     def test_should_highlight_with_just_text(self):
         """
         Test should highlight search term
+
         :return:
         """
 
@@ -718,11 +778,12 @@ class TestHighlightSearchTerm(TestCase):
             '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum'
         )
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)
 
     def test_should_add_dummy_href(self):
         """
         Test should add a dummy href
+
         :return:
         """
 
@@ -738,11 +799,12 @@ class TestHighlightSearchTerm(TestCase):
             '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum</a>'
         )
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)
 
     def test_should_not_highlight_in_link_href(self):
         """
         Test should not highlight in an a-tag's href attribute
+
         :return:
         """
 
@@ -755,11 +817,12 @@ class TestHighlightSearchTerm(TestCase):
             '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum</a>'
         )
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)
 
     def test_should_not_highlight_in_link_title(self):
         """
         Test should not highlight in an a-tag's title attribute
+
         :return:
         """
 
@@ -775,11 +838,12 @@ class TestHighlightSearchTerm(TestCase):
             '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum</a>'
         )
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)
 
     def test_should_not_highlight_in_link_name(self):
         """
         Test should not highlight in an a-tag's name attribute
+
         :return:
         """
 
@@ -795,11 +859,12 @@ class TestHighlightSearchTerm(TestCase):
             '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum</a>'
         )
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)
 
     def test_should_not_highlight_in_img_src(self):
         """
         Test should not highlight in an img-tag's src attribute
+
         :return:
         """
 
@@ -815,11 +880,12 @@ class TestHighlightSearchTerm(TestCase):
             '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum'
         )
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)
 
     def test_should_add_dummy_image_src(self):
         """
         Test should add a dummy image src
+
         :return:
         """
 
@@ -835,11 +901,12 @@ class TestHighlightSearchTerm(TestCase):
             '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum'
         )
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)
 
     def test_should_not_highlight_in_img_alt(self):
         """
         Test should not highlight in an img-tag's alt attribute
+
         :return:
         """
 
@@ -855,11 +922,12 @@ class TestHighlightSearchTerm(TestCase):
             '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum'
         )
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)
 
     def test_should_not_highlight_in_img_title(self):
         """
         Test should not highlight in an img-tag's title attribute
+
         :return:
         """
 
@@ -875,7 +943,7 @@ class TestHighlightSearchTerm(TestCase):
             '<span class="aa-forum-search-term-highlight">Lorem</span> Ipsum'
         )
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)
 
 
 # 2021-08-17 05:38:13.887496
@@ -890,13 +958,14 @@ class TestForumDatetime(TestCase):
     def setUpClass(cls) -> None:
         super().setUpClass()
 
-        cls.db_datetime = parser.parse("2021-08-17 05:38:13.887496")
+        cls.db_datetime = parser.parse(timestr="2021-08-17 05:38:13.887496")
         cls.template = "{% load aa_forum_datetime %}{{ message_date|forum_time }}"
 
     @modify_settings(INSTALLED_APPS={"remove": "timezones"})
     def test_should_return_formatted_date_and_time(self):
         """
         Test should return formatted date and time without aa-timezones support
+
         :return:
         :rtype:
         """
@@ -905,12 +974,13 @@ class TestForumDatetime(TestCase):
         rendered_template = render_template(string=self.template, context=context)
         expected_result = "Aug. 17, 2021, 05:38:13"
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)
 
     @modify_settings(INSTALLED_APPS={"append": "timezones"})
     def test_should_return_formatted_date_and_time_with_aa_timezones_support(self):
         """
         Test should return formatted date and time with aa-timezones support
+
         :return:
         :rtype:
         """
@@ -919,7 +989,7 @@ class TestForumDatetime(TestCase):
         rendered_template = render_template(string=self.template, context=context)
         timestamp_from_db_datetime = int(datetime.timestamp(self.db_datetime))
         timezones_url = reverse_url(
-            "timezones:index", args=[timestamp_from_db_datetime]
+            viewname="timezones:index", args=[timestamp_from_db_datetime]
         )
         link_title = "Timezone Conversion"
         formatted_forum_date = "Aug. 17, 2021, 05:38:13"
@@ -930,11 +1000,12 @@ class TestForumDatetime(TestCase):
             f'title="{link_title}"><i class="fas fa-question-circle"></i></a>)</sup>'
         )
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)
 
     def test_should_return_empty_date_and_time_string(self):
         """
         Test should return empty date and time string for message_date = ""
+
         :return:
         :rtype:
         """
@@ -943,11 +1014,12 @@ class TestForumDatetime(TestCase):
         rendered_template = render_template(string=self.template, context=context)
         expected_result = ""
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)
 
     def test_should_return_empty_date_and_time_string_for_none(self):
         """
         Test should return empty date and time string for message_date = None
+
         :return:
         :rtype:
         """
@@ -956,4 +1028,4 @@ class TestForumDatetime(TestCase):
         rendered_template = render_template(string=self.template, context=context)
         expected_result = ""
 
-        self.assertEqual(rendered_template, expected_result)
+        self.assertEqual(first=rendered_template, second=expected_result)

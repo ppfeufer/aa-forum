@@ -70,6 +70,7 @@ class BaseReadOnlyAdminMixin:
     def has_add_permission(self, request):  # pylint: disable=unused-argument
         """
         Has add permissions
+
         :param request:
         :return:
         """
@@ -81,6 +82,7 @@ class BaseReadOnlyAdminMixin:
     ):
         """
         Has change permissions
+
         :param request:
         :param obj:
         :return:
@@ -93,6 +95,7 @@ class BaseReadOnlyAdminMixin:
     ):
         """
         Has delete permissions
+
         :param request:
         :param obj:
         :return:
@@ -113,6 +116,7 @@ class CategoryAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
     def _board_count(self, obj):
         """
         Return the board count per category
+
         :param obj:
         :return:
         """
@@ -138,6 +142,7 @@ class BoardAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
     def _groups(self, obj):
         """
         Return the groups this board is restricted to as list
+
         :param obj:
         :return:
         """
@@ -152,6 +157,7 @@ class BoardAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
     def _topics_count(self, obj):
         """
         Return the topics count per board
+
         :param obj:
         :return:
         """
@@ -170,6 +176,7 @@ class TopicAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
     def _messages_count(self, obj):
         """
         Return the message count per topic
+
         :param obj:
         :return:
         """

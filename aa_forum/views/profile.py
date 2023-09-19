@@ -22,25 +22,26 @@ from aa_forum import __title__
 from aa_forum.forms import UserProfileForm
 from aa_forum.helper.user import get_user_profile
 
-logger = LoggerAddTag(get_extension_logger(__name__), __title__)
+logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def index(request: WSGIRequest) -> HttpResponse:
     """
-    Profile indes view
+    Profile index view
+
     :param request:
     :return:
     """
 
-    logger.info(f"{request.user} called their user profile.")
+    logger.info(msg=f"{request.user} called their user profile.")
 
     user_profile = get_user_profile(user=request.user)
 
     # If this is a POST request we need to process the form data
     if request.method == "POST":
-        user_profile_form = UserProfileForm(request.POST, instance=user_profile)
+        user_profile_form = UserProfileForm(data=request.POST, instance=user_profile)
 
         # Check whether it's valid:
         if user_profile_form.is_valid():
@@ -53,18 +54,23 @@ def index(request: WSGIRequest) -> HttpResponse:
             user_profile.save()
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Profile saved.</p>"))
+                request=request,
+                message=mark_safe(
+                    s=_(message="<h4>Success!</h4><p>Profile saved.</p>")
+                ),
             )
 
-            return redirect("aa_forum:profile_index")
+            return redirect(to="aa_forum:profile_index")
 
         messages.error(
-            request,
-            mark_safe(
+            request=request,
+            message=mark_safe(
                 # pylint: disable=duplicate-code
-                _(
-                    "<h4>Error!</h4>"
-                    "<p>Something went wrong, please check your input.</p>"
+                s=_(
+                    message=(
+                        "<h4>Error!</h4>"
+                        "<p>Something went wrong, please check your input.</p>"
+                    )
                 )
             ),
         )
@@ -73,4 +79,8 @@ def index(request: WSGIRequest) -> HttpResponse:
 
     context = {"form": user_profile_form}
 
-    return render(request, "aa_forum/view/profile/index.html", context)
+    return render(
+        request=request,
+        template_name="aa_forum/view/profile/index.html",
+        context=context,
+    )

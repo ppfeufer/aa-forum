@@ -31,14 +31,15 @@ from aa_forum.helper.discord_messages import send_message_to_discord_webhook
 from aa_forum.helper.pagination import get_paginated_page_object
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Setting, Topic
 
-logger = LoggerAddTag(get_extension_logger(__name__), __title__)
+logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def index(request: WSGIRequest) -> HttpResponse:
     """
     Forum index view
+
     :param request:
     :return:
     """
@@ -48,9 +49,9 @@ def index(request: WSGIRequest) -> HttpResponse:
         user=request.user,
         message_time__gte=OuterRef("last_message__time_posted"),
     )
-    unread_topic_pks = Topic.objects.filter(~Exists(has_read_all_messages)).values_list(
-        "pk", flat=True
-    )
+    unread_topic_pks = Topic.objects.filter(
+        ~Exists(queryset=has_read_all_messages)
+    ).values_list("pk", flat=True)
 
     boards = (
         Board.objects.select_related(
@@ -62,7 +63,7 @@ def index(request: WSGIRequest) -> HttpResponse:
         )
         .prefetch_related(
             Prefetch(
-                "child_boards",
+                lookup="child_boards",
                 queryset=Board.objects.select_related(
                     "category",
                     "parent_board",
@@ -74,25 +75,31 @@ def index(request: WSGIRequest) -> HttpResponse:
                     "first_message__user_created__profile__main_character",
                 )
                 .annotate(
-                    num_posts=Count("topics__messages", distinct=True),
-                    num_topics=Count("topics", distinct=True),
+                    num_posts=Count(expression="topics__messages", distinct=True),
+                    num_topics=Count(expression="topics", distinct=True),
                     num_unread=Count(
-                        "topics", filter=Q(topics__in=unread_topic_pks), distinct=True
+                        expression="topics",
+                        filter=Q(topics__in=unread_topic_pks),
+                        distinct=True,
                     ),
                 )
-                .user_has_access(request.user)
+                .user_has_access(user=request.user)
                 .order_by("order", "id"),
             )
         )
-        .prefetch_related(Prefetch("groups", queryset=Group.objects.order_by("name")))
+        .prefetch_related(
+            Prefetch(lookup="groups", queryset=Group.objects.order_by("name"))
+        )
         .prefetch_related("topics")
-        .user_has_access(request.user)
+        .user_has_access(user=request.user)
         .filter(parent_board__isnull=True)
         .annotate(
-            num_posts=Count("topics__messages", distinct=True),
-            num_topics=Count("topics", distinct=True),
+            num_posts=Count(expression="topics__messages", distinct=True),
+            num_topics=Count(expression="topics", distinct=True),
             num_unread=Count(
-                "topics", filter=Q(topics__in=unread_topic_pks), distinct=True
+                expression="topics",
+                filter=Q(topics__in=unread_topic_pks),
+                distinct=True,
             ),
         )
         .order_by("category__order", "category__id", "order", "id")
@@ -116,18 +123,21 @@ def index(request: WSGIRequest) -> HttpResponse:
     categories = sorted(categories_map.values(), key=lambda k: k["order"])
     context = {"categories": categories}
 
-    logger.info(f"{request.user} called forum index.")
+    logger.info(msg=f"{request.user} called forum index.")
 
-    return render(request, "aa_forum/view/forum/index.html", context)
+    return render(
+        request=request, template_name="aa_forum/view/forum/index.html", context=context
+    )
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def board(
     request: WSGIRequest, category_slug: str, board_slug: str, page_number: int = None
 ) -> HttpResponse:
     """
     Forum board view
+
     :param request:
     :param category_slug:
     :param board_slug:
@@ -140,9 +150,9 @@ def board(
         user=request.user,
         message_time__gte=OuterRef("last_message__time_posted"),
     )
-    unread_topic_pks = Topic.objects.filter(~Exists(has_read_all_messages)).values_list(
-        "pk", flat=True
-    )
+    unread_topic_pks = Topic.objects.filter(
+        ~Exists(queryset=has_read_all_messages)
+    ).values_list("pk", flat=True)
 
     try:
         current_board = (
@@ -150,7 +160,7 @@ def board(
             .select_related("parent_board")
             .prefetch_related(
                 Prefetch(
-                    "child_boards",
+                    lookup="child_boards",
                     queryset=Board.objects.select_related(
                         "category",
                         "parent_board",
@@ -162,25 +172,27 @@ def board(
                         "first_message__user_created__profile__main_character",
                     )
                     .prefetch_related(
-                        Prefetch("groups", queryset=Group.objects.order_by("name"))
+                        Prefetch(
+                            lookup="groups", queryset=Group.objects.order_by("name")
+                        )
                     )
                     .prefetch_related("topics")
                     .annotate(
-                        num_posts=Count("topics__messages", distinct=True),
-                        num_topics=Count("topics", distinct=True),
+                        num_posts=Count(expression="topics__messages", distinct=True),
+                        num_topics=Count(expression="topics", distinct=True),
                         num_unread=Count(
-                            "topics",
+                            expression="topics",
                             filter=Q(topics__in=unread_topic_pks),
                             distinct=True,
                         ),
                     )
-                    .user_has_access(request.user)
+                    .user_has_access(user=request.user)
                     .order_by("order", "id"),
                 )
             )
             .prefetch_related(
                 Prefetch(
-                    "topics",
+                    lookup="topics",
                     queryset=Topic.objects.select_related(
                         "last_message",
                         "last_message__user_created",
@@ -189,36 +201,45 @@ def board(
                         "first_message__user_created",
                         "first_message__user_created__profile__main_character",
                     )
-                    .annotate(num_posts=Count("messages", distinct=True))
-                    .annotate(has_unread_messages=~Exists(has_read_all_messages))
+                    .annotate(num_posts=Count(expression="messages", distinct=True))
+                    .annotate(
+                        has_unread_messages=~Exists(queryset=has_read_all_messages)
+                    )
                     .order_by("-is_sticky", "-last_message__time_posted", "-id"),
                     to_attr="topics_sorted",
                 )
             )
             .prefetch_related(
-                Prefetch("announcement_groups", queryset=Group.objects.order_by("name"))
+                Prefetch(
+                    lookup="announcement_groups",
+                    queryset=Group.objects.order_by("name"),
+                )
             )
             .filter(category__slug=category_slug, slug=board_slug)
-            .user_has_access(request.user)
+            .user_has_access(user=request.user)
             .get()
         )
     except Board.DoesNotExist:
         messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The board you were trying to visit does "
-                    "either not exist, or you don't have access to it.</p>"
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>The board you were trying to visit does "
+                        "either not exist, or you don't have access to it.</p>"
+                    )
                 )
             ),
         )
 
         logger.info(
-            f"{request.user} called board without having access to it. "
-            "Redirecting to forum index."
+            msg=(
+                f"{request.user} called board without having access to it. "
+                "Redirecting to forum index."
+            )
         )
 
-        return redirect("aa_forum:forum_index")
+        return redirect(to="aa_forum:forum_index")
 
     page_obj = get_paginated_page_object(
         queryset=current_board.topics_sorted,
@@ -234,18 +255,21 @@ def board(
         "page_obj": page_obj,
     }
 
-    logger.info(f'{request.user} called board "{current_board.name}".')
+    logger.info(msg=f'{request.user} called board "{current_board.name}".')
 
-    return render(request, "aa_forum/view/forum/board.html", context)
+    return render(
+        request=request, template_name="aa_forum/view/forum/board.html", context=context
+    )
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def board_new_topic(
     request: WSGIRequest, category_slug: str, board_slug: str
 ) -> HttpResponse:
     """
     Begin a new topic
+
     :param request:
     :param category_slug:
     :param board_slug:
@@ -256,66 +280,78 @@ def board_new_topic(
         Category.objects.get(slug__exact=category_slug)
     except Category.DoesNotExist:
         messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The category you were trying to post in does "
-                    "not exist.</p>"
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>The category you were trying to post in "
+                        "does not exist.</p>"
+                    )
                 )
             ),
         )
 
         logger.info(
-            f"{request.user} tried to open a non existing category. "
-            "Redirecting to forum index."
+            msg=(
+                f"{request.user} tried to open a non existing category. "
+                "Redirecting to forum index."
+            )
         )
 
-        return redirect("aa_forum:forum_index")
+        return redirect(to="aa_forum:forum_index")
 
     try:
         current_board = (
             Board.objects.select_related("category")
-            .user_has_access(request.user)
+            .user_has_access(user=request.user)
             .filter(category__slug=category_slug, slug=board_slug)
             .get()
         )
     except Board.DoesNotExist:
         messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The board you were trying to post in does "
-                    "either not exist, or you don't have access to it.</p>"
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>The board you were trying to post in does "
+                        "either not exist, or you don't have access to it.</p>"
+                    )
                 )
             ),
         )
 
         logger.info(
-            f"{request.user} tried to create a topic in a board they have no access "
-            "to. Redirecting to forum index."
+            msg=(
+                f"{request.user} tried to create a topic in a board they have no "
+                "access to. Redirecting to forum index."
+            )
         )
 
-        return redirect("aa_forum:forum_index")
+        return redirect(to="aa_forum:forum_index")
 
     if not current_board.user_can_start_topic(user=request.user):
         messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The board you were trying to post in is an "
-                    "Announcement Board and you don't have the permissions to start a "
-                    "topic there.</p>"
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>The board you were trying to post in is "
+                        "an Announcement Board and you don't have the permissions to "
+                        "start a topic there.</p>"
+                    )
                 )
             ),
         )
 
         logger.info(
-            f"{request.user} tried to create a topic in an announcement board without "
-            "the permission to do so. Redirecting to board index."
+            msg=(
+                f"{request.user} tried to create a topic in an announcement board "
+                "without the permission to do so. Redirecting to board index."
+            )
         )
 
         return redirect(
-            "aa_forum:forum_board",
+            to="aa_forum:forum_board",
             category_slug=current_board.category.slug,
             board_slug=current_board.slug,
         )
@@ -323,7 +359,7 @@ def board_new_topic(
     # If this is a POST request we need to process the form data …
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = NewTopicForm(request.POST)
+        form = NewTopicForm(data=request.POST)
 
         # Check whether it's valid:
         if form.is_valid():
@@ -337,7 +373,7 @@ def board_new_topic(
                     existing_topic = existing_topic.get()
 
                     existing_topic_url = reverse(
-                        "aa_forum:forum_topic",
+                        viewname="aa_forum:forum_topic",
                         kwargs={
                             "category_slug": existing_topic.board.category.slug,
                             "board_slug": existing_topic.board.slug,
@@ -346,18 +382,18 @@ def board_new_topic(
                     )
 
                     messages.warning(
-                        request,
-                        mark_safe(
-                            _(
-                                f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{existing_topic_url}">{existing_topic.subject}</a></p>'  # pylint: disable=line-too-long
+                        request=request,
+                        message=mark_safe(
+                            s=_(
+                                message=f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{existing_topic_url}">{existing_topic.subject}</a></p>'  # pylint: disable=line-too-long
                             )
                         ),
                     )
 
                     return render(
-                        request,
-                        "aa_forum/view/forum/new-topic.html",
-                        {"board": current_board, "form": form},
+                        request=request,
+                        template_name="aa_forum/view/forum/new-topic.html",
+                        context={"board": current_board, "form": form},
                     )
 
                 new_topic = Topic(
@@ -373,8 +409,10 @@ def board_new_topic(
                 new_message.save()
 
             logger.info(
-                f'{request.user} started a new topic "{new_topic.subject}" '
-                f'in board "{current_board.name}".'
+                msg=(
+                    f'{request.user} started a new topic "{new_topic.subject}" '
+                    f'in board "{current_board.name}".'
+                )
             )
 
             # Send to webhook if one is configured
@@ -387,7 +425,7 @@ def board_new_topic(
                 )
 
             return redirect(
-                "aa_forum:forum_topic",
+                to="aa_forum:forum_topic",
                 category_slug=current_board.category.slug,
                 board_slug=current_board.slug,
                 topic_slug=new_topic.slug,
@@ -395,14 +433,16 @@ def board_new_topic(
 
         # Form is invalid
         messages.error(
-            request,
-            mark_safe(
+            request=request,
+            message=mark_safe(
                 # pylint: disable=duplicate-code
-                _(
-                    "<h4>Error!</h4>"
-                    "<p>Either subject or message is missing. "
-                    "Please make sure you enter both fields, "
-                    "as both fields are mandatory.</p>"
+                s=_(
+                    message=(
+                        "<h4>Error!</h4>"
+                        "<p>Either subject or message is missing. "
+                        "Please make sure you enter both fields, "
+                        "as both fields are mandatory.</p>"
+                    )
                 )
             ),
         )
@@ -413,14 +453,18 @@ def board_new_topic(
     context = {"board": current_board, "form": form}
 
     logger.info(
-        f'{request.user} is starting a new topic in board "{current_board.name}".'
+        msg=f'{request.user} is starting a new topic in board "{current_board.name}".'
     )
 
-    return render(request, "aa_forum/view/forum/new-topic.html", context)
+    return render(
+        request=request,
+        template_name="aa_forum/view/forum/new-topic.html",
+        context=context,
+    )
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def topic(
     request: WSGIRequest,
     category_slug: str,
@@ -430,6 +474,7 @@ def topic(
 ) -> HttpResponse:
     """
     View a topic
+
     :param request:
     :param category_slug:
     :param board_slug:
@@ -447,26 +492,30 @@ def topic(
 
     if not current_topic:
         messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The topic you were trying to view does not "
-                    "exist or you do not have access to it.</p>"
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>The topic you were trying to view does not "
+                        "exist or you do not have access to it.</p>"
+                    )
                 )
             ),
         )
 
         logger.info(
-            f"{request.user} called a non existent topic. Redirecting to forum index."
+            msg=(
+                f"{request.user} called a non existent topic. Redirecting to forum index."  # pylint: disable=line-too-long
+            )
         )
 
-        return redirect("aa_forum:forum_index")
+        return redirect(to="aa_forum:forum_index")
 
     # Determine if the current user can modify the topics subject
     can_modify_subject = False
     if (
         request.user == current_topic.first_message.user_created
-        or request.user.has_perm("aa_forum.manage_forum")
+        or request.user.has_perm(perm="aa_forum.manage_forum")
     ):
         can_modify_subject = True
 
@@ -508,13 +557,15 @@ def topic(
         "reply_form": EditMessageForm(),
     }
 
-    logger.info(f'{request.user} called topic "{current_topic.subject}".')
+    logger.info(msg=f'{request.user} called topic "{current_topic.subject}".')
 
-    return render(request, "aa_forum/view/forum/topic.html", context)
+    return render(
+        request=request, template_name="aa_forum/view/forum/topic.html", context=context
+    )
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def topic_modify(
     request: WSGIRequest,
     category_slug: str,
@@ -523,6 +574,7 @@ def topic_modify(
 ) -> HttpResponse:
     """
     Modify the topic's subject
+
     :param request:
     :param category_slug:
     :param board_slug:
@@ -539,40 +591,50 @@ def topic_modify(
 
     if not topic_to_modify:
         messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The topic you were trying to modify does not "
-                    "exist or you do not have access to it.</p>"
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>The topic you were trying to modify does "
+                        "not exist or you do not have access to it.</p>"
+                    )
                 )
             ),
         )
 
         logger.info(
-            f"{request.user} called a non existent topic. Redirecting to forum index."
+            msg=(
+                f"{request.user} called a non existent topic. Redirecting to forum index."  # pylint: disable=line-too-long
+            )
         )
 
-        return redirect("aa_forum:forum_index")
+        return redirect(to="aa_forum:forum_index")
 
     # Check if the user actually has the right to edit this message
     if (
         topic_to_modify.first_message.user_created != request.user
-        and not request.user.has_perm("aa_forum.manage_forum")
+        and not request.user.has_perm(perm="aa_forum.manage_forum")
     ):
         messages.error(
-            request,
-            mark_safe(
-                _("<h4>Error!</h4><p>You are not allowed to modify this topic!</p>")
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>You are not allowed to modify this topic!</p>"  # pylint: disable=line-too-long
+                    )
+                )
             ),
         )
 
         logger.info(
-            f'{request.user} tried to modify topic "{topic_to_modify.subject}" '
-            "without the proper permissions. Redirecting to forum index."
+            msg=(
+                f'{request.user} tried to modify topic "{topic_to_modify.subject}" '
+                "without the proper permissions. Redirecting to forum index."
+            )
         )
 
         return redirect(
-            "aa_forum:forum_topic",
+            to="aa_forum:forum_topic",
             category_slug=category_slug,
             board_slug=board_slug,
             topic_slug=topic_slug,
@@ -581,7 +643,7 @@ def topic_modify(
     # We are in the clear, let's see what we've got
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = EditTopicForm(request.POST)
+        form = EditTopicForm(data=request.POST)
 
         # Check whether it's valid:
         if form.is_valid():
@@ -589,16 +651,23 @@ def topic_modify(
             topic_to_modify.save()
 
             messages.success(
-                request,
-                mark_safe(
-                    _("<h4>Success!</h4><p>The topic subject has been updated.</p>")
+                request=request,
+                message=mark_safe(
+                    # pylint: disable=duplicate-code
+                    s=_(
+                        message=(
+                            "<h4>Success!</h4><p>The topic subject has been updated.</p>"  # pylint: disable=line-too-long
+                        )
+                    )
                 ),
             )
 
-            logger.info(f'{request.user} modified topic "{topic_to_modify.subject}".')
+            logger.info(
+                msg=f'{request.user} modified topic "{topic_to_modify.subject}".'
+            )
 
             return redirect(
-                "aa_forum:forum_topic",
+                to="aa_forum:forum_topic",
                 category_slug=category_slug,
                 board_slug=board_slug,
                 topic_slug=topic_slug,
@@ -609,9 +678,13 @@ def topic_modify(
 
     context = {"form": form, "topic": topic_to_modify}
 
-    logger.info(f'{request.user} modifying "{topic_to_modify.subject}".')
+    logger.info(msg=f'{request.user} modifying "{topic_to_modify.subject}".')
 
-    return render(request, "aa_forum/view/forum/modify-topic.html", context)
+    return render(
+        request=request,
+        template_name="aa_forum/view/forum/modify-topic.html",
+        context=context,
+    )
 
 
 def _topic_from_slugs(
@@ -619,6 +692,7 @@ def _topic_from_slugs(
 ) -> Optional[Topic]:
     """
     Fetch topic from given slug params
+
     :param request:
     :param category_slug:
     :param board_slug:
@@ -637,12 +711,13 @@ def _topic_from_slugs(
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def topic_first_unread_message(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
     """
     Redirect to the first unread message of a topic
+
     :param request:
     :param category_slug:
     :param board_slug:
@@ -659,16 +734,18 @@ def topic_first_unread_message(
 
     if not current_topic:
         messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The topic you were trying to view does not "
-                    "exist or you do not have access to it.</p>"
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>The topic you were trying to view does not "
+                        "exist or you do not have access to it.</p>"
+                    )
                 )
             ),
         )
 
-        return redirect("aa_forum:forum_index")
+        return redirect(to="aa_forum:forum_index")
 
     messages_sorted = current_topic.messages.order_by("time_posted")
 
@@ -687,16 +764,17 @@ def topic_first_unread_message(
             redirect_message = messages_sorted.last()
 
     if redirect_message:
-        return redirect(redirect_message.get_absolute_url())
+        return redirect(to=redirect_message.get_absolute_url())
 
-    return redirect(current_topic.get_absolute_url())
+    return redirect(to=current_topic.get_absolute_url())
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
     """
     Show all available unread topics
+
     :param request:
     :return:
     """
@@ -706,9 +784,9 @@ def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
         user=request.user,
         message_time__gte=OuterRef("last_message__time_posted"),
     )
-    unread_topic_pks = Topic.objects.filter(~Exists(has_read_all_messages)).values_list(
-        "pk", flat=True
-    )
+    unread_topic_pks = Topic.objects.filter(
+        ~Exists(queryset=has_read_all_messages)
+    ).values_list("pk", flat=True)
 
     boards = (
         Board.objects.select_related(
@@ -721,7 +799,7 @@ def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
         )
         .prefetch_related(
             Prefetch(
-                "topics",
+                lookup="topics",
                 queryset=Topic.objects.select_related(
                     "last_message",
                     "last_message__user_created",
@@ -731,31 +809,36 @@ def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
                     "first_message__user_created__profile__main_character",
                 )
                 .filter(pk__in=unread_topic_pks)
-                .annotate(num_posts=Count("messages", distinct=True))
-                .annotate(has_unread_messages=~Exists(has_read_all_messages))
+                .annotate(num_posts=Count(expression="messages", distinct=True))
+                .annotate(has_unread_messages=~Exists(queryset=has_read_all_messages))
                 .order_by("-is_sticky", "-last_message__time_posted", "-id"),
             )
         )
         .filter(topics__in=unread_topic_pks)
-        .user_has_access(request.user)
+        .user_has_access(user=request.user)
         .order_by("category__order", "category__id", "order", "id")
         .all()
     )
 
     context = {"boards": boards}
 
-    logger.info(f"{request.user} calling unread topics view.")
+    logger.info(msg=f"{request.user} calling unread topics view.")
 
-    return render(request, "aa_forum/view/forum/unread-topics.html", context)
+    return render(
+        request=request,
+        template_name="aa_forum/view/forum/unread-topics.html",
+        context=context,
+    )
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def topic_reply(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
     """
     Reply to a post in a topic
+
     :param request:
     :param category_slug:
     :param board_slug:
@@ -772,24 +855,28 @@ def topic_reply(
 
     if not current_topic:
         messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The topic you were trying to reply does not "
-                    "exist or you do not have access to it.</p>"
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>The topic you were trying to reply does not "
+                        "exist or you do not have access to it.</p>"
+                    )
                 )
             ),
         )
 
         logger.info(
-            f"{request.user} called a non existent topic. Redirecting to forum index."
+            msg=(
+                f"{request.user} called a non existent topic. Redirecting to forum index."  # pylint: disable=line-too-long
+            )
         )
 
-        return redirect("aa_forum:forum_index")
+        return redirect(to="aa_forum:forum_index")
 
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = EditMessageForm(request.POST)
+        form = EditMessageForm(data=request.POST)
 
         # Check whether it's valid:
         if form.is_valid():
@@ -812,10 +899,12 @@ def topic_reply(
                     headline=f'**New reply has been posted in topic "{current_topic.subject}"**',
                 )
 
-            logger.info(f'{request.user} replied to topic "{current_topic.subject}".')
+            logger.info(
+                msg=f'{request.user} replied to topic "{current_topic.subject}".'
+            )
 
             return redirect(
-                "aa_forum:forum_message",
+                to="aa_forum:forum_message",
                 category_slug=category_slug,
                 board_slug=board_slug,
                 topic_slug=topic_slug,
@@ -823,33 +912,45 @@ def topic_reply(
             )
 
         messages.error(
-            request,
-            mark_safe(
+            request=request,
+            message=mark_safe(
                 # pylint: disable=duplicate-code
-                _(
-                    "<h4>Error!</h4>"
-                    "<p>Message field is mandatory and cannot be empty.</p>"
+                s=_(
+                    message=(
+                        "<h4>Error!</h4>"
+                        "<p>Message field is mandatory and cannot be empty.</p>"
+                    )
                 )
             ),
         )
     else:
         messages.error(
-            request,
-            mark_safe(
-                _("<h4>Error!</h4><p>Something went wrong, please try again.</p>")
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>Something went wrong, please try again.</p>"
+                    )
+                )
             ),
         )
 
-    return redirect("aa_forum:forum_topic", category_slug, board_slug, topic_slug)
+    return redirect(
+        to="aa_forum:forum_topic",
+        category_slug=category_slug,
+        board_slug=board_slug,
+        topic_slug=topic_slug,
+    )
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def topic_change_lock_state(
     request: WSGIRequest, topic_id: int
 ) -> HttpResponseRedirect:
     """
     Change the lock state of the given topic
+
     :param request:
     :param topic_id:
     :return:
@@ -864,45 +965,52 @@ def topic_change_lock_state(
         current_topic.is_locked = False
 
         messages.success(
-            request,
-            mark_safe(
-                _(
-                    f'<h4>Success!</h4><p>Topic "{current_topic}" has been unlocked/re-opened.</p>'  # pylint: disable=line-too-long
+            request=request,
+            message=mark_safe(
+                # pylint: disable=duplicate-code
+                s=_(
+                    message=(
+                        f'<h4>Success!</h4><p>Topic "{current_topic}" has been unlocked/re-opened.</p>'  # pylint: disable=line-too-long
+                    )
                 )
             ),
         )
 
-        logger.info(f'{request.user} unlocked/re-opened topic "{current_topic}".')
+        logger.info(msg=f'{request.user} unlocked/re-opened topic "{current_topic}".')
     else:
         current_topic.is_locked = True
 
         messages.success(
-            request,
-            mark_safe(
-                _(
-                    f'<h4>Success!</h4><p>Topic "{current_topic}" has been locked/closed.</p>'
+            request=request,
+            message=mark_safe(
+                # pylint: disable=duplicate-code
+                s=_(
+                    message=(
+                        f'<h4>Success!</h4><p>Topic "{current_topic}" has been locked/closed.</p>'  # pylint: disable=line-too-long
+                    )
                 )
             ),
         )
 
-        logger.info(f'{request.user} locked/closed "{current_topic}".')
+        logger.info(msg=f'{request.user} locked/closed "{current_topic}".')
 
     current_topic.save(update_fields=["is_locked"])
 
     return redirect(
-        "aa_forum:forum_board",
-        current_topic.board.category.slug,
-        current_topic.board.slug,
+        to="aa_forum:forum_board",
+        category_slug=current_topic.board.category.slug,
+        board_slug=current_topic.board.slug,
     )
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def topic_change_sticky_state(
     request: WSGIRequest, topic_id: int
 ) -> HttpResponseRedirect:
     """
     Change the sticky state of the given topic
+
     :param request:
     :param topic_id:
     :return:
@@ -917,39 +1025,46 @@ def topic_change_sticky_state(
         curent_topic.is_sticky = False
 
         messages.success(
-            request,
-            mark_safe(
-                _(
-                    f'<h4>Success!</h4><p>Topic "{curent_topic}" is no longer "Sticky".</p>'
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        f'<h4>Success!</h4><p>Topic "{curent_topic}" is no longer "Sticky".</p>'  # pylint: disable=line-too-long
+                    )
                 )
             ),
         )
 
         logger.info(
-            f'{request.user} changed topic "{curent_topic}" to be no longer sticky.'
+            msg=f'{request.user} changed topic "{curent_topic}" to be no longer sticky.'
         )
     else:
         curent_topic.is_sticky = True
 
         messages.success(
-            request,
-            mark_safe(
-                _(f'<h4>Success!</h4><p>Topic "{curent_topic}" is now "Sticky".</p>')
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        f'<h4>Success!</h4><p>Topic "{curent_topic}" is now "Sticky".</p>'  # pylint: disable=line-too-long
+                    )
+                )
             ),
         )
 
-        logger.info(f'{request.user} changed topic "{curent_topic}" to be sticky.')
+        logger.info(msg=f'{request.user} changed topic "{curent_topic}" to be sticky.')
 
     curent_topic.save(update_fields=["is_sticky"])
 
-    return redirect(curent_topic.board.get_absolute_url())
+    return redirect(to=curent_topic.board.get_absolute_url())
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
     """
     Delete a given topic
+
     :param request:
     :param topic_id:
     :return:
@@ -966,17 +1081,19 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
     current_topic.delete()
 
     messages.success(
-        request,
-        mark_safe(_(f'<h4>Success!</h4><p>Topic "{topic__subject}" removed.</p>')),
+        request=request,
+        message=mark_safe(
+            s=_(message=f'<h4>Success!</h4><p>Topic "{topic__subject}" removed.</p>')
+        ),
     )
 
-    logger.info(f'{request.user} removed topic "{topic__subject}".')
+    logger.info(msg=f'{request.user} removed topic "{topic__subject}".')
 
-    return redirect(topic__board.get_absolute_url())
+    return redirect(to=topic__board.get_absolute_url())
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def message(
     request: WSGIRequest,
     category_slug: str,  # pylint: disable=unused-argument
@@ -986,6 +1103,7 @@ def message(
 ) -> HttpResponseRedirect:
     """
     Get a messages' entry point in a topic, so we end up on the right page with it
+
     :param request:
     :param category_slug:
     :param board_slug:
@@ -1000,17 +1118,19 @@ def message(
         ).get(pk=message_id)
     except Message.DoesNotExist:
         messages.error(
-            request,
-            mark_safe(_("<h4>Error!</h4><p>The message doesn't exist.</p>")),
+            request=request,
+            message=mark_safe(
+                s=_(message="<h4>Error!</h4><p>The message doesn't exist.</p>")
+            ),
         )
 
-        return redirect("aa_forum:forum_index")
+        return redirect(to="aa_forum:forum_index")
 
-    return redirect(current_message.get_absolute_url())
+    return redirect(to=current_message.get_absolute_url())
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def message_modify(
     request: WSGIRequest,
     category_slug: str,
@@ -1020,6 +1140,7 @@ def message_modify(
 ) -> HttpResponse:
     """
     Modify a given message
+
     :param request:
     :param category_slug:
     :param board_slug:
@@ -1041,45 +1162,55 @@ def message_modify(
     # Either way, the message can't be edited
     if not message_to_modify:
         messages.error(
-            request,
-            mark_safe(
-                _(
-                    "<h4>Error!</h4><p>The message you were trying to modify does "
-                    "either not exist, or you don't have access to it.</p>"
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>The message you were trying to modify does "
+                        "either not exist, or you don't have access to it.</p>"
+                    )
                 )
             ),
         )
 
         logger.info(
-            f"{request.user} trying to change a message in a topic that either does "
-            "not exist or they have no access to."
+            msg=(
+                f"{request.user} trying to change a message in a topic that either "
+                "does not exist or they have no access to."
+            )
         )
 
-        return redirect("aa_forum:forum_index")
+        return redirect(to="aa_forum:forum_index")
 
     # Check if the user actually has the right to edit this message
     if (
         message_to_modify.user_created_id != request.user.id
-        and not request.user.has_perm("aa_forum.manage_forum")
+        and not request.user.has_perm(perm="aa_forum.manage_forum")
     ):
         messages.error(
-            request,
-            mark_safe(
-                _("<h4>Error!</h4><p>You are not allowed to modify this message!</p>")
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>You are not allowed to modify this message!</p>"  # pylint: disable=line-too-long
+                    )
+                )
             ),
         )
 
         logger.info(
-            f"{request.user} tried to modify a message in topic "
-            f'"{message_to_modify.topic.subject}" without permission to do so.'
+            msg=(
+                f"{request.user} tried to modify a message in topic "
+                f'"{message_to_modify.topic.subject}" without permission to do so.'
+            )
         )
 
-        return redirect(message_to_modify.topic.get_absolute_url())
+        return redirect(to=message_to_modify.topic.get_absolute_url())
 
     # We are in the clear, let's see what we've got
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = EditMessageForm(request.POST)
+        form = EditMessageForm(data=request.POST)
 
         # Check whether it's valid:
         if form.is_valid():
@@ -1088,17 +1219,21 @@ def message_modify(
             message_to_modify.save()
 
             messages.success(
-                request,
-                mark_safe(_("<h4>Success!</h4><p>The message has been updated.</p>")),
+                request=request,
+                message=mark_safe(
+                    s=_(message="<h4>Success!</h4><p>The message has been updated.</p>")
+                ),
             )
 
             logger.info(
-                f"{request.user} modified message ID {message_to_modify.pk} "
-                f'in topic "{message_to_modify.topic.subject}".'
+                msg=(
+                    f"{request.user} modified message ID {message_to_modify.pk} "
+                    f'in topic "{message_to_modify.topic.subject}".'
+                )
             )
 
             return redirect(
-                "aa_forum:forum_message",
+                to="aa_forum:forum_message",
                 category_slug=category_slug,
                 board_slug=board_slug,
                 topic_slug=topic_slug,
@@ -1107,8 +1242,10 @@ def message_modify(
 
         # Form invalid
         messages.error(
-            request,
-            mark_safe(_("<h4>Error!</h4><p>Mandatory form field is empty.</p>")),
+            request=request,
+            message=mark_safe(
+                s=_(message="<h4>Error!</h4><p>Mandatory form field is empty.</p>")
+            ),
         )
     # If not, we'll fill the form with the information from the message object
     else:
@@ -1121,11 +1258,17 @@ def message_modify(
     }
 
     logger.info(
-        f"{request.user} is modifying message ID {message_to_modify.pk} "
-        f'in topic "{message_to_modify.topic.subject}".'
+        msg=(
+            f"{request.user} is modifying message ID {message_to_modify.pk} "
+            f'in topic "{message_to_modify.topic.subject}".'
+        )
     )
 
-    return render(request, "aa_forum/view/forum/modify-message.html", context)
+    return render(
+        request=request,
+        template_name="aa_forum/view/forum/modify-message.html",
+        context=context,
+    )
 
 
 def _message_from_slugs(
@@ -1137,6 +1280,7 @@ def _message_from_slugs(
 ) -> Optional[Message]:
     """
     Get message from slugs
+
     :param request:
     :param category_slug:
     :param board_slug:
@@ -1157,11 +1301,12 @@ def _message_from_slugs(
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirect:
     """
     Delete a message from a topic
     If it is the last message in this topic, the topic will be removed as well
+
     :param request:
     :param message_id:
     :return:
@@ -1172,7 +1317,7 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
             Message.objects.select_related(
                 "topic", "topic__board", "topic__board__category"
             )
-            .user_has_access(request.user)
+            .user_has_access(user=request.user)
             .get(pk=message_id)
         )
     except Message.DoesNotExist:
@@ -1184,22 +1329,28 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
     # Safety check to make sure the user is allowed to delete this message
     if (
         current_message.user_created_id != request.user.id
-        and not request.user.has_perm("aa_forum.manage_forum")
+        and not request.user.has_perm(perm="aa_forum.manage_forum")
     ):
         messages.error(
-            request,
-            mark_safe(
-                _("<h4>Error!</h4><p>You are not allowed to delete this message!</p>")
+            request=request,
+            message=mark_safe(
+                s=_(
+                    message=(
+                        "<h4>Error!</h4><p>You are not allowed to delete this message!</p>"  # pylint: disable=line-too-long
+                    )
+                )
             ),
         )
 
         logger.info(
-            f"{request.user} was trying to delete message ID {message_id} without "
-            "permission to do so. Redirecting to forum index."
+            msg=(
+                f"{request.user} was trying to delete message ID {message_id} without "
+                "permission to do so. Redirecting to forum index."
+            )
         )
 
         return redirect(
-            "aa_forum:forum_topic",
+            to="aa_forum:forum_topic",
             category_slug=current_message__topic.board.category.slug,
             board_slug=current_message__topic.board.slug,
             topic_slug=current_message__topic.slug,
@@ -1215,17 +1366,21 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
         current_message.delete()
 
         messages.success(
-            request,
-            mark_safe(_("<h4>Success!</h4><p>The message has been deleted.</p>")),
+            request=request,
+            message=mark_safe(
+                s=_(message="<h4>Success!</h4><p>The message has been deleted.</p>")
+            ),
         )
 
         logger.info(
-            f"{request.user} removed message ID {message_id} "
-            f'from topic "{current_message__topic__subject}".'
+            msg=(
+                f"{request.user} removed message ID {message_id} "
+                f'from topic "{current_message__topic__subject}".'
+            )
         )
 
         return redirect(
-            "aa_forum:forum_topic",
+            to="aa_forum:forum_topic",
             category_slug=current_message__topic.board.category.slug,
             board_slug=current_message__topic.board.slug,
             topic_slug=current_message__topic.slug,
@@ -1235,33 +1390,39 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
     current_message__topic.delete()
 
     messages.success(
-        request,
-        mark_safe(
-            _(
-                "<h4>Success!</h4><p>The message has been deleted.</p>"
-                "<p>This was the topics opening post, so the topic has been "
-                "deleted as well.</p>"
+        request=request,
+        message=mark_safe(
+            s=_(
+                message=(
+                    "<h4>Success!</h4><p>The message has been deleted.</p>"
+                    "<p>This was the topics opening post, so the topic has been "
+                    "deleted as well.</p>"
+                )
             )
         ),
     )
 
     logger.info(
-        f"{request.user} removed message ID {message_id}. This was the original post, "
-        f'so the topic "{current_message__topic__subject}" has been removed as well.'
+        msg=(
+            f"{request.user} removed message ID {message_id}. This was the original "
+            f'post, so the topic "{current_message__topic__subject}" has been '
+            "removed as well."
+        )
     )
 
     return redirect(
-        "aa_forum:forum_board",
+        to="aa_forum:forum_board",
         category_slug=current_message__topic.board.category.slug,
         board_slug=current_message__topic.board.slug,
     )
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
     """
     Mark all available topics as read
+
     :param request:
     :return:
     """
@@ -1275,13 +1436,13 @@ def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
     boards = (
         Board.objects.prefetch_related(
             Prefetch(
-                "topics",
+                lookup="topics",
                 queryset=Topic.objects.select_related(
                     "last_message",
-                ).annotate(has_unread_messages=~Exists(has_read_all_messages)),
+                ).annotate(has_unread_messages=~Exists(queryset=has_read_all_messages)),
             )
         )
-        .user_has_access(request.user)
+        .user_has_access(user=request.user)
         .all()
     )
 
@@ -1294,16 +1455,17 @@ def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
                     defaults={"message_time": topic_in_loop.last_message.time_posted},
                 )
 
-    logger.info(f"{request.user} marked all topics as read.")
+    logger.info(msg=f"{request.user} marked all topics as read.")
 
-    return redirect("aa_forum:forum_index")
+    return redirect(to="aa_forum:forum_index")
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def unread_topics_count(request: WSGIRequest) -> int:
     """
     Get the number of unread messages for the user
+
     :param request:
     :return:
     """
@@ -1313,17 +1475,19 @@ def unread_topics_count(request: WSGIRequest) -> int:
         user=request.user,
         message_time__gte=OuterRef("last_message__time_posted"),
     )
-    unread_topic_pks = Topic.objects.filter(~Exists(has_read_all_messages)).values_list(
-        "pk", flat=True
-    )
+    unread_topic_pks = Topic.objects.filter(
+        ~Exists(queryset=has_read_all_messages)
+    ).values_list("pk", flat=True)
 
     boards = (
         Board.objects.annotate(
             num_unread_topics=Count(
-                "topics", filter=Q(topics__in=unread_topic_pks), distinct=True
+                expression="topics",
+                filter=Q(topics__in=unread_topic_pks),
+                distinct=True,
             ),
         )
-        .user_has_access(request.user)
+        .user_has_access(user=request.user)
         .all()
     )
 

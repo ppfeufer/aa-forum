@@ -28,23 +28,24 @@ from aa_forum.helper.pagination import get_paginated_page_object
 from aa_forum.helper.user import get_main_character_from_user
 from aa_forum.models import PersonalMessage, Setting
 
-logger = LoggerAddTag(get_extension_logger(__name__), __title__)
+logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def inbox(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     """
     Messages overview
+
     :param request:
     :param page_number:
     :return:
     """
 
-    logger.info(f"{request.user} called their messages overview.")
+    logger.info(msg=f"{request.user} called their messages overview.")
 
     personal_messages = PersonalMessage.objects.get_personal_messages_for_user(
-        request.user
+        user=request.user
     )
 
     page_obj = get_paginated_page_object(
@@ -57,7 +58,11 @@ def inbox(request: WSGIRequest, page_number: int = None) -> HttpResponse:
 
     context = {"page_obj": page_obj}
 
-    return render(request, "aa_forum/view/personal-messages/inbox.html", context)
+    return render(
+        request=request,
+        template_name="aa_forum/view/personal-messages/inbox.html",
+        context=context,
+    )
 
 
 @login_required
@@ -69,11 +74,11 @@ def new_message(request: WSGIRequest) -> HttpResponse:
     :return:
     """
 
-    logger.info(f"{request.user} called the new personal message page.")
+    logger.info(msg=f"{request.user} called the new personal message page.")
 
     # If this is a POST request, we need to process the form data
     if request.method == "POST":
-        new_private_message_form = NewPersonalMessageForm(request.POST)
+        new_private_message_form = NewPersonalMessageForm(data=request.POST)
 
         # Check whether it's valid:
         if new_private_message_form.is_valid():
@@ -89,23 +94,31 @@ def new_message(request: WSGIRequest) -> HttpResponse:
                 message=message,
             ).save()
 
-            recipient_main_char = get_main_character_from_user(recipient)
+            recipient_main_char = get_main_character_from_user(user=recipient)
+
             messages.success(
-                request,
-                mark_safe(
-                    _(f"<h4>Success!</h4><p>Message to {recipient_main_char} sent.</p>")
+                request=request,
+                message=mark_safe(
+                    # pylint: disable=duplicate-code
+                    s=_(
+                        message=(
+                            f"<h4>Success!</h4><p>Message to {recipient_main_char} sent.</p>"  # pylint: disable=line-too-long
+                        )
+                    )
                 ),
             )
 
-            return redirect("aa_forum:personal_messages_inbox")
+            return redirect(to="aa_forum:personal_messages_inbox")
 
         messages.error(
-            request,
-            mark_safe(
+            request=request,
+            message=mark_safe(
                 # pylint: disable=duplicate-code
-                _(
-                    "<h4>Error!</h4>"
-                    "<p>Something went wrong, please check your input.</p>"
+                s=_(
+                    message=(
+                        "<h4>Error!</h4>"
+                        "<p>Something went wrong, please check your input.</p>"
+                    )
                 )
             ),
         )
@@ -114,23 +127,28 @@ def new_message(request: WSGIRequest) -> HttpResponse:
 
     context = {"form": new_private_message_form}
 
-    return render(request, "aa_forum/view/personal-messages/new-message.html", context)
+    return render(
+        request=request,
+        template_name="aa_forum/view/personal-messages/new-message.html",
+        context=context,
+    )
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     """
     Overview of all messages sent by a user
+
     :param request:
     :param page_number:
     :return:
     """
 
-    logger.info(f"{request.user} called the their sent personal message page.")
+    logger.info(msg=f"{request.user} called the their sent personal message page.")
 
     personal_messages = PersonalMessage.objects.get_personal_messages_sent_for_user(
-        request.user
+        user=request.user
     )
 
     page_obj = get_paginated_page_object(
@@ -144,7 +162,9 @@ def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse
     context = {"page_obj": page_obj}
 
     return render(
-        request, "aa_forum/view/personal-messages/sent-messages.html", context
+        request=request,
+        template_name="aa_forum/view/personal-messages/sent-messages.html",
+        context=context,
     )
 
 
@@ -153,6 +173,7 @@ def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse
 def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
     """
     Reply to a message
+
     :param request:
     :param message_id:
     :return:
@@ -166,22 +187,24 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
         )
     except PersonalMessage.DoesNotExist:
         messages.error(
-            request,
-            mark_safe(
+            request=request,
+            message=mark_safe(
                 # pylint: disable=duplicate-code
-                _(
-                    "<h4>Error!</h4>"
-                    "<p>The message you were trying to reply to does either not exist "
-                    "or you are not the recipient.</p>"
+                s=_(
+                    message=(
+                        "<h4>Error!</h4>"
+                        "<p>The message you were trying to reply to does either not "
+                        "exist or you are not the recipient.</p>"
+                    )
                 )
             ),
         )
 
-        return redirect("aa_forum:personal_messages_inbox")
+        return redirect(to="aa_forum:personal_messages_inbox")
 
     # If this is a POST request, we need to process the form data
     if request.method == "POST":
-        reply_private_message_form = ReplyPersonalMessageForm(request.POST)
+        reply_private_message_form = ReplyPersonalMessageForm(data=request.POST)
 
         # Check whether it's valid:
         if reply_private_message_form.is_valid():
@@ -201,25 +224,30 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
                 message=message,
             ).save()
 
-            recipient_main_char = get_main_character_from_user(recipient)
+            recipient_main_char = get_main_character_from_user(user=recipient)
             messages.success(
-                request,
-                mark_safe(
-                    _(
-                        f"<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>"  # pylint: disable=line-too-long
+                request=request,
+                message=mark_safe(
+                    # pylint: disable=duplicate-code
+                    s=_(
+                        message=(
+                            f"<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>"  # pylint: disable=line-too-long
+                        )
                     )
                 ),
             )
 
-            return redirect("aa_forum:personal_messages_inbox")
+            return redirect(to="aa_forum:personal_messages_inbox")
 
         messages.error(
-            request,
-            mark_safe(
+            request=request,
+            message=mark_safe(
                 # pylint: disable=duplicate-code
-                _(
-                    "<h4>Error!</h4>"
-                    "<p>Something went wrong, please check your input.</p>"
+                s=_(
+                    message=(
+                        "<h4>Error!</h4>"
+                        "<p>Something went wrong, please check your input.</p>"
+                    )
                 )
             ),
         )
@@ -230,7 +258,9 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
     context["form"] = reply_private_message_form
 
     return render(
-        request, "aa_forum/view/personal-messages/reply-message.html", context
+        request=request,
+        template_name="aa_forum/view/personal-messages/reply-message.html",
+        context=context,
     )
 
 
@@ -239,6 +269,7 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
 def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpResponse:
     """
     Delete a personal message
+
     :param request:
     :param folder:
     :param message_id:
@@ -248,6 +279,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
     def folder_inbox() -> HttpResponse:
         """
         Remove message from inbox
+
         :return:
         """
 
@@ -258,10 +290,12 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
                 request=request,
                 message=mark_safe(
                     # pylint: disable=duplicate-code
-                    _(
-                        "<h4>Error!</h4>"
-                        "<p>The message you tried to remove does either not exist "
-                        "or is not yours to remove.</p>"
+                    s=_(
+                        message=(
+                            "<h4>Error!</h4>"
+                            "<p>The message you tried to remove does either not exist "
+                            "or is not yours to remove.</p>"
+                        )
                     )
                 ),
             )
@@ -275,15 +309,18 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
             messages.success(
                 request=request,
                 message=mark_safe(
-                    _("<h4>Success!</h4><p>Message removed from your inbox.</p>")
+                    s=_(
+                        message="<h4>Success!</h4><p>Message removed from your inbox.</p>"  # pylint: disable=line-too-long
+                    )
                 ),
             )
 
-        return redirect("aa_forum:personal_messages_inbox")
+        return redirect(to="aa_forum:personal_messages_inbox")
 
     def folder_sent_messages() -> HttpResponse:
         """
         Remove message from sent messages
+
         :return:
         """
 
@@ -294,10 +331,12 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
                 request=request,
                 message=mark_safe(
                     # pylint: disable=duplicate-code
-                    _(
-                        "<h4>Error!</h4>"
-                        "<p>The message you tried to remove does either not exist "
-                        "or is not yours to remove.</p>"
+                    s=_(
+                        message=(
+                            "<h4>Error!</h4>"
+                            "<p>The message you tried to remove does either not exist "
+                            "or is not yours to remove.</p>"
+                        )
                     )
                 ),
             )
@@ -311,14 +350,17 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
             messages.success(
                 request=request,
                 message=mark_safe(
-                    _(
-                        "<h4>Success!</h4>"
-                        "<p>Message has been removed from your sent messages.</p>"
+                    # pylint: disable=duplicate-code
+                    s=_(
+                        message=(
+                            "<h4>Success!</h4>"
+                            "<p>Message has been removed from your sent messages.</p>"
+                        )
                     )
                 ),
             )
 
-        return redirect("aa_forum:personal_messages_sent_messages")
+        return redirect(to="aa_forum:personal_messages_sent_messages")
 
     switch = {"inbox": folder_inbox, "sent-messages": folder_sent_messages}
 
@@ -327,17 +369,18 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
 
     messages.error(
         request=request,
-        message=mark_safe(_("<h4>Error!</h4><p>Something went wrong.</p>")),
+        message=mark_safe(s=_(message="<h4>Error!</h4><p>Something went wrong.</p>")),
     )
 
-    return redirect("aa_forum:personal_messages_inbox")
+    return redirect(to="aa_forum:personal_messages_inbox")
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def ajax_read_message(request: WSGIRequest, folder: str) -> HttpResponse:
     """
     Ajax :: Read a personal message
+
     :param request:
     :param folder:
     :return:
@@ -374,9 +417,9 @@ def ajax_read_message(request: WSGIRequest, folder: str) -> HttpResponse:
                     data["folder"] = folder
 
                     return render(
-                        request,
-                        "aa_forum/ajax-render/personal-messages/message.html",
-                        data,
+                        request=request,
+                        template_name="aa_forum/ajax-render/personal-messages/message.html",  # pylint: disable=line-too-long
+                        context=data,
                     )
 
     return HttpResponse(status=HTTPStatus.NO_CONTENT)
@@ -387,14 +430,17 @@ def ajax_read_message(request: WSGIRequest, folder: str) -> HttpResponse:
 def ajax_unread_messages_count(request: WSGIRequest) -> JsonResponse:
     """
     Get unread messages count for a user
+
     :param request:
     :return:
     """
 
     unread_messages_count = (
-        PersonalMessage.objects.get_personal_message_unread_count_for_user(request.user)
+        PersonalMessage.objects.get_personal_message_unread_count_for_user(
+            user=request.user
+        )
     )
 
     data = {"unread_messages_count": unread_messages_count}
 
-    return JsonResponse(data, safe=False)
+    return JsonResponse(data=data, safe=False)

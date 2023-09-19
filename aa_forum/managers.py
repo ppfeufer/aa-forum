@@ -21,6 +21,7 @@ class SettingQuerySet(models.QuerySet):
 
         Override :: We don't allow deletion here, so we make sure the object
                     is saved again and not deleted
+
         :return:
         """
 
@@ -35,6 +36,7 @@ class SettingManager(models.Manager):
     def get_setting(self, setting_key: str) -> str:
         """
         Return the value for given setting key
+
         :param setting_key:
         :return:
         """
@@ -44,6 +46,7 @@ class SettingManager(models.Manager):
     def get_queryset(self):
         """
         Get a Setting queryset
+
         :return:
         """
 
@@ -58,12 +61,13 @@ class BoardQuerySet(models.QuerySet):
     def user_has_access(self, user: User) -> models.QuerySet:
         """
         Filter boards that given user has access to.
+
         :param user:
         :return:
         """
 
         # Forum manager always have access, so assign this permission wisely
-        if user.has_perm("aa_forum.manage_forum"):
+        if user.has_perm(perm="aa_forum.manage_forum"):
             return self
 
         # If not a forum manager, check if the user has access to the board
@@ -91,12 +95,13 @@ class TopicQuerySet(models.QuerySet):
     def user_has_access(self, user: User) -> models.QuerySet:
         """
         Filter boards that given user has access to.
+
         :param user:
         :return:
         """
 
         # Forum manager always have access, so assign this permission wisely
-        if user.has_perm("aa_forum.manage_forum"):
+        if user.has_perm(perm="aa_forum.manage_forum"):
             return self
 
         # If not a forum manager, check if the user has access to the board
@@ -113,6 +118,7 @@ class TopicQuerySet(models.QuerySet):
     ) -> models.Model:
         """
         Fetch topic from slugs for user. Return None if not found or no access.
+
         :param category_slug:
         :param board_slug:
         :param topic_slug:
@@ -135,7 +141,7 @@ class TopicQuerySet(models.QuerySet):
                 )
                 .prefetch_related(
                     Prefetch(
-                        "messages",
+                        lookup="messages",
                         queryset=Message.objects.select_related(
                             "user_created",
                             "user_created__profile__main_character",
@@ -149,7 +155,7 @@ class TopicQuerySet(models.QuerySet):
                     board__slug=str(board_slug),
                     slug=str(topic_slug),
                 )
-                .user_has_access(user)
+                .user_has_access(user=user)
                 .distinct()
                 .get()
             )
@@ -178,12 +184,13 @@ class MessageQuerySet(models.QuerySet):
     def user_has_access(self, user: User) -> models.QuerySet:
         """
         Filter boards that given user has access to.
+
         :param user:
         :return:
         """
 
         # Forum manager always have access, so assign this permission wisely
-        if user.has_perm("aa_forum.manage_forum"):
+        if user.has_perm(perm="aa_forum.manage_forum"):
             return self
 
         # If not a forum manager, check if the user has access to the board
@@ -202,6 +209,7 @@ class MessageQuerySet(models.QuerySet):
     ) -> models.Model:
         """
         Fetch message from slugs for user. Return None if not found or no access.
+
         :param category_slug:
         :param board_slug:
         :param topic_slug:
@@ -227,7 +235,7 @@ class MessageQuerySet(models.QuerySet):
                     topic__slug=str(topic_slug),
                     pk=message_id,
                 )
-                .user_has_access(user)
+                .user_has_access(user=user)
                 .distinct()
                 .get()
             )
@@ -256,6 +264,7 @@ class PersonalMessageQuerySet(models.QuerySet):
     def get_personal_messages_for_user(self, user: User) -> QuerySet:
         """
         Get a user's personal messages
+
         :param user:
         :return:
         """
@@ -273,6 +282,7 @@ class PersonalMessageQuerySet(models.QuerySet):
     def get_personal_messages_sent_for_user(self, user: User) -> QuerySet:
         """
         Get a user's personal messages sent
+
         :param user:
         :return:
         """
@@ -290,6 +300,7 @@ class PersonalMessageQuerySet(models.QuerySet):
     def get_personal_message_unread_count_for_user(self, user: User) -> int:
         """
         Get personal message unread count for a given user
+
         :param user:
         :return:
         """

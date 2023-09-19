@@ -59,8 +59,8 @@ def create_fake_user(
     :return:
     """
 
-    username = re.sub(r"[^\w\d@\.\+-]", "_", character_name)
-    user = AuthUtils.create_user(username)
+    username = re.sub(pattern=r"[^\w\d@\.\+-]", repl="_", string=character_name)
+    user = AuthUtils.create_user(username=username)
 
     if not corporation_id:
         corporation_id = 2001
@@ -118,7 +118,7 @@ def create_fake_messages(topic: Topic, amount) -> List[Message]:
 
     with patch("django.utils.timezone.now", new=message_datetime):
         for _ in range(amount):
-            messages.append(create_fake_message(topic, user=random.choice(users)))
+            messages.append(create_fake_message(topic=topic, user=random.choice(users)))
 
     return messages
 
@@ -284,6 +284,6 @@ def render_template(string, context=None):
     """
 
     context = context or {}
-    context = Context(context)
+    context = Context(dict_=context)
 
-    return Template(string).render(context)
+    return Template(template_string=string).render(context=context)

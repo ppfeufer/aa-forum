@@ -41,6 +41,7 @@ from aa_forum.managers import (
 def get_sentinel_user() -> User:
     """
     Get the sentinel user or create one
+
     :return:
     """
 
@@ -50,6 +51,7 @@ def get_sentinel_user() -> User:
 def _generate_slug(calling_model: models.Model, name: str) -> str:
     """
     Generate a valid slug and return it.
+
     :param calling_model:
     :param name:
     :return:
@@ -59,11 +61,13 @@ def _generate_slug(calling_model: models.Model, name: str) -> str:
         name = "hyphen"
 
     run = 0
-    slug_name = slugify(unidecode.unidecode(name), allow_unicode=True)
+    slug_name = slugify(value=unidecode.unidecode(name), allow_unicode=True)
 
     while calling_model.objects.filter(slug=slug_name).exists():
         run += 1
-        slug_name = slugify(unidecode.unidecode(f"{name}-{run}"), allow_unicode=True)
+        slug_name = slugify(
+            value=unidecode.unidecode(f"{name}-{run}"), allow_unicode=True
+        )
 
     return slug_name
 
@@ -116,10 +120,12 @@ class General(models.Model):
         managed = False
         default_permissions = ()
         permissions = (
-            ("basic_access", _("Can access the AA-Forum module")),
+            ("basic_access", _(message="Can access the AA-Forum module")),
             (
                 "manage_forum",
-                _("Can manage the AA-Forum module (Category, topics and messages)"),
+                _(
+                    message="Can manage the AA-Forum module (Category, topics and messages)"
+                ),
             ),
         )
 
@@ -137,10 +143,11 @@ class General(models.Model):
     def users_with_basic_access(cls) -> models.QuerySet:
         """
         Return a queryset with users with basic access
+
         :return:
         """
 
-        return users_with_permission(cls.basic_permission())
+        return users_with_permission(permission=cls.basic_permission())
 
 
 class Category(models.Model):
@@ -161,8 +168,8 @@ class Category(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("category")
-        verbose_name_plural = _("categories")
+        verbose_name = _(message="category")
+        verbose_name_plural = _(message="categories")
 
     def __str__(self) -> str:
         return str(self.name)
@@ -171,19 +178,20 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         """
         Generates the slug
+
         :param args:
         :param kwargs:
         :return:
         """
 
         if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
-            self.slug = _generate_slug(type(self), self.name)
+            self.slug = _generate_slug(calling_model=type(self), name=self.name)
 
         super().save(*args, **kwargs)
 
         if self.slug == "":
             self.slug = _generate_slug(
-                type(self), f"{self.__class__.__name__} {self.pk}"
+                calling_model=type(self), name=f"{self.__class__.__name__} {self.pk}"
             )
             self.save()
 
@@ -194,7 +202,7 @@ class Board(models.Model):
     """
 
     category = models.ForeignKey(
-        Category, related_name="boards", on_delete=models.CASCADE
+        to=Category, related_name="boards", on_delete=models.CASCADE
     )
     name = models.CharField(max_length=254)
     slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
@@ -204,52 +212,62 @@ class Board(models.Model):
     )
     use_webhook_for_replies = models.BooleanField(
         default=False,
-        help_text=(
-            "Use this Discord Webhook for replies as well? When activated every reply "
-            "to any topic in this board will be posted to the defined Discord channel. "
-            "(Child boards are excluded) Chose wisely! (Default: NO)"
+        help_text=_(
+            message=(
+                "Use this Discord Webhook for replies as well? When activated every "
+                "reply to any topic in this board will be posted to the defined "
+                "Discord channel. (Child boards are excluded) Chose wisely! "
+                "(Default: NO)"
+            )
         ),
     )
     parent_board = models.ForeignKey(
-        "self",
+        to="self",
         blank=True,
         null=True,
         related_name="child_boards",
         on_delete=models.CASCADE,
     )
     groups = models.ManyToManyField(
-        Group,
+        to=Group,
         blank=True,
         related_name="aa_forum_boards_group_restriction",
-        help_text=(
-            "User in at least one of these groups have access to this board. If "
-            "no groups are selected, everyone with access to the forum has also "
-            "access to this board."
+        help_text=_(
+            message=(
+                "User in at least one of these groups have access to this board. If "
+                "no groups are selected, everyone with access to the forum has also "
+                "access to this board."
+            )
         ),
     )
     is_announcement_board = models.BooleanField(
         default=False,
-        help_text=(
-            "Mark this board as an 'Announcement Board', meaning that only certain "
-            "selected groups can start new topics. All others who have access to this "
-            "board will still be able to discuss in the topics though. (Default: NO)"
+        help_text=_(
+            message=(
+                "Mark this board as an 'Announcement Board', meaning that only "
+                "certain selected groups can start new topics. All others who have "
+                "access to this board will still be able to discuss in the topics "
+                "though. (Default: NO)"
+            )
         ),
     )
     announcement_groups = models.ManyToManyField(
         Group,
         blank=True,
         related_name="aa_forum_boards_group_start_topic_restriction",
-        help_text=(
-            "User in at least one of the selected groups will be able to start topics "
-            "in 'Announcement Boards'. If no group is selected, only forum admins can "
-            "do so."
+        help_text=_(
+            message=(
+                "User in at least one of the selected groups will be able to start "
+                "topics in 'Announcement Boards'. If no group is selected, only "
+                "forum admins can do so."
+            )
         ),
     )
     order = models.IntegerField(
         default=DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER, db_index=True
     )
     first_message = models.ForeignKey(
-        "Message",
+        to="Message",
         editable=False,
         null=True,
         default=None,
@@ -259,7 +277,7 @@ class Board(models.Model):
         # for adding "Re:" if needed, must be within the same topic as last message
     )
     last_message = models.ForeignKey(
-        "Message",
+        to="Message",
         editable=False,
         null=True,
         default=None,
@@ -276,8 +294,8 @@ class Board(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("board")
-        verbose_name_plural = _("boards")
+        verbose_name = _(message="board")
+        verbose_name_plural = _(message="boards")
         constraints = [
             models.UniqueConstraint(fields=["category", "name"], name="fpk_board")
         ]
@@ -289,19 +307,20 @@ class Board(models.Model):
     def save(self, *args, **kwargs):
         """
         Generates the slug
+
         :param args:
         :param kwargs:
         :return:
         """
 
         if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
-            self.slug = _generate_slug(type(self), self.name)
+            self.slug = _generate_slug(calling_model=type(self), name=self.name)
 
         super().save(*args, **kwargs)
 
         if self.slug == "":
             self.slug = _generate_slug(
-                type(self), f"{self.__class__.__name__} {self.pk}"
+                calling_model=type(self), name=f"{self.__class__.__name__} {self.pk}"
             )
             self.save()
 
@@ -310,12 +329,15 @@ class Board(models.Model):
         Calculate URL for this board and return it.
         """
 
-        return reverse("aa_forum:forum_board", args=[self.category.slug, self.slug])
+        return reverse(
+            viewname="aa_forum:forum_board", args=[self.category.slug, self.slug]
+        )
 
     def user_can_start_topic(self, user: User) -> bool:
         """
         Determine if we have an Announcement Board
         and the current user can start a topic
+
         :param user:
         :return:
         """
@@ -324,7 +346,7 @@ class Board(models.Model):
 
         if self.is_announcement_board:
             user_can_start_topic = bool(
-                user.has_perm("aa_forum.manage_forum")
+                user.has_perm(perm="aa_forum.manage_forum")
                 or user.groups.filter(pk__in=self.announcement_groups.all()).exists()
             )
 
@@ -333,6 +355,7 @@ class Board(models.Model):
     def _update_message_references(self):
         """
         Update the first and last message for this board - and parent board if needed.
+
         :return:
         """
 
@@ -362,13 +385,13 @@ class Topic(models.Model):
     Topic
     """
 
-    board = models.ForeignKey(Board, related_name="topics", on_delete=models.CASCADE)
+    board = models.ForeignKey(to=Board, related_name="topics", on_delete=models.CASCADE)
     subject = models.CharField(max_length=254)
     slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
     is_sticky = models.BooleanField(default=False, db_index=True)
     is_locked = models.BooleanField(default=False, db_index=True)
     first_message = models.ForeignKey(
-        "Message",
+        to="Message",
         editable=False,
         null=True,
         default=None,
@@ -377,7 +400,7 @@ class Topic(models.Model):
         help_text="Shortcut for better performance",
     )
     last_message = models.ForeignKey(
-        "Message",
+        to="Message",
         editable=False,
         null=True,
         default=None,
@@ -394,8 +417,8 @@ class Topic(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("topic")
-        verbose_name_plural = _("topics")
+        verbose_name = _(message="topic")
+        verbose_name_plural = _(message="topics")
         constraints = [
             models.UniqueConstraint(fields=["board", "subject"], name="fpk_topic")
         ]
@@ -407,6 +430,7 @@ class Topic(models.Model):
     def save(self, *args, **kwargs):
         """
         Generate slug for new objects and update first and last messages.
+
         :param args:
         :param kwargs:
         :return:
@@ -426,13 +450,13 @@ class Topic(models.Model):
         )
 
         if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
-            self.slug = _generate_slug(type(self), self.subject)
+            self.slug = _generate_slug(calling_model=type(self), name=self.subject)
 
         super().save(*args, **kwargs)
 
         if self.slug == "":
             self.slug = _generate_slug(
-                type(self), f"{self.__class__.__name__} {self.pk}"
+                calling_model=type(self), name=f"{self.__class__.__name__} {self.pk}"
             )
             self.save()
 
@@ -443,6 +467,7 @@ class Topic(models.Model):
     def delete(self, *args, **kwargs):
         """
         On delete
+
         :param args:
         :param kwargs:
         :return:
@@ -460,17 +485,19 @@ class Topic(models.Model):
     def get_absolute_url(self) -> str:
         """
         Calculate URL for this topic and return it.
+
         :return:
         """
 
         return reverse(
-            "aa_forum:forum_topic",
+            viewname="aa_forum:forum_topic",
             args=[self.board.category.slug, self.board.slug, self.slug],
         )
 
     def _update_message_references(self):
         """
         Update the first and last message for this topic.
+
         :return:
         """
 
@@ -489,10 +516,10 @@ class LastMessageSeen(models.Model):
     """
 
     topic = models.ForeignKey(
-        Topic, on_delete=models.CASCADE, related_name="last_message_seen"
+        to=Topic, on_delete=models.CASCADE, related_name="last_message_seen"
     )
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="aa_forum_last_message_seen"
+        to=User, on_delete=models.CASCADE, related_name="aa_forum_last_message_seen"
     )
     message_time = models.DateTimeField()
 
@@ -519,23 +546,23 @@ class Message(models.Model):
     """
 
     topic = models.ForeignKey(
-        Topic,
+        to=Topic,
         related_name="messages",
         on_delete=models.CASCADE,
     )
     time_posted = models.DateTimeField(auto_now_add=True, db_index=True)
     time_modified = models.DateTimeField(auto_now=True)
     user_created = models.ForeignKey(
-        User,
+        to=User,
         related_name="+",
-        on_delete=models.SET(get_sentinel_user),
+        on_delete=models.SET(value=get_sentinel_user),
     )
     user_updated = models.ForeignKey(
-        User,
+        to=User,
         blank=True,
         null=True,
         related_name="+",
-        on_delete=models.SET(get_sentinel_user),
+        on_delete=models.SET(value=get_sentinel_user),
     )
     message = RichTextUploadingField(blank=False)
     message_plaintext = models.TextField(blank=True)
@@ -548,8 +575,8 @@ class Message(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("message")
-        verbose_name_plural = _("messages")
+        verbose_name = _(message="message")
+        verbose_name_plural = _(message="messages")
 
     def __str__(self) -> str:
         return str(self.pk)
@@ -558,13 +585,14 @@ class Message(models.Model):
     def save(self, *args, **kwargs) -> None:
         """
         Add the slug on save if it does not exist
+
         :param args:
         :param kwargs:
         :return:
         """
 
-        self.message = string_cleanup(self.message)
-        self.message_plaintext = strip_tags(self.message)
+        self.message = string_cleanup(string=self.message)
+        self.message_plaintext = strip_tags(value=self.message)
 
         super().save(*args, **kwargs)
 
@@ -585,6 +613,7 @@ class Message(models.Model):
     def delete(self, *args, **kwargs):
         """
         On delete
+
         :param args:
         :param kwargs:
         :return:
@@ -607,6 +636,7 @@ class Message(models.Model):
     def get_absolute_url(self):
         """
         Calculate URL for this message and return it.
+
         :return:
         """
 
@@ -623,7 +653,7 @@ class Message(models.Model):
 
         if page > 1:
             redirect_path = reverse(
-                "aa_forum:forum_topic",
+                viewname="aa_forum:forum_topic",
                 args=(
                     self.topic.board.category.slug,
                     self.topic.board.slug,
@@ -633,7 +663,7 @@ class Message(models.Model):
             )
         else:
             redirect_path = reverse(
-                "aa_forum:forum_topic",
+                viewname="aa_forum:forum_topic",
                 args=(
                     self.topic.board.category.slug,
                     self.topic.board.slug,
@@ -650,12 +680,12 @@ class PersonalMessage(models.Model):
     """
 
     sender = models.ForeignKey(
-        User,
+        to=User,
         related_name="+",
         on_delete=models.CASCADE,
     )
     recipient = models.ForeignKey(
-        User,
+        to=User,
         related_name="+",
         on_delete=models.CASCADE,
     )
@@ -663,7 +693,7 @@ class PersonalMessage(models.Model):
     subject = models.CharField(max_length=254)
     message = RichTextUploadingField(blank=False)
     message_head = models.ForeignKey(
-        "self",
+        to="self",
         blank=True,
         null=True,
         related_name="replies",
@@ -681,8 +711,8 @@ class PersonalMessage(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("personal message")
-        verbose_name_plural = _("personal messages")
+        verbose_name = _(message="personal message")
+        verbose_name_plural = _(message="personal messages")
 
     def __str__(self) -> str:
         return f'"{self.subject}" from {self.sender} to {self.recipient}'
@@ -703,7 +733,7 @@ class PersonalMessage(models.Model):
         # See if it's a new message and set our status bit accordingly
         is_new_message = self._state.adding
 
-        self.message = string_cleanup(self.message)
+        self.message = string_cleanup(string=self.message)
 
         super().save(*args, **kwargs)
 
@@ -729,24 +759,26 @@ class Setting(SingletonModel):
         Choices for Setting.Field
         """
 
-        MESSAGESPERPAGE = "messages_per_page", _("Messages per page")
-        TOPICSPERPAGE = "topics_per_page", _("Topics per page")
-        USERSIGNATURELENGTH = "user_signature_length", _("User signature length")
+        MESSAGESPERPAGE = "messages_per_page", _(message="Messages per page")
+        TOPICSPERPAGE = "topics_per_page", _(message="Topics per page")
+        USERSIGNATURELENGTH = "user_signature_length", _(
+            message="User signature length"
+        )
 
     messages_per_page = models.IntegerField(
         default=15,
         verbose_name=Field.MESSAGESPERPAGE.label,  # pylint: disable=no-member
-        help_text=_("Maximum number of messages per page in the topic view"),
+        help_text=_(message="Maximum number of messages per page in the topic view"),
     )
     topics_per_page = models.IntegerField(
         default=10,
         verbose_name=Field.TOPICSPERPAGE.label,  # pylint: disable=no-member
-        help_text=_("Maximum number of topics per page in the board view"),
+        help_text=_(message="Maximum number of topics per page in the board view"),
     )
     user_signature_length = models.IntegerField(
         default=750,
         verbose_name=Field.USERSIGNATURELENGTH.label,  # pylint: disable=no-member
-        help_text=_("Maximum length of a users signature"),
+        help_text=_(message="Maximum length of a users signature"),
     )
 
     objects = SettingManager()
@@ -757,8 +789,8 @@ class Setting(SingletonModel):
         """
 
         default_permissions = ()
-        verbose_name = _("setting")
-        verbose_name_plural = _("settings")
+        verbose_name = _(message="setting")
+        verbose_name_plural = _(message="settings")
 
     def __str__(self) -> str:
         return "Forum Settings"
@@ -770,7 +802,7 @@ class UserProfile(models.Model):
     """
 
     user = models.OneToOneField(
-        User,
+        to=User,
         related_name="aa_forum_user_profile",
         on_delete=models.CASCADE,
         unique=True,
@@ -787,8 +819,8 @@ class UserProfile(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _("user profile")
-        verbose_name_plural = _("user profiles")
+        verbose_name = _(message="user profile")
+        verbose_name_plural = _(message="user profiles")
 
     def __str__(self):
         return f"Forum User Profile: {self.user}"
@@ -796,11 +828,12 @@ class UserProfile(models.Model):
     def save(self, *args, **kwargs) -> None:
         """
         Cleanup the signature on save
+
         :param args:
         :param kwargs:
         :return:
         """
 
-        self.signature = string_cleanup(self.signature)
+        self.signature = string_cleanup(string=self.signature)
 
         super().save(*args, **kwargs)

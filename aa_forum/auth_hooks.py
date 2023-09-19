@@ -23,28 +23,30 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
         # Setup menu entry for sidebar
         MenuItemHook.__init__(
             self,
-            _(__title__),
-            "fas fa-comments fa-fw",
-            "aa_forum:forum_index",
+            text=_(__title__),
+            classes="fas fa-comments fa-fw",
+            url_name="aa_forum:forum_index",
             navactive=["aa_forum:"],
         )
 
     def render(self, request):
         """
         Check if the user has the permission to view this app
+
         :param request:
         :return:
         """
 
-        if request.user.has_perm("aa_forum.basic_access"):
+        if request.user.has_perm(perm="aa_forum.basic_access"):
             count_unread_topics = unread_topics_count(request=request)
+
             self.count = (
                 count_unread_topics
                 if count_unread_topics and count_unread_topics > 0
                 else None
             )
 
-            return MenuItemHook.render(self, request)
+            return MenuItemHook.render(self, request=request)
 
         return ""
 
@@ -53,6 +55,7 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
 def register_menu():
     """
     Register our menu item
+
     :return:
     """
 
@@ -63,7 +66,8 @@ def register_menu():
 def register_urls():
     """
     Register our base url
+
     :return:
     """
 
-    return UrlHook(urls, "aa_forum", r"^forum/")
+    return UrlHook(urls=urls, namespace="aa_forum", base_url=r"^forum/")

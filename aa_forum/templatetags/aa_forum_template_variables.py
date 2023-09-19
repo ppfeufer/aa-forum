@@ -25,12 +25,13 @@ class SetVarNode(template.Node):
     def render(self, context):
         """
         Render context
+
         :param context:
         :return:
         """
 
         try:
-            value = template.Variable(self.var_value).resolve(context)
+            value = template.Variable(var=self.var_value).resolve(context=context)
         except template.VariableDoesNotExist:
             value = ""
 
@@ -43,7 +44,10 @@ class SetVarNode(template.Node):
 def set_template_variable(parser, token):  # pylint: disable=unused-argument
     """
     Set a template variable
-    Usage: {% set_template_variable <var_name> = <var_value> %}
+
+    Usage:
+        {% set_template_variable <var_name> = <var_value> %}
+
     :param parser:
     :param token:
     :return:
@@ -64,18 +68,19 @@ def set_template_variable(parser, token):  # pylint: disable=unused-argument
 def personal_message_unread_count(user: User) -> str:
     """
     Return the number of new/unread personal messages
+
     :param user:
     :return:
     """
 
     return_value = ""
     message_count = PersonalMessage.objects.get_personal_message_unread_count_for_user(
-        user
+        user=user
     )
 
     if message_count > 0:
         return_value = mark_safe(
-            f'<span class="badge aa-forum-badge-personal-messages-unread-count">{message_count}</span>'  # pylint: disable=line-too-long
+            s=f'<span class="badge aa-forum-badge-personal-messages-unread-count">{message_count}</span>'  # pylint: disable=line-too-long
         )
 
     return return_value

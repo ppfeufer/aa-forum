@@ -21,6 +21,7 @@ class AaForumConfig(AppConfig):
     def ready(self):
         """
         Make sure we can utilize signals
+
         :return:
         """
 

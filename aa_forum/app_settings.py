@@ -9,6 +9,7 @@ from django.apps import apps
 def discordproxy_installed() -> bool:
     """
     Check if discordproxy is installed by trying to import its DiscordClient
+
     :return:
     """
 
@@ -26,15 +27,17 @@ def discordproxy_installed() -> bool:
 def allianceauth_discordbot_installed() -> bool:
     """
     Check if allianceauth-discordbot is installed and active
+
     :return:
     """
 
-    return apps.is_installed("aadiscordbot")
+    return apps.is_installed(app_name="aadiscordbot")
 
 
 def discord_messaging_proxy_available() -> bool:
     """
     Check if any known discord messaging proxy is available
+
     :return:
     """
 
@@ -44,8 +47,9 @@ def discord_messaging_proxy_available() -> bool:
 def aa_timezones_installed() -> bool:
     """
     Check if aa-timezones is installed and active
+
     :return:
     :rtype:
     """
 
-    return apps.is_installed("timezones")
+    return apps.is_installed(app_name="timezones")

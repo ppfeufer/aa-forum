@@ -20,6 +20,7 @@ from aa_forum.constants import SEARCH_STOPWORDS
 def highlight_search_term(text: str, search_phrase: str) -> str:
     """
     Highlight the search term in search results
+
     :param text:
     :param search_phrase:
     :return:
@@ -36,14 +37,14 @@ def highlight_search_term(text: str, search_phrase: str) -> str:
 
     for search_term in search_phrase_terms:
         highlighted = re.sub(
-            f"(?i)({(re.escape(search_term))})",
-            f"{delimiter_search_term_start}\\1{delimiter_search_term_end}",
-            highlighted,
+            pattern=f"(?i)({(re.escape(search_term))})",
+            repl=f"{delimiter_search_term_start}\\1{delimiter_search_term_end}",
+            string=highlighted,
         )
 
-    highlighted = BeautifulSoup(highlighted, "html.parser")
+    highlighted = BeautifulSoup(markup=highlighted, features="html.parser")
 
-    for hyperlink in highlighted.findAll("a"):
+    for hyperlink in highlighted.findAll(name="a"):
         try:
             hyperlink["href"] = (
                 hyperlink["href"]
