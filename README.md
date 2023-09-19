@@ -485,10 +485,10 @@ Please make sure to read the [Contribution Guidelines].
 [contribution guidelines]: https://github.com/ppfeufer/aa-forum/blob/master/CONTRIBUTING.md
 [discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy
 [ppfeufer on ko-fi]: https://ko-fi.com/N4N8CL1BY
-[screenshot: admin view]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/admin-view.jpg "Admin View"
-[screenshot: forum index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/forum-index.jpg "Forum Index"
-[screenshot: start new topic]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/start-new-topic.jpg "Start new Topic (ckEditor)"
-[screenshot: topic overview / board index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-overview.jpg "Topic Overview / Board Index"
-[screenshot: topic view]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-view.jpg "Topic View"
+[screenshot: admin view]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/admin-view.jpg "Admin View"
+[screenshot: forum index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/forum-index.jpg "Forum Index"
+[screenshot: start new topic]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/start-new-topic.jpg "Start new Topic (ckEditor)"
+[screenshot: topic overview / board index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/topic-overview.jpg "Topic Overview / Board Index"
+[screenshot: topic view]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/topic-view.jpg "Topic View"
 [support discord]: https://discord.gg/zmh52wnfvM
 [weblate engage]: https://weblate.ppfeufer.de/engage/alliance-auth-apps/ "Weblate Translations"
