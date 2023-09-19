@@ -22,6 +22,7 @@ from aa_forum.app_settings import aa_timezones_installed
 def forum_time(db_datetime: datetime) -> str:
     """
     Convert DB time into a formatted date-time string we use in our templates
+
     :param db_datetime:
     :type db_datetime:
     :param arg:
@@ -36,7 +37,7 @@ def forum_time(db_datetime: datetime) -> str:
 
     # Try to format the date for a localised output
     try:
-        formatted_date_string = formats.date_format(db_datetime)
+        formatted_date_string = formats.date_format(value=db_datetime)
     except AttributeError:
         try:
             formatted_date_string = format(db_datetime)
@@ -51,14 +52,16 @@ def forum_time(db_datetime: datetime) -> str:
     if aa_timezones_installed():
         timestamp_from_db_datetime = int(datetime.timestamp(db_datetime))
         timezones_url = reverse_url(
-            "timezones:index", args=[timestamp_from_db_datetime]
+            viewname="timezones:index", args=[timestamp_from_db_datetime]
         )
         link_title = _("Timezone Conversion")
 
         return mark_safe(
-            f"{formatted_forum_date} "
-            f'<sup>(<a href="{timezones_url}" target="_blank" rel="noopener noreferer" '
-            f'title="{link_title}"><i class="fas fa-question-circle"></i></a>)</sup>'
+            s=(
+                f"{formatted_forum_date} "
+                f'<sup>(<a href="{timezones_url}" target="_blank" rel="noopener noreferer" '
+                f'title="{link_title}"><i class="fas fa-question-circle"></i></a>)</sup>'
+            )
         )
 
     return formatted_forum_date

@@ -34,21 +34,22 @@ from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm, Set
 from aa_forum.helper.forms import message_form_errors
 from aa_forum.models import Board, Category, Setting
 
-logger = LoggerAddTag(get_extension_logger(__name__), __title__)
+logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def categories_and_boards(request: WSGIRequest) -> HttpResponse:
     """
     Administration index view
+
     :param request:
     :return:
     """
 
     categories = Category.objects.prefetch_related(
         Prefetch(
-            "boards",
+            lookup="boards",
             queryset=Board.objects.filter(parent_board__isnull=True)
             .prefetch_related("groups")
             .prefetch_related("child_boards")
@@ -120,22 +121,25 @@ def categories_and_boards(request: WSGIRequest) -> HttpResponse:
     logger.info(f"{request.user} calling admin view.")
 
     return render(
-        request, "aa_forum/view/administration/categories-and-boards.html", context
+        request=request,
+        template_name="aa_forum/view/administration/categories-and-boards.html",
+        context=context,
     )
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def category_create(request: WSGIRequest) -> HttpResponseRedirect:
     """
     Create a new category
+
     :param request:
     :return:
     """
 
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = NewCategoryForm(request.POST, prefix="new-category")
+        form = NewCategoryForm(data=request.POST, prefix="new-category")
 
         # Check whether it's valid:
         if form.is_valid():
@@ -157,21 +161,23 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
                     ).save()
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Category created.</p>"))
+                request=request,
+                message=mark_safe(s=_("<h4>Success!</h4><p>Category created.</p>")),
             )
 
-            logger.info(f'{request.user} created category "{new_category.name}".')
+            logger.info(msg=f'{request.user} created category "{new_category.name}".')
         else:
-            message_form_errors(request, form)
+            message_form_errors(request=request, form=form)
 
-    return redirect("aa_forum:admin_categories_and_boards")
+    return redirect(to="aa_forum:admin_categories_and_boards")
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirect:
     """
     Edit a category
+
     :param request:
     :param category_id:
     :return:
@@ -180,7 +186,7 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
         form = EditCategoryForm(
-            request.POST, prefix="edit-category-" + str(category_id)
+            data=request.POST, prefix="edit-category-" + str(category_id)
         )
 
         if form.is_valid():
@@ -192,29 +198,33 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
             category.save()
 
             messages.success(
-                request,
-                mark_safe(
-                    _(
+                request=request,
+                message=mark_safe(
+                    # pylint: disable=duplicate-code
+                    s=_(
                         f'<h4>Success!</h4><p>Category name changed from "{category_name_old}" to "{category.name}".</p>'  # pylint: disable=line-too-long
                     )
                 ),
             )
 
             logger.info(
-                f"{request.user} changed category name "
-                f'from "{category_name_old}" to "{category.name}".'
+                msg=(
+                    f"{request.user} changed category name "
+                    f'from "{category_name_old}" to "{category.name}".'
+                )
             )
         else:
-            message_form_errors(request, form)
+            message_form_errors(request=request, form=form)
 
-    return redirect("aa_forum:admin_categories_and_boards")
+    return redirect(to="aa_forum:admin_categories_and_boards")
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedirect:
     """
     Edit a board
+
     :param request:
     :param category_id:
     :return:
@@ -224,26 +234,29 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
         category = Category.objects.get(pk=category_id)
     except Category.DoesNotExist:
         msg = f"Category with PK {category_id} not found."
-        logger.warning(msg)
+        logger.warning(msg=msg)
         return HttpResponseNotFound(msg)
 
     category_name = category.name
     category.delete()
     messages.success(
-        request,
-        mark_safe(_(f'<h4>Success!</h4><p>Category "{category_name}" removed.</p>')),
+        request=request,
+        message=mark_safe(
+            s=_(f'<h4>Success!</h4><p>Category "{category_name}" removed.</p>')
+        ),
     )
 
-    logger.info(f'{request.user} removed category "{category_name}".')
+    logger.info(msg=f'{request.user} removed category "{category_name}".')
 
-    return redirect("aa_forum:admin_categories_and_boards")
+    return redirect(to="aa_forum:admin_categories_and_boards")
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect:
     """
     Create a new board
+
     :param request:
     :param category_id:
     :return:
@@ -252,7 +265,7 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
         form = EditBoardForm(
-            request.POST, prefix="new-board-in-category-" + str(category_id)
+            data=request.POST, prefix="new-board-in-category-" + str(category_id)
         )
 
         board_category = Category.objects.get(pk=category_id)
@@ -280,21 +293,21 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
             new_board.announcement_groups.set(form.cleaned_data["announcement_groups"])
 
             messages.success(
-                request,
-                mark_safe(
-                    _(f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>')
+                request=request,
+                message=mark_safe(
+                    s=_(f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>')
                 ),
             )
 
-            logger.info(f'{request.user} created board "{new_board.name}".')
+            logger.info(msg=f'{request.user} created board "{new_board.name}".')
         else:
-            message_form_errors(request, form)
+            message_form_errors(request=request, form=form)
 
-    return redirect("aa_forum:admin_categories_and_boards")
+    return redirect(to="aa_forum:admin_categories_and_boards")
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def board_create_child(
     request: WSGIRequest,
     category_id: int,  # pylint: disable=unused-argument
@@ -302,6 +315,7 @@ def board_create_child(
 ) -> HttpResponseRedirect:
     """
     Create a child board
+
     :param request:
     :param category_id:
     :param board_id:
@@ -310,7 +324,9 @@ def board_create_child(
 
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = EditBoardForm(request.POST, prefix="new-child-board-" + str(board_id))
+        form = EditBoardForm(
+            data=request.POST, prefix="new-child-board-" + str(board_id)
+        )
 
         # Check whether it's valid:
         if form.is_valid():
@@ -333,29 +349,32 @@ def board_create_child(
             new_board.save()
 
             messages.success(
-                request,
-                mark_safe(
-                    _(f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>')
+                request=request,
+                message=mark_safe(
+                    s=_(f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>')
                 ),
             )
 
             logger.info(
-                f'{request.user} created board "{new_board.name}" '
-                f'as child board of "{parent_board.name}".'
+                msg=(
+                    f'{request.user} created board "{new_board.name}" '
+                    f'as child board of "{parent_board.name}".'
+                )
             )
         else:
-            message_form_errors(request, form)
+            message_form_errors(request=request, form=form)
 
-    return redirect("aa_forum:admin_categories_and_boards")
+    return redirect(to="aa_forum:admin_categories_and_boards")
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def board_edit(
     request: WSGIRequest, category_id: int, board_id: int
 ) -> HttpResponseRedirect:
     """
     Edit a board
+
     :param request:
     :param category_id:
     :param board_id:
@@ -364,7 +383,7 @@ def board_edit(
 
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
-        form = EditBoardForm(request.POST, prefix="edit-board-" + str(board_id))
+        form = EditBoardForm(data=request.POST, prefix="edit-board-" + str(board_id))
 
         # Check whether it's valid:
         if form.is_valid():
@@ -385,19 +404,21 @@ def board_edit(
             board.save()
 
             messages.success(
-                request,
-                mark_safe(_(f'<h4>Success!</h4><p>Board "{board.name}" changed.</p>')),
+                request=request,
+                message=mark_safe(
+                    s=_(f'<h4>Success!</h4><p>Board "{board.name}" changed.</p>')
+                ),
             )
 
-            logger.info(f'{request.user} changed board "{board.name}".')
+            logger.info(msg=f'{request.user} changed board "{board.name}".')
         else:
-            message_form_errors(request, form)
+            message_form_errors(request=request, form=form)
 
-    return redirect("aa_forum:admin_categories_and_boards")
+    return redirect(to="aa_forum:admin_categories_and_boards")
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def board_delete(
     request: WSGIRequest,
     category_id: int,  # pylint: disable=unused-argument
@@ -405,6 +426,7 @@ def board_delete(
 ) -> HttpResponseRedirect:
     """
     Delete a board
+
     :param request:
     :param category_id:
     :param board_id:
@@ -415,7 +437,7 @@ def board_delete(
         board = Board.objects.get(pk=board_id)
     except Board.DoesNotExist:
         msg = f"Board with PK {board_id} not found."
-        logger.warning(msg)
+        logger.warning(msg=msg)
 
         return HttpResponseNotFound(msg)
 
@@ -423,19 +445,23 @@ def board_delete(
     board.delete()
 
     messages.success(
-        request, mark_safe(_(f'<h4>Success!</h4><p>Board "{board_name}" removed.</p>'))
+        request=request,
+        message=mark_safe(
+            s=_(f'<h4>Success!</h4><p>Board "{board_name}" removed.</p>')
+        ),
     )
 
-    logger.info(f'{request.user} removed board "{board_name}".')
+    logger.info(msg=f'{request.user} removed board "{board_name}".')
 
-    return redirect("aa_forum:admin_categories_and_boards")
+    return redirect(to="aa_forum:admin_categories_and_boards")
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def ajax_category_order(request: WSGIRequest) -> JsonResponse:
     """
     Ajax call :: Save the category order
+
     :param request:
     :return:
     """
@@ -443,15 +469,17 @@ def ajax_category_order(request: WSGIRequest) -> JsonResponse:
     data = []
 
     if request.method == "POST":
-        categories = json.loads(request.POST.get("categories"))
+        categories = json.loads(s=request.POST.get("categories"))
 
         for category in categories:
             try:
                 category_obj = Category.objects.get(pk=category["catId"])
             except Category.DoesNotExist:
+                category_id = category["catId"]
                 logger.warning(
-                    "Tried to change order for non existing category with ID %s.",
-                    category["catId"],
+                    msg=(
+                        f"You tried to change the order for a non existing category with ID {category_id}."  # pylint: disable=line-too-long
+                    )
                 )
             else:
                 category_obj.order = category["catOrder"]
@@ -459,14 +487,15 @@ def ajax_category_order(request: WSGIRequest) -> JsonResponse:
 
         data.append({"success": True})
 
-    return JsonResponse(data, safe=False)
+    return JsonResponse(data=data, safe=False)
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def ajax_board_order(request: WSGIRequest) -> JsonResponse:
     """
     Ajax call :: Save the board order
+
     :param request:
     :return:
     """
@@ -480,9 +509,11 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
             try:
                 board_obj = Board.objects.get(pk=board["boardId"])
             except Board.DoesNotExist:
+                board_id = board["boardId"]
                 logger.warning(
-                    "Tried to change order for non existing board with ID %s.",
-                    board["boardId"],
+                    msg=(
+                        f"You tried to change the order for s non existing board with ID {board_id}."  # pylint: disable=line-too-long
+                    )
                 )
             else:
                 board_obj.order = board["boardOrder"]
@@ -490,14 +521,15 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
 
         data.append({"success": True})
 
-    return JsonResponse(data, safe=False)
+    return JsonResponse(data=data, safe=False)
 
 
 @login_required
-@permission_required("aa_forum.manage_forum")
+@permission_required(perm="aa_forum.manage_forum")
 def forum_settings(request: WSGIRequest) -> HttpResponse:
     """
     Forum Settings
+
     :param request:
     :return:
     """
@@ -508,7 +540,7 @@ def forum_settings(request: WSGIRequest) -> HttpResponse:
 
     # If this is a POST request, we need to process the form data
     if request.method == "POST":
-        settings_form = SettingForm(request.POST, instance=settings)
+        settings_form = SettingForm(data=request.POST, instance=settings)
 
         # Check whether it's valid:
         if settings_form.is_valid():
@@ -520,16 +552,17 @@ def forum_settings(request: WSGIRequest) -> HttpResponse:
             settings.save()
 
             messages.success(
-                request, mark_safe(_("<h4>Success!</h4><p>Settings updated.</p>"))
+                request=request,
+                message=mark_safe(s=_("<h4>Success!</h4><p>Settings updated.</p>")),
             )
 
-            return redirect("aa_forum:admin_forum_settings")
+            return redirect(to="aa_forum:admin_forum_settings")
 
         messages.error(
             request,
             mark_safe(
                 # pylint: disable=duplicate-code
-                _(
+                s=_(
                     "<h4>Error!</h4>"
                     "<p>Something went wrong, please check your input.</p>"
                 )
@@ -540,4 +573,8 @@ def forum_settings(request: WSGIRequest) -> HttpResponse:
 
     context = {"form": settings_form}
 
-    return render(request, "aa_forum/view/administration/forum-settings.html", context)
+    return render(
+        request=request,
+        template_name="aa_forum/view/administration/forum-settings.html",
+        context=context,
+    )

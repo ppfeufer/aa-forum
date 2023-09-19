@@ -32,6 +32,7 @@ from aa_forum.models import (
 def get_mandatory_form_label_text(text):
     """
     Label text for mandatory form fields
+
     :param text:
     :return:
     """
@@ -59,7 +60,7 @@ class SpecialModelChoiceIterator(forms.models.ModelChoiceIterator):
         queryset = self.queryset
 
         for obj in queryset:
-            yield self.choice(obj)
+            yield self.choice(obj=obj)
 
 
 class SpecialModelMultipleChoiceField(forms.ModelMultipleChoiceField):
@@ -87,7 +88,7 @@ class NewTopicForm(forms.Form):
 
     subject = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(_("Subject")),
+        label=get_mandatory_form_label_text(text=_("Subject")),
         max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Subject")}),
     )
@@ -98,16 +99,17 @@ class NewTopicForm(forms.Form):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
-        label=get_mandatory_form_label_text(_("Message")),
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
 
     def clean_message(self):
         """
         Cleanup the message
+
         :return:
         """
 
-        message = string_cleanup(self.cleaned_data["message"])
+        message = string_cleanup(string=self.cleaned_data["message"])
 
         return message
 
@@ -119,7 +121,7 @@ class EditTopicForm(ModelForm):
 
     subject = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(_("Subject")),
+        label=get_mandatory_form_label_text(text=_("Subject")),
         max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Subject")}),
     )
@@ -140,7 +142,7 @@ class NewCategoryForm(ModelForm):
 
     name = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(_("Name")),
+        label=get_mandatory_form_label_text(text=_("Name")),
         max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Category Name")}),
     )
@@ -178,7 +180,7 @@ class EditCategoryForm(ModelForm):
 
     name = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(_("Name")),
+        label=get_mandatory_form_label_text(text=_("Name")),
         max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Category Name")}),
     )
@@ -199,7 +201,7 @@ class EditBoardForm(ModelForm):
 
     name = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(_("Name")),
+        label=get_mandatory_form_label_text(text=_("Name")),
         max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Board Name")}),
     )
@@ -276,6 +278,7 @@ class EditBoardForm(ModelForm):
     def __init__(self, *args, **kwargs):
         """
         When form is initialized
+
         :param args:
         :param kwargs:
         """
@@ -315,7 +318,7 @@ class EditMessageForm(ModelForm):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
-        label=get_mandatory_form_label_text(_("Message")),
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
 
     class Meta:  # pylint: disable=too-few-public-methods
@@ -332,7 +335,7 @@ class EditMessageForm(ModelForm):
         :return:
         """
 
-        message = string_cleanup(self.cleaned_data["message"])
+        message = string_cleanup(string=self.cleaned_data["message"])
 
         return message
 
@@ -362,7 +365,7 @@ class UserProfileForm(ModelForm):
         required=False,
         label=_("Website URL"),
         max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _("https://example.com")}),
+        widget=forms.TextInput(attrs={"placeholder": "https://example.com"}),
         help_text=_(
             "Your website's URL. (Don't forget to also set a title for your website, "
             "otherwise this field will be ignored.)"
@@ -395,10 +398,11 @@ class UserProfileForm(ModelForm):
     def clean_signature(self):
         """
         Check that the signature is not longer than allowed
+
         :return:
         """
 
-        signature = string_cleanup(self.cleaned_data["signature"])
+        signature = string_cleanup(string=self.cleaned_data["signature"])
 
         if not signature:
             return ""
@@ -421,6 +425,7 @@ class UserProfileForm(ModelForm):
     def clean_website_url(self):
         """
         Check if it's a valid URL
+
         :return:
         """
 
@@ -490,11 +495,11 @@ class NewPersonalMessageForm(ModelForm):
     recipient = forms.ModelChoiceField(
         queryset=User.objects.none(),
         required=True,
-        label=get_mandatory_form_label_text(_("Recipient")),
+        label=get_mandatory_form_label_text(text=_("Recipient")),
     )
     subject = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(_("Subject")),
+        label=get_mandatory_form_label_text(text=_("Subject")),
         max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Hello there …")}),
     )
@@ -504,12 +509,13 @@ class NewPersonalMessageForm(ModelForm):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
-        label=get_mandatory_form_label_text(_("Message")),
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
 
     def __init__(self, *args, **kwargs):
         """
         When form is initialized
+
         :param args:
         :param kwargs:
         """
@@ -529,10 +535,11 @@ class NewPersonalMessageForm(ModelForm):
     def clean_message(self):
         """
         Cleanup the message
+
         :return:
         """
 
-        message = string_cleanup(self.cleaned_data["message"])
+        message = string_cleanup(string=self.cleaned_data["message"])
 
         return message
 
@@ -548,7 +555,7 @@ class ReplyPersonalMessageForm(ModelForm):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
-        label=get_mandatory_form_label_text(_("Message")),
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
 
     class Meta:  # pylint: disable=too-few-public-methods
@@ -562,9 +569,10 @@ class ReplyPersonalMessageForm(ModelForm):
     def clean_message(self):
         """
         Cleanup the message
+
         :return:
         """
 
-        message = string_cleanup(self.cleaned_data["message"])
+        message = string_cleanup(string=self.cleaned_data["message"])
 
         return message

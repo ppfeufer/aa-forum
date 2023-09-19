@@ -19,4 +19,4 @@ def message_form_errors(request: WSGIRequest, form: Form) -> None:
 
     for _, errors in form.errors.items():
         for text in errors:
-            messages.error(request, f"{gettext_lazy('Error: ')} {text}")
+            messages.error(request=request, message=f"{gettext_lazy('Error:')} {text}")

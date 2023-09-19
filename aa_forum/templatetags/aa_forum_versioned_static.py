@@ -14,11 +14,12 @@ from aa_forum import __version__
 def aa_forum_static(path: str) -> str:
     """
     Return versioned static URL
+
     :param path:
     :return:
     """
 
-    static_url = static(path)
+    static_url = static(path=path)
     versioned_url = static_url + "?v=" + __version__
 
     return versioned_url

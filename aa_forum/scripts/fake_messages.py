@@ -65,7 +65,7 @@ def run():
             print(f"Generating topics for board {num + 1} / {board_count}")
 
             for _ in range(
-                random.randrange(MIN_TOPICS_PER_BOARD, MAX_TOPICS_PER_BOARD)
+                random.randrange(start=MIN_TOPICS_PER_BOARD, stop=MAX_TOPICS_PER_BOARD)
             ):
                 # Can not bulk create, or we would not get slugs
                 topics.append(
@@ -79,7 +79,9 @@ def run():
                     print(f"Generating messages for topic {num + 1} / {len(topics)}")
 
                     for _ in range(
-                        random.randrange(MIN_MESSAGES_PER_TOPIC, MAX_MESSAGES_PER_TOPIC)
+                        random.randrange(
+                            start=MIN_MESSAGES_PER_TOPIC, stop=MAX_MESSAGES_PER_TOPIC
+                        )
                     ):
                         # Can not bulk create, or we would not get first and last
                         # messages

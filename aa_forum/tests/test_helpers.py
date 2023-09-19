@@ -20,7 +20,7 @@ from app_utils.testing import create_eve_character, create_fake_user
 from aa_forum.forms import NewCategoryForm
 from aa_forum.helper.eve_images import get_character_portrait_from_evecharacter
 from aa_forum.helper.forms import message_form_errors
-from aa_forum.helper.text import get_image_url, string_cleanup
+from aa_forum.helper.text import get_first_image_url_from_text, string_cleanup
 from aa_forum.helper.user import get_main_character_from_user
 from aa_forum.models import get_sentinel_user
 
@@ -37,41 +37,43 @@ class TestHelperForms(TestCase):
     def test_should_send_form_errors_as_messages(self, messages):
         """
         Test should send form errors as message
+
         :param messages:
         :return:
         """
 
         # given
         form = NewCategoryForm({"name": "Dummy"})
-        form.add_error("name", "error message 1")
-        form.add_error(None, "error message 2")
-        request = self.factory.get(reverse("aa_forum:forum_index"))
+        form.add_error(field="name", error="error message 1")
+        form.add_error(field=None, error="error message 2")
+        request = self.factory.get(path=reverse(viewname="aa_forum:forum_index"))
 
         # when
-        message_form_errors(request, form)
+        message_form_errors(request=request, form=form)
 
         # then
-        args, _ = messages.error.call_args_list[0]
-        self.assertIn("error message 1", args[1])
-        args, _ = messages.error.call_args_list[1]
-        self.assertIn("error message 2", args[1])
+        _, result = messages.error.call_args_list[0]
+        self.assertIn(member="Error: error message 1", container=result["message"])
+        _, result = messages.error.call_args_list[1]
+        self.assertIn(member="Error: error message 2", container=result["message"])
 
     def test_should_do_nothing_when_form_has_no_errors(self, messages):
         """
         Test should do nothing when form has no errors
+
         :param messages:
         :return:
         """
 
         # given
         form = NewCategoryForm({"name": "Dummy"})
-        request = self.factory.get(reverse("aa_forum:forum_index"))
+        request = self.factory.get(path=reverse(viewname="aa_forum:forum_index"))
 
         # when
-        message_form_errors(request, form)
+        message_form_errors(request=request, form=form)
 
         # then
-        self.assertFalse(messages.error.called)
+        self.assertFalse(expr=messages.error.called)
 
 
 class TestHelperText(TestCase):
@@ -82,6 +84,7 @@ class TestHelperText(TestCase):
     def test_should_return_cleaned_string(self):
         """
         Test should return a clean/sanitized string
+
         :return:
         """
 
@@ -93,16 +96,18 @@ class TestHelperText(TestCase):
         )
 
         # when
-        cleaned_string = string_cleanup(string)
+        cleaned_string = string_cleanup(string=string)
 
         # then
         self.assertIn(
-            "this is a script test. and this is style test. end tests.", cleaned_string
+            member="this is a script test. and this is style test. end tests.",
+            container=cleaned_string,
         )
 
     def test_should_return_none_for_get_image_url(self):
         """
         Test should return none for get_image_url
+
         :return:
         """
 
@@ -122,13 +127,14 @@ class TestHelperText(TestCase):
             "nulla dictum rutrum."
         )
 
-        image_url = get_image_url(text)
+        image_url = get_first_image_url_from_text(text=text)
 
-        self.assertIsNone(image_url)
+        self.assertIsNone(obj=image_url)
 
     def test_should_return_none_for_get_image_url_2(self):
         """
         Test should return none for get_image_url because it's invalid
+
         :return:
         """
 
@@ -148,13 +154,14 @@ class TestHelperText(TestCase):
             "nulla dictum rutrum."
         )
 
-        image_url = get_image_url(text)
+        image_url = get_first_image_url_from_text(text=text)
 
-        self.assertIsNone(image_url)
+        self.assertIsNone(obj=image_url)
 
     def test_should_return_first_image_url_for_get_image_url(self):
         """
         Test should return none for get_image_url because it's invalid
+
         :return:
         """
 
@@ -174,9 +181,9 @@ class TestHelperText(TestCase):
             "sollicitudin nulla dictum rutrum. "
         )
 
-        image_url = get_image_url(text)
+        image_url = get_first_image_url_from_text(text=text)
 
-        self.assertEqual(image_url, "https://test.de/foobar.jpg")
+        self.assertEqual(first=image_url, second="https://test.de/foobar.jpg")
 
 
 class TestHelperEveImages(TestCase):
@@ -186,12 +193,15 @@ class TestHelperEveImages(TestCase):
 
     def setUp(self) -> None:
         self.user_1001 = create_fake_user(
-            1001, "Bruce Wayne", permissions=["aa_forum.basic_access"]
+            character_id=1001,
+            character_name="Bruce Wayne",
+            permissions=["aa_forum.basic_access"],
         )
 
     def test_should_return_character_portrait_url(self):
         """
         Test should return character portrait URL
+
         :return:
         """
 
@@ -200,11 +210,12 @@ class TestHelperEveImages(TestCase):
         portrait_url = get_character_portrait_from_evecharacter(character=character)
         expected_url = f"https://images.evetech.net/characters/{character.character_id}/portrait?size=32"  # pylint: disable=line-too-long
 
-        self.assertEqual(portrait_url, expected_url)
+        self.assertEqual(first=portrait_url, second=expected_url)
 
     def test_should_return_character_portrait_html(self):
         """
         Test should return character portrait HTML image tag
+
         :return:
         """
 
@@ -220,7 +231,7 @@ class TestHelperEveImages(TestCase):
             'width="32" height="32">'
         )
 
-        self.assertEqual(portrait_html, expected_html)
+        self.assertEqual(first=portrait_html, second=expected_html)
 
 
 class TestGetMainCharacterFromUser(TestCase):
@@ -248,45 +259,49 @@ class TestGetMainCharacterFromUser(TestCase):
     def test_get_main_character_from_user_should_return_character_name(self):
         """
         Test should return the main character name for a regular user
+
         :return:
         """
 
         character_name = get_main_character_from_user(self.user_main_character)
 
-        self.assertEqual(character_name, "William T. Riker")
+        self.assertEqual(first=character_name, second="William T. Riker")
 
     def test_get_main_character_from_user_should_return_user_name(self):
         """
         Test should return just the username for a user without a character
+
         :return:
         """
 
-        user = AuthUtils.create_user("John Doe")
+        user = AuthUtils.create_user(username="John Doe")
 
-        character_name = get_main_character_from_user(user)
+        character_name = get_main_character_from_user(user=user)
 
-        self.assertEqual(character_name, "John Doe")
+        self.assertEqual(first=character_name, second="John Doe")
 
     def test_get_main_character_from_user_should_return_sentinel_user(self):
         """
         Test should return "deleted" as username (Sentinel User)
+
         :return:
         """
 
         user = get_sentinel_user()
 
-        character_name = get_main_character_from_user(user)
+        character_name = get_main_character_from_user(user=user)
 
-        self.assertEqual(character_name, "deleted")
+        self.assertEqual(first=character_name, second="deleted")
 
     def test_get_main_character_from_user_should_return_sentinel_user_for_none(self):
         """
         Test should return "deleted" (Sentinel User) if user is None
+
         :return:
         """
 
         user = None
 
-        character_name = get_main_character_from_user(user)
+        character_name = get_main_character_from_user(user=user)
 
-        self.assertEqual(character_name, "deleted")
+        self.assertEqual(first=character_name, second="deleted")

@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning].
 
 ### Fixed
 
-- pylint issues
+- Pylint issues
+
+### Changed
+
+- Use keyword arguments where ever possible
 
 ## \[1.19.3\] - 2023-09-02
 
