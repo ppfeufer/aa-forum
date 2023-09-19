@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning].
 
 ### Changed
 
-- Use keyword arguments where ever possible
+- Use keyword arguments wherever possible
 
 ## \[1.19.3\] - 2023-09-02
 
