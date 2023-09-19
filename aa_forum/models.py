@@ -120,12 +120,10 @@ class General(models.Model):
         managed = False
         default_permissions = ()
         permissions = (
-            ("basic_access", _(message="Can access the AA-Forum module")),
+            ("basic_access", _("Can access the AA-Forum module")),
             (
                 "manage_forum",
-                _(
-                    message="Can manage the AA-Forum module (Category, topics and messages)"
-                ),
+                _("Can manage the AA-Forum module (Category, topics and messages)"),
             ),
         )
 
@@ -168,8 +166,8 @@ class Category(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _(message="category")
-        verbose_name_plural = _(message="categories")
+        verbose_name = _("category")
+        verbose_name_plural = _("categories")
 
     def __str__(self) -> str:
         return str(self.name)
@@ -213,12 +211,10 @@ class Board(models.Model):
     use_webhook_for_replies = models.BooleanField(
         default=False,
         help_text=_(
-            message=(
-                "Use this Discord Webhook for replies as well? When activated every "
-                "reply to any topic in this board will be posted to the defined "
-                "Discord channel. (Child boards are excluded) Chose wisely! "
-                "(Default: NO)"
-            )
+            "Use this Discord Webhook for replies as well? When activated every "
+            "reply to any topic in this board will be posted to the defined "
+            "Discord channel. (Child boards are excluded) Chose wisely! "
+            "(Default: NO)"
         ),
     )
     parent_board = models.ForeignKey(
@@ -233,22 +229,18 @@ class Board(models.Model):
         blank=True,
         related_name="aa_forum_boards_group_restriction",
         help_text=_(
-            message=(
-                "User in at least one of these groups have access to this board. If "
-                "no groups are selected, everyone with access to the forum has also "
-                "access to this board."
-            )
+            "User in at least one of these groups have access to this board. If "
+            "no groups are selected, everyone with access to the forum has also "
+            "access to this board."
         ),
     )
     is_announcement_board = models.BooleanField(
         default=False,
         help_text=_(
-            message=(
-                "Mark this board as an 'Announcement Board', meaning that only "
-                "certain selected groups can start new topics. All others who have "
-                "access to this board will still be able to discuss in the topics "
-                "though. (Default: NO)"
-            )
+            "Mark this board as an 'Announcement Board', meaning that only "
+            "certain selected groups can start new topics. All others who have "
+            "access to this board will still be able to discuss in the topics "
+            "though. (Default: NO)"
         ),
     )
     announcement_groups = models.ManyToManyField(
@@ -256,11 +248,9 @@ class Board(models.Model):
         blank=True,
         related_name="aa_forum_boards_group_start_topic_restriction",
         help_text=_(
-            message=(
-                "User in at least one of the selected groups will be able to start "
-                "topics in 'Announcement Boards'. If no group is selected, only "
-                "forum admins can do so."
-            )
+            "User in at least one of the selected groups will be able to start "
+            "topics in 'Announcement Boards'. If no group is selected, only "
+            "forum admins can do so."
         ),
     )
     order = models.IntegerField(
@@ -294,8 +284,8 @@ class Board(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _(message="board")
-        verbose_name_plural = _(message="boards")
+        verbose_name = _("board")
+        verbose_name_plural = _("boards")
         constraints = [
             models.UniqueConstraint(fields=["category", "name"], name="fpk_board")
         ]
@@ -417,8 +407,8 @@ class Topic(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _(message="topic")
-        verbose_name_plural = _(message="topics")
+        verbose_name = _("topic")
+        verbose_name_plural = _("topics")
         constraints = [
             models.UniqueConstraint(fields=["board", "subject"], name="fpk_topic")
         ]
@@ -575,8 +565,8 @@ class Message(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _(message="message")
-        verbose_name_plural = _(message="messages")
+        verbose_name = _("message")
+        verbose_name_plural = _("messages")
 
     def __str__(self) -> str:
         return str(self.pk)
@@ -711,8 +701,8 @@ class PersonalMessage(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _(message="personal message")
-        verbose_name_plural = _(message="personal messages")
+        verbose_name = _("personal message")
+        verbose_name_plural = _("personal messages")
 
     def __str__(self) -> str:
         return f'"{self.subject}" from {self.sender} to {self.recipient}'
@@ -759,26 +749,24 @@ class Setting(SingletonModel):
         Choices for Setting.Field
         """
 
-        MESSAGESPERPAGE = "messages_per_page", _(message="Messages per page")
-        TOPICSPERPAGE = "topics_per_page", _(message="Topics per page")
-        USERSIGNATURELENGTH = "user_signature_length", _(
-            message="User signature length"
-        )
+        MESSAGESPERPAGE = "messages_per_page", _("Messages per page")
+        TOPICSPERPAGE = "topics_per_page", _("Topics per page")
+        USERSIGNATURELENGTH = "user_signature_length", _("User signature length")
 
     messages_per_page = models.IntegerField(
         default=15,
         verbose_name=Field.MESSAGESPERPAGE.label,  # pylint: disable=no-member
-        help_text=_(message="Maximum number of messages per page in the topic view"),
+        help_text=_("Maximum number of messages per page in the topic view"),
     )
     topics_per_page = models.IntegerField(
         default=10,
         verbose_name=Field.TOPICSPERPAGE.label,  # pylint: disable=no-member
-        help_text=_(message="Maximum number of topics per page in the board view"),
+        help_text=_("Maximum number of topics per page in the board view"),
     )
     user_signature_length = models.IntegerField(
         default=750,
         verbose_name=Field.USERSIGNATURELENGTH.label,  # pylint: disable=no-member
-        help_text=_(message="Maximum length of a users signature"),
+        help_text=_("Maximum length of a users signature"),
     )
 
     objects = SettingManager()
@@ -789,8 +777,8 @@ class Setting(SingletonModel):
         """
 
         default_permissions = ()
-        verbose_name = _(message="setting")
-        verbose_name_plural = _(message="settings")
+        verbose_name = _("setting")
+        verbose_name_plural = _("settings")
 
     def __str__(self) -> str:
         return "Forum Settings"
@@ -819,8 +807,8 @@ class UserProfile(models.Model):
         """
 
         default_permissions = ()
-        verbose_name = _(message="user profile")
-        verbose_name_plural = _(message="user profiles")
+        verbose_name = _("user profile")
+        verbose_name_plural = _("user profiles")
 
     def __str__(self):
         return f"Forum User Profile: {self.user}"

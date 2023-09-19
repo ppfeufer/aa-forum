@@ -224,10 +224,8 @@ def board(
             request=request,
             message=mark_safe(
                 s=_(
-                    message=(
-                        "<h4>Error!</h4><p>The board you were trying to visit does "
-                        "either not exist, or you don't have access to it.</p>"
-                    )
+                    "<h4>Error!</h4><p>The board you were trying to visit does "
+                    "either not exist, or you don't have access to it.</p>"
                 )
             ),
         )
@@ -283,10 +281,8 @@ def board_new_topic(
             request=request,
             message=mark_safe(
                 s=_(
-                    message=(
-                        "<h4>Error!</h4><p>The category you were trying to post in "
-                        "does not exist.</p>"
-                    )
+                    "<h4>Error!</h4><p>The category you were trying to post in "
+                    "does not exist.</p>"
                 )
             ),
         )
@@ -312,10 +308,8 @@ def board_new_topic(
             request=request,
             message=mark_safe(
                 s=_(
-                    message=(
-                        "<h4>Error!</h4><p>The board you were trying to post in does "
-                        "either not exist, or you don't have access to it.</p>"
-                    )
+                    "<h4>Error!</h4><p>The board you were trying to post in does "
+                    "either not exist, or you don't have access to it.</p>"
                 )
             ),
         )
@@ -334,11 +328,9 @@ def board_new_topic(
             request=request,
             message=mark_safe(
                 s=_(
-                    message=(
-                        "<h4>Error!</h4><p>The board you were trying to post in is "
-                        "an Announcement Board and you don't have the permissions to "
-                        "start a topic there.</p>"
-                    )
+                    "<h4>Error!</h4><p>The board you were trying to post in is "
+                    "an Announcement Board and you don't have the permissions to "
+                    "start a topic there.</p>"
                 )
             ),
         )
@@ -385,7 +377,7 @@ def board_new_topic(
                         request=request,
                         message=mark_safe(
                             s=_(
-                                message=f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{existing_topic_url}">{existing_topic.subject}</a></p>'  # pylint: disable=line-too-long
+                                f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{existing_topic_url}">{existing_topic.subject}</a></p>'  # pylint: disable=line-too-long
                             )
                         ),
                     )
@@ -437,12 +429,10 @@ def board_new_topic(
             message=mark_safe(
                 # pylint: disable=duplicate-code
                 s=_(
-                    message=(
-                        "<h4>Error!</h4>"
-                        "<p>Either subject or message is missing. "
-                        "Please make sure you enter both fields, "
-                        "as both fields are mandatory.</p>"
-                    )
+                    "<h4>Error!</h4>"
+                    "<p>Either subject or message is missing. "
+                    "Please make sure you enter both fields, "
+                    "as both fields are mandatory.</p>"
                 )
             ),
         )
@@ -495,10 +485,8 @@ def topic(
             request=request,
             message=mark_safe(
                 s=_(
-                    message=(
-                        "<h4>Error!</h4><p>The topic you were trying to view does not "
-                        "exist or you do not have access to it.</p>"
-                    )
+                    "<h4>Error!</h4><p>The topic you were trying to view does not "
+                    "exist or you do not have access to it.</p>"
                 )
             ),
         )
@@ -594,10 +582,8 @@ def topic_modify(
             request=request,
             message=mark_safe(
                 s=_(
-                    message=(
-                        "<h4>Error!</h4><p>The topic you were trying to modify does "
-                        "not exist or you do not have access to it.</p>"
-                    )
+                    "<h4>Error!</h4><p>The topic you were trying to modify does "
+                    "not exist or you do not have access to it.</p>"
                 )
             ),
         )
@@ -618,11 +604,7 @@ def topic_modify(
         messages.error(
             request=request,
             message=mark_safe(
-                s=_(
-                    message=(
-                        "<h4>Error!</h4><p>You are not allowed to modify this topic!</p>"  # pylint: disable=line-too-long
-                    )
-                )
+                s=_("<h4>Error!</h4><p>You are not allowed to modify this topic!</p>")
             ),
         )
 
@@ -654,11 +636,7 @@ def topic_modify(
                 request=request,
                 message=mark_safe(
                     # pylint: disable=duplicate-code
-                    s=_(
-                        message=(
-                            "<h4>Success!</h4><p>The topic subject has been updated.</p>"  # pylint: disable=line-too-long
-                        )
-                    )
+                    s=_("<h4>Success!</h4><p>The topic subject has been updated.</p>")
                 ),
             )
 
@@ -737,10 +715,8 @@ def topic_first_unread_message(
             request=request,
             message=mark_safe(
                 s=_(
-                    message=(
-                        "<h4>Error!</h4><p>The topic you were trying to view does not "
-                        "exist or you do not have access to it.</p>"
-                    )
+                    "<h4>Error!</h4><p>The topic you were trying to view does not "
+                    "exist or you do not have access to it.</p>"
                 )
             ),
         )
@@ -858,10 +834,8 @@ def topic_reply(
             request=request,
             message=mark_safe(
                 s=_(
-                    message=(
-                        "<h4>Error!</h4><p>The topic you were trying to reply does not "
-                        "exist or you do not have access to it.</p>"
-                    )
+                    "<h4>Error!</h4><p>The topic you were trying to reply does not "
+                    "exist or you do not have access to it.</p>"
                 )
             ),
         )
@@ -916,10 +890,8 @@ def topic_reply(
             message=mark_safe(
                 # pylint: disable=duplicate-code
                 s=_(
-                    message=(
-                        "<h4>Error!</h4>"
-                        "<p>Message field is mandatory and cannot be empty.</p>"
-                    )
+                    "<h4>Error!</h4>"
+                    "<p>Message field is mandatory and cannot be empty.</p>"
                 )
             ),
         )
@@ -927,11 +899,7 @@ def topic_reply(
         messages.error(
             request=request,
             message=mark_safe(
-                s=_(
-                    message=(
-                        "<h4>Error!</h4><p>Something went wrong, please try again.</p>"
-                    )
-                )
+                s=_("<h4>Error!</h4><p>Something went wrong, please try again.</p>")
             ),
         )
 
@@ -969,9 +937,7 @@ def topic_change_lock_state(
             message=mark_safe(
                 # pylint: disable=duplicate-code
                 s=_(
-                    message=(
-                        f'<h4>Success!</h4><p>Topic "{current_topic}" has been unlocked/re-opened.</p>'  # pylint: disable=line-too-long
-                    )
+                    f'<h4>Success!</h4><p>Topic "{current_topic}" has been unlocked/re-opened.</p>'  # pylint: disable=line-too-long
                 )
             ),
         )
@@ -985,9 +951,7 @@ def topic_change_lock_state(
             message=mark_safe(
                 # pylint: disable=duplicate-code
                 s=_(
-                    message=(
-                        f'<h4>Success!</h4><p>Topic "{current_topic}" has been locked/closed.</p>'  # pylint: disable=line-too-long
-                    )
+                    f'<h4>Success!</h4><p>Topic "{current_topic}" has been locked/closed.</p>'  # pylint: disable=line-too-long
                 )
             ),
         )
@@ -1028,9 +992,7 @@ def topic_change_sticky_state(
             request=request,
             message=mark_safe(
                 s=_(
-                    message=(
-                        f'<h4>Success!</h4><p>Topic "{curent_topic}" is no longer "Sticky".</p>'  # pylint: disable=line-too-long
-                    )
+                    f'<h4>Success!</h4><p>Topic "{curent_topic}" is no longer "Sticky".</p>'  # pylint: disable=line-too-long
                 )
             ),
         )
@@ -1044,11 +1006,7 @@ def topic_change_sticky_state(
         messages.success(
             request=request,
             message=mark_safe(
-                s=_(
-                    message=(
-                        f'<h4>Success!</h4><p>Topic "{curent_topic}" is now "Sticky".</p>'  # pylint: disable=line-too-long
-                    )
-                )
+                s=_(f'<h4>Success!</h4><p>Topic "{curent_topic}" is now "Sticky".</p>')
             ),
         )
 
@@ -1083,7 +1041,7 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
     messages.success(
         request=request,
         message=mark_safe(
-            s=_(message=f'<h4>Success!</h4><p>Topic "{topic__subject}" removed.</p>')
+            s=_(f'<h4>Success!</h4><p>Topic "{topic__subject}" removed.</p>')
         ),
     )
 
@@ -1119,9 +1077,7 @@ def message(
     except Message.DoesNotExist:
         messages.error(
             request=request,
-            message=mark_safe(
-                s=_(message="<h4>Error!</h4><p>The message doesn't exist.</p>")
-            ),
+            message=mark_safe(s=_("<h4>Error!</h4><p>The message doesn't exist.</p>")),
         )
 
         return redirect(to="aa_forum:forum_index")
@@ -1165,10 +1121,8 @@ def message_modify(
             request=request,
             message=mark_safe(
                 s=_(
-                    message=(
-                        "<h4>Error!</h4><p>The message you were trying to modify does "
-                        "either not exist, or you don't have access to it.</p>"
-                    )
+                    "<h4>Error!</h4><p>The message you were trying to modify does "
+                    "either not exist, or you don't have access to it.</p>"
                 )
             ),
         )
@@ -1190,11 +1144,7 @@ def message_modify(
         messages.error(
             request=request,
             message=mark_safe(
-                s=_(
-                    message=(
-                        "<h4>Error!</h4><p>You are not allowed to modify this message!</p>"  # pylint: disable=line-too-long
-                    )
-                )
+                s=_("<h4>Error!</h4><p>You are not allowed to modify this message!</p>")
             ),
         )
 
@@ -1221,7 +1171,7 @@ def message_modify(
             messages.success(
                 request=request,
                 message=mark_safe(
-                    s=_(message="<h4>Success!</h4><p>The message has been updated.</p>")
+                    s=_("<h4>Success!</h4><p>The message has been updated.</p>")
                 ),
             )
 
@@ -1244,7 +1194,7 @@ def message_modify(
         messages.error(
             request=request,
             message=mark_safe(
-                s=_(message="<h4>Error!</h4><p>Mandatory form field is empty.</p>")
+                s=_("<h4>Error!</h4><p>Mandatory form field is empty.</p>")
             ),
         )
     # If not, we'll fill the form with the information from the message object
@@ -1334,11 +1284,7 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
         messages.error(
             request=request,
             message=mark_safe(
-                s=_(
-                    message=(
-                        "<h4>Error!</h4><p>You are not allowed to delete this message!</p>"  # pylint: disable=line-too-long
-                    )
-                )
+                s=_("<h4>Error!</h4><p>You are not allowed to delete this message!</p>")
             ),
         )
 
@@ -1368,7 +1314,7 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
         messages.success(
             request=request,
             message=mark_safe(
-                s=_(message="<h4>Success!</h4><p>The message has been deleted.</p>")
+                s=_("<h4>Success!</h4><p>The message has been deleted.</p>")
             ),
         )
 
@@ -1393,11 +1339,9 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
         request=request,
         message=mark_safe(
             s=_(
-                message=(
-                    "<h4>Success!</h4><p>The message has been deleted.</p>"
-                    "<p>This was the topics opening post, so the topic has been "
-                    "deleted as well.</p>"
-                )
+                "<h4>Success!</h4><p>The message has been deleted.</p>"
+                "<p>This was the topics opening post, so the topic has been "
+                "deleted as well.</p>"
             )
         ),
     )

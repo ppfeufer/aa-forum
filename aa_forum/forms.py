@@ -37,7 +37,7 @@ def get_mandatory_form_label_text(text):
     :return:
     """
 
-    required_text = _(message="This field is mandatory")
+    required_text = _("This field is mandatory")
     required_marker = (
         f'<span aria-label="{required_text}" class="form-required-marker">*</span>'
     )
@@ -88,9 +88,9 @@ class NewTopicForm(forms.Form):
 
     subject = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(text=_(message="Subject")),
+        label=get_mandatory_form_label_text(text=_("Subject")),
         max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _(message="Subject")}),
+        widget=forms.TextInput(attrs={"placeholder": _("Subject")}),
     )
 
     message = forms.CharField(
@@ -99,7 +99,7 @@ class NewTopicForm(forms.Form):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
-        label=get_mandatory_form_label_text(text=_(message="Message")),
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
 
     def clean_message(self):
@@ -121,9 +121,9 @@ class EditTopicForm(ModelForm):
 
     subject = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(text=_(message="Subject")),
+        label=get_mandatory_form_label_text(text=_("Subject")),
         max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _(message="Subject")}),
+        widget=forms.TextInput(attrs={"placeholder": _("Subject")}),
     )
 
     class Meta:  # pylint: disable=too-few-public-methods
@@ -142,26 +142,24 @@ class NewCategoryForm(ModelForm):
 
     name = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(text=_(message="Name")),
+        label=get_mandatory_form_label_text(text=_("Name")),
         max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _(message="Category Name")}),
+        widget=forms.TextInput(attrs={"placeholder": _("Category Name")}),
     )
     boards = forms.CharField(
         required=False,
-        label=_(message="Boards"),
+        label=_("Boards"),
         help_text=_(
-            message=(
-                "Boards to be created with this category (One board per line). These "
-                "boards will have no group restrictions, so you have to add them later "
-                "where needed."
-            )
+            "Boards to be created with this category (One board per line). These "
+            "boards will have no group restrictions, so you have to add them later "
+            "where needed."
         ),
         widget=forms.Textarea(
             attrs={
                 "rows": 10,
                 "cols": 20,
                 "input_type": "textarea",
-                "placeholder": _(message="Boards"),
+                "placeholder": _("Boards"),
             }
         ),
     )
@@ -182,9 +180,9 @@ class EditCategoryForm(ModelForm):
 
     name = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(text=_(message="Name")),
+        label=get_mandatory_form_label_text(text=_("Name")),
         max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _(message="Category Name")}),
+        widget=forms.TextInput(attrs={"placeholder": _("Category Name")}),
     )
 
     class Meta:  # pylint: disable=too-few-public-methods
@@ -203,42 +201,38 @@ class EditBoardForm(ModelForm):
 
     name = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(text=_(message="Name")),
+        label=get_mandatory_form_label_text(text=_("Name")),
         max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _(message="Board Name")}),
+        widget=forms.TextInput(attrs={"placeholder": _("Board Name")}),
     )
     description = forms.CharField(
         required=False,
-        label=_(message="Description"),
+        label=_("Description"),
         widget=forms.Textarea(
             attrs={
                 "rows": 10,
                 "cols": 20,
                 "input_type": "textarea",
-                "placeholder": _(message="Board Description (Optional)"),
+                "placeholder": _("Board Description (Optional)"),
             }
         ),
     )
     groups = SpecialModelMultipleChoiceField(
         required=False,
-        label=_(message="Group Restrictions"),
+        label=_("Group Restrictions"),
         help_text=_(
-            message=(
-                "This will restrict access to this board to the selected groups. If no "
-                "groups are selected, everyone who can access the forum can also access "
-                "this board. (This setting is optional)"
-            )
+            "This will restrict access to this board to the selected groups. If no "
+            "groups are selected, everyone who can access the forum can also access "
+            "this board. (This setting is optional)"
         ),
         queryset=Group.objects.all(),
     )
     discord_webhook = forms.CharField(
         required=False,
-        label=_(message="Discord Webhook (Optional)"),
+        label=_("Discord Webhook (Optional)"),
         help_text=_(
-            message=(
-                "Discord Webhook URL for the channel to post about new topics in this "
-                "board. (This setting is optional)"
-            )
+            "Discord Webhook URL for the channel to post about new topics in this "
+            "board. (This setting is optional)"
         ),
         max_length=254,
         widget=forms.TextInput(
@@ -250,39 +244,33 @@ class EditBoardForm(ModelForm):
     use_webhook_for_replies = forms.BooleanField(
         initial=False,
         required=False,
-        label=_(message="Use this Discord Webhook for replies as well?"),
+        label=_("Use this Discord Webhook for replies as well?"),
         help_text=_(
-            message=(
-                "When activated every reply to any topic in this board will be "
-                "posted to the defined Discord channel. (Child boards are excluded) "
-                "Chose wisely! (Default: NO)"
-            )
+            "When activated every reply to any topic in this board will be "
+            "posted to the defined Discord channel. (Child boards are excluded) "
+            "Chose wisely! (Default: NO)"
         ),
     )
     is_announcement_board = forms.BooleanField(
         initial=False,
         required=False,
-        label=_(message="Mark Board as 'Announcement Board'"),
+        label=_("Mark Board as 'Announcement Board'"),
         help_text=_(
-            message=(
-                "Mark this board as an 'Announcement Board', meaning that only certain "
-                "selected groups can start new topics. All others who have access to this "
-                "board will still be able to discuss in the topics though. This setting "
-                "will not be inherited to child boards. (Default: NO)"
-            )
+            "Mark this board as an 'Announcement Board', meaning that only certain "
+            "selected groups can start new topics. All others who have access to this "
+            "board will still be able to discuss in the topics though. This setting "
+            "will not be inherited to child boards. (Default: NO)"
         ),
     )
     announcement_groups = SpecialModelMultipleChoiceField(
         required=False,
-        label=_(message="Start Topic Restrictions for 'Announcement Boards'"),
+        label=_("Start Topic Restrictions for 'Announcement Boards'"),
         help_text=_(
-            message=(
-                "User in at least one of the selected groups will be able to start topics "
-                "in 'Announcement Boards'. If no group is selected, only forum admins can "
-                "do so. This setting will not be inherited to child boards. (Hint: These "
-                "restrictions only take effect when a board is marked as 'Announcement "
-                "Board', see checkbox above.)"
-            )
+            "User in at least one of the selected groups will be able to start topics "
+            "in 'Announcement Boards'. If no group is selected, only forum admins can "
+            "do so. This setting will not be inherited to child boards. (Hint: These "
+            "restrictions only take effect when a board is marked as 'Announcement "
+            "Board', see checkbox above.)"
         ),
         queryset=Group.objects.all(),
     )
@@ -330,7 +318,7 @@ class EditMessageForm(ModelForm):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
-        label=get_mandatory_form_label_text(text=_(message="Message")),
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
 
     class Meta:  # pylint: disable=too-few-public-methods
@@ -363,36 +351,32 @@ class UserProfileForm(ModelForm):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=False,
-        label=_(message="Signature"),
-        help_text=_(message="Your signature will appear below your posts."),
+        label=_("Signature"),
+        help_text=_("Your signature will appear below your posts."),
     )
     website_title = forms.CharField(
         required=False,
-        label=_(message="Website Title"),
+        label=_("Website Title"),
         max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _(message="e.g.: My Homepage")}),
-        help_text=_(message="Your website's title."),
+        widget=forms.TextInput(attrs={"placeholder": _("e.g.: My Homepage")}),
+        help_text=_("Your website's title."),
     )
     website_url = forms.CharField(
         required=False,
-        label=_(message="Website URL"),
+        label=_("Website URL"),
         max_length=254,
         widget=forms.TextInput(attrs={"placeholder": "https://example.com"}),
         help_text=_(
-            message=(
-                "Your website's URL. (Don't forget to also set a title for your website, "
-                "otherwise this field will be ignored.)"
-            )
+            "Your website's URL. (Don't forget to also set a title for your website, "
+            "otherwise this field will be ignored.)"
         ),
     )
     discord_dm_on_new_personal_message = forms.BooleanField(
         required=False,
-        label=_(message="PM me on Discord when I get a new personal message"),
+        label=_("PM me on Discord when I get a new personal message"),
         help_text=_(
-            message=(
-                "Information: There is currently no module installed that can handle "
-                "Discord direct messages. Have a chat with your IT guys to remedy this."
-            )
+            "Information: There is currently no module installed that can handle "
+            "Discord direct messages. Have a chat with your IT guys to remedy this."
         )
         if discord_messaging_proxy_available() is False
         else "",
@@ -432,7 +416,7 @@ class UserProfileForm(ModelForm):
         except ValidationError as exc:
             raise ValidationError(
                 _(
-                    message=f"Ensure your signature has at most {max_signature_length} characters. (Currently: {len(signature)})"  # pylint: disable=line-too-long
+                    f"Ensure your signature has at most {max_signature_length} characters. (Currently: {len(signature)})"  # pylint: disable=line-too-long
                 )
             ) from exc
 
@@ -453,7 +437,7 @@ class UserProfileForm(ModelForm):
         try:
             URLValidator()(website_url)
         except ValidationError as exc:
-            raise ValidationError(message=_(message="This is not a valid URL")) from exc
+            raise ValidationError(_("This is not a valid URL")) from exc
 
         return website_url
 
@@ -469,10 +453,8 @@ class SettingForm(ModelForm):
             Setting.Field.MESSAGESPERPAGE.label  # pylint: disable=no-member
         ),
         help_text=_(
-            message=(
-                "How many messages per page should be displayed in a forum topic? "
-                "(Default: 15)"
-            )
+            "How many messages per page should be displayed in a forum topic? "
+            "(Default: 15)"
         ),
     )
     topics_per_page = forms.IntegerField(
@@ -481,10 +463,8 @@ class SettingForm(ModelForm):
             Setting.Field.TOPICSPERPAGE.label  # pylint: disable=no-member
         ),
         help_text=_(
-            message=(
-                "How many topics per page should be displayed in a forum category? "
-                "(Default: 10)"
-            )
+            "How many topics per page should be displayed in a forum category? "
+            "(Default: 10)"
         ),
     )
     user_signature_length = forms.IntegerField(
@@ -493,10 +473,8 @@ class SettingForm(ModelForm):
             Setting.Field.USERSIGNATURELENGTH.label  # pylint: disable=no-member
         ),
         help_text=_(
-            message=(
-                "How long (Number of characters) is a user's signature allowed to be? "
-                "(Default: 750)"
-            )
+            "How long (Number of characters) is a user's signature allowed to be? "
+            "(Default: 750)"
         ),
     )
 
@@ -517,13 +495,13 @@ class NewPersonalMessageForm(ModelForm):
     recipient = forms.ModelChoiceField(
         queryset=User.objects.none(),
         required=True,
-        label=get_mandatory_form_label_text(text=_(message="Recipient")),
+        label=get_mandatory_form_label_text(text=_("Recipient")),
     )
     subject = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(text=_(message="Subject")),
+        label=get_mandatory_form_label_text(text=_("Subject")),
         max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _(message="Hello there …")}),
+        widget=forms.TextInput(attrs={"placeholder": _("Hello there …")}),
     )
     message = forms.CharField(
         widget=CKEditorUploadingWidget(
@@ -531,7 +509,7 @@ class NewPersonalMessageForm(ModelForm):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
-        label=get_mandatory_form_label_text(text=_(message="Message")),
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
 
     def __init__(self, *args, **kwargs):
@@ -577,7 +555,7 @@ class ReplyPersonalMessageForm(ModelForm):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
-        label=get_mandatory_form_label_text(text=_(message="Message")),
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
 
     class Meta:  # pylint: disable=too-few-public-methods

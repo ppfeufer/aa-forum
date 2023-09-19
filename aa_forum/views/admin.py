@@ -162,9 +162,7 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
 
             messages.success(
                 request=request,
-                message=mark_safe(
-                    s=_(message="<h4>Success!</h4><p>Category created.</p>")
-                ),
+                message=mark_safe(s=_("<h4>Success!</h4><p>Category created.</p>")),
             )
 
             logger.info(msg=f'{request.user} created category "{new_category.name}".')
@@ -204,9 +202,7 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
                 message=mark_safe(
                     # pylint: disable=duplicate-code
                     s=_(
-                        message=(
-                            f'<h4>Success!</h4><p>Category name changed from "{category_name_old}" to "{category.name}".</p>'  # pylint: disable=line-too-long
-                        )
+                        f'<h4>Success!</h4><p>Category name changed from "{category_name_old}" to "{category.name}".</p>'  # pylint: disable=line-too-long
                     )
                 ),
             )
@@ -246,7 +242,7 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
     messages.success(
         request=request,
         message=mark_safe(
-            s=_(message=f'<h4>Success!</h4><p>Category "{category_name}" removed.</p>')
+            s=_(f'<h4>Success!</h4><p>Category "{category_name}" removed.</p>')
         ),
     )
 
@@ -300,7 +296,7 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
                 request=request,
                 message=mark_safe(
                     s=_(
-                        message=f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>'  # pylint: disable=line-too-long
+                        f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>'  # pylint: disable=line-too-long
                     )
                 ),
             )
@@ -358,7 +354,7 @@ def board_create_child(
                 request=request,
                 message=mark_safe(
                     s=_(
-                        message=f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>'  # pylint: disable=line-too-long
+                        f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>'  # pylint: disable=line-too-long
                     )
                 ),
             )
@@ -414,9 +410,7 @@ def board_edit(
             messages.success(
                 request=request,
                 message=mark_safe(
-                    s=_(
-                        message=f'<h4>Success!</h4><p>Board "{board.name}" changed.</p>'
-                    )
+                    s=_(f'<h4>Success!</h4><p>Board "{board.name}" changed.</p>')
                 ),
             )
 
@@ -457,7 +451,7 @@ def board_delete(
     messages.success(
         request=request,
         message=mark_safe(
-            s=_(message=f'<h4>Success!</h4><p>Board "{board_name}" removed.</p>')
+            s=_(f'<h4>Success!</h4><p>Board "{board_name}" removed.</p>')
         ),
     )
 
@@ -563,9 +557,7 @@ def forum_settings(request: WSGIRequest) -> HttpResponse:
 
             messages.success(
                 request=request,
-                message=mark_safe(
-                    s=_(message="<h4>Success!</h4><p>Settings updated.</p>")
-                ),
+                message=mark_safe(s=_("<h4>Success!</h4><p>Settings updated.</p>")),
             )
 
             return redirect(to="aa_forum:admin_forum_settings")
@@ -574,11 +566,9 @@ def forum_settings(request: WSGIRequest) -> HttpResponse:
             request,
             mark_safe(
                 # pylint: disable=duplicate-code
-                _(
-                    message=(
-                        "<h4>Error!</h4>"
-                        "<p>Something went wrong, please check your input.</p>"
-                    )
+                s=_(
+                    "<h4>Error!</h4>"
+                    "<p>Something went wrong, please check your input.</p>"
                 )
             ),
         )

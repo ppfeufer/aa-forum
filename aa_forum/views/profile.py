@@ -55,9 +55,7 @@ def index(request: WSGIRequest) -> HttpResponse:
 
             messages.success(
                 request=request,
-                message=mark_safe(
-                    s=_(message="<h4>Success!</h4><p>Profile saved.</p>")
-                ),
+                message=mark_safe(s=_("<h4>Success!</h4><p>Profile saved.</p>")),
             )
 
             return redirect(to="aa_forum:profile_index")
@@ -67,10 +65,8 @@ def index(request: WSGIRequest) -> HttpResponse:
             message=mark_safe(
                 # pylint: disable=duplicate-code
                 s=_(
-                    message=(
-                        "<h4>Error!</h4>"
-                        "<p>Something went wrong, please check your input.</p>"
-                    )
+                    "<h4>Error!</h4>"
+                    "<p>Something went wrong, please check your input.</p>"
                 )
             ),
         )

@@ -101,9 +101,7 @@ def new_message(request: WSGIRequest) -> HttpResponse:
                 message=mark_safe(
                     # pylint: disable=duplicate-code
                     s=_(
-                        message=(
-                            f"<h4>Success!</h4><p>Message to {recipient_main_char} sent.</p>"  # pylint: disable=line-too-long
-                        )
+                        f"<h4>Success!</h4><p>Message to {recipient_main_char} sent.</p>"  # pylint: disable=line-too-long
                     )
                 ),
             )
@@ -115,10 +113,8 @@ def new_message(request: WSGIRequest) -> HttpResponse:
             message=mark_safe(
                 # pylint: disable=duplicate-code
                 s=_(
-                    message=(
-                        "<h4>Error!</h4>"
-                        "<p>Something went wrong, please check your input.</p>"
-                    )
+                    "<h4>Error!</h4>"
+                    "<p>Something went wrong, please check your input.</p>"
                 )
             ),
         )
@@ -191,11 +187,9 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
             message=mark_safe(
                 # pylint: disable=duplicate-code
                 s=_(
-                    message=(
-                        "<h4>Error!</h4>"
-                        "<p>The message you were trying to reply to does either not "
-                        "exist or you are not the recipient.</p>"
-                    )
+                    "<h4>Error!</h4>"
+                    "<p>The message you were trying to reply to does either not "
+                    "exist or you are not the recipient.</p>"
                 )
             ),
         )
@@ -229,11 +223,7 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
                 request=request,
                 message=mark_safe(
                     # pylint: disable=duplicate-code
-                    s=_(
-                        message=(
-                            f"<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>"  # pylint: disable=line-too-long
-                        )
-                    )
+                    s=_(f"<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>")
                 ),
             )
 
@@ -244,10 +234,8 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
             message=mark_safe(
                 # pylint: disable=duplicate-code
                 s=_(
-                    message=(
-                        "<h4>Error!</h4>"
-                        "<p>Something went wrong, please check your input.</p>"
-                    )
+                    "<h4>Error!</h4>"
+                    "<p>Something went wrong, please check your input.</p>"
                 )
             ),
         )
@@ -291,11 +279,9 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
                 message=mark_safe(
                     # pylint: disable=duplicate-code
                     s=_(
-                        message=(
-                            "<h4>Error!</h4>"
-                            "<p>The message you tried to remove does either not exist "
-                            "or is not yours to remove.</p>"
-                        )
+                        "<h4>Error!</h4>"
+                        "<p>The message you tried to remove does either not exist "
+                        "or is not yours to remove.</p>"
                     )
                 ),
             )
@@ -309,9 +295,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
             messages.success(
                 request=request,
                 message=mark_safe(
-                    s=_(
-                        message="<h4>Success!</h4><p>Message removed from your inbox.</p>"  # pylint: disable=line-too-long
-                    )
+                    s=_("<h4>Success!</h4><p>Message removed from your inbox.</p>")
                 ),
             )
 
@@ -332,11 +316,9 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
                 message=mark_safe(
                     # pylint: disable=duplicate-code
                     s=_(
-                        message=(
-                            "<h4>Error!</h4>"
-                            "<p>The message you tried to remove does either not exist "
-                            "or is not yours to remove.</p>"
-                        )
+                        "<h4>Error!</h4>"
+                        "<p>The message you tried to remove does either not exist "
+                        "or is not yours to remove.</p>"
                     )
                 ),
             )
@@ -352,10 +334,8 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
                 message=mark_safe(
                     # pylint: disable=duplicate-code
                     s=_(
-                        message=(
-                            "<h4>Success!</h4>"
-                            "<p>Message has been removed from your sent messages.</p>"
-                        )
+                        "<h4>Success!</h4>"
+                        "<p>Message has been removed from your sent messages.</p>"
                     )
                 ),
             )
@@ -369,7 +349,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
 
     messages.error(
         request=request,
-        message=mark_safe(s=_(message="<h4>Error!</h4><p>Something went wrong.</p>")),
+        message=mark_safe(s=_("<h4>Error!</h4><p>Something went wrong.</p>")),
     )
 
     return redirect(to="aa_forum:personal_messages_inbox")
