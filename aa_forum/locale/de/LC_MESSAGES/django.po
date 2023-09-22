@@ -11,16 +11,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-19 11:44+0200\n"
-"PO-Revision-Date: 2023-07-31 17:39+0000\n"
+"PO-Revision-Date: 2023-09-20 10:40+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/de/>\n"
+"Language-Team: German <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #: forms.py:40
 msgid "This field is mandatory"
@@ -112,7 +112,7 @@ msgstr ""
 
 #: forms.py:257
 msgid "Mark Board as 'Announcement Board'"
-msgstr "Board als \"Ankündigngs-Board\" markieren"
+msgstr "Board als „Ankündigungs-Board“ markieren"
 
 #: forms.py:259
 msgid ""
@@ -121,7 +121,7 @@ msgid ""
 "board will still be able to discuss in the topics though. This setting will "
 "not be inherited to child boards. (Default: NO)"
 msgstr ""
-"Markiere dieses Board als 'Ankündigungsboard', was bedeutet, dass nur "
+"Markiere dieses Board als „Ankündigungs-Board“, was bedeutet, dass nur "
 "bestimmte ausgewählte Gruppen neue Themen starten können. Alle anderen, die "
 "Zugriff auf dieses Board haben, können jedoch weiterhin in den Themen "
 "diskutieren. Diese Einstellung wird nicht an untergeordnete Boards vererbt. "
@@ -129,7 +129,7 @@ msgstr ""
 
 #: forms.py:267
 msgid "Start Topic Restrictions for 'Announcement Boards'"
-msgstr "\"Starte Thema\" Einschränkungen für 'Ankündigungs-Board'"
+msgstr "„Starte Thema“ Einschränkungen für „Ankündigungs-Board“"
 
 #: forms.py:269
 msgid ""
@@ -140,10 +140,10 @@ msgid ""
 "Board', see checkbox above.)"
 msgstr ""
 "Benutzer in mindestens einer der ausgewählten Gruppen können Themen in "
-"'Ankündigungs-Boards' beginnen. Wenn keine Gruppe ausgewählt ist, können "
+"„Ankündigungs-Boards“ beginnen. Wenn keine Gruppe ausgewählt ist, können "
 "dies nur Forenadministratoren tun. Diese Einstellung wird nicht an "
 "untergeordnete Boards vererbt. (Hinweis: Diese Einschränkungen wirken sich "
-"nur aus, wenn eine Tafel als 'Ankündigungs-Board' markiert ist, siehe "
+"nur aus, wenn ein Board als „Ankündigungs-Board“ markiert ist, siehe "
 "Checkbox oben.)"
 
 #: forms.py:354
@@ -254,72 +254,45 @@ msgid "categories"
 msgstr "Kategorien"
 
 #: models.py:214
-#, fuzzy
-#| msgid ""
-#| "When activated every reply to any topic in this board will be posted to "
-#| "the defined Discord channel. (Child boards are excluded) Chose wisely! "
-#| "(Default: NO)"
 msgid ""
 "Use this Discord Webhook for replies as well? When activated every reply to "
 "any topic in this board will be posted to the defined Discord channel. "
 "(Child boards are excluded) Chose wisely! (Default: NO)"
 msgstr ""
-"Wenn aktiviert, wird jede Antwort auf ein beliebiges Thema in diesem Board "
-"im definierten Discord-Kanal gepostet. (Child-Boards sind ausgeschlossen) "
-"Wähle mit Bedacht! (Standard: NEIN)"
+"Diesen Discord-Webhook auch für Antworten nutzen? Wenn aktiviert, wird jede "
+"Antwort zu einem beliebigen Thema in diesem Forum im definierten Discord-"
+"Kanal gepostet. (Untergeordnete Boards sind ausgeschlossen) Wähle mit "
+"Bedacht! (Standard: NEIN)"
 
 #: models.py:232
-#, fuzzy
-#| msgid ""
-#| "This will restrict access to this board to the selected groups. If no "
-#| "groups are selected, everyone who can access the forum can also access "
-#| "this board. (This setting is optional)"
 msgid ""
 "User in at least one of these groups have access to this board. If no groups "
 "are selected, everyone with access to the forum has also access to this "
 "board."
 msgstr ""
-"Dadurch wird der Zugriff auf dieses Board auf die ausgewählten Gruppen "
-"beschränkt. Wenn keine Gruppen ausgewählt sind, kann jeder, der auf das "
-"Forum zugreifen kann, auch auf dieses Board zugreifen. (Diese Einstellung "
-"ist optional)"
+"Benutzer in mindestens einer dieser Gruppen haben Zugriff auf dieses Board. "
+"Wenn keine Gruppen ausgewählt sind, hat jeder, der Zugriff auf das Forum "
+"hat, auch Zugriff auf dieses Board."
 
 #: models.py:240
-#, fuzzy
-#| msgid ""
-#| "Mark this board as an 'Announcement Board', meaning that only certain "
-#| "selected groups can start new topics. All others who have access to this "
-#| "board will still be able to discuss in the topics though. This setting "
-#| "will not be inherited to child boards. (Default: NO)"
 msgid ""
 "Mark this board as an 'Announcement Board', meaning that only certain "
 "selected groups can start new topics. All others who have access to this "
 "board will still be able to discuss in the topics though. (Default: NO)"
 msgstr ""
-"Markiere dieses Board als 'Ankündigungsboard', was bedeutet, dass nur "
+"Markiere dieses Board als „Ankündigungs-Board“, was bedeutet, dass nur "
 "bestimmte ausgewählte Gruppen neue Themen starten können. Alle anderen, die "
 "Zugriff auf dieses Board haben, können jedoch weiterhin in den Themen "
-"diskutieren. Diese Einstellung wird nicht an untergeordnete Boards vererbt. "
-"(Standard: NEIN)"
+"diskutieren. (Standard: NEIN)"
 
 #: models.py:251
-#, fuzzy
-#| msgid ""
-#| "User in at least one of the selected groups will be able to start topics "
-#| "in 'Announcement Boards'. If no group is selected, only forum admins can "
-#| "do so. This setting will not be inherited to child boards. (Hint: These "
-#| "restrictions only take effect when a board is marked as 'Announcement "
-#| "Board', see checkbox above.)"
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
 "'Announcement Boards'. If no group is selected, only forum admins can do so."
 msgstr ""
 "Benutzer in mindestens einer der ausgewählten Gruppen können Themen in "
-"'Ankündigungs-Boards' beginnen. Wenn keine Gruppe ausgewählt ist, können "
-"dies nur Forenadministratoren tun. Diese Einstellung wird nicht an "
-"untergeordnete Boards vererbt. (Hinweis: Diese Einschränkungen wirken sich "
-"nur aus, wenn eine Tafel als 'Ankündigungs-Board' markiert ist, siehe "
-"Checkbox oben.)"
+"„Ankündigungs-Boards“ starten. Wenn keine Gruppe ausgewählt ist, können dies "
+"nur Forumadministratoren tun."
 
 #: models.py:287
 msgid "board"
@@ -511,11 +484,11 @@ msgstr "Sticky-Status des Themas ändern"
 
 #: templates/aa_forum/modals/forum/board/topic-change-sticky-state.html:13
 msgid "Remove \"Sticky\" State from Topic"
-msgstr "Entferne den \"Sticky\"-Status von diesem Thema"
+msgstr "Entferne den „Sticky“-Status von diesem Thema"
 
 #: templates/aa_forum/modals/forum/board/topic-change-sticky-state.html:16
 msgid "Set \"Sticky\" State for Topic"
-msgstr "Setze den \"Sticky\"-Status für dieses Thema"
+msgstr "Setze den „Sticky“-Status für dieses Thema"
 
 #: templates/aa_forum/modals/forum/board/topic-change-sticky-state.html:24
 msgid "Are you sure you want to remove the sticky state from this topic?"
@@ -1088,28 +1061,28 @@ msgid ""
 "<h4>Success!</h4><p>Category name changed from \"{category_name_old}\" to "
 "\"{category.name}\".</p>"
 msgstr ""
-"<h4>Erfolg!</h4><p>Der Kategoriename wurde von \"{category_name_old}\" in "
-"\"{category.name}\" geändert.</p>"
+"<h4>Erfolg!</h4><p>Der Kategoriename wurde von „{category_name_old}“ in "
+"„{category.name}“geändert.</p>"
 
 #: views/admin.py:245
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Category \"{category_name}\" removed.</p>"
-msgstr "<h4>Erfolg!</h4><p>Kategorie \"{category_name}\" entfernt.</p>"
+msgstr "<h4>Erfolg!</h4><p>Kategorie „{category_name}“ entfernt.</p>"
 
 #: views/admin.py:298 views/admin.py:354
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{new_board.name}\" created.</p>"
-msgstr "<h4>Erfolg!</h4><p>Board \"{new_board.name}\" erstellt.</p>"
+msgstr "<h4>Erfolg!</h4><p>Board„{new_board.name}“ erstellt.</p>"
 
 #: views/admin.py:409
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{board.name}\" changed.</p>"
-msgstr "<h4>Erfolg!</h4><p>Board \"{board.name}\" geändert.</p>"
+msgstr "<h4>Erfolg!</h4><p>Board „{board.name}“ geändert.</p>"
 
 #: views/admin.py:450
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{board_name}\" removed.</p>"
-msgstr "<h4>Erfolg!</h4><p>Board \"{board_name}\" entfernt.</p>"
+msgstr "<h4>Erfolg!</h4><p>Board „{board_name}“ entfernt.</p>"
 
 #: views/admin.py:556
 msgid "<h4>Success!</h4><p>Settings updated.</p>"
@@ -1150,9 +1123,8 @@ msgid ""
 "<h4>Error!</h4><p>The board you were trying to post in is an Announcement "
 "Board and you don't have the permissions to start a topic there.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Das Board, in dem Du posten willst, ist ein "
-"Ankündigungsboard und Du hast nicht die Berechtigung, dort ein Thema zu "
-"eröffnen.</p>"
+"<h4>Fehler!</h4><p>Das Board in dem Du posten willst, ist ein „Ankündigungs-"
+"Board“ und Du hast nicht die Berechtigung, dort ein Thema zu eröffnen.</p>"
 
 #: views/forum.py:380
 #, python-brace-format
@@ -1218,39 +1190,34 @@ msgstr ""
 "<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte versuche es erneut.</p>"
 
 #: views/forum.py:940
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "<h4>Success!</h4><p>Topic \"{topic}\" has been unlocked/re-opened.</p>"
+#, python-brace-format
 msgid ""
 "<h4>Success!</h4><p>Topic \"{current_topic}\" has been unlocked/re-opened.</"
 "p>"
-msgstr "<h4>Erfolg!</h4><p>Topic \"{topic}\" wieder eröffnet.</p>"
+msgstr "<h4>Erfolg!</h4><p>Topic „{current_topic}“ wieder eröffnet.</p>"
 
 #: views/forum.py:954
-#, fuzzy, python-brace-format
-#| msgid "<h4>Success!</h4><p>Topic \"{topic}\" has been locked/closed.</p>"
+#, python-brace-format
 msgid ""
 "<h4>Success!</h4><p>Topic \"{current_topic}\" has been locked/closed.</p>"
-msgstr "<h4>Erfolg!</h4><p>Thema \"{topic}\" wurde gesperrt/geschlossen.</p>"
+msgstr ""
+"<h4>Erfolg!</h4><p>Thema „{current_topic}“ wurde gesperrt/geschlossen.</p>"
 
 #: views/forum.py:995
-#, fuzzy, python-brace-format
-#| msgid "<h4>Success!</h4><p>Topic \"{topic}\" is no longer \"Sticky\".</p>"
+#, python-brace-format
 msgid ""
 "<h4>Success!</h4><p>Topic \"{curent_topic}\" is no longer \"Sticky\".</p>"
-msgstr "<h4>Erfolg!</h4><p>Thema \"{topic}\" ist nicht mehr \"Sticky\".</p>"
+msgstr "<h4>Erfolg!</h4><p>Thema „{curent_topic}“ ist nicht mehr „Sticky“.</p>"
 
 #: views/forum.py:1009
-#, fuzzy, python-brace-format
-#| msgid "<h4>Success!</h4><p>Topic \"{topic}\" is now \"Sticky\".</p>"
+#, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{curent_topic}\" is now \"Sticky\".</p>"
-msgstr "<h4>Erfolg!</h4><p>Thema \"{topic}\" ist jetzt \"Sticky\".</p>"
+msgstr "<h4>Erfolg!</h4><p>Thema „{curent_topic}“ ist jetzt „Sticky“.</p>"
 
 #: views/forum.py:1044
-#, fuzzy, python-brace-format
-#| msgid "<h4>Success!</h4><p>Topic \"{topic_subject}\" removed.</p>"
+#, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{topic__subject}\" removed.</p>"
-msgstr "<h4>Erfolg!</h4><p>Thema \"{topic_subject}\" entfernt.</p>"
+msgstr "<h4>Erfolg!</h4><p>Thema „{topic__subject}“ entfernt.</p>"
 
 #: views/forum.py:1080
 msgid "<h4>Error!</h4><p>The message doesn't exist.</p>"
