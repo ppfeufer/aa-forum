@@ -10,17 +10,42 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-19 11:44+0200\n"
+"POT-Creation-Date: 2023-09-22 22:58+0200\n"
 "PO-Revision-Date: 2023-09-20 10:40+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: German <https://weblate.ppfeufer.de/projects/"
-"alliance-auth-apps/aa-forum/de/>\n"
+"Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
+"apps/aa-forum/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.0.2\n"
+
+#: __init__.py:12 templates/aa_forum/base.html:5
+#: templates/aa_forum/partials/menu.html:14
+#: templates/aa_forum/view/administration/categories-and-boards.html:7
+#: templates/aa_forum/view/administration/forum-settings.html:7
+#: templates/aa_forum/view/forum/board.html:5
+#: templates/aa_forum/view/forum/index.html:6
+#: templates/aa_forum/view/forum/modify-message.html:7
+#: templates/aa_forum/view/forum/modify-topic.html:7
+#: templates/aa_forum/view/forum/new-topic.html:8
+#: templates/aa_forum/view/forum/topic.html:5
+#: templates/aa_forum/view/forum/unread-topics.html:7
+#: templates/aa_forum/view/personal-messages/inbox.html:9
+#: templates/aa_forum/view/personal-messages/new-message.html:9
+#: templates/aa_forum/view/personal-messages/reply-message.html:9
+#: templates/aa_forum/view/personal-messages/sent-messages.html:9
+#: templates/aa_forum/view/profile/index.html:9
+#: templates/aa_forum/view/search/results.html:7
+msgid "Forum"
+msgstr "Forum"
+
+#: apps.py:20
+#, python-brace-format
+msgid "AA Forum v{__version__}"
+msgstr ""
 
 #: forms.py:40
 msgid "This field is mandatory"
@@ -41,7 +66,9 @@ msgid "Name"
 msgstr "Name"
 
 #: forms.py:147 forms.py:185
-msgid "Category Name"
+#, fuzzy
+#| msgid "Category Name"
+msgid "Category name"
 msgstr "Kategoriename"
 
 #: forms.py:151 forms.py:162
@@ -58,7 +85,9 @@ msgstr ""
 "hinzufügt werden müssen."
 
 #: forms.py:206
-msgid "Board Name"
+#, fuzzy
+#| msgid "Board Name"
+msgid "Board name"
 msgstr "Board-Name"
 
 #: forms.py:210
@@ -66,11 +95,15 @@ msgid "Description"
 msgstr "Beschreibung"
 
 #: forms.py:216
-msgid "Board Description (Optional)"
+#, fuzzy
+#| msgid "Board Description (Optional)"
+msgid "Board description (optional)"
 msgstr "Board-Beschreibung (Optional)"
 
 #: forms.py:222
-msgid "Group Restrictions"
+#, fuzzy
+#| msgid "Group Restrictions"
+msgid "Group restrictions"
 msgstr "Gruppenbeschränkungen"
 
 #: forms.py:224
@@ -85,19 +118,27 @@ msgstr ""
 "ist optional)"
 
 #: forms.py:232
-msgid "Discord Webhook (Optional)"
+#, fuzzy
+#| msgid "Discord Webhook (Optional)"
+msgid "Discord webhook (optional)"
 msgstr "Discord-Webhook (Optional)"
 
 #: forms.py:234
+#, fuzzy
+#| msgid ""
+#| "Discord Webhook URL for the channel to post about new topics in this "
+#| "board. (This setting is optional)"
 msgid ""
-"Discord Webhook URL for the channel to post about new topics in this board. "
+"Discord webhook URL for the channel to post about new topics in this board. "
 "(This setting is optional)"
 msgstr ""
 "Discord-Webhook URL für den Kanal, um über neue Themen in diesem Board zu "
 "posten. (Diese Einstellung ist optional)"
 
 #: forms.py:247
-msgid "Use this Discord Webhook for replies as well?"
+#, fuzzy
+#| msgid "Use this Discord Webhook for replies as well?"
+msgid "Use this Discord webhook for replies as well?"
 msgstr "Auch für Antworten nutzen?"
 
 #: forms.py:249
@@ -111,7 +152,9 @@ msgstr ""
 "Wähle mit Bedacht! (Standard: NEIN)"
 
 #: forms.py:257
-msgid "Mark Board as 'Announcement Board'"
+#, fuzzy
+#| msgid "Mark Board as 'Announcement Board'"
+msgid "Mark board as 'Announcement Board'"
 msgstr "Board als „Ankündigungs-Board“ markieren"
 
 #: forms.py:259
@@ -128,7 +171,9 @@ msgstr ""
 "(Standard: NEIN)"
 
 #: forms.py:267
-msgid "Start Topic Restrictions for 'Announcement Boards'"
+#, fuzzy
+#| msgid "Start Topic Restrictions for 'Announcement Boards'"
+msgid "Start topic restrictions for 'Announcement Boards'"
 msgstr "„Starte Thema“ Einschränkungen für „Ankündigungs-Board“"
 
 #: forms.py:269
@@ -155,7 +200,9 @@ msgid "Your signature will appear below your posts."
 msgstr "Deine Signatur wird unter Deinem Beiträgen angezeigt."
 
 #: forms.py:359
-msgid "Website Title"
+#, fuzzy
+#| msgid "Website Title"
+msgid "Website title"
 msgstr "Webseitentitel"
 
 #: forms.py:361
@@ -237,6 +284,12 @@ msgstr "Empfänger"
 msgid "Hello there …"
 msgstr "Hallo …"
 
+#: models.py:119
+#, fuzzy
+#| msgid "Forum"
+msgid "AA-Forum"
+msgstr "Forum"
+
 #: models.py:123
 msgid "Can access the AA-Forum module"
 msgstr "Kann auf das AA-Forum-Modul zugreifen"
@@ -254,8 +307,13 @@ msgid "categories"
 msgstr "Kategorien"
 
 #: models.py:214
+#, fuzzy
+#| msgid ""
+#| "Use this Discord Webhook for replies as well? When activated every reply "
+#| "to any topic in this board will be posted to the defined Discord channel. "
+#| "(Child boards are excluded) Chose wisely! (Default: NO)"
 msgid ""
-"Use this Discord Webhook for replies as well? When activated every reply to "
+"Use this Discord webhook for replies as well? When activated every reply to "
 "any topic in this board will be posted to the defined Discord channel. "
 "(Child boards are excluded) Chose wisely! (Default: NO)"
 msgstr ""
@@ -358,6 +416,14 @@ msgstr "Einstellung"
 msgid "settings"
 msgstr "Einstellungen"
 
+#: models.py:784
+#: templates/aa_forum/partials/administration/settings-form.html:7
+#: templates/aa_forum/partials/menu/menu-admin.html:16
+#, fuzzy
+#| msgid "Forum Settings"
+msgid "Forum settings"
+msgstr "Forum-Einstellungen"
+
 #: models.py:810
 msgid "user profile"
 msgstr "Benutzerprofil"
@@ -365,6 +431,12 @@ msgstr "Benutzerprofil"
 #: models.py:811
 msgid "user profiles"
 msgstr "Benutzerprofile"
+
+#: models.py:814
+#, fuzzy
+#| msgid "user profile"
+msgid "Forum user profile"
+msgstr "Benutzerprofil"
 
 #: templates/aa_forum/ajax-render/personal-messages/message.html:21
 #: templates/aa_forum/partials/forum/topic/message.html:30
@@ -386,21 +458,17 @@ msgstr "Antwort"
 #: templates/aa_forum/modals/personal-messages/message-delete.html:12
 #: templates/aa_forum/partials/forum/topic/message.html:56
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:73
-#: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:67
-msgid "Delete Message"
+#, fuzzy
+#| msgid "Delete Message"
+msgid "Delete message"
 msgstr "Beitrag löschen"
-
-#: templates/aa_forum/base.html:5 templates/aa_forum/partials/menu.html:14
-#: templates/aa_forum/view/forum/board.html:5
-#: templates/aa_forum/view/forum/index.html:6
-#: templates/aa_forum/view/forum/topic.html:5
-msgid "Forum"
-msgstr "Forum"
 
 #: templates/aa_forum/modals/administration/delete-board.html:3
 #: templates/aa_forum/modals/administration/delete-board.html:12
 #: templates/aa_forum/partials/administration/board-loop.html:13
-msgid "Delete Board"
+#, fuzzy
+#| msgid "Delete Board"
+msgid "Delete board"
 msgstr "Board löschen"
 
 #: templates/aa_forum/modals/administration/delete-board.html:18
@@ -411,27 +479,27 @@ msgstr "Möchtest Du dieses Board wirklich löschen?"
 msgid "This will also remove all topics and messages in this board."
 msgstr "Dadurch werden auch alle Themen und Beiträge in diesem Board entfernt."
 
-#: templates/aa_forum/modals/administration/delete-board.html:21
-#: templates/aa_forum/modals/administration/delete-category.html:21
+#: templates/aa_forum/modals/administration/delete-board.html:22
+#: templates/aa_forum/modals/administration/delete-category.html:22
 #: templates/aa_forum/modals/forum/board/topic-delete.html:21
 #: templates/aa_forum/modals/forum/topic/message-delete.html:21
 #: templates/aa_forum/modals/personal-messages/message-delete.html:21
 msgid "This action cannot be undone!"
 msgstr "Diese Aktion kann nicht rückgängig gemacht werden!"
 
-#: templates/aa_forum/modals/administration/delete-board.html:28
-#: templates/aa_forum/modals/administration/delete-category.html:28
+#: templates/aa_forum/modals/administration/delete-board.html:29
+#: templates/aa_forum/modals/administration/delete-category.html:29
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:33
 #: templates/aa_forum/modals/forum/board/topic-change-sticky-state.html:33
 #: templates/aa_forum/modals/forum/board/topic-delete.html:28
 #: templates/aa_forum/modals/forum/topic/message-delete.html:28
 #: templates/aa_forum/modals/personal-messages/message-delete.html:28
-#: templates/aa_forum/view/forum/new-topic.html:31
+#: templates/aa_forum/view/forum/new-topic.html:36
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: templates/aa_forum/modals/administration/delete-board.html:33
-#: templates/aa_forum/modals/administration/delete-category.html:33
+#: templates/aa_forum/modals/administration/delete-board.html:34
+#: templates/aa_forum/modals/administration/delete-category.html:34
 #: templates/aa_forum/modals/forum/board/topic-delete.html:33
 #: templates/aa_forum/modals/forum/topic/message-delete.html:33
 #: templates/aa_forum/modals/personal-messages/message-delete.html:33
@@ -441,7 +509,9 @@ msgstr "Löschen"
 #: templates/aa_forum/modals/administration/delete-category.html:3
 #: templates/aa_forum/modals/administration/delete-category.html:12
 #: templates/aa_forum/partials/administration/category-loop.html:15
-msgid "Delete Category"
+#, fuzzy
+#| msgid "Delete Category"
+msgid "Delete category"
 msgstr "Kategorie löschen"
 
 #: templates/aa_forum/modals/administration/delete-category.html:18
@@ -461,13 +531,17 @@ msgstr "Sperrstatus des Themas ändern"
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:13
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:39
 #: templates/aa_forum/partials/forum/board/topic.html:84
-msgid "Unlock/Re-Open Topic"
+#, fuzzy
+#| msgid "Unlock/Re-Open Topic"
+msgid "Unlock/re-open topic"
 msgstr "Thema entsperren/erneut öffnen"
 
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:16
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:42
 #: templates/aa_forum/partials/forum/board/topic.html:88
-msgid "Lock/Close Topic"
+#, fuzzy
+#| msgid "Lock/Close Topic"
+msgid "Lock/close topic"
 msgstr "Thema sperren/schließen"
 
 #: templates/aa_forum/modals/forum/board/topic-change-lock-state.html:24
@@ -483,11 +557,15 @@ msgid "Change sticky state of topic"
 msgstr "Sticky-Status des Themas ändern"
 
 #: templates/aa_forum/modals/forum/board/topic-change-sticky-state.html:13
-msgid "Remove \"Sticky\" State from Topic"
+#, fuzzy
+#| msgid "Remove \"Sticky\" State from Topic"
+msgid "Remove \"sticky\" state from topic"
 msgstr "Entferne den „Sticky“-Status von diesem Thema"
 
 #: templates/aa_forum/modals/forum/board/topic-change-sticky-state.html:16
-msgid "Set \"Sticky\" State for Topic"
+#, fuzzy
+#| msgid "Set \"Sticky\" State for Topic"
+msgid "Set \"sticky\" state for topic"
 msgstr "Setze den „Sticky“-Status für dieses Thema"
 
 #: templates/aa_forum/modals/forum/board/topic-change-sticky-state.html:24
@@ -505,17 +583,23 @@ msgstr ""
 "Themenliste angezeigt wird?"
 
 #: templates/aa_forum/modals/forum/board/topic-change-sticky-state.html:39
-msgid "Unset Sticky"
+#, fuzzy
+#| msgid "Unset Sticky"
+msgid "Unset sticky"
 msgstr "Sticky aufheben"
 
 #: templates/aa_forum/modals/forum/board/topic-change-sticky-state.html:42
-msgid "Make Sticky"
+#, fuzzy
+#| msgid "Make Sticky"
+msgid "Make sticky"
 msgstr "Sticky setzen"
 
 #: templates/aa_forum/modals/forum/board/topic-delete.html:3
 #: templates/aa_forum/modals/forum/board/topic-delete.html:12
 #: templates/aa_forum/partials/forum/board/topic.html:97
-msgid "Delete Topic"
+#, fuzzy
+#| msgid "Delete Topic"
+msgid "Delete topic"
 msgstr "Thema löschen"
 
 #: templates/aa_forum/modals/forum/board/topic-delete.html:18
@@ -549,7 +633,9 @@ msgstr ""
 "zugehörigen Nachrichten ebenfalls entfernt."
 
 #: templates/aa_forum/partials/administration/board-loop.html:9
-msgid "Edit Board"
+#, fuzzy
+#| msgid "Edit Board"
+msgid "Edit board"
 msgstr "Board bearbeiten"
 
 #: templates/aa_forum/partials/administration/board-loop.html:22
@@ -561,11 +647,15 @@ msgstr ""
 "bleibt gleich, um keine möglichen Links in dieses Board zu unterbrechen."
 
 #: templates/aa_forum/partials/administration/board-loop.html:44
-msgid "Change Board"
+#, fuzzy
+#| msgid "Change Board"
+msgid "Change board"
 msgstr "Board ändern"
 
 #: templates/aa_forum/partials/administration/board-loop.html:56
-msgid "New Child Board"
+#, fuzzy
+#| msgid "New Child Board"
+msgid "New child board"
 msgstr "Neues Unter-Board"
 
 #: templates/aa_forum/partials/administration/board-loop.html:63
@@ -579,7 +669,9 @@ msgstr ""
 
 #: templates/aa_forum/partials/administration/board-loop.html:79
 #: templates/aa_forum/partials/administration/category-loop.html:75
-msgid "Create Board"
+#, fuzzy
+#| msgid "Create Board"
+msgid "Create board"
 msgstr "Board erstellen"
 
 #: templates/aa_forum/partials/administration/categories.html:6
@@ -591,11 +683,15 @@ msgstr ""
 "kannst ihre Reihenfolge auch per Drag & Drop ändern."
 
 #: templates/aa_forum/partials/administration/category-loop.html:11
-msgid "Edit Category"
+#, fuzzy
+#| msgid "Edit Category"
+msgid "Edit category"
 msgstr "Kategorie bearbeiten"
 
 #: templates/aa_forum/partials/administration/category-loop.html:19
-msgid "Expand/Collapse Category"
+#, fuzzy
+#| msgid "Expand/Collapse Category"
+msgid "Expand/collapse category"
 msgstr "Kategorie erweitern/reduzieren"
 
 #: templates/aa_forum/partials/administration/category-loop.html:31
@@ -607,19 +703,27 @@ msgstr ""
 "bleibt gleich, um keine möglichen Links in diese Kategorie einzuteilen."
 
 #: templates/aa_forum/partials/administration/category-loop.html:44
-msgid "Change Category"
+#, fuzzy
+#| msgid "Change Category"
+msgid "Change category"
 msgstr "Kategorie ändern"
 
 #: templates/aa_forum/partials/administration/category-loop.html:55
-msgid "New Board"
+#, fuzzy
+#| msgid "New Board"
+msgid "New board"
 msgstr "Neues Board"
 
 #: templates/aa_forum/partials/administration/new-category.html:7
-msgid "Create New Category"
+#, fuzzy
+#| msgid "Create New Category"
+msgid "Create new category"
 msgstr "Neue Kategorie erstellen"
 
 #: templates/aa_forum/partials/administration/new-category.html:16
-msgid "New Category"
+#, fuzzy
+#| msgid "New Category"
+msgid "New category"
 msgstr "Neue Kategorie"
 
 #: templates/aa_forum/partials/administration/new-category.html:22
@@ -631,13 +735,10 @@ msgstr ""
 "per Drag and Drop an eine Position Deiner Wahl verschieben."
 
 #: templates/aa_forum/partials/administration/new-category.html:35
-msgid "Create Category"
+#, fuzzy
+#| msgid "Create Category"
+msgid "Create category"
 msgstr "Kategorie erstellen"
-
-#: templates/aa_forum/partials/administration/settings-form.html:7
-#: templates/aa_forum/partials/menu/menu-admin.html:16
-msgid "Forum Settings"
-msgstr "Forum-Einstellungen"
 
 #: templates/aa_forum/partials/administration/settings-form.html:21
 #: templates/aa_forum/partials/profile/form.html:21
@@ -645,16 +746,22 @@ msgid "Submit"
 msgstr "Absenden"
 
 #: templates/aa_forum/partials/breadcrumb.html:6
-msgid "Forum Index"
+#, fuzzy
+#| msgid "Forum Index"
+msgid "Forum index"
 msgstr "Forum-Index"
 
 #: templates/aa_forum/partials/breadcrumb.html:27
 #: templates/aa_forum/partials/forum/topic/message.html:49
 #: templates/aa_forum/partials/forum/topic/modify-message.html:7
-msgid "Modify Message"
+#: templates/aa_forum/view/forum/modify-message.html:6
+#, fuzzy
+#| msgid "Modify Message"
+msgid "Modify message"
 msgstr "Beitrag bearbeiten"
 
 #: templates/aa_forum/partials/breadcrumb.html:34
+#: templates/aa_forum/view/forum/new-topic.html:7
 msgid "Start new topic"
 msgstr "Neues Thema beginnen"
 
@@ -691,7 +798,9 @@ msgid "This board is restricted to the following group(s):"
 msgstr "Dieses Board ist auf die folgende(n) Gruppe(n) beschränkt:"
 
 #: templates/aa_forum/partials/forum/board/board.html:41
-msgid "Child Boards:"
+#, fuzzy
+#| msgid "Child Boards:"
+msgid "Child boards:"
 msgstr "Untergeordnete Boards:"
 
 #: templates/aa_forum/partials/forum/board/board.html:50
@@ -729,7 +838,9 @@ msgid "posted at:"
 msgstr "geschrieben:"
 
 #: templates/aa_forum/partials/forum/board/new-topic-button.html:7
-msgid "New Topic"
+#, fuzzy
+#| msgid "New Topic"
+msgid "New topic"
 msgstr "Neues Thema"
 
 #: templates/aa_forum/partials/forum/board/no-access.html:6
@@ -744,7 +855,9 @@ msgstr ""
 #: templates/aa_forum/partials/personal-messages/inbox/pagination.html:5
 #: templates/aa_forum/partials/personal-messages/sent-messages/pagination.html:5
 #: templates/aa_forum/partials/search/pagination.html:4
-msgid "Message Pagination"
+#, fuzzy
+#| msgid "Message Pagination"
+msgid "Message pagination"
 msgstr "Paginierung der Beträge"
 
 #: templates/aa_forum/partials/forum/board/pagination.html:13
@@ -805,11 +918,15 @@ msgid "Last"
 msgstr "Letzter"
 
 #: templates/aa_forum/partials/forum/board/topic.html:38
-msgid "Topic Is Always on Top"
+#, fuzzy
+#| msgid "Topic Is Always on Top"
+msgid "Topic is always on top"
 msgstr "Das Thema steht immer oben"
 
 #: templates/aa_forum/partials/forum/board/topic.html:44
-msgid "Topic Is Locked"
+#, fuzzy
+#| msgid "Topic Is Locked"
+msgid "Topic is locked"
 msgstr "Thema ist gesperrt"
 
 #: templates/aa_forum/partials/forum/board/topic.html:48
@@ -826,11 +943,15 @@ msgid "Last post"
 msgstr "Letzter Beitrag"
 
 #: templates/aa_forum/partials/forum/board/topic.html:71
-msgid "Go to Last Message"
+#, fuzzy
+#| msgid "Go to Last Message"
+msgid "Go to last message"
 msgstr "Gehe zum letzten Beitrag"
 
 #: templates/aa_forum/partials/forum/board/topic.html:93
-msgid "Change Topics Sticky State"
+#, fuzzy
+#| msgid "Change Topics Sticky State"
+msgid "Change topics sticky state"
 msgstr "Sticky-Status vom Thema ändern"
 
 #: templates/aa_forum/partials/forum/mark-unread-button.html:7
@@ -839,11 +960,15 @@ msgid "Mark all topics as read"
 msgstr "Alle Themen als gelesen markieren"
 
 #: templates/aa_forum/partials/forum/topic/message.html:38
-msgid "Copy Message Link to Clipboard"
+#, fuzzy
+#| msgid "Copy Message Link to Clipboard"
+msgid "Copy message link to clipboard"
 msgstr "Beitragslink in die Zwischenablage kopieren"
 
 #: templates/aa_forum/partials/forum/topic/message.html:81
-msgid "Last Modified:"
+#, fuzzy
+#| msgid "Last Modified:"
+msgid "Last modified:"
 msgstr "Zuletzt geändert:"
 
 #: templates/aa_forum/partials/forum/topic/modify-message.html:14
@@ -861,7 +986,10 @@ msgid "Modify"
 msgstr "Ändern"
 
 #: templates/aa_forum/partials/forum/topic/modify-topic.html:7
-msgid "Modify Topic"
+#: templates/aa_forum/view/forum/modify-topic.html:6
+#, fuzzy
+#| msgid "Modify Topic"
+msgid "Modify topic"
 msgstr "Thema ändern"
 
 #: templates/aa_forum/partials/forum/topic/reply.html:20
@@ -870,8 +998,10 @@ msgstr ""
 "Achtung: Dieses Thema ist gesperrt! Nur Administratoren können antworten."
 
 #: templates/aa_forum/partials/forum/topic/reply.html:33
-#: templates/aa_forum/view/forum/new-topic.html:32
-msgid "Clear Form"
+#: templates/aa_forum/view/forum/new-topic.html:37
+#, fuzzy
+#| msgid "Clear Form"
+msgid "Clear form"
 msgstr "Formular löschen"
 
 #: templates/aa_forum/partials/forum/unread-topic-buttons.html:7
@@ -887,10 +1017,13 @@ msgid "Administration"
 msgstr "Verwaltung"
 
 #: templates/aa_forum/partials/menu/menu-admin.html:12
-msgid "Categories and Boards"
+#, fuzzy
+#| msgid "Categories and Boards"
+msgid "Categories and boards"
 msgstr "Kategorien und Boards"
 
 #: templates/aa_forum/partials/menu/menu-user.html:6
+#: templates/aa_forum/view/profile/index.html:8
 msgid "Profile"
 msgstr "Profil"
 
@@ -914,8 +1047,9 @@ msgid "Sender"
 msgstr "Absender"
 
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:62
-#: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:56
-msgid "Read Message"
+#, fuzzy
+#| msgid "Read Message"
+msgid "Read message"
 msgstr "Nachricht lesen"
 
 #: templates/aa_forum/partials/personal-messages/inbox/messages.html:87
@@ -923,11 +1057,15 @@ msgid "No personal messages"
 msgstr "Keine persönlichen Nachrichten"
 
 #: templates/aa_forum/partials/personal-messages/new-message/form.html:8
-msgid "New Personal Message"
-msgstr "Neue persönliche Nachricht"
+#, fuzzy
+#| msgid "No personal messages"
+msgid "New personal message"
+msgstr "Keine persönlichen Nachrichten"
 
 #: templates/aa_forum/partials/personal-messages/new-message/form.html:23
-msgid "Send Message"
+#, fuzzy
+#| msgid "Send Message"
+msgid "Send message"
 msgstr "Nachricht senden"
 
 #: templates/aa_forum/partials/personal-messages/reply-message/form.html:8
@@ -935,36 +1073,56 @@ msgid "Reply to:"
 msgstr "Antwort an:"
 
 #: templates/aa_forum/partials/personal-messages/reply-message/form.html:24
-msgid "Send Reply"
+#, fuzzy
+#| msgid "Send Reply"
+msgid "Send reply"
 msgstr "Antwort senden"
 
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:10
 #: templates/aa_forum/partials/personal-messages/sidebar.html:30
-msgid "Sent Messages"
+#, fuzzy
+#| msgid "Sent Messages"
+msgid "Sent messages"
 msgstr "Gesendete Nachrichten"
+
+#: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:56
+msgid "Read Message"
+msgstr "Nachricht lesen"
+
+#: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:67
+msgid "Delete Message"
+msgstr "Beitrag löschen"
 
 #: templates/aa_forum/partials/personal-messages/sent-messages/messages.html:81
 msgid "No personal messages sent"
 msgstr "Keine gesendeten Nachrichten"
 
 #: templates/aa_forum/partials/personal-messages/sidebar.html:17
-msgid "New Message"
+#, fuzzy
+#| msgid "New Message"
+msgid "New message"
 msgstr "Neue Nachricht"
 
 #: templates/aa_forum/partials/profile/form.html:7
-msgid "User Profile"
+#, fuzzy
+#| msgid "user profile"
+msgid "User profile"
 msgstr "Benutzerprofil"
 
 #: templates/aa_forum/partials/search/search-form.html:7
 msgid "Search …"
 msgstr "Suche …"
 
-#: templates/aa_forum/view/administration/categories-and-boards.html:5
-msgid "Forum (Administration » Categories and Boards)"
+#: templates/aa_forum/view/administration/categories-and-boards.html:6
+#, fuzzy
+#| msgid "Forum (Administration » Categories and Boards)"
+msgid "Administration (Categories and boards)"
 msgstr "Forum (Verwaltung » Kategorien und Foren)"
 
-#: templates/aa_forum/view/administration/forum-settings.html:5
-msgid "Forum (Administration » Forum Settings)"
+#: templates/aa_forum/view/administration/forum-settings.html:6
+#, fuzzy
+#| msgid "Forum (Administration » Forum Settings)"
+msgid "Administration (Forum settings)"
 msgstr "Forum (Verwaltung » Forum-Einstellungen)"
 
 #: templates/aa_forum/view/forum/index.html:26
@@ -975,80 +1133,85 @@ msgstr "Neue Beiträge"
 msgid "No new posts"
 msgstr "Keine neuen Beiträge"
 
-#: templates/aa_forum/view/forum/modify-message.html:5
-msgid "Modify Message » Forum"
-msgstr "Beitrag bearbeiten » Forum"
-
-#: templates/aa_forum/view/forum/modify-topic.html:5
-msgid "Modify Topic » Forum"
-msgstr "Thema bearbeiten » Forum"
-
-#: templates/aa_forum/view/forum/new-topic.html:6
-msgid "New Topic » Forum"
-msgstr "Neues Thema » Forum"
-
-#: templates/aa_forum/view/forum/new-topic.html:17
+#: templates/aa_forum/view/forum/new-topic.html:22
 msgid "Start new topic in"
 msgstr "Neues Thema beginnen in"
 
-#: templates/aa_forum/view/forum/new-topic.html:33
-msgid "Start Topic"
+#: templates/aa_forum/view/forum/new-topic.html:38
+#, fuzzy
+#| msgid "Start Topic"
+msgid "Start topic"
 msgstr "Thema beginnen"
 
 #: templates/aa_forum/view/forum/topic.html:23
-msgid "Modify Topic Subject"
+#, fuzzy
+#| msgid "Modify Topic Subject"
+msgid "Modify topic subject"
 msgstr "Themenbetreff ändern"
 
-#: templates/aa_forum/view/forum/unread-topics.html:5
-msgid "Unread Topics » Forum"
-msgstr "Ungelesene Temen » Forum"
+#: templates/aa_forum/view/forum/unread-topics.html:6
+#, fuzzy
+#| msgid "Unread Topics"
+msgid "Unread topics"
+msgstr "Ungelesene Themen"
 
-#: templates/aa_forum/view/forum/unread-topics.html:11
+#: templates/aa_forum/view/forum/unread-topics.html:16
 msgid "Unread Topics"
 msgstr "Ungelesene Themen"
 
-#: templates/aa_forum/view/forum/unread-topics.html:26
+#: templates/aa_forum/view/forum/unread-topics.html:31
 msgid "You have no unread topics …"
 msgstr "Du hast keine ungelesenen Themen …"
 
-#: templates/aa_forum/view/personal-messages/inbox.html:7
-msgid "Forum (Personal Messages » Inbox)"
+#: templates/aa_forum/view/personal-messages/inbox.html:8
+#, fuzzy
+#| msgid "Forum (Personal Messages » Inbox)"
+msgid "Personal messages (Inbox)"
 msgstr "Forum (Persönliche Nachrichten » Posteingang)"
 
-#: templates/aa_forum/view/personal-messages/new-message.html:7
-msgid "Forum (Personal Messages » New)"
-msgstr "Forum (Persönliche Nachrichten » Neue Nachricht)"
+#: templates/aa_forum/view/personal-messages/new-message.html:8
+#, fuzzy
+#| msgid "Forum (Personal Messages » Sent Messages)"
+msgid "Personal messages (New message)"
+msgstr "Forum (Persönliche Nachrichten » Gesendete Nachrichten)"
 
-#: templates/aa_forum/view/personal-messages/new-message.html:34
+#: templates/aa_forum/view/personal-messages/new-message.html:39
 msgid "Enter the recipients name"
 msgstr "Gib den Namen des Empfängers ein"
 
-#: templates/aa_forum/view/personal-messages/reply-message.html:7
-msgid "Forum (Personal Messages » Reply)"
-msgstr "Forum (Persönliche Nachrichten » Antworten)"
-
-#: templates/aa_forum/view/personal-messages/sent-messages.html:7
-msgid "Forum (Personal Messages » Sent Messages)"
+#: templates/aa_forum/view/personal-messages/reply-message.html:8
+#, fuzzy
+#| msgid "Forum (Personal Messages » Sent Messages)"
+msgid "Personal messages (Reply to message)"
 msgstr "Forum (Persönliche Nachrichten » Gesendete Nachrichten)"
 
-#: templates/aa_forum/view/profile/index.html:7
-msgid "Forum (Profile)"
-msgstr "Forum (Profil)"
+#: templates/aa_forum/view/personal-messages/sent-messages.html:8
+#, fuzzy
+#| msgid "Forum (Personal Messages » Sent Messages)"
+msgid "Personal messages (Sent messages)"
+msgstr "Forum (Persönliche Nachrichten » Gesendete Nachrichten)"
 
-#: templates/aa_forum/view/search/results.html:5
-msgid "Search Results » Forum"
+#: templates/aa_forum/view/search/results.html:6
+#, fuzzy
+#| msgid "Search Results » Forum"
+msgid "Search results"
 msgstr "Suchergebnisse » Forum"
 
-#: templates/aa_forum/view/search/results.html:17
-msgid "Result(s)"
-msgstr "Resultat(e)"
+#: templates/aa_forum/view/search/results.html:22
+#, python-format
+msgid "%(counter)s Result"
+msgid_plural "%(counter)s Results"
+msgstr[0] ""
+msgstr[1] ""
 
-#: templates/aa_forum/view/search/results.html:27
+#: templates/aa_forum/view/search/results.html:32
 msgid "Nothing found …"
 msgstr "Nichts gefunden …"
 
 #: templatetags/aa_forum_datetime.py:57
-msgid "Timezone Conversion"
+#, fuzzy
+#| msgid "Timezone Conversion"
+msgid "Timezone conversion"
 msgstr "Zeitzonen-Übersicht"
 
 #: views/admin.py:165
@@ -1119,9 +1282,13 @@ msgstr ""
 "nicht oder Du hast keinen Zugriff darauf.</p>"
 
 #: views/forum.py:331
+#, fuzzy
+#| msgid ""
+#| "<h4>Error!</h4><p>The board you were trying to post in is an Announcement "
+#| "Board and you don't have the permissions to start a topic there.</p>"
 msgid ""
-"<h4>Error!</h4><p>The board you were trying to post in is an Announcement "
-"Board and you don't have the permissions to start a topic there.</p>"
+"<h4>Error!</h4><p>The board you were trying to post in is an announcement "
+"board and you don't have the permissions to start a topic there.</p>"
 msgstr ""
 "<h4>Fehler!</h4><p>Das Board in dem Du posten willst, ist ein „Ankündigungs-"
 "Board“ und Du hast nicht die Berechtigung, dort ein Thema zu eröffnen.</p>"
@@ -1204,14 +1371,17 @@ msgstr ""
 "<h4>Erfolg!</h4><p>Thema „{current_topic}“ wurde gesperrt/geschlossen.</p>"
 
 #: views/forum.py:995
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "<h4>Success!</h4><p>Topic \"{curent_topic}\" is no longer \"Sticky\".</p>"
 msgid ""
-"<h4>Success!</h4><p>Topic \"{curent_topic}\" is no longer \"Sticky\".</p>"
+"<h4>Success!</h4><p>Topic \"{curent_topic}\" is no longer \"sticky\".</p>"
 msgstr "<h4>Erfolg!</h4><p>Thema „{curent_topic}“ ist nicht mehr „Sticky“.</p>"
 
 #: views/forum.py:1009
-#, python-brace-format
-msgid "<h4>Success!</h4><p>Topic \"{curent_topic}\" is now \"Sticky\".</p>"
+#, fuzzy, python-brace-format
+#| msgid "<h4>Success!</h4><p>Topic \"{curent_topic}\" is now \"Sticky\".</p>"
+msgid "<h4>Success!</h4><p>Topic \"{curent_topic}\" is now \"sticky\".</p>"
 msgstr "<h4>Erfolg!</h4><p>Thema „{curent_topic}“ ist jetzt „Sticky“.</p>"
 
 #: views/forum.py:1044
