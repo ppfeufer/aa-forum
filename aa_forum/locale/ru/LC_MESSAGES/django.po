@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-19 11:44+0200\n"
-"PO-Revision-Date: 2023-07-31 17:39+0000\n"
-"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/ru/>\n"
+"PO-Revision-Date: 2023-09-22 16:21+0000\n"
+"Last-Translator: Nikolay <nick.postnikov@gmail.com>\n"
+"Language-Team: Russian <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : (n%10==1 && n%100!=11 ? 0 : "
 "n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #: forms.py:40
 msgid "This field is mandatory"
@@ -241,42 +241,25 @@ msgid "categories"
 msgstr "категории"
 
 #: models.py:214
-#, fuzzy
-#| msgid ""
-#| "When activated every reply to any topic in this board will be posted to "
-#| "the defined Discord channel. (Child boards are excluded) Chose wisely! "
-#| "(Default: NO)"
 msgid ""
 "Use this Discord Webhook for replies as well? When activated every reply to "
 "any topic in this board will be posted to the defined Discord channel. "
 "(Child boards are excluded) Chose wisely! (Default: NO)"
 msgstr ""
-"При включении каждый ответ в любой теме доски будет отправлен в канал "
-"Discord. (Дочерние доски не учитываются) Использовать с умом! (По умолчанию: "
-"ВЫКЛ)"
+"Использовать данный Discord Webhook для ответов? В случае активации каждый "
+"ответ в любой теме доски будет отправлен в канал Discord. (Дочерние доски не "
+"учитываются) Использовать с умом! (По умолчанию: НЕТ)"
 
 #: models.py:232
-#, fuzzy
-#| msgid ""
-#| "This will restrict access to this board to the selected groups. If no "
-#| "groups are selected, everyone who can access the forum can also access "
-#| "this board. (This setting is optional)"
 msgid ""
 "User in at least one of these groups have access to this board. If no groups "
 "are selected, everyone with access to the forum has also access to this "
 "board."
 msgstr ""
-"Только перечисленные группы будут иметь доступ к доске. Если группы не "
-"выбраны, все пользователи форума будут иметь доступ к доске. (Настройка не "
-"обязательна)"
+"Пользователи любой из перечисленных групп будут иметь доступ к доске. Если "
+"группы не выбраны, все пользователи форума будут иметь доступ к доске."
 
 #: models.py:240
-#, fuzzy
-#| msgid ""
-#| "Mark this board as an 'Announcement Board', meaning that only certain "
-#| "selected groups can start new topics. All others who have access to this "
-#| "board will still be able to discuss in the topics though. This setting "
-#| "will not be inherited to child boards. (Default: NO)"
 msgid ""
 "Mark this board as an 'Announcement Board', meaning that only certain "
 "selected groups can start new topics. All others who have access to this "
@@ -284,25 +267,15 @@ msgid ""
 msgstr ""
 "Пометка 'Доска оповещений' обозначает, что только определенные группы могут "
 "начинать новые темы. Все остальные, кто имеет доступ, могут участвовать в "
-"обсуждениях. Эта настройка не распространяется на дочерние доски. (По "
-"умолчанию: НЕТ)"
+"обсуждениях. (По умолчанию: НЕТ)"
 
 #: models.py:251
-#, fuzzy
-#| msgid ""
-#| "User in at least one of the selected groups will be able to start topics "
-#| "in 'Announcement Boards'. If no group is selected, only forum admins can "
-#| "do so. This setting will not be inherited to child boards. (Hint: These "
-#| "restrictions only take effect when a board is marked as 'Announcement "
-#| "Board', see checkbox above.)"
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
 "'Announcement Boards'. If no group is selected, only forum admins can do so."
 msgstr ""
 "Пользователи из перечисленных групп смогут создавать новые темы на 'Досках "
-"оповещений'. Если группы не указаны, только админы форума смогут это делать. "
-"Эта настройка не распространяется на дочерние доски. (Подсказка: Это "
-"ограничение работает только для 'Досок оповещений', см. настройку выше.)"
+"оповещений'. Если группы не указаны, только админы форума смогут это делать."
 
 #: models.py:287
 msgid "board"
@@ -1186,39 +1159,33 @@ msgid "<h4>Error!</h4><p>Something went wrong, please try again.</p>"
 msgstr "<h4>Ошибка!</h4><p>Что-то пошло не так, попробуйте еще раз.</p>"
 
 #: views/forum.py:940
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "<h4>Success!</h4><p>Topic \"{topic}\" has been unlocked/re-opened.</p>"
+#, python-brace-format
 msgid ""
 "<h4>Success!</h4><p>Topic \"{current_topic}\" has been unlocked/re-opened.</"
 "p>"
-msgstr "<h4>Успех!</h4><p>Тема \"{topic}\" была открыта.</p>"
+msgstr "<h4>Успех!</h4><p>Тема \"{current_topic}\" была открыта.</p>"
 
 #: views/forum.py:954
-#, fuzzy, python-brace-format
-#| msgid "<h4>Success!</h4><p>Topic \"{topic}\" has been locked/closed.</p>"
+#, python-brace-format
 msgid ""
 "<h4>Success!</h4><p>Topic \"{current_topic}\" has been locked/closed.</p>"
-msgstr "<h4>Успех!</h4><p>Тема \"{topic}\" была закрыта.</p>"
+msgstr "<h4>Успех!</h4><p>Тема \"{current_topic}\" была закрыта.</p>"
 
 #: views/forum.py:995
-#, fuzzy, python-brace-format
-#| msgid "<h4>Success!</h4><p>Topic \"{topic}\" is no longer \"Sticky\".</p>"
+#, python-brace-format
 msgid ""
 "<h4>Success!</h4><p>Topic \"{curent_topic}\" is no longer \"Sticky\".</p>"
-msgstr "<h4>Успех!</h4><p>Тема \"{topic}\" больше не \"Sticky\".</p>"
+msgstr "<h4>Успех!</h4><p>Тема \"{curent_topic}\" больше не \"Sticky\".</p>"
 
 #: views/forum.py:1009
-#, fuzzy, python-brace-format
-#| msgid "<h4>Success!</h4><p>Topic \"{topic}\" is now \"Sticky\".</p>"
+#, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{curent_topic}\" is now \"Sticky\".</p>"
-msgstr "<h4>Успех!</h4><p>Тема \"{topic}\" теперь \"Sticky\".</p>"
+msgstr "<h4>Успех!</h4><p>Тема \"{curent_topic}\" теперь \"Sticky\".</p>"
 
 #: views/forum.py:1044
-#, fuzzy, python-brace-format
-#| msgid "<h4>Success!</h4><p>Topic \"{topic_subject}\" removed.</p>"
+#, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{topic__subject}\" removed.</p>"
-msgstr "<h4>Успех!</h4><p>Тема \"{topic_subject}\" удалена.</p>"
+msgstr "<h4>Успех!</h4><p>Тема \"{topic__subject}\" удалена.</p>"
 
 #: views/forum.py:1080
 msgid "<h4>Error!</h4><p>The message doesn't exist.</p>"
