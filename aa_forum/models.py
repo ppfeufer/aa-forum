@@ -116,7 +116,7 @@ class General(models.Model):
         Meta definitions
         """
 
-        verbose_name = "AA-Forum"
+        verbose_name = _("AA-Forum")
         managed = False
         default_permissions = ()
         permissions = (
@@ -211,7 +211,7 @@ class Board(models.Model):
     use_webhook_for_replies = models.BooleanField(
         default=False,
         help_text=_(
-            "Use this Discord Webhook for replies as well? When activated every "
+            "Use this Discord webhook for replies as well? When activated every "
             "reply to any topic in this board will be posted to the defined "
             "Discord channel. (Child boards are excluded) Chose wisely! "
             "(Default: NO)"
@@ -263,7 +263,7 @@ class Board(models.Model):
         default=None,
         related_name="+",
         on_delete=models.SET_DEFAULT,
-        help_text="Shortcut for better performance",
+        help_text="Shortcut for better performance",  # Don't add this to translations
         # for adding "Re:" if needed, must be within the same topic as last message
     )
     last_message = models.ForeignKey(
@@ -273,7 +273,7 @@ class Board(models.Model):
         default=None,
         related_name="+",
         on_delete=models.SET_DEFAULT,
-        help_text="Shortcut for better performance",
+        help_text="Shortcut for better performance",  # Don't add this to translations
     )
 
     objects = BoardManager()
@@ -387,7 +387,7 @@ class Topic(models.Model):
         default=None,
         related_name="+",
         on_delete=models.SET_DEFAULT,
-        help_text="Shortcut for better performance",
+        help_text="Shortcut for better performance",  # Don't add this to translations
     )
     last_message = models.ForeignKey(
         to="Message",
@@ -396,7 +396,7 @@ class Topic(models.Model):
         default=None,
         related_name="+",
         on_delete=models.SET_DEFAULT,
-        help_text="Shortcut for better performance",
+        help_text="Shortcut for better performance",  # Don't add this to translations
     )
 
     objects = TopicManager()
@@ -781,7 +781,7 @@ class Setting(SingletonModel):
         verbose_name_plural = _("settings")
 
     def __str__(self) -> str:
-        return "Forum Settings"
+        return str(_("Forum settings"))
 
 
 class UserProfile(models.Model):
@@ -811,7 +811,9 @@ class UserProfile(models.Model):
         verbose_name_plural = _("user profiles")
 
     def __str__(self):
-        return f"Forum User Profile: {self.user}"
+        model_string_name = str(_("Forum user profile"))
+
+        return f"{model_string_name}: {self.user}"
 
     def save(self, *args, **kwargs) -> None:
         """

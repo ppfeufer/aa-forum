@@ -38,7 +38,7 @@
 
         {% if board_child_boards %}
             <p class="aa-forum-child-boards text-muted small">
-                <b>{% translate "Child Boards:" %}</b>
+                <b>{% translate "Child boards:" %}</b>
 
                 {% for child_board in board_child_boards %}
                     <a href="{% url 'aa_forum:forum_board' category_slug child_board.slug %}">

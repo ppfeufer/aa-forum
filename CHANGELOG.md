@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning].
 ### Fixed
 
 - Pylint issues
+- Capitalization for translatable strings
 
 ### Changed
 

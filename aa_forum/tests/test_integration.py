@@ -1081,7 +1081,7 @@ class TestProfileUI(WebTest):
 
         # then
         self.assertEqual(
-            first=str(user_profile), second=f"Forum User Profile: {self.user_1002}"
+            first=str(user_profile), second=f"Forum user profile: {self.user_1002}"
         )
 
     def test_should_set_discord_dm_on_new_personal_message_to_true(self):
@@ -1269,7 +1269,7 @@ class TestAdminForumSettingsUI(WebTest):
         forum_settings = Setting.objects.get(pk=1)
 
         # then
-        self.assertEqual(first=str(forum_settings), second="Forum Settings")
+        self.assertEqual(first=str(forum_settings), second="Forum settings")
 
 
 class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods

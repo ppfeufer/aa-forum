@@ -1065,7 +1065,7 @@ class TestSetting(TestCase):
         setting = Setting.objects.get(pk=1)
 
         # when/then
-        self.assertEqual(first=str(setting), second="Forum Settings")
+        self.assertEqual(first=str(setting), second="Forum settings")
 
     def test_setting_save(self):
         """

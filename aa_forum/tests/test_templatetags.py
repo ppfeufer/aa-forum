@@ -991,7 +991,7 @@ class TestForumDatetime(TestCase):
         timezones_url = reverse_url(
             viewname="timezones:index", args=[timestamp_from_db_datetime]
         )
-        link_title = "Timezone Conversion"
+        link_title = "Timezone conversion"
         formatted_forum_date = "Aug. 17, 2021, 05:38:13"
 
         expected_result = (

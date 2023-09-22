@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="modal fade" id="delete-topic-{{ topic.pk }}" tabindex="-1" role="dialog" aria-labelledby="{% translate 'Delete Topic' %}" aria-hidden="true">
+<div class="modal fade" id="delete-topic-{{ topic.pk }}" tabindex="-1" role="dialog" aria-labelledby="{% translate 'Delete topic' %}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,7 +9,7 @@
                 </button>
 
                 <div class="modal-title">
-                    {% translate "Delete Topic" %}
+                    {% translate "Delete topic" %}
                     "<b>{{ topic.subject }}</b>"
                 </div>
             </div>

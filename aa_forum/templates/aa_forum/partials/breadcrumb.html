@@ -3,7 +3,7 @@
 
 <div class="aa-forum-breadcrumb">
     <ul>
-        <li><a href="{% url 'aa_forum:forum_index' %}">{% translate "Forum Index" %}</a></li>
+        <li><a href="{% url 'aa_forum:forum_index' %}">{% translate "Forum index" %}</a></li>
 
         {% if page %}
             <li>» {{ page }}</li>
@@ -24,7 +24,7 @@
 
                 {% if topic %}
                     {% if modify_message %}
-                        <li>» {% translate "Modify Message" %} (<a href="{{ topic.get_absolute_url }}">{{ topic.subject }}</a>)</li>
+                        <li>» {% translate "Modify message" %} (<a href="{{ topic.get_absolute_url }}">{{ topic.subject }}</a>)</li>
                     {% else %}
                         <li>» <a href="{{ topic.get_absolute_url }}">{{ topic.subject }}</a></li>
                     {% endif %}

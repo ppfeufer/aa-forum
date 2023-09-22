@@ -1566,7 +1566,7 @@ class TestTopicViews(TestCase):
             first=str(messages[0]),
             second=(
                 "<h4>Error!</h4><p>The board you were trying to post in is an "
-                "Announcement Board and you don't have the permissions to start a "
+                "announcement board and you don't have the permissions to start a "
                 "topic there.</p>"
             ),
         )
@@ -1604,7 +1604,7 @@ class TestTopicViews(TestCase):
             first=str(messages[0]),
             second=(
                 "<h4>Error!</h4><p>The board you were trying to post in is an "
-                "Announcement Board and you don't have the permissions to start a "
+                "announcement board and you don't have the permissions to start a "
                 "topic there.</p>"
             ),
         )

@@ -329,7 +329,7 @@ def board_new_topic(
             message=mark_safe(
                 s=_(
                     "<h4>Error!</h4><p>The board you were trying to post in is "
-                    "an Announcement Board and you don't have the permissions to "
+                    "an announcement board and you don't have the permissions to "
                     "start a topic there.</p>"
                 )
             ),
@@ -992,7 +992,7 @@ def topic_change_sticky_state(
             request=request,
             message=mark_safe(
                 s=_(
-                    f'<h4>Success!</h4><p>Topic "{curent_topic}" is no longer "Sticky".</p>'  # pylint: disable=line-too-long
+                    f'<h4>Success!</h4><p>Topic "{curent_topic}" is no longer "sticky".</p>'  # pylint: disable=line-too-long
                 )
             ),
         )
@@ -1006,7 +1006,7 @@ def topic_change_sticky_state(
         messages.success(
             request=request,
             message=mark_safe(
-                s=_(f'<h4>Success!</h4><p>Topic "{curent_topic}" is now "Sticky".</p>')
+                s=_(f'<h4>Success!</h4><p>Topic "{curent_topic}" is now "sticky".</p>')
             ),
         )
 

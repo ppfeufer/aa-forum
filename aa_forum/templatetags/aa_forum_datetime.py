@@ -54,7 +54,7 @@ def forum_time(db_datetime: datetime) -> str:
         timezones_url = reverse_url(
             viewname="timezones:index", args=[timestamp_from_db_datetime]
         )
-        link_title = _("Timezone Conversion")
+        link_title = _("Timezone conversion")
 
         return mark_safe(
             s=(
