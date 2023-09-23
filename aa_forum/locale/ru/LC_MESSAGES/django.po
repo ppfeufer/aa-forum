@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-22 22:58+0200\n"
-"PO-Revision-Date: 2023-09-22 16:21+0000\n"
-"Last-Translator: Nikolay <nick.postnikov@gmail.com>\n"
-"Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/ru/>\n"
+"PO-Revision-Date: 2023-09-23 00:06+0000\n"
+"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
+"Language-Team: Russian <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -98,8 +98,6 @@ msgid "Board description (optional)"
 msgstr "Описание доски (не обязательно)"
 
 #: forms.py:222
-#, fuzzy
-#| msgid "Group Restrictions"
 msgid "Group restrictions"
 msgstr "Ограничения групп"
 
