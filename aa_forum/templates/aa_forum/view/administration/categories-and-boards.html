@@ -2,7 +2,12 @@
 
 {% load i18n %}
 
-{% block page_title %}{% translate "Forum (Administration » Categories and Boards)" %}{% endblock %}
+{% block page_title %}
+    {% translate "Administration (Categories and boards)" as page_title %}
+    {% translate "Forum" as app_title %}
+
+    {{ page_title|title }} » {{ app_title }}
+{% endblock %}
 
 {% block aa_forum_header %}
     {% include "aa_forum/partials/menu.html" %}

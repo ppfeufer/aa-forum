@@ -23,7 +23,7 @@ from app_utils.urls import site_absolute_url
 from aa_forum import __title__
 from aa_forum.constants import DISCORD_EMBED_MESSAGE_LENGTH
 
-logger = LoggerAddTag(get_extension_logger(__name__), __title__)
+logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 def verify_image_url(image_url):
@@ -36,46 +36,49 @@ def verify_image_url(image_url):
     (like example.com/kitten.gif) might not pass this test. If you need to test that
     the URL is both valid AND an image suitable for the Incoming Webhook integration,
     run it through both verify_url() and verify_image_url().
+
     :param image_url:
     :return:
     """
 
     return re.match(
-        r"(http(s?):)([\/|.|\w|\s|-])*\.(?:gif|jpg|jpeg|png|bmp|webp)", image_url
+        pattern=r"(https?:\/\/.*\.(?:gif|jpg|jpeg|png|bmp|webp))",
+        string=image_url,
     )
 
 
-def get_image_url(text):
+def get_first_image_url_from_text(text):
     """
     Extract an image url from the passed text. If there are multiple image urls,
     the first to verify will be returned.
+
     :param text:
     :return:
     """
 
-    soup = BeautifulSoup(text, "html.parser")
+    soup = BeautifulSoup(markup=text, features="html.parser")
 
-    images = soup.findAll("img")
+    images = soup.findAll(name="img")
 
     # The first image to verify we will use
     if images:
         for image in images:
             image__src = image["src"]
 
-            logger.debug(f"Image found: {image__src}")
+            logger.debug(msg=f"Image found: {image__src}")
 
             if not image__src.startswith(("http://", "https://")):
-                logger.debug("Image has no absolute URL, fixing!")
+                logger.debug(msg="Image has no absolute URL, fixing!")
 
                 absolute_site_url = site_absolute_url()
                 image__src = f"{absolute_site_url}{image__src}"
 
-            if verify_image_url(image__src):
+            if verify_image_url(image_url=image__src):
                 logger.debug(f"Image verified: {image__src}")
 
                 return image__src
 
-    logger.debug("No images found.")
+    logger.debug(msg="No images found.")
 
     return None
 
@@ -83,18 +86,25 @@ def get_image_url(text):
 def string_cleanup(string: str) -> str:
     """
     Clean up a string by removing JS, CSS and Head tags
+
     :param string:
     :return:
     """
 
-    re_head = re.compile(r"<\s*head[^>]*>.*?<\s*/\s*head\s*>", re.S | re.I)
-    re_script = re.compile(r"<\s*script[^>]*>.*?<\s*/\s*script\s*>", re.S | re.I)
-    re_css = re.compile(r"<\s*style[^>]*>.*?<\s*/\s*style\s*>", re.S | re.I)
+    re_head = re.compile(
+        pattern=r"<\s*head[^>]*>.*?<\s*/\s*head\s*>", flags=re.S | re.I
+    )
+    re_script = re.compile(
+        pattern=r"<\s*script[^>]*>.*?<\s*/\s*script\s*>", flags=re.S | re.I
+    )
+    re_css = re.compile(
+        pattern=r"<\s*style[^>]*>.*?<\s*/\s*style\s*>", flags=re.S | re.I
+    )
 
     # Strip JS
-    string = re_head.sub("", string)
-    string = re_script.sub("", string)
-    string = re_css.sub("", string)
+    string = re_head.sub(repl="", string=string)
+    string = re_script.sub(repl="", string=string)
+    string = re_css.sub(repl="", string=string)
 
     return string
 
@@ -106,9 +116,10 @@ def prepare_message_for_discord(
     Preparing the message to be sent with a Discord Webhook
 
     We have to run strip_tags() twice here.
-    1. To remove HTML tags from the text we want to send
-    2. After html.unescape() in case that unescaped former escaped HTML tags,
-    which now need to be removed as well
+    1.  To remove HTML tags from the text we want to send
+    2.  After html.unescape() in case that unescaped former escaped HTML tags,
+        which now need to be removed as well
+
     :param message:
     :type message:
     :param message_length:
@@ -118,9 +129,9 @@ def prepare_message_for_discord(
     """
 
     return strip_tags(
-        html.unescape(
-            strip_tags(
-                message[:message_length] + "…"
+        value=html.unescape(
+            s=strip_tags(
+                value=message[:message_length] + "…"
                 if len(message) > message_length
                 else message
             )

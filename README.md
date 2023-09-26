@@ -5,6 +5,7 @@
 [![Badge: Supported Python Versions]][aa-forum on pypi]
 [![Badge: Supported Django Versions]][aa-forum on pypi]
 ![Badge: pre-commit]
+[![Badge: pre-commit.ci status]][pre-commit.ci status]
 [![Badge: Code Style: black]][black code formatter documentation]
 [![Badge: Support Discord]][support discord]
 [![Badge: Automated Tests]][automated tests on github]
@@ -474,6 +475,7 @@ Please make sure to read the [Contribution Guidelines].
 [badge: contributor covenant]: https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg "Contributor Covenant"
 [badge: license]: https://img.shields.io/github/license/ppfeufer/aa-forum "License"
 [badge: pre-commit]: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white "pre-commit"
+[badge: pre-commit.ci status]: https://results.pre-commit.ci/badge/github/ppfeufer/aa-forum/master.svg "pre-commit.ci status"
 [badge: support discord]: https://img.shields.io/discord/790364535294132234?label=discord "Support Discord"
 [badge: supported django versions]: https://img.shields.io/pypi/djversions/aa-forum?label=django "Supported Django Versions"
 [badge: supported python versions]: https://img.shields.io/pypi/pyversions/aa-forum "Supported Python Versions"
@@ -485,10 +487,11 @@ Please make sure to read the [Contribution Guidelines].
 [contribution guidelines]: https://github.com/ppfeufer/aa-forum/blob/master/CONTRIBUTING.md
 [discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy
 [ppfeufer on ko-fi]: https://ko-fi.com/N4N8CL1BY
-[screenshot: admin view]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/admin-view.jpg "Admin View"
-[screenshot: forum index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/forum-index.jpg "Forum Index"
-[screenshot: start new topic]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/start-new-topic.jpg "Start new Topic (ckEditor)"
-[screenshot: topic overview / board index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-overview.jpg "Topic Overview / Board Index"
-[screenshot: topic view]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/aa_forum/docs/images/topic-view.jpg "Topic View"
+[pre-commit.ci status]: https://results.pre-commit.ci/latest/github/ppfeufer/aa-forum/master "pre-commit.ci"
+[screenshot: admin view]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/admin-view.jpg "Admin View"
+[screenshot: forum index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/forum-index.jpg "Forum Index"
+[screenshot: start new topic]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/start-new-topic.jpg "Start new Topic (ckEditor)"
+[screenshot: topic overview / board index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/topic-overview.jpg "Topic Overview / Board Index"
+[screenshot: topic view]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/topic-view.jpg "Topic View"
 [support discord]: https://discord.gg/zmh52wnfvM
 [weblate engage]: https://weblate.ppfeufer.de/engage/alliance-auth-apps/ "Weblate Translations"

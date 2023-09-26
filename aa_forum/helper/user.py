@@ -12,6 +12,7 @@ from aa_forum.models import UserProfile, get_sentinel_user
 def get_user_profile(user: User) -> UserProfile:
     """
     Get a users settings or create them
+
     :param user:
     :return:
     """
@@ -21,9 +22,11 @@ def get_user_profile(user: User) -> UserProfile:
     return user_profile
 
 
+# pylint: disable=duplicate-code
 def get_main_character_from_user(user: User) -> str:
     """
     Get the main character from a user
+
     :param user:
     :type user:
     :return:

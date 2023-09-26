@@ -25,14 +25,15 @@ from aa_forum.constants import SEARCH_STOPWORDS
 from aa_forum.helper.pagination import get_paginated_page_object
 from aa_forum.models import Board, Message, Setting
 
-logger = LoggerAddTag(get_extension_logger(__name__), __title__)
+logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 @login_required
-@permission_required("aa_forum.basic_access")
+@permission_required(perm="aa_forum.basic_access")
 def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     """
     Search results view
+
     :param request:
     :param page_number:
     :return:
@@ -53,7 +54,7 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
 
     if len(search_phrase_terms) >= 1:
         boards = (
-            Board.objects.user_has_access(request.user)
+            Board.objects.user_has_access(user=request.user)
             .distinct()
             .values_list("pk", flat=True)
         )
@@ -95,6 +96,12 @@ def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
         "search_results_count": 0 if search_results is None else search_results.count(),
     }
 
-    logger.info(f'{request.user} calling search view, searching for "{search_phrase}".')
+    logger.info(
+        msg=f'{request.user} calling search view, searching for "{search_phrase}".'
+    )
 
-    return render(request, "aa_forum/view/search/results.html", context)
+    return render(
+        request=request,
+        template_name="aa_forum/view/search/results.html",
+        context=context,
+    )

@@ -11,7 +11,11 @@ from aa_forum.models import Board
 
 
 @receiver(post_save, sender=Board)
-def sync_parent_board_access_to_child_board(sender, instance, **kwargs):
+def sync_parent_board_access_to_child_board(
+    sender,  # pylint: disable=unused-argument
+    instance,
+    **kwargs,  # pylint: disable=unused-argument
+):
     """
     Keeps the access restrictions in sync between parent boards and their children
     """

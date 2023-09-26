@@ -8,15 +8,15 @@
                 {{ category.category_obj.name }}
 
                 <div class="pull-right">
-                    <button class="btn btn-warning btn-xs" title="{% translate 'Edit Category' %}" data-toggle="collapse" data-target="#collapseEditCategory-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseEditCategory-{{ category.category_obj.pk }}">
+                    <button class="btn btn-warning btn-xs" title="{% translate 'Edit category' %}" data-toggle="collapse" data-target="#collapseEditCategory-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseEditCategory-{{ category.category_obj.pk }}">
                         <i class="fas fa-pencil-alt"></i>
                     </button>
 
-                    <button class="btn btn-danger btn-xs" title="{% translate 'Delete Category' %}" data-toggle="modal" data-target="#delete-category-{{ category.category_obj.pk }}">
+                    <button class="btn btn-danger btn-xs" title="{% translate 'Delete category' %}" data-toggle="modal" data-target="#delete-category-{{ category.category_obj.pk }}">
                         <i class="far fa-trash-alt"></i>
                     </button>
 
-                    <button class="aa-forum-admin-expand-collapse-category btn btn-default btn-xs collapsed" title="{% translate 'Expand/Collapse Category' %}" data-toggle="collapse" data-target="#collapseCategory-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseCategory-{{ category.category_obj.pk }}">
+                    <button class="aa-forum-admin-expand-collapse-category btn btn-default btn-xs collapsed" title="{% translate 'Expand/collapse category' %}" data-toggle="collapse" data-target="#collapseCategory-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseCategory-{{ category.category_obj.pk }}">
                         <i class="if-collapsed fas fa-expand-alt"></i>
                         <i class="if-expanded fas fa-compress-alt"></i>
                     </button>
@@ -41,7 +41,7 @@
 
                             <div class="form-group aa-forum-form-group aa-forum-form-new-category text-right clearfix">
                                 <button class="btn btn-primary btn-sm" type="submit">
-                                    {% translate "Change Category" %}
+                                    {% translate "Change category" %}
                                 </button>
                             </div>
                         </fieldset>
@@ -52,7 +52,7 @@
             <div class="collapse" id="collapseCategory-{{ category.category_obj.pk }}">
                 <p>
                     <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseNewBoardForm-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseNewBoardForm-{{ category.category_obj.pk }}">
-                        {% translate "New Board" %}
+                        {% translate "New board" %}
                     </button>
                 </p>
 
@@ -72,7 +72,7 @@
 
                                 <div class="form-group aa-forum-form-group aa-forum-form-new-board text-right clearfix">
                                     <button class="btn btn-primary btn-sm" type="submit">
-                                        {% translate "Create Board" %}
+                                        {% translate "Create board" %}
                                     </button>
                                 </div>
                             </fieldset>

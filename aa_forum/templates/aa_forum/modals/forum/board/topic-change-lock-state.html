@@ -10,10 +10,10 @@
 
                 <div class="modal-title">
                     {% if topic.is_locked %}
-                        {% translate "Unlock/Re-Open Topic" %}
+                        {% translate "Unlock/re-open topic" %}
                         "<b>{{ topic.subject }}</b>"
                     {% else %}
-                        {% translate "Lock/Close Topic" %}
+                        {% translate "Lock/close topic" %}
                         "<b>{{ topic.subject }}</b>"
                     {% endif %}
                 </div>
@@ -36,10 +36,10 @@
                 <a id="modal-button-confirm" class="btn btn-danger btn-sm" role="button" href="{% url 'aa_forum:forum_topic_change_lock_state' topic.pk %}">
                     {% if topic.is_locked %}
                         <i class="fas fa-unlock"></i>
-                        {% translate "Unlock/Re-Open Topic" %}
+                        {% translate "Unlock/re-open topic" %}
                     {% else %}
                         <i class="fas fa-lock"></i>
-                        {% translate "Lock/Close Topic" %}
+                        {% translate "Lock/close topic" %}
                     {% endif %}
                 </a>
             </div>

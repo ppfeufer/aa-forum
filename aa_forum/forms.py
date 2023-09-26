@@ -32,6 +32,7 @@ from aa_forum.models import (
 def get_mandatory_form_label_text(text):
     """
     Label text for mandatory form fields
+
     :param text:
     :return:
     """
@@ -59,7 +60,7 @@ class SpecialModelChoiceIterator(forms.models.ModelChoiceIterator):
         queryset = self.queryset
 
         for obj in queryset:
-            yield self.choice(obj)
+            yield self.choice(obj=obj)
 
 
 class SpecialModelMultipleChoiceField(forms.ModelMultipleChoiceField):
@@ -87,7 +88,7 @@ class NewTopicForm(forms.Form):
 
     subject = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(_("Subject")),
+        label=get_mandatory_form_label_text(text=_("Subject")),
         max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Subject")}),
     )
@@ -98,16 +99,17 @@ class NewTopicForm(forms.Form):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
-        label=get_mandatory_form_label_text(_("Message")),
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
 
     def clean_message(self):
         """
         Cleanup the message
+
         :return:
         """
 
-        message = string_cleanup(self.cleaned_data["message"])
+        message = string_cleanup(string=self.cleaned_data["message"])
 
         return message
 
@@ -119,7 +121,7 @@ class EditTopicForm(ModelForm):
 
     subject = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(_("Subject")),
+        label=get_mandatory_form_label_text(text=_("Subject")),
         max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Subject")}),
     )
@@ -140,9 +142,9 @@ class NewCategoryForm(ModelForm):
 
     name = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(_("Name")),
+        label=get_mandatory_form_label_text(text=_("Name")),
         max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _("Category Name")}),
+        widget=forms.TextInput(attrs={"placeholder": _("Category name")}),
     )
     boards = forms.CharField(
         required=False,
@@ -178,9 +180,9 @@ class EditCategoryForm(ModelForm):
 
     name = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(_("Name")),
+        label=get_mandatory_form_label_text(text=_("Name")),
         max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _("Category Name")}),
+        widget=forms.TextInput(attrs={"placeholder": _("Category name")}),
     )
 
     class Meta:  # pylint: disable=too-few-public-methods
@@ -199,9 +201,9 @@ class EditBoardForm(ModelForm):
 
     name = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(_("Name")),
+        label=get_mandatory_form_label_text(text=_("Name")),
         max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _("Board Name")}),
+        widget=forms.TextInput(attrs={"placeholder": _("Board name")}),
     )
     description = forms.CharField(
         required=False,
@@ -211,13 +213,13 @@ class EditBoardForm(ModelForm):
                 "rows": 10,
                 "cols": 20,
                 "input_type": "textarea",
-                "placeholder": _("Board Description (Optional)"),
+                "placeholder": _("Board description (optional)"),
             }
         ),
     )
     groups = SpecialModelMultipleChoiceField(
         required=False,
-        label=_("Group Restrictions"),
+        label=_("Group restrictions"),
         help_text=_(
             "This will restrict access to this board to the selected groups. If no "
             "groups are selected, everyone who can access the forum can also access "
@@ -227,9 +229,9 @@ class EditBoardForm(ModelForm):
     )
     discord_webhook = forms.CharField(
         required=False,
-        label=_("Discord Webhook (Optional)"),
+        label=_("Discord webhook (optional)"),
         help_text=_(
-            "Discord Webhook URL for the channel to post about new topics in this "
+            "Discord webhook URL for the channel to post about new topics in this "
             "board. (This setting is optional)"
         ),
         max_length=254,
@@ -242,7 +244,7 @@ class EditBoardForm(ModelForm):
     use_webhook_for_replies = forms.BooleanField(
         initial=False,
         required=False,
-        label=_("Use this Discord Webhook for replies as well?"),
+        label=_("Use this Discord webhook for replies as well?"),
         help_text=_(
             "When activated every reply to any topic in this board will be "
             "posted to the defined Discord channel. (Child boards are excluded) "
@@ -252,7 +254,7 @@ class EditBoardForm(ModelForm):
     is_announcement_board = forms.BooleanField(
         initial=False,
         required=False,
-        label=_("Mark Board as 'Announcement Board'"),
+        label=_("Mark board as 'Announcement Board'"),
         help_text=_(
             "Mark this board as an 'Announcement Board', meaning that only certain "
             "selected groups can start new topics. All others who have access to this "
@@ -262,7 +264,7 @@ class EditBoardForm(ModelForm):
     )
     announcement_groups = SpecialModelMultipleChoiceField(
         required=False,
-        label=_("Start Topic Restrictions for 'Announcement Boards'"),
+        label=_("Start topic restrictions for 'Announcement Boards'"),
         help_text=_(
             "User in at least one of the selected groups will be able to start topics "
             "in 'Announcement Boards'. If no group is selected, only forum admins can "
@@ -276,6 +278,7 @@ class EditBoardForm(ModelForm):
     def __init__(self, *args, **kwargs):
         """
         When form is initialized
+
         :param args:
         :param kwargs:
         """
@@ -315,7 +318,7 @@ class EditMessageForm(ModelForm):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
-        label=get_mandatory_form_label_text(_("Message")),
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
 
     class Meta:  # pylint: disable=too-few-public-methods
@@ -332,7 +335,7 @@ class EditMessageForm(ModelForm):
         :return:
         """
 
-        message = string_cleanup(self.cleaned_data["message"])
+        message = string_cleanup(string=self.cleaned_data["message"])
 
         return message
 
@@ -353,7 +356,7 @@ class UserProfileForm(ModelForm):
     )
     website_title = forms.CharField(
         required=False,
-        label=_("Website Title"),
+        label=_("Website title"),
         max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("e.g.: My Homepage")}),
         help_text=_("Your website's title."),
@@ -362,7 +365,7 @@ class UserProfileForm(ModelForm):
         required=False,
         label=_("Website URL"),
         max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _("https://example.com")}),
+        widget=forms.TextInput(attrs={"placeholder": "https://example.com"}),
         help_text=_(
             "Your website's URL. (Don't forget to also set a title for your website, "
             "otherwise this field will be ignored.)"
@@ -395,10 +398,11 @@ class UserProfileForm(ModelForm):
     def clean_signature(self):
         """
         Check that the signature is not longer than allowed
+
         :return:
         """
 
-        signature = string_cleanup(self.cleaned_data["signature"])
+        signature = string_cleanup(string=self.cleaned_data["signature"])
 
         if not signature:
             return ""
@@ -415,12 +419,13 @@ class UserProfileForm(ModelForm):
                     f"Ensure your signature has at most {max_signature_length} characters. (Currently: {len(signature)})"  # pylint: disable=line-too-long
                 )
             ) from exc
-        else:
-            return signature
+
+        return signature
 
     def clean_website_url(self):
         """
         Check if it's a valid URL
+
         :return:
         """
 
@@ -433,8 +438,8 @@ class UserProfileForm(ModelForm):
             URLValidator()(website_url)
         except ValidationError as exc:
             raise ValidationError(_("This is not a valid URL")) from exc
-        else:
-            return website_url
+
+        return website_url
 
 
 class SettingForm(ModelForm):
@@ -444,7 +449,9 @@ class SettingForm(ModelForm):
 
     messages_per_page = forms.IntegerField(
         required=True,
-        label=get_mandatory_form_label_text(Setting.Field.MESSAGESPERPAGE.label),
+        label=get_mandatory_form_label_text(
+            Setting.Field.MESSAGESPERPAGE.label  # pylint: disable=no-member
+        ),
         help_text=_(
             "How many messages per page should be displayed in a forum topic? "
             "(Default: 15)"
@@ -452,7 +459,9 @@ class SettingForm(ModelForm):
     )
     topics_per_page = forms.IntegerField(
         required=True,
-        label=get_mandatory_form_label_text(Setting.Field.TOPICSPERPAGE.label),
+        label=get_mandatory_form_label_text(
+            Setting.Field.TOPICSPERPAGE.label  # pylint: disable=no-member
+        ),
         help_text=_(
             "How many topics per page should be displayed in a forum category? "
             "(Default: 10)"
@@ -460,7 +469,9 @@ class SettingForm(ModelForm):
     )
     user_signature_length = forms.IntegerField(
         required=True,
-        label=get_mandatory_form_label_text(Setting.Field.USERSIGNATURELENGTH.label),
+        label=get_mandatory_form_label_text(
+            Setting.Field.USERSIGNATURELENGTH.label  # pylint: disable=no-member
+        ),
         help_text=_(
             "How long (Number of characters) is a user's signature allowed to be? "
             "(Default: 750)"
@@ -484,11 +495,11 @@ class NewPersonalMessageForm(ModelForm):
     recipient = forms.ModelChoiceField(
         queryset=User.objects.none(),
         required=True,
-        label=get_mandatory_form_label_text(_("Recipient")),
+        label=get_mandatory_form_label_text(text=_("Recipient")),
     )
     subject = forms.CharField(
         required=True,
-        label=get_mandatory_form_label_text(_("Subject")),
+        label=get_mandatory_form_label_text(text=_("Subject")),
         max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Hello there …")}),
     )
@@ -498,12 +509,13 @@ class NewPersonalMessageForm(ModelForm):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
-        label=get_mandatory_form_label_text(_("Message")),
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
 
     def __init__(self, *args, **kwargs):
         """
         When form is initialized
+
         :param args:
         :param kwargs:
         """
@@ -523,10 +535,11 @@ class NewPersonalMessageForm(ModelForm):
     def clean_message(self):
         """
         Cleanup the message
+
         :return:
         """
 
-        message = string_cleanup(self.cleaned_data["message"])
+        message = string_cleanup(string=self.cleaned_data["message"])
 
         return message
 
@@ -542,7 +555,7 @@ class ReplyPersonalMessageForm(ModelForm):
             attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
         ),
         required=True,
-        label=get_mandatory_form_label_text(_("Message")),
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
 
     class Meta:  # pylint: disable=too-few-public-methods
@@ -556,9 +569,10 @@ class ReplyPersonalMessageForm(ModelForm):
     def clean_message(self):
         """
         Cleanup the message
+
         :return:
         """
 
-        message = string_cleanup(self.cleaned_data["message"])
+        message = string_cleanup(string=self.cleaned_data["message"])
 
         return message
