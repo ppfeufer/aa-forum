@@ -6,7 +6,7 @@ requires = [
 
 [project]
 name = "aa-forum"
-version = "1.19.3"
+version = "1.19.4"
 description = "Simple forum for Alliance Auth"
 readme = "README.md"
 keywords = [
