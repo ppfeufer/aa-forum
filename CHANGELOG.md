@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning].
 
 ## \[In Development\] - Unreleased
 
+## \[1.19.4\] - 2023-09-26
+
+### Fixed
+
+- Pylint issues
+- Capitalization for translatable strings
+
+### Changed
+
+- Use keyword arguments wherever possible
+- Translations updated
+- Test suite updated
+
 ## \[1.19.3\] - 2023-09-02
 
 ### Changed
@@ -785,10 +798,10 @@ python manage.py migrate aa_forum
 [#125]: https://github.com/ppfeufer/aa-forum/issues/125 "Localization of forum time"
 [aa time zones]: https://github.com/ppfeufer/aa-timezones "AA Time Zones"
 [aa-discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
-[admin board options]: aa_forum/docs/images/admin-board-options.jpg "Admin Board Options"
+[admin board options]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/admin-board-options.jpg "Admin Board Options"
 [discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy "discordproxy"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
-[new feature: announcement boards]: aa_forum/docs/images/feature-announcement-board.jpg "New Feature: Announcement Boards"
+[new feature: announcement boards]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/feature-announcement-board.jpg "New Feature: Announcement Boards"
 [new feature: support for aa-timezones]: https://user-images.githubusercontent.com/2989985/195106607-8caf39c1-7343-404b-a926-e3253558b1ce.png "New Feature: Support for aa-timezones"
 [readme.md]: https://github.com/ppfeufer/aa-forum/blob/development/README.md "README.md"
 [semantic versioning]: http://semver.org/ "Semantic Versioning"

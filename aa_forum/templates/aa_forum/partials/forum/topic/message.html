@@ -35,7 +35,7 @@
                             <div class="text-right">
                                 <button
                                     class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-copy-to-clipboard"
-                                    title="{% translate 'Copy Message Link to Clipboard' %}"
+                                    title="{% translate 'Copy message link to clipboard' %}"
                                     data-clipboard-text="{{ SITE_URL }}{% url 'aa_forum:forum_message' message.topic.board.category.slug message.topic.board.slug message.topic.slug message.pk %}"
                                 >
                                     <i class="far fa-copy"></i>
@@ -46,14 +46,14 @@
                                         id="aa-forum-btn-modify-message-{{ message.pk }}"
                                         href="{% url 'aa_forum:forum_message_modify' topic.board.category.slug topic.board.slug topic.slug message.pk %}"
                                         class="btn btn-aa-forum-topic-moderation btn-xs"
-                                        title="{% translate 'Modify Message' %}"
+                                        title="{% translate 'Modify message' %}"
                                     >
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
 
                                     <button
                                         class="btn btn-aa-forum-topic-moderation btn-xs"
-                                        title="{% translate 'Delete Message' %}"
+                                        title="{% translate 'Delete message' %}"
                                         data-toggle="modal"
                                         data-target="#delete-message-{{ message.pk }}"
                                     >
@@ -78,7 +78,7 @@
 
                     {% if message.user_updated %}
                         <div class="aa-forum-message-body-last-edited text-muted small">
-                            « {% translate "Last Modified:" %} {{ message.time_modified|forum_time }} by {{ message.user_updated|main_character_name }} »
+                            « {% translate "Last modified:" %} {{ message.time_modified|forum_time }} by {{ message.user_updated|main_character_name }} »
                         </div>
                     {% endif %}
 

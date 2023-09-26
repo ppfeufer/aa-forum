@@ -10,10 +10,10 @@
 
                 <div class="modal-title">
                     {% if topic.is_sticky %}
-                        {% translate 'Remove "Sticky" State from Topic' %}
+                        {% translate 'Remove "sticky" state from topic' %}
                         "<b>{{ topic.subject }}</b>"
                     {% else %}
-                        {% translate 'Set "Sticky" State for Topic' %}
+                        {% translate 'Set "sticky" state for topic' %}
                         "<b>{{ topic.subject }}</b>"
                     {% endif %}
                 </div>
@@ -36,10 +36,10 @@
                 <a id="modal-button-confirm" class="btn btn-danger btn-sm" role="button" href="{% url 'aa_forum:forum_topic_change_sticky_state' topic.pk %}">
                     {% if topic.is_sticky %}
                         <i class="fas fa-unlock"></i>
-                        {% translate "Unset Sticky" %}
+                        {% translate "Unset sticky" %}
                     {% else %}
                         <i class="fas fa-lock"></i>
-                        {% translate "Make Sticky" %}
+                        {% translate "Make sticky" %}
                     {% endif %}
                 </a>
             </div>

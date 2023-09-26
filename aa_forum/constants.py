@@ -10,7 +10,7 @@ from aa_forum import __version__
 
 github_url: str = "https://github.com/ppfeufer/aa-forum"
 verbose_name: str = "AA-Forum - A simple forum for Alliance Auth"
-verbose_name_slug: str = slugify(verbose_name, allow_unicode=True)
+verbose_name_slug: str = slugify(value=verbose_name, allow_unicode=True)
 user_agent: str = f"{verbose_name_slug} v{__version__} {github_url}"
 
 # All internal URLs need to start with this prefix

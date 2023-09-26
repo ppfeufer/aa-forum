@@ -13,6 +13,7 @@ from django.template.defaulttags import register
 def main_character_name(user: User) -> str:
     """
     Get the users main character name, or return the username if no main character
+
     :param user:
     :return:
     """
@@ -28,10 +29,12 @@ def main_character_name(user: User) -> str:
     return return_value
 
 
+# pylint: disable=duplicate-code
 @register.filter
 def main_character_id(user: User) -> int:
     """
     Get the users main character id, or return 1 if no main character
+
     :param user:
     :return:
     """
@@ -52,6 +55,7 @@ def main_character_corporation_name(user: User) -> str:
     """
     Get the users main character corporation name,
     or an empty string if no main character
+
     :param user:
     :return:
     """
@@ -71,6 +75,7 @@ def main_character_corporation_name(user: User) -> str:
 def main_character_corporation_id(user: User) -> int:
     """
     Get the users main character corporation id, or 1 if no main character
+
     :param user:
     :return:
     """
@@ -90,6 +95,7 @@ def main_character_corporation_id(user: User) -> int:
 def main_character_alliance_name(user: User) -> str:
     """
     Get the users main character alliance name, or an empty string if no main character
+
     :param user:
     :return:
     """
@@ -109,6 +115,7 @@ def main_character_alliance_name(user: User) -> str:
 def main_character_alliance_id(user: User) -> int:
     """
     Get the users main character alliance id, or 1 if no main character
+
     :param user:
     :return:
     """
@@ -122,7 +129,7 @@ def main_character_alliance_id(user: User) -> int:
         # Check if the user is in an alliance
         try:
             return_value = int(return_value)
-        except Exception:
+        except Exception:  # pylint: disable=broad-exception-caught
             return_value = 1
     except AttributeError:
         return_value = 1

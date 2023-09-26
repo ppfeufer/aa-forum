@@ -21,7 +21,7 @@ class TestBoard(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.user = create_fake_user(1001, "Bruce Wayne")
+        cls.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
         cls.group = Group.objects.create(name="Superhero")
 
     def setUp(self) -> None:
@@ -30,6 +30,7 @@ class TestBoard(TestCase):
     def test_should_set_parent_board_access_restriction(self):
         """
         Test that a child board inherits the groups from its parent board on creation
+
         :return:
         """
 
@@ -39,12 +40,13 @@ class TestBoard(TestCase):
             name="Thermal Theories", category=self.category, parent_board=board
         )
 
-        self.assertEqual(list(board_2.groups.all()), [self.group])
+        self.assertEqual(first=list(board_2.groups.all()), second=[self.group])
 
     def test_should_set_child_board_access_restriction(self):
         """
         Test that a child parent board passes down its group restriction to
         its child on save
+
         :return:
         """
 
@@ -55,6 +57,4 @@ class TestBoard(TestCase):
         board.groups.add(self.group)
         board.save()
 
-        # result_groups = [groups for group in board_2.get_groups()]
-
-        self.assertEqual(list(board_2.groups.all()), [self.group])
+        self.assertEqual(first=list(board_2.groups.all()), second=[self.group])

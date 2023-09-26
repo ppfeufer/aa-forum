@@ -4,7 +4,12 @@
 {% load static %}
 {% load i18n %}
 
-{% block page_title %}{% translate "Forum (Profile)" %}{% endblock %}
+{% block page_title %}
+    {% translate "Profile" as page_title %}
+    {% translate "Forum" as app_title %}
+
+    {{ page_title|title }} » {{ app_title }}
+{% endblock %}
 
 {% block aa_forum_header %}
     {% include "aa_forum/partials/menu.html" %}

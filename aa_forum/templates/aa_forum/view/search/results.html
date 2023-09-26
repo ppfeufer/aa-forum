@@ -2,7 +2,12 @@
 
 {% load i18n %}
 
-{% block page_title %}{% translate "Search Results » Forum" %}{% endblock %}
+{% block page_title %}
+    {% translate "Search results" as page_title %}
+    {% translate "Forum" as app_title %}
+
+    {{ page_title|title }} » {{ app_title }}
+{% endblock %}
 
 {% block aa_forum_header %}
     {% include "aa_forum/partials/menu.html" %}
@@ -14,7 +19,7 @@
 
     {% if search_results %}
         <div class="aa-forum-search-results-total-number">
-            {{ search_results_count }} {% translate "Result(s)" %}
+            {% blocktranslate count search_results_count as counter %}{{ counter }} Result{% plural %}{{ counter }} Results{% endblocktranslate %}
         </div>
 
         {% for message in search_results %}

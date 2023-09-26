@@ -6,7 +6,7 @@ requires = [
 
 [project]
 name = "aa-forum"
-version = "1.19.3"
+version = "1.19.4"
 description = "Simple forum for Alliance Auth"
 readme = "README.md"
 keywords = [
@@ -19,7 +19,7 @@ authors = [
     { name = "Peter Pfeufer", email = "develop@ppfeufer.de" },
     { name = "Erik Kalkoken", email = "kalkoken87@gmail.com" },
 ]
-requires-python = "~=3.8"
+requires-python = ">=3.8"
 classifiers = [
     "Environment :: Web Environment",
     "Framework :: Django",

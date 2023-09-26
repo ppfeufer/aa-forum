@@ -6,7 +6,8 @@ Helper to handle Discord messaging to users (Discord DM)
 from datetime import datetime
 
 # Third Party
-from dhooks_lite import Embed, Footer, Image, Webhook
+from dhooks_lite import Embed as DhooksLiteEmbed
+from dhooks_lite import Footer, Image, Webhook
 
 # Django
 from django.utils import timezone
@@ -26,7 +27,10 @@ from aa_forum.app_settings import (
 )
 from aa_forum.constants import DISCORD_EMBED_COLOR_MAP
 from aa_forum.helper.eve_images import get_character_portrait_from_evecharacter
-from aa_forum.helper.text import get_image_url, prepare_message_for_discord
+from aa_forum.helper.text import (
+    get_first_image_url_from_text,
+    prepare_message_for_discord,
+)
 from aa_forum.models import Board, Message, PersonalMessage, Topic
 
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
@@ -47,14 +51,17 @@ def _aadiscordbot_send_private_message(
 
     if allianceauth_discordbot_installed():
         logger.debug(
-            "allianceauth-discordbot is active, trying to send private message"
+            msg="allianceauth-discordbot is active, trying to send private message"
         )
 
         # Third Party
+        # pylint: disable=import-outside-toplevel
         from aadiscordbot.tasks import send_message
-        from discord import Embed
 
-        embed = Embed(
+        # pylint: disable=import-outside-toplevel
+        from discord import Embed as DiscordEmbed
+
+        embed = DiscordEmbed(
             title=str(title),
             description=message,
             color=DISCORD_EMBED_COLOR_MAP.get(level, None),
@@ -67,8 +74,10 @@ def _aadiscordbot_send_private_message(
             send_message(user_id=user_id, message=f"**{title}**\n\n{message}")
     else:
         logger.debug(
-            "allianceauth-discordbot is not available on this "
-            "system to send the private message"
+            msg=(
+                "allianceauth-discordbot is not available on this "
+                "system to send the private message"
+            )
         )
 
 
@@ -87,20 +96,25 @@ def _discordproxy_send_private_message(
     """
 
     # Third Party
-    from discordproxy.client import DiscordClient
-    from discordproxy.exceptions import DiscordProxyException
+    from discordproxy.client import (  # pylint: disable=import-outside-toplevel
+        DiscordClient,
+    )
+    from discordproxy.exceptions import (  # pylint: disable=import-outside-toplevel
+        DiscordProxyException,
+    )
 
     client = DiscordClient()
 
     try:
-        logger.debug("Trying to send a direct message via discordproxy")
+        logger.debug(msg="Trying to send a direct message via discordproxy")
 
         if embed_message is True:
             # Third Party
-            from discordproxy.discord_api_pb2 import Embed
+            # pylint: disable=import-outside-toplevel
+            from discordproxy.discord_api_pb2 import Embed as DiscordProxyEmbed
 
-            footer = Embed.Footer(text=__title__)
-            embed = Embed(
+            footer = DiscordProxyEmbed.Footer(text=__title__)
+            embed = DiscordProxyEmbed(
                 title=str(title),
                 description=message,
                 color=DISCORD_EMBED_COLOR_MAP.get(level, None),
@@ -118,9 +132,11 @@ def _discordproxy_send_private_message(
         # Fail silently and try if allianceauth-discordbot is available
         # as a last ditch effort to get the message out to Discord
         logger.debug(
-            "Something went wrong with discordproxy, "
-            "cannot send a direct message, trying allianceauth-discordbot "
-            f"to send the message if available. Error: {ex}"
+            msg=(
+                "Something went wrong with discordproxy, "
+                "cannot send a direct message, trying allianceauth-discordbot "
+                f"to send the message if available. Error: {ex}"
+            )
         )
 
         _aadiscordbot_send_private_message(
@@ -144,26 +160,31 @@ def send_new_personal_message_notification(
 
     # Needs to be imported here, otherwise it's a circular import
     # AA Forum
-    from aa_forum.helper.user import get_main_character_from_user, get_user_profile
+    from aa_forum.helper.user import (  # pylint: disable=import-outside-toplevel
+        get_main_character_from_user,
+        get_user_profile,
+    )
 
-    recipient_forum_settings = get_user_profile(message.recipient)
+    recipient_forum_settings = get_user_profile(user=message.recipient)
 
     if recipient_forum_settings.discord_dm_on_new_personal_message is True and hasattr(
         message.recipient, "discord"
     ):
         # Get the main characters for sender and recipient
-        sender_main_char = get_main_character_from_user(message.sender)
-        recipient_main_char = get_main_character_from_user(message.recipient)
+        sender_main_char = get_main_character_from_user(user=message.sender)
+        recipient_main_char = get_main_character_from_user(user=message.recipient)
 
         logger.debug(
-            f"Sending Discord PM to {recipient_main_char} to "
-            "notify about a new personal message"
+            msg=(
+                f"Sending Discord PM to {recipient_main_char} to "
+                "notify about a new personal message"
+            )
         )
 
         message_to_send = prepare_message_for_discord(
             message=message.message, message_length=750
         )
-        forum_pm_url = reverse_absolute("aa_forum:personal_messages_inbox")
+        forum_pm_url = reverse_absolute(viewname="aa_forum:personal_messages_inbox")
         dm_level = "info"
         dm_title = "Forum: New Personal Message"
         dm_text = (
@@ -175,7 +196,7 @@ def send_new_personal_message_notification(
         dm_text += f"[Your Personal Messages]({forum_pm_url})"
 
         if discordproxy_installed():
-            logger.debug("discordproxy seems to be available …")
+            logger.debug(msg="discordproxy seems to be available …")
 
             _discordproxy_send_private_message(
                 user_id=int(message.recipient.discord.uid),
@@ -188,8 +209,10 @@ def send_new_personal_message_notification(
             # discordproxy not available, try if allianceauth-discordbot is
             # available
             logger.debug(
-                "discordproxy not available to send a direct message, "
-                "let's see if we can use allianceauth-discordbot if available"
+                msg=(
+                    "discordproxy not available to send a direct message, "
+                    "let's see if we can use allianceauth-discordbot if available"
+                )
             )
 
             _aadiscordbot_send_private_message(
@@ -213,10 +236,10 @@ def send_message_to_discord_webhook(
     :return:
     """
 
-    discord_webhook = Webhook(board.discord_webhook)
+    discord_webhook = Webhook(url=board.discord_webhook)
     message_to_send = prepare_message_for_discord(message=message.message)
     embed_color = DISCORD_EMBED_COLOR_MAP.get("info", None)
-    image_url = get_image_url(message.message)
+    image_url = get_first_image_url_from_text(text=message.message)
     author_eve_avatar = get_character_portrait_from_evecharacter(
         character=message.user_created.profile.main_character, size=256
     )
@@ -225,24 +248,24 @@ def send_message_to_discord_webhook(
     if message.pk == message.topic.first_message.pk:
         title = topic.subject
         url = reverse_absolute(
-            "aa_forum:forum_topic",
+            viewname="aa_forum:forum_topic",
             args=[board.category.slug, board.slug, topic.slug],
         )
     else:
         title = f"Re: {topic.subject}"
         url = reverse_absolute(
-            "aa_forum:forum_message",
+            viewname="aa_forum:forum_message",
             args=[board.category.slug, board.slug, topic.slug, message.pk],
         )
 
-    embed = Embed(
+    embed = DhooksLiteEmbed(
         description=message_to_send,
         title=title,
         url=url,
         timestamp=message.time_posted,
         color=embed_color,
-        footer=Footer(f"Posted by: {author_eve_name}", author_eve_avatar),
-        image=Image(image_url) if image_url else None,
+        footer=Footer(text=f"Posted by: {author_eve_name}", icon_url=author_eve_avatar),
+        image=Image(url=image_url) if image_url else None,
         # thumbnail=Thumbnail(author_eve_avatar),
         # author=Author(
         #     author_eve_name,
@@ -256,7 +279,7 @@ def send_message_to_discord_webhook(
     )
 
     discord_webhook.execute(
-        headline,
+        content=headline,
         # username=author_eve_name,
         # avatar_url=author_eve_avatar,
         embeds=[embed],

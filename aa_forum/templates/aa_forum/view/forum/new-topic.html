@@ -3,7 +3,12 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block page_title %}{% translate "New Topic » Forum" %}{% endblock %}
+{% block page_title %}
+    {% translate "Start new topic" as page_title %}
+    {% translate "Forum" as app_title %}
+
+    {{ page_title|title }} » {{ app_title }}
+{% endblock %}
 
 {% block aa_forum_header %}
     {% include "aa_forum/partials/menu.html" %}
@@ -29,8 +34,8 @@
 
                 <div class="form-group aa-forum-form-group aa-forum-form-new-topic text-right clearfix">
                     <a id="aa-forum-btn-cancel" class="btn btn-default btn-sm" href="{{ board.get_absolute_url }}">{% translate "Cancel" %}</a>
-                    <button class="btn btn-default btn-sm" type="reset">{% translate "Clear Form" %}</button>
-                    <button class="btn btn-primary btn-sm" type="submit">{% translate "Start Topic" %}</button>
+                    <button class="btn btn-default btn-sm" type="reset">{% translate "Clear form" %}</button>
+                    <button class="btn btn-primary btn-sm" type="submit">{% translate "Start topic" %}</button>
                 </div>
             </form>
         </div>
