@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning].
 ### Changed
 
 - Use keyword arguments wherever possible
+- Translations updated
+- Test suite updated
 
 ## \[1.19.3\] - 2023-09-02
 
