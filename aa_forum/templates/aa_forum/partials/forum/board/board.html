@@ -31,7 +31,8 @@
 
         {% if board_groups %}
             <p class="aa-forum-text-board-group-restrictions text-muted small">
-                {% translate "This board is restricted to the following group(s):" %}<br>
+                {% blocktranslate count group_count=board_groups|length %}This board is restricted to the following group:{% plural %}This board is restricted to the following groups:{% endblocktranslate %}
+                <br>
                 {{ board_groups|join:", " }}
             </p>
         {% endif %}
