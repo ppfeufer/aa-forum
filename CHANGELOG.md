@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning].
 
 ## \[In Development\] - Unreleased
 
+### Fixed
+
+- Pluralisation in a template string
+
 ## \[1.19.4\] - 2023-09-26
 
 ### Fixed
