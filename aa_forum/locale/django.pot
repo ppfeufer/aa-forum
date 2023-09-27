@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-27 12:18+0200\n"
+"POT-Creation-Date: 2023-09-27 13:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -637,44 +637,46 @@ msgid "No topics have been started in this board …"
 msgstr ""
 
 #: templates/aa_forum/partials/forum/board/board.html:34
-msgid "This board is restricted to the following group(s):"
-msgstr ""
+msgid "This board is restricted to the following group:"
+msgid_plural "This board is restricted to the following groups:"
+msgstr[0] ""
+msgstr[1] ""
 
-#: templates/aa_forum/partials/forum/board/board.html:41
+#: templates/aa_forum/partials/forum/board/board.html:42
 msgid "Child boards:"
 msgstr ""
 
-#: templates/aa_forum/partials/forum/board/board.html:50
+#: templates/aa_forum/partials/forum/board/board.html:51
 #: templates/aa_forum/partials/forum/board/topic.html:31
 msgid "New"
 msgstr ""
 
-#: templates/aa_forum/partials/forum/board/board.html:60
+#: templates/aa_forum/partials/forum/board/board.html:61
 msgid "Posts"
 msgstr ""
 
-#: templates/aa_forum/partials/forum/board/board.html:61
+#: templates/aa_forum/partials/forum/board/board.html:62
 msgid "Topics"
 msgstr ""
 
-#: templates/aa_forum/partials/forum/board/board.html:65
+#: templates/aa_forum/partials/forum/board/board.html:66
 msgid "Unread"
 msgstr ""
 
-#: templates/aa_forum/partials/forum/board/board.html:81
+#: templates/aa_forum/partials/forum/board/board.html:82
 msgid "Last post:"
 msgstr ""
 
-#: templates/aa_forum/partials/forum/board/board.html:85
+#: templates/aa_forum/partials/forum/board/board.html:86
 #: templates/aa_forum/partials/forum/topic/message.html:25
 msgid "Re:"
 msgstr ""
 
-#: templates/aa_forum/partials/forum/board/board.html:92
+#: templates/aa_forum/partials/forum/board/board.html:93
 msgid "posted by:"
 msgstr ""
 
-#: templates/aa_forum/partials/forum/board/board.html:93
+#: templates/aa_forum/partials/forum/board/board.html:94
 msgid "posted at:"
 msgstr ""
 

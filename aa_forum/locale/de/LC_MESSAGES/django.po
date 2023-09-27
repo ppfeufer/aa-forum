@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-27 12:18+0200\n"
+"POT-Creation-Date: 2023-09-27 13:33+0200\n"
 "PO-Revision-Date: 2023-09-24 13:13+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -715,44 +715,48 @@ msgid "No topics have been started in this board …"
 msgstr "In diesem Board wurden keine Themen begonnen …"
 
 #: templates/aa_forum/partials/forum/board/board.html:34
-msgid "This board is restricted to the following group(s):"
-msgstr "Dieses Board ist auf die folgende(n) Gruppe(n) beschränkt:"
+#, fuzzy
+#| msgid "This board is restricted to the following group(s):"
+msgid "This board is restricted to the following group:"
+msgid_plural "This board is restricted to the following groups:"
+msgstr[0] "Dieses Board ist auf die folgende(n) Gruppe(n) beschränkt:"
+msgstr[1] "Dieses Board ist auf die folgende(n) Gruppe(n) beschränkt:"
 
-#: templates/aa_forum/partials/forum/board/board.html:41
+#: templates/aa_forum/partials/forum/board/board.html:42
 msgid "Child boards:"
 msgstr "Untergeordnete Boards:"
 
-#: templates/aa_forum/partials/forum/board/board.html:50
+#: templates/aa_forum/partials/forum/board/board.html:51
 #: templates/aa_forum/partials/forum/board/topic.html:31
 msgid "New"
 msgstr "Neu"
 
-#: templates/aa_forum/partials/forum/board/board.html:60
+#: templates/aa_forum/partials/forum/board/board.html:61
 msgid "Posts"
 msgstr "Beiträge"
 
-#: templates/aa_forum/partials/forum/board/board.html:61
+#: templates/aa_forum/partials/forum/board/board.html:62
 msgid "Topics"
 msgstr "Themen"
 
-#: templates/aa_forum/partials/forum/board/board.html:65
+#: templates/aa_forum/partials/forum/board/board.html:66
 msgid "Unread"
 msgstr "Ungelesen"
 
-#: templates/aa_forum/partials/forum/board/board.html:81
+#: templates/aa_forum/partials/forum/board/board.html:82
 msgid "Last post:"
 msgstr "Letzter Beitrag:"
 
-#: templates/aa_forum/partials/forum/board/board.html:85
+#: templates/aa_forum/partials/forum/board/board.html:86
 #: templates/aa_forum/partials/forum/topic/message.html:25
 msgid "Re:"
 msgstr "Betreffend:"
 
-#: templates/aa_forum/partials/forum/board/board.html:92
+#: templates/aa_forum/partials/forum/board/board.html:93
 msgid "posted by:"
 msgstr "von:"
 
-#: templates/aa_forum/partials/forum/board/board.html:93
+#: templates/aa_forum/partials/forum/board/board.html:94
 msgid "posted at:"
 msgstr "geschrieben:"
 
