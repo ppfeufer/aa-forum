@@ -44,6 +44,16 @@ dependencies = [
     "django-ckeditor-youtube-plugin>=0.0.1",
     "unidecode>=1.3.3",
 ]
+[project.optional-dependencies]
+tests-allianceauth-stable = [
+    "aa-timezones",
+    "allianceauth-discordbot",
+    "coverage",
+    "django-testdata",
+    "django-webtest",
+    "Faker",
+    "python-dateutil",
+]
 [project.urls]
 Changelog = "https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md"
 Documentation = "https://github.com/ppfeufer/aa-forum/blob/master/README.md"
