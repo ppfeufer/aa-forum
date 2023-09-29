@@ -5,7 +5,6 @@ help:
 	@echo "Makefile for $(appname)"
 
 translationfiles:
-	cd $(package) && \
 	django-admin makemessages \
 		-l de \
 		-l es \
