@@ -72,7 +72,7 @@ This project uses minified and compressed JavaScript files with source maps crea
 To do so, run:
 
 ```shell
-uglifyjs script.js -o script.min.js --source-map "url='script.min.js.map'" --compress --mangle
+uglifyjs script.js -o script.min.js --source-map "url='script.min.js.map'" --compress reduce_vars=false --mangle
 ```
 
 ### CSS<a name="css"></a>
