@@ -14,16 +14,22 @@ from django.db import models, transaction
 from django.db.models import Q
 from django.urls import reverse
 from django.utils.html import strip_tags
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
+# Alliance Auth
+from allianceauth.services.hooks import get_extension_logger
+
 # Alliance Auth (External Libs)
 from app_utils.django import users_with_permission
+from app_utils.logging import LoggerAddTag
 
 # ckEditor
 from ckeditor_uploader.fields import RichTextUploadingField
 
 # AA Forum
+from aa_forum import __title__
 from aa_forum.constants import (
     DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
     INTERNAL_URL_PREFIX,
@@ -36,6 +42,8 @@ from aa_forum.managers import (
     SettingManager,
     TopicManager,
 )
+
+logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 def get_sentinel_user() -> User:
@@ -290,6 +298,76 @@ class Board(models.Model):
             models.UniqueConstraint(fields=["category", "name"], name="fpk_board")
         ]
 
+    class TopicAlreadyExists(Exception):
+        """
+        Exception when a topic with the same subject already exists in this board
+
+        This should be caught and handled.
+
+        Example:
+            >>> try:
+            ...     new_topic = current_board.new_topic(
+            ...         subject="Foobar",
+            ...         message="Barfoo",
+            ...         user=request.user,
+            ...     )
+            ... except current_board.TopicAlreadyExists as exc:
+            ...     messages.warning(request=request, message=exc)
+            ...
+            ...     return render(
+            ...         request=request,
+            ...         template_name="aa_forum/view/forum/new-topic.html",
+            ...         context={"board": current_board, "form": form},
+            ...     )
+        """
+
+        def __init__(self, topic: "Topic") -> None:
+            """
+            Initialize our Exception
+
+            :param topic:
+            :type topic:
+            """
+
+            super().__init__(topic)
+
+            self._topic = topic
+
+        @property
+        def topic_url(self) -> str:
+            """
+            Build the URL to the already existing topic.
+            We need this later in the error message.
+
+            :return:
+            :rtype:
+            """
+
+            existing_topic_url = reverse(
+                viewname="aa_forum:forum_topic",
+                kwargs={
+                    "category_slug": self._topic.board.category.slug,
+                    "board_slug": self._topic.board.slug,
+                    "topic_slug": self._topic.slug,
+                },
+            )
+
+            return existing_topic_url
+
+        def __str__(self) -> str:
+            """
+            Return the error message
+
+            :return:
+            :rtype:
+            """
+
+            return mark_safe(
+                s=_(
+                    f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{self.topic_url}">{self._topic.subject}</a></p>'  # pylint: disable=line-too-long
+                )
+            )
+
     def __str__(self) -> str:
         return str(self.name)
 
@@ -368,6 +446,96 @@ class Board(models.Model):
 
         if self.parent_board:
             self.parent_board._update_message_references()
+
+    def new_topic(self, subject: str, message: str, user: User) -> "Topic":
+        """
+        Start a new topic in this board
+
+        Warning:
+            This function will NOT check if the current logged in user
+            has access to the board or is allowed to start a new topic
+            in this board.
+            You have to implement these checks on your own!
+
+            The following checks are recommended:
+            - User has access to the board:
+                >>> try:
+                ...     current_board: Board = (
+                ...         Board.objects.select_related("category")
+                ...         .user_has_access(user=request.user)
+                ...         .filter(category__slug=category_slug, slug=board_slug)
+                ...         .get()
+                ...     )
+                ... except Board.DoesNotExist:
+                ...     messages.error(
+                ...         request=request,
+                ...         message=mark_safe(
+                ...             s=_(
+                ...                 "<h4>Error!</h4><p>The board you were trying to post in does "
+                ...                 "either not exist, or you don't have access to it.</p>"
+                ...             )
+                ...         ),
+                ...     )
+            - User can start a topic in the current board. If the user can't, it's probably an Announcement Board.
+                >>> if not current_board.user_can_start_topic(user=request.user):
+                ...    messages.error(
+                ...        request=request,
+                ...        message=mark_safe(
+                ...            s=_(
+                ...                "<h4>Error!</h4><p>The board you were trying to post in is "
+                ...                "an announcement board and you don't have the permissions to "
+                ...                "start a topic there.</p>"
+                ...            )
+                ...        ),
+                ...    )
+
+        :param subject:
+        :type subject:
+        :param message:
+        :type message:
+        :param user:
+        :type user:
+        :return:
+        :rtype:
+        """
+
+        with transaction.atomic():
+            # Check if a topic with the same subject already exists in this board
+            existing_topic = Topic.objects.filter(board=self, subject__iexact=subject)
+
+            if existing_topic.exists():
+                existing_topic = existing_topic.get()
+
+                raise self.TopicAlreadyExists(topic=existing_topic)
+
+            new_topic = Topic(board=self, subject=subject)
+            new_topic.save()
+
+            new_message = Message(topic=new_topic, user_created=user, message=message)
+            new_message.save()
+
+            logger.info(
+                msg=(
+                    f'{user} started a new topic "{subject}" '
+                    f'in board "{self.name}".'
+                )
+            )
+
+            # Send to webhook if one is configured
+            if self.discord_webhook is not None:
+                # AA Forum
+                from aa_forum.helper.discord_messages import (  # pylint: disable=import-outside-toplevel
+                    send_message_to_discord_webhook,
+                )
+
+                send_message_to_discord_webhook(
+                    board=self,
+                    topic=new_topic,
+                    message=new_message,
+                    headline=f'**New topic has been started in board "{self.name}"**',
+                )
+
+            return new_topic
 
 
 class Topic(models.Model):

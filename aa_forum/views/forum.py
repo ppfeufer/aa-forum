@@ -10,11 +10,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
 from django.core.handlers.wsgi import WSGIRequest
-from django.db import transaction
 from django.db.models import Count, Exists, OuterRef, Prefetch, Q
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -297,7 +295,7 @@ def board_new_topic(
         return redirect(to="aa_forum:forum_index")
 
     try:
-        current_board = (
+        current_board: Board = (
             Board.objects.select_related("category")
             .user_has_access(user=request.user)
             .filter(category__slug=category_slug, slug=board_slug)
@@ -355,65 +353,21 @@ def board_new_topic(
 
         # Check whether it's valid:
         if form.is_valid():
-            with transaction.atomic():
-                # Check if a topic with the same subject already exists in this board
-                existing_topic = Topic.objects.filter(
-                    board=current_board, subject__iexact=form.cleaned_data["subject"]
-                )
-
-                if existing_topic.exists():
-                    existing_topic = existing_topic.get()
-
-                    existing_topic_url = reverse(
-                        viewname="aa_forum:forum_topic",
-                        kwargs={
-                            "category_slug": existing_topic.board.category.slug,
-                            "board_slug": existing_topic.board.slug,
-                            "topic_slug": existing_topic.slug,
-                        },
-                    )
-
-                    messages.warning(
-                        request=request,
-                        message=mark_safe(
-                            s=_(
-                                f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{existing_topic_url}">{existing_topic.subject}</a></p>'  # pylint: disable=line-too-long
-                            )
-                        ),
-                    )
-
-                    return render(
-                        request=request,
-                        template_name="aa_forum/view/forum/new-topic.html",
-                        context={"board": current_board, "form": form},
-                    )
-
-                new_topic = Topic(
-                    board=current_board, subject=form.cleaned_data["subject"]
-                )
-                new_topic.save()
-
-                new_message = Message(
-                    topic=new_topic,
-                    user_created=request.user,
+            try:
+                # Let's see if we can create the new topic
+                new_topic = current_board.new_topic(
+                    subject=form.cleaned_data["subject"],
                     message=form.cleaned_data["message"],
+                    user=request.user,
                 )
-                new_message.save()
+            except current_board.TopicAlreadyExists as exc:
+                # Apparently there is already a topic with this subject
+                messages.warning(request=request, message=exc)
 
-            logger.info(
-                msg=(
-                    f'{request.user} started a new topic "{new_topic.subject}" '
-                    f'in board "{current_board.name}".'
-                )
-            )
-
-            # Send to webhook if one is configured
-            if current_board.discord_webhook is not None:
-                send_message_to_discord_webhook(
-                    board=current_board,
-                    topic=new_topic,
-                    message=new_message,
-                    headline=f'**New topic has been started in board "{current_board.name}"**',
+                return render(
+                    request=request,
+                    template_name="aa_forum/view/forum/new-topic.html",
+                    context={"board": current_board, "form": form},
                 )
 
             return redirect(
