@@ -14,7 +14,7 @@ from django.urls import reverse
 from django.utils.timezone import now
 
 # AA Forum
-from aa_forum.models import Board, Setting, get_sentinel_user
+from aa_forum.models import Board, Setting, Topic, get_sentinel_user
 from aa_forum.tests.utils import (
     create_board,
     create_category,
@@ -310,6 +310,56 @@ class TestBoard(TestCase):
         expected_slug = "drifterke-rorki-v-dok"
 
         self.assertEqual(first=board.slug, second=expected_slug)
+
+    def test_should_create_topic_in_board(self):
+        """
+        Test that a new topic is created in a given board
+
+        :return:
+        :rtype:
+        """
+
+        board = create_board(name="Test Board", category=self.category)
+        topic = board.new_topic(subject="Foobar", message="Foobar", user=self.user)
+
+        topic_last_created = Topic.objects.last()
+
+        self.assertEqual(first=topic.subject, second=topic_last_created.subject)
+        self.assertEqual(first=topic.board_id, second=topic_last_created.board_id)
+
+    def test_should_raise_topic_already_exists_exception(self):
+        """
+        Test that the Board.TopicAlreadyExists exception is raised
+
+        :return:
+        :rtype:
+        """
+
+        board = create_board(name="Test Board", category=self.category)
+        existing_topic = board.new_topic(
+            subject="Foobar", message="Foobar", user=self.user
+        )
+
+        expected_exception = Board.TopicAlreadyExists
+
+        existing_topic_url = reverse(
+            viewname="aa_forum:forum_topic",
+            kwargs={
+                "category_slug": board.category.slug,
+                "board_slug": board.slug,
+                "topic_slug": existing_topic.slug,
+            },
+        )
+
+        expected_message = f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{existing_topic_url}">{existing_topic.subject}</a></p>'  # pylint: disable=line-too-long
+
+        with self.assertRaises(expected_exception=expected_exception):
+            board.new_topic(subject="Foobar", message="Foobar", user=self.user)
+
+        with self.assertRaisesMessage(
+            expected_exception=expected_exception, expected_message=expected_message
+        ):
+            board.new_topic(subject="Foobar", message="Foobar", user=self.user)
 
 
 class TestCategory(TestCase):
