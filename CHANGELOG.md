@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning].
 
 - Pluralisation in a template string
 
+### Changed
+
+- Moved topic creation from the view to the model. This will make it possible for
+  3rd-Party apps to create topics in a defined board.
+
 ## \[1.19.4\] - 2023-09-26
 
 ### Fixed
