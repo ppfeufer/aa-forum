@@ -245,7 +245,7 @@ class Board(models.Model):
     is_announcement_board = models.BooleanField(
         default=False,
         help_text=_(
-            "Mark this board as an 'Announcement Board', meaning that only "
+            'Mark this board as an "Announcement Board", meaning that only '
             "certain selected groups can start new topics. All others who have "
             "access to this board will still be able to discuss in the topics "
             "though. (Default: NO)"
@@ -257,7 +257,7 @@ class Board(models.Model):
         related_name="aa_forum_boards_group_start_topic_restriction",
         help_text=_(
             "User in at least one of the selected groups will be able to start "
-            "topics in 'Announcement Boards'. If no group is selected, only "
+            'topics in "Announcement Boards". If no group is selected, only '
             "forum admins can do so."
         ),
     )
