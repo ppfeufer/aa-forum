@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-29 21:53+0200\n"
+"POT-Creation-Date: 2023-10-01 18:29+0200\n"
 "PO-Revision-Date: 2023-09-24 13:14+0000\n"
 "Last-Translator: Author50CO <tkddlschry@gmail.com>\n"
 "Language-Team: Korean <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -123,28 +123,28 @@ msgid ""
 msgstr ""
 
 #: aa_forum/forms.py:257
-msgid "Mark board as 'Announcement Board'"
+msgid "Mark board as \"Announcement Board\""
 msgstr ""
 
 #: aa_forum/forms.py:259
 msgid ""
-"Mark this board as an 'Announcement Board', meaning that only certain "
+"Mark this board as an \"Announcement Board\", meaning that only certain "
 "selected groups can start new topics. All others who have access to this "
 "board will still be able to discuss in the topics though. This setting will "
 "not be inherited to child boards. (Default: NO)"
 msgstr ""
 
 #: aa_forum/forms.py:267
-msgid "Start topic restrictions for 'Announcement Boards'"
+msgid "Start topic restrictions for \"Announcement Boards\""
 msgstr ""
 
 #: aa_forum/forms.py:269
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
-"'Announcement Boards'. If no group is selected, only forum admins can do so. "
-"This setting will not be inherited to child boards. (Hint: These "
-"restrictions only take effect when a board is marked as 'Announcement "
-"Board', see checkbox above.)"
+"\"Announcement Boards\". If no group is selected, only forum admins can do "
+"so. This setting will not be inherited to child boards. (Hint: These "
+"restrictions only take effect when a board is marked as \"Announcement "
+"Board\", see checkbox above.)"
 msgstr ""
 
 #: aa_forum/forms.py:354
@@ -260,7 +260,7 @@ msgstr ""
 
 #: aa_forum/models.py:248
 msgid ""
-"Mark this board as an 'Announcement Board', meaning that only certain "
+"Mark this board as an \"Announcement Board\", meaning that only certain "
 "selected groups can start new topics. All others who have access to this "
 "board will still be able to discuss in the topics though. (Default: NO)"
 msgstr ""
@@ -268,7 +268,8 @@ msgstr ""
 #: aa_forum/models.py:259
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
-"'Announcement Boards'. If no group is selected, only forum admins can do so."
+"\"Announcement Boards\". If no group is selected, only forum admins can do "
+"so."
 msgstr ""
 
 #: aa_forum/models.py:295

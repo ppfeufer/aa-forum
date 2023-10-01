@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning].
 ### Fixed
 
 - Pluralisation in a template string
+- Quotation marks in some strings
 
 ### Changed
 
