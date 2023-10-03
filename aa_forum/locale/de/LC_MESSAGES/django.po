@@ -11,10 +11,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-01 18:29+0200\n"
-"PO-Revision-Date: 2023-10-01 16:15+0000\n"
+"PO-Revision-Date: 2023-10-02 09:34+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/de/>\n"
+"Language-Team: German <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -138,18 +138,10 @@ msgstr ""
 "Wähle mit Bedacht! (Standard: NEIN)"
 
 #: aa_forum/forms.py:257
-#, fuzzy
-#| msgid "Mark board as 'Announcement Board'"
 msgid "Mark board as \"Announcement Board\""
 msgstr "Board als „Ankündigungs-Board“ markieren"
 
 #: aa_forum/forms.py:259
-#, fuzzy
-#| msgid ""
-#| "Mark this board as an 'Announcement Board', meaning that only certain "
-#| "selected groups can start new topics. All others who have access to this "
-#| "board will still be able to discuss in the topics though. This setting "
-#| "will not be inherited to child boards. (Default: NO)"
 msgid ""
 "Mark this board as an \"Announcement Board\", meaning that only certain "
 "selected groups can start new topics. All others who have access to this "
@@ -163,19 +155,10 @@ msgstr ""
 "(Standard: NEIN)"
 
 #: aa_forum/forms.py:267
-#, fuzzy
-#| msgid "Start topic restrictions for 'Announcement Boards'"
 msgid "Start topic restrictions for \"Announcement Boards\""
 msgstr "„Starte Thema“ Einschränkungen für „Ankündigungs-Board“"
 
 #: aa_forum/forms.py:269
-#, fuzzy
-#| msgid ""
-#| "User in at least one of the selected groups will be able to start topics "
-#| "in 'Announcement Boards'. If no group is selected, only forum admins can "
-#| "do so. This setting will not be inherited to child boards. (Hint: These "
-#| "restrictions only take effect when a board is marked as 'Announcement "
-#| "Board', see checkbox above.)"
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
 "\"Announcement Boards\". If no group is selected, only forum admins can do "
@@ -323,11 +306,6 @@ msgstr ""
 "hat, auch Zugriff auf dieses Board."
 
 #: aa_forum/models.py:248
-#, fuzzy
-#| msgid ""
-#| "Mark this board as an 'Announcement Board', meaning that only certain "
-#| "selected groups can start new topics. All others who have access to this "
-#| "board will still be able to discuss in the topics though. (Default: NO)"
 msgid ""
 "Mark this board as an \"Announcement Board\", meaning that only certain "
 "selected groups can start new topics. All others who have access to this "
@@ -339,11 +317,6 @@ msgstr ""
 "diskutieren. (Standard: NEIN)"
 
 #: aa_forum/models.py:259
-#, fuzzy
-#| msgid ""
-#| "User in at least one of the selected groups will be able to start topics "
-#| "in 'Announcement Boards'. If no group is selected, only forum admins can "
-#| "do so."
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
 "\"Announcement Boards\". If no group is selected, only forum admins can do "
@@ -1159,8 +1132,8 @@ msgstr "<h4>Erfolg!</h4><p>Einstellungen aktualisiert.</p>"
 #: aa_forum/views/personal_messages.py:237 aa_forum/views/profile.py:68
 msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte überprüfe Deine Eingabe."
-"</p>"
+"<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte überprüfe Deine "
+"Eingabe.</p>"
 
 #: aa_forum/views/forum.py:225
 msgid ""
@@ -1174,8 +1147,8 @@ msgstr ""
 msgid ""
 "<h4>Error!</h4><p>The category you were trying to post in does not exist.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Die Kategorie, in der Du posten willst, existiert nicht.</"
-"p>"
+"<h4>Fehler!</h4><p>Die Kategorie, in der Du posten willst, existiert "
+"nicht.</p>"
 
 #: aa_forum/views/forum.py:309
 msgid ""
