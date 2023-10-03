@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # "H. Peter Pfeufer" <info@ppfeufer.de>, 2023.
 # Nikolay <nick.postnikov@gmail.com>, 2023.
+# Max <mark25@inbox.ru>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-01 18:29+0200\n"
-"PO-Revision-Date: 2023-10-01 16:15+0000\n"
-"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/ru/>\n"
+"PO-Revision-Date: 2023-10-03 11:36+0000\n"
+"Last-Translator: Max <mark25@inbox.ru>\n"
+"Language-Team: Russian <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +44,7 @@ msgstr "Форум"
 #: aa_forum/apps.py:20
 #, python-brace-format
 msgid "AA Forum v{__version__}"
-msgstr ""
+msgstr "АА-форум v{__version__}"
 
 #: aa_forum/forms.py:40
 msgid "This field is mandatory"
@@ -66,8 +67,6 @@ msgid "Name"
 msgstr "Название"
 
 #: aa_forum/forms.py:147 aa_forum/forms.py:185
-#, fuzzy
-#| msgid "Category Name"
 msgid "Category name"
 msgstr "Название категории"
 
@@ -84,8 +83,6 @@ msgstr ""
 "будут установлены ограничения по группам, их нужно добавить отдельно."
 
 #: aa_forum/forms.py:206
-#, fuzzy
-#| msgid "Board Name"
 msgid "Board name"
 msgstr "Название доски"
 
@@ -94,8 +91,6 @@ msgid "Description"
 msgstr "Описание"
 
 #: aa_forum/forms.py:216
-#, fuzzy
-#| msgid "Board Description (Optional)"
 msgid "Board description (optional)"
 msgstr "Описание доски (не обязательно)"
 
@@ -114,16 +109,10 @@ msgstr ""
 "обязательна)"
 
 #: aa_forum/forms.py:232
-#, fuzzy
-#| msgid "Discord Webhook (Optional)"
 msgid "Discord webhook (optional)"
 msgstr "Discord вебхук (не обязательно)"
 
 #: aa_forum/forms.py:234
-#, fuzzy
-#| msgid ""
-#| "Discord Webhook URL for the channel to post about new topics in this "
-#| "board. (This setting is optional)"
 msgid ""
 "Discord webhook URL for the channel to post about new topics in this board. "
 "(This setting is optional)"
@@ -132,8 +121,6 @@ msgstr ""
 "не обязательна)"
 
 #: aa_forum/forms.py:247
-#, fuzzy
-#| msgid "Use this Discord Webhook for replies as well?"
 msgid "Use this Discord webhook for replies as well?"
 msgstr "Использовать этот же Discord вебхук для ответов?"
 
@@ -148,18 +135,10 @@ msgstr ""
 "ВЫКЛ)"
 
 #: aa_forum/forms.py:257
-#, fuzzy
-#| msgid "Mark Board as 'Announcement Board'"
 msgid "Mark board as \"Announcement Board\""
-msgstr "Пометить доску как 'Доска оповещений'"
+msgstr "Пометить доску как «Доска оповещений»"
 
 #: aa_forum/forms.py:259
-#, fuzzy
-#| msgid ""
-#| "Mark this board as an 'Announcement Board', meaning that only certain "
-#| "selected groups can start new topics. All others who have access to this "
-#| "board will still be able to discuss in the topics though. This setting "
-#| "will not be inherited to child boards. (Default: NO)"
 msgid ""
 "Mark this board as an \"Announcement Board\", meaning that only certain "
 "selected groups can start new topics. All others who have access to this "
@@ -172,19 +151,10 @@ msgstr ""
 "умолчанию: НЕТ)"
 
 #: aa_forum/forms.py:267
-#, fuzzy
-#| msgid "Start topic restrictions for 'Announcement Boards'"
 msgid "Start topic restrictions for \"Announcement Boards\""
 msgstr "Ограничения создания новых тем для «Доски оповещений»"
 
 #: aa_forum/forms.py:269
-#, fuzzy
-#| msgid ""
-#| "User in at least one of the selected groups will be able to start topics "
-#| "in 'Announcement Boards'. If no group is selected, only forum admins can "
-#| "do so. This setting will not be inherited to child boards. (Hint: These "
-#| "restrictions only take effect when a board is marked as 'Announcement "
-#| "Board', see checkbox above.)"
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
 "\"Announcement Boards\". If no group is selected, only forum admins can do "
@@ -206,8 +176,6 @@ msgid "Your signature will appear below your posts."
 msgstr "Ваша подпись будет отображаться под Вашими сообщениями."
 
 #: aa_forum/forms.py:359
-#, fuzzy
-#| msgid "Website Title"
 msgid "Website title"
 msgstr "Заголовок вебсайта"
 
@@ -285,10 +253,8 @@ msgid "Hello there …"
 msgstr "Привет…"
 
 #: aa_forum/models.py:127
-#, fuzzy
-#| msgid "Forum"
 msgid "AA-Forum"
-msgstr "Форум"
+msgstr "АА-форум"
 
 #: aa_forum/models.py:131
 msgid "Can access the AA-Forum module"
@@ -307,11 +273,6 @@ msgid "categories"
 msgstr "категории"
 
 #: aa_forum/models.py:222
-#, fuzzy
-#| msgid ""
-#| "Use this Discord Webhook for replies as well? When activated every reply "
-#| "to any topic in this board will be posted to the defined Discord channel. "
-#| "(Child boards are excluded) Chose wisely! (Default: NO)"
 msgid ""
 "Use this Discord webhook for replies as well? When activated every reply to "
 "any topic in this board will be posted to the defined Discord channel. "
@@ -331,26 +292,16 @@ msgstr ""
 "группы не выбраны, все пользователи форума будут иметь доступ к доске."
 
 #: aa_forum/models.py:248
-#, fuzzy
-#| msgid ""
-#| "Mark this board as an 'Announcement Board', meaning that only certain "
-#| "selected groups can start new topics. All others who have access to this "
-#| "board will still be able to discuss in the topics though. (Default: NO)"
 msgid ""
 "Mark this board as an \"Announcement Board\", meaning that only certain "
 "selected groups can start new topics. All others who have access to this "
 "board will still be able to discuss in the topics though. (Default: NO)"
 msgstr ""
-"Пометка 'Доска оповещений' обозначает, что только определенные группы могут "
+"Пометка «Доска оповещений» обозначает, что только определенные группы могут "
 "начинать новые темы. Все остальные, кто имеет доступ, могут участвовать в "
 "обсуждениях. (По умолчанию: НЕТ)"
 
 #: aa_forum/models.py:259
-#, fuzzy
-#| msgid ""
-#| "User in at least one of the selected groups will be able to start topics "
-#| "in 'Announcement Boards'. If no group is selected, only forum admins can "
-#| "do so."
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
 "\"Announcement Boards\". If no group is selected, only forum admins can do "
@@ -368,18 +319,15 @@ msgid "boards"
 msgstr "доски"
 
 #: aa_forum/models.py:367
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "<h4>Warning!</h4><p>There is already a topic with the exact same subject "
-#| "in this board.</p><p>See here: <a "
-#| "href=\"{existing_topic_url}\">{existing_topic.subject}</a></p>"
+#, python-brace-format
 msgid ""
 "<h4>Warning!</h4><p>There is already a topic with the exact same subject in "
 "this board.</p><p>See here: <a href=\"{self.topic_url}\">{self._topic."
 "subject}</a></p>"
 msgstr ""
-"<h4>Предупреждение!</h4><p>На доске уже есть тема с таким же названием.</"
-"p><p>См.: <a href=\"{self.topic_url}\">{self._topic.subject}</a></p>"
+"<h4>Предупреждение!</h4><p>На доске уже есть тема с таким же "
+"названием.</p><p>См.: <a href=\"{self.topic_url}\">{self._topic."
+"subject}</a></p>"
 
 #: aa_forum/models.py:578
 msgid "topic"
@@ -440,8 +388,6 @@ msgstr "настройки"
 #: aa_forum/models.py:952
 #: aa_forum/templates/aa_forum/partials/administration/settings-form.html:7
 #: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:16
-#, fuzzy
-#| msgid "Forum Settings"
 msgid "Forum settings"
 msgstr "Настройки форума"
 
@@ -454,8 +400,6 @@ msgid "user profiles"
 msgstr "профили пользователей"
 
 #: aa_forum/models.py:982
-#, fuzzy
-#| msgid "user profile"
 msgid "Forum user profile"
 msgstr "профиль пользователя"
 
@@ -479,16 +423,12 @@ msgstr "Ответить"
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:12
 #: aa_forum/templates/aa_forum/partials/forum/topic/message.html:56
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:73
-#, fuzzy
-#| msgid "Delete Message"
 msgid "Delete message"
 msgstr "Удалить сообщение"
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:3
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:12
 #: aa_forum/templates/aa_forum/partials/administration/board-loop.html:13
-#, fuzzy
-#| msgid "Delete Board"
 msgid "Delete board"
 msgstr "Удалить доску"
 
@@ -530,8 +470,6 @@ msgstr "Удалить"
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:3
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:12
 #: aa_forum/templates/aa_forum/partials/administration/category-loop.html:15
-#, fuzzy
-#| msgid "Delete Category"
 msgid "Delete category"
 msgstr "Удалить категорию"
 
@@ -550,16 +488,12 @@ msgstr "Изменить блокировку темы"
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:13
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:39
 #: aa_forum/templates/aa_forum/partials/forum/board/topic.html:84
-#, fuzzy
-#| msgid "Unlock/Re-Open Topic"
 msgid "Unlock/re-open topic"
 msgstr "Разблокировать/открыть тему"
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:16
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:42
 #: aa_forum/templates/aa_forum/partials/forum/board/topic.html:88
-#, fuzzy
-#| msgid "Lock/Close Topic"
 msgid "Lock/close topic"
 msgstr "Заблокировать/закрыть тему"
 
@@ -606,8 +540,6 @@ msgstr "Установить свойство «sticky»"
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-delete.html:3
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-delete.html:12
 #: aa_forum/templates/aa_forum/partials/forum/board/topic.html:97
-#, fuzzy
-#| msgid "Delete Topic"
 msgid "Delete topic"
 msgstr "Удалить тему"
 
@@ -640,8 +572,6 @@ msgstr ""
 "будут удалены."
 
 #: aa_forum/templates/aa_forum/partials/administration/board-loop.html:9
-#, fuzzy
-#| msgid "Edit Board"
 msgid "Edit board"
 msgstr "Редактировать доску"
 
@@ -654,14 +584,10 @@ msgstr ""
 "работоспособность всех ранее созданных ссылок на эту доску."
 
 #: aa_forum/templates/aa_forum/partials/administration/board-loop.html:44
-#, fuzzy
-#| msgid "Change Board"
 msgid "Change board"
 msgstr "Сменить доску"
 
 #: aa_forum/templates/aa_forum/partials/administration/board-loop.html:56
-#, fuzzy
-#| msgid "New Child Board"
 msgid "New child board"
 msgstr "Новая дочерняя доска"
 
@@ -676,8 +602,6 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/administration/board-loop.html:79
 #: aa_forum/templates/aa_forum/partials/administration/category-loop.html:75
-#, fuzzy
-#| msgid "Create Board"
 msgid "Create board"
 msgstr "Создать доску"
 
@@ -690,14 +614,10 @@ msgstr ""
 "менять порядок следования с помощью перетаскивания."
 
 #: aa_forum/templates/aa_forum/partials/administration/category-loop.html:11
-#, fuzzy
-#| msgid "Edit Category"
 msgid "Edit category"
 msgstr "Редактировать категорию"
 
 #: aa_forum/templates/aa_forum/partials/administration/category-loop.html:19
-#, fuzzy
-#| msgid "Expand/Collapse Category"
 msgid "Expand/collapse category"
 msgstr "Развернуть/свернуть категорию"
 
@@ -710,26 +630,18 @@ msgstr ""
 "работоспособность всех ранее созданных ссылок на эту категорию."
 
 #: aa_forum/templates/aa_forum/partials/administration/category-loop.html:44
-#, fuzzy
-#| msgid "Change Category"
 msgid "Change category"
 msgstr "Сменить категорию"
 
 #: aa_forum/templates/aa_forum/partials/administration/category-loop.html:55
-#, fuzzy
-#| msgid "New Board"
 msgid "New board"
 msgstr "Новая доска"
 
 #: aa_forum/templates/aa_forum/partials/administration/new-category.html:7
-#, fuzzy
-#| msgid "Create New Category"
 msgid "Create new category"
 msgstr "Создать новую категорию"
 
 #: aa_forum/templates/aa_forum/partials/administration/new-category.html:16
-#, fuzzy
-#| msgid "New Category"
 msgid "New category"
 msgstr "Новая категория"
 
@@ -742,8 +654,6 @@ msgstr ""
 "сможете перетащить их на желаемую позицию."
 
 #: aa_forum/templates/aa_forum/partials/administration/new-category.html:35
-#, fuzzy
-#| msgid "Create Category"
 msgid "Create category"
 msgstr "Создать категорию"
 
@@ -753,8 +663,6 @@ msgid "Submit"
 msgstr "Отправить"
 
 #: aa_forum/templates/aa_forum/partials/breadcrumb.html:6
-#, fuzzy
-#| msgid "Forum Index"
 msgid "Forum index"
 msgstr "Индекс форума"
 
@@ -762,8 +670,6 @@ msgstr "Индекс форума"
 #: aa_forum/templates/aa_forum/partials/forum/topic/message.html:49
 #: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:7
 #: aa_forum/templates/aa_forum/view/forum/modify-message.html:6
-#, fuzzy
-#| msgid "Modify Message"
 msgid "Modify message"
 msgstr "Изменить сообщение"
 
@@ -801,18 +707,14 @@ msgid "No topics have been started in this board …"
 msgstr "Эта доска не содержит тем…"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board.html:34
-#, fuzzy
-#| msgid "This board is restricted to the following group(s):"
 msgid "This board is restricted to the following group:"
 msgid_plural "This board is restricted to the following groups:"
-msgstr[0] "К доске имеют доступ следующие группы:"
+msgstr[0] "К доске имеют доступ следующая группа:"
 msgstr[1] "К доске имеют доступ следующие группы:"
 msgstr[2] "К доске имеют доступ следующие группы:"
 msgstr[3] "К доске имеют доступ следующие группы:"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board.html:42
-#, fuzzy
-#| msgid "Child Boards:"
 msgid "Child boards:"
 msgstr "Дочерние доски:"
 
@@ -851,8 +753,6 @@ msgid "posted at:"
 msgstr "отправлено:"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/new-topic-button.html:7
-#, fuzzy
-#| msgid "New Topic"
 msgid "New topic"
 msgstr "Новая тема"
 
@@ -866,8 +766,6 @@ msgstr "У Вас нет прав доступа к доске или доска
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:5
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/pagination.html:5
 #: aa_forum/templates/aa_forum/partials/search/pagination.html:4
-#, fuzzy
-#| msgid "Message Pagination"
 msgid "Message pagination"
 msgstr "Разбивка сообщения"
 
@@ -929,14 +827,10 @@ msgid "Last"
 msgstr "Последний"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/topic.html:38
-#, fuzzy
-#| msgid "Topic Is Always on Top"
 msgid "Topic is always on top"
 msgstr "Тема всегда в начале"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/topic.html:44
-#, fuzzy
-#| msgid "Topic Is Locked"
 msgid "Topic is locked"
 msgstr "Тема закрыта"
 
@@ -954,14 +848,10 @@ msgid "Last post"
 msgstr "Последнее сообщение"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/topic.html:71
-#, fuzzy
-#| msgid "Go to Last Message"
 msgid "Go to last message"
 msgstr "Перейти к последнему сообщению"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/topic.html:93
-#, fuzzy
-#| msgid "Change Topics Sticky State"
 msgid "Change topics sticky state"
 msgstr "Изменить свойство Sticky для темы"
 
@@ -971,14 +861,10 @@ msgid "Mark all topics as read"
 msgstr "Отметить все темы как прочитанные"
 
 #: aa_forum/templates/aa_forum/partials/forum/topic/message.html:38
-#, fuzzy
-#| msgid "Copy Message Link to Clipboard"
 msgid "Copy message link to clipboard"
 msgstr "Скопировать ссылку на сообщение в буфер обмена"
 
 #: aa_forum/templates/aa_forum/partials/forum/topic/message.html:81
-#, fuzzy
-#| msgid "Last Modified:"
 msgid "Last modified:"
 msgstr "Изменено:"
 
@@ -998,8 +884,6 @@ msgstr "Изменить"
 
 #: aa_forum/templates/aa_forum/partials/forum/topic/modify-topic.html:7
 #: aa_forum/templates/aa_forum/view/forum/modify-topic.html:6
-#, fuzzy
-#| msgid "Modify Topic"
 msgid "Modify topic"
 msgstr "Изменить тему"
 
@@ -1009,8 +893,6 @@ msgstr "Внимание: эта тема закрыта! Отвечать мо�
 
 #: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:33
 #: aa_forum/templates/aa_forum/view/forum/new-topic.html:37
-#, fuzzy
-#| msgid "Clear Form"
 msgid "Clear form"
 msgstr "Очистить форму"
 
@@ -1027,8 +909,6 @@ msgid "Administration"
 msgstr "Администрирование"
 
 #: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:12
-#, fuzzy
-#| msgid "Categories and Boards"
 msgid "Categories and boards"
 msgstr "Категории и доски"
 
@@ -1057,8 +937,6 @@ msgid "Sender"
 msgstr "Отправитель"
 
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:62
-#, fuzzy
-#| msgid "Read Message"
 msgid "Read message"
 msgstr "Прочитать сообщение"
 
@@ -1067,14 +945,10 @@ msgid "No personal messages"
 msgstr "Нет личных сообщений"
 
 #: aa_forum/templates/aa_forum/partials/personal-messages/new-message/form.html:8
-#, fuzzy
-#| msgid "No personal messages"
 msgid "New personal message"
-msgstr "Нет личных сообщений"
+msgstr "Новое личное сообщение"
 
 #: aa_forum/templates/aa_forum/partials/personal-messages/new-message/form.html:23
-#, fuzzy
-#| msgid "Send Message"
 msgid "Send message"
 msgstr "Отправить сообщение"
 
@@ -1083,17 +957,13 @@ msgid "Reply to:"
 msgstr "Кому:"
 
 #: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/form.html:24
-#, fuzzy
-#| msgid "Send Reply"
 msgid "Send reply"
 msgstr "Ответить"
 
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:10
 #: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:30
-#, fuzzy
-#| msgid "Sent Messages"
 msgid "Sent messages"
-msgstr "Отправить сообщения"
+msgstr "Отправленные сообщения"
 
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:56
 msgid "Read Message"
@@ -1108,14 +978,10 @@ msgid "No personal messages sent"
 msgstr "Нет отправленных личных сообщений"
 
 #: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:17
-#, fuzzy
-#| msgid "New Message"
 msgid "New message"
 msgstr "Новое сообщение"
 
 #: aa_forum/templates/aa_forum/partials/profile/form.html:7
-#, fuzzy
-#| msgid "user profile"
 msgid "User profile"
 msgstr "профиль пользователя"
 
@@ -1124,16 +990,12 @@ msgid "Search …"
 msgstr "Поиск…"
 
 #: aa_forum/templates/aa_forum/view/administration/categories-and-boards.html:6
-#, fuzzy
-#| msgid "Forum (Administration » Categories and Boards)"
 msgid "Administration (Categories and boards)"
-msgstr "Форум (Администрирование » Категории и доски)"
+msgstr "Администрирование (Категории и доски)"
 
 #: aa_forum/templates/aa_forum/view/administration/forum-settings.html:6
-#, fuzzy
-#| msgid "Forum (Administration » Forum Settings)"
 msgid "Administration (Forum settings)"
-msgstr "Форум (Администрирование » Настройки)"
+msgstr "Администрирование (Настройки)"
 
 #: aa_forum/templates/aa_forum/view/forum/index.html:26
 msgid "New posts"
@@ -1148,20 +1010,14 @@ msgid "Start new topic in"
 msgstr "Начать новую тему в"
 
 #: aa_forum/templates/aa_forum/view/forum/new-topic.html:38
-#, fuzzy
-#| msgid "Start Topic"
 msgid "Start topic"
 msgstr "Начать тему"
 
 #: aa_forum/templates/aa_forum/view/forum/topic.html:23
-#, fuzzy
-#| msgid "Modify Topic Subject"
 msgid "Modify topic subject"
 msgstr "Изменить заголовок темы"
 
 #: aa_forum/templates/aa_forum/view/forum/unread-topics.html:6
-#, fuzzy
-#| msgid "Unread Topics"
 msgid "Unread topics"
 msgstr "Непрочитанные темы"
 
@@ -1174,55 +1030,43 @@ msgid "You have no unread topics …"
 msgstr "У Вас нет непрочитанных тем…"
 
 #: aa_forum/templates/aa_forum/view/personal-messages/inbox.html:8
-#, fuzzy
-#| msgid "Forum (Personal Messages » Inbox)"
 msgid "Personal messages (Inbox)"
-msgstr "Форум (Персональные сообщения » Входящие)"
+msgstr "Персональные сообщения (Входящие)"
 
 #: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:8
-#, fuzzy
-#| msgid "Forum (Personal Messages » Sent Messages)"
 msgid "Personal messages (New message)"
-msgstr "Форум (Персональные Сообщения » Отправленные сообщения)"
+msgstr "Персональные сообщения (Новое сообщение)"
 
 #: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:39
 msgid "Enter the recipients name"
 msgstr "Введите имя получателя"
 
 #: aa_forum/templates/aa_forum/view/personal-messages/reply-message.html:8
-#, fuzzy
-#| msgid "Forum (Personal Messages » Sent Messages)"
 msgid "Personal messages (Reply to message)"
-msgstr "Форум (Персональные Сообщения » Отправленные сообщения)"
+msgstr "Персональные сообщения (Ответить на сообщение)"
 
 #: aa_forum/templates/aa_forum/view/personal-messages/sent-messages.html:8
-#, fuzzy
-#| msgid "Forum (Personal Messages » Sent Messages)"
 msgid "Personal messages (Sent messages)"
-msgstr "Форум (Персональные Сообщения » Отправленные сообщения)"
+msgstr "Персональные Сообщения (Отправленные сообщения)"
 
 #: aa_forum/templates/aa_forum/view/search/results.html:6
-#, fuzzy
-#| msgid "Search Results » Forum"
 msgid "Search results"
-msgstr "Результаты поиска » Форум"
+msgstr "Результаты поиска"
 
 #: aa_forum/templates/aa_forum/view/search/results.html:22
 #, python-format
 msgid "%(counter)s Result"
 msgid_plural "%(counter)s Results"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%(counter)s Результат"
+msgstr[1] "%(counter)s Результата"
+msgstr[2] "%(counter)s Результатов"
+msgstr[3] "%(counter)s Результатов"
 
 #: aa_forum/templates/aa_forum/view/search/results.html:32
 msgid "Nothing found …"
 msgstr "Ничего не найдено…"
 
 #: aa_forum/templatetags/aa_forum_datetime.py:57
-#, fuzzy
-#| msgid "Timezone Conversion"
 msgid "Timezone conversion"
 msgstr "Преобразование временной зоны"
 
@@ -1280,8 +1124,8 @@ msgstr ""
 msgid ""
 "<h4>Error!</h4><p>The category you were trying to post in does not exist.</p>"
 msgstr ""
-"<h4>Ошибка!</h4><p>Категория, в которую в попытались написать, не существует."
-"</p>"
+"<h4>Ошибка!</h4><p>Категория, в которую в попытались написать, не "
+"существует.</p>"
 
 #: aa_forum/views/forum.py:309
 msgid ""
@@ -1292,16 +1136,12 @@ msgstr ""
 "или Вам не доступна.</p>"
 
 #: aa_forum/views/forum.py:329
-#, fuzzy
-#| msgid ""
-#| "<h4>Error!</h4><p>The board you were trying to post in is an Announcement "
-#| "Board and you don't have the permissions to start a topic there.</p>"
 msgid ""
 "<h4>Error!</h4><p>The board you were trying to post in is an announcement "
 "board and you don't have the permissions to start a topic there.</p>"
 msgstr ""
-"<h4>Ошибка!</h4><p>Доска, на которую вы пытаетесь написать, - это доска "
-"объявлений и у вас нет прав начинать тему там.</p>"
+"<h4>Ошибка!</h4><p>Доска, на которой вы пытались разместить сообщение, "
+"является доской объявлений, и у вас нет разрешений создавать там тему.</p>"
 
 #: aa_forum/views/forum.py:386
 msgid ""
@@ -1426,8 +1266,8 @@ msgstr ""
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Message to {recipient_main_char} sent.</p>"
 msgstr ""
-"<h4>Успех!</h4><p>Сообщение пользователю {recipient_main_char} отправлено.</"
-"p>"
+"<h4>Успех!</h4><p>Сообщение пользователю {recipient_main_char} "
+"отправлено.</p>"
 
 #: aa_forum/views/personal_messages.py:190
 msgid ""
