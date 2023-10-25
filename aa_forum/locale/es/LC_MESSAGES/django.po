@@ -3,13 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # "H. Peter Pfeufer" <info@ppfeufer.de>, 2023.
 # Zigor Fernandez Moreno <sietehierros@gmail.com>, 2023.
+# Geovanny David Morales De la cruz <moralesgeovanny1996@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-01 18:29+0200\n"
-"PO-Revision-Date: 2023-10-02 09:34+0000\n"
-"Last-Translator: Zigor Fernandez Moreno <sietehierros@gmail.com>\n"
+"PO-Revision-Date: 2023-10-25 07:04+0000\n"
+"Last-Translator: Geovanny David Morales De la cruz <moralesgeovanny1996@gmail"
+".com>\n"
 "Language-Team: Spanish <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-forum/es/>\n"
 "Language: es\n"
@@ -17,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.2\n"
+"X-Generator: Weblate 5.1\n"
 
 #: aa_forum/__init__.py:12 aa_forum/templates/aa_forum/base.html:5
 #: aa_forum/templates/aa_forum/partials/menu.html:14
@@ -37,7 +39,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/view/profile/index.html:9
 #: aa_forum/templates/aa_forum/view/search/results.html:7
 msgid "Forum"
-msgstr ""
+msgstr "Foro"
 
 #: aa_forum/apps.py:20
 #, python-brace-format
