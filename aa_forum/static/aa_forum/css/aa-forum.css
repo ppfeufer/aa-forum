@@ -387,11 +387,10 @@
 ------------------------------------------------------------------------------------- */
 @media all {
     .aa-forum .aa-forum-search-result-inner {
-        align-content: flex-start;
+        place-content: flex-start flex-start;
         align-items: flex-start;
         display: flex;
         flex-flow: row nowrap;
-        justify-content: flex-start;
     }
 
     .aa-forum .aa-forum-search-results-total-number {
@@ -593,11 +592,10 @@
 @media all and (min-width: 992px) {
     .panel-aa-forum-personal-messages-item-header,
     .aa-forum .panel-aa-forum-personal-messages-item {
-        align-content: flex-start;
+        place-content: flex-start flex-start;
         align-items: center;
         display: flex;
         flex-flow: row nowrap;
-        justify-content: flex-start;
     }
 
     .aa-forum .aa-forum-personal-message-date {
