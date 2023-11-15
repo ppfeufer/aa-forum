@@ -6,7 +6,6 @@ requires = [
 
 [project]
 name = "aa-forum"
-version = "1.19.4"
 description = "Simple forum for Alliance Auth"
 readme = "README.md"
 keywords = [
@@ -35,6 +34,9 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+dynamic = [
+    "version",
 ]
 dependencies = [
     "allianceauth>=3.2",
@@ -66,3 +68,6 @@ Tracker = "https://github.com/ppfeufer/aa-forum/issues"
 include = [
     "/aa_forum",
 ]
+
+[tool.hatch.version]
+path = "aa_forum/__init__.py"

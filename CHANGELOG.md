@@ -7,15 +7,19 @@ and this project adheres to [Semantic Versioning].
 
 ## \[In Development\] - Unreleased
 
+## \[1.19.5\] - 2023-11-15
+
 ### Fixed
 
 - Pluralisation in a template string
 - Quotation marks in some strings
+- Stylelint issue: Expected shorthand property "place-content"
 
 ### Changed
 
 - Moved topic creation from the view to the model. This will make it possible for
   3rd-Party apps to create topics in a defined board.
+- Translations updated
 
 ## \[1.19.4\] - 2023-09-26
 
