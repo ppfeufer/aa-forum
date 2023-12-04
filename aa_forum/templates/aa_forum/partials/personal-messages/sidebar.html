@@ -3,14 +3,14 @@
 {% load aa_forum_template_variables %}
 
 <div class="col-sm-4 col-md-3 col-lg-2 col-sm-push-8 col-md-push-9 col-lg-push-10">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="panel-title">
+    <div class="card card-default">
+        <div class="card-header">
+            <div class="card-title mb-0">
                 {% translate "Messages" %}
             </div>
         </div>
 
-        <div class="panel-body">
+        <div class="card-body">
             <ul id="aa-forum-messages-sidebar-menu" class="nav nav-pills nav-stacked">
                 <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:personal_messages_new_message' %}">
                     <a href="{% url 'aa_forum:personal_messages_new_message' %}">

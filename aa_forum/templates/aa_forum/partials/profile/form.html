@@ -1,14 +1,14 @@
 {% load bootstrap %}
 {% load i18n %}
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title">
+<div class="card card-default">
+    <div class="card-header">
+        <div class="card-title mb-0">
             {% translate "User profile" %}
         </div>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
         <form id="aa-forum-form-userprofile-modify" class="form-horizontal" autocomplete="off" action="{% url 'aa_forum:profile_index' %}" method="post">
             {% csrf_token %}
             {{ form|bootstrap_horizontal }}

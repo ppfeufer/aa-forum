@@ -2,8 +2,8 @@
 {% load aa_forum_datetime %}
 
 {% if message %}
-    <div id="message-{{ message.pk }}" class="panel panel-default">
-        <div class="panel-body">
+    <div id="message-{{ message.pk }}" class="card card-default">
+        <div class="card-body">
             <div class="aa-forum-message">
                 <div class="hidden-xs">
                     {% include "aa_forum/partials/forum/topic/message-author.html" with message_author=message.sender %}

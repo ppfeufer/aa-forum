@@ -2,9 +2,9 @@
 {% load i18n %}
 
 <li class="category-sortable ui-state-default ui-sortable" data-category-id="{{ category.category_obj.pk }}" data-position="{{ category.category_obj.order }}">
-    <div class="panel panel-default aa-forum-admin-panel-aa-forum-category">
-        <div class="panel-heading">
-            <div class="panel-title">
+    <div class="card card-default aa-forum-admin-card-aa-forum-category">
+        <div class="card-header">
+            <div class="card-title mb-0">
                 {{ category.category_obj.name }}
 
                 <div class="pull-right">
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="panel-body">
+        <div class="card-body">
             <div class="collapse" id="collapseEditCategory-{{ category.category_obj.pk }}">
                 <div class="well">
                     <p>

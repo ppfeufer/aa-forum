@@ -2,14 +2,14 @@
 {% load i18n %}
 {% load aa_forum_user %}
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title">
+<div class="card card-default">
+    <div class="card-header">
+        <div class="card-title mb-0">
             {% translate "Reply to:" %} {{ message.sender|main_character_name }}
         </div>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
         <form id="aa-forum-form-new-personal-message-reply" autocomplete="off" action="{% url 'aa_forum:personal_messages_message_reply' message.pk %}" method="post">
             <fieldset>
                 {% csrf_token %}

@@ -4,10 +4,10 @@
 {% load aa_forum_template_variables %}
 {% load aa_forum_user %}
 
-<div id="message-{{ message.id }}" class="panel panel-default">
+<div id="message-{{ message.id }}" class="card card-default">
     {% set_template_variable message_author = message.user_created %}
 
-    <div class="panel-body">
+    <div class="card-body">
         <div class="aa-forum-message">
             <div class="hidden-xs">
                 {% include "aa_forum/partials/forum/topic/message-author.html" %}

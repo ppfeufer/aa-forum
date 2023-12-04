@@ -1,10 +1,12 @@
 {% load i18n %}
 
 {% if user_can_start_topic %}
-    <div class="text-right">
-        <a id="aa-forum-btn-new-topic-{{ suffix }}" class="btn btn-default btn-sm" href="{% url 'aa_forum:forum_board_new_topic' board.category.slug board.slug %}">
-            <i class="fas fa-pencil-alt"></i>
-            <span class="hidden-xs">{% translate "New topic" %}</span>
-        </a>
+    <div class="aa-forum-new-topic-button py-3 clearfix">
+        <div class="float-end">
+            <a id="aa-forum-btn-new-topic-{{ suffix }}" class="btn btn-secondary btn-sm" href="{% url 'aa_forum:forum_board_new_topic' board.category.slug board.slug %}">
+                <i class="fas fa-pencil-alt"></i>
+                <span class="hidden-xs">{% translate "New topic" %}</span>
+            </a>
+        </div>
     </div>
 {% endif %}

@@ -1,6 +1,6 @@
-<div id="category-{{ category.id }}" class="panel panel-default panel-aa-forum-category">
-    <div class="panel-heading">
-        <div class="panel-title">
+<div id="category-{{ category.id }}" class="card card-default card-aa-forum-category">
+    <div class="card-header">
+        <div class="card-title mb-0">
             {{ board.category.name }} »
 
             {% if board.parent_board %}
@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
         {% for topic in board.topics.all %}
             {% include "aa_forum/partials/forum/board/topic.html" %}
         {% endfor %}

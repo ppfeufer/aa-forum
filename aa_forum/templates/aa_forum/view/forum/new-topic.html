@@ -16,15 +16,15 @@
 {% endblock %}
 
 {% block aa_forum_body %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="panel-title">
+    <div class="card card-default">
+        <div class="card-header">
+            <div class="card-title mb-0">
                 {% translate "Start new topic in" %}
                 "<a href="{{ board.get_absolute_url }}">{{ board.name }}</a>"
             </div>
         </div>
 
-        <div class="panel-body">
+        <div class="card-body">
             <form id="aa-forum-form-new-topic" autocomplete="off" action="{% url 'aa_forum:forum_board_new_topic' board.category.slug board.slug %}" method="post">
                 {% csrf_token %}
 

@@ -1,14 +1,14 @@
 {% load i18n %}
 {% load bootstrap %}
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title">
+<div class="card card-default">
+    <div class="card-header">
+        <div class="card-title mb-0">
             {% translate "Modify topic" %}
         </div>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
         <form id="aa-forum-form-topic-modify" autocomplete="off" action="{% url 'aa_forum:forum_topic_modify' topic.board.category.slug topic.board.slug topic.slug %}" method="post">
             {% csrf_token %}
 

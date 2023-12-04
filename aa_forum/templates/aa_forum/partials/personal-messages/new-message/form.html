@@ -2,14 +2,14 @@
 {% load i18n %}
 
 <div class="col-sm-8 col-md-9 col-lg-10 col-sm-pull-4 col-md-pull-3 col-lg-pull-2">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="panel-title">
+    <div class="card card-default">
+        <div class="card-header">
+            <div class="card-title mb-0">
                 {% translate "New personal message" %}
             </div>
         </div>
 
-        <div class="panel-body">
+        <div class="card-body">
             <form id="aa-forum-form-new-personal-message" autocomplete="off" action="{% url 'aa_forum:personal_messages_new_message' %}" method="post">
                 <fieldset>
                     {% csrf_token %}

@@ -1,12 +1,12 @@
 {% load i18n %}
 
-<div id="category-{{ category.id }}" class="panel panel-default panel-aa-forum-category">
-    <div class="panel-heading">
-        <div class="panel-title">{{ board.name }}</div>
+<div id="category-{{ category.id }}" class="card card-default card-aa-forum-category">
+    <div class="card-header">
+        <div class="card-title mb-0">{{ board.name }}</div>
     </div>
 
     {% if board.child_boards.all %}
-        <div class="panel-body">
+        <div class="card-body">
             {% for child_board in board.child_boards.all %}
                 {% include "aa_forum/partials/forum/board/board.html" with board=child_board %}
             {% endfor %}
@@ -16,8 +16,8 @@
 
 {% include "aa_forum/partials/forum/board/new-topic-button.html" with suffix="above-list" %}
 
-<div class="panel panel-default panel-aa-forum-topic-list">
-    <div class="panel-body">
+<div class="card card-default card-aa-forum-topic-list">
+    <div class="card-body">
         {% if page_obj %}
             {% for topic in page_obj %}
                 {% include "aa_forum/partials/forum/board/topic.html" %}

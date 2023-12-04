@@ -88,12 +88,12 @@
         margin-bottom: 0;
     }
 
-    .aa-forum .aa-forum-admin-card-aa-forum-category .panel-body {
+    .aa-forum .aa-forum-admin-card-aa-forum-category .card-body {
         padding: 0 1rem;
     }
 
-    .aa-forum .aa-forum-admin-card-aa-forum-category .panel-body .collapse,
-    .aa-forum .aa-forum-admin-card-aa-forum-category .panel-body .collapsing {
+    .aa-forum .aa-forum-admin-card-aa-forum-category .card-body .collapse,
+    .aa-forum .aa-forum-admin-card-aa-forum-category .card-body .collapsing {
         margin-top: 1rem;
     }
 
@@ -215,10 +215,6 @@
         flex-direction: row;
         padding: 1rem;
         transition: var(--bg-hover-transition);
-    }
-
-    .aa-forum .panel-aa-forum-topic-list {
-        margin: 2rem 0;
     }
 
     .aa-forum .aa-forum-topic-row:last-child .aa-forum-topic {
@@ -372,25 +368,25 @@
 /* Personal messages view
 ------------------------------------------------------------------------------------- */
 @media all {
-    .aa-forum .panel-aa-forum-personal-messages-item {
+    .aa-forum .card-aa-forum-personal-messages-item {
         padding: 1rem;
         transition: var(--bg-hover-transition);
     }
 
-    .aa-forum .panel-aa-forum-personal-messages-item:hover {
+    .aa-forum .card-aa-forum-personal-messages-item:hover {
         background: rgb(0 0 0 / 5%);
     }
 
-    .aa-forum .panel-aa-forum-personal-messages-item-header {
+    .aa-forum .card-aa-forum-personal-messages-item-header {
         border-bottom: 1px solid rgb(236 240 241);
         font-weight: 700;
     }
 
-    .aa-forum .panel-aa-forum-personal-messages-item-unread {
+    .aa-forum .card-aa-forum-personal-messages-item-unread {
         font-weight: 700;
     }
 
-    .aa-forum .aa-forum-personal-messages-message .panel {
+    .aa-forum .aa-forum-personal-messages-message .card {
         margin-top: 2rem;
     }
 }
@@ -531,8 +527,8 @@
 /* Personal messages view (@media all and (min-width: 992px))
 ------------------------------------------------------------------------------------- */
 @media all and (min-width: 992px) {
-    .panel-aa-forum-personal-messages-item-header,
-    .aa-forum .panel-aa-forum-personal-messages-item {
+    .card-aa-forum-personal-messages-item-header,
+    .aa-forum .card-aa-forum-personal-messages-item {
         place-content: flex-start flex-start;
         align-items: center;
         display: flex;

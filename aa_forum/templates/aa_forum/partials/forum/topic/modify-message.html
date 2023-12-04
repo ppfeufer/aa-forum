@@ -1,14 +1,14 @@
 {% load i18n %}
 {% load bootstrap %}
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title">
+<div class="card card-default">
+    <div class="card-header">
+        <div class="card-title mb-0">
             {% translate "Modify message" %}
         </div>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
         {% if page_obj.has_next %}
             <div class="alert alert-warning">
                 {% translate "Note: You are not on the last page of this topic and may miss the most recent replies." %}
