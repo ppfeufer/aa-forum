@@ -284,17 +284,6 @@
 /* Message view
 ------------------------------------------------------------------------------------- */
 @media all {
-    .aa-forum .aa-forum-message-author {
-        float: left;
-        margin: 0 2rem;
-        min-width: 110px;
-        width: 110px;
-    }
-
-    .aa-forum .aa-forum-message-author figure {
-        width: 85%;
-    }
-
     .aa-forum .aa-forum-message-author .img-author-avatar {
         margin-bottom: 1rem;
         max-width: 100%;
@@ -507,8 +496,6 @@
     }
 
     .aa-forum .aa-forum-message-author {
-        float: none;
-        margin: 2rem;
         min-width: 150px;
         width: 150px;
     }

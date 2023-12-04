@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block aa_forum_body %}
-    <div class="card card-default">
+    <div class="card card-default mb-3">
         <div class="card-header">
             <div class="card-title mb-0 clearfix">
                 {{ topic.subject }}
@@ -19,7 +19,7 @@
                     <a
                         id="aa-forum-btn-modify-message-{{ message.pk }}"
                         href="{% url 'aa_forum:forum_topic_modify' topic.board.category.slug topic.board.slug topic.slug %}"
-                        class="btn btn-aa-forum-topic-moderation btn-xs pull-right"
+                        class="btn btn-aa-forum-topic-moderation btn-sm float-end"
                         title="{% translate 'Modify topic subject' %}"
                     >
                         <i class="fas fa-pencil-alt"></i>

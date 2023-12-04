@@ -4,18 +4,18 @@
 {% load aa_forum_template_variables %}
 {% load aa_forum_user %}
 
-<div id="message-{{ message.id }}" class="card card-default">
+<div id="message-{{ message.id }}" class="card card-default mb-3">
     {% set_template_variable message_author = message.user_created %}
 
     <div class="card-body">
         <div class="aa-forum-message">
-            <div class="hidden-xs">
+            <div class="d-none d-sm-block m-sm-3 m-md-0">
                 {% include "aa_forum/partials/forum/topic/message-author.html" %}
             </div>
 
-            <div class="aa-forum-message-wrapper">
+            <div class="aa-forum-message-wrapper m-3">
                 <div class="aa-forum-message-header row">
-                    <div class="hidden-lg hidden-md hidden-sm">
+                    <div class="d-lg-none d-md-none d-sm-none">
                         {% include "aa_forum/partials/forum/topic/message-author.html" %}
                     </div>
 
@@ -32,9 +32,9 @@
 
                     <div class="col-md-6">
                         {% if not search_term %}
-                            <div class="text-right">
+                            <div class="float-end">
                                 <button
-                                    class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-copy-to-clipboard"
+                                    class="btn btn-aa-forum-topic-moderation btn-sm btn-aa-forum-copy-to-clipboard"
                                     title="{% translate 'Copy message link to clipboard' %}"
                                     data-clipboard-text="{{ SITE_URL }}{% url 'aa_forum:forum_message' message.topic.board.category.slug message.topic.board.slug message.topic.slug message.pk %}"
                                 >
@@ -45,14 +45,14 @@
                                     <a
                                         id="aa-forum-btn-modify-message-{{ message.pk }}"
                                         href="{% url 'aa_forum:forum_message_modify' topic.board.category.slug topic.board.slug topic.slug message.pk %}"
-                                        class="btn btn-aa-forum-topic-moderation btn-xs"
+                                        class="btn btn-aa-forum-topic-moderation btn-sm"
                                         title="{% translate 'Modify message' %}"
                                     >
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
 
                                     <button
-                                        class="btn btn-aa-forum-topic-moderation btn-xs"
+                                        class="btn btn-aa-forum-topic-moderation btn-sm"
                                         title="{% translate 'Delete message' %}"
                                         data-toggle="modal"
                                         data-target="#delete-message-{{ message.pk }}"
