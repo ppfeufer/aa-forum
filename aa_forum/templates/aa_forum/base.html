@@ -2,7 +2,13 @@
 
 {% load i18n %}
 
-{% block page_title %}{% translate "Forum" %}{% endblock %}
+{% block page_title %}
+    {% translate "Forum" %}
+{% endblock %}
+
+{% block header_nav_brand %}
+    {% translate "Forum" %}
+{% endblock %}
 
 {% block content %}
     <div class="aa-forum">
