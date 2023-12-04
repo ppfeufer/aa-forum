@@ -1,4 +1,4 @@
-{% load bootstrap %}
+{% load django_bootstrap5 %}
 {% load i18n %}
 
 <div>
@@ -26,11 +26,11 @@
                 <fieldset>
                     {% csrf_token %}
 
-                    {{ new_category_form|bootstrap }}
+                    {% bootstrap_form new_category_form %}
 
                     {% include "aa_forum/partials/form/required-field-hint.html" %}
 
-                    <div class="form-group aa-forum-form-group aa-forum-form-new-category text-right clearfix">
+                    <div class="form-group aa-forum-form-group aa-forum-form-new-category float-end clearfix">
                         <button class="btn btn-primary btn-sm" type="submit">
                             {% translate "Create category" %}
                         </button>

@@ -1,6 +1,6 @@
 {% extends "aa_forum/base.html" %}
 
-{% load bootstrap %}
+{% load django_bootstrap5 %}
 {% load i18n %}
 
 {% block page_title %}
@@ -28,13 +28,13 @@
             <form id="aa-forum-form-new-topic" autocomplete="off" action="{% url 'aa_forum:forum_board_new_topic' board.category.slug board.slug %}" method="post">
                 {% csrf_token %}
 
-                {{ form|bootstrap }}
+                {% bootstrap_form form %}
 
                 {% include "aa_forum/partials/form/required-field-hint.html" %}
 
-                <div class="form-group aa-forum-form-group aa-forum-form-new-topic text-right clearfix">
-                    <a id="aa-forum-btn-cancel" class="btn btn-default btn-sm" href="{{ board.get_absolute_url }}">{% translate "Cancel" %}</a>
-                    <button class="btn btn-default btn-sm" type="reset">{% translate "Clear form" %}</button>
+                <div class="form-group aa-forum-form-group aa-forum-form-new-topic float-end clearfix">
+                    <a id="aa-forum-btn-cancel" class="btn btn-secondary btn-sm" href="{{ board.get_absolute_url }}">{% translate "Cancel" %}</a>
+                    <button class="btn btn-secondary btn-sm" type="reset">{% translate "Clear form" %}</button>
                     <button class="btn btn-primary btn-sm" type="submit">{% translate "Start topic" %}</button>
                 </div>
             </form>

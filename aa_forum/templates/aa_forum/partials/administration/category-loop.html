@@ -1,4 +1,4 @@
-{% load bootstrap %}
+{% load django_bootstrap5 %}
 {% load i18n %}
 
 <li class="category-sortable ui-state-default ui-sortable" data-category-id="{{ category.category_obj.pk }}" data-position="{{ category.category_obj.order }}">
@@ -35,11 +35,11 @@
                         <fieldset>
                             {% csrf_token %}
 
-                            {{ category.category_forms.edit_category|bootstrap }}
+                            {% bootstrap_form category.category_forms.edit_category %}
 
                             {% include "aa_forum/partials/form/required-field-hint.html" %}
 
-                            <div class="form-group aa-forum-form-group aa-forum-form-new-category text-right clearfix">
+                            <div class="form-group aa-forum-form-group aa-forum-form-new-category float-end clearfix">
                                 <button class="btn btn-primary btn-sm" type="submit">
                                     {% translate "Change category" %}
                                 </button>
@@ -66,11 +66,11 @@
                             <fieldset>
                                 {% csrf_token %}
 
-                                {{ category.category_forms.new_board|bootstrap }}
+                                {% bootstrap_form category.category_forms.new_board %}
 
                                 {% include "aa_forum/partials/form/required-field-hint.html" %}
 
-                                <div class="form-group aa-forum-form-group aa-forum-form-new-board text-right clearfix">
+                                <div class="form-group aa-forum-form-group aa-forum-form-new-board float-end clearfix">
                                     <button class="btn btn-primary btn-sm" type="submit">
                                         {% translate "Create board" %}
                                     </button>
