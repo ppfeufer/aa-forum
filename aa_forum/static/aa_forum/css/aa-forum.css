@@ -46,10 +46,6 @@
         margin-top: 1rem;
         padding-top: 1rem;
     }
-
-    .template-dark-mode .aa-forum-footer {
-        border-color: rgb(70 69 69);
-    }
 }
 
 /* Search Box
@@ -85,14 +81,6 @@
 
     .aa-forum .child-boards-sortable > li {
         background-color: rgb(213 217 218);
-    }
-
-    .template-dark-mode .aa-forum .boards-sortable > li {
-        background-color: rgb(93 89 89);
-    }
-
-    .template-dark-mode .aa-forum .child-boards-sortable > li {
-        background-color: rgb(70 69 69);
     }
 
     .aa-forum .boards-sortable > li:first-child {
@@ -470,16 +458,6 @@
 @media all {
     .aa-forum .SumoSelect p {
         height: auto;
-    }
-
-    /* For for Dark Mode
-    --------------------------------------------------------------------------------- */
-    .template-dark-mode .aa-forum .SumoSelect {
-        color: rgb(54 54 54);
-    }
-
-    .template-dark-mode .aa-forum .SumoSelect > .CaptionCont > span.placeholder {
-        color: rgb(62 68 76);
     }
 }
 
