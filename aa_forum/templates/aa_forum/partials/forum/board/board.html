@@ -9,7 +9,7 @@
 {% set_template_variable board_groups = board.groups.all %}
 {% set_template_variable board_child_boards = board.child_boards.all %}
 
-<div class="aa-forum-board row">
+<div class="aa-forum-board px-1">
     <div class="aa-forum-board-image">
         {% if board.num_unread > 0 %}
             <svg id="aa-forum-unread-in-{{ board.id }}">
@@ -78,7 +78,7 @@
                 <img class="aa-forum-character-portrait img img-rounded img-last-post-avatar" src="{{ author_maincharacter_id|character_portrait_url:64 }}" alt="{{ board_last_message_author|main_character_name }}" width="64" height="64">
             {% endwith %}
 
-            <p class="last-post-information small">
+            <p class="mb-0 last-post-information small">
                 <b>{% translate "Last post:" %}</b>
 
                 <a href="{% url 'aa_forum:forum_message' board.category.slug board_latest_topic_board.slug board_latest_topic.slug board_last_message.pk %}" title="{{ board_latest_topic.subject }}">

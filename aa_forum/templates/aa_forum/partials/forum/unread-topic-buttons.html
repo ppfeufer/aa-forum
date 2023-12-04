@@ -1,7 +1,7 @@
 {% load i18n %}
 
-<div class="card-body clearfix">
-    <div id="aa-forum-unread-topics-buttons-{{ position }}" class="float-end aa-forum-unread-topics-buttons">
+<div class="card-body float-end py-3 clearfix">
+    <div id="aa-forum-unread-topics-buttons-{{ position }}" class="aa-forum-unread-topics-buttons">
         <a href="{% url 'aa_forum:forum_topic_show_all_unread' %}" class="btn btn-secondary btn-sm">
             <i class="fas fa-mail-bulk"></i>
             <span class="hidden-xs">{% translate "Show all unread topics" %}</span>
