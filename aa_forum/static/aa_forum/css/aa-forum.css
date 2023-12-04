@@ -55,30 +55,8 @@
 /* Search Box
 ------------------------------------------------------------------------------------- */
 @media all {
-    .aa-forum .aa-forum-search-box .form-control-feedback {
-        color: rgb(204 204 204);
-        left: 0;
-        right: initial;
-    }
-
-    .aa-forum .aa-forum-search-box .form-control {
-        padding-left: 35px;
-        padding-right: 1rem;
-    }
-
-    .aa-forum .aa-forum-body #aa-forum-form-search-results {
-        margin: 0;
-        padding: 0;
-    }
-
-    .aa-forum .aa-forum-body #aa-forum-form-search-results .form-group {
-        display: block;
-        margin-bottom: 15px;
-    }
-
-    .aa-forum .aa-forum-body #aa-forum-form-search-results .form-control {
-        display: block;
-        width: 100%;
+    .aa-forum .aa-forum-body #aa-forum-form-search-results .input-group {
+        margin-bottom: 1rem;
     }
 }
 
