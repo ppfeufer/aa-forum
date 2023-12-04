@@ -23,7 +23,6 @@
 
 {% block extra_css %}
     {% include "aa_forum/bundles/select2-css.html" %}
-    {% include "aa_forum/bundles/select2-bootstrap-theme-css.html" %}
     {% include "aa_forum/bundles/aa-forum-css.html" %}
 {% endblock %}
 
@@ -32,10 +31,12 @@
     {% include "aa_forum/bundles/select2-js.html" %}
 
     <script>
-        $("#id_recipient").select2({
-            theme: "bootstrap",
-            minimumInputLength: 3,
-            placeholder: "{% translate 'Enter the recipients name' %}",
+        $(document).ready(() => {
+            $("#id_recipient").select2({
+                theme: "bootstrap-5",
+                minimumInputLength: 3,
+                placeholder: "{% translate 'Enter the recipients name' %}",
+            });
         });
     </script>
 {% endblock %}
