@@ -1,9 +1,3 @@
 {% load aa_forum_versioned_static %}
 
-{% if debug %}
-    <link rel="stylesheet" href="{% aa_forum_static 'aa_forum/css/aa-bootstrap-fix.css' %}">
-    <link rel="stylesheet" href="{% aa_forum_static 'aa_forum/css/aa-forum.css' %}">
-{% else %}
-    <link rel="stylesheet" href="{% aa_forum_static 'aa_forum/css/aa-bootstrap-fix.min.css' %}">
-    <link rel="stylesheet" href="{% aa_forum_static 'aa_forum/css/aa-forum.min.css' %}">
-{% endif %}
+<link rel="stylesheet" href="{% aa_forum_static 'aa_forum/css/aa-forum.min.css' %}">
