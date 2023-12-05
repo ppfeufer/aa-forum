@@ -76,11 +76,11 @@
         margin-top: 1rem;
     }
 
-    .aa-forum [data-toggle="collapse"].collapsed .if-expanded {
+    .aa-forum [data-bs-toggle="collapse"].collapsed .if-expanded {
         display: none;
     }
 
-    .aa-forum [data-toggle="collapse"]:not(.collapsed) .if-collapsed {
+    .aa-forum [data-bs-toggle="collapse"]:not(.collapsed) .if-collapsed {
         display: none;
     }
 

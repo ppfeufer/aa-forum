@@ -6,7 +6,7 @@
         {{ board.board_obj.name }}
 
         <div class="pull-right">
-            <button class="btn btn-warning btn-xs" title="{% translate 'Edit board' %}" data-toggle="collapse" data-target="#collapseEditBoard-{{ board.board_obj.pk }}" aria-expanded="false" aria-controls="collapseEditBoard-{{ board.board_obj.pk }}">
+            <button class="btn btn-warning btn-xs" title="{% translate 'Edit board' %}" data-bs-toggle="collapse" data-bs-target="#collapseEditBoard-{{ board.board_obj.pk }}" aria-expanded="false" aria-controls="collapseEditBoard-{{ board.board_obj.pk }}">
                 <i class="fas fa-pencil-alt"></i>
             </button>
 
@@ -52,7 +52,7 @@
     {% if not is_child_board %}
         <div class="child-boards" style="margin-left: 2rem; margin-top: 2rem;">
             <p>
-                <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseNewChildBoardForm-{{ board.board_obj.pk }}" aria-expanded="false" aria-controls="collapseNewBoardForm-{{ category.category_obj.pk }}">
+                <button class="btn btn-default btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNewChildBoardForm-{{ board.board_obj.pk }}" aria-expanded="false" aria-controls="collapseNewBoardForm-{{ category.category_obj.pk }}">
                     {% translate "New child board" %}
                 </button>
             </p>
