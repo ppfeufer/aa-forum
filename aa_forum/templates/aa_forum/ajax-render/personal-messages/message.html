@@ -26,7 +26,7 @@
                                 {% if folder == "inbox" %}
                                     <a
                                         href="{% url 'aa_forum:personal_messages_message_reply' message.pk %}"
-                                        class="btn btn-aa-forum-topic-moderation btn-xs"
+                                        class="btn btn-aa-forum-topic-moderation btn-sm"
                                         title="{% translate 'Reply' %}"
                                     >
                                         <i class="fas fa-reply-all"></i>
@@ -34,7 +34,7 @@
                                 {% endif %}
 
                                 <button
-                                    class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-delete"
+                                    class="btn btn-aa-forum-topic-moderation btn-sm btn-aa-forum-delete"
                                     title="{% translate 'Delete message' %}"
                                     data-bs-toggle="modal"
                                     data-bs-target="#delete-message-{{ message.pk }}"

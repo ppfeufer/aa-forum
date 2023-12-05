@@ -81,20 +81,20 @@
             {% if perms.aa_forum.manage_forum %}
                 <div class="text-right">
                     {% if topic.is_locked %}
-                        <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Unlock/re-open topic' %}" data-bs-toggle="modal" data-bs-target="#topic-lock-state-change-{{ topic.pk }}">
+                        <button class="btn btn-aa-forum-topic-moderation btn-sm" title="{% translate 'Unlock/re-open topic' %}" data-bs-toggle="modal" data-bs-target="#topic-lock-state-change-{{ topic.pk }}">
                             <i class="fas fa-unlock"></i>
                         </button>
                     {% else %}
-                        <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Lock/close topic' %}" data-bs-toggle="modal" data-bs-target="#topic-lock-state-change-{{ topic.pk }}">
+                        <button class="btn btn-aa-forum-topic-moderation btn-sm" title="{% translate 'Lock/close topic' %}" data-bs-toggle="modal" data-bs-target="#topic-lock-state-change-{{ topic.pk }}">
                             <i class="fas fa-lock"></i>
                         </button>
                     {% endif %}
 
-                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Change topics sticky state' %}" data-bs-toggle="modal" data-bs-target="#topic-sticky-state-change-{{ topic.pk }}">
+                    <button class="btn btn-aa-forum-topic-moderation btn-sm" title="{% translate 'Change topics sticky state' %}" data-bs-toggle="modal" data-bs-target="#topic-sticky-state-change-{{ topic.pk }}">
                         <i class="fas fa-thumbtack"></i>
                     </button>
 
-                    <button class="btn btn-aa-forum-topic-moderation btn-xs" title="{% translate 'Delete topic' %}" data-bs-toggle="modal" data-bs-target="#delete-topic-{{ topic.pk }}">
+                    <button class="btn btn-aa-forum-topic-moderation btn-sm" title="{% translate 'Delete topic' %}" data-bs-toggle="modal" data-bs-target="#delete-topic-{{ topic.pk }}">
                         <i class="far fa-trash-alt"></i>
                     </button>
                 </div>

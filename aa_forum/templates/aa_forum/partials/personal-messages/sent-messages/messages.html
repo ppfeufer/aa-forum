@@ -53,7 +53,7 @@
 
                                 <span class="float-end">
                                     <button
-                                        class="btn btn-aa-forum-topic-moderation btn-xs btn-read-personal-message"
+                                        class="btn btn-aa-forum-topic-moderation btn-sm btn-read-personal-message"
                                         title="{% translate 'Read message' %}"
                                         data-sender="{{ message.sender.pk }}"
                                         data-recipient="{{ message.recipient.pk }}"
@@ -64,7 +64,7 @@
                                     </button>
 
                                     <button
-                                        class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-delete"
+                                        class="btn btn-aa-forum-topic-moderation btn-sm btn-aa-forum-delete"
                                         title="{% translate 'Delete message' %}"
                                         data-bs-toggle="modal"
                                         data-bs-target="#delete-message-{{ message.pk }}"
