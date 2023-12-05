@@ -424,6 +424,21 @@
     .aa-forum .SumoSelect p {
         height: auto;
     }
+
+    .aa-forum .SumoSelect {
+        color: rgb(54 54 54);
+        display: block;
+    }
+
+    .aa-forum .SumoSelect > .CaptionCont > label > i {
+        background-image: none;
+    }
+
+    .aa-forum .SumoSelect > .CaptionCont > span.placeholder {
+        background-color: transparent;
+        color: rgb(62 68 76);
+        opacity: 1;
+    }
 }
 
 /* Select2

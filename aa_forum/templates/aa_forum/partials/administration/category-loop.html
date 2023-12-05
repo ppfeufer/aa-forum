@@ -26,7 +26,7 @@
 
         <div class="card-body">
             <div class="collapse" id="collapseEditCategory-{{ category.category_obj.pk }}">
-                <div class="well">
+                <div class="card card-body bg-light mb-3 py-3">
                     <p>
                         {% translate "Changing the name of this category does not change its URL part. This will remain the same to not break any possible links into this category." %}
                     </p>
@@ -57,7 +57,7 @@
                 </p>
 
                 <div class="collapse" id="collapseNewBoardForm-{{ category.category_obj.pk }}">
-                    <div class="well">
+                    <div class="card card-body bg-light mb-3 py-3">
                         <p>
                             {% translate "New boards will be added at the bottom of the board list for this category. You can move them via drag and drop to a position of your liking." %}
                         </p>
