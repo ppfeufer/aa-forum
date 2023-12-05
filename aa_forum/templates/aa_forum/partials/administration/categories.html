@@ -1,18 +1,18 @@
 {% load i18n %}
 
-<div class="row">
-    <div class="col-sm-12">
-        <p>
-            {% translate "Here you can create, modify and delete categories and boards. You also can change their order via drag and drop." %}
-        </p>
-    </div>
+<div class="mb-3">
+    <p>
+        {% translate "Here you can create, modify and delete categories and boards. You also can change their order via drag and drop." %}
+    </p>
+</div>
 
-    <div class="col-md-6 col-md-push-6">
+<div class="row">
+    <div class="col-md-6 order-sm-last">
         {% include "aa_forum/partials/administration/new-category.html" %}
     </div>
 
     {% if category_loop %}
-        <div class="col-md-6 col-md-pull-6">
+        <div class="col-md-6 order-sm-first">
             <script>
                 let categoriesWithBoards = []
                 let boardsWithChildren = []
