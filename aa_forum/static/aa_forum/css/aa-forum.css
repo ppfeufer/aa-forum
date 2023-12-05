@@ -64,12 +64,7 @@
     }
 
     .aa-forum .boards-sortable > li {
-        background-color: rgb(236 240 241);
         padding: 1rem;
-    }
-
-    .aa-forum .child-boards-sortable > li {
-        background-color: rgb(213 217 218);
     }
 
     .aa-forum .boards-sortable > li:first-child {
