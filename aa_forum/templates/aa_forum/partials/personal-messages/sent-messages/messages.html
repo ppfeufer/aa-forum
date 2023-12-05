@@ -28,52 +28,56 @@
                 </div>
 
                 {% for message in page_obj %}
-                    <div id="aa-forum-personal-message-id-{{ message.pk }}" class="card-aa-forum-personal-messages-item">
-                        <div class="aa-forum-personal-message-date">
-                            {{ message.time_sent|forum_time }}
+                    <div id="aa-forum-personal-message-id-{{ message.pk }}">
+                        <div class="card-aa-forum-personal-messages-item">
+                            <div class="aa-forum-personal-message-date">
+                                {{ message.time_sent|forum_time }}
+                            </div>
+
+                            <div class="aa-forum-personal-message-recipient">
+                                {% with recipient_maincharacter_id=message.recipient|main_character_id %}
+                                    <img
+                                        class="aa-forum-character-portrait img img-rounded img-last-post-avatar"
+                                        src="{{ recipient_maincharacter_id|character_portrait_url:32 }}"
+                                        alt="{{ message.recipient|main_character_name }}"
+                                        width="32"
+                                        height="32"
+                                    >
+                                {% endwith %}
+
+                                {{ message.recipient|main_character_name  }}
+                            </div>
+
+                            <div class="aa-forum-personal-message-subject">
+                                {{ message.subject }}
+
+                                <span class="float-end">
+                                    <button
+                                        class="btn btn-aa-forum-topic-moderation btn-xs btn-read-personal-message"
+                                        title="{% translate 'Read message' %}"
+                                        data-sender="{{ message.sender.pk }}"
+                                        data-recipient="{{ message.recipient.pk }}"
+                                        data-message="{{ message.pk }}"
+                                        data-message-folder="sent-messages"
+                                    >
+                                        <i class="fa-solid fa-envelope-open"></i>
+                                    </button>
+
+                                    <button
+                                        class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-delete"
+                                        title="{% translate 'Delete message' %}"
+                                        data-toggle="modal"
+                                        data-target="#delete-message-{{ message.pk }}"
+                                    >
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </span>
+                            </div>
+
+                            {% include "aa_forum/modals/personal-messages/message-delete.html" with message_folder='inbox' %}
                         </div>
 
-                        <div class="aa-forum-personal-message-recipient">
-                            {% with recipient_maincharacter_id=message.recipient|main_character_id %}
-                                <img
-                                    class="aa-forum-character-portrait img img-rounded img-last-post-avatar"
-                                    src="{{ recipient_maincharacter_id|character_portrait_url:32 }}"
-                                    alt="{{ message.recipient|main_character_name }}"
-                                    width="32"
-                                    height="32"
-                                >
-                            {% endwith %}
-
-                            {{ message.recipient|main_character_name  }}
-                        </div>
-
-                        <div class="aa-forum-personal-message-subject">
-                            {{ message.subject }}
-
-                            <span class="float-end">
-                                <button
-                                    class="btn btn-aa-forum-topic-moderation btn-xs btn-read-personal-message"
-                                    title="{% translate 'Read Message' %}"
-                                    data-sender="{{ message.sender.pk }}"
-                                    data-recipient="{{ message.recipient.pk }}"
-                                    data-message="{{ message.pk }}"
-                                    data-message-folder="sent-messages"
-                                >
-                                    <i class="fas fa-sign-in-alt"></i>
-                                </button>
-
-                                <button
-                                    class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-delete"
-                                    title="{% translate 'Delete Message' %}"
-                                    data-toggle="modal"
-                                    data-target="#delete-message-{{ message.pk }}"
-                                >
-                                    <i class="far fa-trash-alt"></i>
-                                </button>
-                            </span>
-                        </div>
-
-                        {% include "aa_forum/modals/personal-messages/message-delete.html" with message_folder='sent-messages' %}
+                        <div class="d-none mb-3 card-aa-forum-personal-messages-message"></div>
                     </div>
                 {% endfor %}
             {% else %}

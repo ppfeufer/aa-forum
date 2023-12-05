@@ -5,13 +5,13 @@
     <div id="message-{{ message.pk }}" class="card card-default">
         <div class="card-body">
             <div class="aa-forum-message">
-                <div class="hidden-xs">
+                <div class="d-none d-sm-block m-sm-3 m-md-0">
                     {% include "aa_forum/partials/forum/topic/message-author.html" with message_author=message.sender %}
                 </div>
 
-                <div class="aa-forum-message-wrapper">
+                <div class="aa-forum-message-wrapper m-3">
                     <div class="aa-forum-message-header row">
-                        <div class="hidden-lg hidden-md hidden-sm">
+                        <div class="d-lg-none d-md-none d-sm-none">
                             {% include "aa_forum/partials/forum/topic/message-author.html" with message_author=message.sender %}
                         </div>
 
