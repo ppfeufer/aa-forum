@@ -362,9 +362,11 @@ class Board(models.Model):
             :rtype:
             """
 
-            return mark_safe(
-                s=_(
-                    f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{self.topic_url}">{self._topic.subject}</a></p>'  # pylint: disable=line-too-long
+            return str(
+                mark_safe(
+                    s=_(
+                        f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{self.topic_url}">{self._topic.subject}</a></p>'  # pylint: disable=line-too-long
+                    )
                 )
             )
 
@@ -452,7 +454,7 @@ class Board(models.Model):
         Start a new topic in this board
 
         Warning:
-            This function will NOT check if the current logged in user
+            This function will NOT check if the current logged-in user
             has access to the board or is allowed to start a new topic
             in this board.
             You have to implement these checks on your own!
@@ -499,11 +501,15 @@ class Board(models.Model):
         :rtype:
         """
 
+        logger.debug(msg="Starting new topic")
+
         with transaction.atomic():
             # Check if a topic with the same subject already exists in this board
             existing_topic = Topic.objects.filter(board=self, subject__iexact=subject)
 
             if existing_topic.exists():
+                logger.debug(msg=f'Topic "{subject}" already exists!')
+
                 existing_topic = existing_topic.get()
 
                 raise self.TopicAlreadyExists(topic=existing_topic)

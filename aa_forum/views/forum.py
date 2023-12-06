@@ -346,7 +346,7 @@ def board_new_topic(
             board_slug=current_board.slug,
         )
 
-    # If this is a POST request we need to process the form data …
+    # If this is a POST request, we need to process the form data …
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
         form = NewTopicForm(data=request.POST)
@@ -354,7 +354,7 @@ def board_new_topic(
         # Check whether it's valid:
         if form.is_valid():
             try:
-                # Let's see if we can create the new topic
+                # Let's see if we can create a new topic
                 new_topic = current_board.new_topic(
                     subject=form.cleaned_data["subject"],
                     message=form.cleaned_data["message"],
@@ -362,6 +362,8 @@ def board_new_topic(
                 )
             except current_board.TopicAlreadyExists as exc:
                 # Apparently there is already a topic with this subject
+                logger.debug(msg=f"{request.user} tried to create a duplicate topic.")
+
                 messages.warning(request=request, message=exc)
 
                 return render(
