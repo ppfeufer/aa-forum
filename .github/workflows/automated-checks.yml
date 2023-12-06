@@ -48,7 +48,7 @@ jobs:
           - '3.10'
           - '3.11'
         django-version:
-          - '4.0'
+          - '4.2'
         # MySQL versions to test against
         database:
           # https://endoflife.date/mysql
