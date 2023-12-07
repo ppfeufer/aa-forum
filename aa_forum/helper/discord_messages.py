@@ -1,5 +1,5 @@
 """
-Helper to handle Discord messaging to users (Discord DM)
+Helper functions to send messages to Discord
 """
 
 # Standard Library
@@ -41,12 +41,19 @@ def _aadiscordbot_send_private_message(
 ) -> None:
     """
     Try to send a PM to a user on Discord via allianceauth-discordbot
+
     :param user_id:
+    :type user_id:
     :param level:
+    :type level:
     :param title:
+    :type title:
     :param message:
+    :type message:
     :param embed_message:
+    :type embed_message:
     :return:
+    :rtype:
     """
 
     if allianceauth_discordbot_installed():
@@ -86,13 +93,19 @@ def _discordproxy_send_private_message(
 ):
     """
     Try to send a PM to a user on Discord via discordproxy
-    (fall back to allianceauth-discordbot if needed)
+
     :param user_id:
+    :type user_id:
     :param level:
+    :type level:
     :param title:
+    :type title:
     :param message:
+    :type message:
     :param embed_message:
+    :type embed_message:
     :return:
+    :rtype:
     """
 
     # Third Party
@@ -152,10 +165,14 @@ def send_new_personal_message_notification(
     message: PersonalMessage, embed_message: bool = True
 ) -> None:
     """
-    Send a DM to the recipient of a personal message
+    Send a notification to Discord about a new personal message
+
     :param message:
+    :type message:
     :param embed_message:
+    :type embed_message:
     :return:
+    :rtype:
     """
 
     # Needs to be imported here, otherwise it's a circular import
@@ -228,12 +245,18 @@ def send_message_to_discord_webhook(
     board: Board, topic: Topic, message: Message, headline: str
 ):
     """
-    Send a message to a Discord Webhook
+    Send a message to a Discord webhook
+
     :param board:
+    :type board:
     :param topic:
+    :type topic:
     :param message:
+    :type message:
     :param headline:
+    :type headline:
     :return:
+    :rtype:
     """
 
     discord_webhook = Webhook(url=board.discord_webhook)

@@ -1,5 +1,5 @@
 """
-Search related views
+Search views
 """
 
 # Standard Library
@@ -32,11 +32,14 @@ logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__ti
 @permission_required(perm="aa_forum.basic_access")
 def results(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     """
-    Search results view
+    View for the search results
 
     :param request:
+    :type request:
     :param page_number:
+    :type page_number:
     :return:
+    :rtype:
     """
 
     if request.GET:

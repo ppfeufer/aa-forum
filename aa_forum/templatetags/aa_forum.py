@@ -30,7 +30,7 @@ from aa_forum.models import PersonalMessage
 
 class SetVarNode(template.Node):
     """
-    SetVarNode
+    Set a template variable
     """
 
     def __init__(self, var_name, var_value):
@@ -39,10 +39,12 @@ class SetVarNode(template.Node):
 
     def render(self, context):
         """
-        Render context
+        Render the template variable
 
         :param context:
+        :type context:
         :return:
+        :rtype:
         """
 
         try:
@@ -58,10 +60,12 @@ class SetVarNode(template.Node):
 @register.simple_tag
 def aa_forum_static(path: str) -> str:
     """
-    Return versioned static URL
+    Return a versioned static URL
 
     :param path:
+    :type path:
     :return:
+    :rtype:
     """
 
     static_url = static(path=path)
@@ -73,12 +77,10 @@ def aa_forum_static(path: str) -> str:
 @register.filter
 def aa_forum_time(db_datetime: datetime) -> str:
     """
-    Convert DB time into a formatted date-time string we use in our templates
+    Format a datetime object for the forum
 
     :param db_datetime:
     :type db_datetime:
-    :param arg:
-    :type arg:
     :return:
     :rtype:
     """
@@ -87,7 +89,7 @@ def aa_forum_time(db_datetime: datetime) -> str:
     if db_datetime in (None, ""):
         return ""
 
-    # Try to format the date for a localised output
+    # Try to format the date for a localized output
     try:
         formatted_date_string = formats.date_format(value=db_datetime)
     except AttributeError:
@@ -122,11 +124,14 @@ def aa_forum_time(db_datetime: datetime) -> str:
 @register.filter
 def aa_forum_highlight_search_term(text: str, search_phrase: str) -> str:
     """
-    Highlight the search term in search results
+    Highlight a search term in a text
 
     :param text:
+    :type text:
     :param search_phrase:
+    :type search_phrase:
     :return:
+    :rtype:
     """
 
     delimiter_search_term_start = "{«}"
@@ -223,8 +228,11 @@ def aa_forum_template_variable(parser, token):  # pylint: disable=unused-argumen
         {% aa_forum_template_variable <var_name> = <var_value> %}
 
     :param parser:
+    :type parser:
     :param token:
+    :type token:
     :return:
+    :rtype:
     """
 
     parts = token.split_contents()
@@ -241,10 +249,12 @@ def aa_forum_template_variable(parser, token):  # pylint: disable=unused-argumen
 @register.simple_tag
 def personal_message_unread_count(user: User) -> str:
     """
-    Return the number of new/unread personal messages
+    Get the unread personal message count for a user
 
     :param user:
+    :type user:
     :return:
+    :rtype:
     """
 
     return_value = ""
@@ -266,7 +276,9 @@ def aa_forum_main_character_name(user: User) -> str:
     Get the users main character name, or return the username if no main character
 
     :param user:
+    :type user:
     :return:
+    :rtype:
     """
 
     if user is None:
@@ -284,10 +296,12 @@ def aa_forum_main_character_name(user: User) -> str:
 @register.filter
 def aa_forum_main_character_id(user: User) -> int:
     """
-    Get the users main character id, or return 1 if no main character
+    Get the users' main character id, or 1 if no main character
 
     :param user:
+    :type user:
     :return:
+    :rtype:
     """
 
     if user is None:
@@ -304,11 +318,12 @@ def aa_forum_main_character_id(user: User) -> int:
 @register.filter
 def aa_forum_main_character_corporation_name(user: User) -> str:
     """
-    Get the users' main character corporation name,
-    or an empty string if no main character
+    Get the users' main character corporation name, or an empty string if no main character
 
     :param user:
+    :type user:
     :return:
+    :rtype:
     """
 
     if user is None:
@@ -328,7 +343,9 @@ def aa_forum_main_character_corporation_id(user: User) -> int:
     Get the users' main character corporation id, or 1 if no main character
 
     :param user:
+    :type user:
     :return:
+    :rtype:
     """
 
     if user is None:
@@ -348,7 +365,9 @@ def aa_forum_main_character_alliance_name(user: User) -> str:
     Get the users' main character alliance name, or an empty string if no main character
 
     :param user:
+    :type user:
     :return:
+    :rtype:
     """
 
     if user is None:
@@ -368,7 +387,9 @@ def aa_forum_main_character_alliance_id(user: User) -> int:
     Get the users' main character alliance id, or 1 if no main character
 
     :param user:
+    :type user:
     :return:
+    :rtype:
     """
 
     if user is None:

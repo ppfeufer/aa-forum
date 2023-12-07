@@ -1,5 +1,5 @@
 """
-Testing app settings
+Test for app_settings.py
 """
 
 # Django
@@ -15,7 +15,7 @@ from aa_forum.app_settings import (
 
 class TestModulesInstalled(TestCase):
     """
-    Test for installed modules
+    Test if modules are installed
     """
 
     @modify_settings(INSTALLED_APPS={"append": "aadiscordbot"})
@@ -24,6 +24,7 @@ class TestModulesInstalled(TestCase):
         Test allianceauth_discordbot_installed should return True
 
         :return:
+        :rtype:
         """
 
         self.assertTrue(expr=allianceauth_discordbot_installed())
@@ -34,6 +35,7 @@ class TestModulesInstalled(TestCase):
         Test allianceauth_discordbot_installed should return False
 
         :return:
+        :rtype:
         """
 
         self.assertFalse(expr=allianceauth_discordbot_installed())
@@ -44,6 +46,7 @@ class TestModulesInstalled(TestCase):
         Test discord_messaging_proxy_available should return True for aadiscordbot
 
         :return:
+        :rtype:
         """
 
         self.assertTrue(expr=discord_messaging_proxy_available())
@@ -54,6 +57,7 @@ class TestModulesInstalled(TestCase):
         Test aa_timezones_installed should return True
 
         :return:
+        :rtype:
         """
 
         self.assertTrue(expr=aa_timezones_installed())
@@ -64,6 +68,7 @@ class TestModulesInstalled(TestCase):
         Test aa_timezones_installed should return False
 
         :return:
+        :rtype:
         """
 
         self.assertFalse(expr=aa_timezones_installed())

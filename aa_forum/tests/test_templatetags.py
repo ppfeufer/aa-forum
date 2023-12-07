@@ -32,14 +32,22 @@ class TestMainCharacterName(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up template
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.template = "{% load aa_forum %}{{ user|aa_forum_main_character_name }}"
 
     def test_should_contain_character_name_for_users_with_main(self):
         """
-        Test should contain character name for user with main set
+        Test should contain a character name for user with a main set
 
         :return:
+        :rtype:
         """
 
         # given
@@ -57,6 +65,7 @@ class TestMainCharacterName(TestCase):
         Should return username for users without a main character
 
         :return:
+        :rtype:
         """
 
         # given
@@ -74,6 +83,7 @@ class TestMainCharacterName(TestCase):
         Should return "deleted" for sentinel user
 
         :return:
+        :rtype:
         """
 
         # given
@@ -91,6 +101,7 @@ class TestMainCharacterName(TestCase):
         Test should be empty
 
         :return:
+        :rtype:
         """
 
         # given
@@ -110,6 +121,13 @@ class TestMainCharacterId(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up template
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.template = "{% load aa_forum %}{{ user|aa_forum_main_character_id }}"
 
@@ -118,6 +136,7 @@ class TestMainCharacterId(TestCase):
         Test should contain main character ID for users with main
 
         :return:
+        :rtype:
         """
 
         # given
@@ -135,6 +154,7 @@ class TestMainCharacterId(TestCase):
         Test should contain dummy ID (1) for users without main character
 
         :return:
+        :rtype:
         """
 
         # given
@@ -152,6 +172,7 @@ class TestMainCharacterId(TestCase):
         Test should return dummy ID (1) for sentinel user
 
         :return:
+        :rtype:
         """
 
         # given
@@ -169,6 +190,7 @@ class TestMainCharacterId(TestCase):
         Test should return dummy ID (1) for None
 
         :return:
+        :rtype:
         """
 
         # given
@@ -188,6 +210,13 @@ class TestMainCharacterCorporationName(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up template
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.template = (
             "{% load aa_forum %}{{ user|aa_forum_main_character_corporation_name }}"
@@ -198,6 +227,7 @@ class TestMainCharacterCorporationName(TestCase):
         Test should return corporation name for users with a main character
 
         :return:
+        :rtype:
         """
 
         # given
@@ -218,9 +248,10 @@ class TestMainCharacterCorporationName(TestCase):
 
     def test_should_be_empty_for_users_without_main(self):
         """
-        Test should be empty for users without main character
+        Test should be empty for users without a main character
 
         :return:
+        :rtype:
         """
 
         # given
@@ -238,6 +269,7 @@ class TestMainCharacterCorporationName(TestCase):
         Test should be empty for sentinel user
 
         :return:
+        :rtype:
         """
 
         # given
@@ -255,6 +287,7 @@ class TestMainCharacterCorporationName(TestCase):
         Test should be empty for None
 
         :return:
+        :rtype:
         """
 
         # given
@@ -275,6 +308,13 @@ class TestMainCorporationId(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up template
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.template = (
             "{% load aa_forum %}{{ user|aa_forum_main_character_corporation_id }}"
@@ -285,6 +325,7 @@ class TestMainCorporationId(TestCase):
         Test should return the main character corp ID for users with a main character
 
         :return:
+        :rtype:
         """
 
         # given
@@ -305,9 +346,10 @@ class TestMainCorporationId(TestCase):
 
     def test_should_be_dummy_id_for_users_without_main(self):
         """
-        Test should return dummy ID (1) for users without main character
+        Test should return dummy ID (1) for users without a main character
 
         :return:
+        :rtype:
         """
 
         # given
@@ -325,6 +367,7 @@ class TestMainCorporationId(TestCase):
         Test should return dummy ID (1) for sentinel user
 
         :return:
+        :rtype:
         """
 
         # given
@@ -342,6 +385,7 @@ class TestMainCorporationId(TestCase):
         Test should return dummy ID (1) for None
 
         :return:
+        :rtype:
         """
 
         # given
@@ -361,6 +405,13 @@ class TestMainCharacterAllianceName(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up template
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.template = (
             "{% load aa_forum %}{{ user|aa_forum_main_character_alliance_name }}"
@@ -368,9 +419,10 @@ class TestMainCharacterAllianceName(TestCase):
 
     def test_should_contain_alliance_name_for_users_with_main(self):
         """
-        Test should return main character alliance name for users with min character
+        Test should return the main character alliance name for users with a main character
 
         :return:
+        :rtype:
         """
 
         # given
@@ -394,9 +446,10 @@ class TestMainCharacterAllianceName(TestCase):
 
     def test_should_be_empty_for_users_without_main(self):
         """
-        Test should be empty for users without main character
+        Test should be empty for users without a main character
 
         :return:
+        :rtype:
         """
 
         # given
@@ -411,9 +464,10 @@ class TestMainCharacterAllianceName(TestCase):
 
     def test_should_be_empty_when_main_is_not_in_an_alliance(self):
         """
-        Test should be empty when main character is not in an alliance
+        Test should be empty when the main character is not in an alliance
 
         :return:
+        :rtype:
         """
 
         # given
@@ -439,6 +493,7 @@ class TestMainCharacterAllianceName(TestCase):
         Test should be empty for sentinel user
 
         :return:
+        :rtype:
         """
 
         # given
@@ -456,6 +511,7 @@ class TestMainCharacterAllianceName(TestCase):
         Test should be empty for None
 
         :return:
+        :rtype:
         """
 
         # given
@@ -475,6 +531,13 @@ class TestMainAllianceId(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up template
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.template = (
             "{% load aa_forum %}{{ user|aa_forum_main_character_alliance_id }}"
@@ -485,6 +548,7 @@ class TestMainAllianceId(TestCase):
         Test should return main character alliance ID for user with a main character
 
         :return:
+        :rtype:
         """
 
         # given
@@ -510,6 +574,7 @@ class TestMainAllianceId(TestCase):
         Test should return dummy ID (1) for user without main character
 
         :return:
+        :rtype:
         """
 
         # given
@@ -524,9 +589,10 @@ class TestMainAllianceId(TestCase):
 
     def test_should_dummy_id_when_main_is_not_in_an_alliance(self):
         """
-        Test should dummy ID (1) when main character is not in an alliance
+        Test should dummy ID (1) when the main character is not in an alliance
 
         :return:
+        :rtype:
         """
 
         # given
@@ -552,6 +618,7 @@ class TestMainAllianceId(TestCase):
         Test should return dummy ID (1) for sentinel user
 
         :return:
+        :rtype:
         """
 
         # given
@@ -569,6 +636,7 @@ class TestMainAllianceId(TestCase):
         Test should return dummy ID (1) for None
 
         :return:
+        :rtype:
         """
 
         # given
@@ -589,7 +657,9 @@ class TestForumTemplateVariables(TestCase):
     def test_aa_forum_template_variable(self):
         """
         Test aa_forum_template_variable
+
         :return:
+        :rtype:
         """
 
         rendered = render_template(
@@ -606,7 +676,9 @@ class TestForumTemplateVariables(TestCase):
     def test_should_raise_template_syntax_error(self):
         """
         Test should raise template syntax error
+
         :return:
+        :rtype:
         """
 
         with self.assertRaisesMessage(
@@ -629,6 +701,7 @@ class TestForumTemplateVariables(TestCase):
         Test personal_message_unread_count to return zero
 
         :return:
+        :rtype:
         """
 
         user = create_fake_user(
@@ -656,6 +729,7 @@ class TestForumTemplateVariables(TestCase):
         Test personal_message_unread_count to return a bootstrap badge with a number
 
         :return:
+        :rtype:
         """
 
         # given (creating our personal message)
@@ -705,9 +779,10 @@ class TestForumVersionedStatic(TestCase):
 
     def test_versioned_static(self):
         """
-        Test should return static URL string with version
+        Test should return static URL string with a version
 
         :return:
+        :rtype:
         """
 
         context = {"version": __version__}
@@ -733,6 +808,13 @@ class TestHighlightSearchTerm(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Setup
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
 
         cls.message_text = "Lorem Ipsum"
@@ -767,6 +849,7 @@ class TestHighlightSearchTerm(TestCase):
         Test should highlight search term
 
         :return:
+        :rtype:
         """
 
         context = {"message": self.message_text, "search_term": self.search_term}
@@ -784,6 +867,7 @@ class TestHighlightSearchTerm(TestCase):
         Test should add a dummy href
 
         :return:
+        :rtype:
         """
 
         context = {
@@ -805,6 +889,7 @@ class TestHighlightSearchTerm(TestCase):
         Test should not highlight in an a-tag's href attribute
 
         :return:
+        :rtype:
         """
 
         context = {"message": self.message_with_link, "search_term": self.search_term}
@@ -823,6 +908,7 @@ class TestHighlightSearchTerm(TestCase):
         Test should not highlight in an a-tag's title attribute
 
         :return:
+        :rtype:
         """
 
         context = {
@@ -844,6 +930,7 @@ class TestHighlightSearchTerm(TestCase):
         Test should not highlight in an a-tag's name attribute
 
         :return:
+        :rtype:
         """
 
         context = {
@@ -865,6 +952,7 @@ class TestHighlightSearchTerm(TestCase):
         Test should not highlight in an img-tag's src attribute
 
         :return:
+        :rtype:
         """
 
         context = {
@@ -886,6 +974,7 @@ class TestHighlightSearchTerm(TestCase):
         Test should add a dummy image src
 
         :return:
+        :rtype:
         """
 
         context = {
@@ -907,6 +996,7 @@ class TestHighlightSearchTerm(TestCase):
         Test should not highlight in an img-tag's alt attribute
 
         :return:
+        :rtype:
         """
 
         context = {
@@ -928,6 +1018,7 @@ class TestHighlightSearchTerm(TestCase):
         Test should not highlight in an img-tag's title attribute
 
         :return:
+        :rtype:
         """
 
         context = {
@@ -945,9 +1036,6 @@ class TestHighlightSearchTerm(TestCase):
         self.assertEqual(first=rendered_template, second=expected_result)
 
 
-# 2021-08-17 05:38:13.887496
-
-
 class TestForumDatetime(TestCase):
     """
     Tests for aa_forum_time template tag
@@ -955,6 +1043,13 @@ class TestForumDatetime(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Setup
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
 
         cls.db_datetime = parser.parse(timestr="2021-08-17 05:38:13.887496")
@@ -978,7 +1073,7 @@ class TestForumDatetime(TestCase):
     @modify_settings(INSTALLED_APPS={"append": "timezones"})
     def test_should_return_formatted_date_and_time_with_aa_timezones_support(self):
         """
-        Test should return formatted date and time with aa-timezones support
+        Test should return a formatted date and time with aa-timezones support
 
         :return:
         :rtype:

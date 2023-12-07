@@ -1,5 +1,5 @@
 """
-Models
+Models for AA-Forum
 """
 
 # Standard Library
@@ -51,6 +51,7 @@ def get_sentinel_user() -> User:
     Get the sentinel user or create one
 
     :return:
+    :rtype:
     """
 
     return User.objects.get_or_create(username="deleted")[0]
@@ -58,11 +59,14 @@ def get_sentinel_user() -> User:
 
 def _generate_slug(calling_model: models.Model, name: str) -> str:
     """
-    Generate a valid slug and return it.
+    Generate a slug for a model
 
     :param calling_model:
+    :type calling_model:
     :param name:
+    :type name:
     :return:
+    :rtype:
     """
 
     if name == INTERNAL_URL_PREFIX:
@@ -94,10 +98,14 @@ class SingletonModel(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        save action
+        "Save" action
+
         :param args:
+        :type args:
         :param kwargs:
+        :type kwargs:
         :return:
+        :rtype:
         """
 
         self.pk = 1
@@ -105,10 +113,14 @@ class SingletonModel(models.Model):
 
     def delete(self, *args, **kwargs):
         """
-        delete action
+        "Delete" action
+
         :param args:
+        :type args:
         :param kwargs:
+        :type kwargs:
         :return:
+        :rtype:
         """
 
         pass  # pylint: disable=unnecessary-pass
@@ -138,7 +150,10 @@ class General(models.Model):
     @classmethod
     def basic_permission(cls):
         """
-        Return basic permission needed to use this app
+        Return the basic permission for this app
+
+        :return:
+        :rtype:
         """
 
         return Permission.objects.select_related("content_type").get(
@@ -148,9 +163,10 @@ class General(models.Model):
     @classmethod
     def users_with_basic_access(cls) -> models.QuerySet:
         """
-        Return a queryset with users with basic access
+        Return all users with basic access to this app
 
         :return:
+        :rtype:
         """
 
         return users_with_permission(permission=cls.basic_permission())
@@ -178,6 +194,13 @@ class Category(models.Model):
         verbose_name_plural = _("categories")
 
     def __str__(self) -> str:
+        """
+        Return the name of the category
+
+        :return:
+        :rtype:
+        """
+
         return str(self.name)
 
     @transaction.atomic()
@@ -186,8 +209,11 @@ class Category(models.Model):
         Generates the slug
 
         :param args:
+        :type args:
         :param kwargs:
+        :type kwargs:
         :return:
+        :rtype:
         """
 
         if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
@@ -371,6 +397,13 @@ class Board(models.Model):
             )
 
     def __str__(self) -> str:
+        """
+        Return the name of the board
+
+        :return:
+        :rtype:
+        """
+
         return str(self.name)
 
     @transaction.atomic()
@@ -379,8 +412,11 @@ class Board(models.Model):
         Generates the slug
 
         :param args:
+        :type args:
         :param kwargs:
+        :type kwargs:
         :return:
+        :rtype:
         """
 
         if self._state.adding is True or self.slug == INTERNAL_URL_PREFIX:
@@ -397,6 +433,9 @@ class Board(models.Model):
     def get_absolute_url(self) -> str:
         """
         Calculate URL for this board and return it.
+
+        :return:
+        :rtype:
         """
 
         return reverse(
@@ -405,11 +444,12 @@ class Board(models.Model):
 
     def user_can_start_topic(self, user: User) -> bool:
         """
-        Determine if we have an Announcement Board
-        and the current user can start a topic
+        Check if the user can start a topic in this board
 
         :param user:
+        :type user:
         :return:
+        :rtype:
         """
 
         user_can_start_topic = True
@@ -424,9 +464,10 @@ class Board(models.Model):
 
     def _update_message_references(self):
         """
-        Update the first and last message for this board - and parent board if needed.
+        Update the first and last message for this board.
 
         :return:
+        :rtype:
         """
 
         self.last_message = (
@@ -588,6 +629,13 @@ class Topic(models.Model):
         ]
 
     def __str__(self) -> str:
+        """
+        Return the subject of the topic
+
+        :return:
+        :rtype:
+        """
+
         return str(self.subject)
 
     @transaction.atomic()
@@ -596,8 +644,11 @@ class Topic(models.Model):
         Generate slug for new objects and update first and last messages.
 
         :param args:
+        :type args:
         :param kwargs:
+        :type kwargs:
         :return:
+        :rtype:
         """
 
         if not self._state.adding and self.pk:
@@ -633,8 +684,11 @@ class Topic(models.Model):
         On delete
 
         :param args:
+        :type args:
         :param kwargs:
+        :type kwargs:
         :return:
+        :rtype:
         """
 
         board_needs_update = (
@@ -651,6 +705,7 @@ class Topic(models.Model):
         Calculate URL for this topic and return it.
 
         :return:
+        :rtype:
         """
 
         return reverse(
@@ -663,6 +718,7 @@ class Topic(models.Model):
         Update the first and last message for this topic.
 
         :return:
+        :rtype:
         """
 
         self.first_message = (
@@ -701,6 +757,13 @@ class LastMessageSeen(models.Model):
         ]
 
     def __str__(self) -> str:
+        """
+        Return a string representation of this object
+
+        :return:
+        :rtype:
+        """
+
         return f"{self.topic}-{self.user}-{self.message_time}"
 
 
@@ -748,11 +811,14 @@ class Message(models.Model):
     @transaction.atomic()
     def save(self, *args, **kwargs) -> None:
         """
-        Add the slug on save if it does not exist
+        Saving
 
         :param args:
+        :type args:
         :param kwargs:
+        :type kwargs:
         :return:
+        :rtype:
         """
 
         self.message = string_cleanup(string=self.message)
@@ -779,8 +845,11 @@ class Message(models.Model):
         On delete
 
         :param args:
+        :type args:
         :param kwargs:
+        :type kwargs:
         :return:
+        :rtype:
         """
 
         topic_needs_update = self in (self.topic.first_message, self.topic.last_message)
@@ -802,6 +871,7 @@ class Message(models.Model):
         Calculate URL for this message and return it.
 
         :return:
+        :rtype:
         """
 
         messages_per_topic = int(
@@ -879,6 +949,13 @@ class PersonalMessage(models.Model):
         verbose_name_plural = _("personal messages")
 
     def __str__(self) -> str:
+        """
+        Return a string representation of this object
+
+        :return:
+        :rtype:
+        """
+
         return f'"{self.subject}" from {self.sender} to {self.recipient}'
 
     @transaction.atomic()
@@ -955,6 +1032,13 @@ class Setting(SingletonModel):
         verbose_name_plural = _("settings")
 
     def __str__(self) -> str:
+        """
+        Return a string representation of this object
+
+        :return:
+        :rtype:
+        """
+
         return str(_("Forum settings"))
 
 
@@ -985,17 +1069,27 @@ class UserProfile(models.Model):
         verbose_name_plural = _("user profiles")
 
     def __str__(self):
+        """
+        Return a string representation of this object
+
+        :return:
+        :rtype:
+        """
+
         model_string_name = str(_("Forum user profile"))
 
         return f"{model_string_name}: {self.user}"
 
     def save(self, *args, **kwargs) -> None:
         """
-        Cleanup the signature on save
+        Saving
 
         :param args:
+        :type args:
         :param kwargs:
+        :type kwargs:
         :return:
+        :rtype:
         """
 
         self.signature = string_cleanup(string=self.signature)

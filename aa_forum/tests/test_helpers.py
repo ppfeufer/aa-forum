@@ -1,5 +1,5 @@
 """
-Test for our helper functions
+Test for the helpers
 """
 
 # Standard Library
@@ -28,7 +28,7 @@ from aa_forum.models import get_sentinel_user
 @patch("aa_forum.helper.forms.messages")
 class TestHelperForms(TestCase):
     """
-    Testing the forms helper
+    Testing the form helpers
     """
 
     def setUp(self) -> None:
@@ -36,10 +36,12 @@ class TestHelperForms(TestCase):
 
     def test_should_send_form_errors_as_messages(self, messages):
         """
-        Test should send form errors as message
+        Test should send form errors as messages
 
         :param messages:
+        :type messages:
         :return:
+        :rtype:
         """
 
         # given
@@ -62,7 +64,9 @@ class TestHelperForms(TestCase):
         Test should do nothing when form has no errors
 
         :param messages:
+        :type messages:
         :return:
+        :rtype:
         """
 
         # given
@@ -78,14 +82,15 @@ class TestHelperForms(TestCase):
 
 class TestHelperText(TestCase):
     """
-    Testing the text helper
+    Testing the text helpers
     """
 
     def test_should_return_cleaned_string(self):
         """
-        Test should return a clean/sanitized string
+        Test should return cleaned string
 
         :return:
+        :rtype:
         """
 
         # given
@@ -106,9 +111,10 @@ class TestHelperText(TestCase):
 
     def test_should_return_none_for_get_image_url(self):
         """
-        Test should return none for get_image_url
+        Test should return none for get_image_url because there is none
 
         :return:
+        :rtype:
         """
 
         text = (
@@ -136,6 +142,7 @@ class TestHelperText(TestCase):
         Test should return none for get_image_url because it's invalid
 
         :return:
+        :rtype:
         """
 
         text = (
@@ -160,9 +167,10 @@ class TestHelperText(TestCase):
 
     def test_should_return_first_image_url_for_get_image_url(self):
         """
-        Test should return none for get_image_url because it's invalid
+        Test should return first image URL for get_image_url
 
         :return:
+        :rtype:
         """
 
         text = (
@@ -188,7 +196,7 @@ class TestHelperText(TestCase):
 
 class TestHelperEveImages(TestCase):
     """
-    Testing the eve_images helpers
+    Testing the EVE image helpers
     """
 
     def setUp(self) -> None:
@@ -203,6 +211,7 @@ class TestHelperEveImages(TestCase):
         Test should return character portrait URL
 
         :return:
+        :rtype:
         """
 
         character = self.user_1001.profile.main_character
@@ -214,9 +223,10 @@ class TestHelperEveImages(TestCase):
 
     def test_should_return_character_portrait_html(self):
         """
-        Test should return character portrait HTML image tag
+        Test should return character portrait HTML
 
         :return:
+        :rtype:
         """
 
         character = self.user_1001.profile.main_character
@@ -236,13 +246,16 @@ class TestHelperEveImages(TestCase):
 
 class TestGetMainCharacterFromUser(TestCase):
     """
-    Tests for get_main_character_from_user
+    Test get_main_character_from_user
     """
 
     @classmethod
     def setUpClass(cls) -> None:
         """
         Set up groups and users
+
+        :return:
+        :rtype:
         """
 
         super().setUpClass()
@@ -258,9 +271,10 @@ class TestGetMainCharacterFromUser(TestCase):
 
     def test_get_main_character_from_user_should_return_character_name(self):
         """
-        Test should return the main character name for a regular user
+        Test should return the main character name for a user with a character
 
         :return:
+        :rtype:
         """
 
         character_name = get_main_character_from_user(self.user_main_character)
@@ -269,9 +283,10 @@ class TestGetMainCharacterFromUser(TestCase):
 
     def test_get_main_character_from_user_should_return_user_name(self):
         """
-        Test should return just the username for a user without a character
+        Test should return the username for a user without a character
 
         :return:
+        :rtype:
         """
 
         user = AuthUtils.create_user(username="John Doe")
@@ -282,9 +297,10 @@ class TestGetMainCharacterFromUser(TestCase):
 
     def test_get_main_character_from_user_should_return_sentinel_user(self):
         """
-        Test should return "deleted" as username (Sentinel User)
+        Test should return "deleted" (Sentinel User) if user has no profile
 
         :return:
+        :rtype:
         """
 
         user = get_sentinel_user()
@@ -298,6 +314,7 @@ class TestGetMainCharacterFromUser(TestCase):
         Test should return "deleted" (Sentinel User) if user is None
 
         :return:
+        :rtype:
         """
 
         user = None

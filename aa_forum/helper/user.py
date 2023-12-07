@@ -1,5 +1,5 @@
 """
-User helper
+Helper functions for user related tasks
 """
 
 # Django
@@ -11,10 +11,12 @@ from aa_forum.models import UserProfile, get_sentinel_user
 
 def get_user_profile(user: User) -> UserProfile:
     """
-    Get a users settings or create them
+    Get the user profile from a user
 
     :param user:
+    :type user:
     :return:
+    :rtype:
     """
 
     user_profile, _ = UserProfile.objects.get_or_create(user=user)
@@ -25,7 +27,7 @@ def get_user_profile(user: User) -> UserProfile:
 # pylint: disable=duplicate-code
 def get_main_character_from_user(user: User) -> str:
     """
-    Get the main character from a user
+    Get the main character name from a user
 
     :param user:
     :type user:

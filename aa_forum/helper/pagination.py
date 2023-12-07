@@ -1,5 +1,5 @@
 """
-Pagination helper
+Pagination helper functions
 """
 
 # Django
@@ -11,7 +11,8 @@ def get_paginated_page_object(
     queryset: QuerySet, items_per_page: int = 10, page_number: int = None
 ) -> Page:
     """
-    Get the pagination page object
+    Return a paginated page object
+
     :param queryset:
     :type queryset:
     :param items_per_page:

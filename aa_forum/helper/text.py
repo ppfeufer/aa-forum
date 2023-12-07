@@ -1,5 +1,5 @@
 """
-Text helper
+Helper functions for text processing
 """
 
 # Standard Library
@@ -28,7 +28,7 @@ logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__ti
 
 def verify_image_url(image_url):
     """
-    Verify that the passed text is an image URL.
+    Verify if the passed string is a valid image url
 
     We're verifying image URLs for inclusion in Slack/Discord Webhook integration,
     which requires a scheme at the beginning (http(s)) and a file extension at the end
@@ -38,7 +38,9 @@ def verify_image_url(image_url):
     run it through both verify_url() and verify_image_url().
 
     :param image_url:
+    :type image_url:
     :return:
+    :rtype:
     """
 
     return re.match(
@@ -49,11 +51,12 @@ def verify_image_url(image_url):
 
 def get_first_image_url_from_text(text):
     """
-    Extract an image url from the passed text. If there are multiple image urls,
-    the first to verify will be returned.
+    Get the first image URL from a text
 
     :param text:
+    :type text:
     :return:
+    :rtype:
     """
 
     soup = BeautifulSoup(markup=text, features="html.parser")
@@ -85,10 +88,12 @@ def get_first_image_url_from_text(text):
 
 def string_cleanup(string: str) -> str:
     """
-    Clean up a string by removing JS, CSS and Head tags
+    Clean up a string
 
     :param string:
+    :type string:
     :return:
+    :rtype:
     """
 
     re_head = re.compile(
@@ -113,10 +118,10 @@ def prepare_message_for_discord(
     message: str, message_length=DISCORD_EMBED_MESSAGE_LENGTH
 ) -> str:
     """
-    Preparing the message to be sent with a Discord Webhook
+    Prepare a message for Discord
 
     We have to run strip_tags() twice here.
-    1.  To remove HTML tags from the text we want to send
+    1.  To remove HTML tags from the text, we want to send
     2.  After html.unescape() in case that unescaped former escaped HTML tags,
         which now need to be removed as well
 

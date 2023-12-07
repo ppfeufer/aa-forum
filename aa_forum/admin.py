@@ -1,5 +1,5 @@
 """
-Django admin declarations
+AA Forum Admin
 """
 
 # Django
@@ -12,6 +12,7 @@ from aa_forum.models import Board, Category, Setting, Topic, UserProfile
 
 class SingletonModelAdmin(admin.ModelAdmin):
     """
+    Singleton Model Admin
     Prevents Django admin users deleting the singleton or adding extra rows.
     """
 
@@ -19,7 +20,7 @@ class SingletonModelAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):  # pylint: disable=unused-argument
         """
-        Has add permissions
+        Has "add" permissions
 
         :param request:
         :type request:
@@ -33,7 +34,7 @@ class SingletonModelAdmin(admin.ModelAdmin):
         self, request, obj=None  # pylint: disable=unused-argument
     ):
         """
-        Has change permissions
+        Has "change" permissions
 
         :param request:
         :type request:
@@ -49,7 +50,7 @@ class SingletonModelAdmin(admin.ModelAdmin):
         self, request, obj=None  # pylint: disable=unused-argument
     ):
         """
-        Has delete permissions
+        Has "delete" permissions
 
         :param request:
         :type request:
@@ -72,7 +73,9 @@ class BaseReadOnlyAdminMixin:
         Has add permissions
 
         :param request:
+        :type request:
         :return:
+        :rtype:
         """
 
         return False
@@ -81,11 +84,14 @@ class BaseReadOnlyAdminMixin:
         self, request, obj=None  # pylint: disable=unused-argument
     ):
         """
-        Has change permissions
+        Has "change" permissions
 
         :param request:
+        :type request:
         :param obj:
+        :type obj:
         :return:
+        :rtype:
         """
 
         return False
@@ -94,11 +100,14 @@ class BaseReadOnlyAdminMixin:
         self, request, obj=None  # pylint: disable=unused-argument
     ):
         """
-        Has delete permissions
+        Has "delete" permissions
 
         :param request:
+        :type request:
         :param obj:
+        :type obj:
         :return:
+        :rtype:
         """
 
         return False
@@ -118,7 +127,9 @@ class CategoryAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
         Return the board count per category
 
         :param obj:
+        :type obj:
         :return:
+        :rtype:
         """
 
         return obj.boards.count()
@@ -141,10 +152,12 @@ class BoardAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
 
     def _groups(self, obj):
         """
-        Return the groups this board is restricted to as list
+        Return the groups per board
 
         :param obj:
+        :type obj:
         :return:
+        :rtype:
         """
 
         groups = obj.groups.all()
@@ -156,10 +169,12 @@ class BoardAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
 
     def _topics_count(self, obj):
         """
-        Return the topics count per board
+        Return the topic count per board
 
         :param obj:
+        :type obj:
         :return:
+        :rtype:
         """
 
         return obj.topics.count()
@@ -178,7 +193,9 @@ class TopicAdmin(BaseReadOnlyAdminMixin, admin.ModelAdmin):
         Return the message count per topic
 
         :param obj:
+        :type obj:
         :return:
+        :rtype:
         """
 
         return obj.messages.count()
@@ -194,7 +211,7 @@ class SettingAdmin(SingletonModelAdmin):
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
     """
-    Setting Admin
+    User Profile Admin
     """
 
     list_display = ("user",)

@@ -24,6 +24,13 @@ class TestAdminViews(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """
+        Set up user
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.user = create_fake_user(
             character_id=1001,
@@ -36,6 +43,7 @@ class TestAdminViews(TestCase):
         Test should delete a category
 
         :return:
+        :rtype:
         """
 
         # given
@@ -56,6 +64,7 @@ class TestAdminViews(TestCase):
         Test should raise 404 when category not found on delete
 
         :return:
+        :rtype:
         """
 
         # given
@@ -75,6 +84,7 @@ class TestAdminViews(TestCase):
         Test should delete board
 
         :return:
+        :rtype:
         """
 
         # given
@@ -101,6 +111,7 @@ class TestAdminViews(TestCase):
         Test should raise 404 when board not found on delete
 
         :return:
+        :rtype:
         """
 
         # given
@@ -121,6 +132,7 @@ class TestAdminViews(TestCase):
         Test should save category order
 
         :return:
+        :rtype:
         """
 
         # given
@@ -150,9 +162,10 @@ class TestAdminViews(TestCase):
 
     def test_should_save_categories_order_and_handle_errors(self):
         """
-        Test should save categories order and handle errors
+        Test should save the category order and handle errors
 
         :return:
+        :rtype:
         """
 
         # given
@@ -182,6 +195,7 @@ class TestAdminViews(TestCase):
         Test should save board order
 
         :return:
+        :rtype:
         """
 
         # given
@@ -215,6 +229,7 @@ class TestAdminViews(TestCase):
         Test should create child board
 
         :return:
+        :rtype:
         """
 
         # given
@@ -245,6 +260,7 @@ class TestAdminViews(TestCase):
         Test should save board order and handle errors
 
         :return:
+        :rtype:
         """
 
         # given

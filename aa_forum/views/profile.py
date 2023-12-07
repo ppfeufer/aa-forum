@@ -1,5 +1,5 @@
 """
-User profile view
+Views for the user profile
 """
 
 # Django
@@ -29,17 +29,19 @@ logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__ti
 @permission_required(perm="aa_forum.basic_access")
 def index(request: WSGIRequest) -> HttpResponse:
     """
-    Profile index view
+    View for the user profile
 
     :param request:
+    :type request:
     :return:
+    :rtype:
     """
 
     logger.info(msg=f"{request.user} called their user profile.")
 
     user_profile = get_user_profile(user=request.user)
 
-    # If this is a POST request we need to process the form data
+    # If this is a POST request, we need to process the form data
     if request.method == "POST":
         user_profile_form = UserProfileForm(data=request.POST, instance=user_profile)
 

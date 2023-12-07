@@ -31,10 +31,12 @@ from aa_forum.models import (
 
 def get_mandatory_form_label_text(text):
     """
-    Label text for mandatory form fields
+    Returns a label text with a mandatory marker
 
     :param text:
+    :type text:
     :return:
+    :rtype:
     """
 
     required_text = _("This field is mandatory")
@@ -50,10 +52,17 @@ def get_mandatory_form_label_text(text):
 class SpecialModelChoiceIterator(forms.models.ModelChoiceIterator):
     """
     Variant of Django's ModelChoiceIterator to prevent it from always re-fetching the
-    given queryset from database.
+    given queryset from the database.
     """
 
     def __iter__(self):
+        """
+        Iterate over the choices
+
+        :return:
+        :rtype:
+        """
+
         if self.field.empty_label is not None:
             yield "", self.field.empty_label
 
@@ -66,15 +75,31 @@ class SpecialModelChoiceIterator(forms.models.ModelChoiceIterator):
 class SpecialModelMultipleChoiceField(forms.ModelMultipleChoiceField):
     """
     Variant of Django's ModelMultipleChoiceField to prevent it from always
-    re-fetching the given queryset from database.
+    re-fetching the given queryset from the database.
     """
 
     iterator = SpecialModelChoiceIterator
 
     def _get_queryset(self):
+        """
+        Get the queryset
+
+        :return:
+        :rtype:
+        """
+
         return self._queryset
 
     def _set_queryset(self, queryset):
+        """
+        Set the queryset
+
+        :param queryset:
+        :type queryset:
+        :return:
+        :rtype:
+        """
+
         self._queryset = queryset
         self.widget.choices = self.choices
 
@@ -107,6 +132,7 @@ class NewTopicForm(forms.Form):
         Cleanup the message
 
         :return:
+        :rtype:
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
@@ -332,7 +358,9 @@ class EditMessageForm(ModelForm):
     def clean_message(self):
         """
         Cleanup the message
+
         :return:
+        :rtype:
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
@@ -402,6 +430,7 @@ class UserProfileForm(ModelForm):
         Check that the signature is not longer than allowed
 
         :return:
+        :rtype:
         """
 
         signature = string_cleanup(string=self.cleaned_data["signature"])
@@ -429,6 +458,7 @@ class UserProfileForm(ModelForm):
         Check if it's a valid URL
 
         :return:
+        :rtype:
         """
 
         website_url = self.cleaned_data["website_url"]
@@ -539,6 +569,7 @@ class NewPersonalMessageForm(ModelForm):
         Cleanup the message
 
         :return:
+        :rtype:
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
@@ -573,6 +604,7 @@ class ReplyPersonalMessageForm(ModelForm):
         Cleanup the message
 
         :return:
+        :rtype:
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])

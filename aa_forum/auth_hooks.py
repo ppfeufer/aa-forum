@@ -1,5 +1,5 @@
 """
-Hook into AA
+Hooks for the auth app
 """
 
 # Alliance Auth
@@ -13,10 +13,14 @@ from aa_forum.views.forum import unread_topics_count
 
 class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
     """
-    This class ensures only authorized users will see the menu entry
+    Menu item hook for AA Forum
     """
 
     def __init__(self):
+        """
+        Constructor
+        """
+
         # Setup menu entry for sidebar
         MenuItemHook.__init__(
             self,
@@ -28,10 +32,12 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
 
     def render(self, request):
         """
-        Check if the user has the permission to view this app
+        Render the menu item
 
         :param request:
+        :type request:
         :return:
+        :rtype:
         """
 
         if request.user.has_perm(perm="aa_forum.basic_access"):
@@ -54,6 +60,7 @@ def register_menu():
     Register our menu item
 
     :return:
+    :rtype:
     """
 
     return AaForumMenuItem()
@@ -62,9 +69,10 @@ def register_menu():
 @hooks.register("url_hook")
 def register_urls():
     """
-    Register our base url
+    Register our urls
 
     :return:
+    :rtype:
     """
 
     return UrlHook(urls=urls, namespace="aa_forum", base_url=r"^forum/")

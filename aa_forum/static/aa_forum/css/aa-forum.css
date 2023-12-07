@@ -314,10 +314,10 @@
 ------------------------------------------------------------------------------------- */
 @media all {
     .aa-forum .aa-forum-search-result-inner {
-        place-content: flex-start flex-start;
         align-items: flex-start;
         display: flex;
         flex-flow: row nowrap;
+        place-content: flex-start flex-start;
     }
 
     .aa-forum .aa-forum-search-results-total-number {
@@ -530,10 +530,10 @@
 @media all and (min-width: 992px) {
     .card-aa-forum-personal-messages-item-header,
     .aa-forum .card-aa-forum-personal-messages-item {
-        place-content: flex-start flex-start;
         align-items: center;
         display: flex;
         flex-flow: row nowrap;
+        place-content: flex-start flex-start;
     }
 
     .aa-forum .aa-forum-personal-message-date {

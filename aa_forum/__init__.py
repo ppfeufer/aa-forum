@@ -1,5 +1,5 @@
 """
-A couple of variables to use throughout the app
+AA-Forum
 """
 
 # Django

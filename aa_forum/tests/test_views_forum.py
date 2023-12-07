@@ -26,6 +26,13 @@ class TestIndexViews(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up users and categories
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.user_1001 = create_fake_user(
             character_id=1001,
@@ -40,6 +47,13 @@ class TestIndexViews(TestCase):
         cls.category = Category.objects.create(name="Science")
 
     def setUp(self) -> None:
+        """
+        Set up boards and topics
+
+        :return:
+        :rtype:
+        """
+
         # board 1 has an unread topic
         self.board_1 = Board.objects.create(name="Physics", category=self.category)
         topic_1 = Topic.objects.create(subject="Mysteries", board=self.board_1)
@@ -67,6 +81,7 @@ class TestIndexViews(TestCase):
         Test should show forum index
 
         :return:
+        :rtype:
         """
 
         # given
@@ -83,6 +98,7 @@ class TestIndexViews(TestCase):
         Test should show new indicator when a topic has not been seen yet
 
         :return:
+        :rtype:
         """
 
         # given
@@ -103,6 +119,7 @@ class TestIndexViews(TestCase):
         Test should show new indicator when new posts are made
 
         :return:
+        :rtype:
         """
 
         # given
@@ -125,6 +142,7 @@ class TestIndexViews(TestCase):
         Test should show counts
 
         :return:
+        :rtype:
         """
 
         # given
@@ -143,6 +161,7 @@ class TestIndexViews(TestCase):
         Test should show empty counts after all topics are deleted
 
         :return:
+        :rtype:
         """
 
         # given
@@ -165,6 +184,13 @@ class TestIndexViewsSpecial(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up users and categories
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.user_1001 = create_fake_user(
             character_id=1001,
@@ -185,6 +211,7 @@ class TestIndexViewsSpecial(TestCase):
         Test should show empty counts after all topics are deleted with child board
 
         :return:
+        :rtype:
         """
 
         # given
@@ -215,6 +242,13 @@ class TestBoardViews(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up users and categories
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.user_1001 = create_fake_user(
             character_id=1001,
@@ -235,6 +269,13 @@ class TestBoardViews(TestCase):
         cls.board = Board.objects.create(name="Physics", category=cls.category)
 
     def setUp(self) -> None:
+        """
+        Set up topics
+
+        :return:
+        :rtype:
+        """
+
         # topic 1 is completely new
         self.topic_1 = Topic.objects.create(subject="Mysteries", board=self.board)
         create_fake_messages(topic=self.topic_1, amount=15)
@@ -252,6 +293,7 @@ class TestBoardViews(TestCase):
         Test should show new indicator when topic has not been seen yet
 
         :return:
+        :rtype:
         """
 
         # given
@@ -274,6 +316,7 @@ class TestBoardViews(TestCase):
         Test should show new indicator when first page seen only
 
         :return:
+        :rtype:
         """
 
         # given
@@ -302,6 +345,7 @@ class TestBoardViews(TestCase):
         Test should show new indicator when only second page been seen
 
         :return:
+        :rtype:
         """
 
         # given
@@ -330,6 +374,7 @@ class TestBoardViews(TestCase):
         Test should show new indicator when only last page been seen
 
         :return:
+        :rtype:
         """
 
         # given
@@ -360,6 +405,7 @@ class TestBoardViews(TestCase):
         Test should show new indicator when new posts are made
 
         :return:
+        :rtype:
         """
 
         # given
@@ -382,9 +428,10 @@ class TestBoardViews(TestCase):
 
     def test_should_delete_topic(self):
         """
-        Test should delete topic
+        Test should delete a topic
 
         :return:
+        :rtype:
         """
 
         # given
@@ -407,9 +454,10 @@ class TestBoardViews(TestCase):
 
     def test_should_return_404_when_delete_topic_not_found(self):
         """
-        Test should return 404 when topic not found on delete
+        Test should return 404 when a topic not found on delete
 
         :return:
+        :rtype:
         """
 
         # given
@@ -425,9 +473,10 @@ class TestBoardViews(TestCase):
 
     def test_should_lock_topic(self):
         """
-        Test should lock topic
+        Test should lock a topic
 
         :return:
+        :rtype:
         """
 
         # given
@@ -454,9 +503,10 @@ class TestBoardViews(TestCase):
 
     def test_should_unlock_topic(self):
         """
-        Test should unlock topic
+        Test should unlock a topic
 
         :return:
+        :rtype:
         """
 
         # given
@@ -485,9 +535,10 @@ class TestBoardViews(TestCase):
 
     def test_should_return_404_when_lock_topic_not_found(self):
         """
-        Test should return 404 when topic not found on lock
+        Test should return 404 when a topic not found on lock
 
         :return:
+        :rtype:
         """
 
         # given
@@ -506,6 +557,7 @@ class TestBoardViews(TestCase):
         Test should make topic sticky
 
         :return:
+        :rtype:
         """
 
         # given
@@ -535,6 +587,7 @@ class TestBoardViews(TestCase):
         Test should reverse topic sticky
 
         :return:
+        :rtype:
         """
 
         # given
@@ -563,9 +616,10 @@ class TestBoardViews(TestCase):
 
     def test_should_return_404_when_sticky_topic_not_found(self):
         """
-        Test should return 404 when topic not found on sticky change
+        Test should return 404 when a topic not found on sticky change
 
         :return:
+        :rtype:
         """
 
         # given
@@ -584,6 +638,7 @@ class TestBoardViews(TestCase):
         Test should return "Board does not exist" for wrong board
 
         :return:
+        :rtype:
         """
 
         # given
@@ -619,6 +674,7 @@ class TestBoardViews(TestCase):
         Test should return "Category does not exist" on new topic
 
         :return:
+        :rtype:
         """
 
         # given
@@ -654,6 +710,7 @@ class TestBoardViews(TestCase):
         Test should return "Board does not exist" on new topic
 
         :return:
+        :rtype:
         """
 
         # given
@@ -693,6 +750,13 @@ class TestTopicViews(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up users and categories
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.user_1001 = create_fake_user(
             character_id=1001,
@@ -715,6 +779,13 @@ class TestTopicViews(TestCase):
         cls.user_1004.groups.add(cls.announcement_group)
 
     def setUp(self) -> None:
+        """
+        Set up categories, boards and topics
+
+        :return:
+        :rtype:
+        """
+
         self.category = Category.objects.create(name="Science")
         self.board = Board.objects.create(name="Physics", category=self.category)
         self.announcement_board = Board.objects.create(
@@ -725,9 +796,10 @@ class TestTopicViews(TestCase):
 
     def test_should_remember_last_message_seen_by_user_page_1(self):
         """
-        Test should remember last message seen by user on page 1
+        Test should remember the last message seen by user on page 1
 
         :return:
+        :rtype:
         """
 
         # given
@@ -755,9 +827,10 @@ class TestTopicViews(TestCase):
 
     def test_should_remember_last_message_seen_by_user_page_2(self):
         """
-        Test should remember last message seen by user on page 2
+        Test should remember the last message seen by user on page 2
 
         :return:
+        :rtype:
         """
 
         # given
@@ -787,9 +860,10 @@ class TestTopicViews(TestCase):
         self,
     ):
         """
-        Test should remember last message seen by user when opening previous pages
+        Test should remember the last message seen by user when opening previous pages
 
         :return:
+        :rtype:
         """
 
         # given
@@ -823,9 +897,10 @@ class TestTopicViews(TestCase):
 
     def test_should_redirect_to_first_message_when_topic_not_seen_yet(self):
         """
-        Test should redirect to first message when topic not seen yet
+        Test should redirect to the first message when the topic not seen yet
 
         :return:
+        :rtype:
         """
 
         # given
@@ -848,9 +923,10 @@ class TestTopicViews(TestCase):
 
     def test_should_redirect_to_first_new_message_normal(self):
         """
-        Test should normally redirect to first new message
+        Test should normally redirect to the first new message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -882,9 +958,10 @@ class TestTopicViews(TestCase):
         self,
     ):
         """
-        Test should redirect to first unseen message when last seen message is deleted
+        Test should redirect to the first unseen message when the last seen message is deleted
 
         :return:
+        :rtype:
         """
 
         # given
@@ -916,7 +993,9 @@ class TestTopicViews(TestCase):
     def test_should_redirect_to_newest_message_when_seen_full_topic(self):
         """
         Test should redirect to the newest message
+
         :return:
+        :rtype:
         """
 
         # given
@@ -947,6 +1026,7 @@ class TestTopicViews(TestCase):
         Test should redirect to message by ID on the first page
 
         :return:
+        :rtype:
         """
 
         # given
@@ -974,6 +1054,7 @@ class TestTopicViews(TestCase):
         Test should redirect to message by ID on page 1
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1002,6 +1083,7 @@ class TestTopicViews(TestCase):
         Test should redirect to message by ID on page 2
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1030,6 +1112,7 @@ class TestTopicViews(TestCase):
         Test should redirect to message by ID on the last page
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1055,9 +1138,10 @@ class TestTopicViews(TestCase):
 
     def test_should_delete_regular_message(self):
         """
-        Test should delete regular message
+        Test should delete a regular message
 
         :return:
+        :rtype:
 
         """
 
@@ -1077,9 +1161,10 @@ class TestTopicViews(TestCase):
 
     def test_should_not_delete_message_because_missing_permissions(self):
         """
-        Test should not delete message because of insufficient permissions
+        Test should not delete a message because of insufficient permissions
 
         :return:
+        :rtype:
 
         """
 
@@ -1108,9 +1193,10 @@ class TestTopicViews(TestCase):
 
     def test_should_delete_first_message(self):
         """
-        Test should delete first message
+        Test should delete the first message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1130,9 +1216,10 @@ class TestTopicViews(TestCase):
 
     def test_should_delete_last_message_in_topic(self):
         """
-        Test should delete last message in topic
+        Test should delete the last message in a topic
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1153,9 +1240,10 @@ class TestTopicViews(TestCase):
 
     def test_should_return_404_when_delete_message_not_found(self):
         """
-        Test should return 404 when message not found on delete
+        Test should return 404 when a message not found on delete
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1175,7 +1263,9 @@ class TestTopicViews(TestCase):
         Test should not be able to edit messages from others
 
         :param messages:
+        :type messages:
         :return:
+        :rtype:
         """
 
         # given
@@ -1212,7 +1302,9 @@ class TestTopicViews(TestCase):
         Test should not be able to edit messages from boards with no access
 
         :param messages:
+        :type messages:
         :return:
+        :rtype:
         """
 
         # given
@@ -1248,9 +1340,10 @@ class TestTopicViews(TestCase):
         self,
     ):
         """
-        Test should redirect to forum index if topic is unavailable
+        Test should redirect to forum index when the topic does not exist on topic view
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1285,6 +1378,7 @@ class TestTopicViews(TestCase):
         Test should redirect to forum index when topic does not exist on topic modify
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1316,9 +1410,10 @@ class TestTopicViews(TestCase):
         self,
     ):
         """
-        Test should redirect to forum index if topic does not exist on reply
+        Test should redirect to forum index if a topic does not exist on reply
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1350,9 +1445,10 @@ class TestTopicViews(TestCase):
         self,
     ):
         """
-        Test should redirect to forum index if message does not exist
+        Test should redirect to forum index if a message does not exist
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1383,6 +1479,7 @@ class TestTopicViews(TestCase):
         Test should show all unread messages
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1398,9 +1495,10 @@ class TestTopicViews(TestCase):
 
     def test_should_return_to_forum_index_on_topic_modify_when_no_topic_found(self):
         """
-        Test should redirect to forum index if topic not found on modify
+        Test should redirect to forum index if a topic not found on modify
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1435,6 +1533,7 @@ class TestTopicViews(TestCase):
         Test should redirect to forum index for user without rights to modify topic
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1475,6 +1574,7 @@ class TestTopicViews(TestCase):
         Test should show modify topic view
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1493,9 +1593,10 @@ class TestTopicViews(TestCase):
 
     def test_can_create_new_topic_in_announcement_board_with_permission(self):
         """
-        Test should create new topic in announcement board with permissions
+        Test should create a new topic in announcement board with permissions
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1514,9 +1615,10 @@ class TestTopicViews(TestCase):
 
     def test_can_create_new_topic_in_announcement_board_with_group(self):
         """
-        Test should create new topic in announcement board with groups
+        Test should create a new topic in announcement board with groups
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1536,9 +1638,10 @@ class TestTopicViews(TestCase):
 
     def test_cannot_create_new_topic_in_announcement_board_without_permission(self):
         """
-        Test should create new topic in announcement board without permissions
+        Test should create a new topic in announcement board without permissions
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1574,9 +1677,10 @@ class TestTopicViews(TestCase):
 
     def test_cannot_create_new_topic_in_announcement_board(self):
         """
-        Test cannot create new topic in announcement board
+        Test cannot create a new topic in announcement board
 
         :return:
+        :rtype:
         """
 
         # given
