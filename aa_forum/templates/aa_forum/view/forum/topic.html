@@ -19,7 +19,7 @@
 
                 {% if can_modify_subject %}
                     <a
-                        id="aa-forum-btn-modify-message-{{ message.pk }}"
+                        id="aa-forum-btn-modify-topic-{{ topic.pk }}"
                         href="{% url 'aa_forum:forum_topic_modify' topic.board.category.slug topic.board.slug topic.slug %}"
                         class="btn btn-aa-forum-topic-moderation btn-sm float-end"
                         title="{% translate 'Modify topic subject' %}"
