@@ -1,11 +1,11 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
-{% load aa_forum_user %}
+{% load aa_forum %}
 
 <div class="card card-default">
     <div class="card-header">
         <div class="card-title mb-0">
-            {% translate "Reply to:" %} {{ message.sender|main_character_name }}
+            {% translate "Reply to:" %} {{ message.sender|aa_forum_main_character_name }}
         </div>
     </div>
 

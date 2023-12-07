@@ -21,9 +21,7 @@ from app_utils.urls import reverse as reverse_url
 # AA Forum
 from aa_forum import __version__
 from aa_forum.models import PersonalMessage, get_sentinel_user
-from aa_forum.templatetags.aa_forum_template_variables import (
-    personal_message_unread_count,
-)
+from aa_forum.templatetags.aa_forum import personal_message_unread_count
 from aa_forum.tests.utils import create_fake_user, render_template
 
 
@@ -35,7 +33,7 @@ class TestMainCharacterName(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.template = "{% load aa_forum_user %}{{ user|main_character_name }}"
+        cls.template = "{% load aa_forum %}{{ user|aa_forum_main_character_name }}"
 
     def test_should_contain_character_name_for_users_with_main(self):
         """
@@ -107,13 +105,13 @@ class TestMainCharacterName(TestCase):
 
 class TestMainCharacterId(TestCase):
     """
-    Tests for main_character_id template tag
+    Tests for aa_forum_main_character_id template tag
     """
 
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.template = "{% load aa_forum_user %}{{ user|main_character_id }}"
+        cls.template = "{% load aa_forum %}{{ user|aa_forum_main_character_id }}"
 
     def test_should_contain_character_id_for_users_with_main(self):
         """
@@ -185,19 +183,19 @@ class TestMainCharacterId(TestCase):
 
 class TestMainCharacterCorporationName(TestCase):
     """
-    Tests for main_character_corporation_name template tag
+    Tests for aa_forum_main_character_corporation_name template tag
     """
 
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
         cls.template = (
-            "{% load aa_forum_user %}{{ user|main_character_corporation_name }}"
+            "{% load aa_forum %}{{ user|aa_forum_main_character_corporation_name }}"
         )
 
     def test_should_contain_corp_name_for_users_with_main(self):
         """
-        Test should return corporation name for users with main character
+        Test should return corporation name for users with a main character
 
         :return:
         """
@@ -271,7 +269,7 @@ class TestMainCharacterCorporationName(TestCase):
 
 class TestMainCorporationId(TestCase):
     """
-    Tests for main_character_corporation_id template tag
+    Tests for aa_forum_main_character_corporation_id template tag
 
     """
 
@@ -279,12 +277,12 @@ class TestMainCorporationId(TestCase):
     def setUpClass(cls) -> None:
         super().setUpClass()
         cls.template = (
-            "{% load aa_forum_user %}{{ user|main_character_corporation_id }}"
+            "{% load aa_forum %}{{ user|aa_forum_main_character_corporation_id }}"
         )
 
     def test_should_contain_corporation_id_for_users_with_main(self):
         """
-        Test should return main character corp ID for users with main character
+        Test should return the main character corp ID for users with a main character
 
         :return:
         """
@@ -358,13 +356,15 @@ class TestMainCorporationId(TestCase):
 
 class TestMainCharacterAllianceName(TestCase):
     """
-    Tests for main_character_alliance_name template tag
+    Tests for aa_forum_main_character_alliance_name template tag
     """
 
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.template = "{% load aa_forum_user %}{{ user|main_character_alliance_name }}"
+        cls.template = (
+            "{% load aa_forum %}{{ user|aa_forum_main_character_alliance_name }}"
+        )
 
     def test_should_contain_alliance_name_for_users_with_main(self):
         """
@@ -470,17 +470,19 @@ class TestMainCharacterAllianceName(TestCase):
 
 class TestMainAllianceId(TestCase):
     """
-    Tests for main_character_alliance_id template tag
+    Tests for aa_forum_main_character_alliance_id template tag
     """
 
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.template = "{% load aa_forum_user %}{{ user|main_character_alliance_id }}"
+        cls.template = (
+            "{% load aa_forum %}{{ user|aa_forum_main_character_alliance_id }}"
+        )
 
     def test_should_contain_alliance_id_for_users_with_main(self):
         """
-        Test should return main character alliance ID for user with main character
+        Test should return main character alliance ID for user with a main character
 
         :return:
         """
@@ -581,19 +583,19 @@ class TestMainAllianceId(TestCase):
 
 class TestForumTemplateVariables(TestCase):
     """
-    Tests for aa_forum_template_variables template tag
+    Tests for aa_forum template_variables template tag
     """
 
-    def test_set_template_variable(self):
+    def test_aa_forum_template_variable(self):
         """
-        Test set template variable
+        Test aa_forum_template_variable
         :return:
         """
 
         rendered = render_template(
             string=(
-                "{% load aa_forum_template_variables %}"
-                "{% set_template_variable foo = content %}"
+                "{% load aa_forum %}"
+                "{% aa_forum_template_variable foo = content %}"
                 "{{ foo }}"
             ),
             context={"content": "bar"},
@@ -610,14 +612,14 @@ class TestForumTemplateVariables(TestCase):
         with self.assertRaisesMessage(
             expected_exception=TemplateSyntaxError,
             expected_message=(
-                "'set_template_variable' tag must be of the form: "
-                "{% set_template_variable <var_name> = <var_value> %}"
+                "'aa_forum_template_variable' tag must be of the form: "
+                "{% aa_forum_template_variable <var_name> = <var_value> %}"
             ),
         ):
             render_template(
                 string=(
-                    "{% load aa_forum_template_variables %}"
-                    "{% set_template_variable foo %}"
+                    "{% load aa_forum %}"
+                    "{% aa_forum_template_variable foo %}"
                     "{{ foo }}"
                 )
             )
@@ -642,10 +644,7 @@ class TestForumTemplateVariables(TestCase):
         self.client.force_login(user)
 
         rendered = render_template(
-            string=(
-                "{% load aa_forum_template_variables %}"
-                "{% personal_message_unread_count 1001 %}"
-            )
+            string=("{% load aa_forum %}{% personal_message_unread_count 1001 %}")
         )
 
         self.assertEqual(first=rendered, second="")
@@ -701,7 +700,7 @@ class TestForumTemplateVariables(TestCase):
 
 class TestForumVersionedStatic(TestCase):
     """
-    Tests for aa_forum_versioned_static template tag
+    Tests for aa_forum_static template tag
     """
 
     def test_versioned_static(self):
@@ -715,7 +714,7 @@ class TestForumVersionedStatic(TestCase):
 
         rendered_template = render_template(
             string=(
-                "{% load aa_forum_versioned_static %}"
+                "{% load aa_forum %}"
                 "{% aa_forum_static 'aa_forum/css/aa-forum.min.css' %}"
             ),
             context=context,
@@ -759,8 +758,8 @@ class TestHighlightSearchTerm(TestCase):
         )
         cls.search_term = "Lorem"
         cls.template = (
-            "{% load aa_forum_search %}"
-            "{{ message|highlight_search_term:search_term  }}"
+            "{% load aa_forum %}"
+            "{{ message|aa_forum_highlight_search_term:search_term  }}"
         )
 
     def test_should_highlight_with_just_text(self):
@@ -951,7 +950,7 @@ class TestHighlightSearchTerm(TestCase):
 
 class TestForumDatetime(TestCase):
     """
-    Tests for forum_time template tag
+    Tests for aa_forum_time template tag
     """
 
     @classmethod
@@ -959,12 +958,12 @@ class TestForumDatetime(TestCase):
         super().setUpClass()
 
         cls.db_datetime = parser.parse(timestr="2021-08-17 05:38:13.887496")
-        cls.template = "{% load aa_forum_datetime %}{{ message_date|forum_time }}"
+        cls.template = "{% load aa_forum %}{{ message_date|aa_forum_time }}"
 
     @modify_settings(INSTALLED_APPS={"remove": "timezones"})
     def test_should_return_formatted_date_and_time(self):
         """
-        Test should return formatted date and time without aa-timezones support
+        Test should return the formatted date and time without aa-timezones support
 
         :return:
         :rtype:

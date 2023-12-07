@@ -1,5 +1,5 @@
 {% load i18n %}
-{% load aa_forum_datetime %}
+{% load aa_forum %}
 
 {% if message %}
     <div id="message-{{ message.pk }}" class="card card-default">
@@ -18,7 +18,7 @@
                         <div class="aa-forum-message-keyinfo col-md-6">
                             {{ message.subject }}
                             <br>
-                            <small>« <b>{% translate "on:" %}</b> {{ message.time_sent|forum_time }} »</small>
+                            <small>« <b>{% translate "on:" %}</b> {{ message.time_sent|aa_forum_time }} »</small>
                         </div>
                     </div>
 

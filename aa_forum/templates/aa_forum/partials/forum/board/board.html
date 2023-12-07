@@ -1,13 +1,12 @@
 {% load i18n %}
 {% load static %}
 {% load evelinks %}
-{% load aa_forum_datetime %}
-{% load aa_forum_template_variables %}
+{% load aa_forum %}
 
-{% set_template_variable category_slug = board.category.slug %}
-{% set_template_variable board_slug = board.slug %}
-{% set_template_variable board_groups = board.groups.all %}
-{% set_template_variable board_child_boards = board.child_boards.all %}
+{% aa_forum_template_variable category_slug = board.category.slug %}
+{% aa_forum_template_variable board_slug = board.slug %}
+{% aa_forum_template_variable board_groups = board.groups.all %}
+{% aa_forum_template_variable board_child_boards = board.child_boards.all %}
 
 <div class="aa-forum-board px-1">
     <div class="aa-forum-board-image">
@@ -69,13 +68,13 @@
 
     <div class="aa-forum-board-last-post hidden-xs">
         {% if board.topics.exists %}
-            {% set_template_variable board_last_message = board.last_message %}
-            {% set_template_variable board_latest_topic = board_last_message.topic %}
-            {% set_template_variable board_latest_topic_board = board_latest_topic.board %}
-            {% set_template_variable board_last_message_author = board_last_message.user_created %}
+            {% aa_forum_template_variable board_last_message = board.last_message %}
+            {% aa_forum_template_variable board_latest_topic = board_last_message.topic %}
+            {% aa_forum_template_variable board_latest_topic_board = board_latest_topic.board %}
+            {% aa_forum_template_variable board_last_message_author = board_last_message.user_created %}
 
-            {% with author_maincharacter_id=board_last_message_author|main_character_id %}
-                <img class="aa-forum-character-portrait img img-rounded img-last-post-avatar" src="{{ author_maincharacter_id|character_portrait_url:64 }}" alt="{{ board_last_message_author|main_character_name }}" width="64" height="64">
+            {% with author_maincharacter_id=board_last_message_author|aa_forum_main_character_id %}
+                <img class="aa-forum-character-portrait img img-rounded img-last-post-avatar" src="{{ author_maincharacter_id|character_portrait_url:64 }}" alt="{{ board_last_message_author|aa_forum_main_character_name }}" width="64" height="64">
             {% endwith %}
 
             <p class="mb-0 last-post-information small">
@@ -90,8 +89,8 @@
                 </a>
 
                 <br>
-                <b>{% translate "posted by:" %}</b> {{ board_last_message_author|main_character_name }}<br>
-                <b>{% translate "posted at:" %}</b> {{ board_last_message.time_posted|forum_time }}
+                <b>{% translate "posted by:" %}</b> {{ board_last_message_author|aa_forum_main_character_name }}<br>
+                <b>{% translate "posted at:" %}</b> {{ board_last_message.time_posted|aa_forum_time }}
             </p>
         {% endif %}
     </div>

@@ -1,8 +1,8 @@
 {% load i18n %}
 {% load navactive %}
-{% load aa_forum_template_variables %}
+{% load aa_forum %}
 
-{% set_template_variable url_name = request.resolver_match.url_name %}
+{% aa_forum_template_variable url_name = request.resolver_match.url_name %}
 
 <li class="nav-item dropdown aa-forum-admin-menu">
     <a class="nav-link dropdown-toggle{% if "admin_" in url_name %} active{% endif %}" data-bs-toggle="dropdown" href="#">{% translate "Administration" %}</a>

@@ -1,7 +1,6 @@
 {% load i18n %}
 {% load evelinks %}
-{% load aa_forum_datetime %}
-{% load aa_forum_user %}
+{% load aa_forum %}
 
 <div class="col-sm-8 col-md-9 col-lg-10 col-sm-pull-4 col-md-pull-3 col-lg-pull-2">
     <div class="card card-default card-aa-forum-personal-messages-list">
@@ -31,21 +30,21 @@
                     <div id="aa-forum-personal-message-id-{{ message.pk }}">
                         <div class="card-aa-forum-personal-messages-item">
                             <div class="aa-forum-personal-message-date">
-                                {{ message.time_sent|forum_time }}
+                                {{ message.time_sent|aa_forum_time }}
                             </div>
 
                             <div class="aa-forum-personal-message-recipient">
-                                {% with recipient_maincharacter_id=message.recipient|main_character_id %}
+                                {% with recipient_maincharacter_id=message.recipient|aa_forum_main_character_id %}
                                     <img
                                         class="aa-forum-character-portrait img img-rounded img-last-post-avatar"
                                         src="{{ recipient_maincharacter_id|character_portrait_url:32 }}"
-                                        alt="{{ message.recipient|main_character_name }}"
+                                        alt="{{ message.recipient|aa_forum_main_character_name }}"
                                         width="32"
                                         height="32"
                                     >
                                 {% endwith %}
 
-                                {{ message.recipient|main_character_name  }}
+                                {{ message.recipient|aa_forum_main_character_name }}
                             </div>
 
                             <div class="aa-forum-personal-message-subject">

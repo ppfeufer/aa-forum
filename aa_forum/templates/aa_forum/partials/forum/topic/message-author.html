@@ -1,18 +1,18 @@
 {% load evelinks %}
-{% load aa_forum_user %}
+{% load aa_forum %}
 
 <div class="aa-forum-message-author m-md-3">
     <figure>
-        {% with user_maincharacter_id=message_author|main_character_id %}
-            <img class="aa-forum-character-portrait img img-rounded img-author-avatar" src="{{ user_maincharacter_id|character_portrait_url:128 }}" alt="{{ message_author|main_character_name }}" width="128" height="128">
+        {% with user_maincharacter_id=message_author|aa_forum_main_character_id %}
+            <img class="aa-forum-character-portrait img img-rounded img-author-avatar" src="{{ user_maincharacter_id|character_portrait_url:128 }}" alt="{{ message_author|aa_forum_main_character_name }}" width="128" height="128">
         {% endwith %}
     </figure>
 
     <p>
-        <span><b>{{ message_author|main_character_name }}</b><br></span>
-        <span class="hidden-xs">{{ message_author|main_character_corporation_name }}</span>
+        <span><b>{{ message_author|aa_forum_main_character_name }}</b><br></span>
+        <span class="hidden-xs">{{ message_author|aa_forum_main_character_corporation_name }}</span>
 
-        {% with main_character_alliance_name=message_author|main_character_alliance_name %}
+        {% with main_character_alliance_name=message_author|aa_forum_main_character_alliance_name %}
             {% if main_character_alliance_name %}
                 <span class="hidden-xs"><br><em>{{ main_character_alliance_name }}</em></span>
             {% endif %}
