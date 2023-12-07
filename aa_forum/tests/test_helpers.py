@@ -236,7 +236,7 @@ class TestHelperEveImages(TestCase):
         )
         expected_url = f"https://images.evetech.net/characters/{character.character_id}/portrait?size=32"  # pylint: disable=line-too-long
         expected_html = (
-            '<img class="aa-forum-character-portrait img-rounded" '
+            '<img class="aa-forum-character-portrait img rounded" '
             f'src="{expected_url}" alt="{character.character_name}" '
             'width="32" height="32">'
         )

@@ -36,7 +36,7 @@
                             <div class="aa-forum-personal-message-sender">
                                 {% with sender_maincharacter_id=message.sender|aa_forum_main_character_id %}
                                     <img
-                                        class="aa-forum-character-portrait img img-rounded img-last-post-avatar"
+                                        class="aa-forum-character-portrait img rounded img-last-post-avatar"
                                         src="{{ sender_maincharacter_id|character_portrait_url:32 }}"
                                         alt="{{ message.sender|aa_forum_main_character_name }}"
                                         width="32"

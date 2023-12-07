@@ -74,7 +74,7 @@
             {% aa_forum_template_variable board_last_message_author = board_last_message.user_created %}
 
             {% with author_maincharacter_id=board_last_message_author|aa_forum_main_character_id %}
-                <img class="aa-forum-character-portrait img img-rounded img-last-post-avatar" src="{{ author_maincharacter_id|character_portrait_url:64 }}" alt="{{ board_last_message_author|aa_forum_main_character_name }}" width="64" height="64">
+                <img class="aa-forum-character-portrait img rounded img-last-post-avatar" src="{{ author_maincharacter_id|character_portrait_url:64 }}" alt="{{ board_last_message_author|aa_forum_main_character_name }}" width="64" height="64">
             {% endwith %}
 
             <p class="mb-0 last-post-information small">
