@@ -15,7 +15,7 @@
 </li>
 
 <li class="nav-item">
-    <a class="nav-link {% navactive request 'aa_forum:personal_messages_inbox' %}" href="{% url 'aa_forum:personal_messages_inbox' %}">
+    <a class="nav-link {% renavactive request "^/forum/-/personal-messages/" %}" href="{% url 'aa_forum:personal_messages_inbox' %}">
         {% translate "Messages" %}
         {% personal_message_unread_count request.user %}
     </a>

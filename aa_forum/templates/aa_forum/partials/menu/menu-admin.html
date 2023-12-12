@@ -2,10 +2,10 @@
 {% load navactive %}
 {% load aa_forum %}
 
-{% aa_forum_template_variable url_name = request.resolver_match.url_name %}
-
 <li class="nav-item dropdown aa-forum-admin-menu">
-    <a class="nav-link dropdown-toggle{% if "admin_" in url_name %} active{% endif %}" data-bs-toggle="dropdown" href="#">{% translate "Administration" %}</a>
+    <a class="nav-link dropdown-toggle {% renavactive request "^/forum/-/admin/" %}" data-bs-toggle="dropdown" href="#">
+        {% translate "Administration" %}
+    </a>
 
     <ul id="aa-forum-admin-menu" class="dropdown-menu clearfix" role="menu">
         <li class="aa-forum-admin-menu-item">
