@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="aa-forum-message-wrapper m-3">
-                    <div class="aa-forum-message-header row">
+                    <div class="aa-forum-message-header row mb-3">
                         <div class="d-lg-none d-md-none d-sm-none">
                             {% include "aa_forum/partials/forum/topic/message-author.html" with message_author=message.sender %}
                         </div>
@@ -22,14 +22,14 @@
                         </div>
                     </div>
 
-                    <div class="aa-forum-message-body">
+                    <div class="aa-forum-message-body pt-3">
                         <div class="aa-forum-message-body-inner">
                             {{ message.message|safe }}
                         </div>
 
                         {% if message_author.aa_forum_user_profile %}
                             {% if message_author.aa_forum_user_profile.signature %}
-                                <div class="aa-forum-message-body-author-signature text-muted small hidden-xs">
+                                <div class="aa-forum-message-body-author-signature text-muted small hidden-xs pt-3">
                                     {{ message_sender.aa_forum_user_profile.signature|safe }}
                                 </div>
                             {% endif %}

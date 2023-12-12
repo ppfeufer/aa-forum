@@ -12,24 +12,8 @@
         width: 0;
     }
 
-    .aa-forum .aa-forum-admin-menu:hover .dropdown-menu {
+    .aa-forum-admin-menu:hover .dropdown-menu {
         display: block;
-    }
-
-    .aa-forum .aa-forum-admin-menu .aa-forum-admin-menu-item {
-        margin: 2.5px 0;
-    }
-
-    .aa-forum .aa-forum-admin-menu .aa-forum-admin-menu-item:first-child {
-        margin-top: 0;
-    }
-
-    .aa-forum .aa-forum-admin-menu .aa-forum-admin-menu-item:last-child {
-        margin-bottom: 0;
-    }
-
-    .aa-forum .aa-forum-admin-menu .aa-forum-admin-menu-item a {
-        padding: 1rem 1.5rem;
     }
 }
 
@@ -51,16 +35,6 @@
     .aa-forum .categories-sortable,
     .aa-forum .boards-sortable {
         list-style-type: none;
-        padding: 0;
-    }
-
-    .aa-forum .categories-sortable > li,
-    .aa-forum .boards-sortable > li {
-        margin-bottom: 1rem;
-    }
-
-    .aa-forum .boards-sortable > li {
-        padding: 1rem;
     }
 
     .aa-forum .boards-sortable > li:first-child {
@@ -73,19 +47,6 @@
 
     .aa-forum [data-bs-toggle="collapse"]:not(.collapsed) .if-collapsed {
         display: none;
-    }
-
-    .aa-forum .aa-forum-admin-card-aa-forum-category {
-        margin-bottom: 0;
-    }
-
-    .aa-forum .aa-forum-admin-card-aa-forum-category .card-body {
-        padding: 0 1rem;
-    }
-
-    .aa-forum .aa-forum-admin-card-aa-forum-category .card-body .collapse,
-    .aa-forum .aa-forum-admin-card-aa-forum-category .card-body .collapsing {
-        margin-top: 1rem;
     }
 
     .aa-forum .category-sortable {
@@ -116,9 +77,7 @@
 ------------------------------------------------------------------------------------- */
 @media all {
     .aa-forum .card-aa-forum-category .aa-forum-board {
-        display: flex;
         flex-direction: row;
-        padding: 1rem;
         transition: var(--bg-hover-transition);
     }
 
@@ -128,10 +87,6 @@
 
     .aa-forum .card-aa-forum-category .aa-forum-board:hover {
         background: rgb(0 0 0 / 5%);
-    }
-
-    .aa-forum .card-aa-forum-category .aa-forum-board-image {
-        margin-right: 1rem;
     }
 
     .aa-forum .card-aa-forum-category .aa-forum-board-image svg {
@@ -177,10 +132,6 @@
         margin-right: 5rem;
     }
 
-    .aa-forum .aa-forum-legend .aa-forum-legend-image {
-        margin-right: 0.5rem;
-    }
-
     .aa-forum .aa-forum-legend .aa-forum-legend-image svg {
         height: 30px;
         width: 30px;
@@ -188,7 +139,6 @@
 
     .aa-forum .aa-forum-legend .aa-forum-legend-text {
         display: inline-block;
-        margin-top: 0.25rem;
     }
 
     .aa-forum .aa-forum-legend span:last-child {
@@ -204,7 +154,6 @@
         align-items: center;
         display: flex;
         flex-direction: row;
-        padding: 1rem;
         transition: var(--bg-hover-transition);
     }
 
@@ -255,10 +204,6 @@
         background-color: rgb(255 220 104 / 25%);
     }
 
-    .aa-forum .aa-forum-topic-status-icon {
-        margin: 0 0.25rem;
-    }
-
     .aa-forum .label-aa-forum-topic-new-message {
         font-size: 55%;
         margin-left: 1rem;
@@ -276,28 +221,20 @@
 ------------------------------------------------------------------------------------- */
 @media all {
     .aa-forum .aa-forum-message-author .img-author-avatar {
-        margin-bottom: 1rem;
         max-width: 100%;
     }
 
     .aa-forum .aa-forum-message-wrapper {
-        margin: 2rem;
         width: auto;
-    }
-
-    .aa-forum .aa-forum-message-header {
-        margin-bottom: 1rem;
     }
 
     .aa-forum .aa-forum-message-body {
         border-top: 1px solid rgb(236 240 241);
-        padding: 1em 0 0;
     }
 
     .aa-forum .aa-forum-message-body-author-signature {
         border-top: 1px solid rgb(236 240 241);
         margin-top: 3em;
-        padding-top: 1em;
     }
 
     .aa-forum .aa-forum-message-body-last-edited {

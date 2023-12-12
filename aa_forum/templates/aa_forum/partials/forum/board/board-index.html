@@ -1,12 +1,12 @@
 {% load i18n %}
 
-<div id="category-{{ category.id }}" class="card card-default card-aa-forum-category">
+<div id="category-{{ category.id }}" class="card card-default card-aa-forum-category mb-3">
     <div class="card-header">
         <div class="card-title mb-0">{{ board.name }}</div>
     </div>
 
     {% if board.child_boards.all %}
-        <div class="card-body">
+        <div class="card-body row">
             {% for child_board in board.child_boards.all %}
                 {% include "aa_forum/partials/forum/board/board.html" with board=child_board %}
             {% endfor %}

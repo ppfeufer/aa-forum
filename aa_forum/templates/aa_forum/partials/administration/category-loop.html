@@ -1,8 +1,8 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 
-<li class="category-sortable ui-state-default ui-sortable" data-category-id="{{ category.category_obj.pk }}" data-position="{{ category.category_obj.order }}">
-    <div class="card card-default aa-forum-admin-card-aa-forum-category">
+<li class="mb-3 category-sortable ui-state-default ui-sortable" data-category-id="{{ category.category_obj.pk }}" data-position="{{ category.category_obj.order }}">
+    <div class="card card-default mb-0 aa-forum-admin-card-aa-forum-category">
         <div class="card-header">
             <div class="card-title mb-0">
                 {{ category.category_obj.name }}
@@ -24,8 +24,8 @@
             </div>
         </div>
 
-        <div class="card-body">
-            <div class="collapse" id="collapseEditCategory-{{ category.category_obj.pk }}">
+        <div class="card-body px-3 py-0">
+            <div class="collapse mt-3" id="collapseEditCategory-{{ category.category_obj.pk }}">
                 <div class="card card-body bg-light mb-3 py-3">
                     <p>
                         {% translate "Changing the name of this category does not change its URL part. This will remain the same to not break any possible links into this category." %}
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="collapse" id="collapseCategory-{{ category.category_obj.pk }}">
+            <div class="collapse mt-3" id="collapseCategory-{{ category.category_obj.pk }}">
                 <p>
                     <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNewBoardForm-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseNewBoardForm-{{ category.category_obj.pk }}">
                         {% translate "New board" %}
@@ -81,7 +81,7 @@
                 </div>
 
                 {% if category.boards %}
-                    <ul id="boards-sortable-category-{{ category.category_obj.pk }}" class="boards-sortable">
+                    <ul id="boards-sortable-category-{{ category.category_obj.pk }}" class="boards-sortable p-0">
                         {% for board in category.boards %}
                             {% include "aa_forum/partials/administration/board-loop.html" %}
                         {% endfor %}

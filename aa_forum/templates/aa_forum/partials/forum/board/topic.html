@@ -3,7 +3,7 @@
 {% load aa_forum %}
 
 <div class="aa-forum-topic-row {% if topic.is_locked %}aa-forum-topic-locked{% endif %} {% if topic.is_sticky %}aa-forum-topic-sticky{% endif %} row">
-    <div class="aa-forum-topic">
+    <div class="aa-forum-topic p-3">
         <div class="aa-forum-topic-image">
             {% if topic.has_unread_messages %}
                 <svg id="aa-forum-unread-in-{{ board.id }}">
@@ -33,13 +33,13 @@
                 <br>
                 <span class="small">
                     {% if topic.is_sticky %}
-                        <span class="aa-forum-topic-status-icon aa-forum-topic-status-sticky">
+                        <span class="aa-forum-topic-status-icon aa-forum-topic-status-sticky mx-1 my-0">
                             <i class="fa-solid fa-thumbtack" title="{% translate 'Topic is always on top' %}"></i>
                         </span>
                     {% endif %}
 
                     {% if topic.is_locked %}
-                        <span class="aa-forum-topic-status-icon aa-forum-topic-status-locked">
+                        <span class="aa-forum-topic-status-icon aa-forum-topic-status-locked mx-1 my-0">
                             <i class="fa-solid fa-lock" title="{% translate 'Topic is locked' %}"></i>
                         </span>
                     {% endif %}

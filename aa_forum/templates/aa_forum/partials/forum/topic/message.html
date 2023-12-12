@@ -11,7 +11,7 @@
             </div>
 
             <div class="aa-forum-message-wrapper m-3">
-                <div class="aa-forum-message-header row">
+                <div class="aa-forum-message-header row mb-3">
                     <div class="d-lg-none d-md-none d-sm-none">
                         {% include "aa_forum/partials/forum/topic/message-author.html" %}
                     </div>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
 
-                <div class="aa-forum-message-body">
+                <div class="aa-forum-message-body pt-3">
                     <div class="aa-forum-message-body-inner">
                         {% if search_term %}
                             {{ message.message|aa_forum_highlight_search_term:search_term }}
@@ -81,7 +81,7 @@
 
                     {% if message_author.aa_forum_user_profile %}
                         {% if message_author.aa_forum_user_profile.signature %}
-                            <div class="aa-forum-message-body-author-signature text-muted small hidden-xs">
+                            <div class="aa-forum-message-body-author-signature text-muted small hidden-xs pt-3">
                                 {{ message_author.aa_forum_user_profile.signature|safe }}
                             </div>
                         {% endif %}

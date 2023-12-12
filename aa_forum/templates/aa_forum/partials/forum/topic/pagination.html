@@ -2,13 +2,13 @@
 {% load i18n %}
 
 {% if page_obj.paginator.num_pages > 1 %}
-    <div class="col-4 offset-4">
+    <div>
         {% aa_forum_template_variable topic_first_message = topic.first_message %}
         {% aa_forum_template_variable topic_first_message_board = topic_first_message.topic.board %}
         {% aa_forum_template_variable topic_first_message_category = topic_first_message_board.category %}
 
         <nav aria-label="{% translate 'Message pagination' %}">
-            <ul class="pagination pagination-sm">
+            <ul class="pagination pagination-sm justify-content-center">
                 {% if page_obj.has_previous %}
                     <li class="page-item">
                         <a href="{{ topic.get_absolute_url }}" class="page-link">

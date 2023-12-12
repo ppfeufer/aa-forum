@@ -1,8 +1,8 @@
 {% load i18n %}
 
-<div class="col-4 offset-4">
+<div>
     <nav aria-label="{% translate 'Message pagination' %}">
-        <ul class="pagination pagination-sm">
+        <ul class="pagination pagination-sm justify-content-center">
             {% if search_results.has_previous %}
                 <li class="page-item">
                     <a href="{% url 'aa_forum:search_results' %}?q={{ search_term }}" class="page-link">

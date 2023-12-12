@@ -1,7 +1,7 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 
-<li class="{% if is_child_board %}child-{% endif %}board-sortable ui-state-default ui-sortable" data-board-id="{{ board.board_obj.pk }}" data-position="{{ board.board_obj.order }}">
+<li class="mb-3 p-3 {% if is_child_board %}child-{% endif %}board-sortable ui-state-default ui-sortable" data-board-id="{{ board.board_obj.pk }}" data-position="{{ board.board_obj.order }}">
     <div class="aa-forum-admin-board-name clearfix">
         {{ board.board_obj.name }}
 

@@ -4,7 +4,7 @@
             <div class="card-title mb-0">{{ category.name }}</div>
         </div>
 
-        <div class="card-body">
+        <div class="card-body row">
             {% for board in category.boards_sorted %}
                 {% include "aa_forum/partials/forum/board/board.html" %}
             {% endfor %}
