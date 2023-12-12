@@ -1091,7 +1091,7 @@ class TestForumDatetime(TestCase):
         expected_result = (
             f"{formatted_forum_date} "
             f'<sup>(<a href="{timezones_url}" target="_blank" rel="noopener noreferer" '
-            f'title="{link_title}"><i class="fas fa-question-circle"></i></a>)</sup>'
+            f'title="{link_title}"><i class="fa-solid fa-circle-question"></i></a>)</sup>'
         )
 
         self.assertEqual(first=rendered_template, second=expected_result)

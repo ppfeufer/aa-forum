@@ -25,7 +25,7 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
         MenuItemHook.__init__(
             self,
             text=__title__,
-            classes="fas fa-comments",
+            classes="fa-solid fa-comments",
             url_name="aa_forum:forum_index",
             navactive=["aa_forum:"],
         )

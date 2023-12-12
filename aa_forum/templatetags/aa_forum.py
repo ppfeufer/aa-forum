@@ -1,5 +1,5 @@
 """
-Versioned static URLs to break browser caches when changing the app version
+AA Forum template tags
 """
 
 # Standard Library
@@ -114,7 +114,7 @@ def aa_forum_time(db_datetime: datetime) -> str:
             s=(
                 f"{formatted_forum_date} "
                 f'<sup>(<a href="{timezones_url}" target="_blank" rel="noopener noreferer" '
-                f'title="{link_title}"><i class="fas fa-question-circle"></i></a>)</sup>'
+                f'title="{link_title}"><i class="fa-solid fa-circle-question"></i></a>)</sup>'
             )
         )
 
