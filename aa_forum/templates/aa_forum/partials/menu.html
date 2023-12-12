@@ -1,37 +1,8 @@
 {% load i18n %}
 {% load navactive %}
 
-<nav class="navbar navbar-expand-lg bg-primary navbar-dark mb-3 rounded">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'aa_forum:forum_index' %}">
-            {% translate "Forum" as navigation_item %}
-            {{ navigation_item|title }}
-        </a>
+{% include "aa_forum/partials/menu/menu-user.html" %}
 
-        <button
-            class="navbar-toggler collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#aa-forum-header-navbar"
-            aria-controls="aa-forum-header-navbar"
-            aria-expanded="false"
-            aria-label="{% translate 'Toggle navigation' %}"
-        >
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse navbar-left" id="aa-forum-header-navbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                {% include "aa_forum/partials/menu/menu-user.html" %}
-
-                {% if perms.aa_forum.manage_forum %}
-                    {% include "aa_forum/partials/menu/menu-admin.html" %}
-                {% endif %}
-            </ul>
-        </div>
-
-        <div class="aa-forum-search-box navbar-right">
-            {% include "aa_forum/partials/search/search-form.html" with suffix="menu" %}
-        </div>
-    </div>
-</nav>
+{% if perms.aa_forum.manage_forum %}
+    {% include "aa_forum/partials/menu/menu-admin.html" %}
+{% endif %}
