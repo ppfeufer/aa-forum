@@ -27,16 +27,16 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
-                    <i class="far fa-hand-paper"></i>
+                    <i class="fa-regular fa-hand fa-fw"></i>
                     {% translate "Cancel" %}
                 </button>
 
                 <a id="modal-button-confirm" class="btn btn-danger btn-sm" role="button" href="{% url 'aa_forum:forum_topic_change_sticky_state' topic.pk %}">
                     {% if topic.is_sticky %}
-                        <i class="fas fa-unlock"></i>
+                        <i class="fa-solid fa-thumbtack fa-fw"></i>
                         {% translate "Unset sticky" %}
                     {% else %}
-                        <i class="fas fa-lock"></i>
+                        <i class="fa-solid fa-thumbtack fa-fw"></i>
                         {% translate "Make sticky" %}
                     {% endif %}
                 </a>

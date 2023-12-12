@@ -35,7 +35,7 @@
                                     title="{% translate 'Copy message link to clipboard' %}"
                                     data-clipboard-text="{{ SITE_URL }}{% url 'aa_forum:forum_message' message.topic.board.category.slug message.topic.board.slug message.topic.slug message.pk %}"
                                 >
-                                    <i class="far fa-copy"></i>
+                                    <i class="fa-regular fa-copy"></i>
                                 </button>
 
                                 {% if message_author == request.user or perms.aa_forum.manage_forum %}
@@ -45,7 +45,7 @@
                                         class="btn btn-aa-forum-topic-moderation btn-sm"
                                         title="{% translate 'Modify message' %}"
                                     >
-                                        <i class="fas fa-pencil-alt"></i>
+                                        <i class="fa-solid fa-pencil"></i>
                                     </a>
 
                                     <button
@@ -54,7 +54,7 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#delete-message-{{ message.pk }}"
                                     >
-                                        <i class="fas fa-trash-alt"></i>
+                                        <i class="fa-regular fa-trash-can"></i>
                                     </button>
                                 {% endif %}
                             </div>

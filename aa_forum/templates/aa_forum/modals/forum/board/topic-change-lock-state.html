@@ -27,16 +27,16 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
-                    <i class="far fa-hand-paper"></i>
+                    <i class="fa-regular fa-hand fa-fw"></i>
                     {% translate "Cancel" %}
                 </button>
 
                 <a id="modal-button-confirm" class="btn btn-danger btn-sm" role="button" href="{% url 'aa_forum:forum_topic_change_lock_state' topic.pk %}">
                     {% if topic.is_locked %}
-                        <i class="fas fa-unlock"></i>
+                        <i class="fa-solid fa-unlock fa-fw"></i>
                         {% translate "Unlock/re-open topic" %}
                     {% else %}
-                        <i class="fas fa-lock"></i>
+                        <i class="fa-solid fa-lock fa-fw"></i>
                         {% translate "Lock/close topic" %}
                     {% endif %}
                 </a>

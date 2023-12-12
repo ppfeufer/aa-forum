@@ -9,11 +9,11 @@
 
                 <div class="float-end">
                     <button class="btn btn-warning btn-sm" title="{% translate 'Edit category' %}" data-bs-toggle="collapse" data-bs-target="#collapseEditCategory-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseEditCategory-{{ category.category_obj.pk }}">
-                        <i class="fas fa-pencil-alt"></i>
+                        <i class="fa-solid fa-pencil"></i>
                     </button>
 
                     <button class="btn btn-danger btn-sm" title="{% translate 'Delete category' %}" data-bs-toggle="modal" data-bs-target="#delete-category-{{ category.category_obj.pk }}">
-                        <i class="far fa-trash-alt"></i>
+                        <i class="fa-regular fa-trash-can"></i>
                     </button>
 
                     <button class="aa-forum-admin-expand-collapse-category btn btn-secondary btn-sm collapsed" title="{% translate 'Expand/collapse category' %}" data-bs-toggle="collapse" data-bs-target="#collapseCategory-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseCategory-{{ category.category_obj.pk }}">
