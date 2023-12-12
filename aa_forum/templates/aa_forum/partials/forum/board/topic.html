@@ -78,7 +78,7 @@
 
         <div class="aa-forum-topic-actions hidden-xs">
             {% if perms.aa_forum.manage_forum %}
-                <div class="text-right">
+                <div class="text-end">
                     {% if topic.is_locked %}
                         <button class="btn btn-aa-forum-topic-moderation btn-sm" title="{% translate 'Unlock/re-open topic' %}" data-bs-toggle="modal" data-bs-target="#topic-lock-state-change-{{ topic.pk }}">
                             <i class="fas fa-unlock"></i>
