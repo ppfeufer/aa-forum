@@ -32,7 +32,6 @@ ______________________________________________________________________
       - [Start New Topic (ckEditor)](#start-new-topic-ckeditor)
       - [Admin View](#admin-view)
   - [Installation](#installation)
-    - [Important: Please Make Sure You Meet All Preconditions Before You Proceed:](#important-please-make-sure-you-meet-all-preconditions-before-you-proceed)
     - [Step 1: Install the Package](#step-1-install-the-package)
     - [Step 2: Configure Alliance Auth](#step-2-configure-alliance-auth)
       - [Settings in `/home/allianceserver/myauth/myauth/settings/local.py`](#settings-in-homeallianceservermyauthmyauthsettingslocalpy)
@@ -104,7 +103,15 @@ these kinds of changes. For your own sanity, and mine :-)
 
 ## Installation<a name="installation"></a>
 
-#### Important: Please Make Sure You Meet All Preconditions Before You Proceed:<a name="important-please-make-sure-you-meet-all-preconditions-before-you-proceed"></a>
+> \[!NOTE\]
+>
+> **AA Forum needs at least Alliance Auth v4.0.0!**
+>
+> Please make sure to update your Alliance Auth instance _before_ you install this
+> module or update to the latest version, otherwise an update to Alliance Auth will
+> be pulled in unsupervised.
+
+**Important**: Please make sure you meet all preconditions before you proceed:
 
 - AA Forum is a plugin for Alliance Auth. If you don't have Alliance Auth running
   already, please install it first before proceeding. (see the official
