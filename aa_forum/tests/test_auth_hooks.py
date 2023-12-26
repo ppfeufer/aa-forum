@@ -40,7 +40,7 @@ class TestHooks(TestCase):
 
         cls.html_menu = f"""
             <li class="d-flex flex-wrap m-2 p-2 pt-0 pb-0 mt-0 mb-0 me-0 pe-0">
-                <i class="nav-link fas fa-comments fa-fw align-self-center me-3 "></i>
+                <i class="nav-link fa-solid fa-comments fa-fw align-self-center me-3 "></i>
                 <a class="nav-link flex-fill align-self-center" href="{reverse('aa_forum:forum_index')}">
                     Forum
                 </a>
