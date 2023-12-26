@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",  # https://github.com/zostera/django-bootstrap5
     "sortedm2m",
     "esi",
+    "allianceauth.framework",
     "allianceauth.authentication",
     "allianceauth.services",
     "allianceauth.eveonline",
@@ -76,6 +77,7 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 MIDDLEWARE = [
+    "allianceauth.menu.middleware.MenuSyncMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "allianceauth.authentication.middleware.UserSettingsMiddleware",
@@ -129,6 +131,7 @@ WSGI_APPLICATION = "allianceauth.wsgi.application"
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -151,10 +154,15 @@ AUTHENTICATION_BACKENDS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
+
 LANGUAGE_CODE = "en-us"
+
 LANGUAGE_COOKIE_AGE = 1209600
+
 TIME_ZONE = "UTC"
+
 USE_I18N = True
+
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -201,10 +209,10 @@ LOGOUT_REDIRECT_URL = "authentication:dashboard"  # destination after logging ou
 # - relative urls eg '/dashboard'
 # - absolute urls eg 'http://example.com/dashboard'
 
-# Scopes required on new tokens when logging in. Cannot be blank.
+# scopes required on new tokens when logging in. Cannot be blank.
 LOGIN_TOKEN_SCOPES = ["publicData"]
 
-# Number of days email verification links are valid for
+# number of days email verification links are valid for
 ACCOUNT_ACTIVATION_DAYS = 1
 
 ESI_API_URL = "https://esi.evetech.net/"
@@ -226,7 +234,7 @@ LOGGING = {
             "filename": os.path.join(BASE_DIR, "log/allianceauth.log"),
             "formatter": "verbose",
             "maxBytes": 1024 * 1024 * 5,  # edit this line to change max log file size
-            "backupCount": 5,  # edit this line to change the number of log backups
+            "backupCount": 5,  # edit this line to change number of log backups
         },
         "extension_file": {
             "level": "INFO",
