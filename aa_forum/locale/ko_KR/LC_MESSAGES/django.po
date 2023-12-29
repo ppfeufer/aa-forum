@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-01 18:29+0200\n"
-"PO-Revision-Date: 2023-10-02 09:34+0000\n"
-"Last-Translator: Author50CO <tkddlschry@gmail.com>\n"
+"PO-Revision-Date: 2023-12-29 10:04+0000\n"
+"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Korean <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-forum/ko/>\n"
 "Language: ko_KR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.0.2\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #: aa_forum/__init__.py:12 aa_forum/templates/aa_forum/base.html:5
 #: aa_forum/templates/aa_forum/partials/menu.html:14
@@ -37,12 +37,12 @@ msgstr ""
 #: aa_forum/templates/aa_forum/view/profile/index.html:9
 #: aa_forum/templates/aa_forum/view/search/results.html:7
 msgid "Forum"
-msgstr ""
+msgstr "포럼"
 
 #: aa_forum/apps.py:20
 #, python-brace-format
 msgid "AA Forum v{__version__}"
-msgstr ""
+msgstr "AA 포럼 v{__version__}"
 
 #: aa_forum/forms.py:40
 msgid "This field is mandatory"
