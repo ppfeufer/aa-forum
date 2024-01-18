@@ -43,6 +43,21 @@ Section Order:
 > you install this version, otherwise an update to Alliance Auth will
 > be pulled in unsupervised.
 
+### Added
+
+- Support for Alliance Auth v4.x
+- Support for Django 4.0
+- Native lazy loading support for images
+
+### Changed
+
+- Minimum requirements
+  - `allianceauth`>=4.0.0
+
+### Removed
+
+- Support for Alliance Auth v3.x
+
 ## \[1.19.5\] - 2023-11-15
 
 ### Fixed

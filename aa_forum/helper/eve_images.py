@@ -34,7 +34,7 @@ def get_character_portrait_from_evecharacter(
         return_value = (
             '<img class="aa-forum-character-portrait img rounded" '
             f'src="{portrait_url}" alt="{character_name}" '
-            f'width="{size}" height="{size}">'
+            f'width="{size}" height="{size}" loading="lazy">'
         )
 
     return return_value

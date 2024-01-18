@@ -238,7 +238,7 @@ class TestHelperEveImages(TestCase):
         expected_html = (
             '<img class="aa-forum-character-portrait img rounded" '
             f'src="{expected_url}" alt="{character.character_name}" '
-            'width="32" height="32">'
+            'width="32" height="32" loading="lazy">'
         )
 
         self.assertEqual(first=portrait_html, second=expected_html)

@@ -4,7 +4,14 @@
 <div class="aa-forum-message-author m-md-3">
     <figure>
         {% with user_maincharacter_id=message_author|aa_forum_main_character_id %}
-            <img class="aa-forum-character-portrait img rounded img-author-avatar" src="{{ user_maincharacter_id|character_portrait_url:128 }}" alt="{{ message_author|aa_forum_main_character_name }}" width="128" height="128">
+            <img
+                class="aa-forum-character-portrait img rounded img-author-avatar"
+                src="{{ user_maincharacter_id|character_portrait_url:128 }}"
+                alt="{{ message_author|aa_forum_main_character_name }}"
+                width="128"
+                height="128"
+                loading="lazy"
+            >
         {% endwith %}
     </figure>
 
