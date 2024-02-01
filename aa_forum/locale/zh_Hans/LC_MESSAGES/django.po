@@ -2,13 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Dehao Wu <wudehao2000@163.com>, 2024.
+# Peter Pfeufer <info@ppfeufer.de>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-01 18:29+0200\n"
-"PO-Revision-Date: 2024-01-11 21:04+0000\n"
-"Last-Translator: Dehao Wu <wudehao2000@163.com>\n"
+"PO-Revision-Date: 2024-02-01 17:08+0000\n"
+"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-forum/zh_Hans/>\n"
 "Language: zh_Hans\n"
@@ -45,7 +46,7 @@ msgstr ""
 
 #: aa_forum/forms.py:40
 msgid "This field is mandatory"
-msgstr ""
+msgstr "这个字段是必填的"
 
 #: aa_forum/forms.py:91 aa_forum/forms.py:93 aa_forum/forms.py:124
 #: aa_forum/forms.py:126 aa_forum/forms.py:502
@@ -415,7 +416,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:28
 #: aa_forum/templates/aa_forum/view/forum/new-topic.html:36
 msgid "Cancel"
-msgstr ""
+msgstr "频道"
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:34
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:34
@@ -423,7 +424,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/modals/forum/topic/message-delete.html:33
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:33
 msgid "Delete"
-msgstr ""
+msgstr "删除"
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:3
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:12
@@ -633,15 +634,15 @@ msgstr ""
 msgid ""
 "Do you want to help translate this app into your language or improve the "
 "existing translation?"
-msgstr ""
+msgstr "您想帮助将此应用程序翻译成您的母语或改进现有的翻译吗?"
 
 #: aa_forum/templates/aa_forum/partials/footer/app-translation-footer.html:8
 msgid "Join our team of translators!"
-msgstr ""
+msgstr "加入我们的翻译团队吧！"
 
 #: aa_forum/templates/aa_forum/partials/form/required-field-hint.html:9
 msgid "Fields marked with an asterisk (*) are mandatory"
-msgstr ""
+msgstr "带有(*)星号符号的字段是必填的"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board-index.html:27
 msgid "No topics have been started in this board …"
