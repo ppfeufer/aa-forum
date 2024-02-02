@@ -2,7 +2,7 @@
 
 <div>
     <nav aria-label="{% translate 'Message pagination' %}">
-        <ul class="pagination pagination-sm justify-content-center">
+        <ul class="pagination justify-content-center">
             {% if search_results.has_previous %}
                 <li class="page-item">
                     <a href="{% url 'aa_forum:search_results' %}?q={{ search_term }}" class="page-link">

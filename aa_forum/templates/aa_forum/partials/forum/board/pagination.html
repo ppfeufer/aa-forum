@@ -6,7 +6,7 @@
         {% aa_forum_template_variable category = board.category %}
 
         <nav aria-label="{% translate 'Message pagination' %}">
-            <ul class="pagination pagination-sm justify-content-center">
+            <ul class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
                     <li class="page-item">
                         <a href="{{ board.get_absolute_url }}" class="page-link">
