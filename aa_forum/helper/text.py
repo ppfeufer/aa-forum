@@ -131,9 +131,11 @@ def prepare_message_for_discord(
     return strip_tags(
         value=html.unescape(
             s=strip_tags(
-                value=message[:message_length] + "…"
-                if len(message) > message_length
-                else message
+                value=(
+                    message[:message_length] + "…"
+                    if len(message) > message_length
+                    else message
+                )
             )
         )
     )
