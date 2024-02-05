@@ -1,6 +1,7 @@
 """
 Tests for the forum views
 """
+
 # Standard Library
 from http import HTTPStatus
 from unittest.mock import patch

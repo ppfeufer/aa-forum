@@ -383,9 +383,9 @@ class TestForumUI(WebTest):
 
         form = page.forms["aa-forum-form-new-topic"]
         form["subject"] = "Recent Discoveries"
-        form[
-            "message"
-        ] = "Energy of the Higgs boson <img src='/images/images/038/929/227/large/marc-bell-2a.jpg'>"  # pylint: disable=line-too-long
+        form["message"] = (
+            "Energy of the Higgs boson <img src='/images/images/038/929/227/large/marc-bell-2a.jpg'>"  # pylint: disable=line-too-long
+        )
         response = form.submit().follow()
 
         # then
@@ -432,9 +432,9 @@ class TestForumUI(WebTest):
 
         form = page.forms["aa-forum-form-new-topic"]
         form["subject"] = "Recent Discoveries"
-        form[
-            "message"
-        ] = "Energy of the Higgs boson <img src='https://cdnb.artstation.com/p/assets/images/images/038/929/227/large/marc-bell-2a.jpg'>"  # pylint: disable=line-too-long
+        form["message"] = (
+            "Energy of the Higgs boson <img src='https://cdnb.artstation.com/p/assets/images/images/038/929/227/large/marc-bell-2a.jpg'>"  # pylint: disable=line-too-long
+        )
         response = form.submit().follow()
 
         # then

@@ -374,12 +374,14 @@ class UserProfileForm(ModelForm):
     discord_dm_on_new_personal_message = forms.BooleanField(
         required=False,
         label=_("PM me on Discord when I get a new personal message"),
-        help_text=_(
-            "Information: There is currently no module installed that can handle "
-            "Discord direct messages. Have a chat with your IT guys to remedy this."
-        )
-        if discord_messaging_proxy_available() is False
-        else "",
+        help_text=(
+            _(
+                "Information: There is currently no module installed that can handle "
+                "Discord direct messages. Have a chat with your IT guys to remedy this."
+            )
+            if discord_messaging_proxy_available() is False
+            else ""
+        ),
     )
 
     class Meta:  # pylint: disable=too-few-public-methods
