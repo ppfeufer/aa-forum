@@ -128,8 +128,23 @@ class NewTopicForm(forms.Form):
                 "style": "width: 100%;",
             },
         ),
-        required=True,  # We have to set this to False, otherwise CKEditor5 will not work
+        required=False,  # We have to set this to False, otherwise CKEditor5 will not work
     )
+
+    def clean(self):
+        """
+        Clean the form
+
+        :return:
+        :rtype:
+        """
+
+        cleaned_data = super().clean()
+
+        if not string_cleanup(cleaned_data.get("message")).strip():
+            raise ValidationError(_("You have forgotten the message!"))
+
+        return cleaned_data
 
     def clean_message(self):
         """
@@ -140,9 +155,6 @@ class NewTopicForm(forms.Form):
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
-
-        if message.strip() == "":
-            raise ValidationError(_("You have forgotten the message!"))
 
         return message
 
@@ -380,6 +392,21 @@ class EditMessageForm(ModelForm):
         }
         labels = {"message": get_mandatory_form_label_text(text=_("Message"))}
 
+    def clean(self):
+        """
+        Clean the form
+
+        :return:
+        :rtype:
+        """
+
+        cleaned_data = super().clean()
+
+        if not string_cleanup(cleaned_data.get("message")).strip():
+            raise ValidationError(_("You have forgotten the message!"))
+
+        return cleaned_data
+
     def clean_message(self):
         """
         Cleanup the message
@@ -389,9 +416,6 @@ class EditMessageForm(ModelForm):
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
-
-        if message.strip() == "":
-            raise ValidationError(_("You have forgotten the message!"))
 
         return message
 
@@ -601,6 +625,21 @@ class NewPersonalMessageForm(ModelForm):
         }
         labels = {"message": get_mandatory_form_label_text(text=_("Message"))}
 
+    def clean(self):
+        """
+        Clean the form
+
+        :return:
+        :rtype:
+        """
+
+        cleaned_data = super().clean()
+
+        if not string_cleanup(cleaned_data.get("message")).strip():
+            raise ValidationError(_("You have forgotten the message!"))
+
+        return cleaned_data
+
     def clean_message(self):
         """
         Cleanup the message
@@ -610,9 +649,6 @@ class NewPersonalMessageForm(ModelForm):
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
-
-        if message.strip() == "":
-            raise ValidationError(_("You have forgotten the message!"))
 
         return message
 
@@ -654,6 +690,21 @@ class ReplyPersonalMessageForm(ModelForm):
         }
         labels = {"message": get_mandatory_form_label_text(text=_("Message"))}
 
+    def clean(self):
+        """
+        Clean the form
+
+        :return:
+        :rtype:
+        """
+
+        cleaned_data = super().clean()
+
+        if not string_cleanup(cleaned_data.get("message")).strip():
+            raise ValidationError(_("You have forgotten the message!"))
+
+        return cleaned_data
+
     def clean_message(self):
         """
         Cleanup the message
@@ -663,8 +714,5 @@ class ReplyPersonalMessageForm(ModelForm):
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
-
-        if message.strip() == "":
-            raise ValidationError(_("You have forgotten the message!"))
 
         return message
