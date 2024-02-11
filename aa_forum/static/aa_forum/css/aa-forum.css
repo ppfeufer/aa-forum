@@ -345,10 +345,11 @@
     }
 }
 
-/* MultiSelect
+/* SumoSelect
 ------------------------------------------------------------------------------------- */
 @media all {
     .aa-forum .SumoSelect p {
+        border-radius: var(--bs-border-radius);
         height: auto;
     }
 
@@ -371,16 +372,26 @@
 /* Select2
 ------------------------------------------------------------------------------------- */
 @media all {
-    .select2-container--bootstrap-5 {
+    .aa-forum .select2-container--bootstrap-5 {
         max-width: 100% !important;
     }
 }
 
-/* cKeditor
+/* CKEditor 5 (WYSIWYG editor)
 ------------------------------------------------------------------------------------- */
 @media all {
-    .aa-forum .django-ckeditor-widget {
-        display: initial !important;
+    .aa-forum .ck-rounded-corners {
+        --ck-border-radius: var(--bs-border-radius);
+    }
+
+    .aa-forum .ck-editor__editable {
+        color: initial;
+    }
+
+    .aa-forum .ck-word-count {
+        color: var(--bs-secondary-color) !important;
+
+        --bs-text-opacity: 1;
     }
 }
 
