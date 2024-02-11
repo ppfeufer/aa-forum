@@ -300,6 +300,14 @@
     .aa-forum .aa-forum-personal-messages-message .card {
         margin-top: 2rem;
     }
+
+    .aa-forum li.aa-forum-messages-sidebar-menu-item:has(a.active) {
+        background-color: var(--bs-secondary-bg-subtle);
+    }
+
+    .aa-forum li.aa-forum-messages-sidebar-menu-item > a.active {
+        color: rgb(var(--bs-primary-rgb));
+    }
 }
 
 /* Lightbox
@@ -462,7 +470,7 @@
 /* Personal messages view (@media all and (min-width: 992px))
 ------------------------------------------------------------------------------------- */
 @media all and (min-width: 992px) {
-    .card-aa-forum-personal-messages-item-header,
+    .aa-forum .card-aa-forum-personal-messages-item-header,
     .aa-forum .card-aa-forum-personal-messages-item {
         align-items: center;
         display: flex;
