@@ -138,151 +138,155 @@ This is fairly simple, configure your AA settings (`local.py`) as follows:
 ```python
 # AA Forum
 INSTALLED_APPS += [
-    "ckeditor",
-    "ckeditor_uploader",
-    "django_ckeditor_youtube_plugin",
+    "django_ckeditor_5",  # https://github.com/hvlads/django-ckeditor-5
     "aa_forum",  # https://github.com/ppfeufer/aa-forum
 ]
 
-if "ckeditor" in INSTALLED_APPS:
-    # ckEditor
-    import ckeditor.configs
-
+# Django CKEditor 5 Configuration
+if "django_ckeditor_5" in INSTALLED_APPS:
     MEDIA_URL = "/media/"
-    MEDIA_ROOT = "/var/www/myauth/media/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media/uploads")
 
-    X_FRAME_OPTIONS = "SAMEORIGIN"
-
-    CKEDITOR_UPLOAD_PATH = "uploads/"
-    CKEDITOR_RESTRICT_BY_USER = True
-    CKEDITOR_ALLOW_NONIMAGE_FILES = False
-
-    # Editor configuration
-    #
-    # If you already have this from another app, like `aa-bulletin-board`, you don't
-    # need to define this again, just add it to the `CKEDITOR_CONFIGS` dict, see below
-    #
-    # You can extend and change this to your needs
-    # Some of the options are commented out, feel free to play around with them
-    ckeditor_default_config = {
-        "width": "100%",
-        "height": "45vh",
-        "youtube_responsive": True,
-        "youtube_privacy": True,
-        "youtube_related": False,
-        "youtube_width": 1920,
-        "youtube_height": 1080,
-        "extraPlugins": ",".join(
-            [
-                "uploadimage",
-                # "div",
-                "autolink",
-                # "autoembed",
-                # "embedsemantic",
-                "clipboard",
-                "elementspath",
-                # "codesnippet",
-                "youtube",
-            ]
-        ),
-        "toolbar": [
-            {
-                "name": "styles",
-                "items": [
-                    "Styles",
-                    "Format",
-                    # "Font",
-                    # "FontSize",
-                ],
-            },
-            {
-                "name": "basicstyles",
-                "items": [
-                    "Bold",
-                    "Italic",
-                    "Underline",
-                    "Strike",
-                    # "Subscript",
-                    # "Superscript",
-                    # "-",
-                    # "RemoveFormat",
-                ],
-            },
-            {
-                "name": "clipboard",
-                "items": [
-                    # "Cut",
-                    # "Copy",
-                    # "Paste",
-                    # "PasteText",
-                    # "PasteFromWord",
-                    # "-",
-                    "Undo",
-                    "Redo",
-                ],
-            },
-            {
-                "name": "links",
-                "items": [
-                    "Link",
-                    "Unlink",
-                    "Anchor",
-                ],
-            },
-            {
-                "name": "insert",
-                "items": [
-                    "Image",
-                    "Youtube",
-                    "Table",
-                    "HorizontalRule",
-                    "Smiley",
-                    "SpecialChar",
-                    # "PageBreak",
-                    # "Iframe",
-                ],
-            },
-            {
-                "name": "colors",
-                "items": [
-                    "TextColor",
-                    "BGColor",
-                ],
-            },
-            {
-                "name": "document",
-                "items": [
-                    # "Source",
-                    # "-",
-                    # "Save",
-                    # "NewPage",
-                    # "Preview",
-                    # "Print",
-                    # "-",
-                    # "Templates",
-                ],
-            },
-        ],
-    }
-
-    # Add the external YouTube plugin
-    aa_forum__external_plugin_resources = [
-        (
-            "youtube",
-            "/static/ckeditor/ckeditor/plugins/youtube/",
-            "plugin.min.js",
-        )
+    customColorPalette = [
+        {"color": "hsl(4, 90%, 58%)", "label": "Red"},
+        {"color": "hsl(340, 82%, 52%)", "label": "Pink"},
+        {"color": "hsl(291, 64%, 42%)", "label": "Purple"},
+        {"color": "hsl(262, 52%, 47%)", "label": "Deep Purple"},
+        {"color": "hsl(231, 48%, 48%)", "label": "Indigo"},
+        {"color": "hsl(207, 90%, 54%)", "label": "Blue"},
     ]
 
-    # Put it all together
-    CKEDITOR_CONFIGS = {
-        "default": ckeditor.configs.DEFAULT_CONFIG,
-        "aa_forum": ckeditor_default_config,
+    CKEDITOR_5_CONFIGS = {
+        "default": {
+            "toolbar": [
+                "heading",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "bulletedList",
+                "numberedList",
+                "blockQuote",
+                "imageUpload",
+            ],
+        },
+        "extends": {
+            "blockToolbar": [
+                "paragraph",
+                "heading1",
+                "heading2",
+                "heading3",
+                "|",
+                "bulletedList",
+                "numberedList",
+                "|",
+                "blockQuote",
+            ],
+            "toolbar": [
+                "heading",
+                "|",
+                "outdent",
+                "indent",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "underline",
+                "strikethrough",
+                "code",
+                "subscript",
+                "superscript",
+                "highlight",
+                "|",
+                "codeBlock",
+                "sourceEditing",
+                "insertImage",
+                "bulletedList",
+                "numberedList",
+                "todoList",
+                "|",
+                "blockQuote",
+                "imageUpload",
+                "|",
+                "fontSize",
+                "fontFamily",
+                "fontColor",
+                "fontBackgroundColor",
+                "mediaEmbed",
+                "removeFormat",
+                "insertTable",
+            ],
+            "image": {
+                "toolbar": [
+                    "imageTextAlternative",
+                    "|",
+                    "imageStyle:alignLeft",
+                    "imageStyle:alignRight",
+                    "imageStyle:alignCenter",
+                    "imageStyle:side",
+                    "|",
+                ],
+                "styles": [
+                    "full",
+                    "side",
+                    "alignLeft",
+                    "alignRight",
+                    "alignCenter",
+                ],
+            },
+            "table": {
+                "contentToolbar": [
+                    "tableColumn",
+                    "tableRow",
+                    "mergeTableCells",
+                    "tableProperties",
+                    "tableCellProperties",
+                ],
+                "tableProperties": {
+                    "borderColors": customColorPalette,
+                    "backgroundColors": customColorPalette,
+                },
+                "tableCellProperties": {
+                    "borderColors": customColorPalette,
+                    "backgroundColors": customColorPalette,
+                },
+            },
+            "heading": {
+                "options": [
+                    {
+                        "model": "paragraph",
+                        "title": "Paragraph",
+                        "class": "ck-heading_paragraph",
+                    },
+                    {
+                        "model": "heading1",
+                        "view": "h1",
+                        "title": "Heading 1",
+                        "class": "ck-heading_heading1",
+                    },
+                    {
+                        "model": "heading2",
+                        "view": "h2",
+                        "title": "Heading 2",
+                        "class": "ck-heading_heading2",
+                    },
+                    {
+                        "model": "heading3",
+                        "view": "h3",
+                        "title": "Heading 3",
+                        "class": "ck-heading_heading3",
+                    },
+                ]
+            },
+        },
+        "list": {
+            "properties": {
+                "styles": "true",
+                "startIndex": "true",
+                "reversed": "true",
+            }
+        },
     }
-
-    CKEDITOR_CONFIGS["aa_forum"][
-        "external_plugin_resources"
-    ] = aa_forum__external_plugin_resources
 ```
 
 #### Settings in `/home/allianceserver/myauth/myauth/urls.py`<a name="settings-in-homeallianceservermyauthmyauthurlspy"></a>
@@ -292,33 +296,33 @@ you need to open `/home/allianceserver/myauth/myauth/urls.py` and change the
 following block right before the `handler` definitions:
 
 ```python
-# URL configuration for cKeditor
-from django.apps import apps
+from django.apps import apps  # Only if not already imported earlier
+from django.conf import settings  # Only if not already imported earlier
+from django.conf.urls.static import static  # Only if not already imported earlier
 
-if apps.is_installed("ckeditor"):
-    # Django
-    from django.contrib.auth.decorators import login_required
-    from django.views.decorators.cache import never_cache
-
-    # ckEditor
-    from ckeditor_uploader import views as ckeditor_views
-
-    urlpatterns = [
-        re_path(
-            r"^upload/", login_required(ckeditor_views.upload), name="ckeditor_upload"
-        ),
-        re_path(
-            r"^browse/",
-            never_cache(login_required(ckeditor_views.browse)),
-            name="ckeditor_browse",
-        ),
-    ] + urlpatterns
+# If django_ckeditor_5 is loaded
+if apps.is_installed("django_ckeditor_5"):
+    # URL configuration for CKEditor 5
+    urlpatterns = (
+        [
+            path(
+                "ckeditor5/",
+                include("django_ckeditor_5.urls"),
+                name="ck_editor_5_upload_file",
+            ),
+        ]
+        + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        + urlpatterns
+    )
 ```
 
 After this, your `urls.py` should look similar to this:
 
 ```python
+from django.apps import apps
+from django.conf import settings
 from django.urls import include, re_path
+from django.conf.urls.static import static
 
 from allianceauth import urls
 
@@ -327,27 +331,20 @@ urlpatterns = [
     re_path(r"", include(urls)),
 ]
 
-# URL configuration for cKeditor
-from django.apps import apps
-
-if apps.is_installed("ckeditor"):
-    # Django
-    from django.contrib.auth.decorators import login_required
-    from django.views.decorators.cache import never_cache
-
-    # ckEditor
-    from ckeditor_uploader import views as ckeditor_views
-
-    urlpatterns = [
-        re_path(
-            r"^upload/", login_required(ckeditor_views.upload), name="ckeditor_upload"
-        ),
-        re_path(
-            r"^browse/",
-            never_cache(login_required(ckeditor_views.browse)),
-            name="ckeditor_browse",
-        ),
-    ] + urlpatterns
+# If django_ckeditor_5 is loaded
+if apps.is_installed("django_ckeditor_5"):
+    # URL configuration for CKEditor 5
+    urlpatterns = (
+        [
+            path(
+                "ckeditor5/",
+                include("django_ckeditor_5.urls"),
+                name="ck_editor_5_upload_file",
+            ),
+        ]
+        + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        + urlpatterns
+    )
 
 handler500 = "allianceauth.views.Generic500Redirect"
 handler404 = "allianceauth.views.Generic404Redirect"

@@ -11,8 +11,8 @@ from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-# ckEditor
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
+# CKEditor
+from django_ckeditor_5.widgets import CKEditor5Widget
 
 # AA Forum
 from aa_forum.app_settings import discord_messaging_proxy_available
@@ -119,12 +119,16 @@ class NewTopicForm(forms.Form):
     )
 
     message = forms.CharField(
-        widget=CKEditorUploadingWidget(
-            config_name="aa_forum",
-            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
+        widget=CKEditor5Widget(
+            config_name="extends",
+            attrs={
+                "class": "aa-forum-ckeditor django_ckeditor_5",
+                "rows": 10,
+                "cols": 20,
+                "style": "width: 100%;",
+            },
         ),
-        required=True,
-        label=get_mandatory_form_label_text(text=_("Message")),
+        required=True,  # We have to set this to False, otherwise CKEditor5 will not work
     )
 
     def clean_message(self):
@@ -136,6 +140,9 @@ class NewTopicForm(forms.Form):
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
+
+        if message.strip() == "":
+            raise ValidationError(_("You have forgotten the message!"))
 
         return message
 
@@ -338,14 +345,20 @@ class EditMessageForm(ModelForm):
     Edit message form
     """
 
-    message = forms.CharField(
-        widget=CKEditorUploadingWidget(
-            config_name="aa_forum",
-            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
-        ),
-        required=True,
-        label=get_mandatory_form_label_text(text=_("Message")),
-    )
+    def __init__(self, *args, **kwargs):
+        """
+        When form is initialized
+
+        :param args:
+        :type args:
+        :param kwargs:
+        :type kwargs:
+        """
+
+        super().__init__(*args, **kwargs)
+
+        # We have to set this to False, otherwise CKEditor5 will not work
+        self.fields["message"].required = False
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -354,6 +367,18 @@ class EditMessageForm(ModelForm):
 
         model = Message
         fields = ["message"]
+        widgets = {
+            "message": CKEditor5Widget(
+                config_name="extends",
+                attrs={
+                    "class": "aa-forum-ckeditor django_ckeditor_5",
+                    "rows": 10,
+                    "cols": 20,
+                    "style": "width: 100%;",
+                },
+            )
+        }
+        labels = {"message": get_mandatory_form_label_text(text=_("Message"))}
 
     def clean_message(self):
         """
@@ -365,6 +390,9 @@ class EditMessageForm(ModelForm):
 
         message = string_cleanup(string=self.cleaned_data["message"])
 
+        if message.strip() == "":
+            raise ValidationError(_("You have forgotten the message!"))
+
         return message
 
 
@@ -373,15 +401,6 @@ class UserProfileForm(ModelForm):
     Edit message form
     """
 
-    signature = forms.CharField(
-        widget=CKEditorUploadingWidget(
-            config_name="aa_forum",
-            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
-        ),
-        required=False,
-        label=_("Signature"),
-        help_text=_("Your signature will appear below your posts."),
-    )
     website_title = forms.CharField(
         required=False,
         label=_("Website title"),
@@ -424,6 +443,19 @@ class UserProfileForm(ModelForm):
             "website_url",
             "discord_dm_on_new_personal_message",
         ]
+        widgets = {
+            "signature": CKEditor5Widget(
+                config_name="extends",
+                attrs={
+                    "class": "aa-forum-ckeditor django_ckeditor_5",
+                    "rows": 10,
+                    "cols": 20,
+                    "style": "width: 100%;",
+                },
+            )
+        }
+        labels = {"signature": _("Signature")}
+        help_texts = {"signature": _("Your signature will appear below your posts.")}
 
     def clean_signature(self):
         """
@@ -535,14 +567,6 @@ class NewPersonalMessageForm(ModelForm):
         max_length=254,
         widget=forms.TextInput(attrs={"placeholder": _("Hello there …")}),
     )
-    message = forms.CharField(
-        widget=CKEditorUploadingWidget(
-            config_name="aa_forum",
-            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
-        ),
-        required=True,
-        label=get_mandatory_form_label_text(text=_("Message")),
-    )
 
     def __init__(self, *args, **kwargs):
         """
@@ -555,6 +579,7 @@ class NewPersonalMessageForm(ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields["recipient"].queryset = General.users_with_basic_access()
+        self.fields["message"].required = False
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -563,6 +588,18 @@ class NewPersonalMessageForm(ModelForm):
 
         model = PersonalMessage
         fields = ["recipient", "subject", "message"]
+        widgets = {
+            "message": CKEditor5Widget(
+                config_name="extends",
+                attrs={
+                    "class": "aa-forum-ckeditor django_ckeditor_5",
+                    "rows": 10,
+                    "cols": 20,
+                    "style": "width: 100%;",
+                },
+            )
+        }
+        labels = {"message": get_mandatory_form_label_text(text=_("Message"))}
 
     def clean_message(self):
         """
@@ -573,6 +610,9 @@ class NewPersonalMessageForm(ModelForm):
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
+
+        if message.strip() == "":
+            raise ValidationError(_("You have forgotten the message!"))
 
         return message
 
@@ -582,14 +622,17 @@ class ReplyPersonalMessageForm(ModelForm):
     Reply personal message form
     """
 
-    message = forms.CharField(
-        widget=CKEditorUploadingWidget(
-            config_name="aa_forum",
-            attrs={"rows": 10, "cols": 20, "style": "width: 100%;"},
-        ),
-        required=True,
-        label=get_mandatory_form_label_text(text=_("Message")),
-    )
+    def __init__(self, *args, **kwargs):
+        """
+        When form is initialized
+
+        :param args:
+        :param kwargs:
+        """
+
+        super().__init__(*args, **kwargs)
+
+        self.fields["message"].required = False
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -598,6 +641,18 @@ class ReplyPersonalMessageForm(ModelForm):
 
         model = PersonalMessage
         fields = ["message"]
+        widgets = {
+            "message": CKEditor5Widget(
+                config_name="extends",
+                attrs={
+                    "class": "aa-forum-ckeditor django_ckeditor_5",
+                    "rows": 10,
+                    "cols": 20,
+                    "style": "width: 100%;",
+                },
+            )
+        }
+        labels = {"message": get_mandatory_form_label_text(text=_("Message"))}
 
     def clean_message(self):
         """
@@ -608,5 +663,8 @@ class ReplyPersonalMessageForm(ModelForm):
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
+
+        if message.strip() == "":
+            raise ValidationError(_("You have forgotten the message!"))
 
         return message

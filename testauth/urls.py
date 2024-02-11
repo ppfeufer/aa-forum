@@ -1,6 +1,10 @@
+"""
+Test URL config
+"""
+
 # Django
 from django.apps import apps
-from django.urls import include, path, re_path
+from django.urls import include, path
 
 # Alliance Auth
 from allianceauth import urls
@@ -11,21 +15,19 @@ urlpatterns = [
 ]
 
 # URL configuration for cKeditor
-if apps.is_installed("ckeditor"):
+if apps.is_installed("django_ckeditor_5"):
     # Django
-    from django.contrib.auth.decorators import login_required
-    from django.views.decorators.cache import never_cache
+    from django.conf import settings
+    from django.conf.urls.static import static
 
-    # ckEditor
-    from ckeditor_uploader import views as ckeditor_views
-
-    urlpatterns = [
-        re_path(
-            r"^upload/", login_required(ckeditor_views.upload), name="ckeditor_upload"
-        ),
-        re_path(
-            r"^browse/",
-            never_cache(login_required(ckeditor_views.browse)),
-            name="ckeditor_browse",
-        ),
-    ] + urlpatterns
+    urlpatterns = (
+        [
+            path(
+                "ckeditor5/",
+                include("django_ckeditor_5.urls"),
+                name="ck_editor_5_upload_file",
+            ),
+        ]
+        + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        + urlpatterns
+    )

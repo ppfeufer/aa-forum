@@ -62,8 +62,7 @@ if os.environ.get("USE_MYSQL", True) is True:
 # Add any additional apps to this list.
 INSTALLED_APPS += [
     PACKAGE,
-    "ckeditor",
-    "ckeditor_uploader",
+    "django_ckeditor_5",  # https://github.com/hvlads/django-ckeditor-5
     "timezones",
 ]
 
@@ -121,138 +120,148 @@ DEFAULT_FROM_EMAIL = ""
 # Add any custom settings below here. #
 #######################################
 ## AA Forum
-if "ckeditor" in INSTALLED_APPS:
-    # ckEditor
-    import ckeditor.configs
-
+if "django_ckeditor_5" in INSTALLED_APPS:
     MEDIA_URL = "/media/"
-    MEDIA_ROOT = "/var/www/myauth/media/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media/uploads")
 
-    X_FRAME_OPTIONS = "SAMEORIGIN"
-
-    CKEDITOR_UPLOAD_PATH = "uploads/"
-    CKEDITOR_RESTRICT_BY_USER = True
-    CKEDITOR_ALLOW_NONIMAGE_FILES = False
-
-    # Editor configuration
-    #
-    # If you already have this from another app, like `aa-bulletin-board`, you don't
-    # need to define this again, just add it to the `CKEDITOR_CONFIGS` dict, see below
-    #
-    # You can extend and change this to your needs
-    # Some of the options are commented out, feel free to play around with them
-    ckeditor_default_config = {
-        "width": "100%",
-        "height": "45vh",
-        "youtube_responsive": True,
-        "youtube_privacy": True,
-        "youtube_related": False,
-        "youtube_width": 1920,
-        "youtube_height": 1080,
-        "extraPlugins": ",".join(
-            [
-                "uploadimage",
-                # "div",
-                "autolink",
-                # "autoembed",
-                # "embedsemantic",
-                "clipboard",
-                "elementspath",
-                # "codesnippet",
-                "youtube",
-            ]
-        ),
-        "toolbar": [
-            {
-                "name": "styles",
-                "items": [
-                    "Styles",
-                    "Format",
-                    # "Font",
-                    # "FontSize",
-                ],
-            },
-            {
-                "name": "basicstyles",
-                "items": [
-                    "Bold",
-                    "Italic",
-                    "Underline",
-                    "Strike",
-                    # "Subscript",
-                    # "Superscript",
-                    # "-",
-                    # "RemoveFormat",
-                ],
-            },
-            {
-                "name": "clipboard",
-                "items": [
-                    # "Cut",
-                    # "Copy",
-                    # "Paste",
-                    # "PasteText",
-                    # "PasteFromWord",
-                    # "-",
-                    "Undo",
-                    "Redo",
-                ],
-            },
-            {
-                "name": "links",
-                "items": [
-                    "Link",
-                    "Unlink",
-                    "Anchor",
-                ],
-            },
-            {
-                "name": "insert",
-                "items": [
-                    "Image",
-                    "Youtube",
-                    "Table",
-                    "HorizontalRule",
-                    "Smiley",
-                    "SpecialChar",
-                    # "PageBreak",
-                    # "Iframe",
-                ],
-            },
-            {
-                "name": "colors",
-                "items": [
-                    "TextColor",
-                    "BGColor",
-                ],
-            },
-            {
-                "name": "document",
-                "items": [
-                    "Source",
-                    # "-",
-                    # "Save",
-                    # "NewPage",
-                    # "Preview",
-                    # "Print",
-                    # "-",
-                    # "Templates",
-                ],
-            },
-        ],
-    }
-
-    # Put it all together
-    CKEDITOR_CONFIGS = {
-        "default": ckeditor.configs.DEFAULT_CONFIG,
-        "aa_forum": ckeditor_default_config,
-    }
-
-    # Add the external YouTube plugin
-    CKEDITOR_CONFIGS["aa_forum"]["external_plugin_resources"] = [
-        (
-            "youtube",
-            "/static/aa_forum/ckeditor/plugins/youtube/",
-            "plugin.min.js",
-        )
+    customColorPalette = [
+        {"color": "hsl(4, 90%, 58%)", "label": "Red"},
+        {"color": "hsl(340, 82%, 52%)", "label": "Pink"},
+        {"color": "hsl(291, 64%, 42%)", "label": "Purple"},
+        {"color": "hsl(262, 52%, 47%)", "label": "Deep Purple"},
+        {"color": "hsl(231, 48%, 48%)", "label": "Indigo"},
+        {"color": "hsl(207, 90%, 54%)", "label": "Blue"},
     ]
+
+    # CKEDITOR_5_CUSTOM_CSS = "path_to.css"  # optional
+    CKEDITOR_5_CONFIGS = {
+        "default": {
+            "toolbar": [
+                "heading",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "bulletedList",
+                "numberedList",
+                "blockQuote",
+                "imageUpload",
+            ],
+        },
+        "extends": {
+            "blockToolbar": [
+                "paragraph",
+                "heading1",
+                "heading2",
+                "heading3",
+                "|",
+                "bulletedList",
+                "numberedList",
+                "|",
+                "blockQuote",
+            ],
+            "toolbar": [
+                "heading",
+                "|",
+                "outdent",
+                "indent",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "underline",
+                "strikethrough",
+                "code",
+                "subscript",
+                "superscript",
+                "highlight",
+                "|",
+                "codeBlock",
+                "sourceEditing",
+                "insertImage",
+                "bulletedList",
+                "numberedList",
+                "todoList",
+                "|",
+                "blockQuote",
+                "imageUpload",
+                "|",
+                "fontSize",
+                "fontFamily",
+                "fontColor",
+                "fontBackgroundColor",
+                "mediaEmbed",
+                "removeFormat",
+                "insertTable",
+            ],
+            "image": {
+                "toolbar": [
+                    "imageTextAlternative",
+                    "|",
+                    "imageStyle:alignLeft",
+                    "imageStyle:alignRight",
+                    "imageStyle:alignCenter",
+                    "imageStyle:side",
+                    "|",
+                ],
+                "styles": [
+                    "full",
+                    "side",
+                    "alignLeft",
+                    "alignRight",
+                    "alignCenter",
+                ],
+            },
+            "table": {
+                "contentToolbar": [
+                    "tableColumn",
+                    "tableRow",
+                    "mergeTableCells",
+                    "tableProperties",
+                    "tableCellProperties",
+                ],
+                "tableProperties": {
+                    "borderColors": customColorPalette,
+                    "backgroundColors": customColorPalette,
+                },
+                "tableCellProperties": {
+                    "borderColors": customColorPalette,
+                    "backgroundColors": customColorPalette,
+                },
+            },
+            "heading": {
+                "options": [
+                    {
+                        "model": "paragraph",
+                        "title": "Paragraph",
+                        "class": "ck-heading_paragraph",
+                    },
+                    {
+                        "model": "heading1",
+                        "view": "h1",
+                        "title": "Heading 1",
+                        "class": "ck-heading_heading1",
+                    },
+                    {
+                        "model": "heading2",
+                        "view": "h2",
+                        "title": "Heading 2",
+                        "class": "ck-heading_heading2",
+                    },
+                    {
+                        "model": "heading3",
+                        "view": "h3",
+                        "title": "Heading 3",
+                        "class": "ck-heading_heading3",
+                    },
+                ]
+            },
+        },
+        "list": {
+            "properties": {
+                "styles": "true",
+                "startIndex": "true",
+                "reversed": "true",
+            }
+        },
+    }

@@ -47,7 +47,9 @@
 
                     <div class="aa-forum-message-body pt-3">
                         <div class="aa-forum-message-body-inner">
-                            {{ message.message|safe }}
+                            <div class="ck ck-content">
+                                {{ message.message|safe }}
+                            </div>
                         </div>
 
                         {% if message_author.aa_forum_user_profile %}

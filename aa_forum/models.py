@@ -25,8 +25,8 @@ from allianceauth.services.hooks import get_extension_logger
 from app_utils.django import users_with_permission
 from app_utils.logging import LoggerAddTag
 
-# ckEditor
-from ckeditor_uploader.fields import RichTextUploadingField
+# CKEditor
+from django_ckeditor_5.fields import CKEditor5Field
 
 # AA Forum
 from aa_forum import __title__
@@ -791,7 +791,7 @@ class Message(models.Model):
         related_name="+",
         on_delete=models.SET(value=get_sentinel_user),
     )
-    message = RichTextUploadingField(blank=False)
+    message = CKEditor5Field(blank=False, config_name="extends")
     message_plaintext = models.TextField(blank=True)
 
     objects = MessageManager()
@@ -925,7 +925,7 @@ class PersonalMessage(models.Model):
     )
     time_sent = models.DateTimeField(auto_now_add=True)
     subject = models.CharField(max_length=254)
-    message = RichTextUploadingField(blank=False)
+    message = CKEditor5Field(blank=False, config_name="extends")
     message_head = models.ForeignKey(
         to="self",
         blank=True,
@@ -1054,7 +1054,7 @@ class UserProfile(models.Model):
         unique=True,
         primary_key=True,
     )
-    signature = RichTextUploadingField(blank=True)
+    signature = CKEditor5Field(blank=True, config_name="extends")
     website_title = models.CharField(max_length=254, blank=True)
     website_url = models.CharField(max_length=254, blank=True)
     discord_dm_on_new_personal_message = models.BooleanField(default=False)

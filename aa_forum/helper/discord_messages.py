@@ -126,7 +126,7 @@ def _discordproxy_send_private_message(
             # pylint: disable=import-outside-toplevel
             from discordproxy.discord_api_pb2 import Embed as DiscordProxyEmbed
 
-            footer = DiscordProxyEmbed.Footer(text=__title__)
+            footer = DiscordProxyEmbed.Footer(text=str(__title__))
             embed = DiscordProxyEmbed(
                 title=str(title),
                 description=message,

@@ -66,11 +66,13 @@
 
                 <div class="aa-forum-message-body pt-3">
                     <div class="aa-forum-message-body-inner">
-                        {% if search_term %}
-                            {{ message.message|aa_forum_highlight_search_term:search_term }}
-                        {% else %}
-                            {{ message.message|safe }}
-                        {% endif %}
+                        <div class="ck ck-content">
+                            {% if search_term %}
+                                {{ message.message|aa_forum_highlight_search_term:search_term }}
+                            {% else %}
+                                {{ message.message|safe }}
+                            {% endif %}
+                        </div>
                     </div>
 
                     {% if message.user_updated %}
@@ -82,7 +84,9 @@
                     {% if message_author.aa_forum_user_profile %}
                         {% if message_author.aa_forum_user_profile.signature %}
                             <div class="aa-forum-message-body-author-signature text-muted small hidden-xs pt-3">
-                                {{ message_author.aa_forum_user_profile.signature|safe }}
+                                <div class="ck ck-content">
+                                    {{ message_author.aa_forum_user_profile.signature|safe }}
+                                </div>
                             </div>
                         {% endif %}
                     {% endif %}

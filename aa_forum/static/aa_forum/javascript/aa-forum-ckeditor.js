@@ -1,21 +1,10 @@
-/* global CKEDITOR */
-
 $(document).ready(() => {
     'use strict';
 
-    if ('undefined' !== typeof CKEDITOR) {
-        $('form').on('reset', (e) => {
-            if ($(CKEDITOR.instances).length) {
-                for (let key in CKEDITOR.instances) {
-                    if ({}.hasOwnProperty.call(CKEDITOR.instances, key)) {
-                        const instance = CKEDITOR.instances[key];
+    $('form').on('reset', (e) => {
+        const domEditableElement = document.querySelector(`#${$(e.target).attr('id')} .ck-editor__editable`);
+        const editorInstance = domEditableElement.ckeditorInstance;
 
-                        if ($(instance.element.$).closest('form').attr('name') === $(e.target).attr('name')) {
-                            instance.setData(instance.element.$.defaultValue);
-                        }
-                    }
-                }
-            }
-        });
-    }
+        editorInstance.setData('');
+    });
 });
