@@ -35,9 +35,11 @@ Section Order:
 ### Security
 -->
 
+## \[2.0.0-beta.1\] - 2024-02-18
+
 > \[!NOTE\]
 >
-> **This version needs at least Alliance Auth v4.0.0!**
+> **This version needs at least Alliance Auth v4.0.0b1!**
 >
 > Please make sure to update your Alliance Auth instance before
 > you install this version, otherwise an update to Alliance Auth will
@@ -72,7 +74,8 @@ This version introduces a new WYSIWYG editor. Some configuration changes are nec
 #### Settings in `/home/allianceserver/myauth/myauth/settings/local.py`
 
 Please make sure to update your `local.py` with the following configuration.\
-Add `"django_ckeditor_5",` to `INSTALLED_APPS` and remove the following apps if they are present:
+Add `"django_ckeditor_5",` to `INSTALLED_APPS` and remove the following apps
+if they are present:
 
 ```python
 "ckeditor",
