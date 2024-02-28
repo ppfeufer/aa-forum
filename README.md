@@ -298,6 +298,7 @@ following block right before the `handler` definitions:
 from django.apps import apps  # Only if not already imported earlier
 from django.conf import settings  # Only if not already imported earlier
 from django.conf.urls.static import static  # Only if not already imported earlier
+from django.urls import path  # Only if not already imported earlier
 
 # If django_ckeditor_5 is loaded
 if apps.is_installed("django_ckeditor_5"):
@@ -320,14 +321,14 @@ After this, your `urls.py` should look similar to this:
 ```python
 from django.apps import apps
 from django.conf import settings
-from django.urls import include, re_path
 from django.conf.urls.static import static
+from django.urls import include, path, re_path
 
 from allianceauth import urls
 
 # Alliance auth urls
 urlpatterns = [
-    re_path(r"", include(urls)),
+    path(r"", include(urls)),
 ]
 
 # If django_ckeditor_5 is loaded

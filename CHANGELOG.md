@@ -241,6 +241,7 @@ CKEditor URL configuration if it's present:
 from django.apps import apps  # Only if not already imported earlier
 from django.conf import settings  # Only if not already imported earlier
 from django.conf.urls.static import static  # Only if not already imported earlier
+from django.urls import path  # Only if not already imported earlier
 
 # If django_ckeditor_5 is loaded
 if apps.is_installed("django_ckeditor_5"):
