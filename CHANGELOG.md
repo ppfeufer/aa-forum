@@ -88,8 +88,8 @@ Remove the old CKEditor configuration and replace it with the following:
 ```python
 # Django CKEditor 5 Configuration
 if "django_ckeditor_5" in INSTALLED_APPS:
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = os.path.join(BASE_DIR, "media/uploads")
+    MEDIA_URL = "/media/uploads/"
+    MEDIA_ROOT = "/var/www/myauth/media/uploads"
 
     customColorPalette = [
         {"color": "hsl(4, 90%, 58%)", "label": "Red"},
