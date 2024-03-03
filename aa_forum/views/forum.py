@@ -784,6 +784,7 @@ def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
         .user_has_access(user=request.user)
         .order_by("category__order", "category__id", "order", "id")
         .all()
+        .distinct()
     )
 
     context = {"boards": boards}

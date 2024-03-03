@@ -40,6 +40,8 @@ Section Order:
 - Upload directory for CKEditor (see [README.md] for details)
 - New message badge appearance
 - Margins
+- A bug where the topic of unread messages was displayed multiple times in the
+  unread messages view when there was more than one unread message in the topic
 
 ### Changed
 
