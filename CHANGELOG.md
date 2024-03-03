@@ -38,6 +38,8 @@ Section Order:
 ### Fixed
 
 - Upload directory for CKEditor (see [README.md] for details)
+- New message badge appearance
+- Margins
 
 ### Changed
 
