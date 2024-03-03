@@ -35,6 +35,15 @@ Section Order:
 ### Security
 -->
 
+### Fixed
+
+- Upload directory for CKEditor (see [README.md] for details)
+
+### Changed
+
+- Set `user` field to read-only in `ModelAdmin` for `UserProfile` to prevent
+  accidental changes
+
 ## \[2.0.0-beta.1\] - 2024-02-18
 
 > \[!NOTE\]

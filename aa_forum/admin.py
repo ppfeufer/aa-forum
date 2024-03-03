@@ -65,7 +65,7 @@ class SingletonModelAdmin(admin.ModelAdmin):
 
 class BaseReadOnlyAdminMixin:
     """
-    Base "Read Only" mixin for admin models
+    Base "Read-Only" mixin for admin models
     """
 
     def has_add_permission(self, request):  # pylint: disable=unused-argument
@@ -215,3 +215,4 @@ class UserProfileAdmin(admin.ModelAdmin):
     """
 
     list_display = ("user",)
+    readonly_fields = ("user",)
