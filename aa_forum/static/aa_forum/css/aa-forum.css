@@ -11,10 +11,6 @@
         height: 0;
         width: 0;
     }
-
-    .aa-forum-admin-menu:hover .dropdown-menu {
-        display: block;
-    }
 }
 
 /* Search Box
