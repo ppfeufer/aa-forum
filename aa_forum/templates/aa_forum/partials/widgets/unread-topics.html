@@ -1,0 +1,19 @@
+{% load static %}
+{% load i18n %}
+
+<link rel="stylesheet" href="{% static 'aa_forum/css/aa-forum.min.css' %}">
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-title text-center mb-0">
+            {% translate 'Forum: Unread topics' as widget_title %}
+            {{ widget_title|title }}
+        </div>
+    </div>
+
+    <div class="card-body aa-forum aa-forum-unread-topics-loop">
+        {% for board in boards %}
+            {% include "aa_forum/partials/forum/topic/unread-topics.html" %}
+        {% endfor %}
+    </div>
+</div>

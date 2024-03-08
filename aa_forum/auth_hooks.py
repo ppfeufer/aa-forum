@@ -4,11 +4,13 @@ Hooks for the auth app
 
 # Alliance Auth
 from allianceauth import hooks
+from allianceauth.hooks import DashboardItemHook
 from allianceauth.services.hooks import MenuItemHook, UrlHook
 
 # AA Forum
 from aa_forum import __title__, urls
 from aa_forum.views.forum import unread_topics_count
+from aa_forum.views.widgets import unread_topics
 
 
 class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
@@ -69,6 +71,16 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
         return ""
 
 
+class UnreadTopicsDashboardHook(DashboardItemHook):
+    """
+    This class adds the unread topics widget to the Alliance Auth dashboard
+    """
+
+    def __init__(self):
+        # Setup dashboard widget
+        DashboardItemHook.__init__(self=self, view_function=unread_topics, order=5)
+
+
 @hooks.register("menu_item_hook")
 def register_menu():
     """
@@ -91,3 +103,15 @@ def register_urls():
     """
 
     return UrlHook(urls=urls, namespace="aa_forum", base_url=r"^forum/")
+
+
+@hooks.register("dashboard_hook")
+def register_esi_hook():
+    """
+    Register our dashboard hook
+
+    :return: The hook
+    :rtype: UnreadTopicsDashboardHook
+    """
+
+    return UnreadTopicsDashboardHook()
