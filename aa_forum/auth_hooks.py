@@ -10,7 +10,7 @@ from allianceauth.services.hooks import MenuItemHook, UrlHook
 # AA Forum
 from aa_forum import __title__, urls
 from aa_forum.views.forum import unread_topics_count
-from aa_forum.views.widgets import unread_topics
+from aa_forum.views.widgets import dashboard_widgets
 
 
 class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
@@ -78,7 +78,7 @@ class UnreadTopicsDashboardHook(DashboardItemHook):
 
     def __init__(self):
         # Setup dashboard widget
-        DashboardItemHook.__init__(self=self, view_function=unread_topics, order=5)
+        DashboardItemHook.__init__(self=self, view_function=dashboard_widgets, order=5)
 
 
 @hooks.register("menu_item_hook")

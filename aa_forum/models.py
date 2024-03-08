@@ -1058,6 +1058,7 @@ class UserProfile(models.Model):
     website_title = models.CharField(max_length=254, blank=True)
     website_url = models.CharField(max_length=254, blank=True)
     discord_dm_on_new_personal_message = models.BooleanField(default=False)
+    show_unread_personal_messages_dashboard_widget = models.BooleanField(default=False)
     show_unread_topics_dashboard_widget = models.BooleanField(default=False)
 
     class Meta:  # pylint: disable=too-few-public-methods

@@ -14,7 +14,7 @@ from aa_forum.helper.user import get_user_profile
 from aa_forum.views.forum import _get_boards_with_unread_topics
 
 
-def unread_topics(request):
+def dashboard_widgets(request):
     """
     Return the unread topics
 
@@ -24,14 +24,10 @@ def unread_topics(request):
     :rtype:
     """
 
-    user_profile = get_user_profile(user=request.user)
-
-    if (
-        user_profile.show_unread_topics_dashboard_widget is True
-        and request.user.has_perm("aa_forum.basic_access")
-    ):
+    if request.user.has_perm("aa_forum.basic_access"):
         return render_to_string(
-            template_name="aa_forum/view/widgets/unread-topics.html",
+            template_name="aa_forum/view/widgets/dashboard-widgets.html",
+            context={"user_profile": get_user_profile(user=request.user)},
             request=request,
         )
 
