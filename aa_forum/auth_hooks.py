@@ -21,6 +21,8 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
         Constructor
         """
 
+        self.count = None
+
         # Setup menu entry for sidebar
         MenuItemHook.__init__(
             self,
@@ -28,6 +30,23 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
             classes="fa-solid fa-comments",
             url_name="aa_forum:forum_index",
             navactive=["aa_forum:"],
+        )
+
+    def get_unread_topics_count(self, request):
+        """
+        Get the unread topics count
+
+        :param request:
+        :type request:
+        :return:
+        :rtype:
+        """
+
+        count_unread_topics = unread_topics_count(request=request)
+        self.count = (
+            count_unread_topics
+            if count_unread_topics and count_unread_topics > 0
+            else None
         )
 
     def render(self, request):
@@ -41,14 +60,10 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
         """
 
         if request.user.has_perm(perm="aa_forum.basic_access"):
-            count_unread_topics = unread_topics_count(request=request)
+            # Get the unread topics count
+            self.get_unread_topics_count(request=request)
 
-            self.count = (
-                count_unread_topics
-                if count_unread_topics and count_unread_topics > 0
-                else None
-            )
-
+            # Render the menu item
             return MenuItemHook.render(self, request=request)
 
         return ""
