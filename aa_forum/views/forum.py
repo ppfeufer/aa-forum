@@ -733,11 +733,9 @@ def topic_first_unread_message(
     return redirect(to=current_topic.get_absolute_url())
 
 
-@login_required
-@permission_required(perm="aa_forum.basic_access")
-def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
+def _get_boards_with_unread_topics(request: WSGIRequest):
     """
-    Show all unread topics
+    Get all boards with unread topics
 
     :param request:
     :type request:
@@ -756,7 +754,6 @@ def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
 
     boards = (
         Board.objects.select_related(
-            "parent_board",
             "category",
             "last_message",
             "last_message__topic",
@@ -787,7 +784,22 @@ def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
         .distinct()
     )
 
-    context = {"boards": boards}
+    return boards
+
+
+@login_required
+@permission_required(perm="aa_forum.basic_access")
+def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
+    """
+    Show all unread topics
+
+    :param request:
+    :type request:
+    :return:
+    :rtype:
+    """
+
+    context = {"boards": _get_boards_with_unread_topics(request=request)}
 
     logger.info(msg=f"{request.user} calling unread topics view.")
 

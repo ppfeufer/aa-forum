@@ -454,6 +454,15 @@ class UserProfileForm(ModelForm):
             else ""
         ),
     )
+    show_unread_topics_dashboard_widget = forms.BooleanField(
+        required=False,
+        label=_("Show unread topics as widget on the dashboard"),
+        help_text=(
+            _(
+                "Activating this setting will ad a widget to your dashboard that shows unread topics in the forum."  # pylint: disable=line-too-long
+            )
+        ),
+    )
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -466,6 +475,7 @@ class UserProfileForm(ModelForm):
             "website_title",
             "website_url",
             "discord_dm_on_new_personal_message",
+            "show_unread_topics_dashboard_widget",
         ]
         widgets = {
             "signature": CKEditor5Widget(
