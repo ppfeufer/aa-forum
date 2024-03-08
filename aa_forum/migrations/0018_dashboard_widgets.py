@@ -13,11 +13,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name="userprofile",
-            name="show_unread_personal_messages_dashboard_widget",
-            field=models.BooleanField(default=False),
-        ),
-        migrations.AddField(
-            model_name="userprofile",
             name="show_unread_topics_dashboard_widget",
             field=models.BooleanField(default=False),
         ),

@@ -3,7 +3,6 @@
 'use strict';
 
 const aaForumDashboardWidgets = document.getElementById('aa-forum-dashboard-widgets');
-// const aaForumUnreadPersonalMessagesWidget = document.getElementById('aa-forum-dashboard-widget-unread-personal-messages');
 const aaForumUnreadTopicsWidget = document.getElementById('aa-forum-dashboard-widget-unread-topics');
 
 if (aaForumUnreadTopicsWidget) {
