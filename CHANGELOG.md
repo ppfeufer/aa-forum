@@ -35,6 +35,36 @@ Section Order:
 ### Security
 -->
 
+## \[2.0.0-beta.3\] - 2024-03-08
+
+> \[!NOTE\]
+>
+> **This version needs at least Alliance Auth v4.0.0b2!**
+>
+> Please make sure to update your Alliance Auth instance before
+> you install this version, otherwise an update to Alliance Auth will
+> be pulled in unsupervised.
+
+> \[!IMPORTANT\]
+>
+> New migrations have been consolidated.
+>
+> Please make sure to run the following command before you update to this version:
+>
+> ```shell
+> python manage.py migrate aa_forum 0016
+> ```
+
+### Added
+
+- Unread topics dashboard widget
+
+### Changed
+
+- New migrations consolidated
+- Behavior for the "Administration" menu has been changed to follow the default Bootstrap
+  navigation behavior. Meaning it will no longer open on hover, you have to click it now.
+
 ## \[2.0.0-beta.2\] - 2024-03-03
 
 > \[!NOTE\]
