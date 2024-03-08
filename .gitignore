@@ -3,8 +3,8 @@
 /*.egg-info/
 .idea/
 .tox/
-htmlcov/
-node_modules/
+/htmlcov
+/node_modules
 
 *.log
 *.tmp
