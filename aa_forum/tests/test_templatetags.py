@@ -760,7 +760,7 @@ class TestForumTemplateVariables(TestCase):
             message="Bar",
         )
 
-        # when (template tage is triggered)
+        # when (template tag is triggered)
         response = personal_message_unread_count(user_receiver)
 
         # then
