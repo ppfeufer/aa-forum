@@ -63,7 +63,8 @@ Section Order:
 
 - New migrations consolidated
 - Behavior for the "Administration" menu has been changed to follow the default Bootstrap
-  navigation behavior. Meaning it will no longer open on hover, you have to click it now.
+  navigation behavior. Meaning, it will no longer open on hover, you have to click
+  it now.
 
 ## \[2.0.0-beta.2\] - 2024-03-03
 
