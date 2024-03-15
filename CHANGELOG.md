@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Fixed
+
+- PM badge background color
+
 ## \[2.0.0-beta.3\] - 2024-03-08
 
 > \[!NOTE\]
