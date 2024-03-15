@@ -767,7 +767,7 @@ class TestForumTemplateVariables(TestCase):
         self.assertEqual(
             first=response,
             second=(
-                '<span class="badge aa-forum-badge-personal-messages-unread-count">1</span>'  # pylint: disable=line-too-long
+                '<span class="badge bg-light aa-forum-badge-personal-messages-unread-count">1</span>'  # pylint: disable=line-too-long
             ),
         )
 
