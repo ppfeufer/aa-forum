@@ -1,5 +1,5 @@
 """
-Managers for our models
+Managers for AA Forum models
 """
 
 # pylint: disable=cyclic-import
@@ -23,6 +23,7 @@ class SettingQuerySet(models.QuerySet):
                     is saved again and not deleted
 
         :return:
+        :rtype:
         """
 
         return super().update()
@@ -35,10 +36,12 @@ class SettingManager(models.Manager):
 
     def get_setting(self, setting_key: str) -> str:
         """
-        Return the value for given setting key
+        Get a setting value
 
         :param setting_key:
+        :type setting_key:
         :return:
+        :rtype:
         """
 
         return getattr(self.first(), setting_key)
@@ -48,6 +51,7 @@ class SettingManager(models.Manager):
         Get a Setting queryset
 
         :return:
+        :rtype:
         """
 
         return SettingQuerySet(self.model)
@@ -63,10 +67,12 @@ class BoardQuerySet(models.QuerySet):
         Filter boards that given user has access to.
 
         :param user:
+        :type user:
         :return:
+        :rtype:
         """
 
-        # Forum manager always have access, so assign this permission wisely
+        # Forum manager always has access, so assign this permission wisely
         if user.has_perm(perm="aa_forum.manage_forum"):
             return self
 
@@ -97,10 +103,12 @@ class TopicQuerySet(models.QuerySet):
         Filter boards that given user has access to.
 
         :param user:
+        :type user:
         :return:
+        :rtype:
         """
 
-        # Forum manager always have access, so assign this permission wisely
+        # Forum manager always has access, so assign this permission wisely
         if user.has_perm(perm="aa_forum.manage_forum"):
             return self
 
@@ -117,13 +125,18 @@ class TopicQuerySet(models.QuerySet):
         user: User,
     ) -> models.Model:
         """
-        Fetch topic from slugs for user. Return None if not found or no access.
+        Fetch a topic from slugs for user. Return None if not found or no access.
 
         :param category_slug:
+        :type category_slug:
         :param board_slug:
+        :type board_slug:
         :param topic_slug:
+        :type topic_slug:
         :param user:
+        :type user:
         :return:
+        :rtype:
         """
 
         # AA Forum
@@ -183,13 +196,15 @@ class MessageQuerySet(models.QuerySet):
 
     def user_has_access(self, user: User) -> models.QuerySet:
         """
-        Filter boards that given user has access to.
+        Filter the topics a given user has access to.
 
         :param user:
+        :type user:
         :return:
+        :rtype:
         """
 
-        # Forum manager always have access, so assign this permission wisely
+        # Forum manager always has access, so assign this permission wisely
         if user.has_perm(perm="aa_forum.manage_forum"):
             return self
 
@@ -208,14 +223,20 @@ class MessageQuerySet(models.QuerySet):
         user: User,
     ) -> models.Model:
         """
-        Fetch message from slugs for user. Return None if not found or no access.
+        Fetch a message from slugs for user. Return None if not found or no access.
 
         :param category_slug:
+        :type category_slug:
         :param board_slug:
+        :type board_slug:
         :param topic_slug:
+        :type topic_slug:
         :param message_id:
+        :type message_id:
         :param user:
+        :type user:
         :return:
+        :rtype:
         """
 
         try:
@@ -266,7 +287,9 @@ class PersonalMessageQuerySet(models.QuerySet):
         Get a user's personal messages
 
         :param user:
+        :type user:
         :return:
+        :rtype:
         """
 
         messages = (
@@ -284,7 +307,9 @@ class PersonalMessageQuerySet(models.QuerySet):
         Get a user's personal messages sent
 
         :param user:
+        :type user:
         :return:
+        :rtype:
         """
 
         messages = (
@@ -299,10 +324,12 @@ class PersonalMessageQuerySet(models.QuerySet):
 
     def get_personal_message_unread_count_for_user(self, user: User) -> int:
         """
-        Get personal message unread count for a given user
+        Get a user's unread personal messages count
 
         :param user:
+        :type user:
         :return:
+        :rtype:
         """
 
         unread_count = self.filter(

@@ -12,7 +12,7 @@ from aa_forum import __version__
 
 class AaForumConfig(AppConfig):
     """
-    Application config
+    AA Forum App Config
     """
 
     name = "aa_forum"
@@ -24,6 +24,7 @@ class AaForumConfig(AppConfig):
         Make sure we can utilize signals
 
         :return:
+        :rtype:
         """
 
         # AA Forum

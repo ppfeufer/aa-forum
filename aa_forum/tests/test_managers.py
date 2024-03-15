@@ -1,5 +1,5 @@
 """
-Test for the managers
+Test managers
 """
 
 # Django
@@ -13,16 +13,30 @@ from aa_forum.tests.utils import create_fake_message, create_fake_user
 
 class TestBoard(TestCase):
     """
-    Test board manager
+    Tests for board manager
     """
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up groups and categories
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.group = Group.objects.create(name="Superhero")
         cls.category = Category.objects.create(name="Science")
 
     def setUp(self) -> None:
+        """
+        Set up user
+
+        :return:
+        :rtype:
+        """
+
         self.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
 
     def test_should_return_board_with_no_groups(self):
@@ -30,6 +44,7 @@ class TestBoard(TestCase):
         Test should return board with no groups
 
         :return:
+        :rtype:
         """
 
         # given
@@ -46,6 +61,7 @@ class TestBoard(TestCase):
         Test should return board for group member
 
         :return:
+        :rtype:
         """
 
         # given
@@ -64,6 +80,7 @@ class TestBoard(TestCase):
         Test should not return board for non group member
 
         :return:
+        :rtype:
         """
 
         # given
@@ -84,19 +101,34 @@ class TestTopic(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up groups and categories
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.group = Group.objects.create(name="Superhero")
         cls.category = Category.objects.create(name="Science")
 
     def setUp(self) -> None:
+        """
+        Set up user and board
+
+        :return:
+        :rtype:
+        """
+
         self.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
         self.board = Board.objects.create(name="Physics", category=self.category)
 
     def test_should_return_topic_normally_1(self):
         """
-        Test should return topic normally
+        Test should return a topic normally (test with keyword arguments)
 
         :return:
+        :rtype:
         """
 
         # given
@@ -116,9 +148,10 @@ class TestTopic(TestCase):
 
     def test_should_return_topic_normally_2(self):
         """
-        Test should return topic normally (test without positional arguments)
+        Test should return a topic normally (test with positional arguments)
 
         :return:
+        :rtype:
         """
 
         # given
@@ -141,6 +174,7 @@ class TestTopic(TestCase):
         Test should return None if not found (invalid topic slug)
 
         :return:
+        :rtype:
         """
 
         # given
@@ -163,6 +197,7 @@ class TestTopic(TestCase):
         Test should return None if not found (invalid board slug)
 
         :return:
+        :rtype:
         """
 
         # given
@@ -185,6 +220,7 @@ class TestTopic(TestCase):
         Test should return None if not found (invalid category slug)
 
         :return:
+        :rtype:
         """
 
         # given
@@ -204,9 +240,10 @@ class TestTopic(TestCase):
 
     def test_should_return_restricted_topic_for_group_members(self):
         """
-        Test should return restricted topic for group member
+        Test should return a restricted topic for group members
 
         :return:
+        :rtype:
         """
 
         # given
@@ -228,9 +265,10 @@ class TestTopic(TestCase):
 
     def test_should_not_return_restricted_topic_for_non_group_members(self):
         """
-        Test should not return restricted topic for non group member
+        Test should not return a restricted topic for non group members
 
         :return:
+        :rtype:
         """
 
         # given

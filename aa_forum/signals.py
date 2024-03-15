@@ -17,7 +17,16 @@ def sync_parent_board_access_to_child_board(
     **kwargs,  # pylint: disable=unused-argument
 ):
     """
-    Keeps the access restrictions in sync between parent boards and their children
+    Sync parent board access to child board
+
+    :param sender:
+    :type sender:
+    :param instance:
+    :type instance:
+    :param kwargs:
+    :type kwargs:
+    :return:
+    :rtype:
     """
 
     if instance.parent_board:

@@ -5,9 +5,6 @@ import django.db.models.deletion
 from django.conf import settings
 from django.db import migrations, models
 
-# ckEditor
-import ckeditor_uploader.fields
-
 # AA Forum
 import aa_forum.models
 
@@ -113,7 +110,7 @@ class Migration(migrations.Migration):
                 ),
                 ("time_posted", models.DateTimeField(auto_now_add=True, db_index=True)),
                 ("time_modified", models.DateTimeField(auto_now=True)),
-                ("message", ckeditor_uploader.fields.RichTextUploadingField()),
+                ("message", models.TextField(blank=True)),
                 ("message_plaintext", models.TextField(blank=True)),
             ],
             options={

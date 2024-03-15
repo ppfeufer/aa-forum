@@ -1,5 +1,7 @@
 """
-Our app setting
+App settings
+
+This module provides functions to check if certain apps are installed and active
 """
 
 # Django
@@ -8,9 +10,10 @@ from django.apps import apps
 
 def discordproxy_installed() -> bool:
     """
-    Check if discordproxy is installed by trying to import its DiscordClient
+    Check if discordproxy is installed and active
 
     :return:
+    :rtype:
     """
 
     try:
@@ -29,6 +32,7 @@ def allianceauth_discordbot_installed() -> bool:
     Check if allianceauth-discordbot is installed and active
 
     :return:
+    :rtype:
     """
 
     return apps.is_installed(app_name="aadiscordbot")
@@ -36,9 +40,10 @@ def allianceauth_discordbot_installed() -> bool:
 
 def discord_messaging_proxy_available() -> bool:
     """
-    Check if any known discord messaging proxy is available
+    Check if discord messaging proxy is available
 
     :return:
+    :rtype:
     """
 
     return discordproxy_installed() or allianceauth_discordbot_installed()

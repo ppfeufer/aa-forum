@@ -1,58 +1,60 @@
 {% load i18n %}
-{% load aa_forum_datetime %}
+{% load aa_forum %}
 
 {% if message %}
-    <div id="message-{{ message.pk }}" class="panel panel-default">
-        <div class="panel-body">
+    <div id="message-{{ message.pk }}" class="card card-default">
+        <div class="card-body">
             <div class="aa-forum-message">
-                <div class="hidden-xs">
+                <div class="d-none d-sm-block m-sm-3 m-md-0">
                     {% include "aa_forum/partials/forum/topic/message-author.html" with message_author=message.sender %}
                 </div>
 
-                <div class="aa-forum-message-wrapper">
-                    <div class="aa-forum-message-header row">
-                        <div class="hidden-lg hidden-md hidden-sm">
+                <div class="aa-forum-message-wrapper m-3">
+                    <div class="aa-forum-message-header row mb-3">
+                        <div class="d-lg-none d-md-none d-sm-none">
                             {% include "aa_forum/partials/forum/topic/message-author.html" with message_author=message.sender %}
                         </div>
 
                         <div class="aa-forum-message-keyinfo col-md-6">
                             {{ message.subject }}
                             <br>
-                            <small>« <b>{% translate "on:" %}</b> {{ message.time_sent|forum_time }} »</small>
+                            <small>« <b>{% translate "on:" %}</b> {{ message.time_sent|aa_forum_time }} »</small>
                         </div>
 
                         <div class="col-md-6">
-                            <div class="text-right">
+                            <div class="float-end">
                                 {% if folder == "inbox" %}
                                     <a
                                         href="{% url 'aa_forum:personal_messages_message_reply' message.pk %}"
-                                        class="btn btn-aa-forum-topic-moderation btn-xs"
+                                        class="btn btn-aa-forum-topic-moderation btn-sm"
                                         title="{% translate 'Reply' %}"
                                     >
-                                        <i class="fas fa-reply-all"></i>
+                                        <i class="fa-solid fa-reply-all"></i>
                                     </a>
                                 {% endif %}
 
                                 <button
-                                    class="btn btn-aa-forum-topic-moderation btn-xs btn-aa-forum-delete"
+                                    class="btn btn-aa-forum-topic-moderation btn-sm btn-aa-forum-delete"
                                     title="{% translate 'Delete message' %}"
-                                    data-toggle="modal"
-                                    data-target="#delete-message-{{ message.pk }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#delete-message-{{ message.pk }}"
                                 >
-                                    <i class="far fa-trash-alt"></i>
+                                    <i class="fa-regular fa-trash-can"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="aa-forum-message-body">
+                    <div class="aa-forum-message-body pt-3">
                         <div class="aa-forum-message-body-inner">
-                            {{ message.message|safe }}
+                            <div class="ck ck-content">
+                                {{ message.message|safe }}
+                            </div>
                         </div>
 
                         {% if message_author.aa_forum_user_profile %}
                             {% if message_author.aa_forum_user_profile.signature %}
-                                <div class="aa-forum-message-body-author-signature text-muted small hidden-xs">
+                                <div class="aa-forum-message-body-author-signature text-muted small hidden-xs pt-3">
                                     {{ message_sender.aa_forum_user_profile.signature|safe }}
                                 </div>
                             {% endif %}
@@ -62,4 +64,11 @@
             </div>
         </div>
     </div>
+
+    <script>
+        'use strict';
+
+        // Look for oembed elements and replace them with iframes
+        checkForOembed();
+    </script>
 {% endif %}

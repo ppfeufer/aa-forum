@@ -1,5 +1,5 @@
 """
-Messages views
+Personal Messages Views
 """
 
 # Standard Library
@@ -35,11 +35,14 @@ logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__ti
 @permission_required(perm="aa_forum.basic_access")
 def inbox(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     """
-    Messages overview
+    Overview of all messages in a user's inbox
 
     :param request:
+    :type request:
     :param page_number:
+    :type page_number:
     :return:
+    :rtype:
     """
 
     logger.info(msg=f"{request.user} called their messages overview.")
@@ -70,8 +73,11 @@ def inbox(request: WSGIRequest, page_number: int = None) -> HttpResponse:
 def new_message(request: WSGIRequest) -> HttpResponse:
     """
     Create a new personal message
+
     :param request:
+    :type request:
     :return:
+    :rtype:
     """
 
     logger.info(msg=f"{request.user} called the new personal message page.")
@@ -134,11 +140,14 @@ def new_message(request: WSGIRequest) -> HttpResponse:
 @permission_required(perm="aa_forum.basic_access")
 def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse:
     """
-    Overview of all messages sent by a user
+    Overview of all messages in a users sent messages
 
     :param request:
+    :type request:
     :param page_number:
+    :type page_number:
     :return:
+    :rtype:
     """
 
     logger.info(msg=f"{request.user} called the their sent personal message page.")
@@ -168,11 +177,14 @@ def sent_messages(request: WSGIRequest, page_number: int = None) -> HttpResponse
 @permission_required("aa_forum.basic_access")
 def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
     """
-    Reply to a message
+    Reply to a personal message
 
     :param request:
+    :type request:
     :param message_id:
+    :type message_id:
     :return:
+    :rtype:
     """
 
     context = {}
@@ -259,9 +271,13 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
     Delete a personal message
 
     :param request:
+    :type request:
     :param folder:
+    :type folder:
     :param message_id:
+    :type message_id:
     :return:
+    :rtype:
     """
 
     def folder_inbox() -> HttpResponse:
@@ -303,7 +319,7 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
 
     def folder_sent_messages() -> HttpResponse:
         """
-        Remove message from sent messages
+        Remove a message from sent messages
 
         :return:
         """
@@ -359,11 +375,14 @@ def delete_message(request: WSGIRequest, folder: str, message_id: int) -> HttpRe
 @permission_required(perm="aa_forum.basic_access")
 def ajax_read_message(request: WSGIRequest, folder: str) -> HttpResponse:
     """
-    Ajax :: Read a personal message
+    Read a personal message
 
     :param request:
+    :type request:
     :param folder:
+    :type folder:
     :return:
+    :rtype:
     """
 
     data = {}
@@ -409,10 +428,12 @@ def ajax_read_message(request: WSGIRequest, folder: str) -> HttpResponse:
 @permission_required("aa_forum.basic_access")
 def ajax_unread_messages_count(request: WSGIRequest) -> JsonResponse:
     """
-    Get unread messages count for a user
+    Get the number of unread messages for a user
 
     :param request:
+    :type request:
     :return:
+    :rtype:
     """
 
     unread_messages_count = (

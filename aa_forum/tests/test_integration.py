@@ -1,5 +1,5 @@
 """
-Integration and UI tests
+Integration tests for the Forum app
 """
 
 # Standard Library
@@ -43,6 +43,13 @@ class TestForumUI(WebTest):
 
     @classmethod
     def setUpClass(cls):
+        """
+        Set up test data
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
 
         cls.user_1001 = create_fake_user(
@@ -78,6 +85,7 @@ class TestForumUI(WebTest):
         Test should show forum index
 
         :return:
+        :rtype:
         """
 
         # given
@@ -97,6 +105,7 @@ class TestForumUI(WebTest):
         Test should not show forum index
 
         :return:
+        :rtype:
         """
 
         # given
@@ -113,9 +122,10 @@ class TestForumUI(WebTest):
 
     def test_should_create_new_topic(self):
         """
-        Test should create new topic
+        Test should create a new topic
 
         :return:
+        :rtype:
         """
 
         # given
@@ -141,9 +151,10 @@ class TestForumUI(WebTest):
 
     def test_should_return_cleaned_message_string_on_topic_creation(self):
         """
-        Test should return a clean/sanitized message string when new topic is created
+        Test should return a clean/sanitized message string on topic creation
 
         :return:
+        :rtype:
         """
 
         # given
@@ -169,9 +180,10 @@ class TestForumUI(WebTest):
 
     def test_should_not_create_new_topic_doe_to_subject_missing(self):
         """
-        Test should not create new topic due to missing/empty subject
+        Test should not create a new topic due to a missing/empty subject
 
         :return:
+        :rtype:
         """
 
         # given
@@ -204,9 +216,10 @@ class TestForumUI(WebTest):
 
     def test_should_not_create_new_topic_doe_to_message_missing(self):
         """
-        Test should not create new topic due to missing/empty message
+        Test should not create a new topic due to a missing/empty message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -239,9 +252,10 @@ class TestForumUI(WebTest):
 
     def test_should_not_create_topic_that_already_exists(self):
         """
-        Test should not re-create an existing topic
+        Test should not create a topic that already exists
 
         :return:
+        :rtype:
         """
 
         # given
@@ -290,9 +304,12 @@ class TestForumUI(WebTest):
     @patch("requests.post")
     def test_should_post_to_webhook_on_create_reply_in_topic(self, mock_post):
         """
-        Test should post to Discord webhook when reply in topic
+        Test should post to Discord webhook when a new reply is created
 
+        :param mock_post:
+        :type mock_post:
         :return:
+        :rtype:
         """
 
         # given
@@ -327,10 +344,12 @@ class TestForumUI(WebTest):
     @patch("requests.post")
     def test_should_post_to_discord_webhook_on_create_new_topic(self, mock_post):
         """
-        Test should post to Discord webhook when new topic is created
+        Test should post to Discord webhook when a new topic is created
 
         :param mock_post:
+        :type mock_post:
         :return:
+        :rtype:
         """
 
         # given
@@ -368,10 +387,12 @@ class TestForumUI(WebTest):
         self, mock_post
     ):
         """
-        Test should post to Discord webhook when new topic with image is created
+        Test should post to Discord webhook when a new topic with image is created
 
         :param mock_post:
+        :type mock_post:
         :return:
+        :rtype:
         """
 
         # given
@@ -416,11 +437,12 @@ class TestForumUI(WebTest):
         self, mock_post
     ):
         """
-        Test should post to Discord webhook when new topic
+        Test should post to Discord webhook when a new topic with image (full url) is created
 
-        with image (full url) is created
         :param mock_post:
+        :type mock_post:
         :return:
+        :rtype:
         """
 
         # given
@@ -463,6 +485,7 @@ class TestForumUI(WebTest):
         Test should cancel new topic creation
 
         :return:
+        :rtype:
         """
 
         # given
@@ -481,9 +504,10 @@ class TestForumUI(WebTest):
 
     def test_should_create_reply_in_topic(self):
         """
-        Test should create reply in topic
+        Test should create reply in a topic
 
         :return:
+        :rtype:
         """
 
         # given
@@ -507,9 +531,10 @@ class TestForumUI(WebTest):
 
     def test_should_return_cleaned_message_string_on_topic_reply(self):
         """
-        Test should return a clean/sanitized message string on reply in topic
+        Test should return a clean/sanitized message string on topic reply
 
         :return:
+        :rtype:
         """
 
         # given
@@ -535,9 +560,10 @@ class TestForumUI(WebTest):
 
     def test_should_not_create_reply_in_topic_due_to_missing_message(self):
         """
-        Test should not create reply in topic, because message field is empty
+        Test should not create a reply in a topic due to a missing message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -571,10 +597,10 @@ class TestForumUI(WebTest):
         self,
     ):
         """
-        Test should trigger an error message when trying to access
-        the reply endpoint of a topic directly
+        Test should trigger an error message when trying to access a message reply directly
 
         :return:
+        :rtype:
         """
 
         # given
@@ -603,6 +629,7 @@ class TestForumUI(WebTest):
         Test should update own message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -627,9 +654,10 @@ class TestForumUI(WebTest):
 
     def test_should_return_cleaned_message_string_on_update_own_message(self):
         """
-        Test should return a clean/sanitized message string when updating own message
+        Test should return a clean/sanitized message string on updating own message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -656,10 +684,10 @@ class TestForumUI(WebTest):
 
     def test_should_trigger_error_on_message_edit_due_to_invalid_form_data(self):
         """
-        Test should trigger an error message when updating a message
-        due to invalid form data
+        Test should trigger an error on message edit due to invalid form data
 
         :return:
+        :rtype:
         """
 
         # given
@@ -690,6 +718,7 @@ class TestForumUI(WebTest):
         Test should not be able to edit messages from others
 
         :return:
+        :rtype:
         """
 
         # given
@@ -710,9 +739,10 @@ class TestForumUI(WebTest):
 
     def test_should_find_message_by_key_word(self):
         """
-        Test should find message by keyword
+        Test should find a message by keyword
 
         :return:
+        :rtype:
         """
 
         # given
@@ -756,6 +786,13 @@ class TestAdminCategoriesAndBoardsUI(WebTest):
 
     @classmethod
     def setUpClass(cls):
+        """
+        Set up test data
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.user = create_fake_user(
             character_id=1001,
@@ -765,9 +802,10 @@ class TestAdminCategoriesAndBoardsUI(WebTest):
 
     def test_should_create_category(self):
         """
-        Test should create a category
+        Test should create category
 
         :return:
+        :rtype:
         """
 
         # given
@@ -794,6 +832,7 @@ class TestAdminCategoriesAndBoardsUI(WebTest):
         Test should edit category
 
         :return:
+        :rtype:
         """
 
         # given
@@ -821,6 +860,7 @@ class TestAdminCategoriesAndBoardsUI(WebTest):
         Test should add board to category
 
         :return:
+        :rtype:
         """
 
         # given
@@ -848,6 +888,7 @@ class TestAdminCategoriesAndBoardsUI(WebTest):
         Test should edit board
 
         :return:
+        :rtype:
         """
 
         # given
@@ -874,11 +915,18 @@ class TestAdminCategoriesAndBoardsUI(WebTest):
 
 class TestProfileUI(WebTest):
     """
-    Tests for the Forum UI
+    Tests for the Profile UI
     """
 
     @classmethod
     def setUpClass(cls):
+        """
+        Set up test data
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
 
         cls.user_1001 = create_fake_user(
@@ -900,6 +948,7 @@ class TestProfileUI(WebTest):
         Test should show profile index
 
         :return:
+        :rtype:
         """
 
         # given
@@ -918,6 +967,7 @@ class TestProfileUI(WebTest):
         Test should not show profile index
 
         :return:
+        :rtype:
         """
 
         # given
@@ -933,17 +983,17 @@ class TestProfileUI(WebTest):
 
     def test_should_create_user_profile(self):
         """
-        Test should create a user profile, since they are only
-        created when a user opens their profile page
+        Test should create a user profile
 
         :return:
+        :rtype:
         """
 
         # given (Should raise a DoesNotExist exception)
         with self.assertRaises(expected_exception=UserProfile.DoesNotExist):
             UserProfile.objects.get(pk=self.user_1002.pk)
 
-        # when (User loggs in and opens the profile page)
+        # when (User logs in and opens the profile page)
         self.app.set_user(user=self.user_1002)
         response = self.app.get(url=reverse(viewname="aa_forum:profile_index"))
 
@@ -957,9 +1007,10 @@ class TestProfileUI(WebTest):
 
     def test_should_update_user_profile(self):
         """
-        Test should update the user profile
+        Test should update a user profile
 
         :return:
+        :rtype:
         """
 
         # given
@@ -989,6 +1040,7 @@ class TestProfileUI(WebTest):
         Test should throw an error because the signature is too long
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1019,9 +1071,10 @@ class TestProfileUI(WebTest):
 
     def test_should_throw_error_for_invalid_url(self):
         """
-        Test should throw an error because the url is not valid
+        Test should throw an error because the URL is invalid
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1044,9 +1097,10 @@ class TestProfileUI(WebTest):
 
     def test_should_return_valid_url(self):
         """
-        Test should the validated URL
+        Test should return a valid URL
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1069,9 +1123,10 @@ class TestProfileUI(WebTest):
 
     def test_should_return_correct_model_string(self):
         """
-        Test should return the correct model string
+        Test should return correct model string
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1089,6 +1144,7 @@ class TestProfileUI(WebTest):
         Test should set discord_dm_on_new_personal_message to True
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1114,6 +1170,7 @@ class TestProfileUI(WebTest):
         Test should set discord_dm_on_new_personal_message to False
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1137,11 +1194,18 @@ class TestProfileUI(WebTest):
 
 class TestAdminForumSettingsUI(WebTest):
     """
-    Tests for the Admin UI
+    Tests for the Settings UI
     """
 
     @classmethod
     def setUpClass(cls):
+        """
+        Set up test data
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.user_1001 = create_fake_user(
             character_id=1001,
@@ -1159,6 +1223,7 @@ class TestAdminForumSettingsUI(WebTest):
         Test should show forum settings
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1178,6 +1243,7 @@ class TestAdminForumSettingsUI(WebTest):
         Test should not show forum settings
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1197,6 +1263,7 @@ class TestAdminForumSettingsUI(WebTest):
         Test should update forum settings
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1222,9 +1289,10 @@ class TestAdminForumSettingsUI(WebTest):
 
     def test_should_not_update_forum_settings_on_empty_value(self):
         """
-        Test should update forum settings because of an empty value in a mandatory field
+        Test should not update forum settings on empty value
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1263,6 +1331,7 @@ class TestAdminForumSettingsUI(WebTest):
         Test should return the correct model string
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1274,11 +1343,18 @@ class TestAdminForumSettingsUI(WebTest):
 
 class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
     """
-    Tests for the Forum UI
+    Tests for the Personal Message UI
     """
 
     @classmethod
     def setUpClass(cls):
+        """
+        Set up test data
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
 
         cls.user_1001 = create_fake_user(
@@ -1298,7 +1374,9 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
     def test_should_show_messages_inbox(self):
         """
         Test should show personal messages inbox
+
         :return:
+        :rtype:
         """
 
         # given
@@ -1317,6 +1395,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should not show personal messages inbox
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1336,6 +1415,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should show personal messages - new message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1357,6 +1437,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should not show personal messages - new message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1378,6 +1459,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should show personal messages - sent messages
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1399,6 +1481,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should not show personal messages - sent messages
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1420,6 +1503,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should send a personal message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1451,10 +1535,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         self,
     ):
         """
-        Test should not send a personal message and raise an error
-        because of empty recipient
+        Test should not send a personal message and raise an error because of empty recipient
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1487,10 +1571,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         self,
     ):
         """
-        Test should not send a personal message and raise an error
-        because of empty subject
+        Test should not send a personal message and raise an error because of an empty subject
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1523,10 +1607,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         self,
     ):
         """
-        Test should not send a personal message and raise an error
-        because of empty message
+        Test should not send a personal message and raise an error because of an empty message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1559,9 +1643,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         self,
     ):
         """
-        Test should return empty response HTTP code
+        Test should return empty response for template for ajax_read_message with GET
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1581,9 +1666,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         self,
     ):
         """
-        Test should fail silently with no POST data and return empty response HTTP code
+        Test should fail silently for ajax_read_message with no POST data
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1603,10 +1689,11 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         self,
     ):
         """
-        Test should not return an inbox message when recipient and user don't match
+        Test should not return an inbox message when the recipient and user don't match
         and return empty response HTTP code
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1627,10 +1714,11 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         self,
     ):
         """
-        Test should not return an inbox message when recipient and user don't match
+        Test should not return an inbox message when the message doesn't exist
         and return empty response HTTP code
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1652,6 +1740,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should return an inbox message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1685,9 +1774,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
 
     def test_should_return_sent_item_message(self):
         """
-        Test should return a message sent
+        Test should return a sent item message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1722,9 +1812,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
 
     def test_should_mark_message_as_read(self):
         """
-        Test should unread message as read upon return
+        Test should mark a message as read
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1762,9 +1853,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
 
     def test_should_return_inbox_message_unread_count(self):
         """
-        Test should return an inbox message
+        Test should return the unread messages count
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1795,6 +1887,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should mark an inbox message as deleted_by_recipient
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1830,6 +1923,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should delete an inbox message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1867,6 +1961,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should not delete an inbox message and throw an error message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1903,6 +1998,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should mark a sent message as deleted_by_sender
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1938,6 +2034,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should delete a sent message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1972,9 +2069,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
 
     def test_should_not_delete_sent_message_and_redirect(self):
         """
-        Test should not delete an inbox message and throw an error message
+        Test should not delete a sent message and throw an error message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -2008,10 +2106,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
 
     def test_should_simply_redirect_because_wrong_url_parameter(self):
         """
-        Test should simply redirect to personal messages
-        inbox, because wrong URL parameter
+        Test should simply redirect because of a wrong url parameter
 
         :return:
+        :rtype:
         """
 
         # given
@@ -2038,6 +2136,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should show reply view
 
         :return:
+        :rtype:
         """
 
         # given
@@ -2066,9 +2165,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
 
     def test_should_not_open_reply_view(self):
         """
-        Test not should show reply view
+        Test should not show reply view because of the wrong user
 
         :return:
+        :rtype:
         """
 
         # given
@@ -2101,6 +2201,7 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
         Test should send a reply to a personal message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -2138,9 +2239,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
 
     def test_should_not_send_reply_with_missing_form_field(self):
         """
-        Test should not send a reply to a personal message because form field is missing
+        Test should not send a reply to a personal message because of a missing form field
 
         :return:
+        :rtype:
         """
 
         # given
@@ -2174,9 +2276,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
 
     def test_should_change_topic_on_reply(self):
         """
-        Test should add "Re:" to the topic on first reply
+        Test should add another "Re:" to the topic on reply
 
         :return:
+        :rtype:
         """
 
         # given
@@ -2207,9 +2310,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
 
     def test_should_not_change_topic_on_reply(self):
         """
-        Test should not add another "Re:" to the topic on reply to a reply
+        Test should not add another "Re:" to the topic on reply
 
         :return:
+        :rtype:
         """
 
         # given

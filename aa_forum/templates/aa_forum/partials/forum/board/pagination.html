@@ -1,12 +1,12 @@
-{% load aa_forum_template_variables %}
+{% load aa_forum %}
 {% load i18n %}
 
 {% if page_obj.paginator.num_pages > 1 %}
-    <div class="col-4 offset-4">
-        {% set_template_variable category = board.category %}
+    <div>
+        {% aa_forum_template_variable category = board.category %}
 
         <nav aria-label="{% translate 'Message pagination' %}">
-            <ul class="pagination pagination-sm">
+            <ul class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
                     <li class="page-item">
                         <a href="{{ board.get_absolute_url }}" class="page-link">

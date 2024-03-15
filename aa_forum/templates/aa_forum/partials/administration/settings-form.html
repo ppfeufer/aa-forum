@@ -1,26 +1,25 @@
-{% load bootstrap %}
+{% load django_bootstrap5 %}
 {% load i18n %}
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title">
+<div class="card card-default">
+    <div class="card-header">
+        <div class="card-title mb-0">
             {% translate "Forum settings" %}
         </div>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
         <form id="aa-forum-form-settings-modify" class="form-horizontal" autocomplete="off" action="{% url 'aa_forum:admin_forum_settings' %}" method="post">
             {% csrf_token %}
-            {{ form|bootstrap_horizontal }}
 
-            {% include "aa_forum/partials/form/required-field-hint.html" with form_horizontal=True %}
+            {% bootstrap_form form %}
 
-            <div class="form-group aa-forum-form-group aa-forum-form-modify-settings text-right clearfix">
-                <div class="col-xs-12">
-                    <button class="btn btn-primary btn-sm" type="submit">
-                        {% translate "Submit" %}
-                    </button>
-                </div>
+            {% include "aa_forum/partials/form/required-field-hint.html" %}
+
+            <div class="form-group aa-forum-form-group aa-forum-form-modify-settings float-end clearfix">
+                <button class="btn btn-primary btn-sm" type="submit">
+                    {% translate "Submit" %}
+                </button>
             </div>
         </form>
     </div>

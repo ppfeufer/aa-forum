@@ -7,7 +7,7 @@ from django.urls import include, path
 
 # AA Forum
 from aa_forum.constants import INTERNAL_URL_PREFIX
-from aa_forum.views import admin, forum, personal_messages, profile, search
+from aa_forum.views import admin, forum, personal_messages, profile, search, widgets
 
 app_name: str = "aa_forum"
 
@@ -173,6 +173,12 @@ internal_urls = [
         route="mark-all-as-read/",
         view=forum.mark_all_as_read,
         name="forum_mark_all_as_read",
+    ),
+    # "Public" ajax URLs
+    path(
+        route="ajax/widget/unread-topics/",
+        view=widgets.ajax_unread_topics,
+        name="widgets_ajax_unread_topics",
     ),
 ]
 

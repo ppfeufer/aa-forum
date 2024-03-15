@@ -1,5 +1,5 @@
 """
-Test our signals
+Test signals for the aa_forum app
 """
 
 # Django
@@ -15,16 +15,30 @@ MODELS_PATH = "aa_forum.models"
 
 class TestBoard(TestCase):
     """
-    Test Board signals
+    Test signals for Board
     """
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Setup
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
         cls.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
         cls.group = Group.objects.create(name="Superhero")
 
     def setUp(self) -> None:
+        """
+        Setup
+
+        :return:
+        :rtype:
+        """
+
         self.category = Category.objects.create(name="Science")
 
     def test_should_set_parent_board_access_restriction(self):
@@ -32,6 +46,7 @@ class TestBoard(TestCase):
         Test that a child board inherits the groups from its parent board on creation
 
         :return:
+        :rtype:
         """
 
         board = Board.objects.create(name="Physics", category=self.category)
@@ -48,6 +63,7 @@ class TestBoard(TestCase):
         its child on save
 
         :return:
+        :rtype:
         """
 
         board = Board.objects.create(name="Physics", category=self.category)

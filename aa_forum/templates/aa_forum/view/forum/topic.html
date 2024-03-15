@@ -2,27 +2,28 @@
 
 {% load i18n %}
 
-{% block page_title %}{{ topic.subject }} » {% translate "Forum" %}{% endblock %}
+{% block page_title %}
+    {{ topic.subject }} » {% translate "Forum" %}
+{% endblock %}
 
 {% block aa_forum_header %}
-    {% include "aa_forum/partials/menu.html" %}
     {% include "aa_forum/partials/breadcrumb.html" with category=topic.board.category board=topic.board topic=topic %}
 {% endblock %}
 
 {% block aa_forum_body %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="panel-title clearfix">
+    <div class="card card-default mb-3">
+        <div class="card-header">
+            <div class="card-title mb-0 clearfix">
                 {{ topic.subject }}
 
                 {% if can_modify_subject %}
                     <a
-                        id="aa-forum-btn-modify-message-{{ message.pk }}"
+                        id="aa-forum-btn-modify-topic-{{ topic.pk }}"
                         href="{% url 'aa_forum:forum_topic_modify' topic.board.category.slug topic.board.slug topic.slug %}"
-                        class="btn btn-aa-forum-topic-moderation btn-xs pull-right"
+                        class="btn btn-aa-forum-topic-moderation btn-sm float-end"
                         title="{% translate 'Modify topic subject' %}"
                     >
-                        <i class="fas fa-pencil-alt"></i>
+                        <i class="fa-solid fa-pencil"></i>
                     </a>
 
                 {% endif %}
@@ -46,12 +47,14 @@
 {% endblock %}
 
 {% block extra_css %}
+    {% include "aa_forum/bundles/ckeditor5-css.html" %}
     {% include "aa_forum/bundles/aa-forum-css.html" %}
 {% endblock %}
 
 {% block extra_javascript %}
-    {% include "aa_forum/bundles/ckeditor-js.html" %}
+    {% include "aa_forum/bundles/ckeditor5-js.html" %}
     {% include "aa_forum/bundles/aa-forum-ckeditor-js.html" %}
+    {% include "aa_forum/bundles/aa-forum-oembed-js.html" %}
     {% include "bundles/clipboard-js.html" %}
 
     <script>

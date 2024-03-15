@@ -3,10 +3,11 @@
 {% load static %}
 {% load i18n %}
 
-{% block page_title %}{% translate "Forum" %}{% endblock %}
+{% block page_title %}
+    {% translate "Forum" %}
+{% endblock %}
 
 {% block aa_forum_header %}
-    {% include "aa_forum/partials/menu.html" %}
     {% include "aa_forum/partials/forum/unread-topic-buttons.html" with position="above-category-list" %}
     {% include "aa_forum/partials/breadcrumb.html" %}
 {% endblock %}
@@ -15,24 +16,24 @@
     {% include "aa_forum/partials/forum/forum-index.html" %}
     {% include "aa_forum/partials/forum/unread-topic-buttons.html" with position="below-category-list" %}
 
-    <div class="panel-body">
+    <div class="card-body">
         <div class="aa-forum-legend">
             <span class="aa-forum-legend-new-post">
-                <span class="aa-forum-legend-image">
+                <span class="aa-forum-legend-image me-2">
                     <svg>
                         <use href="#aa-forum-icon-post-new"></use>
                     </svg>
                 </span>
-                <span class="aa-forum-legend-text">{% translate "New posts" %}</span>
+                <span class="aa-forum-legend-text mt-1">{% translate "New posts" %}</span>
             </span>
 
             <span class="aa-forum-legend-no-new-post">
-                <span class="aa-forum-legend-image">
+                <span class="aa-forum-legend-image me-2">
                     <svg>
                         <use href="#aa-forum-icon-post"></use>
                     </svg>
                 </span>
-                <span class="aa-forum-legend-text">{% translate "No new posts" %}</span>
+                <span class="aa-forum-legend-text mt-1">{% translate "No new posts" %}</span>
             </span>
         </div>
     </div>

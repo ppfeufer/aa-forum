@@ -5,9 +5,6 @@ import django.db.models.deletion
 from django.conf import settings
 from django.db import migrations, models
 
-# ckEditor
-import ckeditor_uploader.fields
-
 
 class Migration(migrations.Migration):
     dependencies = [
@@ -29,10 +26,7 @@ class Migration(migrations.Migration):
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
-                (
-                    "signature",
-                    ckeditor_uploader.fields.RichTextUploadingField(blank=True),
-                ),
+                ("signature", models.TextField(blank=True)),
                 ("website_title", models.CharField(blank=True, max_length=254)),
                 ("website_url", models.CharField(blank=True, max_length=254)),
             ],

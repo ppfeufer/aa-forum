@@ -1,5 +1,5 @@
 """
-Tests for our models
+Tests for the models
 """
 
 # Standard Library
@@ -33,14 +33,15 @@ MODELS_PATH = "aa_forum.models"
 
 class TestGetSentinelUser(TestCase):
     """
-    Tests for the sentinel user
+    Tests for the get_sentinel_user function
     """
 
     def test_should_create_user_when_it_does_not_exist(self):
         """
-        Test should create sentinel user when it doesn't exist
+        Test should create the sentinel user when it doesn't exist
 
         :return:
+        :rtype:
         """
 
         # when
@@ -51,9 +52,10 @@ class TestGetSentinelUser(TestCase):
 
     def test_should_return_user_when_it_does(self):
         """
-        Test should return sentinel user when it exists
+        Test should return the sentinel user when it does exist
 
         :return:
+        :rtype:
         """
 
         # given
@@ -68,17 +70,31 @@ class TestGetSentinelUser(TestCase):
 
 class TestBoard(TestCase):
     """
-    Tests for the board model
+    Tests for Board
     """
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Set up groups and users
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
 
         cls.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
         cls.group = Group.objects.create(name="Superhero")
 
     def setUp(self) -> None:
+        """
+        Set up category
+
+        :return:
+        :rtype:
+        """
+
         self.category = create_category(name="Science")
 
     def test_model_string_names(self):
@@ -86,6 +102,7 @@ class TestBoard(TestCase):
         Test model string names
 
         :return:
+        :rtype:
         """
 
         board = create_board(name="Physics", category=self.category)
@@ -97,6 +114,7 @@ class TestBoard(TestCase):
         Test should update last message when message created
 
         :return:
+        :rtype:
         """
 
         # given
@@ -115,6 +133,7 @@ class TestBoard(TestCase):
         Test should update last message when message created in child board
 
         :return:
+        :rtype:
         """
 
         # given
@@ -138,6 +157,7 @@ class TestBoard(TestCase):
         Test should return board URL
 
         :return:
+        :rtype:
         """
 
         # given
@@ -154,9 +174,10 @@ class TestBoard(TestCase):
 
     def test_should_return_board_with_no_groups(self):
         """
-        Test should return board with no group restrictions
+        Test should return board with no groups
 
         :return:
+        :rtype:
         """
 
         # given
@@ -170,9 +191,10 @@ class TestBoard(TestCase):
 
     def test_should_return_board_for_group_member(self):
         """
-        Test should return restricted board for group member
+        Test should return board for group member
 
         :return:
+        :rtype:
         """
 
         # given
@@ -192,6 +214,7 @@ class TestBoard(TestCase):
         Test should return restricted child board for group member
 
         :return:
+        :rtype:
         """
 
         # given
@@ -213,6 +236,7 @@ class TestBoard(TestCase):
         Test should not return restricted board for non group member
 
         :return:
+        :rtype:
         """
 
         # given
@@ -224,9 +248,10 @@ class TestBoard(TestCase):
 
     def test_should_not_return_child_board_for_non_group_member(self):
         """
-        Test should nopt return restricted child board for none group member
+        Test should not return restricted child board for non group member
 
         :return:
+        :rtype:
         """
 
         # given
@@ -239,9 +264,10 @@ class TestBoard(TestCase):
 
     def test_should_generate_new_slug_when_slug_already_exists(self):
         """
-        Test should generate new slug when board-slug already exists
+        Test should generate a new slug when board-slug already exists
 
         :return:
+        :rtype:
         """
 
         # given
@@ -260,6 +286,7 @@ class TestBoard(TestCase):
         Test should not allow creation with hyphen slugs (reserved for admin pages)
 
         :return:
+        :rtype:
         """
 
         # when
@@ -274,6 +301,7 @@ class TestBoard(TestCase):
         Test should create slug with name matching internal URL prefix
 
         :return:
+        :rtype:
         """
 
         # when
@@ -284,10 +312,11 @@ class TestBoard(TestCase):
 
     def test_should_handle_empty_board_slug(self):
         """
-        Handling an empty slug that is returned by Board.save() when the board name is
-        just special characters, which are getting stripped by slug generation
+        Handling an empty slug returned by Board.save() when the board
+        name is just special characters, which are getting stripped by slug generation
 
         :return:
+        :rtype:
         """
 
         # when
@@ -378,6 +407,7 @@ class TestCategory(TestCase):
         Test model string names
 
         :return:
+        :rtype:
         """
 
         category = create_category(name="Science")
@@ -386,9 +416,10 @@ class TestCategory(TestCase):
 
     def test_should_create_new_category_with_slug(self):
         """
-        Tests should create new category with slug
+        Test should create a new category with slug
 
         :return:
+        :rtype:
         """
 
         # when
@@ -399,9 +430,10 @@ class TestCategory(TestCase):
 
     def test_should_keep_existing_slug_when_changing_name(self):
         """
-        Test should keep existing slug when changing category name
+        Test should keep existing slug when changing name
 
         :return:
+        :rtype:
         """
 
         category = create_category(name="Science")
@@ -416,9 +448,10 @@ class TestCategory(TestCase):
 
     def test_should_generate_new_slug_when_slug_already_exists(self):
         """
-        Test should generate new slug when category slug already exists
+        Test should generate a new slug when slug already exists
 
         :return:
+        :rtype:
         """
 
         # given
@@ -434,9 +467,10 @@ class TestCategory(TestCase):
 
     def test_should_not_allow_creation_with_hyphen_slugs(self):
         """
-        Test should not allow creation with hyphen slug
+        Test should not allow creation with hyphen slugs (reserved for admin pages)
 
         :return:
+        :rtype:
         """
 
         # when
@@ -447,9 +481,10 @@ class TestCategory(TestCase):
 
     def test_should_not_allow_to_update_slug_to_hyphen(self):
         """
-        Test should not allow to update slug to hyphen
+        Test should not allow updating slug to hyphen (reserved for admin pages)
 
         :return:
+        :rtype:
         """
 
         # given
@@ -480,9 +515,10 @@ class TestCategory(TestCase):
     @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
     def test_should_create_new_category_with_name_matching_internal_url_prefix(self):
         """
-        Test should create new category with name matching internal URL prefix
+        Test should create a new category with name matching internal URL prefix
 
         :return:
+        :rtype:
         """
 
         # when
@@ -493,10 +529,11 @@ class TestCategory(TestCase):
 
     def test_should_handle_empty_category_slug(self):
         """
-        Handling an empty slug that is returned by Category.save() when the category
+        Handling an empty slug returned by Category.save() when the category
         name is just special characters, which are getting stripped by slug generation
 
         :return:
+        :rtype:
         """
 
         # when
@@ -510,16 +547,29 @@ class TestCategory(TestCase):
 @patch(MODELS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
 class TestMessage(TestCase):
     """
-    Tests for Message model
+    Tests for Message
     """
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Setup
+
+        :return:
+        :rtype:
+        """
         super().setUpClass()
 
         cls.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
 
     def setUp(self) -> None:
+        """
+        Setup
+
+        :return:
+        :rtype:
+        """
+
         category = create_category()
 
         self.board = create_board(category=category)
@@ -532,6 +582,7 @@ class TestMessage(TestCase):
         Test model string names
 
         :return:
+        :rtype:
         """
 
         # when
@@ -542,9 +593,10 @@ class TestMessage(TestCase):
 
     def test_should_update_first_and_last_messages_when_saving_1(self):
         """
-        Test should update first and last message when saving
+        Test should update the first and last message when saving
 
         :return:
+        :rtype:
         """
 
         # when
@@ -560,9 +612,10 @@ class TestMessage(TestCase):
 
     def test_should_update_first_and_last_messages_when_saving_2(self):
         """
-        Test should update first and last message when saving multiple messages
+        Test should update the first and last message when saving multiple messages
 
         :return:
+        :rtype:
         """
 
         # given
@@ -581,9 +634,10 @@ class TestMessage(TestCase):
 
     def test_should_update_first_and_last_messages_when_saving_3(self):
         """
-        Test should update first and last message when saving
+        Test should update the first and last message when saving
 
         :return:
+        :rtype:
         """
 
         # when
@@ -602,9 +656,10 @@ class TestMessage(TestCase):
 
     def test_should_update_first_and_last_messages_when_saving_4(self):
         """
-        Test should update first and last message when saving
+        Test should update the first and last message when saving
 
         :return:
+        :rtype:
         """
 
         # given
@@ -629,9 +684,10 @@ class TestMessage(TestCase):
 
     def test_should_update_first_and_last_messages_when_saving_5(self):
         """
-        Test should update first and last message when saving
+        Test should update the first and last message when saving
 
         :return:
+        :rtype:
         """
 
         # given
@@ -658,9 +714,10 @@ class TestMessage(TestCase):
 
     def test_should_update_message_references_when_deleting_last_message_1(self):
         """
-        Test should update first and last message when deleting last message
+        Test should updat thee first and last message when deleting the last message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -680,9 +737,10 @@ class TestMessage(TestCase):
 
     def test_should_update_message_references_when_deleting_last_message_2(self):
         """
-        Test should update first and last message when deleting last message
+        Test should update the first and last message when deleting the last message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -702,9 +760,10 @@ class TestMessage(TestCase):
 
     def test_should_update_message_references_when_deleting_last_message_3(self):
         """
-        Test should update first and last message when deleting last message
+        Test should update the first and last message when deleting the last message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -727,9 +786,10 @@ class TestMessage(TestCase):
 
     def test_should_update_message_references_when_deleting_last_message_4(self):
         """
-        Test should update first and last message when deleting last message
+        Test should update the first and last message when deleting the last message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -752,9 +812,10 @@ class TestMessage(TestCase):
 
     def test_should_reset_message_references_when_deleting_last_message_1(self):
         """
-        Test should reset message references when deleting last message
+        Test should reset message references when deleting the last message
 
         :return:
+        :rtype:
         """
 
         # given
@@ -773,9 +834,10 @@ class TestMessage(TestCase):
 
     def test_should_return_url_first_page(self):
         """
-        Test should return URL to first page
+        Test should return URL to the first page
 
         :return:
+        :rtype:
         """
 
         # given
@@ -801,6 +863,7 @@ class TestMessage(TestCase):
         Test should return URL to other pages
 
         :return:
+        :rtype:
         """
 
         # given
@@ -826,16 +889,30 @@ class TestMessage(TestCase):
 
 class TestTopic(TestCase):
     """
-    Test for the Topic model
+    Tests for Topic
     """
 
     @classmethod
     def setUpClass(cls) -> None:
+        """
+        Setup
+
+        :return:
+        :rtype:
+        """
+
         super().setUpClass()
 
         cls.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
 
     def setUp(self) -> None:
+        """
+        Setup
+
+        :return:
+        :rtype:
+        """
+
         category = create_category(name="Science")
 
         self.board = create_board(category=category, name="Physics")
@@ -846,6 +923,7 @@ class TestTopic(TestCase):
         Test model string names
 
         :return:
+        :rtype:
         """
 
         topic = create_topic(subject="Mysteries", board=self.board)
@@ -854,9 +932,10 @@ class TestTopic(TestCase):
 
     def test_should_update_last_message_when_message_is_created(self):
         """
-        Test should update last message when message is created
+        Test should update the last message when a message is created
 
         :return:
+        :rtype:
         """
 
         # given
@@ -871,9 +950,10 @@ class TestTopic(TestCase):
 
     def test_should_update_last_message_when_message_is_created_child_board(self):
         """
-        Test should update last message when message is created in child board
+        Test should update the last message when a message is created in child board
 
         :return:
+        :rtype:
         """
 
         # given
@@ -888,9 +968,10 @@ class TestTopic(TestCase):
 
     def test_should_update_last_message_after_topic_deletion(self):
         """
-        Test should update last message when topic is deleted
+        Test should update last message when the topic is deleted
 
         :return:
+        :rtype:
         """
 
         # given
@@ -915,9 +996,10 @@ class TestTopic(TestCase):
 
     def test_should_not_update_last_message_after_topic_deletion(self):
         """
-        Test should not update last message when topic is deleted
+        Test should not update the last message when the topic is deleted
 
         :return:
+        :rtype:
         """
 
         # given
@@ -945,6 +1027,7 @@ class TestTopic(TestCase):
         Test should return topic URL
 
         :return:
+        :rtype:
         """
 
         # given
@@ -964,9 +1047,10 @@ class TestTopic(TestCase):
 
     def test_should_generate_new_slug_when_slug_already_exists(self):
         """
-        Test should generate new slug when slug already exists
+        Test should generate a new slug when slug already exists
 
         :return:
+        :rtype:
         """
 
         # given
@@ -985,6 +1069,7 @@ class TestTopic(TestCase):
         Test should not allow creation with hyphen slugs
 
         :return:
+        :rtype:
         """
 
         # when
@@ -999,6 +1084,7 @@ class TestTopic(TestCase):
         Test should create slug with name matching internal URL prefix
 
         :return:
+        :rtype:
         """
 
         # when
@@ -1009,10 +1095,11 @@ class TestTopic(TestCase):
 
     def test_should_handle_empty_topic_slug(self):
         """
-        Handling an empty slug that is returned by Topic.save() when the topic
+        Handling an empty slug returned by Topic.save() when the topic
         name is just special characters, which are getting stripped by slug generation
 
         :return:
+        :rtype:
         """
 
         # when
@@ -1039,7 +1126,7 @@ class TestTopic(TestCase):
 
 class TestPersonalMessage(TestCase):
     """
-    Tests for PersonalMessage model
+    Tests for PersonalMessage
     """
 
     def test_str(self):
@@ -1047,6 +1134,7 @@ class TestPersonalMessage(TestCase):
         Test model string names
 
         :return:
+        :rtype:
         """
 
         # with
@@ -1060,9 +1148,10 @@ class TestPersonalMessage(TestCase):
     @patch(MODELS_PATH + ".INTERNAL_URL_PREFIX", "-")
     def test_can_create_personal_message(self):
         """
-        Test can create personal message
+        Test can create a personal message
 
         :return:
+        :rtype:
         """
 
         # with
@@ -1074,7 +1163,7 @@ class TestPersonalMessage(TestCase):
 
 class LastMessageSeen(TestCase):
     """
-    Test for LastMessageSeen model
+    Tests for LastMessageSeen
     """
 
     def test_str(self):
@@ -1082,6 +1171,7 @@ class LastMessageSeen(TestCase):
         Test model string names
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1101,7 +1191,7 @@ class LastMessageSeen(TestCase):
 
 class TestSetting(TestCase):
     """
-    Tests for Settings model
+    Tests for Setting
     """
 
     def test_model_string_name(self):
@@ -1109,6 +1199,7 @@ class TestSetting(TestCase):
         Test model string name
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1123,6 +1214,7 @@ class TestSetting(TestCase):
         and the existing setting is changed instead
 
         :return:
+        :rtype:
         """
 
         # given
@@ -1144,6 +1236,7 @@ class TestSetting(TestCase):
         django.db.utils.IntegrityError: (1062, "Duplicate entry '1' for key 'PRIMARY'")
 
         :return:
+        :rtype:
         """
 
         # No pk given
@@ -1159,6 +1252,7 @@ class TestSetting(TestCase):
         django.db.utils.IntegrityError: (1062, "Duplicate entry '1' for key 'PRIMARY'")
 
         :return:
+        :rtype:
         """
 
         # Set pk=2
@@ -1173,6 +1267,7 @@ class TestSetting(TestCase):
         Test that the settings object cannot be deleted
 
         :return:
+        :rtype:
         """
 
         # given

@@ -1,5 +1,5 @@
 """
-Forum related views
+Forum views
 """
 
 # Standard Library
@@ -39,7 +39,9 @@ def index(request: WSGIRequest) -> HttpResponse:
     Forum index view
 
     :param request:
+    :type request:
     :return:
+    :rtype:
     """
 
     has_read_all_messages = LastMessageSeen.objects.filter(
@@ -134,13 +136,18 @@ def board(
     request: WSGIRequest, category_slug: str, board_slug: str, page_number: int = None
 ) -> HttpResponse:
     """
-    Forum board view
+    View a board
 
     :param request:
+    :type request:
     :param category_slug:
+    :type category_slug:
     :param board_slug:
+    :type board_slug:
     :param page_number:
+    :type page_number:
     :return:
+    :rtype:
     """
 
     has_read_all_messages = LastMessageSeen.objects.filter(
@@ -264,12 +271,16 @@ def board_new_topic(
     request: WSGIRequest, category_slug: str, board_slug: str
 ) -> HttpResponse:
     """
-    Begin a new topic
+    Create a new topic in a board
 
     :param request:
+    :type request:
     :param category_slug:
+    :type category_slug:
     :param board_slug:
+    :type board_slug:
     :return:
+    :rtype:
     """
 
     try:
@@ -346,7 +357,7 @@ def board_new_topic(
             board_slug=current_board.slug,
         )
 
-    # If this is a POST request we need to process the form data …
+    # If this is a POST request, we need to process the form data …
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
         form = NewTopicForm(data=request.POST)
@@ -354,7 +365,7 @@ def board_new_topic(
         # Check whether it's valid:
         if form.is_valid():
             try:
-                # Let's see if we can create the new topic
+                # Let's see if we can create a new topic
                 new_topic = current_board.new_topic(
                     subject=form.cleaned_data["subject"],
                     message=form.cleaned_data["message"],
@@ -362,6 +373,8 @@ def board_new_topic(
                 )
             except current_board.TopicAlreadyExists as exc:
                 # Apparently there is already a topic with this subject
+                logger.debug(msg=f"{request.user} tried to create a duplicate topic.")
+
                 messages.warning(request=request, message=exc)
 
                 return render(
@@ -377,7 +390,7 @@ def board_new_topic(
                 topic_slug=new_topic.slug,
             )
 
-        # Form is invalid
+        # The form is invalid
         messages.error(
             request=request,
             message=mark_safe(
@@ -420,11 +433,17 @@ def topic(
     View a topic
 
     :param request:
+    :type request:
     :param category_slug:
+    :type category_slug:
     :param board_slug:
+    :type board_slug:
     :param topic_slug:
+    :type topic_slug:
     :param page_number:
+    :type page_number:
     :return:
+    :rtype:
     """
 
     current_topic = _topic_from_slugs(
@@ -515,13 +534,18 @@ def topic_modify(
     topic_slug: str,
 ) -> HttpResponse:
     """
-    Modify the topic's subject
+    Modify a topic subject
 
     :param request:
+    :type request:
     :param category_slug:
+    :type category_slug:
     :param board_slug:
+    :type board_slug:
     :param topic_slug:
+    :type topic_slug:
     :return:
+    :rtype:
     """
 
     topic_to_modify = _topic_from_slugs(
@@ -623,13 +647,18 @@ def _topic_from_slugs(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> Optional[Topic]:
     """
-    Fetch topic from given slug params
+    Helper function to get a topic from slugs
 
     :param request:
+    :type request:
     :param category_slug:
+    :type category_slug:
     :param board_slug:
+    :type board_slug:
     :param topic_slug:
+    :type topic_slug:
     :return:
+    :rtype:
     """
 
     current_topic = Topic.objects.get_from_slugs(
@@ -648,13 +677,18 @@ def topic_first_unread_message(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
     """
-    Redirect to the first unread message of a topic
+    Redirect to the first unread message in a topic
 
     :param request:
+    :type request:
     :param category_slug:
+    :type category_slug:
     :param board_slug:
+    :type board_slug:
     :param topic_slug:
+    :type topic_slug:
     :return:
+    :rtype:
     """
 
     current_topic = _topic_from_slugs(
@@ -699,14 +733,14 @@ def topic_first_unread_message(
     return redirect(to=current_topic.get_absolute_url())
 
 
-@login_required
-@permission_required(perm="aa_forum.basic_access")
-def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
+def _get_boards_with_unread_topics(request: WSGIRequest):
     """
-    Show all available unread topics
+    Get all boards with unread topics
 
     :param request:
+    :type request:
     :return:
+    :rtype:
     """
 
     has_read_all_messages = LastMessageSeen.objects.filter(
@@ -720,7 +754,6 @@ def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
 
     boards = (
         Board.objects.select_related(
-            "parent_board",
             "category",
             "last_message",
             "last_message__topic",
@@ -748,9 +781,25 @@ def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
         .user_has_access(user=request.user)
         .order_by("category__order", "category__id", "order", "id")
         .all()
+        .distinct()
     )
 
-    context = {"boards": boards}
+    return boards
+
+
+@login_required
+@permission_required(perm="aa_forum.basic_access")
+def topic_show_all_unread(request: WSGIRequest) -> HttpResponse:
+    """
+    Show all unread topics
+
+    :param request:
+    :type request:
+    :return:
+    :rtype:
+    """
+
+    context = {"boards": _get_boards_with_unread_topics(request=request)}
 
     logger.info(msg=f"{request.user} calling unread topics view.")
 
@@ -767,13 +816,18 @@ def topic_reply(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
 ) -> HttpResponse:
     """
-    Reply to a post in a topic
+    Reply to a topic
 
     :param request:
+    :type request:
     :param category_slug:
+    :type category_slug:
     :param board_slug:
+    :type board_slug:
     :param topic_slug:
+    :type topic_slug:
     :return:
+    :rtype:
     """
 
     current_topic = _topic_from_slugs(
@@ -874,8 +928,11 @@ def topic_change_lock_state(
     Change the lock state of the given topic
 
     :param request:
+    :type request:
     :param topic_id:
+    :type topic_id:
     :return:
+    :rtype:
     """
 
     try:
@@ -930,8 +987,11 @@ def topic_change_sticky_state(
     Change the sticky state of the given topic
 
     :param request:
+    :type request:
     :param topic_id:
+    :type topic_id:
     :return:
+    :rtype:
     """
 
     try:
@@ -975,11 +1035,14 @@ def topic_change_sticky_state(
 @permission_required(perm="aa_forum.manage_forum")
 def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
     """
-    Delete a given topic
+    Delete a topic from a board
 
     :param request:
+    :type request:
     :param topic_id:
+    :type topic_id:
     :return:
+    :rtype:
     """
 
     try:
@@ -1014,14 +1077,20 @@ def message(
     message_id: int,
 ) -> HttpResponseRedirect:
     """
-    Get a messages' entry point in a topic, so we end up on the right page with it
+    Redirect to a given message
 
     :param request:
+    :type request:
     :param category_slug:
+    :type category_slug:
     :param board_slug:
+    :type board_slug:
     :param topic_slug:
+    :type topic_slug:
     :param message_id:
+    :type message_id:
     :return:
+    :rtype:
     """
 
     try:
@@ -1049,14 +1118,20 @@ def message_modify(
     message_id: int,
 ) -> HttpResponse:
     """
-    Modify a given message
+    Modify a message
 
     :param request:
+    :type request:
     :param category_slug:
+    :type category_slug:
     :param board_slug:
+    :type board_slug:
     :param topic_slug:
+    :type topic_slug:
     :param message_id:
+    :type message_id:
     :return:
+    :rtype:
     """
 
     message_to_modify = _message_from_slugs(
@@ -1183,14 +1258,20 @@ def _message_from_slugs(
     message_id: int,
 ) -> Optional[Message]:
     """
-    Get message from slugs
+    Helper function to get a message from slugs
 
     :param request:
+    :type request:
     :param category_slug:
+    :type category_slug:
     :param board_slug:
+    :type board_slug:
     :param topic_slug:
+    :type topic_slug:
     :param message_id:
+    :type message_id:
     :return:
+    :rtype:
     """
 
     current_message = Message.objects.get_from_slugs(
@@ -1209,11 +1290,13 @@ def _message_from_slugs(
 def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirect:
     """
     Delete a message from a topic
-    If it is the last message in this topic, the topic will be removed as well
 
     :param request:
+    :type request:
     :param message_id:
+    :type message_id:
     :return:
+    :rtype:
     """
 
     try:
@@ -1319,10 +1402,12 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
 @permission_required(perm="aa_forum.basic_access")
 def mark_all_as_read(request: WSGIRequest) -> HttpResponseRedirect:
     """
-    Mark all available topics as read
+    Mark all topics as read
 
     :param request:
+    :type request:
     :return:
+    :rtype:
     """
 
     has_read_all_messages = LastMessageSeen.objects.filter(
@@ -1365,7 +1450,9 @@ def unread_topics_count(request: WSGIRequest) -> int:
     Get the number of unread messages for the user
 
     :param request:
+    :type request:
     :return:
+    :rtype:
     """
 
     has_read_all_messages = LastMessageSeen.objects.filter(

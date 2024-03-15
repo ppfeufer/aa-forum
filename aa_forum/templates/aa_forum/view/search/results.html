@@ -10,7 +10,6 @@
 {% endblock %}
 
 {% block aa_forum_header %}
-    {% include "aa_forum/partials/menu.html" %}
     {% include "aa_forum/partials/breadcrumb.html" with search_term=search_term search_results=search_results %}
 {% endblock %}
 
@@ -34,6 +33,11 @@
     {% endif %}
 {% endblock %}
 
+{% block extra_javascript %}
+    {% include "aa_forum/bundles/aa-forum-oembed-js.html" %}
+{% endblock %}
+
 {% block extra_css %}
+    {% include "aa_forum/bundles/ckeditor5-css.html" %}
     {% include "aa_forum/bundles/aa-forum-css.html" %}
 {% endblock %}

@@ -1,14 +1,14 @@
 {% load i18n %}
-{% load bootstrap %}
+{% load django_bootstrap5 %}
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title">
+<div class="card card-default">
+    <div class="card-header">
+        <div class="card-title mb-0">
             {% translate "Modify message" %}
         </div>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
         {% if page_obj.has_next %}
             <div class="alert alert-warning">
                 {% translate "Note: You are not on the last page of this topic and may miss the most recent replies." %}
@@ -18,11 +18,11 @@
         <form id="aa-forum-form-message-modify" autocomplete="off" action="{% url 'aa_forum:forum_message_modify' board.category.slug board.slug message.topic.slug message.pk %}" method="post">
             {% csrf_token %}
 
-            {{ form|bootstrap }}
+            {% bootstrap_form form %}
 
             {% include "aa_forum/partials/form/required-field-hint.html" %}
 
-            <div class="form-group aa-forum-form-group aa-forum-form-modify-message text-right clearfix">
+            <div class="form-group aa-forum-form-group aa-forum-form-modify-message float-end clearfix">
                 <button class="btn btn-primary btn-sm" type="submit">
                     {% translate "Modify" %}
                 </button>

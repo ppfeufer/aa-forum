@@ -1,5 +1,5 @@
 """
-Administration related views
+Views for the admin area
 """
 
 # Standard Library
@@ -41,10 +41,12 @@ logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__ti
 @permission_required(perm="aa_forum.manage_forum")
 def categories_and_boards(request: WSGIRequest) -> HttpResponse:
     """
-    Administration index view
+    Administration » Categories and Boards
 
     :param request:
+    :type request:
     :return:
+    :rtype:
     """
 
     categories = Category.objects.prefetch_related(
@@ -134,7 +136,9 @@ def category_create(request: WSGIRequest) -> HttpResponseRedirect:
     Create a new category
 
     :param request:
+    :type request:
     :return:
+    :rtype:
     """
 
     if request.method == "POST":
@@ -179,8 +183,11 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
     Edit a category
 
     :param request:
+    :type request:
     :param category_id:
+    :type category_id:
     :return:
+    :rtype:
     """
 
     if request.method == "POST":
@@ -223,11 +230,14 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
 @permission_required(perm="aa_forum.manage_forum")
 def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedirect:
     """
-    Edit a board
+    Delete a category
 
     :param request:
+    :type request:
     :param category_id:
+    :type category_id:
     :return:
+    :rtype:
     """
 
     try:
@@ -258,8 +268,11 @@ def board_create(request: WSGIRequest, category_id: int) -> HttpResponseRedirect
     Create a new board
 
     :param request:
+    :type request:
     :param category_id:
+    :type category_id:
     :return:
+    :rtype:
     """
 
     if request.method == "POST":
@@ -314,12 +327,16 @@ def board_create_child(
     board_id: int,
 ) -> HttpResponseRedirect:
     """
-    Create a child board
+    Create a new child board
 
     :param request:
+    :type request:
     :param category_id:
+    :type category_id:
     :param board_id:
+    :type board_id:
     :return:
+    :rtype:
     """
 
     if request.method == "POST":
@@ -376,9 +393,13 @@ def board_edit(
     Edit a board
 
     :param request:
+    :type request:
     :param category_id:
+    :type category_id:
     :param board_id:
+    :type board_id:
     :return:
+    :rtype:
     """
 
     if request.method == "POST":
@@ -428,9 +449,13 @@ def board_delete(
     Delete a board
 
     :param request:
+    :type request:
     :param category_id:
+    :type category_id:
     :param board_id:
+    :type board_id:
     :return:
+    :rtype:
     """
 
     try:
@@ -463,7 +488,9 @@ def ajax_category_order(request: WSGIRequest) -> JsonResponse:
     Ajax call :: Save the category order
 
     :param request:
+    :type request:
     :return:
+    :rtype:
     """
 
     data = []
@@ -497,7 +524,9 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
     Ajax call :: Save the board order
 
     :param request:
+    :type request:
     :return:
+    :rtype:
     """
 
     data = []
@@ -528,10 +557,12 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
 @permission_required(perm="aa_forum.manage_forum")
 def forum_settings(request: WSGIRequest) -> HttpResponse:
     """
-    Forum Settings
+    Administration » Forum Settings
 
     :param request:
+    :type request:
     :return:
+    :rtype:
     """
 
     logger.info(f"{request.user} called forum settings page.")

@@ -1,19 +1,23 @@
 {% load i18n %}
 {% load navactive %}
-{% load aa_forum_template_variables %}
+{% load aa_forum %}
 
-{% set_template_variable url_name = request.resolver_match.url_name %}
-
-<li class="aa-forum-admin-menu dropdown{% if "admin_" in url_name %} active{% endif %}">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{% translate "Administration" %}</a>
+<li class="nav-item dropdown aa-forum-admin-menu">
+    <a class="nav-link dropdown-toggle {% renavactive request "^/forum/-/admin/" %}" data-bs-toggle="dropdown" href="#">
+        {% translate "Administration" %}
+    </a>
 
     <ul id="aa-forum-admin-menu" class="dropdown-menu clearfix" role="menu">
-        <li class="aa-forum-admin-menu-item {% navactive request 'aa_forum:admin_categories_and_boards' %}">
-            <a href="{% url 'aa_forum:admin_categories_and_boards' %}">{% translate "Categories and boards" %}</a>
+        <li class="aa-forum-admin-menu-item">
+            <a class="dropdown-item {% navactive request 'aa_forum:admin_categories_and_boards' %}" href="{% url 'aa_forum:admin_categories_and_boards' %}">
+                {% translate "Categories and boards" %}
+            </a>
         </li>
 
-        <li class="aa-forum-admin-menu-item {% navactive request 'aa_forum:admin_forum_settings' %}">
-            <a href="{% url 'aa_forum:admin_forum_settings' %}">{% translate "Forum settings" %}</a>
+        <li class="aa-forum-admin-menu-item">
+            <a class="dropdown-item {% navactive request 'aa_forum:admin_forum_settings' %}" href="{% url 'aa_forum:admin_forum_settings' %}">
+                {% translate "Forum settings" %}
+            </a>
         </li>
     </ul>
 </li>

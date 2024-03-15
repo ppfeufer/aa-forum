@@ -48,15 +48,24 @@ def create_fake_user(
     **kwargs,
 ) -> User:
     """
-    Create a fake user incl. main character and (optional) permissions.
+    Create a fake user with a given character name and id.
+
     :param character_id:
+    :type character_id:
     :param character_name:
+    :type character_name:
     :param corporation_id:
+    :type corporation_id:
     :param corporation_name:
+    :type corporation_name:
     :param corporation_ticker:
+    :type corporation_ticker:
     :param permissions:
+    :type permissions:
     :param kwargs:
+    :type kwargs:
     :return:
+    :rtype:
     """
 
     username = re.sub(pattern=r"[^\w\d@\.\+-]", repl="_", string=character_name)
@@ -94,10 +103,14 @@ def create_fake_user(
 
 def create_fake_message(topic: Topic, user: User):
     """
-    Create a fake message.
+    Create a fake message in given topic.
+
     :param topic:
+    :type topic:
     :param user:
+    :type user:
     :return:
+    :rtype:
     """
 
     return Message.objects.create(
@@ -107,10 +120,14 @@ def create_fake_message(topic: Topic, user: User):
 
 def create_fake_messages(topic: Topic, amount) -> List[Message]:
     """
-    Create a bunch of fake messages in given topic.
+    Create a given number of fake messages in a given topic.
+
     :param topic:
+    :type topic:
     :param amount:
+    :type amount:
     :return:
+    :rtype:
     """
 
     users = list(User.objects.all())
@@ -125,7 +142,8 @@ def create_fake_messages(topic: Topic, amount) -> List[Message]:
 
 def message_datetime():
     """
-    Make sure follow-up messages can not be before the earlier message
+    Helper to create a new message datetime
+
     :return:
     :rtype:
     """
@@ -143,9 +161,12 @@ def message_datetime():
 
 def my_get_setting(setting_key: str) -> str:
     """
-    Overload settings for tests.
+    Helper to get a setting
+
     :param setting_key:
+    :type setting_key:
     :return:
+    :rtype:
     """
 
     if setting_key == Setting.Field.MESSAGESPERPAGE:
@@ -158,8 +179,11 @@ def my_get_setting(setting_key: str) -> str:
 def create_category(**kwargs) -> Category:
     """
     Create category
+
     :param kwargs:
+    :type kwargs:
     :return:
+    :rtype:
     """
 
     if "name" not in kwargs:
@@ -171,8 +195,11 @@ def create_category(**kwargs) -> Category:
 def create_board(**kwargs) -> Board:
     """
     Create board
+
     :param kwargs:
+    :type kwargs:
     :return:
+    :rtype:
     """
 
     if "name" not in kwargs:
@@ -187,8 +214,11 @@ def create_board(**kwargs) -> Board:
 def create_topic(**kwargs) -> Topic:
     """
     Create topic
+
     :param kwargs:
+    :type kwargs:
     :return:
+    :rtype:
     """
 
     if "subject" not in kwargs:
@@ -203,8 +233,11 @@ def create_topic(**kwargs) -> Topic:
 def create_message(**kwargs) -> Message:
     """
     Create message
+
     :param kwargs:
+    :type kwargs:
     :return:
+    :rtype:
     """
 
     if "message" not in kwargs:
@@ -216,8 +249,11 @@ def create_message(**kwargs) -> Message:
 def create_last_message_seen(**kwargs):
     """
     Create last message seen
+
     :param kwargs:
+    :type kwargs:
     :return:
+    :rtype:
     """
 
     if "user" not in kwargs:
@@ -228,9 +264,12 @@ def create_last_message_seen(**kwargs):
 
 def create_personal_message(**kwargs) -> PersonalMessage:
     """
-    Create personal message
+    Create a personal message
+
     :param kwargs:
+    :type kwargs:
     :return:
+    :rtype:
     """
 
     if "sender" not in kwargs:
@@ -247,9 +286,12 @@ def create_personal_message(**kwargs) -> PersonalMessage:
 
 def create_setting(**kwargs) -> Setting:
     """
-    Create setting
+    Create a setting
+
     :param kwargs:
+    :type kwargs:
     :return:
+    :rtype:
     """
 
     return Setting.objects.create(**kwargs)
@@ -257,7 +299,15 @@ def create_setting(**kwargs) -> Setting:
 
 def get_or_create_fake_user(*args, **kwargs) -> User:
     """
+    Get or create a fake user
     Same as create_fake_user but will not fail when user already exists.
+
+    :param args:
+    :type args:
+    :param kwargs:
+    :type kwargs:
+    :return:
+    :rtype:
     """
 
     if len(args) > 1:
@@ -277,10 +327,14 @@ def get_or_create_fake_user(*args, **kwargs) -> User:
 
 def render_template(string, context=None):
     """
-    Helper to render templates
+    Render a template
+
     :param string:
+    :type string:
     :param context:
+    :type context:
     :return:
+    :rtype:
     """
 
     context = context or {}

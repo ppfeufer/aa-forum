@@ -10,7 +10,6 @@
 {% endblock %}
 
 {% block aa_forum_header %}
-    {% include "aa_forum/partials/menu.html" %}
     {% include "aa_forum/partials/forum/mark-unread-button.html" with position="above-board-list" %}
 
     {% translate "Unread Topics" as page_title %}
@@ -25,8 +24,8 @@
 
         {% include "aa_forum/partials/forum/mark-unread-button.html" with position="below-board-list" %}
     {% else %}
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <div class="card card-default">
+            <div class="card-body">
                 <div class="alert alert-info">
                     <p>{% translate "You have no unread topics …" %}</p>
                 </div>
@@ -35,7 +34,11 @@
     {% endif %}
 {% endblock %}
 
+{% block extra_javascript %}
+    {% include "aa_forum/bundles/aa-forum-oembed-js.html" %}
+{% endblock %}
 
 {% block extra_css %}
+    {% include "aa_forum/bundles/ckeditor5-css.html" %}
     {% include "aa_forum/bundles/aa-forum-css.html" %}
 {% endblock %}

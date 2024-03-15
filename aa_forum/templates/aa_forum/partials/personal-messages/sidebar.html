@@ -1,32 +1,32 @@
 {% load i18n %}
 {% load navactive %}
-{% load aa_forum_template_variables %}
+{% load aa_forum %}
 
-<div class="col-sm-4 col-md-3 col-lg-2 col-sm-push-8 col-md-push-9 col-lg-push-10">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="panel-title">
+<div class="col-md-3 order-md-last mb-3">
+    <div class="card card-default">
+        <div class="card-header">
+            <div class="card-title mb-0">
                 {% translate "Messages" %}
             </div>
         </div>
 
-        <div class="panel-body">
-            <ul id="aa-forum-messages-sidebar-menu" class="nav nav-pills nav-stacked">
-                <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:personal_messages_new_message' %}">
-                    <a href="{% url 'aa_forum:personal_messages_new_message' %}">
+        <div class="card-body">
+            <ul id="aa-forum-messages-sidebar-menu" class="nav flex-column">
+                <li class="nav-item aa-forum-messages-sidebar-menu-item">
+                    <a class="nav-link {% navactive request 'aa_forum:personal_messages_new_message' %}" href="{% url 'aa_forum:personal_messages_new_message' %}">
                         {% translate "New message" %}
                     </a>
                 </li>
 
-                <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:personal_messages_inbox' %}">
-                    <a href="{% url 'aa_forum:personal_messages_inbox' %}">
+                <li class="nav-item aa-forum-messages-sidebar-menu-item">
+                    <a class="nav-link {% navactive request 'aa_forum:personal_messages_inbox' %}" href="{% url 'aa_forum:personal_messages_inbox' %}">
                         {% translate "Inbox" %}
                         {% personal_message_unread_count request.user %}
                     </a>
                 </li>
 
-                <li class="aa-forum-messages-sidebar-menu-item {% navactive request 'aa_forum:personal_messages_sent_messages' %}">
-                    <a href="{% url 'aa_forum:personal_messages_sent_messages' %}">
+                <li class="nav-item aa-forum-messages-sidebar-menu-item">
+                    <a class="nav-link {% navactive request 'aa_forum:personal_messages_sent_messages' %}" href="{% url 'aa_forum:personal_messages_sent_messages' %}">
                         {% translate "Sent messages" %}
                     </a>
                 </li>

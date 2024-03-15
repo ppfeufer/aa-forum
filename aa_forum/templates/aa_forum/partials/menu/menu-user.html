@@ -1,13 +1,21 @@
 {% load i18n %}
 {% load navactive %}
-{% load aa_forum_template_variables %}
+{% load aa_forum %}
 
-<li class="{% navactive request 'aa_forum:profile_index' %}">
-    <a href="{% url 'aa_forum:profile_index' %}">{% translate "Profile" %}</a>
+<li class="nav-item">
+    <a class="nav-link {% navactive request 'aa_forum:forum_index' %}" href="{% url 'aa_forum:forum_index' %}">
+        {% translate "Forum index" %}
+    </a>
 </li>
 
-<li class="{% navactive request 'aa_forum:personal_messages_inbox' %}">
-    <a href="{% url 'aa_forum:personal_messages_inbox' %}">
+<li class="nav-item">
+    <a class="nav-link {% navactive request 'aa_forum:profile_index' %}" href="{% url 'aa_forum:profile_index' %}">
+        {% translate "Profile" %}
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link {% renavactive request "^/forum/-/personal-messages/" %}" href="{% url 'aa_forum:personal_messages_inbox' %}">
         {% translate "Messages" %}
         {% personal_message_unread_count request.user %}
     </a>

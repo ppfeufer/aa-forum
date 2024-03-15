@@ -1,29 +1,27 @@
-{% load bootstrap %}
+{% load django_bootstrap5 %}
 {% load i18n %}
-{% load aa_forum_user %}
+{% load aa_forum %}
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="panel-title">
-            {% translate "Reply to:" %} {{ message.sender|main_character_name }}
+<div class="card card-default mb-3">
+    <div class="card-header">
+        <div class="card-title mb-0">
+            {% translate "Reply to:" %} {{ message.sender|aa_forum_main_character_name }}
         </div>
     </div>
 
-    <div class="panel-body">
+    <div class="card-body">
         <form id="aa-forum-form-new-personal-message-reply" autocomplete="off" action="{% url 'aa_forum:personal_messages_message_reply' message.pk %}" method="post">
             <fieldset>
                 {% csrf_token %}
 
-                {{ form|bootstrap }}
+                {% bootstrap_form form %}
 
-                {% include "aa_forum/partials/form/required-field-hint.html" with form_horizontal=True %}
+                {% include "aa_forum/partials/form/required-field-hint.html" %}
 
-                <div class="form-group aa-forum-form-group aa-forum-form-modify-userprofile text-right clearfix">
-                    <div class="col-xs-12">
-                        <button class="btn btn-primary btn-sm" type="submit">
-                            {% translate "Send reply" %}
-                        </button>
-                    </div>
+                <div class="form-group aa-forum-form-group aa-forum-form-modify-userprofile float-end clearfix">
+                    <button class="btn btn-primary btn-sm" type="submit">
+                        {% translate "Send reply" %}
+                    </button>
                 </div>
             </fieldset>
         </form>

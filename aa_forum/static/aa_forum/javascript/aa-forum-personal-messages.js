@@ -29,21 +29,14 @@ $(document).ready(() => {
                 return;
             }
 
-            const messageContainer = $('.aa-forum-personal-messages-message');
-            messageContainer.html(data);
-
-            $('html, body').animate(
-                {scrollTop: messageContainer.offset().top - 50}, 500
-            );
+            const messageContainer = $(`#aa-forum-personal-message-id-${message} .card-aa-forum-personal-messages-message`);
+            messageContainer.html(data).removeClass('d-none');
 
             if (messageFolder === 'inbox') {
                 const urlUnreadMessagesCount = personalMessagesSettings.urlUnreadMessagesCount;
 
-                $('#aa-forum-personal-message-id-' + message)
+                $(`#aa-forum-personal-message-id-${message} .card-aa-forum-personal-messages-item`)
                     .removeClass('panel-aa-forum-personal-messages-item-unread');
-
-                $('#aa-forum-personal-message-id-' + message + ' .btn-mark-personal-message-as-read')
-                    .remove();
 
                 // Get new unread count
                 const getUnreadMessageCount = $.get(urlUnreadMessagesCount);

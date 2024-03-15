@@ -5,9 +5,6 @@ import django.db.models.deletion
 from django.conf import settings
 from django.db import migrations, models
 
-# ckEditor
-import ckeditor_uploader.fields
-
 
 class Migration(migrations.Migration):
     dependencies = [
@@ -44,7 +41,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="personalmessage",
             name="message",
-            field=ckeditor_uploader.fields.RichTextUploadingField(),
+            field=models.TextField(blank=True),
         ),
         migrations.AlterField(
             model_name="personalmessage",

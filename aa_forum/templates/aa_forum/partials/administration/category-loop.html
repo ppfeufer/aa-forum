@@ -1,32 +1,32 @@
-{% load bootstrap %}
+{% load django_bootstrap5 %}
 {% load i18n %}
 
-<li class="category-sortable ui-state-default ui-sortable" data-category-id="{{ category.category_obj.pk }}" data-position="{{ category.category_obj.order }}">
-    <div class="panel panel-default aa-forum-admin-panel-aa-forum-category">
-        <div class="panel-heading">
-            <div class="panel-title">
+<li class="mb-3 category-sortable ui-state-default ui-sortable" data-category-id="{{ category.category_obj.pk }}" data-position="{{ category.category_obj.order }}">
+    <div class="card card-default mb-0 aa-forum-admin-card-aa-forum-category">
+        <div class="card-header">
+            <div class="card-title mb-0">
                 {{ category.category_obj.name }}
 
-                <div class="pull-right">
-                    <button class="btn btn-warning btn-xs" title="{% translate 'Edit category' %}" data-toggle="collapse" data-target="#collapseEditCategory-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseEditCategory-{{ category.category_obj.pk }}">
-                        <i class="fas fa-pencil-alt"></i>
+                <div class="float-end">
+                    <button class="btn btn-warning btn-sm" title="{% translate 'Edit category' %}" data-bs-toggle="collapse" data-bs-target="#collapseEditCategory-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseEditCategory-{{ category.category_obj.pk }}">
+                        <i class="fa-solid fa-pencil"></i>
                     </button>
 
-                    <button class="btn btn-danger btn-xs" title="{% translate 'Delete category' %}" data-toggle="modal" data-target="#delete-category-{{ category.category_obj.pk }}">
-                        <i class="far fa-trash-alt"></i>
+                    <button class="btn btn-danger btn-sm" title="{% translate 'Delete category' %}" data-bs-toggle="modal" data-bs-target="#delete-category-{{ category.category_obj.pk }}">
+                        <i class="fa-regular fa-trash-can"></i>
                     </button>
 
-                    <button class="aa-forum-admin-expand-collapse-category btn btn-default btn-xs collapsed" title="{% translate 'Expand/collapse category' %}" data-toggle="collapse" data-target="#collapseCategory-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseCategory-{{ category.category_obj.pk }}">
-                        <i class="if-collapsed fas fa-expand-alt"></i>
-                        <i class="if-expanded fas fa-compress-alt"></i>
+                    <button class="aa-forum-admin-expand-collapse-category btn btn-secondary btn-sm collapsed" title="{% translate 'Expand/collapse category' %}" data-bs-toggle="collapse" data-bs-target="#collapseCategory-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseCategory-{{ category.category_obj.pk }}">
+                        <i class="if-collapsed fa-solid fa-expand-alt"></i>
+                        <i class="if-expanded fa-solid fa-compress-alt"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class="panel-body">
-            <div class="collapse" id="collapseEditCategory-{{ category.category_obj.pk }}">
-                <div class="well">
+        <div class="card-body px-3 py-0">
+            <div class="collapse mt-3" id="collapseEditCategory-{{ category.category_obj.pk }}">
+                <div class="card card-body bg-light mb-3 py-3">
                     <p>
                         {% translate "Changing the name of this category does not change its URL part. This will remain the same to not break any possible links into this category." %}
                     </p>
@@ -35,11 +35,11 @@
                         <fieldset>
                             {% csrf_token %}
 
-                            {{ category.category_forms.edit_category|bootstrap }}
+                            {% bootstrap_form category.category_forms.edit_category %}
 
                             {% include "aa_forum/partials/form/required-field-hint.html" %}
 
-                            <div class="form-group aa-forum-form-group aa-forum-form-new-category text-right clearfix">
+                            <div class="form-group aa-forum-form-group aa-forum-form-new-category float-end clearfix">
                                 <button class="btn btn-primary btn-sm" type="submit">
                                     {% translate "Change category" %}
                                 </button>
@@ -49,15 +49,15 @@
                 </div>
             </div>
 
-            <div class="collapse" id="collapseCategory-{{ category.category_obj.pk }}">
+            <div class="collapse mt-3" id="collapseCategory-{{ category.category_obj.pk }}">
                 <p>
-                    <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseNewBoardForm-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseNewBoardForm-{{ category.category_obj.pk }}">
+                    <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNewBoardForm-{{ category.category_obj.pk }}" aria-expanded="false" aria-controls="collapseNewBoardForm-{{ category.category_obj.pk }}">
                         {% translate "New board" %}
                     </button>
                 </p>
 
                 <div class="collapse" id="collapseNewBoardForm-{{ category.category_obj.pk }}">
-                    <div class="well">
+                    <div class="card card-body bg-light mb-3 py-3">
                         <p>
                             {% translate "New boards will be added at the bottom of the board list for this category. You can move them via drag and drop to a position of your liking." %}
                         </p>
@@ -66,11 +66,11 @@
                             <fieldset>
                                 {% csrf_token %}
 
-                                {{ category.category_forms.new_board|bootstrap }}
+                                {% bootstrap_form category.category_forms.new_board %}
 
                                 {% include "aa_forum/partials/form/required-field-hint.html" %}
 
-                                <div class="form-group aa-forum-form-group aa-forum-form-new-board text-right clearfix">
+                                <div class="form-group aa-forum-form-group aa-forum-form-new-board float-end clearfix">
                                     <button class="btn btn-primary btn-sm" type="submit">
                                         {% translate "Create board" %}
                                     </button>
@@ -81,7 +81,7 @@
                 </div>
 
                 {% if category.boards %}
-                    <ul id="boards-sortable-category-{{ category.category_obj.pk }}" class="boards-sortable">
+                    <ul id="boards-sortable-category-{{ category.category_obj.pk }}" class="boards-sortable p-0">
                         {% for board in category.boards %}
                             {% include "aa_forum/partials/administration/board-loop.html" %}
                         {% endfor %}

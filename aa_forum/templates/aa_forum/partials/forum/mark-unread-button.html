@@ -1,9 +1,9 @@
 {% load i18n %}
 
-<div class="panel-body pull-right">
-    <div id="aa-forum-mark-unread-button-{{ position }}" class="aa-forum-mark-unread-button">
+<div class="card-body pull-right">
+    <div id="aa-forum-mark-unread-button-{{ position }}" class="aa-forum-mark-unread-button my-3">
         <a href="{% url 'aa_forum:forum_mark_all_as_read' %}" class="btn btn-warning btn-sm">
-            <i class="fas fa-envelope-open-text"></i>
+            <i class="fa-solid fa-envelope-open-text"></i>
             <span class="hidden-xs">{% translate "Mark all topics as read" %}</span>
         </a>
     </div>

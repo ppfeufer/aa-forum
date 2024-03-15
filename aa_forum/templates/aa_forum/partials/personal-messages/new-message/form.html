@@ -1,28 +1,27 @@
-{% load bootstrap %}
+{% load django_bootstrap5 %}
 {% load i18n %}
 
-<div class="col-sm-8 col-md-9 col-lg-10 col-sm-pull-4 col-md-pull-3 col-lg-pull-2">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="panel-title">
+<div class="col-md-9 mb-3">
+    <div class="card card-default">
+        <div class="card-header">
+            <div class="card-title mb-0">
                 {% translate "New personal message" %}
             </div>
         </div>
 
-        <div class="panel-body">
+        <div class="card-body">
             <form id="aa-forum-form-new-personal-message" autocomplete="off" action="{% url 'aa_forum:personal_messages_new_message' %}" method="post">
                 <fieldset>
                     {% csrf_token %}
-                    {{ form|bootstrap }}
 
-                    {% include "aa_forum/partials/form/required-field-hint.html" with form_horizontal=True %}
+                    {% bootstrap_form form %}
 
-                    <div class="form-group aa-forum-form-group aa-forum-form-modify-userprofile text-right clearfix">
-                        <div class="col-xs-12">
-                            <button class="btn btn-primary btn-sm" type="submit">
-                                {% translate "Send message" %}
-                            </button>
-                        </div>
+                    {% include "aa_forum/partials/form/required-field-hint.html" %}
+
+                    <div class="form-group aa-forum-form-group aa-forum-form-modify-userprofile float-end clearfix">
+                        <button class="btn btn-primary btn-sm" type="submit">
+                            {% translate "Send message" %}
+                        </button>
                     </div>
                 </fieldset>
             </form>

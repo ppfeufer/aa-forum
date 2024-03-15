@@ -1,10 +1,10 @@
 {% for category in categories %}
-    <div id="category-{{ category.id }}" class="panel panel-default panel-aa-forum-category">
-        <div class="panel-heading">
-            <div class="panel-title">{{ category.name }}</div>
+    <div id="category-{{ category.id }}" class="card card-default card-aa-forum-category mb-3">
+        <div class="card-header">
+            <div class="card-title mb-0">{{ category.name }}</div>
         </div>
 
-        <div class="panel-body">
+        <div class="card-body row">
             {% for board in category.boards_sorted %}
                 {% include "aa_forum/partials/forum/board/board.html" %}
             {% endfor %}

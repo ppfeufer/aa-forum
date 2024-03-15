@@ -1,9 +1,9 @@
 {% load i18n %}
 
 {% if page_obj.paginator.num_pages > 1 %}
-    <div class="col-4 offset-4">
+    <div>
         <nav aria-label="{% translate 'Message pagination' %}">
-            <ul class="pagination pagination-sm">
+            <ul class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
                     <li class="page-item">
                         <a href="{% url 'aa_forum:personal_messages_inbox' %}" class="page-link">

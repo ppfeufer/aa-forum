@@ -1,5 +1,5 @@
 """
-Form helper
+Helper functions for forms
 """
 
 # Django
@@ -11,10 +11,14 @@ from django.utils.translation import gettext_lazy
 
 def message_form_errors(request: WSGIRequest, form: Form) -> None:
     """
-    Send form errors as messages.
+    Add form errors to messages
+
     :param request:
+    :type request:
     :param form:
+    :type form:
     :return:
+    :rtype:
     """
 
     for _, errors in form.errors.items():

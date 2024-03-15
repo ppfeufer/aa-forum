@@ -1,12 +1,26 @@
-{% extends "allianceauth/base.html" %}
+{% extends "allianceauth/base-bs5.html" %}
 
 {% load i18n %}
 
-{% block page_title %}{% translate "Forum" %}{% endblock %}
+{% block page_title %}
+    {% translate "Forum" %}
+{% endblock %}
+
+{% block header_nav_brand %}
+    {% translate "Forum" %}
+{% endblock %}
+
+{% block header_nav_collapse_left %}
+    {% include "aa_forum/partials/menu.html" %}
+{% endblock header_nav_collapse_left %}
+
+{% block header_nav_collapse_right %}
+    {% include "aa_forum/partials/search/search-form.html" with suffix="menu" %}
+{% endblock %}
 
 {% block content %}
     <div class="aa-forum">
-        <div class="aa-forum-header">
+        <div class="aa-forum-header mb-3 clearfix">
             {% block aa_forum_header %}{% endblock %}
         </div>
 
@@ -14,16 +28,12 @@
             {% block aa_forum_body %}{% endblock %}
         </div>
 
-        <div class="aa-forum-footer">
+        <div class="aa-forum-footer mt-3 pt-3 border-top border-light">
             {% include "aa_forum/partials/footer/app-translation-footer.html" %}
         </div>
 
         <div class="aa-forum-svg-wrapper">
-            {% if NIGHT_MODE %}
-                {% include "aa_forum/bundles/svg/aa-forum-icons-night-mode.svg" %}
-            {% else %}
-                {% include "aa_forum/bundles/svg/aa-forum-icons.svg" %}
-            {% endif %}
+            {% include "aa_forum/bundles/svg/aa-forum-icons.svg" %}
         </div>
     </div>
 {% endblock %}
