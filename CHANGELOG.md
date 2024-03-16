@@ -35,9 +35,236 @@ Section Order:
 ### Security
 -->
 
+## \[2.0.0\] - 2024-03-16
+
+> \[!NOTE\]
+>
+> **This version needs at least Alliance Auth v4.0.0!**
+>
+> Please make sure to update your Alliance Auth instance before
+> you install this version, otherwise an update to Alliance Auth will
+> be pulled in unsupervised.
+
+> \[!IMPORTANT\]
+>
+> With this version, we switched to a new WYSIWYG editor.
+> Please make sure to read the update information
+> to make sure your configuration is up to date.
+
+### Added
+
+- Support for Alliance Auth v4.x
+- Support for Django 4.0
+- Native lazy loading support for images
+- Unread topics dashboard widget
+
 ### Fixed
 
-- PM badge background color
+- Margins
+- A bug where the topic of unread messages was displayed multiple times in the unread messages view when there was more than one unread message in the topic
+
+### Changed
+
+- Minimum requirements
+  - `allianceauth`>=4.0.0
+- Switched from CKEditor 4 to CKEditor 5 (Configuration update necessary, see below)
+- Set `user` field to read-only in `ModelAdmin` for `UserProfile` to prevent accidental changes
+
+### Removed
+
+- Support for Alliance Auth v3.x
+
+### Update Information
+
+This version introduces a new WYSIWYG editor. Some configuration changes are necessary.
+
+#### Settings in `/home/allianceserver/myauth/myauth/settings/local.py`
+
+Please make sure to update your `local.py` with the following configuration.\
+Add `"django_ckeditor_5",` to `INSTALLED_APPS` and remove the following apps
+if they are present:
+
+```python
+"ckeditor",
+"ckeditor_uploader",
+"django_ckeditor_youtube_plugin",
+```
+
+Remove the old CKEditor configuration and replace it with the following:
+
+```python
+# Django CKEditor 5 Configuration
+if "django_ckeditor_5" in INSTALLED_APPS:
+    MEDIA_URL = "/media/uploads/"
+    MEDIA_ROOT = "/var/www/myauth/media/uploads"
+
+    customColorPalette = [
+        {"color": "hsl(4, 90%, 58%)", "label": "Red"},
+        {"color": "hsl(340, 82%, 52%)", "label": "Pink"},
+        {"color": "hsl(291, 64%, 42%)", "label": "Purple"},
+        {"color": "hsl(262, 52%, 47%)", "label": "Deep Purple"},
+        {"color": "hsl(231, 48%, 48%)", "label": "Indigo"},
+        {"color": "hsl(207, 90%, 54%)", "label": "Blue"},
+    ]
+
+    CKEDITOR_5_CONFIGS = {
+        "default": {
+            "toolbar": [
+                "heading",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "bulletedList",
+                "numberedList",
+                "blockQuote",
+            ],
+        },
+        "extends": {
+            "blockToolbar": [
+                "paragraph",
+                "heading1",
+                "heading2",
+                "heading3",
+                "|",
+                "bulletedList",
+                "numberedList",
+                "|",
+                "blockQuote",
+            ],
+            "toolbar": [
+                "heading",
+                "|",
+                "outdent",
+                "indent",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "underline",
+                "strikethrough",
+                "subscript",
+                "superscript",
+                "highlight",
+                "|",
+                "insertImage",
+                "mediaEmbed",
+                "|",
+                "bulletedList",
+                "numberedList",
+                "todoList",
+                "insertTable",
+                "|",
+                "blockQuote",
+                "codeBlock",
+                "|",
+                "fontSize",
+                "fontFamily",
+                "fontColor",
+                "fontBackgroundColor",
+                "removeFormat",
+                "|",
+                "sourceEditing",
+            ],
+            "image": {
+                "toolbar": [
+                    "imageTextAlternative",
+                    "|",
+                    "imageStyle:alignLeft",
+                    "imageStyle:alignRight",
+                    "imageStyle:alignCenter",
+                    "imageStyle:side",
+                    "|",
+                ],
+                "styles": [
+                    "full",
+                    "side",
+                    "alignLeft",
+                    "alignRight",
+                    "alignCenter",
+                ],
+            },
+            "table": {
+                "contentToolbar": [
+                    "tableColumn",
+                    "tableRow",
+                    "mergeTableCells",
+                    "tableProperties",
+                    "tableCellProperties",
+                ],
+                "tableProperties": {
+                    "borderColors": customColorPalette,
+                    "backgroundColors": customColorPalette,
+                },
+                "tableCellProperties": {
+                    "borderColors": customColorPalette,
+                    "backgroundColors": customColorPalette,
+                },
+            },
+            "heading": {
+                "options": [
+                    {
+                        "model": "paragraph",
+                        "title": "Paragraph",
+                        "class": "ck-heading_paragraph",
+                    },
+                    {
+                        "model": "heading1",
+                        "view": "h1",
+                        "title": "Heading 1",
+                        "class": "ck-heading_heading1",
+                    },
+                    {
+                        "model": "heading2",
+                        "view": "h2",
+                        "title": "Heading 2",
+                        "class": "ck-heading_heading2",
+                    },
+                    {
+                        "model": "heading3",
+                        "view": "h3",
+                        "title": "Heading 3",
+                        "class": "ck-heading_heading3",
+                    },
+                ]
+            },
+        },
+        "list": {
+            "properties": {
+                "styles": "true",
+                "startIndex": "true",
+                "reversed": "true",
+            }
+        },
+    }
+```
+
+#### Settings in `/home/allianceserver/myauth/myauth/urls.py`
+
+Also, make sure to update your `urls.py` with the following and remove the old
+CKEditor URL configuration if it's present:
+
+```python
+from django.apps import apps  # Only if not already imported earlier
+from django.conf import settings  # Only if not already imported earlier
+from django.conf.urls.static import static  # Only if not already imported earlier
+from django.urls import path  # Only if not already imported earlier
+
+# If django_ckeditor_5 is loaded
+if apps.is_installed("django_ckeditor_5"):
+    # URL configuration for CKEditor 5
+    urlpatterns = (
+        [
+            path(
+                "ckeditor5/",
+                include("django_ckeditor_5.urls"),
+                name="ck_editor_5_upload_file",
+            ),
+        ]
+        + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        + urlpatterns
+    )
+```
 
 ## \[2.0.0-beta.3\] - 2024-03-08
 
@@ -318,6 +545,10 @@ if apps.is_installed("django_ckeditor_5"):
 ```
 
 ## \[1.19.5\] - 2023-11-15
+
+> \[!NOTE\]
+>
+> **This is the last version compatible with Alliance Auth v3.**
 
 ### Fixed
 
