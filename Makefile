@@ -1,7 +1,7 @@
-# Makefile for AA-Forum
+# Makefile for AA Forum
 
 appname = aa-forum
-appname_verbose = AA-Forum
+appname_verbose = AA Forum
 package = aa_forum
 
 help:
@@ -19,13 +19,17 @@ help:
 translationfiles:
 	#cd $(package); \
 	django-admin makemessages \
+		-l cs \
 		-l de \
 		-l es \
 		-l fr_FR \
 		-l it_IT \
 		-l ja \
 		-l ko_KR \
+		-l nl \
+		-l pl_PL \
 		-l ru \
+		-l sk \
 		-l uk \
 		-l zh_Hans \
 		--keep-pot \
