@@ -3,21 +3,22 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Author50CO <tkddlschry@gmail.com>, 2023.
 # Peter Pfeufer <info@ppfeufer.de>, 2023.
+# Mind of the Raven <okanieva@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-15 22:24+0100\n"
-"PO-Revision-Date: 2023-12-29 10:04+0000\n"
-"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: Korean <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/ko/>\n"
+"PO-Revision-Date: 2024-03-20 09:11+0000\n"
+"Last-Translator: Mind of the Raven <okanieva@gmail.com>\n"
+"Language-Team: Korean <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/ko/>\n"
 "Language: ko_KR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.3.1\n"
+"X-Generator: Weblate 5.4.2\n"
 
 #: aa_forum/__init__.py:9 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -420,7 +421,7 @@ msgstr "삭제"
 #: aa_forum/templates/aa_forum/modals/forum/topic/message-delete.html:11
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:11
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:16
 msgid "Are you sure you want to delete this board?"
@@ -447,7 +448,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:26
 #: aa_forum/templates/aa_forum/view/forum/new-topic.html:35
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:32
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:32
@@ -648,10 +649,8 @@ msgstr ""
 #: aa_forum/templates/aa_forum/partials/forum/topic/message.html:46
 #: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:7
 #: aa_forum/templates/aa_forum/view/forum/modify-message.html:6
-#, fuzzy
-#| msgid "Message"
 msgid "Modify message"
-msgstr "메시지"
+msgstr "편집"
 
 #: aa_forum/templates/aa_forum/partials/breadcrumb.html:34
 #: aa_forum/templates/aa_forum/view/forum/new-topic.html:7
@@ -682,7 +681,7 @@ msgstr "별표 (*) 표시된 항목은 필수 항목입니다"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board-index.html:27
 msgid "No topics have been started in this board …"
-msgstr ""
+msgstr "작성된 게시글이 없습니다 . . ."
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board.html:33
 msgid "This board is restricted to the following group:"
@@ -721,11 +720,11 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board.html:99
 msgid "posted by:"
-msgstr ""
+msgstr "작성자:"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board.html:100
 msgid "posted at:"
-msgstr ""
+msgstr "작성 시간:"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/new-topic-button.html:8
 msgid "New topic"
@@ -837,18 +836,19 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/forum/topic/message.html:35
 msgid "Copy message link to clipboard"
-msgstr ""
+msgstr "복사"
 
 #: aa_forum/templates/aa_forum/partials/forum/topic/message.html:80
 msgid "Last modified:"
-msgstr ""
+msgstr "편집일:"
 
 #: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:14
 #: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:14
 msgid ""
 "Note: You are not on the last page of this topic and may miss the most "
 "recent replies."
-msgstr ""
+msgstr "참고 : 현재 이 게시글의 마지막 페이지에 있지 않음으로 최신 답글을 놓칠 수 "
+"있습니다."
 
 #: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:27
 #: aa_forum/templates/aa_forum/partials/forum/topic/modify-topic.html:21
@@ -921,10 +921,8 @@ msgid "New personal message"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/personal-messages/new-message/form.html:23
-#, fuzzy
-#| msgid "Message"
 msgid "Send message"
-msgstr "메시지"
+msgstr "보내기"
 
 #: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/form.html:8
 msgid "Reply to:"
@@ -936,10 +934,8 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:9
 #: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:30
-#, fuzzy
-#| msgid "Message"
 msgid "Sent messages"
-msgstr "메시지"
+msgstr "발송된 메시지"
 
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:85
 msgid "No personal messages sent"
