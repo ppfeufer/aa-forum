@@ -4,12 +4,13 @@
 # Author50CO <tkddlschry@gmail.com>, 2023.
 # Peter Pfeufer <info@ppfeufer.de>, 2023.
 # Mind of the Raven <okanieva@gmail.com>, 2024.
+# Rodpold Shard <rodpold@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-15 22:24+0100\n"
-"PO-Revision-Date: 2024-03-20 09:11+0000\n"
+"PO-Revision-Date: 2024-03-21 17:11+0000\n"
 "Last-Translator: Mind of the Raven <okanieva@gmail.com>\n"
 "Language-Team: Korean <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-forum/ko/>\n"
@@ -59,7 +60,7 @@ msgstr "제목"
 #: aa_forum/forms.py:145 aa_forum/forms.py:406 aa_forum/forms.py:649
 #: aa_forum/forms.py:714
 msgid "You have forgotten the message!"
-msgstr ""
+msgstr "메시지를 잊으셨습니다!"
 
 #: aa_forum/forms.py:190 aa_forum/forms.py:228 aa_forum/forms.py:249
 msgid "Name"
@@ -67,29 +68,31 @@ msgstr "이름"
 
 #: aa_forum/forms.py:192 aa_forum/forms.py:230
 msgid "Category name"
-msgstr ""
+msgstr "카테고리 이름"
 
 #: aa_forum/forms.py:196 aa_forum/forms.py:207
 msgid "Boards"
-msgstr ""
+msgstr "게시판"
 
 #: aa_forum/forms.py:198
 msgid ""
 "Boards to be created with this category (One board per line). These boards "
 "will have no group restrictions, so you have to add them later where needed."
 msgstr ""
+"이 카테고리로(한 줄당 한 게시판) 게시판이 생성됩니다. 이 게시판은 그룹 "
+"제한이 없기 때문에 필요하면 나중에 추가할 수 있습니다."
 
 #: aa_forum/forms.py:251
 msgid "Board name"
-msgstr ""
+msgstr "게시판 이름"
 
 #: aa_forum/forms.py:255
 msgid "Description"
-msgstr ""
+msgstr "설명"
 
 #: aa_forum/forms.py:261
 msgid "Board description (optional)"
-msgstr ""
+msgstr "게시판 설명(선택사항)"
 
 #: aa_forum/forms.py:267
 msgid "Group restrictions"
@@ -101,6 +104,8 @@ msgid ""
 "are selected, everyone who can access the forum can also access this board. "
 "(This setting is optional)"
 msgstr ""
+"이렇게 진행할 경우 게시판 접근 권한이 선택한 그룹으로 제한됩니다. 선택하지 "
+"않을 경우 모든 사람이 이 게시판에 접근할 수 있습니다. (선택사항)"
 
 #: aa_forum/forms.py:277
 msgid "Discord webhook (optional)"
@@ -121,11 +126,12 @@ msgid ""
 "When activated every reply to any topic in this board will be posted to the "
 "defined Discord channel. (Child boards are excluded) Chose wisely! (Default: "
 "NO)"
-msgstr ""
+msgstr "활성화할 경우 이 게시판 내 모든 게시글의 모든 답변이 정의된 디스코드 채널에 "
+"게시됩니다. (기본값:꺼짐)"
 
 #: aa_forum/forms.py:302
 msgid "Mark board as \"Announcement Board\""
-msgstr ""
+msgstr "선택된 게시글을 공지사항으로 등록"
 
 #: aa_forum/forms.py:304
 msgid ""
