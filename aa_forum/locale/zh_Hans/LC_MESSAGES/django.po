@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-15 22:24+0100\n"
-"PO-Revision-Date: 2024-03-21 17:11+0000\n"
+"PO-Revision-Date: 2024-03-22 12:56+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-forum/zh_Hans/>\n"
@@ -441,7 +441,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:26
 #: aa_forum/templates/aa_forum/view/forum/new-topic.html:35
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:32
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:32
