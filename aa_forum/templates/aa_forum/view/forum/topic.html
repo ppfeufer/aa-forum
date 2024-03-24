@@ -22,10 +22,10 @@
                         href="{% url 'aa_forum:forum_topic_modify' topic.board.category.slug topic.board.slug topic.slug %}"
                         class="btn btn-aa-forum-topic-moderation btn-sm float-end"
                         title="{% translate 'Modify topic subject' %}"
+                        data-bs-tooltip="aa-forum-tooltip"
                     >
                         <i class="fa-solid fa-pencil"></i>
                     </a>
-
                 {% endif %}
             </div>
         </div>
@@ -56,6 +56,7 @@
     {% include "aa_forum/bundles/aa-forum-ckeditor-js.html" %}
     {% include "aa_forum/bundles/aa-forum-oembed-js.html" %}
     {% include "bundles/clipboard-js.html" %}
+    {% include "aa_forum/bundles/aa-forum-bootstrap-js.html" %}
 
     <script>
         $(document).ready(function () {
