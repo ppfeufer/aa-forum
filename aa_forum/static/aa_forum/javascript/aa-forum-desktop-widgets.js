@@ -21,13 +21,21 @@ if (aaForumUnreadTopicsWidget) {
             if (responseText !== '') {
                 aaForumUnreadTopicsWidgetContent.innerHTML = responseText;
 
+                // Show the widget area
                 const showWidgetArea = new bootstrap.Collapse(aaForumDashboardWidgets, { // eslint-disable-line no-unused-vars
                     show: true
                 });
 
+                // Show the widget
                 const showWidget = new bootstrap.Collapse(aaForumUnreadTopicsWidget, { // eslint-disable-line no-unused-vars
                     show: true
                 });
+
+                // Initialize Bootstrap tooltips
+                [].slice.call(document.querySelectorAll('[data-bs-tooltip="aa-forum-tooltip"]'))
+                    .map((tooltipTriggerEl) => {
+                        return new bootstrap.Tooltip(tooltipTriggerEl);
+                    });
             }
         })
         .catch((error) => {

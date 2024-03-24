@@ -28,6 +28,7 @@
                                         href="{% url 'aa_forum:personal_messages_message_reply' message.pk %}"
                                         class="btn btn-aa-forum-topic-moderation btn-sm"
                                         title="{% translate 'Reply' %}"
+                                        data-bs-tooltip="aa-forum-tooltip"
                                     >
                                         <i class="fa-solid fa-reply-all"></i>
                                     </a>
@@ -36,6 +37,7 @@
                                 <button
                                     class="btn btn-aa-forum-topic-moderation btn-sm btn-aa-forum-delete"
                                     title="{% translate 'Delete message' %}"
+                                    data-bs-tooltip="aa-forum-tooltip"
                                     data-bs-toggle="modal"
                                     data-bs-target="#delete-message-{{ message.pk }}"
                                 >
@@ -67,6 +69,14 @@
 
     <script>
         'use strict';
+
+        // Initialize tooltips
+        // Since this is loaded via AJAX,
+        // we need to reinitialize the tooltips
+        [].slice.call(document.querySelectorAll(`#message-{{ message.pk }} [data-bs-tooltip="aa-forum-tooltip"]`))
+            .map((tooltipTriggerEl) => {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
 
         // Look for oembed elements and replace them with iframes
         checkForOembed();
