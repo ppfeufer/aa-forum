@@ -18,7 +18,7 @@
         <form id="aa-forum-form-message-modify" autocomplete="off" action="{% url 'aa_forum:forum_message_modify' board.category.slug board.slug message.topic.slug message.pk %}" method="post">
             {% csrf_token %}
 
-            {% bootstrap_form form %}
+            {% bootstrap_field form.message %}
 
             {% include "aa_forum/partials/form/required-field-hint.html" %}
 
