@@ -357,6 +357,22 @@ class EditMessageForm(ModelForm):
     Edit message form
     """
 
+    close_topic = forms.BooleanField(
+        required=False,
+        label=_("Close topic"),
+        help_text=_(
+            "If checked, this topic will be closed after posting this message."
+        ),
+    )
+
+    reopen_topic = forms.BooleanField(
+        required=False,
+        label=_("Reopen topic"),
+        help_text=_(
+            "If checked, this topic will be reopened after posting this message."
+        ),
+    )
+
     def __init__(self, *args, **kwargs):
         """
         When form is initialized
@@ -378,7 +394,7 @@ class EditMessageForm(ModelForm):
         """
 
         model = Message
-        fields = ["message"]
+        fields = ["message", "close_topic", "reopen_topic"]
         widgets = {
             "message": CKEditor5Widget(
                 config_name="extends",

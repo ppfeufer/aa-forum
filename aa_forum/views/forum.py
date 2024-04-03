@@ -869,6 +869,27 @@ def topic_reply(
             )
             new_message.save()
 
+            # Check if the user has the rights to close or reopen the topic
+            if (
+                request.user.has_perm(perm="aa_forum.manage_forum")
+                or request.user == current_topic.first_message.user_created
+            ):
+                # Close the topic if requested
+                if (
+                    form.cleaned_data["close_topic"]
+                    and not form.cleaned_data["reopen_topic"]
+                ):
+                    current_topic.is_locked = True
+                    current_topic.save(update_fields=["is_locked"])
+
+                # Reopen the topic if requested
+                if (
+                    form.cleaned_data["reopen_topic"]
+                    and not form.cleaned_data["close_topic"]
+                ) and request.user.has_perm(perm="aa_forum.manage_forum"):
+                    current_topic.is_locked = False
+                    current_topic.save(update_fields=["is_locked"])
+
             # Send to webhook if one is configured
             if (
                 current_topic.board.discord_webhook is not None

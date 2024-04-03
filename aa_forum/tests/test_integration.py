@@ -65,6 +65,11 @@ class TestForumUI(WebTest):
         cls.user_1003 = create_fake_user(
             character_id=1003, character_name="Lex Luthor", permissions=[]
         )
+        cls.user_1004 = create_fake_user(
+            character_id=1004,
+            character_name="Clark Kent",
+            permissions=["aa_forum.basic_access", "aa_forum.manage_forum"],
+        )
 
         cls.category = Category.objects.create(name="Science")
         cls.board = Board.objects.create(name="Physics", category=cls.category)
@@ -214,7 +219,7 @@ class TestForumUI(WebTest):
         self.assertEqual(first=len(messages), second=1)
         self.assertEqual(first=str(messages[0]), second=expected_message)
 
-    def test_should_not_create_new_topic_doe_to_message_missing(self):
+    def test_should_not_create_new_topic_due_to_message_missing(self):
         """
         Test should not create a new topic due to a missing/empty message
 
@@ -528,6 +533,129 @@ class TestForumUI(WebTest):
         )
         new_message = Message.objects.last()
         self.assertEqual(first=new_message.message, second="What is dark matter?")
+
+    def test_should_create_a_reply_and_close_topic_for_op(self):
+        """
+        Test should create a reply and close the topic (for OP)
+
+        :return:
+        :rtype:
+        """
+
+        # Create a new topic
+        self.app.set_user(user=self.user_1001)
+        page = self.app.get(url=self.board.get_absolute_url())
+
+        # Create a new topic
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Recent Discoveries"
+        form["message"] = "Energy of the Higgs boson"
+        form.submit().follow()
+
+        new_topic = Topic.objects.last()
+        page = self.app.get(url=new_topic.get_absolute_url())
+
+        # OP closes the topic
+        form = page.forms["aa-forum-form-message-reply"]
+        form["message"] = "What is dark matter?"
+        form["close_topic"] = True
+        response = form.submit().follow().follow()
+
+        # then
+        self.assertTemplateUsed(
+            response=response, template_name="aa_forum/view/forum/topic.html"
+        )
+        new_topic.refresh_from_db()
+        self.assertTrue(new_topic.is_locked)
+
+    def test_should_create_a_reply_and_close_topic_for_mod(self):
+        """
+        Test should create a reply and close the topic (for Mod)
+
+        :return:
+        :rtype:
+        """
+
+        # Create a new topic
+        self.app.set_user(user=self.user_1001)
+        page = self.app.get(url=self.board.get_absolute_url())
+
+        # Create a new topic
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Recent Discoveries"
+        form["message"] = "Energy of the Higgs boson"
+        form.submit().follow()
+        new_topic = Topic.objects.last()
+
+        # Log in the mod
+        self.app.set_user(user=self.user_1004)
+        page = self.app.get(url=new_topic.get_absolute_url())
+
+        # Mod closes the topic
+        form = page.forms["aa-forum-form-message-reply"]
+        form["message"] = "What is dark matter?"
+        form["close_topic"] = True
+        response = form.submit().follow().follow()
+
+        # then
+        self.assertTemplateUsed(
+            response=response, template_name="aa_forum/view/forum/topic.html"
+        )
+        new_topic.refresh_from_db()
+        self.assertTrue(new_topic.is_locked)
+
+    def test_should_create_a_reply_and_reopen_topic_for_mod(self):
+        """
+        Test should create a reply and reopen the topic (for Mod)
+
+        :return:
+        :rtype:
+        """
+
+        # Create a new topic
+        self.app.set_user(user=self.user_1001)
+        page = self.app.get(url=self.board.get_absolute_url())
+
+        # Create a new topic
+        page = page.click(linkid="aa-forum-btn-new-topic-above-list")
+        form = page.forms["aa-forum-form-new-topic"]
+        form["subject"] = "Recent Discoveries"
+        form["message"] = "Energy of the Higgs boson"
+        form.submit().follow()
+        new_topic = Topic.objects.last()
+        page = self.app.get(url=new_topic.get_absolute_url())
+
+        # OP closes the topic
+        form = page.forms["aa-forum-form-message-reply"]
+        form["message"] = "What is dark matter?"
+        form["close_topic"] = True
+        response = form.submit().follow().follow()
+
+        # then
+        self.assertTemplateUsed(
+            response=response, template_name="aa_forum/view/forum/topic.html"
+        )
+        new_topic.refresh_from_db()
+        self.assertTrue(new_topic.is_locked)
+
+        # Log in the mod
+        self.app.set_user(user=self.user_1004)
+        page = self.app.get(url=new_topic.get_absolute_url())
+
+        # Mod reopens the topic
+        form = page.forms["aa-forum-form-message-reply"]
+        form["message"] = "What is dark matter?"
+        form["reopen_topic"] = True
+        response = form.submit().follow().follow()
+
+        # then
+        self.assertTemplateUsed(
+            response=response, template_name="aa_forum/view/forum/topic.html"
+        )
+        new_topic.refresh_from_db()
+        self.assertFalse(new_topic.is_locked)
 
     def test_should_return_cleaned_message_string_on_topic_reply(self):
         """

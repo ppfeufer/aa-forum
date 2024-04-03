@@ -1,3 +1,4 @@
+{% load aa_forum %}
 {% load i18n %}
 {% load django_bootstrap5 %}
 
@@ -24,7 +25,17 @@
         <form id="aa-forum-form-message-reply" autocomplete="off" action="{% url 'aa_forum:forum_topic_reply' topic.board.category.slug topic.board.slug topic.slug %}" method="post">
             {% csrf_token %}
 
-            {% bootstrap_form reply_form %}
+            {% bootstrap_field reply_form.message %}
+
+            {% if topic.first_message.user_created == request.user or perms.aa_forum.manage_forum %}
+                {% if not topic.is_locked %}
+                    {% bootstrap_field reply_form.close_topic %}
+                {% endif %}
+
+                {% if topic.is_locked and perms.aa_forum.manage_forum %}
+                    {% bootstrap_field reply_form.reopen_topic %}
+                {% endif %}
+            {% endif %}
 
             {% include "aa_forum/partials/form/required-field-hint.html" %}
 
