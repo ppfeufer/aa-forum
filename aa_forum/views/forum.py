@@ -874,29 +874,6 @@ def topic_reply(
                 request.user.has_perm(perm="aa_forum.manage_forum")
                 or request.user == current_topic.first_message.user_created
             ):
-                # Check that we don't contradict ourselves
-                if (
-                    form.cleaned_data["close_topic"]
-                    and form.cleaned_data["reopen_topic"]
-                ):
-                    messages.error(
-                        request=request,
-                        message=mark_safe(
-                            # pylint: disable=duplicate-code
-                            s=_(
-                                "<h4>Error!</h4>"
-                                "<p>You can't close and reopen a topic at the same time.</p>"
-                            )
-                        ),
-                    )
-
-                    return redirect(
-                        to="aa_forum:forum_topic",
-                        category_slug=category_slug,
-                        board_slug=board_slug,
-                        topic_slug=topic_slug,
-                    )
-
                 # Close the topic if requested
                 if (
                     form.cleaned_data["close_topic"]

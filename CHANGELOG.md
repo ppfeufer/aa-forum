@@ -35,6 +35,12 @@ Section Order:
 ### Security
 -->
 
+### Added
+
+- New Feature: Close and reopen topics with a reply.
+  - OPs can now close their topics with a reply.
+  - Forum admins can close any topic and reopen closed topics when needed.
+
 ## \[2.0.0\] - 2024-03-16
 
 > \[!NOTE\]
