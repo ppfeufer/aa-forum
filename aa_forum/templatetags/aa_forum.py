@@ -114,7 +114,7 @@ def aa_forum_time(db_datetime: datetime) -> str:
             s=(
                 f"{formatted_forum_date} "
                 f'<sup>(<a href="{timezones_url}" target="_blank" rel="noopener noreferer" '
-                f'title="{link_title}" data-bs-tooltip="aa-forum-tooltip">'
+                f'title="{link_title}" data-bs-tooltip="aa-forum">'
                 '<i class="fa-solid fa-circle-question"></i></a>)</sup>'
             )
         )

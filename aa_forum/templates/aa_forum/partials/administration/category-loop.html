@@ -11,7 +11,7 @@
                     <button
                         class="btn btn-warning btn-sm"
                         title="{% translate 'Edit category' %}"
-                        data-bs-tooltip="aa-forum-tooltip"
+                        data-bs-tooltip="aa-forum"
                         data-bs-toggle="collapse"
                         data-bs-target="#collapseEditCategory-{{ category.category_obj.pk }}"
                         aria-expanded="false"
@@ -23,7 +23,7 @@
                     <button
                         class="btn btn-danger btn-sm"
                         title="{% translate 'Delete category' %}"
-                        data-bs-tooltip="aa-forum-tooltip"
+                        data-bs-tooltip="aa-forum"
                         data-bs-toggle="modal"
                         data-bs-target="#delete-category-{{ category.category_obj.pk }}"
                     >
@@ -33,7 +33,7 @@
                     <button
                         class="aa-forum-admin-expand-collapse-category btn btn-secondary btn-sm collapsed"
                         title="{% translate 'Expand/collapse category' %}"
-                        data-bs-tooltip="aa-forum-tooltip"
+                        data-bs-tooltip="aa-forum"
                         data-bs-toggle="collapse"
                         data-bs-target="#collapseCategory-{{ category.category_obj.pk }}"
                         aria-expanded="false"

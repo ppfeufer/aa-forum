@@ -33,13 +33,13 @@
                 <span class="small">
                     {% if topic.is_sticky %}
                         <span class="aa-forum-topic-status-icon aa-forum-topic-status-sticky mx-1 my-0">
-                            <i class="fa-solid fa-thumbtack" title="{% translate 'Topic is always on top' %}" data-bs-tooltip="aa-forum-tooltip"></i>
+                            <i class="fa-solid fa-thumbtack" title="{% translate 'Topic is always on top' %}" data-bs-tooltip="aa-forum"></i>
                         </span>
                     {% endif %}
 
                     {% if topic.is_locked %}
                         <span class="aa-forum-topic-status-icon aa-forum-topic-status-locked mx-1 my-0">
-                            <i class="fa-solid fa-lock" title="{% translate 'Topic is locked' %}" data-bs-tooltip="aa-forum-tooltip"></i>
+                            <i class="fa-solid fa-lock" title="{% translate 'Topic is locked' %}" data-bs-tooltip="aa-forum"></i>
                         </span>
                     {% endif %}
 
@@ -69,7 +69,7 @@
                 <a
                     href="{% url 'aa_forum:forum_message' topic.board.category.slug topic.board.slug topic.slug topic.last_message_id %}"
                     title="{% translate 'Go to last message' %}"
-                    data-bs-tooltip="aa-forum-tooltip"
+                    data-bs-tooltip="aa-forum"
                     class="ms-2"
                 >
                     <i class="fa-solid fa-right-to-bracket"></i>
@@ -87,7 +87,7 @@
                         <button
                             class="btn btn-aa-forum-topic-moderation btn-sm"
                             title="{% translate 'Unlock/re-open topic' %}"
-                            data-bs-tooltip="aa-forum-tooltip"
+                            data-bs-tooltip="aa-forum"
                             data-bs-toggle="modal"
                             data-bs-target="#topic-lock-state-change-{{ topic.pk }}"
                         >
@@ -97,7 +97,7 @@
                         <button
                             class="btn btn-aa-forum-topic-moderation btn-sm"
                             title="{% translate 'Lock/close topic' %}"
-                            data-bs-tooltip="aa-forum-tooltip"
+                            data-bs-tooltip="aa-forum"
                             data-bs-toggle="modal"
                             data-bs-target="#topic-lock-state-change-{{ topic.pk }}"
                         >
@@ -108,7 +108,7 @@
                     <button
                         class="btn btn-aa-forum-topic-moderation btn-sm"
                         title="{% translate 'Change topics sticky state' %}"
-                        data-bs-tooltip="aa-forum-tooltip"
+                        data-bs-tooltip="aa-forum"
                         data-bs-toggle="modal"
                         data-bs-target="#topic-sticky-state-change-{{ topic.pk }}"
                     >
@@ -118,7 +118,7 @@
                     <button
                         class="btn btn-aa-forum-topic-moderation btn-sm"
                         title="{% translate 'Delete topic' %}"
-                        data-bs-tooltip="aa-forum-tooltip"
+                        data-bs-tooltip="aa-forum"
                         data-bs-toggle="modal"
                         data-bs-target="#delete-topic-{{ topic.pk }}"
                     >
