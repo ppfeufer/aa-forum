@@ -41,6 +41,10 @@ Section Order:
   - OPs can now close their topics with a reply.
   - Forum admins can close any topic and reopen closed topics when needed.
 
+### Changed
+
+- Simplified the Bootstrap tooltip name
+
 ## \[2.0.0\] - 2024-03-16
 
 > \[!NOTE\]

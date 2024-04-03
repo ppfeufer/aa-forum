@@ -55,7 +55,7 @@
                                     <button
                                         class="btn btn-aa-forum-topic-moderation btn-sm btn-read-personal-message"
                                         title="{% translate 'Read message' %}"
-                                        data-bs-tooltip="aa-forum-tooltip"
+                                        data-bs-tooltip="aa-forum"
                                         data-sender="{{ message.sender.pk }}"
                                         data-recipient="{{ message.recipient.pk }}"
                                         data-message="{{ message.pk }}"
@@ -67,7 +67,7 @@
                                     <button
                                         class="btn btn-aa-forum-topic-moderation btn-sm btn-aa-forum-delete"
                                         title="{% translate 'Delete message' %}"
-                                        data-bs-tooltip="aa-forum-tooltip"
+                                        data-bs-tooltip="aa-forum"
                                         data-bs-toggle="modal"
                                         data-bs-target="#delete-message-{{ message.pk }}"
                                     >

@@ -20,7 +20,7 @@
                         <a
                             href="{% url 'aa_forum:forum_message' message.topic.board.category.slug message.topic.board.slug message.topic.slug message.pk %}"
                             title="{{ board_latest_topic.subject }}"
-                            data-bs-tooltip="aa-forum-tooltip"
+                            data-bs-tooltip="aa-forum"
                         >
                             {% if topic.first_message.pk != message.pk %}
                                 {% translate "Re:" %}
@@ -37,7 +37,7 @@
                                 <button
                                     class="btn btn-aa-forum-topic-moderation btn-sm btn-aa-forum-copy-to-clipboard"
                                     title="{% translate 'Copy message link to clipboard' %}"
-                                    data-bs-tooltip="aa-forum-tooltip"
+                                    data-bs-tooltip="aa-forum"
                                     data-clipboard-text="{{ SITE_URL }}{% url 'aa_forum:forum_message' message.topic.board.category.slug message.topic.board.slug message.topic.slug message.pk %}"
                                 >
                                     <i class="fa-regular fa-copy"></i>
@@ -49,7 +49,7 @@
                                         href="{% url 'aa_forum:forum_message_modify' topic.board.category.slug topic.board.slug topic.slug message.pk %}"
                                         class="btn btn-aa-forum-topic-moderation btn-sm"
                                         title="{% translate 'Modify message' %}"
-                                        data-bs-tooltip="aa-forum-tooltip"
+                                        data-bs-tooltip="aa-forum"
                                     >
                                         <i class="fa-solid fa-pencil"></i>
                                     </a>
@@ -57,7 +57,7 @@
                                     <button
                                         class="btn btn-aa-forum-topic-moderation btn-sm"
                                         title="{% translate 'Delete message' %}"
-                                        data-bs-tooltip="aa-forum-tooltip"
+                                        data-bs-tooltip="aa-forum"
                                         data-bs-toggle="modal"
                                         data-bs-target="#delete-message-{{ message.pk }}"
                                     >

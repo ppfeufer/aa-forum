@@ -90,7 +90,7 @@
                 <a
                     href="{% url 'aa_forum:forum_message' board.category.slug board_latest_topic_board.slug board_latest_topic.slug board_last_message.pk %}"
                     title="{{ board_latest_topic.subject }}"
-                    data-bs-tooltip="aa-forum-tooltip"
+                    data-bs-tooltip="aa-forum"
                 >
                     {% if board.last_message != board.first_message %}
                         {% translate "Re:" %}

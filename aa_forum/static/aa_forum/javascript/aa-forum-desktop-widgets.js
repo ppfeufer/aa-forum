@@ -32,7 +32,7 @@ if (aaForumUnreadTopicsWidget) {
                 });
 
                 // Initialize Bootstrap tooltips
-                [].slice.call(document.querySelectorAll('[data-bs-tooltip="aa-forum-tooltip"]'))
+                [].slice.call(document.querySelectorAll('[data-bs-tooltip="aa-forum"]'))
                     .map((tooltipTriggerEl) => {
                         return new bootstrap.Tooltip(tooltipTriggerEl);
                     });

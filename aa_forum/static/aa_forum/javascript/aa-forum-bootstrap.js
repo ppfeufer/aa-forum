@@ -1,6 +1,6 @@
 /* global bootstrap */
 
-[].slice.call(document.querySelectorAll('[data-bs-tooltip="aa-forum-tooltip"]'))
+[].slice.call(document.querySelectorAll('[data-bs-tooltip="aa-forum"]'))
     .map((tooltipTriggerEl) => {
         'use strict';
 
