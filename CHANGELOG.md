@@ -37,7 +37,8 @@ Section Order:
 
 ### Added
 
-- New Feature: Close and reopen topics with a reply.
+- Bootstrap tooltips where ever it makes sense
+- Close and reopen topics with a reply.
   - OPs can now close their topics with a reply.
   - Forum admins can close any topic and reopen closed topics when needed.
 
