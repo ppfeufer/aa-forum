@@ -1355,11 +1355,7 @@ python manage.py migrate aa_forum
 
 - First version for Alpha testing
 
-<!-- Images -->
-
-<!-- Hyperlinks -->
-
-<!-- Issue Links -->
+<!-- Links -->
 
 [#125]: https://github.com/ppfeufer/aa-forum/issues/125 "Localization of forum time"
 [aa time zones]: https://github.com/ppfeufer/aa-timezones "AA Time Zones"

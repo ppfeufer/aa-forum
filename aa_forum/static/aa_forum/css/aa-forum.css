@@ -231,7 +231,7 @@
     }
 
     .aa-forum .aa-forum-message-body img {
-        height: auto !important; /* to override inline style added by cKeditor */
+        height: auto !important; /* to override inline style added by CKEditor */
         max-width: 100%;
     }
 }
