@@ -11,16 +11,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-03 14:16+0200\n"
-"PO-Revision-Date: 2024-03-16 09:37+0000\n"
+"PO-Revision-Date: 2024-04-04 07:56+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/de/>\n"
+"Language-Team: German <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.4.3\n"
 
 #: aa_forum/__init__.py:9 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -174,24 +174,24 @@ msgstr ""
 "Checkbox oben.)"
 
 #: aa_forum/forms.py:362
-#, fuzzy
-#| msgid "Lock/close topic"
 msgid "Close topic"
-msgstr "Thema sperren/schließen"
+msgstr "Thema schließen"
 
 #: aa_forum/forms.py:364
 msgid "If checked, this topic will be closed after posting this message."
 msgstr ""
+"Wenn diese Option aktiviert ist, wird dieses Thema nach dem Posten dieser "
+"Nachricht geschlossen."
 
 #: aa_forum/forms.py:370
-#, fuzzy
-#| msgid "Unlock/re-open topic"
 msgid "Reopen topic"
-msgstr "Thema entsperren/erneut öffnen"
+msgstr "Thema erneut öffnen"
 
 #: aa_forum/forms.py:372
 msgid "If checked, this topic will be reopened after posting this message."
 msgstr ""
+"Wenn diese Option aktiviert ist, wird dieses Thema nach dem Posten dieser "
+"Nachricht erneut geöffnet."
 
 #: aa_forum/forms.py:409 aa_forum/forms.py:652 aa_forum/forms.py:717
 msgid "Message"
