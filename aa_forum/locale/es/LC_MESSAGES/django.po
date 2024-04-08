@@ -4,22 +4,22 @@
 # "H. Peter Pfeufer" <info@ppfeufer.de>, 2023.
 # Zigor Fernandez Moreno <sietehierros@gmail.com>, 2023.
 # Geovanny David Morales De la cruz <moralesgeovanny1996@gmail.com>, 2023.
+# Mak3rco <depormanuf1@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-03 14:16+0200\n"
-"PO-Revision-Date: 2023-10-25 07:04+0000\n"
-"Last-Translator: Geovanny David Morales De la cruz "
-"<moralesgeovanny1996@gmail.com>\n"
-"Language-Team: Spanish <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/es/>\n"
+"PO-Revision-Date: 2024-04-08 17:13+0000\n"
+"Last-Translator: Mak3rco <depormanuf1@gmail.com>\n"
+"Language-Team: Spanish <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.1\n"
+"X-Generator: Weblate 5.4.3\n"
 
 #: aa_forum/__init__.py:9 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -117,7 +117,7 @@ msgstr ""
 
 #: aa_forum/forms.py:277
 msgid "Discord webhook (optional)"
-msgstr ""
+msgstr "Discord Webhook (Opcional)"
 
 #: aa_forum/forms.py:279
 msgid ""
