@@ -35,6 +35,8 @@ Section Order:
 ### Security
 -->
 
+## \[2.1.0\] - 2024-04-21
+
 ### Added
 
 - Bootstrap tooltips where ever it makes sense
@@ -44,7 +46,7 @@ Section Order:
 
 ### Changed
 
-- Simplified the Bootstrap tooltip name
+- Translations updated
 
 ## \[2.0.0\] - 2024-03-16
 
