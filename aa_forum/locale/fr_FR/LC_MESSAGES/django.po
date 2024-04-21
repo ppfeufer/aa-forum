@@ -2,15 +2,16 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # "H. Peter Pfeufer" <info@ppfeufer.de>, 2023, 2024.
+# Matthias P <randomusernetcom@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-03 14:16+0200\n"
-"PO-Revision-Date: 2024-04-01 09:51+0000\n"
-"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: French <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/fr/>\n"
+"PO-Revision-Date: 2024-04-17 23:13+0000\n"
+"Last-Translator: Matthias P <randomusernetcom@gmail.com>\n"
+"Language-Team: French <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/fr/>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,12 +37,12 @@ msgstr ""
 #: aa_forum/templates/aa_forum/view/profile/index.html:8
 #: aa_forum/templates/aa_forum/view/search/results.html:7
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: aa_forum/apps.py:20
 #, python-brace-format
 msgid "AA Forum v{__version__}"
-msgstr ""
+msgstr "AA Forum v{__version__}"
 
 #: aa_forum/forms.py:42
 msgid "This field is mandatory"
@@ -52,20 +53,20 @@ msgstr "Ce champ est obligatoire"
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:25
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:25
 msgid "Subject"
-msgstr ""
+msgstr "Sujet"
 
 #: aa_forum/forms.py:145 aa_forum/forms.py:422 aa_forum/forms.py:665
 #: aa_forum/forms.py:730
 msgid "You have forgotten the message!"
-msgstr ""
+msgstr "Vous avez oublié le message !"
 
 #: aa_forum/forms.py:190 aa_forum/forms.py:228 aa_forum/forms.py:249
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: aa_forum/forms.py:192 aa_forum/forms.py:230
 msgid "Category name"
-msgstr ""
+msgstr "Nom de la catégorie"
 
 #: aa_forum/forms.py:196 aa_forum/forms.py:207
 msgid "Boards"
@@ -83,7 +84,7 @@ msgstr ""
 
 #: aa_forum/forms.py:255
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: aa_forum/forms.py:261
 msgid "Board description (optional)"
@@ -94,25 +95,32 @@ msgid "Group restrictions"
 msgstr "Restrictions de groupe"
 
 #: aa_forum/forms.py:269
+#, fuzzy
 msgid ""
 "This will restrict access to this board to the selected groups. If no groups "
 "are selected, everyone who can access the forum can also access this board. "
 "(This setting is optional)"
 msgstr ""
+"Cela va restreindre l'accès a ce tableau pour le groupe sélectionné. Si "
+"aucun groupes n'est sélectionné, tout le monde pouvant accéder au forum peut "
+"accéder a ce tableau. (Ce paramètre est optionnel)"
 
 #: aa_forum/forms.py:277
 msgid "Discord webhook (optional)"
-msgstr ""
+msgstr "Webhook Discord (Optionnel)"
 
 #: aa_forum/forms.py:279
+#, fuzzy
 msgid ""
 "Discord webhook URL for the channel to post about new topics in this board. "
 "(This setting is optional)"
 msgstr ""
+"Lien du WebHook Discord pour que le canal publie de nouveaux sujets dans ce "
+"tableau. (Ce paramètre est optionnel)"
 
 #: aa_forum/forms.py:292
 msgid "Use this Discord webhook for replies as well?"
-msgstr ""
+msgstr "Utiliser le WebHook Discord pour les réponses aussi ?"
 
 #: aa_forum/forms.py:294
 msgid ""
@@ -120,10 +128,13 @@ msgid ""
 "defined Discord channel. (Child boards are excluded) Chose wisely! (Default: "
 "NO)"
 msgstr ""
+"Quand activé, toutes les réponses a tous les sujets de ce tableau seront "
+"posté dans un salon discord défini. (Hors sous tableaux) Choisissez "
+"consciencieusement ! (Par défaut : Non)"
 
 #: aa_forum/forms.py:302
 msgid "Mark board as \"Announcement Board\""
-msgstr ""
+msgstr "Marquer ce tableau comme \"Tableau d'annonce\""
 
 #: aa_forum/forms.py:304
 msgid ""
