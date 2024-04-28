@@ -2,32 +2,85 @@
 
 'use strict';
 
-const aaForumDashboardWidgets = document.getElementById('aa-forum-dashboard-widgets');
-const aaForumUnreadTopicsWidget = document.getElementById('aa-forum-dashboard-widget-unread-topics');
+/**
+ * Performs a deep merge of objects and returns a new object.
+ * Does not modify objects (immutable) and merge arrays via concatenation.
+ *
+ * @param {...object} objects - Objects to merge
+ * @returns {object} New object with merged key/values
+ */
+const mergeOptions = (...objects) => {
+    const isObject = obj => obj && typeof obj === 'object';
 
-if (aaForumUnreadTopicsWidget) {
-    const aaForumUnreadTopicsWidgetContent = aaForumUnreadTopicsWidget.querySelector('.aa-forum-dashboard-widget-unread-topics-content');
+    return objects.reduce((prev, obj) => {
+        Object.keys(obj).forEach(key => {
+            const pVal = prev[key];
+            const oVal = obj[key];
 
-    fetch(aaForumDashboardWidgetsSettings.unreadTopics.ajaxUrl)
+            if (Array.isArray(pVal) && Array.isArray(oVal)) {
+                // prev[key] = pVal.concat(...oVal);
+                prev[key] = [...new Set([...oVal, ...pVal])];
+            } else if (isObject(pVal) && isObject(oVal)) {
+                prev[key] = mergeOptions(pVal, oVal);
+            } else {
+                prev[key] = oVal;
+            }
+        });
+
+        return prev;
+    }, {});
+};
+
+const aaForumDashboardWidgetsDefaults = {
+    wrapper: {
+        element: document.getElementById('aa-forum-dashboard-widgets')
+    },
+    unreadTopicsWidget: {
+        element: document.getElementById('aa-forum-dashboard-widget-unread-topics'),
+        contentElementClass: 'aa-forum-dashboard-widget-unread-topics-content'
+    },
+};
+
+/**
+ * Forum dashboard widgets settings.
+ *
+ * @type {Object}
+ */
+const aaForumDashboardWidgets = mergeOptions(
+    aaForumDashboardWidgetsDefaults,
+    aaForumDashboardWidgetsSettings
+);
+
+/**
+ * Check if the unread topics widget element exists.
+ */
+if (aaForumDashboardWidgets.unreadTopicsWidget.element !== null) {
+    const aaForumUnreadTopicsWidgetContent = aaForumDashboardWidgets.unreadTopicsWidget.element.querySelector(
+        `.${aaForumDashboardWidgets.unreadTopicsWidget.contentElementClass}`
+    );
+
+    /**
+     * Fetch the unread topics widget content via AJAX.
+     */
+    fetch(aaForumDashboardWidgetsSettings.unreadTopicsWidget.ajaxUrl)
         .then((response) => {
             if (response.ok) {
                 return response.text();
             }
+
             throw new Error('Something went wrong');
         })
         .then((responseText) => {
-            // console.log('Unread Forum Topics Widget: ', responseText);
-
             if (responseText !== '') {
                 aaForumUnreadTopicsWidgetContent.innerHTML = responseText;
 
                 // Show the widget area
-                const showWidgetArea = new bootstrap.Collapse(aaForumDashboardWidgets, { // eslint-disable-line no-unused-vars
+                const showWidgetArea = new bootstrap.Collapse(aaForumDashboardWidgets.wrapper.element, { // eslint-disable-line no-unused-vars
                     show: true
                 });
 
                 // Show the widget
-                const showWidget = new bootstrap.Collapse(aaForumUnreadTopicsWidget, { // eslint-disable-line no-unused-vars
+                const showWidget = new bootstrap.Collapse(aaForumDashboardWidgets.unreadTopicsWidget.element, { // eslint-disable-line no-unused-vars
                     show: true
                 });
 
