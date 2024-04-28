@@ -35,6 +35,8 @@ Section Order:
 ### Security
 -->
 
+## \[2.1.1\] - 2024-04-28
+
 ### Added
 
 - Integrity hashes to our JS and CSS files to prevent tampering
