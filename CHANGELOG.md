@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Fixed
+
+- CKEditor image alignment
+
 ### Changed
 
 - `Board.user_can_start_topic()` simplified to not have a variable with the same name
