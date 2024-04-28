@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Added
+
+- Integrity hashes to our JS and CSS files to prevent tampering
+
 ### Fixed
 
 - CKEditor image alignment
