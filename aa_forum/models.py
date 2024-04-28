@@ -452,15 +452,13 @@ class Board(models.Model):
         :rtype:
         """
 
-        user_can_start_topic = True
-
         if self.is_announcement_board:
-            user_can_start_topic = bool(
+            return bool(
                 user.has_perm(perm="aa_forum.manage_forum")
                 or user.groups.filter(pk__in=self.announcement_groups.all()).exists()
             )
 
-        return user_can_start_topic
+        return True
 
     def _update_message_references(self):
         """
