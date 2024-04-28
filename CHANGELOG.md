@@ -35,11 +35,16 @@ Section Order:
 ### Security
 -->
 
+### Changed
+
+- `Board.user_can_start_topic()` simplified to not have a variable with the same name
+  as the method
+
 ## \[2.1.0\] - 2024-04-21
 
 ### Added
 
-- Bootstrap tooltips where ever it makes sense
+- Bootstrap tooltips wherever it makes sense
 - Close and reopen topics with a reply.
   - OPs can now close their topics with a reply.
   - Forum admins can close any topic and reopen closed topics when needed.
