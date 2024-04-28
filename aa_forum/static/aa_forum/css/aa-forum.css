@@ -396,6 +396,29 @@
 
         --bs-text-opacity: 1;
     }
+
+    /* Image alignment
+    --------------------------------------------------------------------------------- */
+    .aa-forum .ck-content .image {
+        margin: 0.9em 0;
+    }
+
+    .aa-forum .ck-content .image-style-align-center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .aa-forum .ck-content .image-style-align-left {
+        margin-right: var(--ck-image-style-spacing);
+    }
+
+    .aa-forum .ck-content .image-style-align-right {
+        margin-left: var(--ck-image-style-spacing);
+    }
+
+    .aa-forum .ck-content .image-style-side {
+        margin-left: var(--ck-image-style-spacing);
+    }
 }
 
 /*
