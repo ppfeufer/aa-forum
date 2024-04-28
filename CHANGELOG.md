@@ -39,6 +39,7 @@ Section Order:
 
 - `Board.user_can_start_topic()` simplified to not have a variable with the same name
   as the method
+- Dashboard widget JavaScript modernised
 
 ## \[2.1.0\] - 2024-04-21
 
