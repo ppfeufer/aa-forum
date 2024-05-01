@@ -35,9 +35,10 @@ Section Order:
 ### Security
 -->
 
-### Added
+### Changed
 
-- New search stopwords to improve search results
+- Using stopword lists downloaded from https://github.com/stopwords-iso to improve
+  search results
 
 ## \[2.1.1\] - 2024-04-28
 
