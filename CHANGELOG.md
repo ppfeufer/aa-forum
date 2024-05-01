@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Added
+
+- New search stopwords to improve search results
+
 ## \[2.1.1\] - 2024-04-28
 
 ### Added
