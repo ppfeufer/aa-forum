@@ -35,10 +35,18 @@ Section Order:
 ### Security
 -->
 
+## \[2.2.0\] - 2024-05-06
+
+### Fixed
+
+- Removed wrongfully added integrity hash from CKEditor CSS, since it's not under our
+  control. Now a newer version of CKEditor will load again properly.
+
 ### Changed
 
 - Using stopword lists downloaded from https://github.com/stopwords-iso to improve
   search results
+- Require the latest version of `django-ckeditor-5` (v0.2.13)
 
 ## \[2.1.1\] - 2024-04-28
 
