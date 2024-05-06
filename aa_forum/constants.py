@@ -38,7 +38,7 @@ file_list = glob.glob(
 # Add stopwords from all files
 for file in file_list:
     with open(file, encoding="utf-8") as f:
-        SEARCH_STOPWORDS.extend(json.loads(f.read()))
+        SEARCH_STOPWORDS.extend(json.load(f))
 
 # Discord embed settings
 DISCORD_EMBED_COLOR_INFO = 0x5BC0DE
