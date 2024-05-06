@@ -2,6 +2,11 @@
 Constants
 """
 
+# Standard Library
+import glob
+import json
+import os
+
 # Django
 from django.utils.text import slugify
 
@@ -21,32 +26,19 @@ INTERNAL_URL_PREFIX = "-"
 DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER = 999999
 
 # Search stop words. These words and characters will be removed from the search phrase
-SEARCH_STOPWORDS = [
-    '"',
-    "<",
-    ">",
-    "(",
-    ")",
-    "{",
-    "}",
-    "a",
-    "an",
-    "are",
-    "as",
-    "at",
-    "be",
-    "if",
-    "in",
-    "into",
-    "is",
-    "of",
-    "off",
-    "on",
-    "the",
-    "what",
-    "which",
-    "who",
-]
+SEARCH_STOPWORDS = ['"', "<", ">", "(", ")", "{", "}"]
+
+# Get stopwords file list (Files downloaded from: https://github.com/stopwords-iso)
+file_list = glob.glob(
+    os.path.join(
+        os.path.abspath(os.path.dirname(__file__)), "search/stopwords", "*.json"
+    )
+)
+
+# Add stopwords from all files
+for file in file_list:
+    with open(file, encoding="utf-8") as f:
+        SEARCH_STOPWORDS.extend(json.loads(f.read()))
 
 # Discord embed settings
 DISCORD_EMBED_COLOR_INFO = 0x5BC0DE
