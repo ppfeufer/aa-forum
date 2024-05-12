@@ -119,6 +119,10 @@ DEFAULT_FROM_EMAIL = ""
 #######################################
 # Add any custom settings below here. #
 #######################################
+
+# Discord
+DISCORD_GUILD_ID = "1234567890"
+
 ## AA Forum
 if "django_ckeditor_5" in INSTALLED_APPS:
     MEDIA_URL = "/media/"
