@@ -71,9 +71,9 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
         return ""
 
 
-class UnreadTopicsDashboardHook(DashboardItemHook):
+class AaForumDashboardWidgets(DashboardItemHook):
     """
-    This class adds the unread topics widget to the Alliance Auth dashboard
+    This class adds the AA Forum dashboard widgets to the Alliance Auth dashboard.
     """
 
     def __init__(self):
@@ -106,12 +106,12 @@ def register_urls():
 
 
 @hooks.register("dashboard_hook")
-def register_esi_hook():
+def register_dashboard_widgets():
     """
     Register our dashboard hook
 
     :return: The hook
-    :rtype: UnreadTopicsDashboardHook
+    :rtype: AaForumDashboardWidgets
     """
 
-    return UnreadTopicsDashboardHook()
+    return AaForumDashboardWidgets()
