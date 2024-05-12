@@ -3,7 +3,7 @@ Test for app_settings.py
 """
 
 # Django
-from django.test import TestCase, modify_settings
+from django.test import TestCase, modify_settings, override_settings
 
 # AA Forum
 from aa_forum.app_settings import (
@@ -18,9 +18,8 @@ class TestModulesInstalled(TestCase):
     Test if modules are installed
     """
 
-    @modify_settings(
-        INSTALLED_APPS={"append": "aadiscordbot"}, DISCORD_GUILD_ID="1234567890"
-    )
+    @modify_settings(INSTALLED_APPS={"append": "aadiscordbot"})
+    @override_settings(DISCORD_GUILD_ID="1234567890")
     def test_allianceauth_discordbot_installed_should_return_true(self):
         """
         Test allianceauth_discordbot_installed should return True
@@ -42,9 +41,8 @@ class TestModulesInstalled(TestCase):
 
         self.assertFalse(expr=allianceauth_discordbot_installed())
 
-    @modify_settings(
-        INSTALLED_APPS={"append": "aadiscordbot"}, DISCORD_GUILD_ID="1234567890"
-    )
+    @modify_settings(INSTALLED_APPS={"append": "aadiscordbot"})
+    @override_settings(DISCORD_GUILD_ID="1234567890")
     def test_discord_messaging_proxy_available_return_true(self):
         """
         Test discord_messaging_proxy_available should return True for aadiscordbot
