@@ -421,6 +421,14 @@
     }
 }
 
+/* Dashboard widget
+------------------------------------------------------------------------------------- */
+@media all {
+    #aa-forum-dashboard-widget-unread-topics .card-aa-forum-category:last-child {
+        margin-bottom: 0 !important;
+    }
+}
+
 /*
 ----------------------------------------------------------------------------------------
                 Responsive (@media all and (min-width: 768px))

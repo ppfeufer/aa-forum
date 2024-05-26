@@ -1,7 +1,7 @@
 {% if perms.aa_forum.basic_access %}
-    <div id="aa-forum-dashboard-widgets" class="col-12 align-self-stretch py-2 collapse">
+    <div id="aa-forum-dashboard-widgets" class="aa-forum col-12 align-self-stretch py-2 collapse">
         {% if user_profile.show_unread_topics_dashboard_widget %}
-            <div id="aa-forum-dashboard-widget-unread-topics" class="col-12 align-self-stretch py-2 collapse">
+            <div id="aa-forum-dashboard-widget-unread-topics" class="col-12 align-self-stretch collapse">
                 <div class="aa-forum-dashboard-widget-unread-topics-content"></div>
             </div>
         {% endif %}
