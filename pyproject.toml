@@ -40,7 +40,7 @@ dynamic = [
     "version",
 ]
 dependencies = [
-    "allianceauth<5.0.0,>=4",
+    "allianceauth<5.0.0,>=4.1",
     "allianceauth-app-utils>=1.24",
     "dhooks-lite>=1.1",
     "django-ckeditor-5>=0.2.13",
