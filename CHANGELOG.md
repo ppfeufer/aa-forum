@@ -35,6 +35,8 @@ Section Order:
 ### Security
 -->
 
+## \[2.3.0\] - 2024-05-27
+
 ### Added
 
 - Missing tooltip for `topic.has_unread_messages` marker
