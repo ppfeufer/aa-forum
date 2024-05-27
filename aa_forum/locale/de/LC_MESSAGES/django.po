@@ -10,11 +10,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-03 14:16+0200\n"
+"POT-Creation-Date: 2024-05-27 07:15+0200\n"
 "PO-Revision-Date: 2024-05-10 14:06+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: German <https://weblate.ppfeufer.de/projects/"
-"alliance-auth-apps/aa-forum/de/>\n"
+"Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
+"apps/aa-forum/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -381,77 +381,77 @@ msgstr ""
 "diesem Board.</p><p>Siehe hier: <a href=\"{self.topic_url}\">{self._topic."
 "subject}</a></p>"
 
-#: aa_forum/models.py:625
+#: aa_forum/models.py:623
 msgid "topic"
 msgstr "Thema"
 
-#: aa_forum/models.py:626
+#: aa_forum/models.py:624
 msgid "topics"
 msgstr "Themen"
 
-#: aa_forum/models.py:805
+#: aa_forum/models.py:803
 msgid "message"
 msgstr "Beitrag"
 
-#: aa_forum/models.py:806
+#: aa_forum/models.py:804
 msgid "messages"
 msgstr "Beträge"
 
-#: aa_forum/models.py:948
+#: aa_forum/models.py:946
 msgid "personal message"
 msgstr "Persönliche Nachricht"
 
-#: aa_forum/models.py:949
+#: aa_forum/models.py:947
 msgid "personal messages"
 msgstr "Persönliche Nachrichten"
 
-#: aa_forum/models.py:1003
+#: aa_forum/models.py:1001
 msgid "Messages per page"
 msgstr "Beiträge pro Seite"
 
-#: aa_forum/models.py:1004
+#: aa_forum/models.py:1002
 msgid "Topics per page"
 msgstr "Themen pro Seite"
 
-#: aa_forum/models.py:1005
+#: aa_forum/models.py:1003
 msgid "User signature length"
 msgstr "Länge der Benutzersignatur"
 
-#: aa_forum/models.py:1010
+#: aa_forum/models.py:1008
 msgid "Maximum number of messages per page in the topic view"
 msgstr "Maximale Anzahl von Beiträgen pro Seite in der Themenansicht"
 
-#: aa_forum/models.py:1015
+#: aa_forum/models.py:1013
 msgid "Maximum number of topics per page in the board view"
 msgstr "Maximale Anzahl von Themen pro Seite in der Board-Ansicht"
 
-#: aa_forum/models.py:1020
+#: aa_forum/models.py:1018
 msgid "Maximum length of a users signature"
 msgstr "Maximale Länge einer Benutzersignatur"
 
-#: aa_forum/models.py:1031
+#: aa_forum/models.py:1029
 msgid "setting"
 msgstr "Einstellung"
 
-#: aa_forum/models.py:1032
+#: aa_forum/models.py:1030
 msgid "settings"
 msgstr "Einstellungen"
 
-#: aa_forum/models.py:1042
+#: aa_forum/models.py:1040
 #: aa_forum/templates/aa_forum/partials/administration/settings-form.html:7
 #: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:19
 msgid "Forum settings"
 msgstr "Forumeinstellungen"
 
-#: aa_forum/models.py:1069
+#: aa_forum/models.py:1067
 msgid "user profile"
 msgstr "Benutzerprofil"
 
-#: aa_forum/models.py:1070
+#: aa_forum/models.py:1068
 msgid "user profiles"
 msgstr "Benutzerprofile"
 
-#: aa_forum/models.py:1080
+#: aa_forum/models.py:1078
 msgid "Forum user profile"
 msgstr "Benutzerprofil"
 
@@ -462,7 +462,7 @@ msgid "on:"
 msgstr "geschrieben:"
 
 #: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:30
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:55
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:57
 #: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:8
 #: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:48
 msgid "Reply"
@@ -552,13 +552,13 @@ msgstr "Sperrstatus des Themas ändern"
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:9
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:37
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:89
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:91
 msgid "Unlock/re-open topic"
 msgstr "Thema entsperren/erneut öffnen"
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:12
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:40
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:99
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:101
 msgid "Lock/close topic"
 msgstr "Thema sperren/schließen"
 
@@ -606,7 +606,7 @@ msgstr "Sticky setzen"
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-delete.html:3
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-delete.html:8
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:120
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:122
 msgid "Delete topic"
 msgstr "Thema löschen"
 
@@ -787,7 +787,7 @@ msgid "Child boards:"
 msgstr "Untergeordnete Boards:"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board.html:50
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:29
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:31
 msgid "New"
 msgstr "Neu"
 
@@ -896,32 +896,38 @@ msgstr "Nächster"
 msgid "Last"
 msgstr "Letzter"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:36
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:28
+#, fuzzy
+#| msgid "Go to last message"
+msgid "Go to first unread message"
+msgstr "Gehe zum letzten Beitrag"
+
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:38
 msgid "Topic is always on top"
 msgstr "Das Thema steht immer oben"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:42
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:44
 msgid "Topic is locked"
 msgstr "Thema ist gesperrt"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:46
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:48
 msgid "Started by"
 msgstr "Begonnen bei"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:57
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:60
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:59
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:62
 msgid "Replies"
 msgstr "Antworten"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:67
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:69
 msgid "Last post"
 msgstr "Letzter Beitrag"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:71
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:73
 msgid "Go to last message"
 msgstr "Gehe zum letzten Beitrag"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:110
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:112
 msgid "Change topics sticky state"
 msgstr "Sticky-Status vom Thema ändern"
 
@@ -1049,7 +1055,7 @@ msgstr "Benutzerprofil"
 msgid "Search …"
 msgstr "Suche …"
 
-#: aa_forum/templates/aa_forum/partials/widgets/unread-topics.html:6
+#: aa_forum/templates/aa_forum/partials/widgets/unread-topics.html:5
 msgid "Forum: Unread topics"
 msgstr "Forum: Ungelesene Themen"
 
@@ -1173,8 +1179,8 @@ msgstr "<h4>Erfolg!</h4><p>Einstellungen aktualisiert.</p>"
 #: aa_forum/views/personal_messages.py:249 aa_forum/views/profile.py:70
 msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte überprüfe Deine "
-"Eingabe.</p>"
+"<h4>Fehler!</h4><p>Etwas ist schief gelaufen, bitte überprüfe Deine Eingabe."
+"</p>"
 
 #: aa_forum/views/forum.py:232
 msgid ""
@@ -1188,8 +1194,8 @@ msgstr ""
 msgid ""
 "<h4>Error!</h4><p>The category you were trying to post in does not exist.</p>"
 msgstr ""
-"<h4>Fehler!</h4><p>Die Kategorie, in der Du posten willst, existiert "
-"nicht.</p>"
+"<h4>Fehler!</h4><p>Die Kategorie, in der Du posten willst, existiert nicht.</"
+"p>"
 
 #: aa_forum/views/forum.py:320
 msgid ""

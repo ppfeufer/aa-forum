@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-03 14:16+0200\n"
+"POT-Creation-Date: 2024-05-27 07:15+0200\n"
 "PO-Revision-Date: 2024-05-10 14:06+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
-"Language-Team: Czech <https://weblate.ppfeufer.de/projects/"
-"alliance-auth-apps/aa-forum/cs/>\n"
+"Language-Team: Czech <https://weblate.ppfeufer.de/projects/alliance-auth-"
+"apps/aa-forum/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -319,77 +319,77 @@ msgid ""
 "subject}</a></p>"
 msgstr ""
 
-#: aa_forum/models.py:625
+#: aa_forum/models.py:623
 msgid "topic"
 msgstr ""
 
-#: aa_forum/models.py:626
+#: aa_forum/models.py:624
 msgid "topics"
 msgstr ""
 
-#: aa_forum/models.py:805
+#: aa_forum/models.py:803
 msgid "message"
 msgstr ""
 
-#: aa_forum/models.py:806
+#: aa_forum/models.py:804
 msgid "messages"
 msgstr ""
 
-#: aa_forum/models.py:948
+#: aa_forum/models.py:946
 msgid "personal message"
 msgstr ""
 
-#: aa_forum/models.py:949
+#: aa_forum/models.py:947
 msgid "personal messages"
 msgstr ""
 
-#: aa_forum/models.py:1003
+#: aa_forum/models.py:1001
 msgid "Messages per page"
 msgstr ""
 
-#: aa_forum/models.py:1004
+#: aa_forum/models.py:1002
 msgid "Topics per page"
 msgstr ""
 
-#: aa_forum/models.py:1005
+#: aa_forum/models.py:1003
 msgid "User signature length"
 msgstr ""
 
-#: aa_forum/models.py:1010
+#: aa_forum/models.py:1008
 msgid "Maximum number of messages per page in the topic view"
 msgstr ""
 
-#: aa_forum/models.py:1015
+#: aa_forum/models.py:1013
 msgid "Maximum number of topics per page in the board view"
 msgstr ""
 
-#: aa_forum/models.py:1020
+#: aa_forum/models.py:1018
 msgid "Maximum length of a users signature"
 msgstr ""
 
-#: aa_forum/models.py:1031
+#: aa_forum/models.py:1029
 msgid "setting"
 msgstr ""
 
-#: aa_forum/models.py:1032
+#: aa_forum/models.py:1030
 msgid "settings"
 msgstr ""
 
-#: aa_forum/models.py:1042
+#: aa_forum/models.py:1040
 #: aa_forum/templates/aa_forum/partials/administration/settings-form.html:7
 #: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:19
 msgid "Forum settings"
 msgstr ""
 
-#: aa_forum/models.py:1069
+#: aa_forum/models.py:1067
 msgid "user profile"
 msgstr ""
 
-#: aa_forum/models.py:1070
+#: aa_forum/models.py:1068
 msgid "user profiles"
 msgstr ""
 
-#: aa_forum/models.py:1080
+#: aa_forum/models.py:1078
 msgid "Forum user profile"
 msgstr ""
 
@@ -400,7 +400,7 @@ msgid "on:"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:30
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:55
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:57
 #: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:8
 #: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:48
 msgid "Reply"
@@ -488,13 +488,13 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:9
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:37
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:89
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:91
 msgid "Unlock/re-open topic"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:12
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:40
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:99
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:101
 msgid "Lock/close topic"
 msgstr ""
 
@@ -538,7 +538,7 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-delete.html:3
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-delete.html:8
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:120
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:122
 msgid "Delete topic"
 msgstr ""
 
@@ -704,7 +704,7 @@ msgid "Child boards:"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board.html:50
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:29
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:31
 msgid "New"
 msgstr ""
 
@@ -811,32 +811,36 @@ msgstr ""
 msgid "Last"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:36
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:28
+msgid "Go to first unread message"
+msgstr ""
+
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:38
 msgid "Topic is always on top"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:42
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:44
 msgid "Topic is locked"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:46
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:48
 msgid "Started by"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:57
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:60
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:59
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:62
 msgid "Replies"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:67
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:69
 msgid "Last post"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:71
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:73
 msgid "Go to last message"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:110
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:112
 msgid "Change topics sticky state"
 msgstr ""
 
@@ -961,7 +965,7 @@ msgstr ""
 msgid "Search …"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/widgets/unread-topics.html:6
+#: aa_forum/templates/aa_forum/partials/widgets/unread-topics.html:5
 msgid "Forum: Unread topics"
 msgstr ""
 
