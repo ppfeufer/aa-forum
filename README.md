@@ -105,7 +105,7 @@ these kinds of changes. For your own sanity, and mine :-)
 
 > \[!NOTE\]
 >
-> **AA Forum >= 2.0.0 needs at least Alliance Auth v4.0.0!**
+> **AA Forum >= 2.0.0 needs at least Alliance Auth v4!**
 >
 > Please make sure to update your Alliance Auth instance _before_ you install this
 > module or update to the latest version, otherwise an update to Alliance Auth will
