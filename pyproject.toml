@@ -13,7 +13,7 @@ keywords = [
     "eveonline",
     "forum",
 ]
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 authors = [
     { name = "Peter Pfeufer", email = "develop@ppfeufer.de" },
     { name = "Erik Kalkoken", email = "kalkoken87@gmail.com" },
@@ -40,29 +40,27 @@ dynamic = [
     "version",
 ]
 dependencies = [
-    "allianceauth<5.0.0,>=4.1",
+    "allianceauth<5,>=4.1",
     "allianceauth-app-utils>=1.24",
     "dhooks-lite>=1.1",
     "django-ckeditor-5>=0.2.13",
     "unidecode>=1.3.7",
 ]
-[project.optional-dependencies]
-tests-allianceauth-latest = [
+optional-dependencies.tests-allianceauth-latest = [
     "aa-timezones",
     "allianceauth-discordbot",
     "coverage",
     "django-testdata",
     "django-webtest",
-    "Faker",
+    "faker",
     "python-dateutil",
 ]
-[project.urls]
-Changelog = "https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md"
-Documentation = "https://github.com/ppfeufer/aa-forum/blob/master/README.md"
-Donations = "https://ko-fi.com/ppfeufer"
-Homepage = "https://github.com/ppfeufer/aa-forum"
-Source = "https://github.com/ppfeufer/aa-forum.git"
-Tracker = "https://github.com/ppfeufer/aa-forum/issues"
+urls.Changelog = "https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md"
+urls.Documentation = "https://github.com/ppfeufer/aa-forum/blob/master/README.md"
+urls.Donations = "https://ko-fi.com/ppfeufer"
+urls.Homepage = "https://github.com/ppfeufer/aa-forum"
+urls.Source = "https://github.com/ppfeufer/aa-forum.git"
+urls.Tracker = "https://github.com/ppfeufer/aa-forum/issues"
 
 [tool.hatch.build]
 include = [
