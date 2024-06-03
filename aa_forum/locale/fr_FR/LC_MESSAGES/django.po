@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-27 07:15+0200\n"
-"PO-Revision-Date: 2024-05-10 14:06+0000\n"
+"PO-Revision-Date: 2024-05-28 05:27+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: French <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/fr/>\n"
+"Language-Team: French <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/fr/>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.5.3\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #: aa_forum/__init__.py:9 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -655,7 +655,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/partials/administration/settings-form.html:21
 #: aa_forum/templates/aa_forum/partials/profile/form.html:22
 msgid "Submit"
-msgstr ""
+msgstr "Soumettre"
 
 #: aa_forum/templates/aa_forum/partials/breadcrumb.html:6
 #: aa_forum/templates/aa_forum/partials/menu/menu-user.html:7
@@ -774,7 +774,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/partials/search/pagination.html:9
 #: aa_forum/templates/aa_forum/partials/search/pagination.html:38
 msgid "First"
-msgstr ""
+msgstr "Premier"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:20
 #: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:24
@@ -792,7 +792,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/partials/search/pagination.html:20
 #: aa_forum/templates/aa_forum/partials/search/pagination.html:42
 msgid "Previous"
-msgstr ""
+msgstr "Précèdent"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:63
 #: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:74
@@ -805,7 +805,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/partials/search/pagination.html:59
 #: aa_forum/templates/aa_forum/partials/search/pagination.html:70
 msgid "Next"
-msgstr ""
+msgstr "Suivant"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:69
 #: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:78
@@ -818,7 +818,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/partials/search/pagination.html:65
 #: aa_forum/templates/aa_forum/partials/search/pagination.html:74
 msgid "Last"
-msgstr ""
+msgstr "Dernier"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/topic.html:28
 msgid "Go to first unread message"
@@ -972,7 +972,7 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/search/search-form.html:13
 msgid "Search …"
-msgstr ""
+msgstr "Recherche …"
 
 #: aa_forum/templates/aa_forum/partials/widgets/unread-topics.html:5
 msgid "Forum: Unread topics"

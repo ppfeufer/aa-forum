@@ -11,16 +11,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-27 07:15+0200\n"
-"PO-Revision-Date: 2024-05-10 14:06+0000\n"
+"PO-Revision-Date: 2024-05-28 05:27+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/de/>\n"
+"Language-Team: German <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.3\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #: aa_forum/__init__.py:9 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -897,10 +897,8 @@ msgid "Last"
 msgstr "Letzter"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/topic.html:28
-#, fuzzy
-#| msgid "Go to last message"
 msgid "Go to first unread message"
-msgstr "Gehe zum letzten Beitrag"
+msgstr "Gehe zur ersten ungelesenen Nachricht"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/topic.html:38
 msgid "Topic is always on top"
