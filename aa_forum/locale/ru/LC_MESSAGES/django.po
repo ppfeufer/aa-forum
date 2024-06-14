@@ -4,22 +4,23 @@
 # "H. Peter Pfeufer" <info@ppfeufer.de>, 2023, 2024.
 # Nikolay <nick.postnikov@gmail.com>, 2023, 2024.
 # Max <mark25@inbox.ru>, 2023, 2024.
+# Roycce_ <malyasov.roma@mail.ru>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-27 07:15+0200\n"
-"PO-Revision-Date: 2024-05-10 14:06+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
-"Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-"
-"apps/aa-forum/ru/>\n"
+"PO-Revision-Date: 2024-06-07 13:28+0000\n"
+"Last-Translator: Roycce_ <malyasov.roma@mail.ru>\n"
+"Language-Team: Russian <https://weblate.ppfeufer.de/projects/"
+"alliance-auth-apps/aa-forum/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : (n%10==1 && n%100!=11 ? 0 : "
 "n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.5.3\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #: aa_forum/__init__.py:9 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -60,7 +61,7 @@ msgstr "Тема"
 #: aa_forum/forms.py:145 aa_forum/forms.py:422 aa_forum/forms.py:665
 #: aa_forum/forms.py:730
 msgid "You have forgotten the message!"
-msgstr ""
+msgstr "Вы забыли о сообщении!"
 
 #: aa_forum/forms.py:190 aa_forum/forms.py:228 aa_forum/forms.py:249
 msgid "Name"
@@ -168,24 +169,23 @@ msgstr ""
 "ограничение работает только для «Досок оповещений», см. настройку выше.)"
 
 #: aa_forum/forms.py:362
-#, fuzzy
-#| msgid "Lock/close topic"
 msgid "Close topic"
-msgstr "Заблокировать/закрыть тему"
+msgstr "Закрыть тему"
 
 #: aa_forum/forms.py:364
 msgid "If checked, this topic will be closed after posting this message."
 msgstr ""
+"Если выбрано, то после публикации этого сообщения эта тема будет закрыта."
 
 #: aa_forum/forms.py:370
-#, fuzzy
-#| msgid "Unlock/re-open topic"
 msgid "Reopen topic"
-msgstr "Разблокировать/открыть тему"
+msgstr "Открыть тему"
 
 #: aa_forum/forms.py:372
 msgid "If checked, this topic will be reopened after posting this message."
 msgstr ""
+"Если выбрано, то эта тема будет вновь открыта после публикации этого "
+"сообщения."
 
 #: aa_forum/forms.py:409 aa_forum/forms.py:652 aa_forum/forms.py:717
 msgid "Message"
@@ -229,13 +229,15 @@ msgstr ""
 
 #: aa_forum/forms.py:475
 msgid "Show unread topics as widget on the dashboard"
-msgstr ""
+msgstr "Показывать непрочитанные темы в виде виджета на панели мониторинга"
 
 #: aa_forum/forms.py:478
 msgid ""
 "Activating this setting will ad a widget to your dashboard that shows unread "
 "topics in the forum."
 msgstr ""
+"Активация этого параметра приведет к появлению на вашей панели мониторинга "
+"виджета, отображающего непрочитанные темы на форуме."
 
 #: aa_forum/forms.py:507
 msgid "Signature"
@@ -872,10 +874,8 @@ msgid "Last"
 msgstr "Последний"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/topic.html:28
-#, fuzzy
-#| msgid "Go to last message"
 msgid "Go to first unread message"
-msgstr "Перейти к последнему сообщению"
+msgstr "Перейти к первому непрочитанному сообщению"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/topic.html:38
 msgid "Topic is always on top"
@@ -1030,10 +1030,8 @@ msgid "Search …"
 msgstr "Поиск…"
 
 #: aa_forum/templates/aa_forum/partials/widgets/unread-topics.html:5
-#, fuzzy
-#| msgid "Unread topics"
 msgid "Forum: Unread topics"
-msgstr "Непрочитанные темы"
+msgstr "Форум: Непрочитанные темы"
 
 #: aa_forum/templates/aa_forum/view/administration/categories-and-boards.html:6
 msgid "Administration (Categories and boards)"
