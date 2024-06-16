@@ -2,9 +2,6 @@
 Forum views
 """
 
-# Standard Library
-from typing import Optional
-
 # Django
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -645,7 +642,7 @@ def topic_modify(
 
 def _topic_from_slugs(
     request: WSGIRequest, category_slug: str, board_slug: str, topic_slug: str
-) -> Optional[Topic]:
+) -> Topic | None:
     """
     Helper function to get a topic from slugs
 
@@ -1277,7 +1274,7 @@ def _message_from_slugs(
     board_slug: str,
     topic_slug: str,
     message_id: int,
-) -> Optional[Message]:
+) -> Message | None:
     """
     Helper function to get a message from slugs
 

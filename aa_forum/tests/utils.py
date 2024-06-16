@@ -6,7 +6,6 @@ Helper for our tests
 import datetime as dt
 import random
 import re
-from typing import List
 from unittest.mock import patch
 
 # Third Party
@@ -44,7 +43,7 @@ def create_fake_user(
     corporation_id: int = None,
     corporation_name: str = None,
     corporation_ticker: str = None,
-    permissions: List[str] = None,
+    permissions: list[str] = None,
     **kwargs,
 ) -> User:
     """
@@ -118,7 +117,7 @@ def create_fake_message(topic: Topic, user: User):
     )
 
 
-def create_fake_messages(topic: Topic, amount) -> List[Message]:
+def create_fake_messages(topic: Topic, amount) -> list[Message]:
     """
     Create a given number of fake messages in a given topic.
 
