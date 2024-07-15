@@ -35,6 +35,12 @@ Section Order:
 ### Security
 -->
 
+## \[2.4.1\] - 2024-07-15
+
+### Fixed
+
+- Dependency to `allianceauth`
+
 ## \[2.4.0\] - 2024-07-15
 
 ### Fixed
