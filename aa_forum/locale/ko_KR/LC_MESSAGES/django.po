@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-27 07:15+0200\n"
+"POT-Creation-Date: 2024-07-15 15:11+0200\n"
 "PO-Revision-Date: 2024-05-10 14:06+0000\n"
 "Last-Translator: Rodpold Shard <rodpold@gmail.com>\n"
 "Language-Team: Korean <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -1109,129 +1109,129 @@ msgstr ""
 msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:232
+#: aa_forum/views/forum.py:229
 msgid ""
 "<h4>Error!</h4><p>The board you were trying to visit does either not exist, "
 "or you don't have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:293
+#: aa_forum/views/forum.py:290
 msgid ""
 "<h4>Error!</h4><p>The category you were trying to post in does not exist.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:320
+#: aa_forum/views/forum.py:317
 msgid ""
 "<h4>Error!</h4><p>The board you were trying to post in does either not "
 "exist, or you don't have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:340
+#: aa_forum/views/forum.py:337
 msgid ""
 "<h4>Error!</h4><p>The board you were trying to post in is an announcement "
 "board and you don't have the permissions to start a topic there.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:399
+#: aa_forum/views/forum.py:396
 msgid ""
 "<h4>Error!</h4><p>Either subject or message is missing. Please make sure you "
 "enter both fields, as both fields are mandatory.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:461 aa_forum/views/forum.py:706
+#: aa_forum/views/forum.py:458 aa_forum/views/forum.py:703
 msgid ""
 "<h4>Error!</h4><p>The topic you were trying to view does not exist or you do "
 "not have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:563
+#: aa_forum/views/forum.py:560
 msgid ""
 "<h4>Error!</h4><p>The topic you were trying to modify does not exist or you "
 "do not have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:585
+#: aa_forum/views/forum.py:582
 msgid "<h4>Error!</h4><p>You are not allowed to modify this topic!</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:617
+#: aa_forum/views/forum.py:614
 msgid "<h4>Success!</h4><p>The topic subject has been updated.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:845
+#: aa_forum/views/forum.py:842
 msgid ""
 "<h4>Error!</h4><p>The topic you were trying to reply does not exist or you "
 "do not have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:922
+#: aa_forum/views/forum.py:919
 msgid "<h4>Error!</h4><p>Message field is mandatory and cannot be empty.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:931
+#: aa_forum/views/forum.py:928
 msgid "<h4>Error!</h4><p>Something went wrong, please try again.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:972
+#: aa_forum/views/forum.py:969
 #, python-brace-format
 msgid ""
 "<h4>Success!</h4><p>Topic \"{current_topic}\" has been unlocked/re-opened.</"
 "p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:986
+#: aa_forum/views/forum.py:983
 #, python-brace-format
 msgid ""
 "<h4>Success!</h4><p>Topic \"{current_topic}\" has been locked/closed.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1030
+#: aa_forum/views/forum.py:1027
 #, python-brace-format
 msgid ""
 "<h4>Success!</h4><p>Topic \"{curent_topic}\" is no longer \"sticky\".</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1044
+#: aa_forum/views/forum.py:1041
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{curent_topic}\" is now \"sticky\".</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1082
+#: aa_forum/views/forum.py:1079
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{topic__subject}\" removed.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1124
+#: aa_forum/views/forum.py:1121
 msgid "<h4>Error!</h4><p>The message doesn't exist.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1174
+#: aa_forum/views/forum.py:1171
 msgid ""
 "<h4>Error!</h4><p>The message you were trying to modify does either not "
 "exist, or you don't have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1197
+#: aa_forum/views/forum.py:1194
 msgid "<h4>Error!</h4><p>You are not allowed to modify this message!</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1224
+#: aa_forum/views/forum.py:1221
 msgid "<h4>Success!</h4><p>The message has been updated.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1247
+#: aa_forum/views/forum.py:1244
 msgid "<h4>Error!</h4><p>Mandatory form field is empty.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1345
+#: aa_forum/views/forum.py:1342
 msgid "<h4>Error!</h4><p>You are not allowed to delete this message!</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1375
+#: aa_forum/views/forum.py:1372
 msgid "<h4>Success!</h4><p>The message has been deleted.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1400
+#: aa_forum/views/forum.py:1397
 msgid ""
 "<h4>Success!</h4><p>The message has been deleted.</p><p>This was the topics "
 "opening post, so the topic has been deleted as well.</p>"

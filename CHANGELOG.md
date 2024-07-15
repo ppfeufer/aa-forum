@@ -35,9 +35,15 @@ Section Order:
 ### Security
 -->
 
+## \[2.4.0\] - 2024-07-15
+
 ### Fixed
 
 - Dashboard widget Bootstrap classes
+
+### Changed
+
+- Russian translation updated
 
 ### Removed
 
