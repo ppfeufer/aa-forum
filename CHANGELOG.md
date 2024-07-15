@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Fixed
+
+- Dashboard widget Bootstrap classes
+
 ### Removed
 
 - Support for Python 3.8 and Python 3.9
