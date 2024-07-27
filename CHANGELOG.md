@@ -35,6 +35,16 @@ Section Order:
 ### Security
 -->
 
+## \[2.5.0\] - 2024-07-27
+
+### Added
+
+- Prepared Czech translation for when Alliance Auth supports it
+
+### Changed
+
+- Japanese translation improved
+
 ## \[2.4.1\] - 2024-07-15
 
 ### Fixed
