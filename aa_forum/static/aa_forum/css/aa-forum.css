@@ -421,6 +421,30 @@
     }
 }
 
+/* SVG icons
+------------------------------------------------------------------------------------- */
+@media all {
+    /* Post icon */
+    .aa-forum svg.svg-icon-post {
+        fill: rgb(195 195 195);
+    }
+
+    /* Post new icon */
+    .aa-forum svg.svg-icon-post-new {
+        fill: rgb(103 103 103);
+    }
+
+    /* Darkly theme post icon */
+    html[data-theme="darkly"] .aa-forum svg.svg-icon-post {
+        fill: rgb(103 103 103);
+    }
+
+    /* Darkly theme post new icon */
+    html[data-theme="darkly"] .aa-forum svg.svg-icon-post-new {
+        fill: rgb(195 195 195);
+    }
+}
+
 /* Dashboard widget
 ------------------------------------------------------------------------------------- */
 @media all {

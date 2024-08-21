@@ -35,6 +35,11 @@ Section Order:
 ### Security
 -->
 
+### Changed
+
+- Fill the SVG icons via CSS instead of using the `fill` attribute. This allows for
+  easier theming and better compatibility with dark mode.
+
 ## \[2.5.0\] - 2024-07-27
 
 ### Added

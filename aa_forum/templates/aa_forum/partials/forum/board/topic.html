@@ -6,12 +6,12 @@
     <div class="aa-forum-topic p-3">
         <div class="aa-forum-topic-image">
             {% if topic.has_unread_messages %}
-                <svg id="aa-forum-unread-in-{{ board.id }}">
-                    <use href="#aa-forum-icon-post-new"></use>
+                <svg id="aa-forum-unread-in-{{ board.id }}" class="svg-icon-post-new">
+                    <use xlink:href="#aa-forum-icon-post"></use>
                 </svg>
             {% else %}
-                <svg>
-                    <use href="#aa-forum-icon-post"></use>
+                <svg class="svg-icon-post">
+                    <use xlink:href="#aa-forum-icon-post"></use>
                 </svg>
             {% endif %}
         </div>
