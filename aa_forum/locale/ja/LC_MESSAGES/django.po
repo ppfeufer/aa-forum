@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-15 15:11+0200\n"
-"PO-Revision-Date: 2024-08-05 10:10+0000\n"
-"Last-Translator: Anata_no_Usiro <yt23542354m@gmail.com>\n"
+"PO-Revision-Date: 2024-08-12 14:23+0000\n"
+"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Japanese <https://weblate.ppfeufer.de/projects/"
 "alliance-auth-apps/aa-forum/ja/>\n"
 "Language: ja\n"
@@ -725,7 +725,7 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/form/required-field-hint.html:6
 msgid "Fields marked with an asterisk (*) are mandatory"
-msgstr ""
+msgstr "アスタリスクの付いている項目は必須です"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board-index.html:27
 msgid "No topics have been started in this board …"
