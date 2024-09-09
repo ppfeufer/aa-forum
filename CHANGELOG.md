@@ -41,7 +41,7 @@ Section Order:
 
 - The minimum required AA version is now 4.3.0
 - Fill the SVG icons via CSS instead of using the `fill` attribute. This allows for
-  easier theming and better compatibility with dark mode.
+  easier theming and better compatibility with darker themes
 - Japanese translation improved
 
 ## \[2.5.0\] - 2024-07-27
