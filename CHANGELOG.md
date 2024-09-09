@@ -35,10 +35,14 @@ Section Order:
 ### Security
 -->
 
+## \[2.6.0\] - 2024-09-09
+
 ### Changed
 
+- The minimum required AA version is now 4.3.0
 - Fill the SVG icons via CSS instead of using the `fill` attribute. This allows for
   easier theming and better compatibility with dark mode.
+- Japanese translation improved
 
 ## \[2.5.0\] - 2024-07-27
 
