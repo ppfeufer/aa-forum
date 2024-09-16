@@ -35,6 +35,14 @@ Section Order:
 ### Security
 -->
 
+## \[2.7.0\] - 2024-09-16
+
+### Changed
+
+- Dependencies updated
+  - `allianceauth`>=4.3.1
+- Lingua codes updated to match Alliance Auth v4.3.1
+
 ## \[2.6.0\] - 2024-09-09
 
 ### Changed

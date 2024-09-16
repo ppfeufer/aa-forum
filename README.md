@@ -147,7 +147,7 @@ INSTALLED_APPS += [
 # Django CKEditor 5 Configuration
 if "django_ckeditor_5" in INSTALLED_APPS:
     # CKEditor 5 File Upload Configuration
-    # Permissions not yet implemented by Django CKEditor 5
+    # Permissions not yet implemented by Django CKEditor 5, but it's coming …
     # CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
     #    "authenticated"  # Possible values: "staff", "authenticated", "any"
     # )
