@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-15 15:11+0200\n"
+"POT-Creation-Date: 2024-09-19 19:41+0200\n"
 "PO-Revision-Date: 2024-05-10 14:06+0000\n"
 "Last-Translator: Rodpold Shard <rodpold@gmail.com>\n"
 "Language-Team: Korean <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -266,63 +266,63 @@ msgstr ""
 msgid "Hello there …"
 msgstr ""
 
-#: aa_forum/models.py:139
+#: aa_forum/models.py:98
 msgid "AA-Forum"
 msgstr ""
 
-#: aa_forum/models.py:143
+#: aa_forum/models.py:102
 msgid "Can access the AA-Forum module"
 msgstr ""
 
-#: aa_forum/models.py:146
+#: aa_forum/models.py:105
 msgid "Can manage the AA-Forum module (Category, topics and messages)"
 msgstr ""
 
-#: aa_forum/models.py:193
+#: aa_forum/models.py:152
 msgid "category"
 msgstr ""
 
-#: aa_forum/models.py:194
+#: aa_forum/models.py:153
 msgid "categories"
 msgstr ""
 
-#: aa_forum/models.py:248
+#: aa_forum/models.py:207
 msgid ""
 "Use this Discord webhook for replies as well? When activated every reply to "
 "any topic in this board will be posted to the defined Discord channel. "
 "(Child boards are excluded) Chose wisely! (Default: NO)"
 msgstr ""
 
-#: aa_forum/models.py:266
+#: aa_forum/models.py:225
 msgid ""
 "User in at least one of these groups have access to this board. If no groups "
 "are selected, everyone with access to the forum has also access to this "
 "board."
 msgstr ""
 
-#: aa_forum/models.py:274
+#: aa_forum/models.py:233
 msgid ""
 "Mark this board as an \"Announcement Board\", meaning that only certain "
 "selected groups can start new topics. All others who have access to this "
 "board will still be able to discuss in the topics though. (Default: NO)"
 msgstr ""
 
-#: aa_forum/models.py:285
+#: aa_forum/models.py:244
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
 "\"Announcement Boards\". If no group is selected, only forum admins can do "
 "so."
 msgstr ""
 
-#: aa_forum/models.py:321
+#: aa_forum/models.py:280
 msgid "board"
 msgstr ""
 
-#: aa_forum/models.py:322
+#: aa_forum/models.py:281
 msgid "boards"
 msgstr ""
 
-#: aa_forum/models.py:394
+#: aa_forum/models.py:353
 #, python-brace-format
 msgid ""
 "<h4>Warning!</h4><p>There is already a topic with the exact same subject in "
@@ -330,63 +330,63 @@ msgid ""
 "subject}</a></p>"
 msgstr ""
 
-#: aa_forum/models.py:623
+#: aa_forum/models.py:582
 msgid "topic"
 msgstr ""
 
-#: aa_forum/models.py:624
+#: aa_forum/models.py:583
 msgid "topics"
 msgstr ""
 
-#: aa_forum/models.py:803
+#: aa_forum/models.py:762
 msgid "message"
 msgstr ""
 
-#: aa_forum/models.py:804
+#: aa_forum/models.py:763
 msgid "messages"
 msgstr ""
 
-#: aa_forum/models.py:946
+#: aa_forum/models.py:905
 msgid "personal message"
 msgstr ""
 
-#: aa_forum/models.py:947
+#: aa_forum/models.py:906
 msgid "personal messages"
 msgstr ""
 
-#: aa_forum/models.py:1001
+#: aa_forum/models.py:960
 msgid "Messages per page"
 msgstr ""
 
-#: aa_forum/models.py:1002
+#: aa_forum/models.py:961
 msgid "Topics per page"
 msgstr ""
 
-#: aa_forum/models.py:1003
+#: aa_forum/models.py:962
 msgid "User signature length"
 msgstr ""
 
-#: aa_forum/models.py:1008
+#: aa_forum/models.py:967
 msgid "Maximum number of messages per page in the topic view"
 msgstr ""
 
-#: aa_forum/models.py:1013
+#: aa_forum/models.py:972
 msgid "Maximum number of topics per page in the board view"
 msgstr ""
 
-#: aa_forum/models.py:1018
+#: aa_forum/models.py:977
 msgid "Maximum length of a users signature"
 msgstr ""
 
-#: aa_forum/models.py:1029
+#: aa_forum/models.py:988
 msgid "setting"
 msgstr "설정"
 
-#: aa_forum/models.py:1030
+#: aa_forum/models.py:989
 msgid "settings"
 msgstr "설정"
 
-#: aa_forum/models.py:1040
+#: aa_forum/models.py:999
 #: aa_forum/templates/aa_forum/partials/administration/settings-form.html:7
 #: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:19
 #, fuzzy
@@ -394,15 +394,15 @@ msgstr "설정"
 msgid "Forum settings"
 msgstr "설정"
 
-#: aa_forum/models.py:1067
+#: aa_forum/models.py:1026
 msgid "user profile"
 msgstr ""
 
-#: aa_forum/models.py:1068
+#: aa_forum/models.py:1027
 msgid "user profiles"
 msgstr ""
 
-#: aa_forum/models.py:1078
+#: aa_forum/models.py:1037
 msgid "Forum user profile"
 msgstr ""
 
