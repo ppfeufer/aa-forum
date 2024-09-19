@@ -2,65 +2,15 @@
 AA Forum Admin
 """
 
+# Third Party
+from solo.admin import SingletonModelAdmin
+
 # Django
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 # AA Forum
 from aa_forum.models import Board, Category, Setting, Topic, UserProfile
-
-
-class SingletonModelAdmin(admin.ModelAdmin):
-    """
-    Singleton Model Admin
-    Prevents Django admin users deleting the singleton or adding extra rows.
-    """
-
-    actions = None  # Removes the default delete action.
-
-    def has_add_permission(self, request):  # pylint: disable=unused-argument
-        """
-        Has "add" permissions
-
-        :param request:
-        :type request:
-        :return:
-        :rtype:
-        """
-
-        return self.model.objects.all().count() == 0
-
-    def has_change_permission(
-        self, request, obj=None  # pylint: disable=unused-argument
-    ):
-        """
-        Has "change" permissions
-
-        :param request:
-        :type request:
-        :param obj:
-        :type obj:
-        :return:
-        :rtype:
-        """
-
-        return True
-
-    def has_delete_permission(
-        self, request, obj=None  # pylint: disable=unused-argument
-    ):
-        """
-        Has "delete" permissions
-
-        :param request:
-        :type request:
-        :param obj:
-        :type obj:
-        :return:
-        :rtype:
-        """
-
-        return False
 
 
 class BaseReadOnlyAdminMixin:
