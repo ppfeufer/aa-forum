@@ -7,6 +7,7 @@ import math
 
 # Third Party
 import unidecode
+from solo.models import SingletonModel
 
 # Django
 from django.contrib.auth.models import Group, Permission, User
@@ -82,48 +83,6 @@ def _generate_slug(calling_model: models.Model, name: str) -> str:
         )
 
     return slug_name
-
-
-class SingletonModel(models.Model):
-    """
-    SingletonModel
-    """
-
-    class Meta:  # pylint: disable=too-few-public-methods
-        """
-        Model meta definitions
-        """
-
-        abstract = True
-
-    def save(self, *args, **kwargs):
-        """
-        "Save" action
-
-        :param args:
-        :type args:
-        :param kwargs:
-        :type kwargs:
-        :return:
-        :rtype:
-        """
-
-        self.pk = 1
-        super().save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        """
-        "Delete" action
-
-        :param args:
-        :type args:
-        :param kwargs:
-        :type kwargs:
-        :return:
-        :rtype:
-        """
-
-        pass  # pylint: disable=unnecessary-pass
 
 
 class General(models.Model):
