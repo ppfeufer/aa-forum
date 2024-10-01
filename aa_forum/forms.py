@@ -106,17 +106,10 @@ class SpecialModelMultipleChoiceField(forms.ModelMultipleChoiceField):
     queryset = property(_get_queryset, _set_queryset)
 
 
-class NewTopicForm(forms.Form):
+class NewTopicForm(ModelForm):
     """
     New topic form
     """
-
-    subject = forms.CharField(
-        required=True,
-        label=get_mandatory_form_label_text(text=_("Subject")),
-        max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _("Subject")}),
-    )
 
     message = forms.CharField(
         widget=CKEditor5Widget(
@@ -129,7 +122,21 @@ class NewTopicForm(forms.Form):
             },
         ),
         required=False,  # We have to set this to False, otherwise CKEditor5 will not work
+        label=get_mandatory_form_label_text(text=_("Message")),
     )
+
+    class Meta:  # pylint: disable=too-few-public-methods
+        """
+        Meta definitions
+        """
+
+        model = Topic
+
+        fields = ["subject", "message"]
+        labels = {"subject": get_mandatory_form_label_text(text=_("Subject"))}
+        widgets = {
+            "subject": forms.TextInput(attrs={"placeholder": _("Subject")}),
+        }
 
     def clean(self):
         """
@@ -164,20 +171,18 @@ class EditTopicForm(ModelForm):
     Edit category form
     """
 
-    subject = forms.CharField(
-        required=True,
-        label=get_mandatory_form_label_text(text=_("Subject")),
-        max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _("Subject")}),
-    )
-
     class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
 
         model = Topic
+
         fields = ["subject"]
+        labels = {"subject": get_mandatory_form_label_text(text=_("Subject"))}
+        widgets = {
+            "subject": forms.TextInput(attrs={"placeholder": _("Subject")}),
+        }
 
 
 class NewCategoryForm(ModelForm):
@@ -185,12 +190,7 @@ class NewCategoryForm(ModelForm):
     New category form
     """
 
-    name = forms.CharField(
-        required=True,
-        label=get_mandatory_form_label_text(text=_("Name")),
-        max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _("Category name")}),
-    )
+    # Non-model field, so we have to define it here and not in the Meta class.
     boards = forms.CharField(
         required=False,
         label=_("Boards"),
@@ -215,7 +215,10 @@ class NewCategoryForm(ModelForm):
         """
 
         model = Category
+
         fields = ["name", "boards"]
+        labels = {"name": get_mandatory_form_label_text(text=_("Name"))}
+        widgets = {"name": forms.TextInput(attrs={"placeholder": _("Category name")})}
 
 
 class EditCategoryForm(ModelForm):
@@ -223,102 +226,22 @@ class EditCategoryForm(ModelForm):
     Edit category form
     """
 
-    name = forms.CharField(
-        required=True,
-        label=get_mandatory_form_label_text(text=_("Name")),
-        max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _("Category name")}),
-    )
-
     class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
 
         model = Category
+
         fields = ["name"]
+        labels = {"name": get_mandatory_form_label_text(text=_("Name"))}
+        widgets = {"name": forms.TextInput(attrs={"placeholder": _("Category name")})}
 
 
 class EditBoardForm(ModelForm):
     """
     Edit board form
     """
-
-    name = forms.CharField(
-        required=True,
-        label=get_mandatory_form_label_text(text=_("Name")),
-        max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _("Board name")}),
-    )
-    description = forms.CharField(
-        required=False,
-        label=_("Description"),
-        widget=forms.Textarea(
-            attrs={
-                "rows": 10,
-                "cols": 20,
-                "input_type": "textarea",
-                "placeholder": _("Board description (optional)"),
-            }
-        ),
-    )
-    groups = SpecialModelMultipleChoiceField(
-        required=False,
-        label=_("Group restrictions"),
-        help_text=_(
-            "This will restrict access to this board to the selected groups. If no "
-            "groups are selected, everyone who can access the forum can also access "
-            "this board. (This setting is optional)"
-        ),
-        queryset=Group.objects.all(),
-    )
-    discord_webhook = forms.CharField(
-        required=False,
-        label=_("Discord webhook (optional)"),
-        help_text=_(
-            "Discord webhook URL for the channel to post about new topics in this "
-            "board. (This setting is optional)"
-        ),
-        max_length=254,
-        widget=forms.TextInput(
-            attrs={
-                "placeholder": "https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # pylint: disable=line-too-long
-            }
-        ),
-    )
-    use_webhook_for_replies = forms.BooleanField(
-        initial=False,
-        required=False,
-        label=_("Use this Discord webhook for replies as well?"),
-        help_text=_(
-            "When activated every reply to any topic in this board will be "
-            "posted to the defined Discord channel. (Child boards are excluded) "
-            "Chose wisely! (Default: NO)"
-        ),
-    )
-    is_announcement_board = forms.BooleanField(
-        initial=False,
-        required=False,
-        label=_('Mark board as "Announcement Board"'),
-        help_text=_(
-            'Mark this board as an "Announcement Board", meaning that only certain '
-            "selected groups can start new topics. All others who have access to this "
-            "board will still be able to discuss in the topics though. This setting "
-            "will not be inherited to child boards. (Default: NO)"
-        ),
-    )
-    announcement_groups = SpecialModelMultipleChoiceField(
-        required=False,
-        label=_('Start topic restrictions for "Announcement Boards"'),
-        help_text=_(
-            "User in at least one of the selected groups will be able to start topics "
-            'in "Announcement Boards". If no group is selected, only forum admins can '
-            "do so. This setting will not be inherited to child boards. (Hint: These "
-            "restrictions only take effect when a board is marked as "
-            '"Announcement Board", see checkbox above.)'
-        ),
-        queryset=Group.objects.all(),
-    )
 
     def __init__(self, *args, **kwargs):
         """
@@ -341,6 +264,7 @@ class EditBoardForm(ModelForm):
         """
 
         model = Board
+
         fields = [
             "name",
             "description",
@@ -350,6 +274,65 @@ class EditBoardForm(ModelForm):
             "is_announcement_board",
             "announcement_groups",
         ]
+        help_texts = {
+            "description": _("Description of the board."),
+            "groups": _(
+                "This will restrict access to this board to the selected groups. If no "
+                "groups are selected, everyone who can access the forum can also access "
+                "this board."
+            ),
+            "discord_webhook": _(
+                "Discord webhook URL for the channel to post about new topics in this "
+                "board."
+            ),
+            "use_webhook_for_replies": _(
+                "When activated every reply to any topic in this board will be "
+                "posted to the defined Discord channel."
+            ),
+            "is_announcement_board": _(
+                'Mark this board as an "Announcement Board", meaning that only certain '
+                "selected groups can start new topics. All others who have access to this "
+                "board will still be able to discuss in the topics though."
+            ),
+            "announcement_groups": _(
+                "User in at least one of the selected groups will be able to start topics "
+                'in "Announcement Boards". If no group is selected, only forum admins can '
+                "do so."
+            ),
+        }
+        labels = {
+            "name": get_mandatory_form_label_text(text=_("Name")),
+            "description": _("Description"),
+            "groups": _("Group restrictions"),
+            "discord_webhook": _("Discord webhook (optional)"),
+            "use_webhook_for_replies": _(
+                "Use this Discord webhook for replies as well?"
+            ),
+            "is_announcement_board": _('Mark board as "Announcement Board"'),
+            "announcement_groups": _(
+                'Start topic restrictions for "Announcement Boards"'
+            ),
+        }
+        widgets = {
+            "name": forms.TextInput(attrs={"placeholder": _("Board name")}),
+            "description": forms.Textarea(
+                attrs={
+                    "rows": 10,
+                    "cols": 20,
+                    "input_type": "textarea",
+                    "placeholder": _("Board description (optional)"),
+                }
+            ),
+            "discord_webhook": forms.TextInput(
+                attrs={
+                    "placeholder": "https://discord.com/api/webhooks/xxxxxxxxxxxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # pylint: disable=line-too-long
+                }
+            ),
+        }
+        querysets = {
+            "groups": Group.objects.none(),
+            "announcement_groups": Group.objects.none(),
+        }
 
 
 class EditMessageForm(ModelForm):
@@ -357,6 +340,7 @@ class EditMessageForm(ModelForm):
     Edit message form
     """
 
+    # Non-model fields, so we have to define them here and not in the Meta class.
     close_topic = forms.BooleanField(
         required=False,
         label=_("Close topic"),
@@ -394,18 +378,9 @@ class EditMessageForm(ModelForm):
         """
 
         model = Message
+
         fields = ["message", "close_topic", "reopen_topic"]
-        widgets = {
-            "message": CKEditor5Widget(
-                config_name="extends",
-                attrs={
-                    "class": "aa-forum-ckeditor django_ckeditor_5",
-                    "rows": 10,
-                    "cols": 20,
-                    "style": "width: 100%;",
-                },
-            )
-        }
+        help_texts = {"message": _("Your message.")}
         labels = {"message": get_mandatory_form_label_text(text=_("Message"))}
 
     def clean(self):
@@ -438,47 +413,8 @@ class EditMessageForm(ModelForm):
 
 class UserProfileForm(ModelForm):
     """
-    Edit message form
+    Userprofile form
     """
-
-    website_title = forms.CharField(
-        required=False,
-        label=_("Website title"),
-        max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _("e.g.: My Homepage")}),
-        help_text=_("Your website's title."),
-    )
-    website_url = forms.CharField(
-        required=False,
-        label=_("Website URL"),
-        max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": "https://example.com"}),
-        help_text=_(
-            "Your website's URL. (Don't forget to also set a title for your website, "
-            "otherwise this field will be ignored.)"
-        ),
-    )
-    discord_dm_on_new_personal_message = forms.BooleanField(
-        required=False,
-        label=_("PM me on Discord when I get a new personal message"),
-        help_text=(
-            _(
-                "Information: There is currently no module installed that can handle "
-                "Discord direct messages. Have a chat with your IT guys to remedy this."
-            )
-            if discord_messaging_proxy_available() is False
-            else ""
-        ),
-    )
-    show_unread_topics_dashboard_widget = forms.BooleanField(
-        required=False,
-        label=_("Show unread topics as widget on the dashboard"),
-        help_text=(
-            _(
-                "Activating this setting will ad a widget to your dashboard that shows unread topics in the forum."  # pylint: disable=line-too-long
-            )
-        ),
-    )
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -486,6 +422,7 @@ class UserProfileForm(ModelForm):
         """
 
         model = UserProfile
+
         fields = [
             "signature",
             "website_title",
@@ -493,19 +430,52 @@ class UserProfileForm(ModelForm):
             "discord_dm_on_new_personal_message",
             "show_unread_topics_dashboard_widget",
         ]
-        widgets = {
-            "signature": CKEditor5Widget(
-                config_name="extends",
-                attrs={
-                    "class": "aa-forum-ckeditor django_ckeditor_5",
-                    "rows": 10,
-                    "cols": 20,
-                    "style": "width: 100%;",
-                },
-            )
+        help_texts = {
+            "signature": _("Your signature will appear below your posts."),
+            "website_title": _("Your website's title."),
+            "website_url": _(
+                "Your website's URL. (Don't forget to also set a title for your "
+                "website, otherwise this field will be ignored.)"
+            ),
+            "discord_dm_on_new_personal_message": (
+                _(
+                    "Information: There is currently no module installed that can "
+                    "handle Discord direct messages. Have a chat with your IT guys "
+                    "to remedy this."
+                )
+                if discord_messaging_proxy_available() is False
+                else ""
+            ),
+            "show_unread_topics_dashboard_widget": (
+                _(
+                    "Activating this setting will ad a widget to your dashboard that "
+                    "shows unread topics in the forum."
+                )
+            ),
         }
-        labels = {"signature": _("Signature")}
-        help_texts = {"signature": _("Your signature will appear below your posts.")}
+        labels = {
+            "signature": _("Signature"),
+            "website_title": _("Website title"),
+            "website_url": _("Website URL"),
+            "discord_dm_on_new_personal_message": _(
+                "PM me on Discord when I get a new personal message"
+            ),
+            "show_unread_topics_dashboard_widget": _(
+                "Show unread topics as widget on the dashboard"
+            ),
+        }
+        widgets = {
+            "website_title": forms.TextInput(
+                attrs={
+                    "placeholder": _("e.g.: My Homepage"),
+                }
+            ),
+            "website_url": forms.TextInput(
+                attrs={
+                    "placeholder": "https://example.com",
+                }
+            ),
+        }
 
     def clean_signature(self):
         """
@@ -561,62 +531,45 @@ class SettingForm(ModelForm):
     Edit message form
     """
 
-    messages_per_page = forms.IntegerField(
-        required=True,
-        label=get_mandatory_form_label_text(
-            Setting.Field.MESSAGESPERPAGE.label  # pylint: disable=no-member
-        ),
-        help_text=_(
-            "How many messages per page should be displayed in a forum topic? "
-            "(Default: 15)"
-        ),
-    )
-    topics_per_page = forms.IntegerField(
-        required=True,
-        label=get_mandatory_form_label_text(
-            Setting.Field.TOPICSPERPAGE.label  # pylint: disable=no-member
-        ),
-        help_text=_(
-            "How many topics per page should be displayed in a forum category? "
-            "(Default: 10)"
-        ),
-    )
-    user_signature_length = forms.IntegerField(
-        required=True,
-        label=get_mandatory_form_label_text(
-            Setting.Field.USERSIGNATURELENGTH.label  # pylint: disable=no-member
-        ),
-        help_text=_(
-            "How long (Number of characters) is a user's signature allowed to be? "
-            "(Default: 750)"
-        ),
-    )
-
     class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
         """
 
         model = Setting
+
         fields = ["messages_per_page", "topics_per_page", "user_signature_length"]
+        labels = {
+            "messages_per_page": get_mandatory_form_label_text(
+                Setting.Field.MESSAGESPERPAGE.label  # pylint: disable=no-member
+            ),
+            "topics_per_page": get_mandatory_form_label_text(
+                Setting.Field.TOPICSPERPAGE.label  # pylint: disable=no-member
+            ),
+            "user_signature_length": get_mandatory_form_label_text(
+                Setting.Field.USERSIGNATURELENGTH.label  # pylint: disable=no-member
+            ),
+        }
+        help_texts = {
+            "messages_per_page": _(
+                "How many messages per page should be displayed in a forum topic? "
+                "(Default: 15)"
+            ),
+            "topics_per_page": _(
+                "How many topics per page should be displayed in a forum category?"
+                " (Default: 10)"
+            ),
+            "user_signature_length": _(
+                "How long (Number of characters) is a user's signature allowed to be? "
+                "(Default: 750)"
+            ),
+        }
 
 
 class NewPersonalMessageForm(ModelForm):
     """
     New personal message form
     """
-
-    recipient = forms.ModelChoiceField(
-        queryset=User.objects.none(),
-        required=True,
-        label=get_mandatory_form_label_text(text=_("Recipient")),
-    )
-    subject = forms.CharField(
-        required=True,
-        label=get_mandatory_form_label_text(text=_("Subject")),
-        max_length=254,
-        widget=forms.TextInput(attrs={"placeholder": _("Hello there …")}),
-    )
 
     def __init__(self, *args, **kwargs):
         """
@@ -637,19 +590,14 @@ class NewPersonalMessageForm(ModelForm):
         """
 
         model = PersonalMessage
+
         fields = ["recipient", "subject", "message"]
-        widgets = {
-            "message": CKEditor5Widget(
-                config_name="extends",
-                attrs={
-                    "class": "aa-forum-ckeditor django_ckeditor_5",
-                    "rows": 10,
-                    "cols": 20,
-                    "style": "width: 100%;",
-                },
-            )
+        labels = {
+            "message": get_mandatory_form_label_text(text=_("Message")),
+            "recipient": get_mandatory_form_label_text(text=_("Recipient")),
+            "subject": get_mandatory_form_label_text(text=_("Subject")),
         }
-        labels = {"message": get_mandatory_form_label_text(text=_("Message"))}
+        querysets = {"recipient": User.objects.none()}
 
     def clean(self):
         """
@@ -703,17 +651,6 @@ class ReplyPersonalMessageForm(ModelForm):
 
         model = PersonalMessage
         fields = ["message"]
-        widgets = {
-            "message": CKEditor5Widget(
-                config_name="extends",
-                attrs={
-                    "class": "aa-forum-ckeditor django_ckeditor_5",
-                    "rows": 10,
-                    "cols": 20,
-                    "style": "width: 100%;",
-                },
-            )
-        }
         labels = {"message": get_mandatory_form_label_text(text=_("Message"))}
 
     def clean(self):
