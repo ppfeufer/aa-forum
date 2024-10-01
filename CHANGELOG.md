@@ -37,6 +37,7 @@ Section Order:
 
 ### Changed
 
+- Improve oEmbed handling
 - Improve internal forms handling
 - URL config modularized
 
