@@ -208,13 +208,13 @@ class MessageQuerySet(models.QuerySet):
         if user.has_perm(perm="aa_forum.manage_forum"):
             return self
 
-        # If not a forum manager, check if the user has access to the board
+        # If not a forum manager, check if the user has access to the board.
         return self.filter(
             Q(topic__board__groups__in=user.groups.all())
             | Q(topic__board__groups__isnull=True)
         ).distinct()
 
-    def get_from_slugs(  # pylint: disable=too-many-arguments
+    def get_from_slugs(  # pylint: disable=too-many-arguments,too-many-positional-arguments
         self,
         category_slug: str,
         board_slug: str,
