@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Changed
+
+- URL config modularized
+
 ## \[2.8.0\] - 2024-09-19
 
 ### Changed
