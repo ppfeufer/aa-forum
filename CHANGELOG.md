@@ -37,6 +37,7 @@ Section Order:
 
 ### Changed
 
+- Improve internal forms handling
 - URL config modularized
 
 ## \[2.8.0\] - 2024-09-19
