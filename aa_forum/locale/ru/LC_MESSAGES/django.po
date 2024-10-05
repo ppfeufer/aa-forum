@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-05 17:47+0200\n"
+"POT-Creation-Date: 2024-10-05 18:03+0200\n"
 "PO-Revision-Date: 2024-06-07 13:28+0000\n"
 "Last-Translator: Roycce_ <malyasov.roma@mail.ru>\n"
 "Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -51,20 +51,20 @@ msgstr "АА-форум v{__version__}"
 msgid "This field is mandatory"
 msgstr "Обязательное поле"
 
-#: aa_forum/forms.py:125 aa_forum/forms.py:388 aa_forum/forms.py:600
-#: aa_forum/forms.py:658
+#: aa_forum/forms.py:125 aa_forum/forms.py:389 aa_forum/forms.py:601
+#: aa_forum/forms.py:659
 msgid "Message"
 msgstr "Сообщение"
 
 #: aa_forum/forms.py:136 aa_forum/forms.py:138 aa_forum/forms.py:182
-#: aa_forum/forms.py:184 aa_forum/forms.py:602
+#: aa_forum/forms.py:184 aa_forum/forms.py:603
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:25
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:25
 msgid "Subject"
 msgstr "Тема"
 
-#: aa_forum/forms.py:152 aa_forum/forms.py:401 aa_forum/forms.py:617
-#: aa_forum/forms.py:671
+#: aa_forum/forms.py:152 aa_forum/forms.py:402 aa_forum/forms.py:618
+#: aa_forum/forms.py:672
 msgid "You have forgotten the message!"
 msgstr "Вы забыли о сообщении!"
 
@@ -80,7 +80,7 @@ msgstr ""
 "Доски, создаваемые в этой категории (Одна доска в строке). Для досок не "
 "будут установлены ограничения по группам, их нужно добавить отдельно."
 
-#: aa_forum/forms.py:220 aa_forum/forms.py:237 aa_forum/forms.py:308
+#: aa_forum/forms.py:220 aa_forum/forms.py:237 aa_forum/forms.py:309
 msgid "Name"
 msgstr "Название"
 
@@ -88,7 +88,7 @@ msgstr "Название"
 msgid "Category name"
 msgstr "Название категории"
 
-#: aa_forum/forms.py:278 aa_forum/forms.py:327
+#: aa_forum/forms.py:278 aa_forum/forms.py:328
 msgid "Board description (optional)"
 msgstr "Описание доски (не обязательно)"
 
@@ -119,22 +119,17 @@ msgstr ""
 "Discord вебхук URL канала для сообщений о новых темах на доске. (Настройка "
 "не обязательна)"
 
-#: aa_forum/forms.py:289
-#, fuzzy
-#| msgid ""
-#| "Use this Discord webhook for replies as well? When activated every reply "
-#| "to any topic in this board will be posted to the defined Discord channel. "
-#| "(Child boards are excluded) Chose wisely! (Default: NO)"
+#: aa_forum/forms.py:289 aa_forum/models.py:207
 msgid ""
-"When activated every reply to any topic in this board will be posted to the "
-"defined Discord channel. (Child boards are excluded) Chose wisely! (Default: "
-"NO)"
+"Use this Discord webhook for replies as well? When activated every reply to "
+"any topic in this board will be posted to the defined Discord channel. "
+"(Child boards are excluded) Chose wisely! (Default: NO)"
 msgstr ""
 "Использовать данный Discord Webhook для ответов? В случае активации каждый "
 "ответ в любой теме доски будет отправлен в канал Discord. (Дочерние доски не "
 "учитываются) Использовать с умом! (По умолчанию: НЕТ)"
 
-#: aa_forum/forms.py:294
+#: aa_forum/forms.py:295
 msgid ""
 "Mark this board as an \"Announcement Board\", meaning that only certain "
 "selected groups can start new topics. All others who have access to this "
@@ -146,7 +141,7 @@ msgstr ""
 "обсуждениях. Эта настройка не распространяется на дочерние доски. (По "
 "умолчанию: НЕТ)"
 
-#: aa_forum/forms.py:300
+#: aa_forum/forms.py:301
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
 "\"Announcement Boards\". If no group is selected, only forum admins can do "
@@ -159,68 +154,68 @@ msgstr ""
 "Эта настройка не распространяется на дочерние доски. (Подсказка: Это "
 "ограничение работает только для «Досок оповещений», см. настройку выше.)"
 
-#: aa_forum/forms.py:309
+#: aa_forum/forms.py:310
 msgid "Description"
 msgstr "Описание"
 
-#: aa_forum/forms.py:310
+#: aa_forum/forms.py:311
 msgid "Group restrictions"
 msgstr "Ограничения групп"
 
-#: aa_forum/forms.py:311
+#: aa_forum/forms.py:312
 msgid "Discord webhook (optional)"
 msgstr "Discord вебхук (не обязательно)"
 
-#: aa_forum/forms.py:313
+#: aa_forum/forms.py:314
 msgid "Use this Discord webhook for replies as well?"
 msgstr "Использовать этот же Discord вебхук для ответов?"
 
-#: aa_forum/forms.py:315
+#: aa_forum/forms.py:316
 msgid "Mark board as \"Announcement Board\""
 msgstr "Пометить доску как «Доска оповещений»"
 
-#: aa_forum/forms.py:317
+#: aa_forum/forms.py:318
 msgid "Start topic restrictions for \"Announcement Boards\""
 msgstr "Ограничения создания новых тем для «Доски оповещений»"
 
-#: aa_forum/forms.py:321
+#: aa_forum/forms.py:322
 msgid "Board name"
 msgstr "Название доски"
 
-#: aa_forum/forms.py:350
+#: aa_forum/forms.py:351
 msgid "Close topic"
 msgstr "Закрыть тему"
 
-#: aa_forum/forms.py:352
+#: aa_forum/forms.py:353
 msgid "If checked, this topic will be closed after posting this message."
 msgstr ""
 "Если выбрано, то после публикации этого сообщения эта тема будет закрыта."
 
-#: aa_forum/forms.py:358
+#: aa_forum/forms.py:359
 msgid "Reopen topic"
 msgstr "Открыть тему"
 
-#: aa_forum/forms.py:360
+#: aa_forum/forms.py:361
 msgid "If checked, this topic will be reopened after posting this message."
 msgstr ""
 "Если выбрано, то эта тема будет вновь открыта после публикации этого "
 "сообщения."
 
-#: aa_forum/forms.py:387
+#: aa_forum/forms.py:388
 #, fuzzy
 #| msgid "message"
 msgid "Your message."
 msgstr "сообщение"
 
-#: aa_forum/forms.py:438
+#: aa_forum/forms.py:439
 msgid "Your signature will appear below your posts."
 msgstr "Ваша подпись будет отображаться под Вашими сообщениями."
 
-#: aa_forum/forms.py:439
+#: aa_forum/forms.py:440
 msgid "Your website's title."
 msgstr "Заголовок Вашего вебсайта."
 
-#: aa_forum/forms.py:441
+#: aa_forum/forms.py:442
 msgid ""
 "Your website's URL. (Don't forget to also set a title for your website, "
 "otherwise this field will be ignored.)"
@@ -228,7 +223,7 @@ msgstr ""
 "URL Вашего вебсайта. (Не забудьте также указать название, иначе это поле "
 "будет проигнорировано.)"
 
-#: aa_forum/forms.py:446
+#: aa_forum/forms.py:447
 msgid ""
 "Information: There is currently no module installed that can handle Discord "
 "direct messages. Have a chat with your IT guys to remedy this."
@@ -236,7 +231,7 @@ msgstr ""
 "Информация: в настоящее время не установлены модуля для передачи ЛС в "
 "Discord. Обратитесь в IT поддержку."
 
-#: aa_forum/forms.py:455
+#: aa_forum/forms.py:456
 msgid ""
 "Activating this setting will ad a widget to your dashboard that shows unread "
 "topics in the forum."
@@ -244,31 +239,31 @@ msgstr ""
 "Активация этого параметра приведет к появлению на вашей панели мониторинга "
 "виджета, отображающего непрочитанные темы на форуме."
 
-#: aa_forum/forms.py:461
+#: aa_forum/forms.py:462
 msgid "Signature"
 msgstr "Подпись"
 
-#: aa_forum/forms.py:462
+#: aa_forum/forms.py:463
 msgid "Website title"
 msgstr "Заголовок вебсайта"
 
-#: aa_forum/forms.py:463
+#: aa_forum/forms.py:464
 msgid "Website URL"
 msgstr "URL вебсайта"
 
-#: aa_forum/forms.py:465
+#: aa_forum/forms.py:466
 msgid "PM me on Discord when I get a new personal message"
 msgstr "Отправлять ЛС в Discord при получении личного сообщения"
 
-#: aa_forum/forms.py:468
+#: aa_forum/forms.py:469
 msgid "Show unread topics as widget on the dashboard"
 msgstr "Показывать непрочитанные темы в виде виджета на панели мониторинга"
 
-#: aa_forum/forms.py:474
+#: aa_forum/forms.py:475
 msgid "e.g.: My Homepage"
 msgstr "например: Моя Веб Страница"
 
-#: aa_forum/forms.py:506
+#: aa_forum/forms.py:507
 msgid ""
 "Ensure your signature has at most {max_signature_length} characters. "
 "(Currently: {len(signature)})"
@@ -276,23 +271,23 @@ msgstr ""
 "Убедитесь, что ваша подпись не более {max_signature_length} символов. "
 "(Сейчас: {len(signature)})"
 
-#: aa_forum/forms.py:528
+#: aa_forum/forms.py:529
 msgid "This is not a valid URL"
 msgstr "Некорректный URL"
 
-#: aa_forum/forms.py:559
+#: aa_forum/forms.py:560
 msgid ""
 "How many messages per page should be displayed in a forum topic? (Default: "
 "15)"
 msgstr "Сколько сообщений отображать на странице? (По умолчанию: 15)"
 
-#: aa_forum/forms.py:563
+#: aa_forum/forms.py:564
 msgid ""
 "How many topics per page should be displayed in a forum category? (Default: "
 "10)"
 msgstr "Сколько тем отображать на странице в категории? (По умолчанию: 10)"
 
-#: aa_forum/forms.py:567
+#: aa_forum/forms.py:568
 msgid ""
 "How long (Number of characters) is a user's signature allowed to be? "
 "(Default: 750)"
@@ -300,7 +295,7 @@ msgstr ""
 "Какой длины (количество символов) может быть подпись пользователя? (По "
 "умолчанию: 750)"
 
-#: aa_forum/forms.py:601
+#: aa_forum/forms.py:602
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:21
 msgid "Recipient"
 msgstr "Получатель"
@@ -324,16 +319,6 @@ msgstr "категория"
 #: aa_forum/models.py:153
 msgid "categories"
 msgstr "категории"
-
-#: aa_forum/models.py:207
-msgid ""
-"Use this Discord webhook for replies as well? When activated every reply to "
-"any topic in this board will be posted to the defined Discord channel. "
-"(Child boards are excluded) Chose wisely! (Default: NO)"
-msgstr ""
-"Использовать данный Discord Webhook для ответов? В случае активации каждый "
-"ответ в любой теме доски будет отправлен в канал Discord. (Дочерние доски не "
-"учитываются) Использовать с умом! (По умолчанию: НЕТ)"
 
 #: aa_forum/models.py:225
 msgid ""

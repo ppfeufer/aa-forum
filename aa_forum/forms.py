@@ -286,6 +286,7 @@ class EditBoardForm(ModelForm):
                 "board. (This setting is optional)"
             ),
             "use_webhook_for_replies": _(
+                "Use this Discord webhook for replies as well? "
                 "When activated every reply to any topic in this board will be "
                 "posted to the defined Discord channel. (Child boards are excluded) "
                 "Chose wisely! (Default: NO)"

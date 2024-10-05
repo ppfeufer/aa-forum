@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-05 17:47+0200\n"
+"POT-Creation-Date: 2024-10-05 18:03+0200\n"
 "PO-Revision-Date: 2024-08-12 14:23+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Japanese <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -48,20 +48,20 @@ msgstr "匿名掲示板 v{__version__}"
 msgid "This field is mandatory"
 msgstr "この欄は必須です"
 
-#: aa_forum/forms.py:125 aa_forum/forms.py:388 aa_forum/forms.py:600
-#: aa_forum/forms.py:658
+#: aa_forum/forms.py:125 aa_forum/forms.py:389 aa_forum/forms.py:601
+#: aa_forum/forms.py:659
 msgid "Message"
 msgstr "メッセージ"
 
 #: aa_forum/forms.py:136 aa_forum/forms.py:138 aa_forum/forms.py:182
-#: aa_forum/forms.py:184 aa_forum/forms.py:602
+#: aa_forum/forms.py:184 aa_forum/forms.py:603
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:25
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:25
 msgid "Subject"
 msgstr "テーマ"
 
-#: aa_forum/forms.py:152 aa_forum/forms.py:401 aa_forum/forms.py:617
-#: aa_forum/forms.py:671
+#: aa_forum/forms.py:152 aa_forum/forms.py:402 aa_forum/forms.py:618
+#: aa_forum/forms.py:672
 msgid "You have forgotten the message!"
 msgstr "あなたはメッセージを忘れています！"
 
@@ -77,7 +77,7 @@ msgstr ""
 "このカテゴリーで作成される板（1行に1つ）。これらの板にはグループ制限がないの"
 "で、必要な場所に後で追加する必要があります。"
 
-#: aa_forum/forms.py:220 aa_forum/forms.py:237 aa_forum/forms.py:308
+#: aa_forum/forms.py:220 aa_forum/forms.py:237 aa_forum/forms.py:309
 msgid "Name"
 msgstr "名前"
 
@@ -85,7 +85,7 @@ msgstr "名前"
 msgid "Category name"
 msgstr "カテゴリ名"
 
-#: aa_forum/forms.py:278 aa_forum/forms.py:327
+#: aa_forum/forms.py:278 aa_forum/forms.py:328
 msgid "Board description (optional)"
 msgstr "板の説明(オプション)"
 
@@ -116,22 +116,17 @@ msgstr ""
 "この板の新しいトピックについて投稿するチャンネルのDiscordウェブフックURL。(こ"
 "の設定はオプションです）"
 
-#: aa_forum/forms.py:289
-#, fuzzy
-#| msgid ""
-#| "Use this Discord webhook for replies as well? When activated every reply "
-#| "to any topic in this board will be posted to the defined Discord channel. "
-#| "(Child boards are excluded) Chose wisely! (Default: NO)"
+#: aa_forum/forms.py:289 aa_forum/models.py:207
 msgid ""
-"When activated every reply to any topic in this board will be posted to the "
-"defined Discord channel. (Child boards are excluded) Chose wisely! (Default: "
-"NO)"
+"Use this Discord webhook for replies as well? When activated every reply to "
+"any topic in this board will be posted to the defined Discord channel. "
+"(Child boards are excluded) Chose wisely! (Default: NO)"
 msgstr ""
 "返信に、このDiscord ウェブフックを使用しますか？この板のトピックの返信は、定"
 "義されたDiscordチャンネルに投稿されます。(小さい板は除外されます) 慎重に選択"
 "してください！(デフォルト：NO）"
 
-#: aa_forum/forms.py:294
+#: aa_forum/forms.py:295
 msgid ""
 "Mark this board as an \"Announcement Board\", meaning that only certain "
 "selected groups can start new topics. All others who have access to this "
@@ -142,7 +137,7 @@ msgstr ""
 "られるようにします。この板にアクセスできる他の全員は、トピックで議論すること"
 "ができます。この設定は小さい板には引き継がれません。(デフォルト：NO）"
 
-#: aa_forum/forms.py:300
+#: aa_forum/forms.py:301
 msgid ""
 "User in at least one of the selected groups will be able to start topics in "
 "\"Announcement Boards\". If no group is selected, only forum admins can do "
@@ -156,66 +151,66 @@ msgstr ""
 "ト: これらの制限は、板が「お知らせ」としてマークされている場合にのみ有効にな"
 "ります。(上のチェックボックスを参照してください))"
 
-#: aa_forum/forms.py:309
+#: aa_forum/forms.py:310
 msgid "Description"
 msgstr "説明"
 
-#: aa_forum/forms.py:310
+#: aa_forum/forms.py:311
 msgid "Group restrictions"
 msgstr "グループの制限"
 
-#: aa_forum/forms.py:311
+#: aa_forum/forms.py:312
 msgid "Discord webhook (optional)"
 msgstr "Discordウェブフック（オプション）"
 
-#: aa_forum/forms.py:313
+#: aa_forum/forms.py:314
 msgid "Use this Discord webhook for replies as well?"
 msgstr "返信に、このDiscordのウェブフックを使いますか？"
 
-#: aa_forum/forms.py:315
+#: aa_forum/forms.py:316
 msgid "Mark board as \"Announcement Board\""
 msgstr "板を \"お知らせ \"としてマークする"
 
-#: aa_forum/forms.py:317
+#: aa_forum/forms.py:318
 msgid "Start topic restrictions for \"Announcement Boards\""
 msgstr "\"お知らせ \"のトピック制限を開始する"
 
-#: aa_forum/forms.py:321
+#: aa_forum/forms.py:322
 msgid "Board name"
 msgstr "板名"
 
-#: aa_forum/forms.py:350
+#: aa_forum/forms.py:351
 msgid "Close topic"
 msgstr "トピックを閉じる"
 
-#: aa_forum/forms.py:352
+#: aa_forum/forms.py:353
 msgid "If checked, this topic will be closed after posting this message."
 msgstr "チェックを入れた場合、このトピックはこのメッセージの投稿後に閉じます。"
 
-#: aa_forum/forms.py:358
+#: aa_forum/forms.py:359
 msgid "Reopen topic"
 msgstr "トピックを再開する"
 
-#: aa_forum/forms.py:360
+#: aa_forum/forms.py:361
 msgid "If checked, this topic will be reopened after posting this message."
 msgstr ""
 "チェックを入れた場合、このトピックはこのメッセージの投稿後に再開されます。"
 
-#: aa_forum/forms.py:387
+#: aa_forum/forms.py:388
 #, fuzzy
 #| msgid "message"
 msgid "Your message."
 msgstr "メッセージ"
 
-#: aa_forum/forms.py:438
+#: aa_forum/forms.py:439
 msgid "Your signature will appear below your posts."
 msgstr "あなたの署名は投稿の下に表示されます。"
 
-#: aa_forum/forms.py:439
+#: aa_forum/forms.py:440
 msgid "Your website's title."
 msgstr "ウェブサイトのタイトル。"
 
-#: aa_forum/forms.py:441
+#: aa_forum/forms.py:442
 msgid ""
 "Your website's URL. (Don't forget to also set a title for your website, "
 "otherwise this field will be ignored.)"
@@ -223,7 +218,7 @@ msgstr ""
 "あなたのウェブサイトのURL (ウェブサイトのタイトルも忘れずに設定してください。"
 "そうしないと、この項目は無視されます)"
 
-#: aa_forum/forms.py:446
+#: aa_forum/forms.py:447
 msgid ""
 "Information: There is currently no module installed that can handle Discord "
 "direct messages. Have a chat with your IT guys to remedy this."
@@ -231,7 +226,7 @@ msgstr ""
 "案内： 現在、Discordのダイレクトメッセージを処理できるモジュールはインストー"
 "ルされていません。この問題を解決するためにIT担当者とチャットしてください。"
 
-#: aa_forum/forms.py:455
+#: aa_forum/forms.py:456
 msgid ""
 "Activating this setting will ad a widget to your dashboard that shows unread "
 "topics in the forum."
@@ -239,32 +234,32 @@ msgstr ""
 "この設定を有効にすると、ダッシュボードにフォーラムの未読トピックを表示する"
 "ウィジェットが追加されます。"
 
-#: aa_forum/forms.py:461
+#: aa_forum/forms.py:462
 msgid "Signature"
 msgstr "署名"
 
-#: aa_forum/forms.py:462
+#: aa_forum/forms.py:463
 msgid "Website title"
 msgstr "ウェブサイト名"
 
-#: aa_forum/forms.py:463
+#: aa_forum/forms.py:464
 msgid "Website URL"
 msgstr "ウェブサイトのURL"
 
-#: aa_forum/forms.py:465
+#: aa_forum/forms.py:466
 msgid "PM me on Discord when I get a new personal message"
 msgstr ""
 "新しいパーソナルメッセージが届いたら、Discordでダイレクトメールをください"
 
-#: aa_forum/forms.py:468
+#: aa_forum/forms.py:469
 msgid "Show unread topics as widget on the dashboard"
 msgstr "ダッシュボードに未読トピックをウィジェットで表示する"
 
-#: aa_forum/forms.py:474
+#: aa_forum/forms.py:475
 msgid "e.g.: My Homepage"
 msgstr "例：私のホームページ"
 
-#: aa_forum/forms.py:506
+#: aa_forum/forms.py:507
 msgid ""
 "Ensure your signature has at most {max_signature_length} characters. "
 "(Currently: {len(signature)})"
@@ -272,11 +267,11 @@ msgstr ""
 "署名の文字数が{max_signature_length}であることを確認してください(Currently: "
 "{len(signature)})"
 
-#: aa_forum/forms.py:528
+#: aa_forum/forms.py:529
 msgid "This is not a valid URL"
 msgstr "これは有効なURLではありません"
 
-#: aa_forum/forms.py:559
+#: aa_forum/forms.py:560
 msgid ""
 "How many messages per page should be displayed in a forum topic? (Default: "
 "15)"
@@ -284,7 +279,7 @@ msgstr ""
 "フォーラムのトピックに表示される1ページあたりのメッセージ数はいくつですか？"
 "(デフォルト：15）"
 
-#: aa_forum/forms.py:563
+#: aa_forum/forms.py:564
 msgid ""
 "How many topics per page should be displayed in a forum category? (Default: "
 "10)"
@@ -292,7 +287,7 @@ msgstr ""
 "フォーラムのカテゴリで、1ページに表示するトピック数はいくつですか？(デフォル"
 "ト：10）"
 
-#: aa_forum/forms.py:567
+#: aa_forum/forms.py:568
 msgid ""
 "How long (Number of characters) is a user's signature allowed to be? "
 "(Default: 750)"
@@ -300,7 +295,7 @@ msgstr ""
 "ユーザーの署名はどれくらいの長さ（文字数）まで許されますか？(デフォルト："
 "750）"
 
-#: aa_forum/forms.py:601
+#: aa_forum/forms.py:602
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:21
 msgid "Recipient"
 msgstr "受取人"
@@ -326,16 +321,6 @@ msgstr "カテゴリー"
 #: aa_forum/models.py:153
 msgid "categories"
 msgstr "カテゴリ分け"
-
-#: aa_forum/models.py:207
-msgid ""
-"Use this Discord webhook for replies as well? When activated every reply to "
-"any topic in this board will be posted to the defined Discord channel. "
-"(Child boards are excluded) Chose wisely! (Default: NO)"
-msgstr ""
-"返信に、このDiscord ウェブフックを使用しますか？この板のトピックの返信は、定"
-"義されたDiscordチャンネルに投稿されます。(小さい板は除外されます) 慎重に選択"
-"してください！(デフォルト：NO）"
 
 #: aa_forum/models.py:225
 msgid ""
@@ -1318,38 +1303,3 @@ msgstr ""
 #: aa_forum/views/profile.py:60
 msgid "<h4>Success!</h4><p>Profile saved.</p>"
 msgstr ""
-
-#, fuzzy
-#~| msgid "Description"
-#~ msgid "Description of the board."
-#~ msgstr "説明"
-
-#, fuzzy
-#~| msgid ""
-#~| "When activated every reply to any topic in this board will be posted to "
-#~| "the defined Discord channel. (Child boards are excluded) Chose wisely! "
-#~| "(Default: NO)"
-#~ msgid ""
-#~ "When activated every reply to any topic in this board will be posted to "
-#~ "the defined Discord channel."
-#~ msgstr ""
-#~ "有効にすると、この板のトピックの返信はすべて、定義されたDiscordチャンネル"
-#~ "に投稿されます。(小さい板は除外されます）慎重に選択してください！(デフォル"
-#~ "ト：NO）"
-
-#, fuzzy
-#~| msgid ""
-#~| "Mark this board as an \"Announcement Board\", meaning that only certain "
-#~| "selected groups can start new topics. All others who have access to this "
-#~| "board will still be able to discuss in the topics though. (Default: NO)"
-#~ msgid ""
-#~ "Mark this board as an \"Announcement Board\", meaning that only certain "
-#~ "selected groups can start new topics. All others who have access to this "
-#~ "board will still be able to discuss in the topics though."
-#~ msgstr ""
-#~ "この掲示板を「お知らせ」としてマークし、特定のグループだけが新しいトピック"
-#~ "を立てられるようにします。この掲示板にアクセスできる他の全員は、トピックで"
-#~ "議論することができます。(デフォルト: NO)"
-
-#~ msgid "Hello there …"
-#~ msgstr "やあ、こんにちは"
