@@ -275,29 +275,33 @@ class EditBoardForm(ModelForm):
             "announcement_groups",
         ]
         help_texts = {
-            "description": _("Description of the board."),
+            "description": _("Board description (optional)"),
             "groups": _(
                 "This will restrict access to this board to the selected groups. If no "
                 "groups are selected, everyone who can access the forum can also access "
-                "this board."
+                "this board. (This setting is optional)"
             ),
             "discord_webhook": _(
                 "Discord webhook URL for the channel to post about new topics in this "
-                "board."
+                "board. (This setting is optional)"
             ),
             "use_webhook_for_replies": _(
                 "When activated every reply to any topic in this board will be "
-                "posted to the defined Discord channel."
+                "posted to the defined Discord channel. (Child boards are excluded) "
+                "Chose wisely! (Default: NO)"
             ),
             "is_announcement_board": _(
                 'Mark this board as an "Announcement Board", meaning that only certain '
                 "selected groups can start new topics. All others who have access to this "
-                "board will still be able to discuss in the topics though."
+                "board will still be able to discuss in the topics though. This setting "
+                "will not be inherited to child boards. (Default: NO)"
             ),
             "announcement_groups": _(
                 "User in at least one of the selected groups will be able to start topics "
                 'in "Announcement Boards". If no group is selected, only forum admins can '
-                "do so."
+                "do so. This setting will not be inherited to child boards. (Hint: These "
+                "restrictions only take effect when a board is marked as "
+                '"Announcement Board", see checkbox above.)'
             ),
         }
         labels = {
