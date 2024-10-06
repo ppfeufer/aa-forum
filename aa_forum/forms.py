@@ -274,37 +274,6 @@ class EditBoardForm(ModelForm):
             "is_announcement_board",
             "announcement_groups",
         ]
-        help_texts = {
-            "description": _("Board description (optional)"),
-            "groups": _(
-                "This will restrict access to this board to the selected groups. If no "
-                "groups are selected, everyone who can access the forum can also access "
-                "this board. (This setting is optional)"
-            ),
-            "discord_webhook": _(
-                "Discord webhook URL for the channel to post about new topics in this "
-                "board. (This setting is optional)"
-            ),
-            "use_webhook_for_replies": _(
-                "Use this Discord webhook for replies as well? "
-                "When activated every reply to any topic in this board will be "
-                "posted to the defined Discord channel. (Child boards are excluded) "
-                "Chose wisely! (Default: NO)"
-            ),
-            "is_announcement_board": _(
-                'Mark this board as an "Announcement Board", meaning that only certain '
-                "selected groups can start new topics. All others who have access to this "
-                "board will still be able to discuss in the topics though. This setting "
-                "will not be inherited to child boards. (Default: NO)"
-            ),
-            "announcement_groups": _(
-                "User in at least one of the selected groups will be able to start topics "
-                'in "Announcement Boards". If no group is selected, only forum admins can '
-                "do so. This setting will not be inherited to child boards. (Hint: These "
-                "restrictions only take effect when a board is marked as "
-                '"Announcement Board", see checkbox above.)'
-            ),
-        }
         labels = {
             "name": get_mandatory_form_label_text(text=_("Name")),
             "description": _("Description"),
@@ -385,7 +354,6 @@ class EditMessageForm(ModelForm):
         model = Message
 
         fields = ["message", "close_topic", "reopen_topic"]
-        help_texts = {"message": _("Your message.")}
         labels = {"message": get_mandatory_form_label_text(text=_("Message"))}
 
     def clean(self):
@@ -555,20 +523,6 @@ class SettingForm(ModelForm):
                 Setting.Field.USERSIGNATURELENGTH.label  # pylint: disable=no-member
             ),
         }
-        help_texts = {
-            "messages_per_page": _(
-                "How many messages per page should be displayed in a forum topic? "
-                "(Default: 15)"
-            ),
-            "topics_per_page": _(
-                "How many topics per page should be displayed in a forum category?"
-                " (Default: 10)"
-            ),
-            "user_signature_length": _(
-                "How long (Number of characters) is a user's signature allowed to be? "
-                "(Default: 750)"
-            ),
-        }
 
 
 class NewPersonalMessageForm(ModelForm):
@@ -655,6 +609,7 @@ class ReplyPersonalMessageForm(ModelForm):
         """
 
         model = PersonalMessage
+
         fields = ["message"]
         labels = {"message": get_mandatory_form_label_text(text=_("Message"))}
 

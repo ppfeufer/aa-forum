@@ -197,9 +197,18 @@ class Board(models.Model):
     )
     name = models.CharField(max_length=254)
     slug = models.SlugField(max_length=254, unique=True, allow_unicode=True)
-    description = models.TextField(blank=True)
+    description = models.TextField(
+        blank=True, help_text=_("Board description (optional)")
+    )
     discord_webhook = models.CharField(
-        blank=True, null=True, default=None, max_length=254
+        blank=True,
+        null=True,
+        default=None,
+        max_length=254,
+        help_text=_(
+            "Discord webhook URL for the channel to post about new topics in this "
+            "board. (This setting is optional)"
+        ),
     )
     use_webhook_for_replies = models.BooleanField(
         default=False,
@@ -222,28 +231,30 @@ class Board(models.Model):
         blank=True,
         related_name="aa_forum_boards_group_restriction",
         help_text=_(
-            "User in at least one of these groups have access to this board. If "
-            "no groups are selected, everyone with access to the forum has also "
-            "access to this board."
+            "This will restrict access to this board to the selected groups. If no "
+            "groups are selected, everyone who can access the forum can also access "
+            "this board. (This setting is optional)"
         ),
     )
     is_announcement_board = models.BooleanField(
         default=False,
         help_text=_(
-            'Mark this board as an "Announcement Board", meaning that only '
-            "certain selected groups can start new topics. All others who have "
-            "access to this board will still be able to discuss in the topics "
-            "though. (Default: NO)"
+            'Mark this board as an "Announcement Board", meaning that only certain '
+            "selected groups can start new topics. All others who have access to this "
+            "board will still be able to discuss in the topics though. This setting "
+            "will not be inherited to child boards. (Default: NO)"
         ),
     )
     announcement_groups = models.ManyToManyField(
-        Group,
+        to=Group,
         blank=True,
         related_name="aa_forum_boards_group_start_topic_restriction",
         help_text=_(
-            "User in at least one of the selected groups will be able to start "
-            'topics in "Announcement Boards". If no group is selected, only '
-            "forum admins can do so."
+            "User in at least one of the selected groups will be able to start topics "
+            'in "Announcement Boards". If no group is selected, only forum admins can '
+            "do so. This setting will not be inherited to child boards. (Hint: These "
+            "restrictions only take effect when a board is marked as "
+            '"Announcement Board", see checkbox above.)'
         ),
     )
     order = models.IntegerField(
@@ -964,17 +975,26 @@ class Setting(SingletonModel):
     messages_per_page = models.IntegerField(
         default=15,
         verbose_name=Field.MESSAGESPERPAGE.label,  # pylint: disable=no-member
-        help_text=_("Maximum number of messages per page in the topic view"),
+        help_text=_(
+            "How many messages per page should be displayed in a forum topic? "
+            "(Default: 15)"
+        ),
     )
     topics_per_page = models.IntegerField(
         default=10,
         verbose_name=Field.TOPICSPERPAGE.label,  # pylint: disable=no-member
-        help_text=_("Maximum number of topics per page in the board view"),
+        help_text=_(
+            "How many topics per page should be displayed in a forum category?"
+            " (Default: 10)"
+        ),
     )
     user_signature_length = models.IntegerField(
         default=750,
         verbose_name=Field.USERSIGNATURELENGTH.label,  # pylint: disable=no-member
-        help_text=_("Maximum length of a users signature"),
+        help_text=_(
+            "How long (Number of characters) is a user's signature allowed to be? "
+            "(Default: 750)"
+        ),
     )
 
     objects = SettingManager()
