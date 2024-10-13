@@ -40,6 +40,16 @@ Section Order:
 - Improve oEmbed handling
 - Improve internal forms handling
 - URL config modularized
+- Dependency updates
+  - `django-ckeditor-5`>=0.2.14 (Fixing #219)
+
+Remember to add the following to your `local.py`, so your users can upload files:
+
+```python
+CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
+    "authenticated"  # Possible values: "staff", "authenticated", "any"
+)
+```
 
 ## \[2.8.0\] - 2024-09-19
 
