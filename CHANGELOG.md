@@ -35,6 +35,8 @@ Section Order:
 ### Security
 -->
 
+## \[2.8.1\] - 2024-10-13
+
 ### Changed
 
 - Improve oEmbed handling

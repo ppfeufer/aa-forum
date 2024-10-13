@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-06 18:36+0200\n"
+"POT-Creation-Date: 2024-10-13 02:19+0200\n"
 "PO-Revision-Date: 2024-06-07 13:28+0000\n"
 "Last-Translator: Roycce_ <malyasov.roma@mail.ru>\n"
 "Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-"
@@ -52,7 +52,7 @@ msgid "This field is mandatory"
 msgstr "Обязательное поле"
 
 #: aa_forum/forms.py:125 aa_forum/forms.py:357 aa_forum/forms.py:555
-#: aa_forum/forms.py:613
+#: aa_forum/forms.py:614
 msgid "Message"
 msgstr "Сообщение"
 
@@ -64,7 +64,7 @@ msgid "Subject"
 msgstr "Тема"
 
 #: aa_forum/forms.py:152 aa_forum/forms.py:370 aa_forum/forms.py:572
-#: aa_forum/forms.py:626
+#: aa_forum/forms.py:627
 msgid "You have forgotten the message!"
 msgstr "Вы забыли о сообщении!"
 
