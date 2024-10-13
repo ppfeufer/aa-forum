@@ -147,12 +147,9 @@ INSTALLED_APPS += [
 # Django CKEditor 5 Configuration
 if "django_ckeditor_5" in INSTALLED_APPS:
     # CKEditor 5 File Upload Configuration
-    # Permissions not yet implemented by Django CKEditor 5, but it's coming …
-    # CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
-    #    "authenticated"  # Possible values: "staff", "authenticated", "any"
-    # )
-    # Add more image upload file types if needed
-    CKEDITOR_5_UPLOAD_FILE_TYPES = ["jpg", "jpeg", "png", "gif", "bmp", "webp", "tiff"]
+    CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
+        "authenticated"  # Possible values: "staff", "authenticated", "any"
+    )
 
     MEDIA_URL = "/media/uploads/"
     MEDIA_ROOT = "/var/www/myauth/media/uploads"
