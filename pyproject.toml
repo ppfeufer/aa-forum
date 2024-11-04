@@ -31,6 +31,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
 ]
@@ -38,7 +39,7 @@ dynamic = [
     "version",
 ]
 dependencies = [
-    "allianceauth<5,>=4.3.1",
+    "allianceauth>=4.3.1,<5",
     "allianceauth-app-utils>=1.24",
     "dhooks-lite>=1.1",
     "django-ckeditor-5>=0.2.14",
