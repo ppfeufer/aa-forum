@@ -111,6 +111,7 @@ class NewTopicForm(ModelForm):
     New topic form
     """
 
+    # Non-model field, so we have to define it here and not in the Meta class.
     message = forms.CharField(
         widget=CKEditor5Widget(
             config_name="extends",
@@ -121,7 +122,6 @@ class NewTopicForm(ModelForm):
                 "style": "width: 100%;",
             },
         ),
-        required=False,  # We have to set this to False, otherwise CKEditor5 will not work
         label=get_mandatory_form_label_text(text=_("Message")),
     )
 
@@ -331,21 +331,6 @@ class EditMessageForm(ModelForm):
         ),
     )
 
-    def __init__(self, *args, **kwargs):
-        """
-        When form is initialized
-
-        :param args:
-        :type args:
-        :param kwargs:
-        :type kwargs:
-        """
-
-        super().__init__(*args, **kwargs)
-
-        # We have to set this to False, otherwise CKEditor5 will not work
-        self.fields["message"].required = False
-
     class Meta:  # pylint: disable=too-few-public-methods
         """
         Meta definitions
@@ -396,6 +381,10 @@ class UserProfileForm(ModelForm):
 
         model = UserProfile
 
+        max_signature_length = Setting.objects.get_setting(
+            setting_key=Setting.Field.USERSIGNATURELENGTH
+        )
+
         fields = [
             "signature",
             "website_title",
@@ -404,7 +393,9 @@ class UserProfileForm(ModelForm):
             "show_unread_topics_dashboard_widget",
         ]
         help_texts = {
-            "signature": _("Your signature will appear below your posts."),
+            "signature": _(
+                f"Your signature will appear below your posts. (Max. {max_signature_length} characters.)"  # pylint: disable=line-too-long
+            ),
             "website_title": _("Your website's title."),
             "website_url": _(
                 "Your website's URL. (Don't forget to also set a title for your "
@@ -541,7 +532,6 @@ class NewPersonalMessageForm(ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields["recipient"].queryset = General.users_with_basic_access()
-        self.fields["message"].required = False
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -588,20 +578,8 @@ class NewPersonalMessageForm(ModelForm):
 
 class ReplyPersonalMessageForm(ModelForm):
     """
-    Reply personal message form
+    Reply to personal message form
     """
-
-    def __init__(self, *args, **kwargs):
-        """
-        When form is initialized
-
-        :param args:
-        :param kwargs:
-        """
-
-        super().__init__(*args, **kwargs)
-
-        self.fields["message"].required = False
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
