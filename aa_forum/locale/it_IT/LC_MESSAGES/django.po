@@ -6,11 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-13 02:19+0200\n"
+"POT-Creation-Date: 2024-11-14 20:35+0100\n"
 "PO-Revision-Date: 2024-11-06 20:10+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
-"Language-Team: Italian <https://weblate.ppfeufer.de/projects/"
-"alliance-auth-apps/aa-forum/it/>\n"
+"Language-Team: Italian <https://weblate.ppfeufer.de/projects/alliance-auth-"
+"apps/aa-forum/it/>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,150 +47,151 @@ msgstr ""
 msgid "This field is mandatory"
 msgstr "Questo campo è obbligatorio"
 
-#: aa_forum/forms.py:125 aa_forum/forms.py:357 aa_forum/forms.py:555
-#: aa_forum/forms.py:614
+#: aa_forum/forms.py:126 aa_forum/forms.py:367 aa_forum/forms.py:574
+#: aa_forum/forms.py:642
 msgid "Message"
 msgstr ""
 
-#: aa_forum/forms.py:136 aa_forum/forms.py:138 aa_forum/forms.py:182
-#: aa_forum/forms.py:184 aa_forum/forms.py:557
+#: aa_forum/forms.py:137 aa_forum/forms.py:139 aa_forum/forms.py:192
+#: aa_forum/forms.py:194 aa_forum/forms.py:576
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:25
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:25
 msgid "Subject"
 msgstr ""
 
-#: aa_forum/forms.py:152 aa_forum/forms.py:370 aa_forum/forms.py:572
-#: aa_forum/forms.py:627
+#: aa_forum/forms.py:159 aa_forum/forms.py:174 aa_forum/forms.py:386
+#: aa_forum/forms.py:401 aa_forum/forms.py:597 aa_forum/forms.py:612
+#: aa_forum/forms.py:661 aa_forum/forms.py:676
 msgid "You have forgotten the message!"
 msgstr ""
 
-#: aa_forum/forms.py:196 aa_forum/forms.py:207
+#: aa_forum/forms.py:206 aa_forum/forms.py:217
 msgid "Boards"
 msgstr ""
 
-#: aa_forum/forms.py:198
+#: aa_forum/forms.py:208
 msgid ""
 "Boards to be created with this category (One board per line). These boards "
 "will have no group restrictions, so you have to add them later where needed."
 msgstr ""
 
-#: aa_forum/forms.py:220 aa_forum/forms.py:237 aa_forum/forms.py:278
+#: aa_forum/forms.py:230 aa_forum/forms.py:247 aa_forum/forms.py:288
 msgid "Name"
 msgstr ""
 
-#: aa_forum/forms.py:221 aa_forum/forms.py:238
+#: aa_forum/forms.py:231 aa_forum/forms.py:248
 msgid "Category name"
 msgstr ""
 
-#: aa_forum/forms.py:279
+#: aa_forum/forms.py:289
 msgid "Description"
 msgstr ""
 
-#: aa_forum/forms.py:280
+#: aa_forum/forms.py:290
 msgid "Group restrictions"
 msgstr "Restrizioni Gruppo"
 
-#: aa_forum/forms.py:281
+#: aa_forum/forms.py:291
 msgid "Discord webhook (optional)"
 msgstr ""
 
-#: aa_forum/forms.py:283
+#: aa_forum/forms.py:293
 msgid "Use this Discord webhook for replies as well?"
 msgstr ""
 
-#: aa_forum/forms.py:285
+#: aa_forum/forms.py:295
 msgid "Mark board as \"Announcement Board\""
 msgstr ""
 
-#: aa_forum/forms.py:287
+#: aa_forum/forms.py:297
 msgid "Start topic restrictions for \"Announcement Boards\""
 msgstr ""
 
-#: aa_forum/forms.py:291
+#: aa_forum/forms.py:301
 msgid "Board name"
 msgstr ""
 
-#: aa_forum/forms.py:297 aa_forum/models.py:201
+#: aa_forum/forms.py:307 aa_forum/models.py:201
 msgid "Board description (optional)"
 msgstr ""
 
-#: aa_forum/forms.py:320
+#: aa_forum/forms.py:330
 msgid "Close topic"
 msgstr ""
 
-#: aa_forum/forms.py:322
+#: aa_forum/forms.py:332
 msgid "If checked, this topic will be closed after posting this message."
 msgstr ""
 
-#: aa_forum/forms.py:328
+#: aa_forum/forms.py:338
 msgid "Reopen topic"
 msgstr ""
 
-#: aa_forum/forms.py:330
+#: aa_forum/forms.py:340
 msgid "If checked, this topic will be reopened after posting this message."
 msgstr ""
 
-#: aa_forum/forms.py:407
+#: aa_forum/forms.py:426
 msgid "Your signature will appear below your posts."
 msgstr ""
 
-#: aa_forum/forms.py:408
+#: aa_forum/forms.py:427
 msgid "Your website's title."
 msgstr ""
 
-#: aa_forum/forms.py:410
+#: aa_forum/forms.py:429
 msgid ""
 "Your website's URL. (Don't forget to also set a title for your website, "
 "otherwise this field will be ignored.)"
 msgstr ""
 
-#: aa_forum/forms.py:415
+#: aa_forum/forms.py:434
 msgid ""
 "Information: There is currently no module installed that can handle Discord "
 "direct messages. Have a chat with your IT guys to remedy this."
 msgstr ""
 
-#: aa_forum/forms.py:424
+#: aa_forum/forms.py:443
 msgid ""
 "Activating this setting will ad a widget to your dashboard that shows unread "
 "topics in the forum."
 msgstr ""
 
-#: aa_forum/forms.py:430
+#: aa_forum/forms.py:449
 msgid "Signature"
 msgstr ""
 
-#: aa_forum/forms.py:431
+#: aa_forum/forms.py:450
 msgid "Website title"
 msgstr ""
 
-#: aa_forum/forms.py:432
+#: aa_forum/forms.py:451
 msgid "Website URL"
 msgstr ""
 
-#: aa_forum/forms.py:434
+#: aa_forum/forms.py:453
 msgid "PM me on Discord when I get a new personal message"
 msgstr ""
 
-#: aa_forum/forms.py:437
+#: aa_forum/forms.py:456
 msgid "Show unread topics as widget on the dashboard"
 msgstr ""
 
-#: aa_forum/forms.py:443
+#: aa_forum/forms.py:462
 msgid "e.g.: My Homepage"
 msgstr ""
 
-#: aa_forum/forms.py:475
+#: aa_forum/forms.py:494
 msgid ""
 "Ensure your signature has at most {max_signature_length} characters. "
 "(Currently: {len(signature)})"
 msgstr ""
 
-#: aa_forum/forms.py:497
+#: aa_forum/forms.py:516
 msgid "This is not a valid URL"
 msgstr ""
 
-#: aa_forum/forms.py:556
+#: aa_forum/forms.py:575
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:21
 msgid "Recipient"
 msgstr ""
