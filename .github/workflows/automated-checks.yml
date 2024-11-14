@@ -37,7 +37,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           # https://endoflife.date/nodejs
-          node-version: '20' # [LTS] End of Life: 30 Apr 2026
+          node-version: 22 # [LTS] End of Life: 30 Apr 2027
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
       - run: npm install
 
       - name: Run Pre Commit Checks

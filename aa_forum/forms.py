@@ -16,7 +16,7 @@ from django_ckeditor_5.widgets import CKEditor5Widget
 
 # AA Forum
 from aa_forum.app_settings import discord_messaging_proxy_available
-from aa_forum.helper.text import string_cleanup
+from aa_forum.helper.text import string_cleanup, strip_html_tags
 from aa_forum.models import (
     Board,
     Category,
@@ -111,6 +111,7 @@ class NewTopicForm(ModelForm):
     New topic form
     """
 
+    # Non-model field, so we have to define it here and not in the Meta class.
     message = forms.CharField(
         widget=CKEditor5Widget(
             config_name="extends",
@@ -148,7 +149,13 @@ class NewTopicForm(ModelForm):
 
         cleaned_data = super().clean()
 
-        if not string_cleanup(cleaned_data.get("message")).strip():
+        if (
+            cleaned_data.get("message")
+            and strip_html_tags(
+                text=string_cleanup(cleaned_data.get("message")), strip_nbsp=True
+            ).strip()
+            == ""
+        ):
             raise ValidationError(_("You have forgotten the message!"))
 
         return cleaned_data
@@ -162,6 +169,9 @@ class NewTopicForm(ModelForm):
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
+
+        if not message:
+            raise ValidationError(_("You have forgotten the message!"))
 
         return message
 
@@ -366,7 +376,13 @@ class EditMessageForm(ModelForm):
 
         cleaned_data = super().clean()
 
-        if not string_cleanup(cleaned_data.get("message")).strip():
+        if (
+            cleaned_data.get("message")
+            and strip_html_tags(
+                text=string_cleanup(cleaned_data.get("message")), strip_nbsp=True
+            ).strip()
+            == ""
+        ):
             raise ValidationError(_("You have forgotten the message!"))
 
         return cleaned_data
@@ -380,6 +396,9 @@ class EditMessageForm(ModelForm):
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
+
+        if not message:
+            raise ValidationError(_("You have forgotten the message!"))
 
         return message
 
@@ -568,7 +587,13 @@ class NewPersonalMessageForm(ModelForm):
 
         cleaned_data = super().clean()
 
-        if not string_cleanup(cleaned_data.get("message")).strip():
+        if (
+            cleaned_data.get("message")
+            and strip_html_tags(
+                text=string_cleanup(cleaned_data.get("message")), strip_nbsp=True
+            ).strip()
+            == ""
+        ):
             raise ValidationError(_("You have forgotten the message!"))
 
         return cleaned_data
@@ -583,12 +608,15 @@ class NewPersonalMessageForm(ModelForm):
 
         message = string_cleanup(string=self.cleaned_data["message"])
 
+        if not message:
+            raise ValidationError(_("You have forgotten the message!"))
+
         return message
 
 
 class ReplyPersonalMessageForm(ModelForm):
     """
-    Reply personal message form
+    Reply to personal message form
     """
 
     def __init__(self, *args, **kwargs):
@@ -623,7 +651,13 @@ class ReplyPersonalMessageForm(ModelForm):
 
         cleaned_data = super().clean()
 
-        if not string_cleanup(cleaned_data.get("message")).strip():
+        if (
+            cleaned_data.get("message")
+            and strip_html_tags(
+                text=string_cleanup(cleaned_data.get("message")), strip_nbsp=True
+            ).strip()
+            == ""
+        ):
             raise ValidationError(_("You have forgotten the message!"))
 
         return cleaned_data
@@ -637,5 +671,8 @@ class ReplyPersonalMessageForm(ModelForm):
         """
 
         message = string_cleanup(string=self.cleaned_data["message"])
+
+        if not message:
+            raise ValidationError(_("You have forgotten the message!"))
 
         return message

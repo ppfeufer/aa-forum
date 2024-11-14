@@ -35,6 +35,12 @@ Section Order:
 ### Security
 -->
 
+### Changed
+
+- Enable form validation for CKEditor fields, where needed
+- Dependency updates
+  - `django-ckeditor-5`>=0.2.15
+
 ## \[2.8.1\] - 2024-10-13
 
 ### Changed
