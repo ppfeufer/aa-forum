@@ -230,6 +230,7 @@ class TestForumUI(WebTest):
         # given
         self.app.set_user(user=self.user_1001)
         page = self.app.get(url=self.board.get_absolute_url())
+        old_topic_count = self.board.topics.count()
 
         # when
         page = page.click(linkid="aa-forum-btn-new-topic-above-list")
@@ -238,8 +239,10 @@ class TestForumUI(WebTest):
         form["message"] = ""  # Omitting mandatory field
         response = form.submit()
 
+        new_topic_count = self.board.topics.count()
+
         # then
-        self.assertEqual(first=self.board.topics.count(), second=0)  # No topic created
+        self.assertEqual(first=old_topic_count, second=new_topic_count)
         self.assertTemplateUsed(
             response=response, template_name="aa_forum/view/forum/new-topic.html"
         )

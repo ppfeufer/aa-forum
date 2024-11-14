@@ -96,22 +96,48 @@ def string_cleanup(string: str) -> str:
     :rtype:
     """
 
-    re_head = re.compile(
-        pattern=r"<\s*head[^>]*>.*?<\s*/\s*head\s*>", flags=re.S | re.I
-    )
-    re_script = re.compile(
-        pattern=r"<\s*script[^>]*>.*?<\s*/\s*script\s*>", flags=re.S | re.I
-    )
-    re_css = re.compile(
-        pattern=r"<\s*style[^>]*>.*?<\s*/\s*style\s*>", flags=re.S | re.I
-    )
+    if string:
+        re_head = re.compile(
+            pattern=r"<\s*head[^>]*>.*?<\s*/\s*head\s*>", flags=re.S | re.I
+        )
+        re_script = re.compile(
+            pattern=r"<\s*script[^>]*>.*?<\s*/\s*script\s*>", flags=re.S | re.I
+        )
+        re_css = re.compile(
+            pattern=r"<\s*style[^>]*>.*?<\s*/\s*style\s*>", flags=re.S | re.I
+        )
 
-    # Strip JS
-    string = re_head.sub(repl="", string=string)
-    string = re_script.sub(repl="", string=string)
-    string = re_css.sub(repl="", string=string)
+        # Strip JS
+        string = re_head.sub(repl="", string=string)
+        string = re_script.sub(repl="", string=string)
+        string = re_css.sub(repl="", string=string)
+
+    logger.debug(msg=f"Cleaned up string: {string}")
 
     return string
+
+
+def strip_html_tags(text: str, strip_nbsp: bool = False) -> str:
+    """
+    Strip HTML tags from a text
+
+    :param text: The text to strip HTML tags from
+    :type text: str
+    :param strip_nbsp: Whether to strip &nbsp; as well
+    :type strip_nbsp: bool
+    :return: The stripped text
+    :rtype: str
+    """
+
+    stripped_text = (
+        re.compile(pattern=r"&nbsp;").sub(repl="", string=strip_tags(value=text))
+        if strip_nbsp
+        else strip_tags(value=text)
+    )
+
+    logger.debug(msg=f"Stripped text: {stripped_text}")
+
+    return stripped_text
 
 
 def prepare_message_for_discord(
@@ -120,7 +146,7 @@ def prepare_message_for_discord(
     """
     Prepare a message for Discord
 
-    We have to run strip_tags() twice here.
+    We have to run strip_html_tags() twice here.
     1.  To remove HTML tags from the text, we want to send
     2.  After html.unescape() in case that unescaped former escaped HTML tags,
         which now need to be removed as well
@@ -133,14 +159,16 @@ def prepare_message_for_discord(
     :rtype:
     """
 
-    return strip_tags(
-        value=html.unescape(
-            s=strip_tags(
-                value=(
+    return strip_html_tags(
+        text=html.unescape(
+            s=strip_html_tags(
+                text=(
                     message[:message_length] + "…"
                     if len(message) > message_length
                     else message
-                )
+                ),
+                strip_nbsp=True,
             )
-        )
+        ),
+        strip_nbsp=True,
     )
