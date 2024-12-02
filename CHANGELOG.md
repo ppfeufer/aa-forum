@@ -22,7 +22,7 @@ https://docs.github.com/assets/cb-41128/mw-1440/images/help/writing/alerts-rende
 > Critical content demanding immediate user attention due to potential risks.
 -->
 
-## \[In Development\] - Unreleased
+## [In Development] - Unreleased
 
 <!--
 Section Order:
@@ -35,7 +35,7 @@ Section Order:
 ### Security
 -->
 
-## \[2.9.0\] - 2024-11-14
+## [2.9.0] - 2024-11-14
 
 ### Fixed
 
@@ -46,7 +46,7 @@ Section Order:
 - Dependency updates
   - `django-ckeditor-5`>=0.2.15
 
-## \[2.8.1\] - 2024-10-13
+## [2.8.1] - 2024-10-13
 
 ### Changed
 
@@ -64,13 +64,13 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
 )
 ```
 
-## \[2.8.0\] - 2024-09-19
+## [2.8.0] - 2024-09-19
 
 ### Changed
 
 - Switch to `django-solo` to provide the singleton for the settings model, instead of the custom implementation
 
-## \[2.7.0\] - 2024-09-16
+## [2.7.0] - 2024-09-16
 
 ### Changed
 
@@ -78,7 +78,7 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
   - `allianceauth`>=4.3.1
 - Lingua codes updated to match Alliance Auth v4.3.1
 
-## \[2.6.0\] - 2024-09-09
+## [2.6.0] - 2024-09-09
 
 ### Changed
 
@@ -87,7 +87,7 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
   easier theming and better compatibility with darker themes
 - Japanese translation improved
 
-## \[2.5.0\] - 2024-07-27
+## [2.5.0] - 2024-07-27
 
 ### Added
 
@@ -97,13 +97,13 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
 
 - Japanese translation improved
 
-## \[2.4.1\] - 2024-07-15
+## [2.4.1] - 2024-07-15
 
 ### Fixed
 
 - Dependency to `allianceauth`
 
-## \[2.4.0\] - 2024-07-15
+## [2.4.0] - 2024-07-15
 
 ### Fixed
 
@@ -118,7 +118,7 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
 - Support for Python 3.8 and Python 3.9
 - Common English word from the French stopwords list
 
-## \[2.3.1\] - 2024-06-03
+## [2.3.1] - 2024-06-03
 
 ### Changed
 
@@ -126,7 +126,7 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
 - French translation updated
 - German translation updated
 
-## \[2.3.0\] - 2024-05-27
+## [2.3.0] - 2024-05-27
 
 ### Added
 
@@ -137,13 +137,13 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
 - The minimum required AA version is now 4.1.0
 - Using the AA framework template for the widget title
 
-## \[2.2.1\] - 2024-05-16
+## [2.2.1] - 2024-05-16
 
 ### Changed
 
 - Translations updated
 
-## \[2.2.0\] - 2024-05-06
+## [2.2.0] - 2024-05-06
 
 ### Fixed
 
@@ -156,7 +156,7 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
   search results
 - Require the latest version of `django-ckeditor-5` (v0.2.13)
 
-## \[2.1.1\] - 2024-04-28
+## [2.1.1] - 2024-04-28
 
 ### Added
 
@@ -172,7 +172,7 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
   as the method
 - Dashboard widget JavaScript modernised
 
-## \[2.1.0\] - 2024-04-21
+## [2.1.0] - 2024-04-21
 
 ### Added
 
@@ -185,9 +185,9 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
 
 - Translations updated
 
-## \[2.0.0\] - 2024-03-16
+## [2.0.0] - 2024-03-16
 
-> \[!NOTE\]
+> [!NOTE]
 >
 > **This version needs at least Alliance Auth v4.0.0!**
 >
@@ -195,7 +195,7 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = (
 > you install this version, otherwise an update to Alliance Auth will
 > be pulled in unsupervised.
 
-> \[!IMPORTANT\]
+> [!IMPORTANT]
 >
 > With this version, we switched to a new WYSIWYG editor.
 > Please make sure to read the update information
@@ -416,9 +416,9 @@ if apps.is_installed("django_ckeditor_5"):
     )
 ```
 
-## \[2.0.0-beta.3\] - 2024-03-08
+## [2.0.0-beta.3] - 2024-03-08
 
-> \[!NOTE\]
+> [!NOTE]
 >
 > **This version needs at least Alliance Auth v4.0.0b2!**
 >
@@ -426,7 +426,7 @@ if apps.is_installed("django_ckeditor_5"):
 > you install this version, otherwise an update to Alliance Auth will
 > be pulled in unsupervised.
 
-> \[!IMPORTANT\]
+> [!IMPORTANT]
 >
 > New migrations have been consolidated.
 >
@@ -447,9 +447,9 @@ if apps.is_installed("django_ckeditor_5"):
   navigation behavior. Meaning, it will no longer open on hover, you have to click
   it now.
 
-## \[2.0.0-beta.2\] - 2024-03-03
+## [2.0.0-beta.2] - 2024-03-03
 
-> \[!NOTE\]
+> [!NOTE]
 >
 > **This version needs at least Alliance Auth v4.0.0b2!**
 >
@@ -470,9 +470,9 @@ if apps.is_installed("django_ckeditor_5"):
 - Set `user` field to read-only in `ModelAdmin` for `UserProfile` to prevent
   accidental changes
 
-## \[2.0.0-beta.1\] - 2024-02-18
+## [2.0.0-beta.1] - 2024-02-18
 
-> \[!NOTE\]
+> [!NOTE]
 >
 > **This version needs at least Alliance Auth v4.0.0b1!**
 >
@@ -480,7 +480,7 @@ if apps.is_installed("django_ckeditor_5"):
 > you install this version, otherwise an update to Alliance Auth will
 > be pulled in unsupervised.
 
-> \[!IMPORTANT\]
+> [!IMPORTANT]
 >
 > With this version, we switched to a new WYSIWYG editor.
 > Please make sure to read the update information
@@ -694,9 +694,9 @@ if apps.is_installed("django_ckeditor_5"):
     )
 ```
 
-## \[1.19.5\] - 2023-11-15
+## [1.19.5] - 2023-11-15
 
-> \[!NOTE\]
+> [!NOTE]
 >
 > **This is the last version compatible with Alliance Auth v3.**
 
@@ -712,7 +712,7 @@ if apps.is_installed("django_ckeditor_5"):
   3rd-Party apps to create topics in a defined board.
 - Translations updated
 
-## \[1.19.4\] - 2023-09-26
+## [1.19.4] - 2023-09-26
 
 ### Fixed
 
@@ -725,20 +725,20 @@ if apps.is_installed("django_ckeditor_5"):
 - Translations updated
 - Test suite updated
 
-## \[1.19.3\] - 2023-09-02
+## [1.19.3] - 2023-09-02
 
 ### Changed
 
 - Korean translation improved
 - Spanish translation improved
 
-## \[1.19.2\] - 2023-08-13
+## [1.19.2] - 2023-08-13
 
 ### Fixed
 
 - Bootstrap CSS fix
 
-## \[1.19.1\] - 2023-07-30
+## [1.19.1] - 2023-07-30
 
 ### Added
 
@@ -750,14 +750,14 @@ if apps.is_installed("django_ckeditor_5"):
 - German translation improved
 - Ukrainian translation improved
 
-## \[1.19.0\] - 2023-04-24
+## [1.19.0] - 2023-04-24
 
 ### Changed
 
 - Russian translation updated
 - Moved the build process to PEP 621 / pyproject.toml
 
-## \[1.18.0\] - 2023-04-16
+## [1.18.0] - 2023-04-16
 
 ### Added
 
@@ -767,13 +767,13 @@ if apps.is_installed("django_ckeditor_5"):
 
 - Warning message in a modal window
 
-## \[1.17.2\] - 2023-04-13
+## [1.17.2] - 2023-04-13
 
 ### Changed
 
 - German translation updated
 
-## \[1.17.1\] - 2023-01-06
+## [1.17.1] - 2023-01-06
 
 ### Added
 
@@ -784,7 +784,7 @@ if apps.is_installed("django_ckeditor_5"):
 
 - Use `models.TextChoices` for `Setting` fields
 
-## \[1.17.0\] - 2022-10-11
+## [1.17.0] - 2022-10-11
 
 ### Added
 
@@ -798,7 +798,7 @@ if apps.is_installed("django_ckeditor_5"):
 - Minimum requirements
   - `allianceauth`>=3.2.0
 
-## \[1.16.0\] - 2022-09-18
+## [1.16.0] - 2022-09-18
 
 ### Added
 
@@ -808,14 +808,14 @@ if apps.is_installed("django_ckeditor_5"):
   - [discordproxy]
   - [AA-Discordbot]
 
-## \[1.15.2\] - 2022-09-14
+## [1.15.2] - 2022-09-14
 
 ### Fixed
 
 - Detection of the first message in the message loop in the topic and search result view
 - Highlighting search terms breaks image and link tags in the search result view
 
-## \[1.15.1\] - 2022-09-10
+## [1.15.1] - 2022-09-10
 
 ### Added
 
@@ -825,7 +825,7 @@ if apps.is_installed("django_ckeditor_5"):
 
 - System messages and log messages improved
 
-## \[1.15.0\] - 2022-09-01
+## [1.15.0] - 2022-09-01
 
 ### Fixed
 
@@ -855,7 +855,7 @@ if apps.is_installed("django_ckeditor_5"):
       "/static/ckeditor/ckeditor/plugins/youtube/"
       ```
 
-## \[1.14.0\] - 2022-08-31
+## [1.14.0] - 2022-08-31
 
 ### Fixed
 
@@ -880,7 +880,7 @@ if apps.is_installed("django_ckeditor_5"):
   - mariadb:10.8
   - mariadb:10.9
 
-## \[1.13.0\] - 2022-08-26
+## [1.13.0] - 2022-08-26
 
 ### Fixed
 
@@ -892,7 +892,7 @@ if apps.is_installed("django_ckeditor_5"):
 - User's maximum signature length to global forum settings
 - Forum settings made available to forum administrators
 
-## \[1.12.0\] - 2022-08-25
+## [1.12.0] - 2022-08-25
 
 ### Fixed
 
@@ -909,7 +909,7 @@ if apps.is_installed("django_ckeditor_5"):
 - Moved search term delimiters to variables
 - Some success messages have been improved
 
-## \[1.11.0\] - 2022-08-24
+## [1.11.0] - 2022-08-24
 
 ### Added
 
@@ -920,7 +920,7 @@ if apps.is_installed("django_ckeditor_5"):
 
 - `Setting` model is now a singleton to prevent multiple settings of the same type
 
-## \[1.10.0\] - 2022-08-03
+## [1.10.0] - 2022-08-03
 
 ### Fixed
 
@@ -949,7 +949,7 @@ if apps.is_installed("django_ckeditor_5"):
 - Deprecated `type` parameter from `script` tags
 - Deprecated `type` parameter from `style` tags
 
-## \[1.9.0\] - 2022-07-11
+## [1.9.0] - 2022-07-11
 
 ### Changed
 
@@ -958,7 +958,7 @@ if apps.is_installed("django_ckeditor_5"):
 - Minimum Requirement:
   - Alliance Auth >= 2.14.0
 
-## \[1.8.1\] - 2022-06-26
+## [1.8.1] - 2022-06-26
 
 ### Fixed
 
@@ -976,7 +976,7 @@ if apps.is_installed("django_ckeditor_5"):
 
 - Templates cleaned up
 
-## \[1.8.0\] - 2022-04-14
+## [1.8.0] - 2022-04-14
 
 ### Added
 
@@ -994,7 +994,7 @@ if apps.is_installed("django_ckeditor_5"):
     board, only users with the `manage_forum` permission (Forum Admins) can start topics
   - These settings will not be inherited in child boards
 
-## \[1.7.0\] - 2022-03-02
+## [1.7.0] - 2022-03-02
 
 ### Added
 
@@ -1008,7 +1008,7 @@ if apps.is_installed("django_ckeditor_5"):
 
 - Deprecated settings
 
-## \[1.6.0\] - 2022-02-28
+## [1.6.0] - 2022-02-28
 
 ### Fixed
 
@@ -1017,14 +1017,14 @@ if apps.is_installed("django_ckeditor_5"):
   - URL config in README updated to work with Django 4. **Please make sure to update
     your configuration accordingly!**
 
-## \[1.5.1\] - 2022-01-26
+## [1.5.1] - 2022-01-26
 
 ### Fixed
 
 - Escaped HTML entities in webhook messages, so that this »`That&#39;s`« doesn't
   happen anymore
 
-## \[1.5.0\] - 2022-01-24
+## [1.5.0] - 2022-01-24
 
 ### Added
 
@@ -1038,7 +1038,7 @@ if apps.is_installed("django_ckeditor_5"):
 
 - Webhook handling changed to dhooks-lite, so we can make our Discord messages nicer
 
-## \[1.4.3\] - 2022-01-24
+## [1.4.3] - 2022-01-24
 
 ### Fixed
 
@@ -1046,7 +1046,7 @@ if apps.is_installed("django_ckeditor_5"):
   from the name/subject ended up being empty when only entered special chars like
   "@#$%" as name/subject
 
-## \[1.4.2\] - 2022-01-23
+## [1.4.2] - 2022-01-23
 
 ### Fixed
 
@@ -1062,13 +1062,13 @@ if apps.is_installed("django_ckeditor_5"):
   methods, where e.g. `save()` is not called automatically. Test now also no longer
   test this method directly. (Thanks @ErikKalkoken)
 
-## \[1.4.1\] - 2022-01-19
+## [1.4.1] - 2022-01-19
 
 ### Changed
 
 - JavaScript: Some `let` vs. `const` slipped through the cracks and now have been fixed
 
-## \[1.4.0\] - 2022-01-12
+## [1.4.0] - 2022-01-12
 
 ### Added
 
@@ -1081,7 +1081,7 @@ if apps.is_installed("django_ckeditor_5"):
   - Changed `let` to `const` where appropriate
   - Set `containment` option to category drag and drop
 
-## \[1.3.0\] - 2021-12-28
+## [1.3.0] - 2021-12-28
 
 ### Added
 
@@ -1097,7 +1097,7 @@ if apps.is_installed("django_ckeditor_5"):
 
 - Posts on a child boards weren't considered for possibly being the latest post (#78)
 
-## \[1.2.1\] - 2021-12-01
+## [1.2.1] - 2021-12-01
 
 ### Changed
 
@@ -1107,7 +1107,7 @@ if apps.is_installed("django_ckeditor_5"):
 
 - Discord webhook configuration for child boards
 
-## \[1.2.0\] - 2021-11-30
+## [1.2.0] - 2021-11-30
 
 ### Changed
 
@@ -1118,32 +1118,32 @@ if apps.is_installed("django_ckeditor_5"):
   - Alliance Auth App Utils v1.8.2
   - Unidecode v1.3.2
 
-## \[1.1.3\] - 2021-10-31
+## [1.1.3] - 2021-10-31
 
 ### Changed
 
 - Minimum version for `allianceauth-app-utils` set to 1.8.1
 
-## \[1.1.2\] - 2021-09-28
+## [1.1.2] - 2021-09-28
 
 ### Fixed
 
 - A potential issue with one of our template tags
 
-## \[1.1.1\] - 2021-09-18
+## [1.1.1] - 2021-09-18
 
 ### Fixed
 
 - An issue where JavaScript and CSS could have been posted in a message
 
-## \[1.1.0\] - 2021-09-13
+## [1.1.0] - 2021-09-13
 
 ### Added
 
 - Optional Discord webhook configuration to boards to send messages to your Discord
   via a webhook to notify a channel about new topics created in the board
 
-## \[1.0.3\] - 2021-09-10
+## [1.0.3] - 2021-09-10
 
 ### Added
 
@@ -1153,14 +1153,14 @@ if apps.is_installed("django_ckeditor_5"):
 
 - An issue with unicode characters in category, board or topic names
 
-## \[1.0.2\] - 2021-09-05
+## [1.0.2] - 2021-09-05
 
 ### Fixed
 
 - Admin models are now read-only to prevent users from creating new entries via the
   Django admin backend, which will cause issues (see issue #47)
 
-## \[1.0.1\] - 2021-08-31
+## [1.0.1] - 2021-08-31
 
 ### Changed
 
@@ -1173,19 +1173,19 @@ if apps.is_installed("django_ckeditor_5"):
 - Error 500 when trying to create a new topic with the exact same name of a topic
   that already exists on this board
 
-## \[1.0.0\] - 2021-08-21
+## [1.0.0] - 2021-08-21
 
 ### Changed
 
 - Moved from Beta to Stable
 
-## \[0.1.0-beta.18\] - 2021-08-13
+## [0.1.0-beta.18] - 2021-08-13
 
 ### Fixed
 
 - "Copy message link to clipboard" button should always be visible ...
 
-## \[0.1.0-beta.17\] - 2021-08-13
+## [0.1.0-beta.17] - 2021-08-13
 
 ### Added
 
@@ -1195,7 +1195,7 @@ if apps.is_installed("django_ckeditor_5"):
 
 - Image lightbox, it breaks images that have a hyperlink
 
-## \[0.1.0-beta.16\] - 2021-08-04
+## [0.1.0-beta.16] - 2021-08-04
 
 ### Changed
 
@@ -1205,7 +1205,7 @@ if apps.is_installed("django_ckeditor_5"):
 
 - Lowering SQL query count in Board view
 
-## \[0.1.0-beta.15\] - 2021-08-04
+## [0.1.0-beta.15] - 2021-08-04
 
 ### Changed
 
@@ -1213,19 +1213,19 @@ if apps.is_installed("django_ckeditor_5"):
   they can actually manage the forum. With that said, choose wisely who gets this
   permission!
 
-## \[0.1.0-beta.14\] - 2021-08-02
+## [0.1.0-beta.14] - 2021-08-02
 
 ### Fixed
 
 - Mobile view
 
-## \[0.1.0-beta.13\] - 2021-07-25
+## [0.1.0-beta.13] - 2021-07-25
 
 ### Fixed
 
 - Key in setup.py
 
-## \[0.1.0-beta.12\] - 2021-07-25
+## [0.1.0-beta.12] - 2021-07-25
 
 ### Updated
 
@@ -1233,19 +1233,19 @@ if apps.is_installed("django_ckeditor_5"):
   have multiple apps that use CKEditor, like `aa-bulletin-board`, and how to combine
   these configurations
 
-## \[0.1.0-beta.11\] - 2021-07-24
+## [0.1.0-beta.11] - 2021-07-24
 
 ### Changed
 
 - Moved "Modify Topic Subject" button to a better location
 
-## \[0.1.0-beta.10\] - 2021-07-20
+## [0.1.0-beta.10] - 2021-07-20
 
 ### Fixed
 
 - Order of some bootstrap classes and some CSS
 
-## \[0.1.0-beta.9\] - 2021-07-19
+## [0.1.0-beta.9] - 2021-07-19
 
 ### Added
 
@@ -1260,33 +1260,33 @@ if apps.is_installed("django_ckeditor_5"):
 
 - Arbitrary `user_has_access` function from `Message` model
 
-## \[0.1.0-beta.8\] - 2021-07-18
+## [0.1.0-beta.8] - 2021-07-18
 
 ### Added
 
 - Unread topics functionality to list all unread topics for the current user
 
-## \[0.1.0-beta.7\] - 2021-07-17
+## [0.1.0-beta.7] - 2021-07-17
 
 ### Added
 
 - Child boards (1 Level). Child boards will inherit their access restrictions from
   their parents.
 
-## \[0.1.0-beta.6\] - 2021-07-16
+## [0.1.0-beta.6] - 2021-07-16
 
 ### Fixed
 
-- \[Bootstrap\] CSS class moved to the right element
+- [Bootstrap] CSS class moved to the right element
 
-## \[0.1.0-beta.5\] - 2021-07-15
+## [0.1.0-beta.5] - 2021-07-15
 
 ### Changed
 
 - CKEditor config changed to prevent possible collisions in static files (see
   [README.md] for details)
 
-## \[0.1.0-beta.4\] - 2021-07-14
+## [0.1.0-beta.4] - 2021-07-14
 
 ### Added
 
@@ -1302,7 +1302,7 @@ if apps.is_installed("django_ckeditor_5"):
 - When the first message is deleted, the topic will be deleted as well. This is to
   prevent having topics with replies to a message that does no longer exist.
 
-## \[0.1.0-beta.3\] - 2021-07-07
+## [0.1.0-beta.3] - 2021-07-07
 
 ### Added
 
@@ -1313,14 +1313,14 @@ if apps.is_installed("django_ckeditor_5"):
 - Default config for CKEditor (see [README.md] for details) to implement the
   YouTube embed plugin and to remove the obsolete Flash embed
 
-## \[0.1.0-beta.2\] - 2021-07-05
+## [0.1.0-beta.2] - 2021-07-05
 
 ### Changed
 
 - Setup classifier and pyupgrade check, since we aim to support AA 2.8.x with its
   current minimum Python version of 3.6
 
-## \[0.1.0-beta.1\] - 2021-07-04
+## [0.1.0-beta.1] - 2021-07-04
 
 ## \\o/ FIRST PUBLIC BETA \\o/
 
@@ -1330,14 +1330,14 @@ if apps.is_installed("django_ckeditor_5"):
 - "Mark all messages as read" button to forum index
 - Counter for unread topics on a forum link in navigation
 
-## \[0.0.1-alpha.11\] - 2021-06-28
+## [0.0.1-alpha.11] - 2021-06-28
 
 ### Fixed
 
 - `Topic.MultipleObjectsReturned: get() returned more than one Topic -- it returned 2!`
   when a board was restricted to more than 1 group
 
-## \[0.0.1-alpha.10\] - 2021-06-28
+## [0.0.1-alpha.10] - 2021-06-28
 
 ### ⚠️ Migration Reset ⚠️
 
@@ -1375,7 +1375,7 @@ python manage.py migrate aa_forum
 
 - Appearance for multi select dropdown when dark mode is used
 
-## \[0.0.1-alpha.9\] - 2021-06-17
+## [0.0.1-alpha.9] - 2021-06-17
 
 ### Added
 
@@ -1386,7 +1386,7 @@ python manage.py migrate aa_forum
 - A bug that prevented the forum index from loading after removing a message or even
   a topic
 
-## \[0.0.1-alpha.8\] - 2021-06-16
+## [0.0.1-alpha.8] - 2021-06-16
 
 ### ⚠️ Migration Reset ⚠️
 
@@ -1412,7 +1412,7 @@ python manage.py migrate aa_forum
   Django conventions
 - Improved queries to reduce page load time for all main views
 
-## \[0.0.1-alpha.7\] - 2021-06-14
+## [0.0.1-alpha.7] - 2021-06-14
 
 ### Added
 
@@ -1426,7 +1426,7 @@ python manage.py migrate aa_forum
   instead of the board view
 - Vertical alignment of the topic names in board view
 
-## \[0.0.1-alpha.6\] - 2021-06-13
+## [0.0.1-alpha.6] - 2021-06-13
 
 ### Fixed
 
@@ -1439,7 +1439,7 @@ python manage.py migrate aa_forum
 - Lightbox doesn't put the complete message in the modal anymore, now just the image
   that has been clicked
 
-## \[0.0.1-alpha.5\] - 2021-06-13
+## [0.0.1-alpha.5] - 2021-06-13
 
 ### Added
 
@@ -1457,7 +1457,7 @@ python manage.py migrate aa_forum
   modals in a topic view. Even when there was no image that needs a lightbox.
 - Consistent button style
 
-## \[0.0.1-alpha.4\] - 2021-06-12
+## [0.0.1-alpha.4] - 2021-06-12
 
 ### Added
 
@@ -1471,7 +1471,7 @@ python manage.py migrate aa_forum
 
 - Implemented a simpler way to get a setting from the DB
 
-## \[0.0.1-alpha.3\] - 2021-06-11
+## [0.0.1-alpha.3] - 2021-06-11
 
 ### Added
 
@@ -1482,13 +1482,13 @@ python manage.py migrate aa_forum
 - Page number from pagination links when navigating to the first page. It's not
   needed there ...
 
-## \[0.0.1-alpha.2\] - 2021-06-11
+## [0.0.1-alpha.2] - 2021-06-11
 
 ### Fixed
 
 - Missing prefix added to "New Category" form
 
-## \[0.0.1-alpha.1\] - 2021-06-11
+## [0.0.1-alpha.1] - 2021-06-11
 
 ### Added
 
