@@ -22,6 +22,9 @@ from app_utils.urls import reverse_absolute
 # AA Forum
 from aa_forum import __title__
 from aa_forum.app_settings import (
+    DISCORDPROXY_HOST,
+    DISCORDPROXY_PORT,
+    DISCORDPROXY_TIMEOUT,
     allianceauth_discordbot_installed,
     discordproxy_installed,
 )
@@ -116,7 +119,8 @@ def _discordproxy_send_private_message(
         DiscordProxyException,
     )
 
-    client = DiscordClient()
+    target = f"{DISCORDPROXY_HOST}:{DISCORDPROXY_PORT}"
+    client = DiscordClient(target=target, timeout=DISCORDPROXY_TIMEOUT)
 
     try:
         logger.debug(msg="Trying to send a direct message via discordproxy")
