@@ -41,6 +41,7 @@ ______________________________________________________________________
       - [Nginx](#nginx)
     - [Step 4: Finalizing the Installation](#step-4-finalizing-the-installation)
     - [Step 5: Setting up Permissions](#step-5-setting-up-permissions)
+    - [Step 6: (Optional) Settings for Discord Proxy (If Used)](#step-6-optional-settings-for-discord-proxy-if-used)
   - [Changelog](#changelog)
   - [Translation Status](#translation-status)
   - [Contributing](#contributing)
@@ -443,6 +444,15 @@ your admin backend.
 | :------------- | :--------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `basic_access` | Can access the AA-Forum module                                   | Grants access to the forum                                                                                                                                                                                                                                                                                                                        |
 | `manage_forum` | Can manage the AA-Forum module (Categories, topics and messages) | Users with this permission can create, edit and delete boards and categories in the "Administration" view. They can also modify and delete messages and topics in the "Forum" view. **Users with this permission are not bound by group restrictions and have access to all boards and topics, so choose wisely who is getting this permission.** |
+
+### Step 6: (Optional) Settings for Discord Proxy (If Used)<a name="step-6-optional-settings-for-discord-proxy-if-used"></a>
+
+If you are using [discordproxy] to send Discord messages, you can configure the host and port in your `local.py` settings.
+
+| Name                | Description                                      | Default     |
+| ------------------- | ------------------------------------------------ | ----------- |
+| `DISCORDPROXY_HOST` | Hostname used to communicate with Discord Proxy. | `localhost` |
+| `DISCORDPROXY_PORT` | Port used to communicate with Discord Proxy.     | `50051`     |
 
 ## Changelog<a name="changelog"></a>
 

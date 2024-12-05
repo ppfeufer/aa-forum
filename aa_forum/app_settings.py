@@ -6,6 +6,16 @@ This module provides functions to check if certain apps are installed and active
 
 # Django
 from django.apps import apps
+from django.conf import settings
+
+# Port used to communicate with Discord Proxy
+DISCORDPROXY_PORT = getattr(settings, "DISCORDPROXY_PORT", 50051)
+
+# Host used to communicate with Discord Proxy
+DISCORDPROXY_HOST = getattr(settings, "DISCORDPROXY_HOST", "localhost")
+
+# Timeout for Discord Proxy communication
+DISCORDPROXY_TIMEOUT = getattr(settings, "DISCORDPROXY_TIMEOUT", 300)
 
 
 def discordproxy_installed() -> bool:
