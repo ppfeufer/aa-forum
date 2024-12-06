@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Added
+
+- Testing for Python 3.13
+
 ## [2.9.1] - 2024-12-06
 
 ### Added
