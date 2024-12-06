@@ -35,6 +35,8 @@ Section Order:
 ### Security
 -->
 
+## [2.9.1] - 2024-12-06
+
 ### Added
 
 - Optional settings for Discord Proxy
