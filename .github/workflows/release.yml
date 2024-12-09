@@ -1,4 +1,4 @@
-name: Release to PyPI
+name: Release
 
 on:
   release:
@@ -7,8 +7,8 @@ on:
 
 jobs:
   release:
-    # Release to PyPI
-    name: Release on Pypi
+    # Release
+    name: Release
     runs-on: ubuntu-latest
 
     steps:
@@ -29,8 +29,8 @@ jobs:
           python -m pip install --upgrade build
           python -m pip install --upgrade setuptools wheel twine
 
-      # Package and Upload
-      - name: Package and Upload
+      # Package and Upload to PyPI
+      - name: Package and Upload to PyPI
         env:
           STACKMANAGER_VERSION: ${{ github.event.release.tag_name }}
           TWINE_USERNAME: __token__
@@ -39,8 +39,8 @@ jobs:
           python -m build
           python -m twine upload dist/*
 
-      # Add Release Assets
-      - name: Add Release Assets
+      # Add Assets to Release on GitHub
+      - name: Add Assets to Release on GitHub
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
