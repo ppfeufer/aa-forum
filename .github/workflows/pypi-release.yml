@@ -38,3 +38,12 @@ jobs:
         run: |
           python -m build
           python -m twine upload dist/*
+
+      # Add Release Assets
+      - name: Add Release Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # The name of the file(s) to upload
+          files: |
+            dist/*
