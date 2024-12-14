@@ -7,9 +7,9 @@
 # Mak3rco <depormanuf1@gmail.com>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2024-12-09 15:02+0100\n"
+"POT-Creation-Date: 2024-12-14 18:01+0100\n"
 "PO-Revision-Date: 2024-05-10 14:06+0000\n"
 "Last-Translator: Mak3rco <depormanuf1@gmail.com>\n"
 "Language-Team: Spanish <https://weblate.ppfeufer.de/projects/alliance-auth-"
