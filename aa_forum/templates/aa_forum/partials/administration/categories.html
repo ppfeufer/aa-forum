@@ -14,17 +14,17 @@
     {% if category_loop %}
         <div class="col-md-6 order-sm-first">
             <script>
-                let categoriesWithBoards = []
-                let boardsWithChildren = []
-
-                aaForumAdminSettings['urls'] = {
+                aaForumJsSettingsOverride.url = {
                     categoryOrder: '{% url "aa_forum:admin_ajax_category_order" %}',
                     boardOrder: '{% url "aa_forum:admin_ajax_board_order" %}'
-                }
+                };
 
-                aaForumAdminSettings['form'] = {
+                aaForumJsSettingsOverride.form = {
                     csrfToken: '{{ csrf_token }}'
-                }
+                };
+
+                aaForumJsSettingsOverride.categoriesWithBoards = [];
+                aaForumJsSettingsOverride.boardsWithChildren = [];
             </script>
 
             <ul id="categories-sortable" class="categories-sortable p-0">

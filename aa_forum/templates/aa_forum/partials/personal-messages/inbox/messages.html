@@ -100,9 +100,13 @@
 </div>
 
 <script>
-    const personalMessagesSettings = {
-        csrfToken: '{{ csrf_token }}',
-        urlReadMessage: '{% url "aa_forum:personal_messages_ajax_read_message" "inbox" %}',
-        urlUnreadMessagesCount: '{% url "aa_forum:personal_messages_ajax_unread_messages_count" %}'
-    };
+    const aaForumJsSettingsOverride = {
+        form: {
+            csrfToken: '{{ csrf_token }}',
+        },
+        url: {
+            readMessage: '{% url "aa_forum:personal_messages_ajax_read_message" "inbox" %}',
+            unreadMessagesCount: '{% url "aa_forum:personal_messages_ajax_unread_messages_count" %}'
+        }
+    }
 </script>

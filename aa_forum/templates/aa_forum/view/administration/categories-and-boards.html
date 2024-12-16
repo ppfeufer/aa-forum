@@ -11,7 +11,7 @@
 
 {% block aa_forum_body %}
     <script>
-        let aaForumAdminSettings = {}
+        const aaForumJsSettingsOverride = {}
     </script>
 
     {% include "aa_forum/partials/administration/categories.html" %}
@@ -26,6 +26,7 @@
 {% block extra_javascript %}
     {% include "bundles/jquery-ui-js.html" %}
     {% include "aa_forum/bundles/sumoselect-js.html" %}
+    {% include "aa_forum/bundles/aa-forum-js.html" %}
     {% include "aa_forum/bundles/aa-forum-admin-js.html" %}
     {% include "aa_forum/bundles/aa-forum-bootstrap-js.html" %}
 {% endblock %}

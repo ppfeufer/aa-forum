@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Changed
+
+- Better JS settings merge
+
 ## [2.9.2] - 2024-12-09
 
 ### Added

@@ -1,4 +1,4 @@
-/* global categoriesWithBoards, boardsWithChildren, aaForumAdminSettings */
+/* global aaForumJsSettings */
 
 $(document).ready(() => {
     'use strict';
@@ -47,10 +47,10 @@ $(document).ready(() => {
 
             // Update DB
             $.post(
-                aaForumAdminSettings.urls.categoryOrder,
+                aaForumJsSettings.url.categoryOrder,
                 {
                     categories: JSON.stringify(categories),
-                    csrfmiddlewaretoken: aaForumAdminSettings.form.csrfToken
+                    csrfmiddlewaretoken: aaForumJsSettings.form.csrfToken
                 }
             );
         }
@@ -63,11 +63,11 @@ $(document).ready(() => {
     /**
      * Sort boards via drag and drop
      */
-    if ('undefined' !== typeof categoriesWithBoards && categoriesWithBoards.length > 0) {
-        $(categoriesWithBoards).each((key, element) => {
-            $(categoriesWithBoards[key]).sortable({
+    if ('undefined' !== typeof aaForumJsSettings.categoriesWithBoards && aaForumJsSettings.categoriesWithBoards.length > 0) {
+        $(aaForumJsSettings.categoriesWithBoards).each((key, element) => {
+            $(aaForumJsSettings.categoriesWithBoards[key]).sortable({
                 placeholder: 'aa-forum-ui-placeholder',
-                connectWith: categoriesWithBoards[key],
+                connectWith: aaForumJsSettings.categoriesWithBoards[key],
                 containment: 'parent',
                 start (e, ui) {
                     // Get the instance of the sortable.
@@ -93,7 +93,7 @@ $(document).ready(() => {
                 update () {
                     const boards = [];
 
-                    $(categoriesWithBoards[key] + ' li.board-sortable').each((index, element) => {
+                    $(aaForumJsSettings.categoriesWithBoards[key] + ' li.board-sortable').each((index, element) => {
                         $(element).attr('data-position', index);
 
                         boards.push({
@@ -104,10 +104,10 @@ $(document).ready(() => {
 
                     // Update DB
                     $.post(
-                        aaForumAdminSettings.urls.boardOrder,
+                        aaForumJsSettings.url.boardOrder,
                         {
                             boards: JSON.stringify(boards),
-                            csrfmiddlewaretoken: aaForumAdminSettings.form.csrfToken
+                            csrfmiddlewaretoken: aaForumJsSettings.form.csrfToken
                         }
                     );
                 }
@@ -118,11 +118,11 @@ $(document).ready(() => {
     /**
      * Sort child boards via drag and drop
      */
-    if ('undefined' !== typeof boardsWithChildren && boardsWithChildren.length > 0) {
-        $(boardsWithChildren).each((key, element) => {
-            $(boardsWithChildren[key]).sortable({
+    if ('undefined' !== typeof aaForumJsSettings.boardsWithChildren && aaForumJsSettings.boardsWithChildren.length > 0) {
+        $(aaForumJsSettings.boardsWithChildren).each((key, element) => {
+            $(aaForumJsSettings.boardsWithChildren[key]).sortable({
                 placeholder: 'aa-forum-ui-placeholder',
-                connectWith: boardsWithChildren[key],
+                connectWith: aaForumJsSettings.boardsWithChildren[key],
                 containment: 'parent',
                 start (e, ui) {
                     // Get the instance of the sortable.
@@ -148,7 +148,7 @@ $(document).ready(() => {
                 update () {
                     const childBoards = [];
 
-                    $(boardsWithChildren[key] + ' li.child-board-sortable').each((index, element) => {
+                    $(aaForumJsSettings.boardsWithChildren[key] + ' li.child-board-sortable').each((index, element) => {
                         $(element).attr('data-position', index);
 
                         childBoards.push({
@@ -159,10 +159,10 @@ $(document).ready(() => {
 
                     // Update DB
                     $.post(
-                        aaForumAdminSettings.urls.boardOrder,
+                        aaForumJsSettings.url.boardOrder,
                         {
                             boards: JSON.stringify(childBoards),
-                            csrfmiddlewaretoken: aaForumAdminSettings.form.csrfToken
+                            csrfmiddlewaretoken: aaForumJsSettings.form.csrfToken
                         }
                     );
                 }
