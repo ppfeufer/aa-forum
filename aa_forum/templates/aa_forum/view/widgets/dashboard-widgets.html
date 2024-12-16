@@ -11,14 +11,19 @@
         </div>
 
         <script>
-            const aaForumDashboardWidgetsSettings = {
-                unreadTopicsWidget: {
-                    ajaxUrl: '{% url "aa_forum:widgets_ajax_unread_topics" %}',
+            const aaForumDashboardWidgetsOverride = {
+                widget: {
+                    unreadTopics: {
+                        url: {
+                            ajax: '{% url "aa_forum:widgets_ajax_unread_topics" %}',
+                        },
+                    },
                 },
             };
         </script>
 
         {% include "aa_forum/bundles/aa-forum-css.html" %}
+        {% include "aa_forum/bundles/aa-forum-js.html" %}
         {% include "aa_forum/bundles/aa-forum-dashboard-widgets-js.html" %}
     </div>
 {% endif %}
