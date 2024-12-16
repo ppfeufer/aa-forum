@@ -1,4 +1,4 @@
-/* global personalMessagesSettings */
+/* global aaForumJsSettings */
 
 $(document).ready(() => {
     'use strict';
@@ -11,13 +11,11 @@ $(document).ready(() => {
         const recipient = element.data('recipient');
         const message = element.data('message');
         const messageFolder = element.data('message-folder');
-        const url = personalMessagesSettings.urlReadMessage;
-        const csrfMiddlewareToken = personalMessagesSettings.csrfToken;
 
         const getMessageToRead = $.post(
-            url,
+            aaForumJsSettings.url.readMessage,
             {
-                csrfmiddlewaretoken: csrfMiddlewareToken,
+                csrfmiddlewaretoken: aaForumJsSettings.form.csrfToken,
                 sender: sender,
                 recipient: recipient,
                 message: message
@@ -33,7 +31,7 @@ $(document).ready(() => {
             messageContainer.html(data).removeClass('d-none');
 
             if (messageFolder === 'inbox') {
-                const urlUnreadMessagesCount = personalMessagesSettings.urlUnreadMessagesCount;
+                const urlUnreadMessagesCount = aaForumJsSettings.url.unreadMessagesCount;
 
                 $(`#aa-forum-personal-message-id-${message} .card-aa-forum-personal-messages-item`)
                     .removeClass('panel-aa-forum-personal-messages-item-unread');
