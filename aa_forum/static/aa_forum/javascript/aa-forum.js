@@ -57,7 +57,7 @@ function deepMerge (target, ...sources) {
 // Build the settings object
 let aaForumJsSettings = typeof aaForumJsSettingsDefaults === 'undefined' ? null : aaForumJsSettingsDefaults; // eslint-disable-line no-unused-vars
 
-if (typeof aaForumJsSettingsOverride !== 'undefined') {
+if (aaForumJsSettings && typeof aaForumJsSettingsOverride !== 'undefined') {
     aaForumJsSettings = deepMerge( // eslint-disable-line no-unused-vars
         aaForumJsSettings,
         aaForumJsSettingsOverride
