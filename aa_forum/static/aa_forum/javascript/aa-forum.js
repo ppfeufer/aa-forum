@@ -55,15 +55,11 @@ function deepMerge (target, ...sources) {
 }
 
 // Build the settings object
-let aaForumJsSettings = {}; // eslint-disable-line no-unused-vars
+let aaForumJsSettings = typeof aaForumJsSettingsDefaults === 'undefined' ? null : aaForumJsSettingsDefaults; // eslint-disable-line no-unused-vars
 
-if (typeof aaForumJsSettingsDefaults !== 'undefined') {
-    aaForumJsSettings = aaForumJsSettingsDefaults; // eslint-disable-line no-unused-vars
-
-    if (typeof aaForumJsSettingsOverride !== 'undefined') {
-        aaForumJsSettings = deepMerge( // eslint-disable-line no-unused-vars
-            aaForumJsSettingsDefaults,
-            aaForumJsSettingsOverride
-        );
-    }
+if (typeof aaForumJsSettingsOverride !== 'undefined') {
+    aaForumJsSettings = deepMerge( // eslint-disable-line no-unused-vars
+        aaForumJsSettings,
+        aaForumJsSettingsOverride
+    );
 }
