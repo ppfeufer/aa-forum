@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Fixed
+
+- Missing `li` tags
+
 ### Changed
 
 - Better JS settings merge

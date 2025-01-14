@@ -15,7 +15,9 @@
 {% endblock header_nav_collapse_left %}
 
 {% block header_nav_collapse_right %}
-    {% include "aa_forum/partials/search/search-form.html" with suffix="menu" %}
+    <li role="presentation" class="nav-item">
+        {% include "aa_forum/partials/search/search-form.html" with suffix="menu" %}
+    </li>
 {% endblock %}
 
 {% block content %}
@@ -27,7 +29,7 @@
         <div class="aa-forum-body">
             <script>
                 const aaForumJsSettingsDefaults = {
-                    url: ''
+                    {#url: ''#}
                 }
             </script>
 
