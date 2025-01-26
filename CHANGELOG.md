@@ -37,6 +37,7 @@ Section Order:
 
 ### Fixed
 
+- New message badges in forum view
 - Missing `li` tags
 
 ### Changed
