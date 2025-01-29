@@ -42,6 +42,7 @@ Section Order:
 
 ### Changed
 
+- Use `django-sri` for sri hashes
 - Better JS settings merge
 - Minimum requirements
   - Alliance Auth >= 4.6.0

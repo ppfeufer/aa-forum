@@ -1,14 +1,4 @@
-{% load static %}
+{% load aa_forum %}
 
-<link
-    rel="stylesheet"
-    href="{% static 'aa_forum/libs/select2/4.1.0-rc1/css/select2.min.css' %}"
-    integrity="sha512-aD9ophpFQ61nFZP6hXYu4Q/b/USW7rpLCQLX6Bi0WJHXNO7Js/fUENpBQf/+P4NtpzNX0jSgR5zVvPOJp+W2Kg=="
-    crossorigin="anonymous"
->
-<link
-    rel="stylesheet"
-    href="{% static 'aa_forum/libs/select2-bootstrap-5-theme/1.3.0/select2-bootstrap-5-theme.min.css' %}"
-    integrity="sha512-SGy9+fCqZZ0PEJfLL2aZXSKKYLt8H/BYKPf8qI3Z/98uAzWi0qMdCcdN9V4pcQlOl0L0V/PKIZ0KvdvbRyrKJg=="
-    crossorigin="anonymous"
->
+{% aa_forum_static "libs/select2/4.1.0-rc1/css/select2.min.css" %}
+{% aa_forum_static "libs/select2-bootstrap-5-theme/1.3.0/select2-bootstrap-5-theme.min.css" %}

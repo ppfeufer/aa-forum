@@ -54,3 +54,6 @@ DISCORD_EMBED_COLOR_MAP = {
 }
 
 DISCORD_EMBED_MESSAGE_LENGTH = 1000
+
+AA_FORUM_BASE_DIR = os.path.join(os.path.dirname(__file__))
+AA_FORUM_STATIC_DIR = os.path.join(AA_FORUM_BASE_DIR, "static", "aa_forum")
