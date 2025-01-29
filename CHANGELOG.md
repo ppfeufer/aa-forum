@@ -42,6 +42,7 @@ Section Order:
 
 ### Changed
 
+- Use enum for Discord embed colors
 - Use `django-sri` for sri hashes
 - Better JS settings merge
 - Minimum requirements

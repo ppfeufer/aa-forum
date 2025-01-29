@@ -6,6 +6,7 @@ Constants
 import glob
 import json
 import os
+from enum import Enum
 
 # Django
 from django.utils.text import slugify
@@ -40,17 +41,23 @@ for file in file_list:
     with open(file, encoding="utf-8") as f:
         SEARCH_STOPWORDS.extend(json.load(f))
 
-# Discord embed settings
-DISCORD_EMBED_COLOR_INFO = 0x5BC0DE
-DISCORD_EMBED_COLOR_SUCCESS = 0x5CB85C
-DISCORD_EMBED_COLOR_WARNING = 0xF0AD4E
-DISCORD_EMBED_COLOR_DANGER = 0xD9534F
+
+class DiscordEmbedColor(Enum):
+    """
+    Discord embed colors
+    """
+
+    INFO = 0x5BC0DE
+    SUCCESS = 0x5CB85C
+    WARNING = 0xF0AD4E
+    DANGER = 0xD9534F
+
 
 DISCORD_EMBED_COLOR_MAP = {
-    "info": DISCORD_EMBED_COLOR_INFO,
-    "success": DISCORD_EMBED_COLOR_SUCCESS,
-    "warning": DISCORD_EMBED_COLOR_WARNING,
-    "danger": DISCORD_EMBED_COLOR_DANGER,
+    "info": DiscordEmbedColor.INFO.value,
+    "success": DiscordEmbedColor.SUCCESS.value,
+    "warning": DiscordEmbedColor.WARNING.value,
+    "danger": DiscordEmbedColor.DANGER.value,
 }
 
 DISCORD_EMBED_MESSAGE_LENGTH = 1000
