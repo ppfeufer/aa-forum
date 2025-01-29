@@ -43,6 +43,8 @@ Section Order:
 ### Changed
 
 - Better JS settings merge
+- Minimum requirements
+  - Alliance Auth >= 4.6.0
 
 ## [2.9.2] - 2024-12-09
 
