@@ -9,8 +9,8 @@ from datetime import datetime
 from dateutil import parser
 
 # Django
-from django.template import TemplateSyntaxError
-from django.test import TestCase, modify_settings
+from django.template import Context, Template, TemplateSyntaxError
+from django.test import TestCase, modify_settings, override_settings
 
 # Alliance Auth
 from allianceauth.tests.auth_utils import AuthUtils
@@ -20,6 +20,7 @@ from app_utils.urls import reverse as reverse_url
 
 # AA Forum
 from aa_forum import __version__
+from aa_forum.helper.static_files import calculate_integrity_hash
 from aa_forum.models import PersonalMessage, get_sentinel_user
 from aa_forum.templatetags.aa_forum import personal_message_unread_count
 from aa_forum.tests.utils import create_fake_user, render_template
@@ -777,28 +778,72 @@ class TestForumVersionedStatic(TestCase):
     Tests for aa_forum_static template tag
     """
 
+    @override_settings(DEBUG=False)
     def test_versioned_static(self):
         """
-        Test should return static URL string with a version
+        Test should return the versioned static
 
         :return:
         :rtype:
         """
 
-        context = {"version": __version__}
-
-        rendered_template = render_template(
-            string=(
+        context = Context(dict_={"version": __version__})
+        template_to_render = Template(
+            template_string=(
                 "{% load aa_forum %}"
-                "{% aa_forum_static 'aa_forum/css/aa-forum.min.css' %}"
-            ),
-            context=context,
+                "{% aa_forum_static 'css/aa-forum.min.css' %}"
+                "{% aa_forum_static 'javascript/aa-forum.min.js' %}"
+            )
         )
 
-        self.assertEqual(
-            first=rendered_template,
-            second=f'/static/aa_forum/css/aa-forum.min.css?v={context["version"]}',
+        rendered_template = template_to_render.render(context=context)
+
+        expected_static_css_src = (
+            f'/static/aa_forum/css/aa-forum.min.css?v={context["version"]}'
         )
+        expected_static_css_src_integrity = calculate_integrity_hash(
+            "css/aa-forum.min.css"
+        )
+        expected_static_js_src = (
+            f'/static/aa_forum/javascript/aa-forum.min.js?v={context["version"]}'
+        )
+        expected_static_js_src_integrity = calculate_integrity_hash(
+            "javascript/aa-forum.min.js"
+        )
+
+        self.assertIn(member=expected_static_css_src, container=rendered_template)
+        self.assertIn(
+            member=expected_static_css_src_integrity, container=rendered_template
+        )
+        self.assertIn(member=expected_static_js_src, container=rendered_template)
+        self.assertIn(
+            member=expected_static_js_src_integrity, container=rendered_template
+        )
+
+    @override_settings(DEBUG=True)
+    def test_versioned_static_with_debug_enabled(self) -> None:
+        """
+        Test versioned static template tag with DEBUG enabled
+
+        :return:
+        :rtype:
+        """
+
+        context = Context({"version": __version__})
+        template_to_render = Template(
+            template_string=(
+                "{% load aa_forum %}" "{% aa_forum_static 'css/aa-forum.min.css' %}"
+            )
+        )
+
+        rendered_template = template_to_render.render(context=context)
+
+        expected_static_css_src = (
+            f'/static/aa_forum/css/aa-forum.min.css?v={context["version"]}'
+        )
+
+        self.assertIn(member=expected_static_css_src, container=rendered_template)
+        self.assertNotIn(member="integrity=", container=rendered_template)
 
 
 class TestHighlightSearchTerm(TestCase):
