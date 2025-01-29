@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Added
+
+- Proper user agent for `dhooks-lite`
+
 ### Fixed
 
 - New message badges in forum view
