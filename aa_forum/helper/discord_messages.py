@@ -7,7 +7,7 @@ from datetime import datetime
 
 # Third Party
 from dhooks_lite import Embed as DhooksLiteEmbed
-from dhooks_lite import Footer, Image, Webhook
+from dhooks_lite import Footer, Image, UserAgent, Webhook
 
 # Django
 from django.utils import timezone
@@ -20,7 +20,7 @@ from app_utils.logging import LoggerAddTag
 from app_utils.urls import reverse_absolute
 
 # AA Forum
-from aa_forum import __title__
+from aa_forum import __title__, __version__
 from aa_forum.app_settings import (
     DISCORDPROXY_HOST,
     DISCORDPROXY_PORT,
@@ -28,7 +28,7 @@ from aa_forum.app_settings import (
     allianceauth_discordbot_installed,
     discordproxy_installed,
 )
-from aa_forum.constants import DISCORD_EMBED_COLOR_MAP
+from aa_forum.constants import APP_NAME, DISCORD_EMBED_COLOR_MAP, GITHUB_URL
 from aa_forum.helper.eve_images import get_character_portrait_from_evecharacter
 from aa_forum.helper.text import (
     get_first_image_url_from_text,
@@ -39,11 +39,22 @@ from aa_forum.models import Board, Message, PersonalMessage, Topic
 logger = LoggerAddTag(get_extension_logger(__name__), __title__)
 
 
+def _dhooks_lite_user_agent() -> UserAgent:
+    """
+    Set the user agent for `dhooks-lite`
+
+    :return: User agent for `dhooks-lite`
+    :rtype: UserAgent
+    """
+
+    return UserAgent(name=APP_NAME, url=GITHUB_URL, version=__version__)
+
+
 def _aadiscordbot_send_private_message(
     user_id: int, level: str, title: str, message: str, embed_message: bool = True
 ) -> None:
     """
-    Try to send a PM to a user on Discord via allianceauth-discordbot
+    Try to send a PM to a user on Discord via `allianceauth-discordbot`
 
     :param user_id:
     :type user_id:
@@ -95,7 +106,7 @@ def _discordproxy_send_private_message(
     user_id: int, level: str, title: str, message: str, embed_message: bool = True
 ):
     """
-    Try to send a PM to a user on Discord via discordproxy
+    Try to send a PM to a user on Discord via `discordproxy`
 
     :param user_id:
     :type user_id:
@@ -263,7 +274,9 @@ def send_message_to_discord_webhook(
     :rtype:
     """
 
-    discord_webhook = Webhook(url=board.discord_webhook)
+    discord_webhook = Webhook(
+        url=board.discord_webhook, user_agent=_dhooks_lite_user_agent()
+    )
     message_to_send = prepare_message_for_discord(message=message.message)
     embed_color = DISCORD_EMBED_COLOR_MAP.get("info", None)
     image_url = get_first_image_url_from_text(text=message.message)
