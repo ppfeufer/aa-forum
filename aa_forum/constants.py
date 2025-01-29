@@ -15,6 +15,11 @@ APP_NAME = "aa-forum"
 GITHUB_URL = f"https://github.com/ppfeufer/{APP_NAME}"
 USER_AGENT = f"{APP_NAME}/{__version__} ({GITHUB_URL})"
 
+# aa-forum/aa_forum
+AA_FORUM_BASE_DIR = os.path.join(os.path.dirname(__file__))
+# aa-forum/aa_forum/static/aa_forum
+AA_FORUM_STATIC_DIR = os.path.join(AA_FORUM_BASE_DIR, "static", "aa_forum")
+
 # All internal URLs need to start with this prefix
 # to prevent conflicts with user-generated forum URLs
 INTERNAL_URL_PREFIX = "-"
@@ -25,15 +30,8 @@ DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER = 999999
 # Search stop words. These words and characters will be removed from the search phrase
 SEARCH_STOPWORDS = ['"', "<", ">", "(", ")", "{", "}"]
 
-# Get stopwords file list (Files downloaded from: https://github.com/stopwords-iso)
-file_list = glob.glob(
-    os.path.join(
-        os.path.abspath(os.path.dirname(__file__)), "search/stopwords", "*.json"
-    )
-)
-
-# Add stopwords from all files
-for file in file_list:
+# Add stopwords from all files (Files downloaded from: https://github.com/stopwords-iso)
+for file in glob.glob(os.path.join(AA_FORUM_BASE_DIR, "search/stopwords", "*.json")):
     with open(file, encoding="utf-8") as f:
         SEARCH_STOPWORDS.extend(json.load(f))
 
@@ -57,6 +55,3 @@ DISCORD_EMBED_COLOR_MAP = {
 }
 
 DISCORD_EMBED_MESSAGE_LENGTH = 1000
-
-AA_FORUM_BASE_DIR = os.path.join(os.path.dirname(__file__))
-AA_FORUM_STATIC_DIR = os.path.join(AA_FORUM_BASE_DIR, "static", "aa_forum")
