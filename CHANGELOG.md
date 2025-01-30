@@ -35,6 +35,8 @@ Section Order:
 ### Security
 -->
 
+## [2.10.0] - 2025-01-30
+
 ### Added
 
 - Proper user agent for `dhooks-lite`
