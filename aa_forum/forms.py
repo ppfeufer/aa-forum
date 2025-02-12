@@ -16,7 +16,8 @@ from django_ckeditor_5.widgets import CKEditor5Widget
 
 # AA Forum
 from aa_forum.app_settings import discord_messaging_proxy_available
-from aa_forum.helper.text import string_cleanup, strip_html_tags
+from aa_forum.helper.forms import message_empty
+from aa_forum.helper.text import string_cleanup
 from aa_forum.models import (
     Board,
     Category,
@@ -149,13 +150,7 @@ class NewTopicForm(ModelForm):
 
         cleaned_data = super().clean()
 
-        if (
-            cleaned_data.get("message")
-            and strip_html_tags(
-                text=string_cleanup(cleaned_data.get("message")), strip_nbsp=True
-            ).strip()
-            == ""
-        ):
+        if message_empty(message=cleaned_data.get("message")):
             raise ValidationError(_("You have forgotten the message!"))
 
         return cleaned_data
@@ -376,13 +371,7 @@ class EditMessageForm(ModelForm):
 
         cleaned_data = super().clean()
 
-        if (
-            cleaned_data.get("message")
-            and strip_html_tags(
-                text=string_cleanup(cleaned_data.get("message")), strip_nbsp=True
-            ).strip()
-            == ""
-        ):
+        if message_empty(message=cleaned_data.get("message")):
             raise ValidationError(_("You have forgotten the message!"))
 
         return cleaned_data
@@ -587,13 +576,7 @@ class NewPersonalMessageForm(ModelForm):
 
         cleaned_data = super().clean()
 
-        if (
-            cleaned_data.get("message")
-            and strip_html_tags(
-                text=string_cleanup(cleaned_data.get("message")), strip_nbsp=True
-            ).strip()
-            == ""
-        ):
+        if message_empty(message=cleaned_data.get("message")):
             raise ValidationError(_("You have forgotten the message!"))
 
         return cleaned_data
@@ -651,13 +634,7 @@ class ReplyPersonalMessageForm(ModelForm):
 
         cleaned_data = super().clean()
 
-        if (
-            cleaned_data.get("message")
-            and strip_html_tags(
-                text=string_cleanup(cleaned_data.get("message")), strip_nbsp=True
-            ).strip()
-            == ""
-        ):
+        if message_empty(message=cleaned_data.get("message")):
             raise ValidationError(_("You have forgotten the message!"))
 
         return cleaned_data
