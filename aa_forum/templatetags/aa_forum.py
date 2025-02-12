@@ -12,7 +12,6 @@ from bs4 import BeautifulSoup
 
 # Django
 from django import template
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.template.defaulttags import register
 from django.templatetags.static import static
@@ -29,7 +28,7 @@ from app_utils.urls import reverse as reverse_url
 
 # AA Forum
 from aa_forum import __title__, __version__
-from aa_forum.app_settings import aa_timezones_installed
+from aa_forum.app_settings import aa_timezones_installed, debug_enabled
 from aa_forum.constants import SEARCH_STOPWORDS
 from aa_forum.helper.static_files import calculate_integrity_hash
 from aa_forum.models import PersonalMessage
@@ -95,7 +94,7 @@ def aa_forum_static(relative_file_path: str, script_type: str = None) -> str | N
     # Integrity hash calculation only for non-debug mode
     sri_string = (
         f' integrity="{calculate_integrity_hash(relative_file_path)}" crossorigin="anonymous"'
-        if not settings.DEBUG
+        if not debug_enabled()
         else ""
     )
 
