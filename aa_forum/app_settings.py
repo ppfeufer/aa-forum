@@ -4,6 +4,9 @@ App settings
 This module provides functions to check if certain apps are installed and active
 """
 
+# Standard Library
+from re import RegexFlag
+
 # Django
 from django.apps import apps
 from django.conf import settings
@@ -68,3 +71,14 @@ def aa_timezones_installed() -> bool:
     """
 
     return apps.is_installed(app_name="timezones")
+
+
+def debug_enabled() -> RegexFlag:
+    """
+    Check if DEBUG is enabled
+
+    :return:
+    :rtype:
+    """
+
+    return settings.DEBUG

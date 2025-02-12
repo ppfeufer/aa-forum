@@ -37,6 +37,7 @@ Section Order:
 
 ### Changed
 
+- Debug check moved to function
 - Check for empty messages improved
 
 ## [2.10.0] - 2025-01-30
