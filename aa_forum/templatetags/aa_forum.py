@@ -119,7 +119,7 @@ def aa_forum_static(relative_file_path: str, script_type: str = None) -> str | N
             f'<script{js_type} src="{versioned_url}"{sri_string}></script>'
         )
 
-    return None
+    return None  # pragma: no cover
 
 
 @register.filter
