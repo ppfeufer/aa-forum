@@ -3,12 +3,13 @@ Test for app_settings.py
 """
 
 # Django
-from django.test import TestCase, modify_settings
+from django.test import TestCase, modify_settings, override_settings
 
 # AA Forum
 from aa_forum.app_settings import (
     aa_timezones_installed,
     allianceauth_discordbot_installed,
+    debug_enabled,
     discord_messaging_proxy_available,
 )
 
@@ -72,3 +73,31 @@ class TestModulesInstalled(TestCase):
         """
 
         self.assertFalse(expr=aa_timezones_installed())
+
+
+class TestDebugCheck(TestCase):
+    """
+    Test if debug is enabled
+    """
+
+    @override_settings(DEBUG=True)
+    def test_debug_enabled_with_debug_true(self) -> None:
+        """
+        Test debug_enabled with DEBUG = True
+
+        :return:
+        :rtype:
+        """
+
+        self.assertTrue(debug_enabled())
+
+    @override_settings(DEBUG=False)
+    def test_debug_enabled_with_debug_false(self) -> None:
+        """
+        Test debug_enabled with DEBUG = False
+
+        :return:
+        :rtype:
+        """
+
+        self.assertFalse(debug_enabled())

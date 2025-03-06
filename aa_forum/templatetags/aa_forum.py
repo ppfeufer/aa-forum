@@ -29,7 +29,7 @@ from app_utils.urls import reverse as reverse_url
 # AA Forum
 from aa_forum import __title__, __version__
 from aa_forum.app_settings import aa_timezones_installed, debug_enabled
-from aa_forum.constants import SEARCH_STOPWORDS
+from aa_forum.constants import PACKAGE_NAME, SEARCH_STOPWORDS
 from aa_forum.helper.static_files import calculate_integrity_hash
 from aa_forum.models import PersonalMessage
 
@@ -70,7 +70,7 @@ def aa_forum_static(relative_file_path: str, script_type: str = None) -> str | N
     """
     Versioned static URL
 
-    :param relative_file_path: The file path relative to the `aa-forum/aa_forum/static/aa_forum` folder
+    :param relative_file_path: The file path relative to the `{APP_NAME}/{PACKAGE_NAME}/static/{PACKAGE_NAME}` folder
     :type relative_file_path: str
     :param script_type: The script type
     :type script_type: str
@@ -88,7 +88,7 @@ def aa_forum_static(relative_file_path: str, script_type: str = None) -> str | N
     if file_type not in ["css", "js"]:
         raise ValueError(f"Unsupported file type: {file_type}")
 
-    static_file_path = os.path.join("aa_forum", relative_file_path)
+    static_file_path = os.path.join(PACKAGE_NAME, relative_file_path)
     static_url = static(static_file_path)
 
     # Integrity hash calculation only for non-debug mode
@@ -107,19 +107,23 @@ def aa_forum_static(relative_file_path: str, script_type: str = None) -> str | N
         else static_url + "?v=" + __version__
     )
 
+    return_value = None
+
     # Return the versioned URL with integrity hash for CSS
     if file_type == "css":
-        return mark_safe(f'<link rel="stylesheet" href="{versioned_url}"{sri_string}>')
+        return_value = mark_safe(
+            f'<link rel="stylesheet" href="{versioned_url}"{sri_string}>'
+        )
 
     # Return the versioned URL with integrity hash for JS files
     if file_type == "js":
         js_type = f' type="{script_type}"' if script_type else ""
 
-        return mark_safe(
+        return_value = mark_safe(
             f'<script{js_type} src="{versioned_url}"{sri_string}></script>'
         )
 
-    return None  # pragma: no cover
+    return return_value
 
 
 @register.filter

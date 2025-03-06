@@ -28,7 +28,11 @@ from aa_forum.app_settings import (
     allianceauth_discordbot_installed,
     discordproxy_installed,
 )
-from aa_forum.constants import APP_NAME, DISCORD_EMBED_COLOR_MAP, GITHUB_URL
+from aa_forum.constants import (
+    APP_NAME_VERBOSE_USERAGENT,
+    DISCORD_EMBED_COLOR_MAP,
+    GITHUB_URL,
+)
 from aa_forum.helper.eve_images import get_character_portrait_from_evecharacter
 from aa_forum.helper.text import (
     get_first_image_url_from_text,
@@ -47,7 +51,9 @@ def _dhooks_lite_user_agent() -> UserAgent:
     :rtype: UserAgent
     """
 
-    return UserAgent(name=APP_NAME, url=GITHUB_URL, version=__version__)
+    return UserAgent(
+        name=APP_NAME_VERBOSE_USERAGENT, url=GITHUB_URL, version=__version__
+    )
 
 
 def _aadiscordbot_send_private_message(

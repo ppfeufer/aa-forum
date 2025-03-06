@@ -12,13 +12,16 @@ from enum import Enum
 from aa_forum import __version__
 
 APP_NAME = "aa-forum"
+APP_NAME_VERBOSE = "AA Forum"
+APP_NAME_VERBOSE_USERAGENT = "AA-Forum"
+PACKAGE_NAME = "aa_forum"
 GITHUB_URL = f"https://github.com/ppfeufer/{APP_NAME}"
-USER_AGENT = f"{APP_NAME}/{__version__} ({GITHUB_URL})"
+USER_AGENT = f"{APP_NAME_VERBOSE_USERAGENT}/{__version__} (+{GITHUB_URL})"
 
 # aa-forum/aa_forum
-AA_FORUM_BASE_DIR = os.path.join(os.path.dirname(__file__))
+APP_BASE_DIR = os.path.join(os.path.dirname(__file__))
 # aa-forum/aa_forum/static/aa_forum
-AA_FORUM_STATIC_DIR = os.path.join(AA_FORUM_BASE_DIR, "static", "aa_forum")
+APP_STATIC_DIR = os.path.join(APP_BASE_DIR, "static", PACKAGE_NAME)
 
 # All internal URLs need to start with this prefix
 # to prevent conflicts with user-generated forum URLs
@@ -31,7 +34,7 @@ DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER = 999999
 SEARCH_STOPWORDS = ['"', "<", ">", "(", ")", "{", "}"]
 
 # Add stopwords from all files (Files downloaded from: https://github.com/stopwords-iso)
-for file in glob.glob(os.path.join(AA_FORUM_BASE_DIR, "search/stopwords", "*.json")):
+for file in glob.glob(os.path.join(APP_BASE_DIR, "search/stopwords", "*.json")):
     with open(file, encoding="utf-8") as f:
         SEARCH_STOPWORDS.extend(json.load(f))
 
