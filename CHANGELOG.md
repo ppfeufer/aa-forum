@@ -42,6 +42,7 @@ Section Order:
 - Templatetag code improved
 - Debug check moved to function
 - Check for empty messages improved
+- Translations updated
 
 ## [2.10.0] - 2025-01-30
 
