@@ -17,7 +17,7 @@ from app_utils.logging import LoggerAddTag
 
 # AA Forum
 from aa_forum import __title__
-from aa_forum.constants import AA_FORUM_STATIC_DIR
+from aa_forum.constants import APP_STATIC_DIR
 
 logger = LoggerAddTag(my_logger=get_extension_logger(__name__), prefix=__title__)
 
@@ -25,15 +25,18 @@ logger = LoggerAddTag(my_logger=get_extension_logger(__name__), prefix=__title__
 def calculate_integrity_hash(relative_file_path: str) -> str:
     """
     Calculates the integrity hash for a given static file
+
     :param self:
     :type self:
-    :param relative_file_path: The file path relative to the `aa-forum/aa_forum/static/aa_forum` folder
+    :param relative_file_path: The file path relative to the `{APP_NAME}/{PACKAGE_NAME}/static/{PACKAGE_NAME}` folder
     :type relative_file_path: str
     :return: The integrity hash
     :rtype: str
     """
 
-    file_path = os.path.join(AA_FORUM_STATIC_DIR, relative_file_path)
-    integrity_hash = calculate_integrity(Path(file_path), Algorithm.SHA512)
+    file_path = os.path.join(APP_STATIC_DIR, relative_file_path)
+    integrity_hash = calculate_integrity(
+        path=Path(file_path), algorithm=Algorithm.SHA512
+    )
 
     return integrity_hash

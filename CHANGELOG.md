@@ -37,6 +37,7 @@ Section Order:
 
 ### Changed
 
+- Templatetag code improved
 - Debug check moved to function
 - Check for empty messages improved
 
