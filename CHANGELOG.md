@@ -35,6 +35,14 @@ Section Order:
 ### Security
 -->
 
+### Added
+
+- Bottom margin in mobile navigation
+
+### Removed
+
+- Right margin from search field
+
 ## [2.10.1] - 2025-03-06
 
 ### Changed
