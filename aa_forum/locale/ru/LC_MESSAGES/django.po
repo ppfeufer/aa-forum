@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2025-03-06 23:36+0100\n"
+"POT-Creation-Date: 2025-04-09 11:04+0200\n"
 "PO-Revision-Date: 2024-06-07 13:28+0000\n"
 "Last-Translator: Roycce_ <malyasov.roma@mail.ru>\n"
 "Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/ru/>\n"
@@ -111,7 +111,7 @@ msgstr "Ограничения создания новых тем для «До�
 msgid "Board name"
 msgstr "Название доски"
 
-#: aa_forum/forms.py:302 aa_forum/models.py:201
+#: aa_forum/forms.py:302 aa_forum/models.py:202
 msgid "Board description (optional)"
 msgstr "Описание доски (не обязательно)"
 
@@ -188,134 +188,134 @@ msgstr "Некорректный URL"
 msgid "Recipient"
 msgstr "Получатель"
 
-#: aa_forum/models.py:98
+#: aa_forum/models.py:99
 msgid "AA-Forum"
 msgstr "АА-форум"
 
-#: aa_forum/models.py:102
+#: aa_forum/models.py:103
 msgid "Can access the AA-Forum module"
 msgstr "Имеет доступ к модулю АА-форум"
 
-#: aa_forum/models.py:105
+#: aa_forum/models.py:106
 msgid "Can manage the AA-Forum module (Category, topics and messages)"
 msgstr "Может управлять модулем АА-форум (категории, темы и сообщения)"
 
-#: aa_forum/models.py:152
+#: aa_forum/models.py:153
 msgid "category"
 msgstr "категория"
 
-#: aa_forum/models.py:153
+#: aa_forum/models.py:154
 msgid "categories"
 msgstr "категории"
 
-#: aa_forum/models.py:209
+#: aa_forum/models.py:210
 #, fuzzy
 #| msgid "Discord webhook URL for the channel to post about new topics in this board. (This setting is optional)"
 msgid "Discord webhook URL for the channel to post about new topics in this board. (This setting is optional)"
 msgstr "Discord вебхук URL канала для сообщений о новых темах на доске. (Настройка не обязательна)"
 
-#: aa_forum/models.py:216
+#: aa_forum/models.py:217
 msgid "Use this Discord webhook for replies as well? When activated every reply to any topic in this board will be posted to the defined Discord channel. (Child boards are excluded) Chose wisely! (Default: NO)"
 msgstr "Использовать данный Discord Webhook для ответов? В случае активации каждый ответ в любой теме доски будет отправлен в канал Discord. (Дочерние доски не учитываются) Использовать с умом! (По умолчанию: НЕТ)"
 
-#: aa_forum/models.py:234
+#: aa_forum/models.py:235
 #, fuzzy
 #| msgid "This will restrict access to this board to the selected groups. If no groups are selected, everyone who can access the forum can also access this board. (This setting is optional)"
 msgid "This will restrict access to this board to the selected groups. If no groups are selected, everyone who can access the forum can also access this board. (This setting is optional)"
 msgstr "Только перечисленные группы будут иметь доступ к доске. Если группы не выбраны, все пользователи форума будут иметь доступ к доске. (Настройка не обязательна)"
 
-#: aa_forum/models.py:242
+#: aa_forum/models.py:243
 msgid "Mark this board as an \"Announcement Board\", meaning that only certain selected groups can start new topics. All others who have access to this board will still be able to discuss in the topics though. This setting will not be inherited to child boards. (Default: NO)"
 msgstr "Пометка «Доска оповещений» обозначает, что только определенные группы могут начинать новые темы. Все остальные, кто имеет доступ, могут участвовать в обсуждениях. Эта настройка не распространяется на дочерние доски. (По умолчанию: НЕТ)"
 
-#: aa_forum/models.py:253
+#: aa_forum/models.py:254
 msgid "User in at least one of the selected groups will be able to start topics in \"Announcement Boards\". If no group is selected, only forum admins can do so. This setting will not be inherited to child boards. (Hint: These restrictions only take effect when a board is marked as \"Announcement Board\", see checkbox above.)"
 msgstr "Пользователи из перечисленных групп смогут создавать новые темы на «Досках оповещений». Если группы не указаны, только админы форума смогут это делать. Эта настройка не распространяется на дочерние доски. (Подсказка: Это ограничение работает только для «Досок оповещений», см. настройку выше.)"
 
-#: aa_forum/models.py:291
+#: aa_forum/models.py:292
 msgid "board"
 msgstr "доска"
 
-#: aa_forum/models.py:292
+#: aa_forum/models.py:293
 msgid "boards"
 msgstr "доски"
 
-#: aa_forum/models.py:364
+#: aa_forum/models.py:365
 #, python-brace-format
 msgid "<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href=\"{self.topic_url}\">{self._topic.subject}</a></p>"
 msgstr "<h4>Предупреждение!</h4><p>На доске уже есть тема с таким же названием.</p><p>См.: <a href=\"{self.topic_url}\">{self._topic.subject}</a></p>"
 
-#: aa_forum/models.py:593
+#: aa_forum/models.py:594
 msgid "topic"
 msgstr "тема"
 
-#: aa_forum/models.py:594
+#: aa_forum/models.py:595
 msgid "topics"
 msgstr "темы"
 
-#: aa_forum/models.py:773
+#: aa_forum/models.py:774
 msgid "message"
 msgstr "сообщение"
 
-#: aa_forum/models.py:774
+#: aa_forum/models.py:775
 msgid "messages"
 msgstr "сообщения"
 
-#: aa_forum/models.py:916
+#: aa_forum/models.py:917
 msgid "personal message"
 msgstr "личное сообщение"
 
-#: aa_forum/models.py:917
+#: aa_forum/models.py:918
 msgid "personal messages"
 msgstr "личные сообщения"
 
-#: aa_forum/models.py:971
+#: aa_forum/models.py:972
 msgid "Messages per page"
 msgstr "Сообщений на странице"
 
-#: aa_forum/models.py:972
+#: aa_forum/models.py:973
 msgid "Topics per page"
 msgstr "Тем на странице"
 
-#: aa_forum/models.py:973
+#: aa_forum/models.py:974
 msgid "User signature length"
 msgstr "Длина подписи пользователя"
 
-#: aa_forum/models.py:979
+#: aa_forum/models.py:980
 msgid "How many messages per page should be displayed in a forum topic? (Default: 15)"
 msgstr "Сколько сообщений отображать на странице? (По умолчанию: 15)"
 
-#: aa_forum/models.py:987
+#: aa_forum/models.py:988
 msgid "How many topics per page should be displayed in a forum category? (Default: 10)"
 msgstr "Сколько тем отображать на странице в категории? (По умолчанию: 10)"
 
-#: aa_forum/models.py:995
+#: aa_forum/models.py:996
 msgid "How long (Number of characters) is a user's signature allowed to be? (Default: 750)"
 msgstr "Какой длины (количество символов) может быть подпись пользователя? (По умолчанию: 750)"
 
-#: aa_forum/models.py:1008
+#: aa_forum/models.py:1009
 msgid "setting"
 msgstr "настройка"
 
-#: aa_forum/models.py:1009
+#: aa_forum/models.py:1010
 msgid "settings"
 msgstr "настройки"
 
-#: aa_forum/models.py:1019
+#: aa_forum/models.py:1020
 #: aa_forum/templates/aa_forum/partials/administration/settings-form.html:7
 #: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:19
 msgid "Forum settings"
 msgstr "Настройки форума"
 
-#: aa_forum/models.py:1046
+#: aa_forum/models.py:1047
 msgid "user profile"
 msgstr "профиль пользователя"
 
-#: aa_forum/models.py:1047
+#: aa_forum/models.py:1048
 msgid "user profiles"
 msgstr "профили пользователей"
 
-#: aa_forum/models.py:1057
+#: aa_forum/models.py:1058
 msgid "Forum user profile"
 msgstr "профиль пользователя"
 
