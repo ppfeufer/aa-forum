@@ -4,6 +4,7 @@ Models for AA-Forum
 
 # Standard Library
 import math
+from typing import ClassVar
 
 # Third Party
 import unidecode
@@ -280,7 +281,7 @@ class Board(models.Model):
         help_text="Shortcut for better performance",  # Don't add this to translations
     )
 
-    objects = BoardManager()
+    objects: ClassVar[BoardManager] = BoardManager()
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -582,7 +583,7 @@ class Topic(models.Model):
         help_text="Shortcut for better performance",  # Don't add this to translations
     )
 
-    objects = TopicManager()
+    objects: ClassVar[TopicManager] = TopicManager()
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -762,7 +763,7 @@ class Message(models.Model):
     message = CKEditor5Field(blank=False, config_name="extends")
     message_plaintext = models.TextField(blank=True)
 
-    objects = MessageManager()
+    objects: ClassVar[MessageManager] = MessageManager()
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -905,7 +906,7 @@ class PersonalMessage(models.Model):
     deleted_by_sender = models.BooleanField(default=False)
     deleted_by_recipient = models.BooleanField(default=False)
 
-    objects = PersonalMessageManager()
+    objects: ClassVar[PersonalMessageManager] = PersonalMessageManager()
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
@@ -997,7 +998,7 @@ class Setting(SingletonModel):
         ),
     )
 
-    objects = SettingManager()
+    objects: ClassVar[SettingManager] = SettingManager()
 
     class Meta:  # pylint: disable=too-few-public-methods
         """
