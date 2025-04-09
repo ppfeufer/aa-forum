@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2025-03-06 23:36+0100\n"
+"POT-Creation-Date: 2025-04-09 11:04+0200\n"
 "PO-Revision-Date: 2024-08-12 14:23+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Japanese <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/ja/>\n"
@@ -109,7 +109,7 @@ msgstr "\"お知らせ \"のトピック制限を開始する"
 msgid "Board name"
 msgstr "板名"
 
-#: aa_forum/forms.py:302 aa_forum/models.py:201
+#: aa_forum/forms.py:302 aa_forum/models.py:202
 msgid "Board description (optional)"
 msgstr "板の説明(オプション)"
 
@@ -186,134 +186,134 @@ msgstr "これは有効なURLではありません"
 msgid "Recipient"
 msgstr "受取人"
 
-#: aa_forum/models.py:98
+#: aa_forum/models.py:99
 msgid "AA-Forum"
 msgstr "匿名のフォーラム"
 
-#: aa_forum/models.py:102
+#: aa_forum/models.py:103
 msgid "Can access the AA-Forum module"
 msgstr "匿名のフォーラムのモジュールにアクセス可能です"
 
-#: aa_forum/models.py:105
+#: aa_forum/models.py:106
 msgid "Can manage the AA-Forum module (Category, topics and messages)"
 msgstr "匿名のフォーラムのモジュール（カテゴリー、トピック、メッセージ）を管理できます"
 
-#: aa_forum/models.py:152
+#: aa_forum/models.py:153
 msgid "category"
 msgstr "カテゴリー"
 
-#: aa_forum/models.py:153
+#: aa_forum/models.py:154
 msgid "categories"
 msgstr "カテゴリ分け"
 
-#: aa_forum/models.py:209
+#: aa_forum/models.py:210
 #, fuzzy
 #| msgid "Discord webhook URL for the channel to post about new topics in this board. (This setting is optional)"
 msgid "Discord webhook URL for the channel to post about new topics in this board. (This setting is optional)"
 msgstr "この板の新しいトピックについて投稿するチャンネルのDiscordウェブフックURL。(この設定はオプションです）"
 
-#: aa_forum/models.py:216
+#: aa_forum/models.py:217
 msgid "Use this Discord webhook for replies as well? When activated every reply to any topic in this board will be posted to the defined Discord channel. (Child boards are excluded) Chose wisely! (Default: NO)"
 msgstr "返信に、このDiscord ウェブフックを使用しますか？この板のトピックの返信は、定義されたDiscordチャンネルに投稿されます。(小さい板は除外されます) 慎重に選択してください！(デフォルト：NO）"
 
-#: aa_forum/models.py:234
+#: aa_forum/models.py:235
 #, fuzzy
 #| msgid "This will restrict access to this board to the selected groups. If no groups are selected, everyone who can access the forum can also access this board. (This setting is optional)"
 msgid "This will restrict access to this board to the selected groups. If no groups are selected, everyone who can access the forum can also access this board. (This setting is optional)"
 msgstr "これにより、この掲示板のアクセスが選択したグループに制限されます。グループが選択されていない場合は、フォーラムにアクセスできる全員がこの掲示板にアクセスできます。(この設定はオプションです）"
 
-#: aa_forum/models.py:242
+#: aa_forum/models.py:243
 msgid "Mark this board as an \"Announcement Board\", meaning that only certain selected groups can start new topics. All others who have access to this board will still be able to discuss in the topics though. This setting will not be inherited to child boards. (Default: NO)"
 msgstr "この板を「お知らせ」としてマークし、特定のグループだけが新しいトピックを立てられるようにします。この板にアクセスできる他の全員は、トピックで議論することができます。この設定は小さい板には引き継がれません。(デフォルト：NO）"
 
-#: aa_forum/models.py:253
+#: aa_forum/models.py:254
 msgid "User in at least one of the selected groups will be able to start topics in \"Announcement Boards\". If no group is selected, only forum admins can do so. This setting will not be inherited to child boards. (Hint: These restrictions only take effect when a board is marked as \"Announcement Board\", see checkbox above.)"
 msgstr "選択したグループの少なくとも1つに所属するユーザーは、「お知らせ」にトピックを立てることができます。グループが選択されていない場合は、フォーラム管理者のみがトピックを立てることができます。この設定は小さい板に引き継がれません。(ヒント: これらの制限は、板が「お知らせ」としてマークされている場合にのみ有効になります。(上のチェックボックスを参照してください))"
 
-#: aa_forum/models.py:291
+#: aa_forum/models.py:292
 msgid "board"
 msgstr "板"
 
-#: aa_forum/models.py:292
+#: aa_forum/models.py:293
 msgid "boards"
 msgstr "複数の板"
 
-#: aa_forum/models.py:364
+#: aa_forum/models.py:365
 #, python-brace-format
 msgid "<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href=\"{self.topic_url}\">{self._topic.subject}</a></p>"
 msgstr "<h4>警告！</h4><p>この掲示板に全く同じテーマのトピックが既に存在します</p><p>こちらをご覧ください: <a href=\"{self.topic_url}\">{self._topic.subject}</a></p>"
 
-#: aa_forum/models.py:593
+#: aa_forum/models.py:594
 msgid "topic"
 msgstr "トピック"
 
-#: aa_forum/models.py:594
+#: aa_forum/models.py:595
 msgid "topics"
 msgstr "複数のトピック"
 
-#: aa_forum/models.py:773
+#: aa_forum/models.py:774
 msgid "message"
 msgstr "メッセージ"
 
-#: aa_forum/models.py:774
+#: aa_forum/models.py:775
 msgid "messages"
 msgstr "複数のメッセージ"
 
-#: aa_forum/models.py:916
+#: aa_forum/models.py:917
 msgid "personal message"
 msgstr "個人的なメッセージ"
 
-#: aa_forum/models.py:917
+#: aa_forum/models.py:918
 msgid "personal messages"
 msgstr "複数の個人的なメッセージ"
 
-#: aa_forum/models.py:971
+#: aa_forum/models.py:972
 msgid "Messages per page"
 msgstr "ページあたりのメッセージ数"
 
-#: aa_forum/models.py:972
+#: aa_forum/models.py:973
 msgid "Topics per page"
 msgstr "ページあたりのトピック数"
 
-#: aa_forum/models.py:973
+#: aa_forum/models.py:974
 msgid "User signature length"
 msgstr "ユーザーの署名の長さ"
 
-#: aa_forum/models.py:979
+#: aa_forum/models.py:980
 msgid "How many messages per page should be displayed in a forum topic? (Default: 15)"
 msgstr "フォーラムのトピックに表示される1ページあたりのメッセージ数はいくつですか？(デフォルト：15）"
 
-#: aa_forum/models.py:987
+#: aa_forum/models.py:988
 msgid "How many topics per page should be displayed in a forum category? (Default: 10)"
 msgstr "フォーラムのカテゴリで、1ページに表示するトピック数はいくつですか？(デフォルト：10）"
 
-#: aa_forum/models.py:995
+#: aa_forum/models.py:996
 msgid "How long (Number of characters) is a user's signature allowed to be? (Default: 750)"
 msgstr "ユーザーの署名はどれくらいの長さ（文字数）まで許されますか？(デフォルト：750）"
 
-#: aa_forum/models.py:1008
+#: aa_forum/models.py:1009
 msgid "setting"
 msgstr "設定"
 
-#: aa_forum/models.py:1009
+#: aa_forum/models.py:1010
 msgid "settings"
 msgstr "各種設定"
 
-#: aa_forum/models.py:1019
+#: aa_forum/models.py:1020
 #: aa_forum/templates/aa_forum/partials/administration/settings-form.html:7
 #: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:19
 msgid "Forum settings"
 msgstr "フォーラム設定"
 
-#: aa_forum/models.py:1046
+#: aa_forum/models.py:1047
 msgid "user profile"
 msgstr "ユーザープロファイル"
 
-#: aa_forum/models.py:1047
+#: aa_forum/models.py:1048
 msgid "user profiles"
 msgstr "複数のユーザープロファイル"
 
-#: aa_forum/models.py:1057
+#: aa_forum/models.py:1058
 msgid "Forum user profile"
 msgstr "フォーラム利用者のプロフィール"
 
