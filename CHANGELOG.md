@@ -37,6 +37,7 @@ Section Order:
 
 ### Added
 
+- Type hinting for managers
 - Bottom margin in mobile navigation
 
 ### Removed
