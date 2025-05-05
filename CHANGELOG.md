@@ -35,11 +35,14 @@ Section Order:
 ### Security
 -->
 
+## [2.11.0] - 2025-05-05
+
 ### Changed
 
 - Use `text-bg-*` instead of `bg-*` to make use of Bootstraps native color contrast detection
 - Backend App renamed (AA Forum > Forum)
 - JavaScript refactored
+- Translations updated
 
 ## [2.10.2] - 2025-04-09
 
