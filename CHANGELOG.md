@@ -37,6 +37,7 @@ Section Order:
 
 ### Changed
 
+- Backend App renamed (AA Forum > Forum)
 - JavaScript refactored
 
 ## [2.10.2] - 2025-04-09
