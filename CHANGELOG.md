@@ -35,6 +35,10 @@ Section Order:
 ### Security
 -->
 
+### Changed
+
+- JavaScript refactored
+
 ## [2.10.2] - 2025-04-09
 
 ### Added
