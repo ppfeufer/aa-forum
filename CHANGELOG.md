@@ -37,6 +37,7 @@ Section Order:
 
 ### Changed
 
+- Use `text-bg-*` instead of `bg-*` to make use of Bootstraps native color contrast detection
 - Backend App renamed (AA Forum > Forum)
 - JavaScript refactored
 

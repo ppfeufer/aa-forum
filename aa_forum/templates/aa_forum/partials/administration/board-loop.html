@@ -31,7 +31,7 @@
     </div>
 
     <div class="collapse" id="collapseEditBoard-{{ board.board_obj.pk }}" style="margin-top: 1rem;">
-        <div class="card card-body bg-light mb-3 py-3">
+        <div class="card card-body text-bg-secondary mb-3 py-3">
             <p>
                 {% translate "Changing the name of this board does not change its URL part. This will remain the same to not break any possible links into this board." %}
             </p>
@@ -72,7 +72,7 @@
             </p>
 
             <div class="collapse" id="collapseNewChildBoardForm-{{ board.board_obj.pk }}">
-                <div class="card card-body bg-light mb-3 py-3">
+                <div class="card card-body text-bg-secondary mb-3 py-3">
                     <p>
                         {% translate "New boards will be added at the bottom of the board list for this category. You can move them via drag and drop to a position of your liking." %}
                     </p>
