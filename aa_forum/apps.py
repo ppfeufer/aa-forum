@@ -17,7 +17,7 @@ class AaForumConfig(AppConfig):
 
     name = "aa_forum"
     label = "aa_forum"
-    verbose_name = _(f"AA Forum v{__version__}")
+    verbose_name = _(f"Forum v{__version__}")
 
     def ready(self):
         """
