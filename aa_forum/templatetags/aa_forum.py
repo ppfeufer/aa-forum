@@ -317,7 +317,7 @@ def personal_message_unread_count(user: User) -> str:
 
     if message_count > 0:
         return_value = mark_safe(
-            s=f'<span class="badge bg-light aa-forum-badge-personal-messages-unread-count">{message_count}</span>'  # pylint: disable=line-too-long
+            s=f'<span class="badge text-bg-secondary aa-forum-badge-personal-messages-unread-count">{message_count}</span>'  # pylint: disable=line-too-long
         )
 
     return return_value
