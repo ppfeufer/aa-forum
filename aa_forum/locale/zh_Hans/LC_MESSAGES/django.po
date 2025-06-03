@@ -3,20 +3,21 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Dehao Wu <wudehao2000@163.com>, 2024.
 # Peter Pfeufer <info@ppfeufer.de>, 2024, 2025.
+# gs <baidi0823@163.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2025-05-05 22:25+0200\n"
-"PO-Revision-Date: 2025-03-02 01:06+0000\n"
-"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
+"POT-Creation-Date: 2025-06-03 11:45+0200\n"
+"PO-Revision-Date: 2025-05-22 05:03+0000\n"
+"Last-Translator: gs <baidi0823@163.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/zh_Hans/>\n"
 "Language: zh_Hans\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.10.2\n"
+"X-Generator: Weblate 5.11.4\n"
 
 #: aa_forum/__init__.py:9 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -50,7 +51,7 @@ msgstr "这个字段是必填的"
 #: aa_forum/forms.py:127 aa_forum/forms.py:362 aa_forum/forms.py:563
 #: aa_forum/forms.py:625
 msgid "Message"
-msgstr ""
+msgstr "通知"
 
 #: aa_forum/forms.py:138 aa_forum/forms.py:140 aa_forum/forms.py:187
 #: aa_forum/forms.py:189 aa_forum/forms.py:565
@@ -947,7 +948,7 @@ msgstr[0] ""
 msgid "Nothing found …"
 msgstr ""
 
-#: aa_forum/templatetags/aa_forum.py:163
+#: aa_forum/templatetags/aa_forum.py:99
 msgid "Timezone conversion"
 msgstr ""
 
