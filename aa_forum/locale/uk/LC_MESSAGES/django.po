@@ -4,20 +4,21 @@
 # "H. Peter Pfeufer" <info@ppfeufer.de>, 2023, 2024, 2025.
 # "Andrii M." <elfleg0las88@gmail.com>, 2023, 2024.
 # s0k0l -_- <salarysalo@gmail.com>, 2025.
+# M <skrypets@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2025-05-05 22:25+0200\n"
-"PO-Revision-Date: 2025-04-10 07:05+0000\n"
-"Last-Translator: s0k0l -_- <salarysalo@gmail.com>\n"
+"POT-Creation-Date: 2025-06-03 11:45+0200\n"
+"PO-Revision-Date: 2025-05-12 20:48+0000\n"
+"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Ukrainian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : (n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.11.4\n"
 
 #: aa_forum/__init__.py:9 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -40,10 +41,9 @@ msgid "Forum"
 msgstr "Форум"
 
 #: aa_forum/apps.py:20
-#, fuzzy, python-brace-format
-#| msgid "AA Forum v{__version__}"
+#, python-brace-format
 msgid "Forum v{__version__}"
-msgstr "АА форум версії{__version__}"
+msgstr "форум v{__version__}"
 
 #: aa_forum/forms.py:43
 msgid "This field is mandatory"
@@ -953,7 +953,7 @@ msgstr[3] "%(counter)s результати"
 msgid "Nothing found …"
 msgstr "Нічого не знайдено…"
 
-#: aa_forum/templatetags/aa_forum.py:163
+#: aa_forum/templatetags/aa_forum.py:99
 msgid "Timezone conversion"
 msgstr "Часова зона"
 
