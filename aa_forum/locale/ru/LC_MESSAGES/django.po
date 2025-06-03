@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2025-05-05 22:25+0200\n"
+"POT-Creation-Date: 2025-06-03 11:45+0200\n"
 "PO-Revision-Date: 2024-06-07 13:28+0000\n"
 "Last-Translator: Roycce_ <malyasov.roma@mail.ru>\n"
 "Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/ru/>\n"
@@ -960,7 +960,7 @@ msgstr[3] "%(counter)s Результатов"
 msgid "Nothing found …"
 msgstr "Ничего не найдено…"
 
-#: aa_forum/templatetags/aa_forum.py:163
+#: aa_forum/templatetags/aa_forum.py:99
 msgid "Timezone conversion"
 msgstr "Преобразование временной зоны"
 
