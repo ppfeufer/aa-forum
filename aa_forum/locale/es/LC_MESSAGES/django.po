@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# "H. Peter Pfeufer" <info@ppfeufer.de>, 2023, 2024.
+# "H. Peter Pfeufer" <info@ppfeufer.de>, 2023, 2024, 2025.
 # Zigor Fernandez Moreno <sietehierros@gmail.com>, 2023, 2024.
 # Geovanny David Morales De la cruz <moralesgeovanny1996@gmail.com>, 2023, 2024.
 # Mak3rco <depormanuf1@gmail.com>, 2024.
@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2025-06-03 11:45+0200\n"
-"PO-Revision-Date: 2024-05-10 14:06+0000\n"
-"Last-Translator: Mak3rco <depormanuf1@gmail.com>\n"
+"POT-Creation-Date: 2025-08-05 08:39+0200\n"
+"PO-Revision-Date: 2025-07-29 20:18+0000\n"
+"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Spanish <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.3\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #: aa_forum/__init__.py:9 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -80,8 +80,6 @@ msgid "Name"
 msgstr "Nombre"
 
 #: aa_forum/forms.py:226 aa_forum/forms.py:243
-#, fuzzy
-#| msgid "Category Name"
 msgid "Category name"
 msgstr "Nombre de la Categoría"
 
@@ -102,26 +100,18 @@ msgid "Use this Discord webhook for replies as well?"
 msgstr ""
 
 #: aa_forum/forms.py:290
-#, fuzzy
-#| msgid "Mark Board as 'Announcement Board'"
 msgid "Mark board as \"Announcement Board\""
 msgstr "Marcar tablero como «Tablero de anuncios»"
 
 #: aa_forum/forms.py:292
-#, fuzzy
-#| msgid "Start Topic Restrictions for 'Announcement Boards'"
 msgid "Start topic restrictions for \"Announcement Boards\""
 msgstr "Restricciones del tema inicial para los «tablón de anuncios»"
 
 #: aa_forum/forms.py:296
-#, fuzzy
-#| msgid "Board Name"
 msgid "Board name"
 msgstr "Nombre del Tablón"
 
 #: aa_forum/forms.py:302 aa_forum/models.py:202
-#, fuzzy
-#| msgid "Board Description (Optional)"
 msgid "Board description (optional)"
 msgstr "Descripción del Tablero (opcional)"
 
@@ -170,8 +160,6 @@ msgid "Signature"
 msgstr "Firma"
 
 #: aa_forum/forms.py:439
-#, fuzzy
-#| msgid "Website Title"
 msgid "Website title"
 msgstr "Título de la página"
 
