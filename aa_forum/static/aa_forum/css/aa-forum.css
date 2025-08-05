@@ -112,9 +112,9 @@
 
     .aa-forum .aa-forum-board-last-post .last-post-information {
         overflow: hidden;
+        overflow-wrap: normal;
         text-overflow: ellipsis;
         white-space: nowrap;
-        word-wrap: normal;
     }
 
     .aa-forum .aa-forum-legend > span {
