@@ -1,4 +1,4 @@
-/* global aaForumJsSettings */
+/* global aaForumJsSettings, fetchGet, fetchPost */
 
 $(document).ready(() => {
     'use strict';
@@ -12,44 +12,45 @@ $(document).ready(() => {
         const message = element.data('message');
         const messageFolder = element.data('message-folder');
 
-        const getMessageToRead = $.post(
-            aaForumJsSettings.url.readMessage,
-            {
-                csrfmiddlewaretoken: aaForumJsSettings.form.csrfToken,
+        fetchPost({
+            url: aaForumJsSettings.url.readMessage,
+            csrfToken: aaForumJsSettings.form.csrfToken,
+            payload: {
                 sender: sender,
                 recipient: recipient,
                 message: message
-            }
-        );
+            },
+            responseIsJson: false
+        })
+            .then((data) => {
+                if (undefined === data || data === '') {
+                    return;
+                }
 
-        getMessageToRead.done((data) => {
-            if (undefined === data || data === '') {
-                return;
-            }
+                const messageContainer = $(`#aa-forum-personal-message-id-${message} .card-aa-forum-personal-messages-message`);
+                messageContainer.html(data).removeClass('d-none');
 
-            const messageContainer = $(`#aa-forum-personal-message-id-${message} .card-aa-forum-personal-messages-message`);
-            messageContainer.html(data).removeClass('d-none');
+                if (messageFolder === 'inbox') {
+                    $(`#aa-forum-personal-message-id-${message} .card-aa-forum-personal-messages-item`)
+                        .removeClass('panel-aa-forum-personal-messages-item-unread');
 
-            if (messageFolder === 'inbox') {
-                const urlUnreadMessagesCount = aaForumJsSettings.url.unreadMessagesCount;
-
-                $(`#aa-forum-personal-message-id-${message} .card-aa-forum-personal-messages-item`)
-                    .removeClass('panel-aa-forum-personal-messages-item-unread');
-
-                // Get new unread count
-                const getUnreadMessageCount = $.get(urlUnreadMessagesCount);
-
-                getUnreadMessageCount.done((data) => {
-                    if (data.unread_messages_count > 0) {
-                        $('.aa-forum-badge-personal-messages-unread-count')
-                            .html(data.unread_messages_count);
-                    }
-
-                    if (data.unread_messages_count === 0) {
-                        $('.aa-forum-badge-personal-messages-unread-count').remove();
-                    }
-                });
-            }
-        });
+                    // Get new unread count
+                    fetchGet({url: aaForumJsSettings.url.unreadMessagesCount})
+                        .then((data) => {
+                            if (data.unread_messages_count === 0) {
+                                $('.aa-forum-badge-personal-messages-unread-count').remove();
+                            } else {
+                                $('.aa-forum-badge-personal-messages-unread-count')
+                                    .html(data.unread_messages_count);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error fetching unread messages count:', error);
+                        });
+                }
+            })
+            .catch((error) => {
+                console.error('Error reading message:', error);
+            });
     });
 });
