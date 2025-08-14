@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2025-08-05 08:39+0200\n"
+"POT-Creation-Date: 2025-08-14 09:07+0200\n"
 "PO-Revision-Date: 2024-05-10 14:06+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Polish <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/pl/>\n"
@@ -952,40 +952,40 @@ msgstr ""
 msgid "Timezone conversion"
 msgstr ""
 
-#: aa_forum/views/admin.py:169
+#: aa_forum/views/admin.py:170
 msgid "<h4>Success!</h4><p>Category created.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:212
+#: aa_forum/views/admin.py:213
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Category name changed from \"{category_name_old}\" to \"{category.name}\".</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:255
+#: aa_forum/views/admin.py:256
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Category \"{category_name}\" removed.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:311 aa_forum/views/admin.py:371
+#: aa_forum/views/admin.py:312 aa_forum/views/admin.py:372
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{new_board.name}\" created.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:430
+#: aa_forum/views/admin.py:431
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{board.name}\" changed.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:475
+#: aa_forum/views/admin.py:476
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{board_name}\" removed.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:587
+#: aa_forum/views/admin.py:599
 msgid "<h4>Success!</h4><p>Settings updated.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:597 aa_forum/views/personal_messages.py:122
+#: aa_forum/views/admin.py:609 aa_forum/views/personal_messages.py:122
 #: aa_forum/views/personal_messages.py:249 aa_forum/views/profile.py:70
 msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
 msgstr ""
