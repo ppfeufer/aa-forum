@@ -35,6 +35,8 @@ Section Order:
 ### Security
 -->
 
+## [2.13.0] - 2025-08-14
+
 ### Changed
 
 - SVG sprite optimizations
