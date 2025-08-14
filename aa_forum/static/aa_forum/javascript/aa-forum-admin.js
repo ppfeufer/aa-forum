@@ -1,4 +1,4 @@
-/* global aaForumJsSettings */
+/* global aaForumJsSettings, fetchPost */
 
 $(document).ready(() => {
     'use strict';
@@ -46,13 +46,19 @@ $(document).ready(() => {
             });
 
             // Update DB
-            $.post(
-                aaForumJsSettings.url.categoryOrder,
-                {
-                    categories: JSON.stringify(categories),
-                    csrfmiddlewaretoken: aaForumJsSettings.form.csrfToken
+            fetchPost({
+                url: aaForumJsSettings.url.categoryOrder,
+                csrfToken: aaForumJsSettings.form.csrfToken,
+                payload: {
+                    categories: categories
                 }
-            );
+            })
+                .then(() => {
+                    console.log('Categories sorted successfully.');
+                })
+                .catch((error) => {
+                    console.error('Error sorting categories:', error);
+                });
         }
     }).disableSelection();
 
@@ -103,13 +109,19 @@ $(document).ready(() => {
                     });
 
                     // Update DB
-                    $.post(
-                        aaForumJsSettings.url.boardOrder,
-                        {
-                            boards: JSON.stringify(boards),
-                            csrfmiddlewaretoken: aaForumJsSettings.form.csrfToken
+                    fetchPost({
+                        url: aaForumJsSettings.url.boardOrder,
+                        csrfToken: aaForumJsSettings.form.csrfToken,
+                        payload: {
+                            boards: boards
                         }
-                    );
+                    })
+                        .then(() => {
+                            console.log('Boards sorted successfully.');
+                        })
+                        .catch((error) => {
+                            console.error('Error sorting boards:', error);
+                        });
                 }
             }).disableSelection();
         });
@@ -158,13 +170,19 @@ $(document).ready(() => {
                     });
 
                     // Update DB
-                    $.post(
-                        aaForumJsSettings.url.boardOrder,
-                        {
-                            boards: JSON.stringify(childBoards),
-                            csrfmiddlewaretoken: aaForumJsSettings.form.csrfToken
+                    fetchPost({
+                        url: aaForumJsSettings.url.boardOrder,
+                        csrfToken: aaForumJsSettings.form.csrfToken,
+                        payload: {
+                            boards: childBoards
                         }
-                    );
+                    })
+                        .then(() => {
+                            console.log('Child boards sorted successfully.');
+                        })
+                        .catch((error) => {
+                            console.error('Error sorting child boards:', error);
+                        });
                 }
             }).disableSelection();
         });

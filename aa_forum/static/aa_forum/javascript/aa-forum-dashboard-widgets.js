@@ -1,4 +1,4 @@
-/* global aaForumDashboardWidgetsOverride, bootstrap, deepMerge */
+/* global aaForumDashboardWidgetsOverride, bootstrap, objectDeepMerge, fetchGet */
 
 /* jshint -W097 */
 'use strict';
@@ -20,9 +20,10 @@ const aaForumDashboardWidgetsDefaults = {
  *
  * @type {Object}
  */
-let aaForumDashboardWidgetsSettings = aaForumDashboardWidgetsDefaults; // eslint-disable-line no-unused-vars
+let aaForumDashboardWidgetsSettings = aaForumDashboardWidgetsDefaults;
+
 if (typeof aaForumDashboardWidgetsOverride !== 'undefined') {
-    aaForumDashboardWidgetsSettings = deepMerge( // eslint-disable-line no-unused-vars
+    aaForumDashboardWidgetsSettings = objectDeepMerge(
         aaForumDashboardWidgetsDefaults,
         aaForumDashboardWidgetsOverride
     );
@@ -39,17 +40,13 @@ if (aaForumDashboardWidgetsSettings.widget.unreadTopics.element !== null) {
     /**
      * Fetch the unread topics widget content via AJAX.
      */
-    fetch(aaForumDashboardWidgetsSettings.widget.unreadTopics.url.ajax)
-        .then((response) => {
-            if (response.ok) {
-                return response.text();
-            }
-
-            throw new Error('Something went wrong');
-        })
-        .then((responseText) => {
-            if (responseText !== '') {
-                aaForumUnreadTopicsWidgetContent.innerHTML = responseText;
+    fetchGet({
+        url: aaForumDashboardWidgetsSettings.widget.unreadTopics.url.ajax,
+        responseIsJson: false
+    })
+        .then((data) => {
+            if (data !== '') {
+                aaForumUnreadTopicsWidgetContent.innerHTML = data;
 
                 // Show the widget area
                 const showWidgetArea = new bootstrap.Collapse(aaForumDashboardWidgetsSettings.wrapper.element, { // eslint-disable-line no-unused-vars
@@ -69,6 +66,6 @@ if (aaForumDashboardWidgetsSettings.widget.unreadTopics.element !== null) {
             }
         })
         .catch((error) => {
-            console.log(error);
+            console.error(error);
         });
 }

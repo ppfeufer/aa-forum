@@ -3,6 +3,7 @@ Personal Messages Views
 """
 
 # Standard Library
+import json
 from http import HTTPStatus
 
 # Django
@@ -11,7 +12,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
-from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -387,41 +387,55 @@ def ajax_read_message(request: WSGIRequest, folder: str) -> HttpResponse:
 
     data = {}
 
-    if request.method == "POST":
-        try:
-            sender_id = int(request.POST["sender"])
-            recipient_id = int(request.POST["recipient"])
-            message_id = int(request.POST["message"])
-        except MultiValueDictKeyError:
-            # Fail silently
-            pass
-        else:
-            if (folder == "inbox" and request.user.id == recipient_id) or (
-                folder == "sent-messages" and request.user.id == sender_id
-            ):
-                try:
-                    message = PersonalMessage.objects.get(
-                        pk=message_id, sender_id=sender_id, recipient_id=recipient_id
-                    )
-                except PersonalMessage.DoesNotExist:
-                    # Fail silently
-                    pass
-                else:
-                    # Mark message as read
-                    if folder == "inbox" and message.is_read is False:
-                        message.is_read = True
-                        message.save()
+    # Validate request method
+    if request.method != "POST":
+        return HttpResponse(status=HTTPStatus.NO_CONTENT)
 
-                    data["message"] = message
-                    data["folder"] = folder
+    # Parse and validate JSON request body
+    try:
+        request_body = json.loads(request.body)
+        required_keys = ("sender", "recipient", "message")
 
-                    return render(
-                        request=request,
-                        template_name="aa_forum/ajax-render/personal-messages/message.html",  # pylint: disable=line-too-long
-                        context=data,
-                    )
+        if not all(key in request_body for key in required_keys):
+            raise ValueError("Missing required keys")
 
-    return HttpResponse(status=HTTPStatus.NO_CONTENT)
+        sender_id = int(request_body["sender"])
+        recipient_id = int(request_body["recipient"])
+        message_id = int(request_body["message"])
+    except (json.JSONDecodeError, ValueError, TypeError, KeyError):
+        return HttpResponse(status=HTTPStatus.NO_CONTENT)
+
+    # Validate user permissions and get message
+    user_id = request.user.id
+
+    if not (
+        (folder == "inbox" and user_id == recipient_id)
+        or (folder == "sent-messages" and user_id == sender_id)
+    ):
+        return HttpResponse(status=HTTPStatus.NO_CONTENT)
+
+    try:
+        message = PersonalMessage.objects.get(
+            pk=message_id,
+            sender_id=sender_id,
+            recipient_id=recipient_id,
+        )
+    except PersonalMessage.DoesNotExist:
+        return HttpResponse(status=HTTPStatus.NO_CONTENT)
+
+    # Mark message as read if it's in inbox and unread
+    if folder == "inbox" and not message.is_read:
+        message.is_read = True
+        message.save()
+
+    data["message"] = message
+    data["folder"] = folder
+
+    return render(
+        request=request,
+        template_name="aa_forum/ajax-render/personal-messages/message.html",
+        context=data,
+    )
 
 
 @login_required

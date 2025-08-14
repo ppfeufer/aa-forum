@@ -4,6 +4,7 @@ Views for the admin area
 
 # Standard Library
 import json
+from http import HTTPStatus
 
 # Django
 from django.contrib import messages
@@ -493,10 +494,11 @@ def ajax_category_order(request: WSGIRequest) -> JsonResponse:
     :rtype:
     """
 
-    data = []
+    data = {"success": False}
 
     if request.method == "POST":
-        categories = json.loads(s=request.POST.get("categories"))
+        request_body = json.loads(request.body)
+        categories = request_body.get("categories")
 
         for category in categories:
             try:
@@ -512,14 +514,14 @@ def ajax_category_order(request: WSGIRequest) -> JsonResponse:
                 category_obj.order = category["catOrder"]
                 category_obj.save(update_fields=["order"])
 
-        data.append({"success": True})
+        data["success"] = True
 
     return JsonResponse(data=data, safe=False)
 
 
 @login_required
 @permission_required(perm="aa_forum.manage_forum")
-def ajax_board_order(request: WSGIRequest) -> JsonResponse:
+def ajax_board_order(request: WSGIRequest) -> HttpResponse | JsonResponse:
     """
     Ajax call :: Save the board order
 
@@ -529,26 +531,36 @@ def ajax_board_order(request: WSGIRequest) -> JsonResponse:
     :rtype:
     """
 
-    data = []
+    data = {"success": False}
 
     if request.method == "POST":
-        boards = json.loads(request.POST.get("boards"))
+        # Parse and validate JSON request body
+        try:
+            request_body = json.loads(request.body)
+
+            if "boards" not in request_body:
+                raise ValueError("Missing required key 'boards' in request body")
+
+            boards = request_body.get("boards")
+        except (json.JSONDecodeError, ValueError, TypeError, KeyError):
+            return HttpResponse(status=HTTPStatus.NO_CONTENT)
 
         for board in boards:
             try:
                 board_obj = Board.objects.get(pk=board["boardId"])
             except Board.DoesNotExist:
                 board_id = board["boardId"]
+
                 logger.warning(
                     msg=(
-                        f"You tried to change the order for s non existing board with ID {board_id}."  # pylint: disable=line-too-long
+                        f"You tried to change the order for a non existing board with ID {board_id}."  # pylint: disable=line-too-long
                     )
                 )
             else:
                 board_obj.order = board["boardOrder"]
                 board_obj.save(update_fields=["order"])
 
-        data.append({"success": True})
+        data["success"] = True
 
     return JsonResponse(data=data, safe=False)
 

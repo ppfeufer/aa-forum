@@ -1835,7 +1835,8 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
             path=reverse(
                 viewname="aa_forum:personal_messages_ajax_read_message", args=["inbox"]
             ),
-            data={"sender": 1, "recipient": 1, "message": 1},
+            data=json.dumps({"sender": 1, "recipient": 1, "message": 1}),
+            content_type="application/json",
         )
 
         # then
@@ -1860,7 +1861,10 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
             path=reverse(
                 viewname="aa_forum:personal_messages_ajax_read_message", args=["inbox"]
             ),
-            data={"sender": 1, "recipient": self.user_1001.pk, "message": 1},
+            data=json.dumps(
+                {"sender": 1, "recipient": self.user_1001.pk, "message": 1}
+            ),
+            content_type="application/json",
         )
 
         # then
@@ -1889,11 +1893,14 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
             path=reverse(
                 viewname="aa_forum:personal_messages_ajax_read_message", args=["inbox"]
             ),
-            data={
-                "sender": self.user_1002.pk,
-                "recipient": self.user_1001.pk,
-                "message": message.pk,
-            },
+            data=json.dumps(
+                {
+                    "sender": self.user_1002.pk,
+                    "recipient": self.user_1001.pk,
+                    "message": message.pk,
+                }
+            ),
+            content_type="application/json",
         )
 
         # then
@@ -1927,11 +1934,14 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
                 viewname="aa_forum:personal_messages_ajax_read_message",
                 args=["sent-messages"],
             ),
-            data={
-                "sender": self.user_1002.pk,
-                "recipient": self.user_1001.pk,
-                "message": message.pk,
-            },
+            data=json.dumps(
+                {
+                    "sender": self.user_1002.pk,
+                    "recipient": self.user_1001.pk,
+                    "message": message.pk,
+                }
+            ),
+            content_type="application/json",
         )
 
         # then
@@ -1964,11 +1974,14 @@ class TestPersonalMessageUI(WebTest):  # pylint: disable=too-many-public-methods
             path=reverse(
                 viewname="aa_forum:personal_messages_ajax_read_message", args=["inbox"]
             ),
-            data={
-                "sender": self.user_1002.pk,
-                "recipient": self.user_1001.pk,
-                "message": message_sent.pk,
-            },
+            data=json.dumps(
+                {
+                    "sender": self.user_1002.pk,
+                    "recipient": self.user_1001.pk,
+                    "message": message_sent.pk,
+                }
+            ),
+            content_type="application/json",
         )
 
         # then

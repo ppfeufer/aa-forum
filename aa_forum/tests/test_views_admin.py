@@ -143,18 +143,19 @@ class TestAdminViews(TestCase):
         # when
         res = self.client.post(
             path=reverse(viewname="aa_forum:admin_ajax_category_order"),
-            data={
-                "categories": json.dumps(
-                    [
+            data=json.dumps(
+                {
+                    "categories": [
                         {"catId": category_1.pk, "catOrder": 1},
                         {"catId": category_2.pk, "catOrder": 2},
                     ]
-                )
-            },
+                }
+            ),
+            content_type="application/json",
         )
 
         # then
-        self.assertListEqual(list1=res.json(), list2=[{"success": True}])
+        self.assertDictEqual(d1=res.json(), d2={"success": True})
         category_1.refresh_from_db()
         self.assertEqual(first=category_1.order, second=1)
         category_2.refresh_from_db()
@@ -175,18 +176,19 @@ class TestAdminViews(TestCase):
         # when
         res = self.client.post(
             path=reverse(viewname="aa_forum:admin_ajax_category_order"),
-            data={
-                "categories": json.dumps(
-                    [
+            data=json.dumps(
+                {
+                    "categories": [
                         {"catId": category_1.pk, "catOrder": 1},
                         {"catId": 0, "catOrder": 2},
                     ]
-                )
-            },
+                }
+            ),
+            content_type="application/json",
         )
 
         # then
-        self.assertListEqual(list1=res.json(), list2=[{"success": True}])
+        self.assertDictEqual(d1=res.json(), d2={"success": True})
         category_1.refresh_from_db()
         self.assertEqual(first=category_1.order, second=1)
 
@@ -207,18 +209,19 @@ class TestAdminViews(TestCase):
         # when
         res = self.client.post(
             path=reverse(viewname="aa_forum:admin_ajax_board_order"),
-            data={
-                "boards": json.dumps(
-                    [
+            data=json.dumps(
+                {
+                    "boards": [
                         {"boardId": board_1.pk, "boardOrder": 1},
                         {"boardId": board_2.pk, "boardOrder": 2},
                     ]
-                )
-            },
+                }
+            ),
+            content_type="application/json",
         )
 
         # then
-        self.assertListEqual(list1=res.json(), list2=[{"success": True}])
+        self.assertDictEqual(d1=res.json(), d2={"success": True})
         board_1.refresh_from_db()
         self.assertEqual(first=board_1.order, second=1)
         board_2.refresh_from_db()
@@ -271,17 +274,18 @@ class TestAdminViews(TestCase):
         # when
         res = self.client.post(
             path=reverse(viewname="aa_forum:admin_ajax_board_order"),
-            data={
-                "boards": json.dumps(
-                    [
+            data=json.dumps(
+                {
+                    "boards": [
                         {"boardId": board_1.pk, "boardOrder": 1},
                         {"boardId": 0, "boardOrder": 2},
                     ]
-                )
-            },
+                }
+            ),
+            content_type="application/json",
         )
 
         # then
-        self.assertListEqual(list1=res.json(), list2=[{"success": True}])
+        self.assertDictEqual(d1=res.json(), d2={"success": True})
         board_1.refresh_from_db()
         self.assertEqual(first=board_1.order, second=1)
