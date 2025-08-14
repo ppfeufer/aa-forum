@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="0" height="0" class="hidden">
+<svg id="aa-forum-svg-sprite" width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg">
     <!-- Icon Post -->
     <symbol id="aa-forum-icon-post" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 752 752">
         <path d="m581.45 590.4h-323.56c-2.2383 0-3.7305-1.4922-3.7305-3.7305l-0.003906-421.33c0-2.2383 1.4922-3.7305 3.7305-3.7305h323.18c2.2383 0 3.7305 1.4922 3.7305 3.7305v421.34c0.37891 1.8633-1.4883 3.7266-3.3516 3.7266zm-319.83-7.4609h315.72l0.003906-413.87h-315.72z" />

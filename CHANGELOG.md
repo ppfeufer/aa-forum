@@ -37,6 +37,7 @@ Section Order:
 
 ### Changed
 
+- SVG sprite optimizations
 - Use AA framework JS functions
 - Minimum requirements
   - Alliance Auth >= 4.9.0
