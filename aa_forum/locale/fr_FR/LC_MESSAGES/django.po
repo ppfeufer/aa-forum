@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
 "POT-Creation-Date: 2025-08-14 09:07+0200\n"
-"PO-Revision-Date: 2025-05-20 16:24+0000\n"
-"Last-Translator: balbozorre <loic.petiot2002@gmail.com>\n"
+"PO-Revision-Date: 2025-09-16 16:43+0000\n"
+"Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: French <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/fr/>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11.4\n"
+"X-Generator: Weblate 5.13.3\n"
 
 #: aa_forum/__init__.py:9 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -382,7 +382,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:26
 #: aa_forum/templates/aa_forum/view/forum/new-topic.html:35
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:32
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:32
