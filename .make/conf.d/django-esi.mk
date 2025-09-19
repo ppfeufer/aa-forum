@@ -54,7 +54,7 @@ generate-esi-stubs: check-python-venv get-compatibility-dates
 	@echo "ESI stubs generated."
 
 .PHONY: update-compatibility-date
-update-compatibility-date: check-python-venv get-compatibility-dates
+update-compatibility-date: check-python-venv generate-esi-stubs
 	@echo "Updating ESI compatibility date..."
 	@echo ""
 	@esi_date=$$(cat .esi-compatibility-date 2>/dev/null || exit 0); \
