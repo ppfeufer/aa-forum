@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
+The format is based on [Keep a Changelog] and this project adheres to [Semantic Versioning].
 
 <!--
 GitHub MD Syntax:
@@ -15,11 +14,17 @@ https://docs.github.com/assets/cb-41128/mw-1440/images/help/writing/alerts-rende
 > [!NOTE]
 > Highlights information that users should take into account, even when skimming.
 
+> [!TIP]
+> Optional information to help a user be more successful.
+
 > [!IMPORTANT]
 > Crucial information necessary for users to succeed.
 
 > [!WARNING]
-> Critical content demanding immediate user attention due to potential risks.
+> Urgent info that needs immediate user attention to avoid problems.
+
+> [!CAUTION]
+> Advised about risks or negative outcomes of certain actions.
 -->
 
 ## [In Development] - Unreleased
@@ -34,6 +39,8 @@ Section Order:
 ### Removed
 ### Security
 -->
+
+<!-- Your changes go here -->
 
 ### Changed
 
@@ -1589,13 +1596,113 @@ python manage.py migrate aa_forum
 
 - First version for Alpha testing
 
-<!-- Links -->
+<!-- Links to be updated upon release -->
 
 [#125]: https://github.com/ppfeufer/aa-forum/issues/125 "Localization of forum time"
+[0.0.1-alpha.1]: https://github.com/ppfeufer/aa-forum/releases/edit/v0.0.1-alpha.1 "v0.0.1-alpha.1"
+[0.0.1-alpha.10]: https://github.com/ppfeufer/aa-forum/compare/v0.0.1-alpha.9...v0.0.1-alpha.10 "v0.0.1-alpha.10"
+[0.0.1-alpha.11]: https://github.com/ppfeufer/aa-forum/compare/v0.0.1-alpha.10...v0.0.1-alpha.11 "v0.0.1-alpha.11"
+[0.0.1-alpha.2]: https://github.com/ppfeufer/aa-forum/compare/v0.0.1-alpha.1...v0.0.1-alpha.2 "v0.0.1-alpha.2"
+[0.0.1-alpha.3]: https://github.com/ppfeufer/aa-forum/compare/v0.0.1-alpha.2...v0.0.1-alpha.3 "v0.0.1-alpha.3"
+[0.0.1-alpha.4]: https://github.com/ppfeufer/aa-forum/compare/v0.0.1-alpha.3...v0.0.1-alpha.4 "v0.0.1-alpha.4"
+[0.0.1-alpha.5]: https://github.com/ppfeufer/aa-forum/compare/v0.0.1-alpha.4...v0.0.1-alpha.5 "v0.0.1-alpha.5"
+[0.0.1-alpha.6]: https://github.com/ppfeufer/aa-forum/compare/v0.0.1-alpha.5...v0.0.1-alpha.6 "v0.0.1-alpha.6"
+[0.0.1-alpha.7]: https://github.com/ppfeufer/aa-forum/compare/v0.0.1-alpha.6...v0.0.1-alpha.7 "v0.0.1-alpha.7"
+[0.0.1-alpha.8]: https://github.com/ppfeufer/aa-forum/compare/v0.0.1-alpha.7...v0.0.1-alpha.8 "v0.0.1-alpha.8"
+[0.0.1-alpha.9]: https://github.com/ppfeufer/aa-forum/compare/v0.0.1-alpha.8...v0.0.1-alpha.9 "v0.0.1-alpha.9"
+[0.1.0-beta.1]: https://github.com/ppfeufer/aa-forum/compare/v0.0.1-alpha.11...v0.1.0-beta.1 "v0.1.0-beta.1"
+[0.1.0-beta.10]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.9...v0.1.0-beta.10 "v0.1.0-beta.10"
+[0.1.0-beta.11]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.10...v0.1.0-beta.11 "v0.1.0-beta.11"
+[0.1.0-beta.12]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.11...v0.1.0-beta.12 "v0.1.0-beta.12"
+[0.1.0-beta.13]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.12...v0.1.0-beta.13 "v0.1.0-beta.13"
+[0.1.0-beta.14]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.13...v0.1.0-beta.14 "v0.1.0-beta.14"
+[0.1.0-beta.15]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.14...v0.1.0-beta.15 "v0.1.0-beta.15"
+[0.1.0-beta.16]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.15...v0.1.0-beta.16 "v0.1.0-beta.16"
+[0.1.0-beta.17]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.16...v0.1.0-beta.17 "v0.1.0-beta.17"
+[0.1.0-beta.18]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.17...v0.1.0-beta.18 "v0.1.0-beta.18"
+[0.1.0-beta.2]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.1...v0.1.0-beta.2 "v0.1.0-beta.2"
+[0.1.0-beta.3]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.2...v0.1.0-beta.3 "v0.1.0-beta.3"
+[0.1.0-beta.4]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.3...v0.1.0-beta.4 "v0.1.0-beta.4"
+[0.1.0-beta.5]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.4...v0.1.0-beta.5 "v0.1.0-beta.5"
+[0.1.0-beta.6]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.5...v0.1.0-beta.6 "v0.1.0-beta.6"
+[0.1.0-beta.7]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.6...v0.1.0-beta.7 "v0.1.0-beta.7"
+[0.1.0-beta.8]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.7...v0.1.0-beta.8 "v0.1.0-beta.8"
+[0.1.0-beta.9]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.8...v0.1.0-beta.9 "v0.1.0-beta.9"
+[1.0.0]: https://github.com/ppfeufer/aa-forum/compare/v0.1.0-beta.18...v1.0.0 "v1.0.0"
+[1.0.1]: https://github.com/ppfeufer/aa-forum/compare/v1.0.0...v1.0.1 "v1.0.1"
+[1.0.2]: https://github.com/ppfeufer/aa-forum/compare/v1.0.1...v1.0.2 "v1.0.2"
+[1.0.3]: https://github.com/ppfeufer/aa-forum/compare/v1.0.2...v1.0.3 "v1.0.3"
+[1.1.0]: https://github.com/ppfeufer/aa-forum/compare/v1.0.3...v1.1.0 "v1.1.0"
+[1.1.1]: https://github.com/ppfeufer/aa-forum/compare/v1.1.0...v1.1.1 "v1.1.1"
+[1.1.2]: https://github.com/ppfeufer/aa-forum/compare/v1.1.1...v1.1.2 "v1.1.2"
+[1.1.3]: https://github.com/ppfeufer/aa-forum/compare/v1.1.2...v1.1.3 "v1.1.3"
+[1.10.0]: https://github.com/ppfeufer/aa-forum/compare/v1.9.0...v1.10.0 "v1.10.0"
+[1.11.0]: https://github.com/ppfeufer/aa-forum/compare/v1.10.0...v1.11.0 "v1.11.0"
+[1.12.0]: https://github.com/ppfeufer/aa-forum/compare/v1.11.0...v1.12.0 "v1.12.0"
+[1.13.0]: https://github.com/ppfeufer/aa-forum/compare/v1.12.0...v1.13.0 "v1.13.0"
+[1.14.0]: https://github.com/ppfeufer/aa-forum/compare/v1.13.0...v1.14.0 "v1.14.0"
+[1.15.0]: https://github.com/ppfeufer/aa-forum/compare/v1.14.0...v1.15.0 "v1.15.0"
+[1.15.1]: https://github.com/ppfeufer/aa-forum/compare/v1.15.0...v1.15.1 "v1.15.1"
+[1.15.2]: https://github.com/ppfeufer/aa-forum/compare/v1.15.1...v1.15.2 "v1.15.2"
+[1.16.0]: https://github.com/ppfeufer/aa-forum/compare/v1.15.2...v1.16.0 "v1.16.0"
+[1.17.0]: https://github.com/ppfeufer/aa-forum/compare/v1.16.0...v1.17.0 "v1.17.0"
+[1.17.1]: https://github.com/ppfeufer/aa-forum/compare/v1.17.0...v1.17.1 "v1.17.1"
+[1.17.2]: https://github.com/ppfeufer/aa-forum/compare/v1.17.1...v1.17.2 "v1.17.2"
+[1.18.0]: https://github.com/ppfeufer/aa-forum/compare/v1.17.2...v1.18.0 "v1.18.0"
+[1.19.0]: https://github.com/ppfeufer/aa-forum/compare/v1.18.0...v1.19.0 "v1.19.0"
+[1.19.1]: https://github.com/ppfeufer/aa-forum/compare/v1.19.0...v1.19.1 "v1.19.1"
+[1.19.2]: https://github.com/ppfeufer/aa-forum/compare/v1.19.1...v1.19.2 "v1.19.2"
+[1.19.3]: https://github.com/ppfeufer/aa-forum/compare/v1.19.2...v1.19.3 "v1.19.3"
+[1.19.4]: https://github.com/ppfeufer/aa-forum/compare/v1.19.3...v1.19.4 "v1.19.4"
+[1.19.5]: https://github.com/ppfeufer/aa-forum/compare/v1.19.4...v1.19.5 "v1.19.5"
+[1.2.0]: https://github.com/ppfeufer/aa-forum/compare/v1.1.3...v1.2.0 "v1.2.0"
+[1.2.1]: https://github.com/ppfeufer/aa-forum/compare/v1.2.0...v1.2.1 "v1.2.1"
+[1.3.0]: https://github.com/ppfeufer/aa-forum/compare/v1.2.1...v1.3.0 "v1.3.0"
+[1.4.0]: https://github.com/ppfeufer/aa-forum/compare/v1.3.0...v1.4.0 "v1.4.0"
+[1.4.1]: https://github.com/ppfeufer/aa-forum/compare/v1.4.0...v1.4.1 "v1.4.1"
+[1.4.2]: https://github.com/ppfeufer/aa-forum/compare/v1.4.1...v1.4.2 "v1.4.2"
+[1.4.3]: https://github.com/ppfeufer/aa-forum/compare/v1.4.2...v1.4.3 "v1.4.3"
+[1.5.0]: https://github.com/ppfeufer/aa-forum/compare/v1.4.3...v1.5.0 "v1.5.0"
+[1.5.1]: https://github.com/ppfeufer/aa-forum/compare/v1.5.0...v1.5.1 "v1.5.1"
+[1.6.0]: https://github.com/ppfeufer/aa-forum/compare/v1.5.1...v1.6.0 "v1.6.0"
+[1.7.0]: https://github.com/ppfeufer/aa-forum/compare/v1.6.0...v1.7.0 "v1.7.0"
+[1.8.0]: https://github.com/ppfeufer/aa-forum/compare/v1.7.0...v1.8.0 "v1.8.0"
+[1.8.1]: https://github.com/ppfeufer/aa-forum/compare/v1.8.0...v1.8.1 "v1.8.1"
+[1.9.0]: https://github.com/ppfeufer/aa-forum/compare/v1.8.1...v1.9.0 "v1.9.0"
+[2.0.0]: https://github.com/ppfeufer/aa-forum/compare/v1.19.5...v2.0.0 "v2.0.0"
+[2.0.0-beta.1]: https://github.com/ppfeufer/aa-forum/compare/v1.19.5...v2.0.0-beta.1 "v2.0.0-beta.1"
+[2.0.0-beta.2]: https://github.com/ppfeufer/aa-forum/compare/v2.0.0-beta.1...v2.0.0-beta.2 "v2.0.0-beta.2"
+[2.0.0-beta.3]: https://github.com/ppfeufer/aa-forum/compare/v2.0.0-beta.2...v2.0.0-beta.3 "v2.0.0-beta.3"
+[2.1.0]: https://github.com/ppfeufer/aa-forum/compare/v2.0.0...v2.1.0 "v2.1.0"
+[2.1.1]: https://github.com/ppfeufer/aa-forum/compare/v2.1.0...v2.1.1 "v2.1.1"
+[2.10.0]: https://github.com/ppfeufer/aa-forum/compare/v2.9.2...v2.10.0 "v2.10.0"
+[2.10.1]: https://github.com/ppfeufer/aa-forum/compare/v2.10.0...v2.10.1 "v2.10.1"
+[2.10.2]: https://github.com/ppfeufer/aa-forum/compare/v2.10.1...v2.10.2 "v2.10.2"
+[2.11.0]: https://github.com/ppfeufer/aa-forum/compare/v2.10.2...v2.11.0 "v2.11.0"
+[2.12.0]: https://github.com/ppfeufer/aa-forum/compare/v2.11.0...v2.12.0 "v2.12.0"
+[2.12.1]: https://github.com/ppfeufer/aa-forum/compare/v2.12.0...v2.12.1 "v2.12.1"
+[2.13.0]: https://github.com/ppfeufer/aa-forum/compare/v2.12.1...v2.13.0 "v2.13.0"
+[2.2.0]: https://github.com/ppfeufer/aa-forum/compare/v2.1.1...v2.2.0 "v2.2.0"
+[2.2.1]: https://github.com/ppfeufer/aa-forum/compare/v2.2.0...v2.2.1 "v2.2.1"
+[2.3.0]: https://github.com/ppfeufer/aa-forum/compare/v2.2.1...v2.3.0 "v2.3.0"
+[2.3.1]: https://github.com/ppfeufer/aa-forum/compare/v2.3.0...v2.3.1 "v2.3.1"
+[2.4.0]: https://github.com/ppfeufer/aa-forum/compare/v2.3.1...v2.4.0 "v2.4.0"
+[2.4.1]: https://github.com/ppfeufer/aa-forum/compare/v2.4.0...v2.4.1 "v2.4.1"
+[2.5.0]: https://github.com/ppfeufer/aa-forum/compare/v2.4.1...v2.5.0 "v2.5.0"
+[2.6.0]: https://github.com/ppfeufer/aa-forum/compare/v2.5.0...v2.6.0 "v2.6.0"
+[2.7.0]: https://github.com/ppfeufer/aa-forum/compare/v2.6.0...v2.7.0 "v2.7.0"
+[2.8.0]: https://github.com/ppfeufer/aa-forum/compare/v2.7.0...v2.8.0 "v2.8.0"
+[2.8.1]: https://github.com/ppfeufer/aa-forum/compare/v2.8.0...v2.8.1 "v2.8.1"
+[2.9.0]: https://github.com/ppfeufer/aa-forum/compare/v2.8.1...v2.9.0 "v2.9.0"
+[2.9.1]: https://github.com/ppfeufer/aa-forum/compare/v2.9.0...v2.9.1 "v2.9.1"
+[2.9.2]: https://github.com/ppfeufer/aa-forum/compare/v2.9.1...v2.9.2 "v2.9.2"
 [aa time zones]: https://github.com/ppfeufer/aa-timezones "AA Time Zones"
 [aa-discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
 [admin board options]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/admin-board-options.jpg "Admin Board Options"
 [discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy "discordproxy"
+[in development]: https://github.com/ppfeufer/aa-forum/compare/v2.13.0...HEAD "In Development"
+[keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [new feature: announcement boards]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/feature-announcement-board.jpg "New Feature: Announcement Boards"
 [new feature: support for aa-timezones]: https://user-images.githubusercontent.com/2989985/195106607-8caf39c1-7343-404b-a926-e3253558b1ce.png "New Feature: Support for aa-timezones"
 [readme.md]: https://github.com/ppfeufer/aa-forum/blob/development/README.md "README.md"
+[semantic versioning]: http://semver.org/ "Semantic Versioning"
