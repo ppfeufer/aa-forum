@@ -8,7 +8,7 @@ from allianceauth.hooks import DashboardItemHook
 from allianceauth.services.hooks import MenuItemHook, UrlHook
 
 # AA Forum
-from aa_forum import __title__, urls
+from aa_forum import __title_translated__, urls
 from aa_forum.views.forum import unread_topics_count
 from aa_forum.views.widgets import dashboard_widgets
 
@@ -28,7 +28,7 @@ class AaForumMenuItem(MenuItemHook):  # pylint: disable=too-few-public-methods
         # Setup menu entry for sidebar
         MenuItemHook.__init__(
             self,
-            text=__title__,
+            text=__title_translated__,
             classes="fa-solid fa-comments",
             url_name="aa_forum:forum_index",
             navactive=["aa_forum:"],

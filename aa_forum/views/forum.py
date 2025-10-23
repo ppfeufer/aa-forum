@@ -966,8 +966,8 @@ def topic_change_lock_state(
             message=mark_safe(
                 # pylint: disable=duplicate-code
                 s=_(
-                    f'<h4>Success!</h4><p>Topic "{current_topic}" has been unlocked/re-opened.</p>'  # pylint: disable=line-too-long
-                )
+                    '<h4>Success!</h4><p>Topic "{current_topic}" has been unlocked/re-opened.</p>'
+                ).format(current_topic=current_topic)
             ),
         )
 
@@ -980,8 +980,8 @@ def topic_change_lock_state(
             message=mark_safe(
                 # pylint: disable=duplicate-code
                 s=_(
-                    f'<h4>Success!</h4><p>Topic "{current_topic}" has been locked/closed.</p>'  # pylint: disable=line-too-long
-                )
+                    '<h4>Success!</h4><p>Topic "{current_topic}" has been locked/closed.</p>'
+                ).format(current_topic=current_topic)
             ),
         )
 
@@ -1024,8 +1024,8 @@ def topic_change_sticky_state(
             request=request,
             message=mark_safe(
                 s=_(
-                    f'<h4>Success!</h4><p>Topic "{curent_topic}" is no longer "sticky".</p>'  # pylint: disable=line-too-long
-                )
+                    '<h4>Success!</h4><p>Topic "{curent_topic}" is no longer "sticky".</p>'
+                ).format(curent_topic=curent_topic)
             ),
         )
 
@@ -1038,7 +1038,9 @@ def topic_change_sticky_state(
         messages.success(
             request=request,
             message=mark_safe(
-                s=_(f'<h4>Success!</h4><p>Topic "{curent_topic}" is now "sticky".</p>')
+                s=_(
+                    '<h4>Success!</h4><p>Topic "{curent_topic}" is now "sticky".</p>'
+                ).format(curent_topic=curent_topic)
             ),
         )
 
@@ -1076,7 +1078,9 @@ def topic_delete(request: WSGIRequest, topic_id: int) -> HttpResponseRedirect:
     messages.success(
         request=request,
         message=mark_safe(
-            s=_(f'<h4>Success!</h4><p>Topic "{topic__subject}" removed.</p>')
+            s=_('<h4>Success!</h4><p>Topic "{topic_subject}" removed.</p>').format(
+                topic_subject=topic__subject
+            )
         ),
     )
 

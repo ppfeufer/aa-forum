@@ -362,7 +362,9 @@ class Board(models.Model):
             return str(
                 mark_safe(
                     s=_(
-                        f'<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{self.topic_url}">{self._topic.subject}</a></p>'  # pylint: disable=line-too-long
+                        '<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href="{topic_url}">{topic_subject}</a></p>'
+                    ).format(
+                        topic_url=self.topic_url, topic_subject=self._topic.subject
                     )
                 )
             )

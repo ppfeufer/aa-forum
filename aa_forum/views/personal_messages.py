@@ -107,8 +107,8 @@ def new_message(request: WSGIRequest) -> HttpResponse:
                 message=mark_safe(
                     # pylint: disable=duplicate-code
                     s=_(
-                        f"<h4>Success!</h4><p>Message to {recipient_main_char} sent.</p>"  # pylint: disable=line-too-long
-                    )
+                        "<h4>Success!</h4><p>Message to {recipient_main_char} sent.</p>"
+                    ).format(recipient_main_char=recipient_main_char)
                 ),
             )
 
@@ -235,7 +235,9 @@ def reply_message(request: WSGIRequest, message_id: int) -> HttpResponse:
                 request=request,
                 message=mark_safe(
                     # pylint: disable=duplicate-code
-                    s=_(f"<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>")
+                    s=_(
+                        "<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>"
+                    ).format(recipient_main_char=recipient_main_char)
                 ),
             )
 

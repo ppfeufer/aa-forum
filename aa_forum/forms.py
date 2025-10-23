@@ -478,9 +478,14 @@ class UserProfileForm(ModelForm):
         try:
             MaxLengthValidator(max_signature_length)(signature)
         except ValidationError as exc:
+            current_signature_length = len(signature)
+
             raise ValidationError(
                 _(
-                    f"Ensure your signature has at most {max_signature_length} characters. (Currently: {len(signature)})"  # pylint: disable=line-too-long
+                    "Ensure your signature has at most {max_signature_length} characters. (Currently: {current_signature_length})"
+                ).format(
+                    max_signature_length=max_signature_length,
+                    current_signature_length=current_signature_length,
                 )
             ) from exc
 
