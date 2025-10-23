@@ -210,7 +210,10 @@ def category_edit(request: WSGIRequest, category_id: int) -> HttpResponseRedirec
                 message=mark_safe(
                     # pylint: disable=duplicate-code
                     s=_(
-                        f'<h4>Success!</h4><p>Category name changed from "{category_name_old}" to "{category.name}".</p>'  # pylint: disable=line-too-long
+                        '<h4>Success!</h4><p>Category name changed from "{category_name_old}" to "{category_name_new}".</p>'
+                    ).format(
+                        category_name_old=category_name_old,
+                        category_name_new=category.name,
                     )
                 ),
             )
@@ -253,7 +256,9 @@ def category_delete(request: WSGIRequest, category_id: int) -> HttpResponseRedir
     messages.success(
         request=request,
         message=mark_safe(
-            s=_(f'<h4>Success!</h4><p>Category "{category_name}" removed.</p>')
+            s=_('<h4>Success!</h4><p>Category "{category_name}" removed.</p>').format(
+                category_name=category_name
+            )
         ),
     )
 
@@ -369,7 +374,9 @@ def board_create_child(
             messages.success(
                 request=request,
                 message=mark_safe(
-                    s=_(f'<h4>Success!</h4><p>Board "{new_board.name}" created.</p>')
+                    s=_(
+                        '<h4>Success!</h4><p>Board "{new_board_name}" created.</p>'
+                    ).format(new_board_name=new_board.name)
                 ),
             )
 
@@ -428,7 +435,9 @@ def board_edit(
             messages.success(
                 request=request,
                 message=mark_safe(
-                    s=_(f'<h4>Success!</h4><p>Board "{board.name}" changed.</p>')
+                    s=_('<h4>Success!</h4><p>Board "{board_name}" changed.</p>').format(
+                        board_name=board.name
+                    )
                 ),
             )
 
@@ -473,7 +482,9 @@ def board_delete(
     messages.success(
         request=request,
         message=mark_safe(
-            s=_(f'<h4>Success!</h4><p>Board "{board_name}" removed.</p>')
+            s=_('<h4>Success!</h4><p>Board "{board_name}" removed.</p>').format(
+                board_name=board_name
+            )
         ),
     )
 
