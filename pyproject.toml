@@ -18,7 +18,7 @@ authors = [
     { name = "Peter Pfeufer", email = "develop@ppfeufer.de" },
     { name = "Erik Kalkoken", email = "kalkoken87@gmail.com" },
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.14"
 classifiers = [
     "Environment :: Web Environment",
     "Framework :: Django",
