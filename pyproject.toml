@@ -55,11 +55,13 @@ optional-dependencies.tests-allianceauth-latest = [
     "python-dateutil",
 ]
 urls.Changelog = "https://github.com/ppfeufer/aa-forum/blob/master/CHANGELOG.md"
+urls.Codecov = "https://codecov.io/gh/ppfeufer/aa-forum"
+urls.Discord = "https://discord.gg/fjnHAmk"
 urls.Documentation = "https://github.com/ppfeufer/aa-forum/blob/master/README.md"
-urls.Donations = "https://ko-fi.com/ppfeufer"
-urls.Homepage = "https://github.com/ppfeufer/aa-forum"
-urls.Source = "https://github.com/ppfeufer/aa-forum.git"
+urls.Donation = "https://ko-fi.com/ppfeufer"
+urls.GitHub = "https://github.com/ppfeufer/aa-forum"
 urls.Tracker = "https://github.com/ppfeufer/aa-forum/issues"
+urls.Translation = "https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/"
 
 [tool.hatch.build]
 include = [
