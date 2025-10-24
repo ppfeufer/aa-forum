@@ -488,7 +488,7 @@ Please make sure to read the [Contribution Guidelines].
 [badge: license]: https://img.shields.io/github/license/ppfeufer/aa-forum "License"
 [badge: pre-commit]: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white "pre-commit"
 [badge: pre-commit.ci status]: https://results.pre-commit.ci/badge/github/ppfeufer/aa-forum/master.svg "pre-commit.ci status"
-[badge: support discord]: https://img.shields.io/discord/790364535294132234?label=discord "Support Discord"
+[badge: support discord]: https://img.shields.io/discord/399006117012832262?label=discord "Support Discord"
 [badge: supported django versions]: https://img.shields.io/pypi/djversions/aa-forum?label=django "Supported Django Versions"
 [badge: supported python versions]: https://img.shields.io/pypi/pyversions/aa-forum "Supported Python Versions"
 [badge: translation status]: https://weblate.ppfeufer.de/widget/alliance-auth-apps/aa-forum/svg-badge.svg "Translation Status"
@@ -505,5 +505,5 @@ Please make sure to read the [Contribution Guidelines].
 [screenshot: start new topic]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/start-new-topic.jpg "Start new Topic (ckEditor)"
 [screenshot: topic overview / board index]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/topic-overview.jpg "Topic Overview / Board Index"
 [screenshot: topic view]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/topic-view.jpg "Topic View"
-[support discord]: https://discord.gg/zmh52wnfvM
+[support discord]: https://discord.gg/fjnHAmk "Alliance Auth Support Discord"
 [weblate engage]: https://weblate.ppfeufer.de/engage/alliance-auth-apps/ "Weblate Translations"
