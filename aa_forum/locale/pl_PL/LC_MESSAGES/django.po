@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2025-08-14 09:07+0200\n"
+"POT-Creation-Date: 2025-11-04 11:44+0100\n"
 "PO-Revision-Date: 2024-05-10 14:06+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Polish <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/pl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 5.5.3\n"
 
-#: aa_forum/__init__.py:9 aa_forum/templates/aa_forum/base.html:6
+#: aa_forum/__init__.py:10 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
 #: aa_forum/templates/aa_forum/view/administration/categories-and-boards.html:7
 #: aa_forum/templates/aa_forum/view/administration/forum-settings.html:7
@@ -37,30 +37,25 @@ msgstr ""
 msgid "Forum"
 msgstr ""
 
-#: aa_forum/apps.py:20
-#, python-brace-format
-msgid "Forum v{__version__}"
-msgstr ""
-
 #: aa_forum/forms.py:43
 msgid "This field is mandatory"
 msgstr "To pole jest wymagane"
 
-#: aa_forum/forms.py:127 aa_forum/forms.py:362 aa_forum/forms.py:563
-#: aa_forum/forms.py:625
+#: aa_forum/forms.py:127 aa_forum/forms.py:362 aa_forum/forms.py:568
+#: aa_forum/forms.py:630
 msgid "Message"
 msgstr ""
 
 #: aa_forum/forms.py:138 aa_forum/forms.py:140 aa_forum/forms.py:187
-#: aa_forum/forms.py:189 aa_forum/forms.py:565
+#: aa_forum/forms.py:189 aa_forum/forms.py:570
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:25
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:25
 msgid "Subject"
 msgstr ""
 
 #: aa_forum/forms.py:154 aa_forum/forms.py:169 aa_forum/forms.py:375
-#: aa_forum/forms.py:390 aa_forum/forms.py:580 aa_forum/forms.py:595
-#: aa_forum/forms.py:638 aa_forum/forms.py:653
+#: aa_forum/forms.py:390 aa_forum/forms.py:585 aa_forum/forms.py:600
+#: aa_forum/forms.py:643 aa_forum/forms.py:658
 msgid "You have forgotten the message!"
 msgstr ""
 
@@ -172,17 +167,22 @@ msgstr ""
 msgid "e.g.: My Homepage"
 msgstr ""
 
-#: aa_forum/forms.py:483
-msgid "Ensure your signature has at most {max_signature_length} characters. (Currently: {len(signature)})"
+#: aa_forum/forms.py:485
+#, python-brace-format
+msgid "Ensure your signature has at most {max_signature_length} characters. (Currently: {current_signature_length})"
 msgstr ""
 
-#: aa_forum/forms.py:505
+#: aa_forum/forms.py:510
 msgid "This is not a valid URL"
 msgstr ""
 
-#: aa_forum/forms.py:564
+#: aa_forum/forms.py:569
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:21
 msgid "Recipient"
+msgstr ""
+
+#: aa_forum/helper/forms.py:32
+msgid "Error:"
 msgstr ""
 
 #: aa_forum/models.py:99
@@ -235,80 +235,80 @@ msgstr ""
 
 #: aa_forum/models.py:365
 #, python-brace-format
-msgid "<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href=\"{self.topic_url}\">{self._topic.subject}</a></p>"
+msgid "<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href=\"{topic_url}\">{topic_subject}</a></p>"
 msgstr ""
 
-#: aa_forum/models.py:594
+#: aa_forum/models.py:596
 msgid "topic"
 msgstr ""
 
-#: aa_forum/models.py:595
+#: aa_forum/models.py:597
 msgid "topics"
 msgstr ""
 
-#: aa_forum/models.py:774
+#: aa_forum/models.py:776
 msgid "message"
 msgstr ""
 
-#: aa_forum/models.py:775
+#: aa_forum/models.py:777
 msgid "messages"
 msgstr ""
 
-#: aa_forum/models.py:917
+#: aa_forum/models.py:919
 msgid "personal message"
 msgstr ""
 
-#: aa_forum/models.py:918
+#: aa_forum/models.py:920
 msgid "personal messages"
 msgstr ""
 
-#: aa_forum/models.py:972
+#: aa_forum/models.py:974
 msgid "Messages per page"
 msgstr ""
 
-#: aa_forum/models.py:973
+#: aa_forum/models.py:975
 msgid "Topics per page"
 msgstr ""
 
-#: aa_forum/models.py:974
+#: aa_forum/models.py:976
 msgid "User signature length"
 msgstr ""
 
-#: aa_forum/models.py:980
+#: aa_forum/models.py:982
 msgid "How many messages per page should be displayed in a forum topic? (Default: 15)"
 msgstr ""
 
-#: aa_forum/models.py:988
+#: aa_forum/models.py:990
 msgid "How many topics per page should be displayed in a forum category? (Default: 10)"
 msgstr ""
 
-#: aa_forum/models.py:996
+#: aa_forum/models.py:998
 msgid "How long (Number of characters) is a user's signature allowed to be? (Default: 750)"
 msgstr ""
 
-#: aa_forum/models.py:1009
+#: aa_forum/models.py:1011
 msgid "setting"
 msgstr ""
 
-#: aa_forum/models.py:1010
+#: aa_forum/models.py:1012
 msgid "settings"
 msgstr ""
 
-#: aa_forum/models.py:1020
+#: aa_forum/models.py:1022
 #: aa_forum/templates/aa_forum/partials/administration/settings-form.html:7
 #: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:19
 msgid "Forum settings"
 msgstr ""
 
-#: aa_forum/models.py:1047
+#: aa_forum/models.py:1049
 msgid "user profile"
 msgstr ""
 
-#: aa_forum/models.py:1048
+#: aa_forum/models.py:1050
 msgid "user profiles"
 msgstr ""
 
-#: aa_forum/models.py:1058
+#: aa_forum/models.py:1060
 msgid "Forum user profile"
 msgstr ""
 
@@ -958,35 +958,35 @@ msgstr ""
 
 #: aa_forum/views/admin.py:213
 #, python-brace-format
-msgid "<h4>Success!</h4><p>Category name changed from \"{category_name_old}\" to \"{category.name}\".</p>"
+msgid "<h4>Success!</h4><p>Category name changed from \"{category_name_old}\" to \"{category_name_new}\".</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:256
+#: aa_forum/views/admin.py:259
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Category \"{category_name}\" removed.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:312 aa_forum/views/admin.py:372
+#: aa_forum/views/admin.py:378
 #, python-brace-format
-msgid "<h4>Success!</h4><p>Board \"{new_board.name}\" created.</p>"
+msgid "<h4>Success!</h4><p>Board \"{new_board_name}\" created.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:431
+#: aa_forum/views/admin.py:438
 #, python-brace-format
-msgid "<h4>Success!</h4><p>Board \"{board.name}\" changed.</p>"
+msgid "<h4>Success!</h4><p>Board \"{board_name}\" changed.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:476
+#: aa_forum/views/admin.py:485
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{board_name}\" removed.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:599
+#: aa_forum/views/admin.py:610
 msgid "<h4>Success!</h4><p>Settings updated.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:609 aa_forum/views/personal_messages.py:122
-#: aa_forum/views/personal_messages.py:249 aa_forum/views/profile.py:70
+#: aa_forum/views/admin.py:620 aa_forum/views/personal_messages.py:122
+#: aa_forum/views/personal_messages.py:251 aa_forum/views/profile.py:70
 msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
 msgstr ""
 
@@ -1053,45 +1053,45 @@ msgstr ""
 msgid "<h4>Success!</h4><p>Topic \"{curent_topic}\" is no longer \"sticky\".</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1041
+#: aa_forum/views/forum.py:1042
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{curent_topic}\" is now \"sticky\".</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1079
+#: aa_forum/views/forum.py:1081
 #, python-brace-format
-msgid "<h4>Success!</h4><p>Topic \"{topic__subject}\" removed.</p>"
+msgid "<h4>Success!</h4><p>Topic \"{topic_subject}\" removed.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1121
+#: aa_forum/views/forum.py:1125
 msgid "<h4>Error!</h4><p>The message doesn't exist.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1171
+#: aa_forum/views/forum.py:1175
 msgid "<h4>Error!</h4><p>The message you were trying to modify does either not exist, or you don't have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1194
+#: aa_forum/views/forum.py:1198
 msgid "<h4>Error!</h4><p>You are not allowed to modify this message!</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1221
+#: aa_forum/views/forum.py:1225
 msgid "<h4>Success!</h4><p>The message has been updated.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1244
+#: aa_forum/views/forum.py:1248
 msgid "<h4>Error!</h4><p>Mandatory form field is empty.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1342
+#: aa_forum/views/forum.py:1346
 msgid "<h4>Error!</h4><p>You are not allowed to delete this message!</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1372
+#: aa_forum/views/forum.py:1376
 msgid "<h4>Success!</h4><p>The message has been deleted.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1397
+#: aa_forum/views/forum.py:1401
 msgid "<h4>Success!</h4><p>The message has been deleted.</p><p>This was the topics opening post, so the topic has been deleted as well.</p>"
 msgstr ""
 
@@ -1104,25 +1104,25 @@ msgstr ""
 msgid "<h4>Error!</h4><p>The message you were trying to reply to does either not exist or you are not the recipient.</p>"
 msgstr ""
 
-#: aa_forum/views/personal_messages.py:238
+#: aa_forum/views/personal_messages.py:239
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>"
 msgstr ""
 
-#: aa_forum/views/personal_messages.py:298
-#: aa_forum/views/personal_messages.py:335
+#: aa_forum/views/personal_messages.py:300
+#: aa_forum/views/personal_messages.py:337
 msgid "<h4>Error!</h4><p>The message you tried to remove does either not exist or is not yours to remove.</p>"
 msgstr ""
 
-#: aa_forum/views/personal_messages.py:314
+#: aa_forum/views/personal_messages.py:316
 msgid "<h4>Success!</h4><p>Message removed from your inbox.</p>"
 msgstr ""
 
-#: aa_forum/views/personal_messages.py:353
+#: aa_forum/views/personal_messages.py:355
 msgid "<h4>Success!</h4><p>Message has been removed from your sent messages.</p>"
 msgstr ""
 
-#: aa_forum/views/personal_messages.py:368
+#: aa_forum/views/personal_messages.py:370
 msgid "<h4>Error!</h4><p>Something went wrong.</p>"
 msgstr ""
 
