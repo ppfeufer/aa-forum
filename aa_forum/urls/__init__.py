@@ -9,7 +9,7 @@ from django.urls import include, path
 from aa_forum.constants import INTERNAL_URL_PREFIX
 from aa_forum.urls import forum, internal
 
-app_name: str = "aa_forum"
+app_name: str = "aa_forum"  # pylint: disable=invalid-name
 
 # Put it all together
 # IMPORTANT
