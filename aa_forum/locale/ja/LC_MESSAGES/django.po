@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Peter Pfeufer <info@ppfeufer.de>, 2024.
+# Peter Pfeufer <info@ppfeufer.de>, 2024, 2025.
 # Anata_no_Usiro <yt23542354m@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
 "POT-Creation-Date: 2025-11-04 11:44+0100\n"
-"PO-Revision-Date: 2024-08-12 14:23+0000\n"
+"PO-Revision-Date: 2025-11-08 09:17+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Japanese <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/ja/>\n"
 "Language: ja\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.14\n"
 
 #: aa_forum/__init__.py:10 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -61,6 +61,7 @@ msgid "You have forgotten the message!"
 msgstr "あなたはメッセージを忘れています！"
 
 #: aa_forum/forms.py:201 aa_forum/forms.py:212
+#, fuzzy
 msgid "Boards"
 msgstr "板"
 
@@ -169,10 +170,9 @@ msgid "e.g.: My Homepage"
 msgstr "例：私のホームページ"
 
 #: aa_forum/forms.py:485
-#, fuzzy, python-brace-format
-#| msgid "Ensure your signature has at most {max_signature_length} characters. (Currently: {len(signature)})"
+#, python-brace-format
 msgid "Ensure your signature has at most {max_signature_length} characters. (Currently: {current_signature_length})"
-msgstr "署名の文字数が{max_signature_length}であることを確認してください(Currently: {len(signature)})"
+msgstr "署名の文字数が{max_signature_length}であることを確認してください(Currently: {current_signature_length})"
 
 #: aa_forum/forms.py:510
 msgid "This is not a valid URL"
@@ -188,14 +188,17 @@ msgid "Error:"
 msgstr ""
 
 #: aa_forum/models.py:99
+#, fuzzy
 msgid "AA-Forum"
 msgstr "匿名のフォーラム"
 
 #: aa_forum/models.py:103
+#, fuzzy
 msgid "Can access the AA-Forum module"
 msgstr "匿名のフォーラムのモジュールにアクセス可能です"
 
 #: aa_forum/models.py:106
+#, fuzzy
 msgid "Can manage the AA-Forum module (Category, topics and messages)"
 msgstr "匿名のフォーラムのモジュール（カテゴリー、トピック、メッセージ）を管理できます"
 
@@ -204,6 +207,7 @@ msgid "category"
 msgstr "カテゴリー"
 
 #: aa_forum/models.py:154
+#, fuzzy
 msgid "categories"
 msgstr "カテゴリ分け"
 
@@ -240,10 +244,9 @@ msgid "boards"
 msgstr "複数の板"
 
 #: aa_forum/models.py:365
-#, fuzzy, python-brace-format
-#| msgid "<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href=\"{self.topic_url}\">{self._topic.subject}</a></p>"
+#, python-brace-format
 msgid "<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href=\"{topic_url}\">{topic_subject}</a></p>"
-msgstr "<h4>警告！</h4><p>この掲示板に全く同じテーマのトピックが既に存在します</p><p>こちらをご覧ください: <a href=\"{self.topic_url}\">{self._topic.subject}</a></p>"
+msgstr "<h4>警告！</h4><p>この掲示板に全く同じテーマのトピックが既に存在します</p><p>こちらをご覧ください: <a href=\"{topic_url}\">{self._topic.subject}</a></p>"
 
 #: aa_forum/models.py:596
 msgid "topic"
@@ -299,7 +302,7 @@ msgstr "設定"
 
 #: aa_forum/models.py:1012
 msgid "settings"
-msgstr "各種設定"
+msgstr "設定"
 
 #: aa_forum/models.py:1022
 #: aa_forum/templates/aa_forum/partials/administration/settings-form.html:7
@@ -322,6 +325,7 @@ msgstr "フォーラム利用者のプロフィール"
 #: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:21
 #: aa_forum/templates/aa_forum/partials/forum/topic/message.html:31
 #: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/message.html:21
+#, fuzzy
 msgid "on:"
 msgstr "について:"
 
@@ -392,7 +396,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/modals/forum/topic/message-delete.html:31
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:31
 msgid "Delete"
-msgstr ""
+msgstr "削除"
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:3
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:8
@@ -585,11 +589,11 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/footer/app-translation-footer.html:5
 msgid "Do you want to help translate this app into your language or improve the existing translation?"
-msgstr ""
+msgstr "このアプリをあなたの言語に翻訳するお手伝いをしたり、既存の翻訳を改善したりしませんか？"
 
 #: aa_forum/templates/aa_forum/partials/footer/app-translation-footer.html:8
 msgid "Join our team of translators!"
-msgstr ""
+msgstr "翻訳者チームに参加しましょう！"
 
 #: aa_forum/templates/aa_forum/partials/form/required-field-hint.html:6
 msgid "Fields marked with an asterisk (*) are mandatory"

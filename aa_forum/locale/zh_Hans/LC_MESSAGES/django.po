@@ -4,20 +4,21 @@
 # Dehao Wu <wudehao2000@163.com>, 2024.
 # Peter Pfeufer <info@ppfeufer.de>, 2024, 2025.
 # gs <baidi0823@163.com>, 2025.
+# AKA Patrick <hsc844766246@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
 "POT-Creation-Date: 2025-11-04 11:44+0100\n"
-"PO-Revision-Date: 2025-05-22 05:03+0000\n"
-"Last-Translator: gs <baidi0823@163.com>\n"
+"PO-Revision-Date: 2025-11-15 15:01+0000\n"
+"Last-Translator: AKA Patrick <hsc844766246@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/zh_Hans/>\n"
 "Language: zh_Hans\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.11.4\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #: aa_forum/__init__.py:10 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -53,21 +54,21 @@ msgstr "通知"
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:25
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:25
 msgid "Subject"
-msgstr ""
+msgstr "项目"
 
 #: aa_forum/forms.py:154 aa_forum/forms.py:169 aa_forum/forms.py:375
 #: aa_forum/forms.py:390 aa_forum/forms.py:585 aa_forum/forms.py:600
 #: aa_forum/forms.py:643 aa_forum/forms.py:658
 msgid "You have forgotten the message!"
-msgstr ""
+msgstr "你有未读信息！"
 
 #: aa_forum/forms.py:201 aa_forum/forms.py:212
 msgid "Boards"
-msgstr ""
+msgstr "公告"
 
 #: aa_forum/forms.py:203
 msgid "Boards to be created with this category (One board per line). These boards will have no group restrictions, so you have to add them later where needed."
-msgstr ""
+msgstr "在该类目下创建多条公告（每条公告一行），这些公告将不会被分组，你可以在稍后将它添加到分组。"
 
 #: aa_forum/forms.py:225 aa_forum/forms.py:242 aa_forum/forms.py:283
 msgid "Name"
