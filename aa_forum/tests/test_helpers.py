@@ -7,14 +7,11 @@ from unittest.mock import patch
 
 # Django
 from django.contrib.auth.models import Group
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory
 from django.urls import reverse
 
 # Alliance Auth
 from allianceauth.tests.auth_utils import AuthUtils
-
-# Alliance Auth (External Libs)
-from app_utils.testing import create_eve_character, create_fake_user
 
 # AA Forum
 from aa_forum.forms import NewCategoryForm
@@ -23,10 +20,12 @@ from aa_forum.helper.forms import message_form_errors
 from aa_forum.helper.text import get_first_image_url_from_text, string_cleanup
 from aa_forum.helper.user import get_main_character_from_user
 from aa_forum.models import get_sentinel_user
+from aa_forum.tests import BaseTestCase
+from aa_forum.tests.utils import create_eve_character, create_fake_user
 
 
 @patch("aa_forum.helper.forms.messages")
-class TestHelperForms(TestCase):
+class TestHelperForms(BaseTestCase):
     """
     Testing the form helpers
     """
@@ -80,7 +79,7 @@ class TestHelperForms(TestCase):
         self.assertFalse(expr=messages.error.called)
 
 
-class TestHelperText(TestCase):
+class TestHelperText(BaseTestCase):
     """
     Testing the text helpers
     """
@@ -194,7 +193,7 @@ class TestHelperText(TestCase):
         self.assertEqual(first=image_url, second="https://test.de/foobar.jpg")
 
 
-class TestHelperEveImages(TestCase):
+class TestHelperEveImages(BaseTestCase):
     """
     Testing the EVE image helpers
     """
@@ -244,7 +243,7 @@ class TestHelperEveImages(TestCase):
         self.assertEqual(first=portrait_html, second=expected_html)
 
 
-class TestGetMainCharacterFromUser(TestCase):
+class TestGetMainCharacterFromUser(BaseTestCase):
     """
     Test get_main_character_from_user
     """

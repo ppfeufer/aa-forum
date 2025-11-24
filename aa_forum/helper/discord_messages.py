@@ -15,10 +15,6 @@ from django.utils import timezone
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
-# Alliance Auth (External Libs)
-from app_utils.logging import LoggerAddTag
-from app_utils.urls import reverse_absolute
-
 # AA Forum
 from aa_forum import __title__, __version__
 from aa_forum.app_settings import (
@@ -38,9 +34,11 @@ from aa_forum.helper.text import (
     get_first_image_url_from_text,
     prepare_message_for_discord,
 )
+from aa_forum.helper.urls import reverse_absolute
 from aa_forum.models import Board, Message, PersonalMessage, Topic
+from aa_forum.providers import AppLogger
 
-logger = LoggerAddTag(get_extension_logger(__name__), __title__)
+logger = AppLogger(get_extension_logger(__name__), __title__)
 
 
 def _dhooks_lite_user_agent() -> UserAgent:

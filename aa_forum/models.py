@@ -23,10 +23,6 @@ from django.utils.translation import gettext_lazy as _
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
-# Alliance Auth (External Libs)
-from app_utils.django import users_with_permission
-from app_utils.logging import LoggerAddTag
-
 # CKEditor
 from django_ckeditor_5.fields import CKEditor5Field
 
@@ -44,8 +40,9 @@ from aa_forum.managers import (
     SettingManager,
     TopicManager,
 )
+from aa_forum.providers import AppLogger
 
-logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 def get_sentinel_user() -> User:
@@ -84,6 +81,36 @@ def _generate_slug(calling_model: models.Model, name: str) -> str:
         )
 
     return slug_name
+
+
+def _users_with_permission(
+    permission: Permission, include_superusers=True
+) -> models.QuerySet:
+    """
+    Returns queryset of users that have the given Django permission
+
+    :param permission:
+    :type permission:
+    :param include_superusers:
+    :type include_superusers:
+    :return:
+    :rtype:
+    """
+
+    users_qs = (
+        permission.user_set.all()
+        | User.objects.filter(
+            groups__in=list(permission.group_set.values_list("pk", flat=True))
+        )
+        | User.objects.select_related("profile").filter(
+            profile__state__in=list(permission.state_set.values_list("pk", flat=True))
+        )
+    )
+
+    if include_superusers:
+        users_qs |= User.objects.filter(is_superuser=True)
+
+    return users_qs.distinct()
 
 
 class General(models.Model):
@@ -129,7 +156,7 @@ class General(models.Model):
         :rtype:
         """
 
-        return users_with_permission(permission=cls.basic_permission())
+        return _users_with_permission(permission=cls.basic_permission())
 
 
 class Category(models.Model):

@@ -10,20 +10,18 @@ import re
 from bs4 import BeautifulSoup
 
 # Django
+from django.conf import settings
 from django.utils.html import strip_tags
 
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
-# Alliance Auth (External Libs)
-from app_utils.logging import LoggerAddTag
-from app_utils.urls import site_absolute_url
-
 # AA Forum
 from aa_forum import __title__
 from aa_forum.constants import DISCORD_EMBED_MESSAGE_LENGTH
+from aa_forum.providers import AppLogger
 
-logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 def verify_image_url(image_url):
@@ -73,7 +71,7 @@ def get_first_image_url_from_text(text):
             if not image__src.startswith(("http://", "https://")):
                 logger.debug(msg="Image has no absolute URL, fixing!")
 
-                absolute_site_url = site_absolute_url()
+                absolute_site_url = settings.SITE_URL
                 image__src = f"{absolute_site_url}{image__src}"
 
             if verify_image_url(image_url=image__src):

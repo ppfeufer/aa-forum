@@ -17,6 +17,7 @@ from django.template import Context, Template
 from django.utils.timezone import now
 
 # Alliance Auth
+from allianceauth.eveonline.models import EveCharacter
 from allianceauth.tests.auth_utils import AuthUtils
 
 # AA Forum
@@ -35,6 +36,38 @@ MESSAGE_DATETIME_MINUTES_OFFSET = 2
 NEW_MESSAGE_DATETIME = now() - dt.timedelta(hours=MESSAGE_DATETIME_HOURS_INTO_PAST)
 
 fake = Faker()
+
+
+def create_eve_character(
+    character_id: int, character_name: str, **kwargs
+) -> EveCharacter:
+    """
+    Create an EveCharacter instance.
+
+    :param character_id:
+    :type character_id:
+    :param character_name:
+    :type character_name:
+    :param kwargs:
+    :type kwargs:
+    :return:
+    :rtype:
+    """
+
+    params = {
+        "character_id": character_id,
+        "character_name": character_name,
+        "corporation_id": 2001,
+        "corporation_name": "Wayne Technologies",
+        "corporation_ticker": "WYT",
+        "alliance_id": 3001,
+        "alliance_name": "Wayne Enterprises",
+        "alliance_ticker": "WYE",
+    }
+
+    params.update(kwargs)
+
+    return EveCharacter.objects.create(**params)
 
 
 def create_fake_user(

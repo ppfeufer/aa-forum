@@ -2,16 +2,14 @@
 Test cases for the `aa_forum.helper.discord_messages` module `dhooks-lite` implementation.
 """
 
-# Standard Library
-from unittest import TestCase
-
 # AA Forum
 from aa_forum import __version__
 from aa_forum.constants import APP_NAME_VERBOSE_USERAGENT, GITHUB_URL
 from aa_forum.helper.discord_messages import _dhooks_lite_user_agent
+from aa_forum.tests import BaseTestCase
 
 
-class TestDhooksLiteUserAgent(TestCase):
+class TestDhooksLiteUserAgent(BaseTestCase):
     """
     Test cases for the `dhooks-lite` user agent
     """
