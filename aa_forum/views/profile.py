@@ -14,15 +14,13 @@ from django.utils.translation import gettext as _
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
-# Alliance Auth (External Libs)
-from app_utils.logging import LoggerAddTag
-
 # AA Forum
 from aa_forum import __title__
 from aa_forum.forms import UserProfileForm
 from aa_forum.helper.user import get_user_profile
+from aa_forum.providers import AppLogger
 
-logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 @login_required

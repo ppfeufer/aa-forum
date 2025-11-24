@@ -7,14 +7,21 @@ import datetime as dt
 from unittest.mock import patch
 
 # Django
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group, Permission, User
+from django.contrib.contenttypes.models import ContentType
 from django.db.utils import IntegrityError
-from django.test import TestCase
 from django.urls import reverse
 from django.utils.timezone import now
 
 # AA Forum
-from aa_forum.models import Board, Setting, Topic, get_sentinel_user
+from aa_forum.models import (
+    Board,
+    Setting,
+    Topic,
+    _users_with_permission,
+    get_sentinel_user,
+)
+from aa_forum.tests import BaseTestCase
 from aa_forum.tests.utils import (
     create_board,
     create_category,
@@ -31,7 +38,112 @@ from aa_forum.tests.utils import (
 MODELS_PATH = "aa_forum.models"
 
 
-class TestGetSentinelUser(TestCase):
+class TestHelperUsersWithPermission(BaseTestCase):
+    """
+    Tests for the _users_with_permission helper function
+    """
+
+    def test_returns_users_with_specific_permission(self):
+        """
+        Test returns users with specific permission
+
+        :return:
+        :rtype:
+        """
+
+        content_type = ContentType.objects.get_for_model(User)
+        permission = Permission.objects.create(
+            codename="can_view", name="Can view", content_type=content_type
+        )
+        user = User.objects.create(username="user1")
+        user.user_permissions.add(permission)
+
+        result = _users_with_permission(permission=permission)
+
+        self.assertIn(user, result)
+
+    def test_includes_superusers_when_flag_is_true(self):
+        """
+        Test includes superusers when flag is true
+
+        :return:
+        :rtype:
+        """
+
+        content_type = ContentType.objects.get_for_model(User)
+        permission = Permission.objects.create(
+            codename="can_edit", name="Can edit", content_type=content_type
+        )
+        superuser = User.objects.create(username="superuser", is_superuser=True)
+
+        result = _users_with_permission(permission=permission, include_superusers=True)
+
+        self.assertIn(superuser, result)
+
+    def test_excludes_superusers_when_flag_is_false(self):
+        """
+        Test excludes superusers when flag is false
+
+        :return:
+        :rtype:
+        """
+
+        content_type = ContentType.objects.get_for_model(User)
+        permission = Permission.objects.create(
+            codename="can_delete", name="Can delete", content_type=content_type
+        )
+        superuser = User.objects.create(username="superuser", is_superuser=True)
+
+        result = _users_with_permission(permission=permission, include_superusers=False)
+
+        self.assertNotIn(superuser, result)
+
+    def test_returns_distinct_users_when_user_belongs_to_multiple_groups(self):
+        """
+        Test returns distinct users when user belongs to multiple groups
+
+        :return:
+        :rtype:
+        """
+
+        content_type = ContentType.objects.get_for_model(User)
+        permission = Permission.objects.create(
+            codename="can_manage", name="Can manage", content_type=content_type
+        )
+
+        group1 = Group.objects.create(name="Group1")
+        group2 = Group.objects.create(name="Group2")
+
+        user = User.objects.create(username="user2")
+        user.groups.add(group1, group2)
+
+        group1.permissions.add(permission)
+        group2.permissions.add(permission)
+
+        result = _users_with_permission(permission=permission)
+
+        self.assertEqual(result.count(), 1)
+        self.assertIn(user, result)
+
+    def test_returns_empty_queryset_when_no_users_have_permission(self):
+        """
+        Test returns empty queryset when no users have permission
+
+        :return:
+        :rtype:
+        """
+
+        content_type = ContentType.objects.get_for_model(User)
+        permission = Permission.objects.create(
+            codename="can_publish", name="Can publish", content_type=content_type
+        )
+
+        result = _users_with_permission(permission=permission)
+
+        self.assertEqual(result.count(), 0)
+
+
+class TestGetSentinelUser(BaseTestCase):
     """
     Tests for the get_sentinel_user function
     """
@@ -68,7 +180,7 @@ class TestGetSentinelUser(TestCase):
         self.assertEqual(first=user.username, second="deleted")
 
 
-class TestBoard(TestCase):
+class TestBoard(BaseTestCase):
     """
     Tests for Board
     """
@@ -391,7 +503,7 @@ class TestBoard(TestCase):
             board.new_topic(subject="Foobar", message="Foobar", user=self.user)
 
 
-class TestCategory(TestCase):
+class TestCategory(BaseTestCase):
     """
     Tests for Category
     """
@@ -545,7 +657,7 @@ class TestCategory(TestCase):
 
 
 @patch(MODELS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
-class TestMessage(TestCase):
+class TestMessage(BaseTestCase):
     """
     Tests for Message
     """
@@ -887,7 +999,7 @@ class TestMessage(TestCase):
         )
 
 
-class TestTopic(TestCase):
+class TestTopic(BaseTestCase):
     """
     Tests for Topic
     """
@@ -1124,7 +1236,7 @@ class TestTopic(TestCase):
         self.assertEqual(first=topic.slug, second=expected_slug)
 
 
-class TestPersonalMessage(TestCase):
+class TestPersonalMessage(BaseTestCase):
     """
     Tests for PersonalMessage
     """
@@ -1161,7 +1273,7 @@ class TestPersonalMessage(TestCase):
         self.assertEqual(first=message.subject, second="subject")
 
 
-class LastMessageSeen(TestCase):
+class LastMessageSeen(BaseTestCase):
     """
     Tests for LastMessageSeen
     """
@@ -1189,7 +1301,7 @@ class LastMessageSeen(TestCase):
         self.assertEqual(first=result, second="Alpha-Bruce_Wayne-2022-01-12 17:30:00")
 
 
-class TestSetting(TestCase):
+class TestSetting(BaseTestCase):
     """
     Tests for Setting
     """

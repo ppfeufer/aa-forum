@@ -16,16 +16,14 @@ from django.shortcuts import render
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
-# Alliance Auth (External Libs)
-from app_utils.logging import LoggerAddTag
-
 # AA Forum
 from aa_forum import __title__
 from aa_forum.constants import SEARCH_STOPWORDS
 from aa_forum.helper.pagination import get_paginated_page_object
 from aa_forum.models import Board, Message, Setting
+from aa_forum.providers import AppLogger
 
-logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 @login_required

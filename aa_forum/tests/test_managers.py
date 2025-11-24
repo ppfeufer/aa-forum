@@ -4,14 +4,14 @@ Test managers
 
 # Django
 from django.contrib.auth.models import Group
-from django.test import TestCase
 
 # AA Forum
 from aa_forum.models import Board, Category, Topic
+from aa_forum.tests import BaseTestCase
 from aa_forum.tests.utils import create_fake_message, create_fake_user
 
 
-class TestBoard(TestCase):
+class TestBoard(BaseTestCase):
     """
     Tests for board manager
     """
@@ -94,7 +94,7 @@ class TestBoard(TestCase):
         self.assertNotIn(member=board, container=result)
 
 
-class TestTopic(TestCase):
+class TestTopic(BaseTestCase):
     """
     Tests for topic manager
     """

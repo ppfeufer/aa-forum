@@ -6,14 +6,14 @@ Test auth_hooks
 from http import HTTPStatus
 
 # Django
-from django.test import TestCase
 from django.urls import reverse
 
 # AA Forum
+from aa_forum.tests import BaseTestCase
 from aa_forum.tests.utils import create_fake_user
 
 
-class TestHooks(TestCase):
+class TestHooks(BaseTestCase):
     """
     Test the app hook into allianceauth
     """

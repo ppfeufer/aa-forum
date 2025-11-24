@@ -9,17 +9,17 @@ from unittest.mock import patch
 # Django
 from django.contrib.auth.models import Group
 from django.contrib.messages import get_messages
-from django.test import TestCase
 from django.urls import reverse
 
 # AA Forum
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Topic
+from aa_forum.tests import BaseTestCase
 from aa_forum.tests.utils import create_fake_messages, create_fake_user, my_get_setting
 
 VIEWS_PATH = "aa_forum.views.forum"
 
 
-class TestIndexViews(TestCase):
+class TestIndexViews(BaseTestCase):
     """
     Test the forum views
     """
@@ -177,7 +177,7 @@ class TestIndexViews(TestCase):
         self.assertContains(response=res, text="0 Topics")
 
 
-class TestIndexViewsSpecial(TestCase):
+class TestIndexViewsSpecial(BaseTestCase):
     """
     Test some special views
     """
@@ -235,7 +235,7 @@ class TestIndexViewsSpecial(TestCase):
         self.assertContains(response=res, text="1 Topics")
 
 
-class TestBoardViews(TestCase):
+class TestBoardViews(BaseTestCase):
     """
     Test board views
     """
@@ -743,7 +743,7 @@ class TestBoardViews(TestCase):
 
 
 @patch(VIEWS_PATH + ".Setting.objects.get_setting", new=my_get_setting)
-class TestTopicViews(TestCase):
+class TestTopicViews(BaseTestCase):
     """
     Test topic views
     """

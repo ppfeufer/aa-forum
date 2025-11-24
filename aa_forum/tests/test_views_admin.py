@@ -7,17 +7,17 @@ import json
 from http import HTTPStatus
 
 # Django
-from django.test import TestCase
 from django.urls import reverse
 
 # AA Forum
 from aa_forum.models import Board, Category
+from aa_forum.tests import BaseTestCase
 from aa_forum.tests.utils import create_fake_user
 
 VIEWS_PATH = "aa_forum.views.admin"
 
 
-class TestAdminViews(TestCase):
+class TestAdminViews(BaseTestCase):
     """
     Test the admin views
     """

@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 from django import template
 from django.contrib.auth.models import User
 from django.template.defaulttags import register
+from django.urls import reverse
 from django.utils import formats
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
@@ -20,17 +21,14 @@ from django.utils.translation import gettext_lazy as _
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
-# Alliance Auth (External Libs)
-from app_utils.logging import LoggerAddTag
-from app_utils.urls import reverse as reverse_url
-
 # AA Forum
 from aa_forum import __title__
 from aa_forum.app_settings import aa_timezones_installed
 from aa_forum.constants import SEARCH_STOPWORDS
 from aa_forum.models import PersonalMessage
+from aa_forum.providers import AppLogger
 
-logger = LoggerAddTag(my_logger=get_extension_logger(__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(__name__), prefix=__title__)
 
 
 class SetVarNode(template.Node):
@@ -93,7 +91,7 @@ def aa_forum_time(db_datetime: datetime) -> str:
     # and link to the time zones conversion
     if aa_timezones_installed():
         timestamp_from_db_datetime = int(datetime.timestamp(db_datetime))
-        timezones_url = reverse_url(
+        timezones_url = reverse(
             viewname="timezones:index", args=[timestamp_from_db_datetime]
         )
         link_title = _("Timezone conversion")

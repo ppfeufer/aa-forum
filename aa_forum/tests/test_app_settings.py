@@ -3,7 +3,7 @@ Test for app_settings.py
 """
 
 # Django
-from django.test import TestCase, modify_settings, override_settings
+from django.test import modify_settings, override_settings
 
 # AA Forum
 from aa_forum.app_settings import (
@@ -12,9 +12,10 @@ from aa_forum.app_settings import (
     debug_enabled,
     discord_messaging_proxy_available,
 )
+from aa_forum.tests import BaseTestCase
 
 
-class TestModulesInstalled(TestCase):
+class TestModulesInstalled(BaseTestCase):
     """
     Test if modules are installed
     """
@@ -75,7 +76,7 @@ class TestModulesInstalled(TestCase):
         self.assertFalse(expr=aa_timezones_installed())
 
 
-class TestDebugCheck(TestCase):
+class TestDebugCheck(BaseTestCase):
     """
     Test if debug is enabled
     """

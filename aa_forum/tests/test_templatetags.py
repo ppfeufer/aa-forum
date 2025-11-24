@@ -10,21 +10,20 @@ from dateutil import parser
 
 # Django
 from django.template import TemplateSyntaxError
-from django.test import TestCase, modify_settings
+from django.test import modify_settings
+from django.urls import reverse
 
 # Alliance Auth
 from allianceauth.tests.auth_utils import AuthUtils
 
-# Alliance Auth (External Libs)
-from app_utils.urls import reverse as reverse_url
-
 # AA Forum
 from aa_forum.models import PersonalMessage, get_sentinel_user
 from aa_forum.templatetags.aa_forum import personal_message_unread_count
+from aa_forum.tests import BaseTestCase
 from aa_forum.tests.utils import create_fake_user, render_template
 
 
-class TestMainCharacterName(TestCase):
+class TestMainCharacterName(BaseTestCase):
     """
     Tests for main_character_name template tag
     """
@@ -113,7 +112,7 @@ class TestMainCharacterName(TestCase):
         self.assertEqual(first=result, second="")
 
 
-class TestMainCharacterId(TestCase):
+class TestMainCharacterId(BaseTestCase):
     """
     Tests for aa_forum_main_character_id template tag
     """
@@ -202,7 +201,7 @@ class TestMainCharacterId(TestCase):
         self.assertEqual(first=result, second="1")
 
 
-class TestMainCharacterCorporationName(TestCase):
+class TestMainCharacterCorporationName(BaseTestCase):
     """
     Tests for aa_forum_main_character_corporation_name template tag
     """
@@ -299,7 +298,7 @@ class TestMainCharacterCorporationName(TestCase):
         self.assertEqual(first=result, second="")
 
 
-class TestMainCorporationId(TestCase):
+class TestMainCorporationId(BaseTestCase):
     """
     Tests for aa_forum_main_character_corporation_id template tag
 
@@ -397,7 +396,7 @@ class TestMainCorporationId(TestCase):
         self.assertEqual(first=result, second="1")
 
 
-class TestMainCharacterAllianceName(TestCase):
+class TestMainCharacterAllianceName(BaseTestCase):
     """
     Tests for aa_forum_main_character_alliance_name template tag
     """
@@ -523,7 +522,7 @@ class TestMainCharacterAllianceName(TestCase):
         self.assertEqual(first=result, second="")
 
 
-class TestMainAllianceId(TestCase):
+class TestMainAllianceId(BaseTestCase):
     """
     Tests for aa_forum_main_character_alliance_id template tag
     """
@@ -648,7 +647,7 @@ class TestMainAllianceId(TestCase):
         self.assertEqual(first=result, second="1")
 
 
-class TestForumTemplateVariables(TestCase):
+class TestForumTemplateVariables(BaseTestCase):
     """
     Tests for aa_forum template_variables template tag
     """
@@ -771,7 +770,7 @@ class TestForumTemplateVariables(TestCase):
         )
 
 
-class TestHighlightSearchTerm(TestCase):
+class TestHighlightSearchTerm(BaseTestCase):
     """
     Tests for highlight_search_term template tag
     """
@@ -1006,7 +1005,7 @@ class TestHighlightSearchTerm(TestCase):
         self.assertEqual(first=rendered_template, second=expected_result)
 
 
-class TestForumDatetime(TestCase):
+class TestForumDatetime(BaseTestCase):
     """
     Tests for aa_forum_time template tag
     """
@@ -1052,7 +1051,7 @@ class TestForumDatetime(TestCase):
         context = {"message_date": self.db_datetime}
         rendered_template = render_template(string=self.template, context=context)
         timestamp_from_db_datetime = int(datetime.timestamp(self.db_datetime))
-        timezones_url = reverse_url(
+        timezones_url = reverse(
             viewname="timezones:index", args=[timestamp_from_db_datetime]
         )
         link_title = "Timezone conversion"

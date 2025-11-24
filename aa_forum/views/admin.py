@@ -25,17 +25,15 @@ from django.utils.translation import gettext as _
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
-# Alliance Auth (External Libs)
-from app_utils.logging import LoggerAddTag
-
 # AA Forum
 from aa_forum import __title__
 from aa_forum.constants import DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER
 from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm, SettingForm
 from aa_forum.helper.forms import message_form_errors
 from aa_forum.models import Board, Category, Setting
+from aa_forum.providers import AppLogger
 
-logger = LoggerAddTag(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
 
 
 @login_required
