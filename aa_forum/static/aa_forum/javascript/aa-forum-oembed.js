@@ -5,17 +5,16 @@
  * This function replaces the oembed element with an iframe and is using the YouTube-nocookie domain.
  *
  * @param {string} url The YouTube video URL
- * @returns {`<div class="oembed-video youtube-oembed-video"><iframe src="${string}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`}
+ * @returns {`<div class="oembed-video youtube-oembed-video"><iframe src="${string}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`}
  */
 const youtubeOembedToIframe = (url) => {
-    'use strict';
-
     const videoId = new URLSearchParams(new URL(url).search).get('v'); // jshint ignore:line
     const videoUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
     const divClasses = 'oembed-video youtube-oembed-video';
-    const iframeAllow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+    const iframeTitle = 'YouTube video player';
+    const iframeAllow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
 
-    return `<div class="${divClasses}"><iframe src="${videoUrl}" allow="${iframeAllow}" allowfullscreen></iframe></div>`;
+    return `<div class="${divClasses}"><iframe src="${videoUrl}" title="${iframeTitle}" allow="${iframeAllow}" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`;
 };
 
 
