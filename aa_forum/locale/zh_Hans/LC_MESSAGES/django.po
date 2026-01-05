@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2025-12-02 05:51+0100\n"
-"PO-Revision-Date: 2025-11-15 15:01+0000\n"
+"POT-Creation-Date: 2026-01-05 21:05+0100\n"
+"PO-Revision-Date: 2025-12-08 05:58+0000\n"
 "Last-Translator: AKA Patrick <hsc844766246@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/zh_Hans/>\n"
 "Language: zh_Hans\n"
@@ -80,7 +80,7 @@ msgstr "分类名称"
 
 #: aa_forum/forms.py:284
 msgid "Description"
-msgstr ""
+msgstr "说明"
 
 #: aa_forum/forms.py:285
 msgid "Group restrictions"
@@ -88,19 +88,19 @@ msgstr "组别限制"
 
 #: aa_forum/forms.py:286
 msgid "Discord webhook (optional)"
-msgstr ""
+msgstr "Discord Webhook地址（选填）"
 
 #: aa_forum/forms.py:288
 msgid "Use this Discord webhook for replies as well?"
-msgstr ""
+msgstr "是否确认使用Discord Webhook用于回复消息？"
 
 #: aa_forum/forms.py:290
 msgid "Mark board as \"Announcement Board\""
-msgstr ""
+msgstr "将此文字板作为公告栏"
 
 #: aa_forum/forms.py:292
 msgid "Start topic restrictions for \"Announcement Boards\""
-msgstr ""
+msgstr "公告栏置顶"
 
 #: aa_forum/forms.py:296
 msgid "Board name"
