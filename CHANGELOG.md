@@ -42,6 +42,10 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Fixed
+
+- CKEditor text color for `django-ckeditor-5>=0.2.19`
+
 ## [2.14.1] - 2026-01-05
 
 ### Changed
