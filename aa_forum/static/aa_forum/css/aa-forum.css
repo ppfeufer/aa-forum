@@ -383,12 +383,16 @@
 /* CKEditor 5 (WYSIWYG editor)
 ------------------------------------------------------------------------------------- */
 @media all {
+    .aa-forum .ck-content {
+        color: var(--bs-body-color);
+    }
+
     .aa-forum .ck-rounded-corners {
         --ck-border-radius: var(--bs-border-radius);
     }
 
     .aa-forum .ck-editor__editable {
-        color: initial;
+        color: var(--ck-content-font-color);
     }
 
     .aa-forum .ck-word-count {
