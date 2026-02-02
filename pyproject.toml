@@ -15,8 +15,8 @@ keywords = [
 ]
 license = { file = "LICENSE" }
 authors = [
-    { name = "Peter Pfeufer", email = "develop@ppfeufer.de" },
     { name = "Erik Kalkoken", email = "kalkoken87@gmail.com" },
+    { name = "Peter Pfeufer", email = "develop@ppfeufer.de" },
 ]
 requires-python = ">=3.10,<3.14"
 classifiers = [
