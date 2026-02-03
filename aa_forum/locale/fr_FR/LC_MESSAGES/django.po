@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# "H. Peter Pfeufer" <info@ppfeufer.de>, 2023, 2024, 2025.
+# "H. Peter Pfeufer" <info@ppfeufer.de>, 2023, 2024, 2025, 2026.
 # Matthias P <randomusernetcom@gmail.com>, 2024.
 # Onyx <The_Onyx_best@hotmail.com>, 2025.
 # balbozorre <loic.petiot2002@gmail.com>, 2025.
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2026-01-07 19:05+0100\n"
-"PO-Revision-Date: 2025-09-16 16:43+0000\n"
+"POT-Creation-Date: 2026-02-03 03:13+0100\n"
+"PO-Revision-Date: 2026-01-09 17:17+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: French <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/fr/>\n"
 "Language: fr_FR\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.13.3\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: aa_forum/__init__.py:10 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -355,7 +355,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/modals/forum/topic/message-delete.html:11
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:11
 msgid "Close"
-msgstr "Clôturé"
+msgstr "Fermer"
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:16
 msgid "Are you sure you want to delete this board?"
