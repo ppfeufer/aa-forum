@@ -5,20 +5,21 @@
 # Peter Pfeufer <info@ppfeufer.de>, 2024, 2025.
 # gs <baidi0823@163.com>, 2025.
 # AKA Patrick <hsc844766246@gmail.com>, 2025.
+# Heimi <204420064@qq.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2026-01-07 19:05+0100\n"
-"PO-Revision-Date: 2025-12-08 05:58+0000\n"
-"Last-Translator: AKA Patrick <hsc844766246@gmail.com>\n"
+"POT-Creation-Date: 2026-02-03 03:13+0100\n"
+"PO-Revision-Date: 2026-01-23 00:05+0000\n"
+"Last-Translator: Heimi <204420064@qq.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/zh_Hans/>\n"
 "Language: zh_Hans\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #: aa_forum/__init__.py:10 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -104,7 +105,7 @@ msgstr "公告栏置顶"
 
 #: aa_forum/forms.py:296
 msgid "Board name"
-msgstr ""
+msgstr "报告名称"
 
 #: aa_forum/forms.py:302 aa_forum/models.py:229
 msgid "Board description (optional)"
@@ -118,47 +119,47 @@ msgstr "关闭"
 
 #: aa_forum/forms.py:327
 msgid "If checked, this topic will be closed after posting this message."
-msgstr ""
+msgstr "若勾选此项，本主题将在发布此消息后关闭。"
 
 #: aa_forum/forms.py:333
 msgid "Reopen topic"
-msgstr ""
+msgstr "重新开启主题"
 
 #: aa_forum/forms.py:335
 msgid "If checked, this topic will be reopened after posting this message."
-msgstr ""
+msgstr "若勾选此项，本主题将在发布此消息后重新开启。"
 
 #: aa_forum/forms.py:415
 msgid "Your signature will appear below your posts."
-msgstr ""
+msgstr "您的签名将显示在您的帖子下方。"
 
 #: aa_forum/forms.py:416
 msgid "Your website's title."
-msgstr ""
+msgstr "您的网站标题。"
 
 #: aa_forum/forms.py:418
 msgid "Your website's URL. (Don't forget to also set a title for your website, otherwise this field will be ignored.)"
-msgstr ""
+msgstr "您的网站网址。（请务必同时设置网站标题，否则该字段将被忽略。）"
 
 #: aa_forum/forms.py:423
 msgid "Information: There is currently no module installed that can handle Discord direct messages. Have a chat with your IT guys to remedy this."
-msgstr ""
+msgstr "信息：当前未安装可处理Discord私信的模块。请联系您的IT团队解决此问题。"
 
 #: aa_forum/forms.py:432
 msgid "Activating this setting will ad a widget to your dashboard that shows unread topics in the forum."
-msgstr ""
+msgstr "启用此设置将在您的仪表板中添加一个小工具，用于显示论坛中的未读主题。"
 
 #: aa_forum/forms.py:438
 msgid "Signature"
-msgstr ""
+msgstr "签名"
 
 #: aa_forum/forms.py:439
 msgid "Website title"
-msgstr ""
+msgstr "网站标题"
 
 #: aa_forum/forms.py:440
 msgid "Website URL"
-msgstr ""
+msgstr "网站地址"
 
 #: aa_forum/forms.py:442
 msgid "PM me on Discord when I get a new personal message"
@@ -166,29 +167,29 @@ msgstr ""
 
 #: aa_forum/forms.py:445
 msgid "Show unread topics as widget on the dashboard"
-msgstr ""
+msgstr "在仪表板上以小部件形式显示未读主题"
 
 #: aa_forum/forms.py:451
 msgid "e.g.: My Homepage"
-msgstr ""
+msgstr "例如：我的主页"
 
 #: aa_forum/forms.py:485
 #, python-brace-format
 msgid "Ensure your signature has at most {max_signature_length} characters. (Currently: {current_signature_length})"
-msgstr ""
+msgstr "请确保您的签名最多包含 {max_signature_length} 个字符。（当前：{current_signature_length}）"
 
 #: aa_forum/forms.py:510
 msgid "This is not a valid URL"
-msgstr ""
+msgstr "无效的URL"
 
 #: aa_forum/forms.py:569
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:21
 msgid "Recipient"
-msgstr ""
+msgstr "收件人"
 
 #: aa_forum/helper/forms.py:32
 msgid "Error:"
-msgstr ""
+msgstr "错误:"
 
 #: aa_forum/models.py:126
 msgid "AA-Forum"
@@ -204,31 +205,31 @@ msgstr ""
 
 #: aa_forum/models.py:180
 msgid "category"
-msgstr ""
+msgstr "类别"
 
 #: aa_forum/models.py:181
 msgid "categories"
-msgstr ""
+msgstr "类别"
 
 #: aa_forum/models.py:237
 msgid "Discord webhook URL for the channel to post about new topics in this board. (This setting is optional)"
-msgstr ""
+msgstr "Discord webhook URL，用于向该频道推送本版块的新主题通知。（此设置为可选项）"
 
 #: aa_forum/models.py:244
 msgid "Use this Discord webhook for replies as well? When activated every reply to any topic in this board will be posted to the defined Discord channel. (Child boards are excluded) Chose wisely! (Default: NO)"
-msgstr ""
+msgstr "是否也使用此Discord webhook接收回复？启用后，本版块所有主题的回复都将发布至指定的Discord频道。（子版块除外）请谨慎选择！（默认：否）"
 
 #: aa_forum/models.py:262
 msgid "This will restrict access to this board to the selected groups. If no groups are selected, everyone who can access the forum can also access this board. (This setting is optional)"
-msgstr ""
+msgstr "此设置将限制访问该版块的权限至所选组别。若未选择任何组别，则所有能访问论坛的用户均可访问该版块。（此设置为可选项）"
 
 #: aa_forum/models.py:270
 msgid "Mark this board as an \"Announcement Board\", meaning that only certain selected groups can start new topics. All others who have access to this board will still be able to discuss in the topics though. This setting will not be inherited to child boards. (Default: NO)"
-msgstr ""
+msgstr "将此版块标记为“公告板”，意味着仅特定选定群体可发起新主题。但所有拥有访问权限的用户仍可在现有主题中参与讨论。此设置不会继承至子版块。（默认：否）"
 
 #: aa_forum/models.py:281
 msgid "User in at least one of the selected groups will be able to start topics in \"Announcement Boards\". If no group is selected, only forum admins can do so. This setting will not be inherited to child boards. (Hint: These restrictions only take effect when a board is marked as \"Announcement Board\", see checkbox above.)"
-msgstr ""
+msgstr "选定组别中至少有一个组别的用户可在“公告板”中发起主题。若未选定任何组别，则仅论坛管理员具备此权限。此设置不会继承至子版块。（提示：这些限制仅在版块被标记为“公告板”时生效，请参见上方复选框。）"
 
 #: aa_forum/models.py:319
 msgid "board"
@@ -241,51 +242,51 @@ msgstr ""
 #: aa_forum/models.py:392
 #, python-brace-format
 msgid "<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href=\"{topic_url}\">{topic_subject}</a></p>"
-msgstr ""
+msgstr "<h4>警告！</h4><p>本版块已存在完全相同的主题帖。</p><p>请参阅：</p><a href=\"{topic_url}\">{topic_subject}</a>"
 
 #: aa_forum/models.py:623
 msgid "topic"
-msgstr ""
+msgstr "主题"
 
 #: aa_forum/models.py:624
 msgid "topics"
-msgstr ""
+msgstr "主题"
 
 #: aa_forum/models.py:803
 msgid "message"
-msgstr ""
+msgstr "消息"
 
 #: aa_forum/models.py:804
 msgid "messages"
-msgstr ""
+msgstr "消息"
 
 #: aa_forum/models.py:946
 msgid "personal message"
-msgstr ""
+msgstr "私人信息"
 
 #: aa_forum/models.py:947
 msgid "personal messages"
-msgstr ""
+msgstr "私人信息"
 
 #: aa_forum/models.py:1001
 msgid "Messages per page"
-msgstr ""
+msgstr "每页显示条目数"
 
 #: aa_forum/models.py:1002
 msgid "Topics per page"
-msgstr ""
+msgstr "每页主题数"
 
 #: aa_forum/models.py:1003
 msgid "User signature length"
-msgstr ""
+msgstr "用户签名长度"
 
 #: aa_forum/models.py:1009
 msgid "How many messages per page should be displayed in a forum topic? (Default: 15)"
-msgstr ""
+msgstr "论坛主题每页应显示多少条消息？（默认：15）"
 
 #: aa_forum/models.py:1017
 msgid "How many topics per page should be displayed in a forum category? (Default: 10)"
-msgstr ""
+msgstr "论坛分类中每页应显示多少个主题？（默认：10）"
 
 #: aa_forum/models.py:1025
 msgid "How long (Number of characters) is a user's signature allowed to be? (Default: 750)"

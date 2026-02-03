@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# "H. Peter Pfeufer" <info@ppfeufer.de>, 2023, 2024, 2025.
+# "H. Peter Pfeufer" <info@ppfeufer.de>, 2023, 2024, 2025, 2026.
 #
 # Translators:
 # Peter Pfeufer, 2022
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2026-01-07 19:05+0100\n"
-"PO-Revision-Date: 2025-10-25 12:28+0000\n"
+"POT-Creation-Date: 2026-02-03 03:13+0100\n"
+"PO-Revision-Date: 2026-01-12 12:17+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/de/>\n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: aa_forum/__init__.py:10 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -582,7 +582,7 @@ msgstr "Suche nach:"
 
 #: aa_forum/templates/aa_forum/partials/footer/app-translation-footer.html:5
 msgid "Do you want to help translate this app into your language or improve the existing translation?"
-msgstr "Du möchtest helfen diese App in Deine Sprache zu übersetzen oder die bestehende Übersetzung verbessern?"
+msgstr "Du möchtest helfen diese App in Deine Sprache zu übersetzen oder die bestehende Übersetzung zu verbessern?"
 
 #: aa_forum/templates/aa_forum/partials/footer/app-translation-footer.html:8
 msgid "Join our team of translators!"
