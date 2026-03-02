@@ -9,6 +9,7 @@ from solo.admin import SingletonModelAdmin
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
+# AA Forum^
 # AA Forum
 from aa_forum.models import Board, Category, Setting, Topic, UserProfile
 

@@ -5,6 +5,7 @@ URL config for the AA-Forum app
 # Django
 from django.urls import include, path
 
+# AA Forum^
 # AA Forum
 from aa_forum.constants import INTERNAL_URL_PREFIX
 from aa_forum.urls import forum, internal

@@ -5,6 +5,7 @@ Helper functions for user related tasks
 # Django
 from django.contrib.auth.models import User
 
+# AA Forum^
 # AA Forum
 from aa_forum.models import UserProfile, get_sentinel_user
 

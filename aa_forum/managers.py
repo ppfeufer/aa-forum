@@ -140,6 +140,7 @@ class TopicQuerySet(models.QuerySet):
         """
 
         # AA Forum
+        # AA Forum^
         from aa_forum.models import Message  # pylint: disable=import-outside-toplevel
 
         try:

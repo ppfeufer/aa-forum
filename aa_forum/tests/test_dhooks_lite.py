@@ -2,6 +2,7 @@
 Test cases for the `aa_forum.helper.discord_messages` module `dhooks-lite` implementation.
 """
 
+# AA Forum^
 # AA Forum
 from aa_forum import __version__
 from aa_forum.constants import APP_NAME_VERBOSE_USERAGENT, GITHUB_URL

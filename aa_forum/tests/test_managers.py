@@ -5,6 +5,7 @@ Test managers
 # Django
 from django.contrib.auth.models import Group
 
+# AA Forum^
 # AA Forum
 from aa_forum.models import Board, Category, Topic
 from aa_forum.tests import BaseTestCase

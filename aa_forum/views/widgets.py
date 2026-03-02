@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 
+# AA Forum^
 # AA Forum
 from aa_forum.helper.user import get_user_profile
 from aa_forum.views.forum import _get_boards_with_unread_topics
