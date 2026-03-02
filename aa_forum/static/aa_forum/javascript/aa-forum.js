@@ -7,7 +7,7 @@
 let aaForumJsSettings = typeof aaForumJsSettingsDefaults !== 'undefined' ? aaForumJsSettingsDefaults : null;
 
 if (aaForumJsSettings && typeof aaForumJsSettingsOverride !== 'undefined') {
-    aaForumJsSettings = objectDeepMerge(
+    aaForumJsSettings = objectDeepMerge( // eslint-disable-line no-useless-assignment
         aaForumJsSettings,
         aaForumJsSettingsOverride
     );
