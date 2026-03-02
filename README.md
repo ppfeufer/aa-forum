@@ -128,7 +128,7 @@ Make sure you're in the virtual environment (venv) of your Alliance Auth
 installation Then install the latest release directly from PyPi.
 
 ```shell
-pip install aa-forum==2.14.3
+pip install aa-forum==2.14.4
 ```
 
 ### Step 2: Configure Alliance Auth<a name="step-2-configure-alliance-auth"></a>
