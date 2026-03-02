@@ -16,6 +16,7 @@ from django.shortcuts import render
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
+# AA Forum^
 # AA Forum
 from aa_forum import __title__
 from aa_forum.constants import SEARCH_STOPWORDS

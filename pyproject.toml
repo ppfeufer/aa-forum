@@ -62,10 +62,8 @@ urls.GitHub = "https://github.com/ppfeufer/aa-forum"
 urls.Tracker = "https://github.com/ppfeufer/aa-forum/issues"
 urls.Translation = "https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/"
 
-[tool.hatch.build]
-include = [
+[tool.hatch]
+build.include = [
     "/aa_forum",
 ]
-
-[tool.hatch.version]
-path = "aa_forum/__init__.py"
+version.path = "aa_forum/__init__.py"

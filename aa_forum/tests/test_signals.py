@@ -5,6 +5,7 @@ Test signals for the aa_forum app
 # Django
 from django.contrib.auth.models import Group
 
+# AA Forum^
 # AA Forum
 from aa_forum.models import Board, Category
 from aa_forum.tests import BaseTestCase

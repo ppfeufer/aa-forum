@@ -5,6 +5,7 @@ Test for app_settings.py
 # Django
 from django.test import modify_settings, override_settings
 
+# AA Forum^
 # AA Forum
 from aa_forum.app_settings import (
     aa_timezones_installed,

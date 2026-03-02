@@ -6,6 +6,7 @@ App config
 from django.apps import AppConfig
 from django.utils.text import format_lazy
 
+# AA Forum^
 # AA Forum
 from aa_forum import __title_translated__, __version__
 
@@ -30,4 +31,5 @@ class AaForumConfig(AppConfig):
         """
 
         # AA Forum
+        # AA Forum^
         import aa_forum.signals  # noqa: F401 # pylint: disable=unused-import, import-outside-toplevel

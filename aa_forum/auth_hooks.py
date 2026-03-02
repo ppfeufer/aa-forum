@@ -7,6 +7,7 @@ from allianceauth import hooks
 from allianceauth.hooks import DashboardItemHook
 from allianceauth.services.hooks import MenuItemHook, UrlHook
 
+# AA Forum^
 # AA Forum
 from aa_forum import __title_translated__, urls
 from aa_forum.views.forum import unread_topics_count

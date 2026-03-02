@@ -6,6 +6,7 @@ Our signals
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+# AA Forum^
 # AA Forum
 from aa_forum.models import Board
 

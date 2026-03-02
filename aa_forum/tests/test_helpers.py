@@ -13,6 +13,7 @@ from django.urls import reverse
 # Alliance Auth
 from allianceauth.tests.auth_utils import AuthUtils
 
+# AA Forum^
 # AA Forum
 from aa_forum.forms import NewCategoryForm
 from aa_forum.helper.eve_images import get_character_portrait_from_evecharacter
