@@ -7,11 +7,12 @@
 ![Badge: pre-commit]
 [![Badge: pre-commit.ci status]][pre-commit.ci status]
 [![Badge: Code Style: black]][black code formatter documentation]
-[![Badge: Support Discord]][support discord]
 [![Badge: Automated Tests]][automated tests on github]
 [![Badge: Code Coverage]][aa-forum on codecov]
 [![Badge: Translation Status]][weblate engage]
 [![Badge: Contributor Covenant]][code of conduct]
+[![Badge: Support Discord]][support discord]
+[![Alliance Auth Compatibility](https://img.shields.io/badge/Alliance_Auth-v4_%7C_v5-brightgreen)](https://gitlab.com/allianceauth/allianceauth)
 
 [![Badge: Buy me a coffee]][ppfeufer on ko-fi]
 
