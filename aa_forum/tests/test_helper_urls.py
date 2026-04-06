@@ -5,7 +5,6 @@ Unit tests for the fleetpings.helper.urls helper.
 # Standard Library
 from unittest.mock import patch
 
-# AA Forum^
 # AA Forum
 from aa_forum.helper.urls import reverse_absolute
 from aa_forum.tests import BaseTestCase

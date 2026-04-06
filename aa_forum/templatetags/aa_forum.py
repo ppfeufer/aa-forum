@@ -21,7 +21,6 @@ from django.utils.translation import gettext_lazy as _
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
-# AA Forum^
 # AA Forum
 from aa_forum import __title__
 from aa_forum.app_settings import aa_timezones_installed

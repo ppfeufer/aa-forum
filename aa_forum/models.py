@@ -26,7 +26,6 @@ from allianceauth.services.hooks import get_extension_logger
 # CKEditor
 from django_ckeditor_5.fields import CKEditor5Field
 
-# AA Forum^
 # AA Forum
 from aa_forum import __title__
 from aa_forum.constants import (
@@ -570,7 +569,6 @@ class Board(models.Model):
             # Send to webhook if one is configured
             if self.discord_webhook is not None:
                 # AA Forum
-                # AA Forum^
                 from aa_forum.helper.discord_messages import (  # pylint: disable=import-outside-toplevel
                     send_message_to_discord_webhook,
                 )
@@ -982,7 +980,6 @@ class PersonalMessage(models.Model):
         if is_new_message is True:
             # Needs to be imported here, otherwise it's a circular import
             # AA Forum
-            # AA Forum^
             from aa_forum.helper.discord_messages import (  # pylint: disable=import-outside-toplevel
                 send_new_personal_message_notification,
             )

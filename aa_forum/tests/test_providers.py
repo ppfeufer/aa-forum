@@ -5,7 +5,6 @@ Test for the providers module.
 # Standard Library
 import logging
 
-# AA Forum^
 # AA Forum
 from aa_forum.providers import AppLogger
 from aa_forum.tests import BaseTestCase

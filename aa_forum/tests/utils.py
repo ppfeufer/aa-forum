@@ -20,7 +20,6 @@ from django.utils.timezone import now
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.tests.auth_utils import AuthUtils
 
-# AA Forum^
 # AA Forum
 from aa_forum.models import (
     Board,

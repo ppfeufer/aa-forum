@@ -15,7 +15,6 @@ from django.utils import timezone
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
-# AA Forum^
 # AA Forum
 from aa_forum import __title__, __version__
 from aa_forum.app_settings import (
@@ -197,7 +196,6 @@ def send_new_personal_message_notification(
 
     # Needs to be imported here, otherwise it's a circular import
     # AA Forum
-    # AA Forum^
     from aa_forum.helper.user import (  # pylint: disable=import-outside-toplevel
         get_main_character_from_user,
         get_user_profile,

@@ -9,7 +9,6 @@ from http import HTTPStatus
 # Django
 from django.urls import reverse
 
-# AA Forum^
 # AA Forum
 from aa_forum.models import Board, Category
 from aa_forum.tests import BaseTestCase

@@ -18,7 +18,6 @@ from django.utils.translation import gettext as _
 # Alliance Auth
 from allianceauth.services.hooks import get_extension_logger
 
-# AA Forum^
 # AA Forum
 from aa_forum import __title__
 from aa_forum.forms import NewPersonalMessageForm, ReplyPersonalMessageForm

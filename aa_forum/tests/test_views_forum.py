@@ -11,7 +11,6 @@ from django.contrib.auth.models import Group
 from django.contrib.messages import get_messages
 from django.urls import reverse
 
-# AA Forum^
 # AA Forum
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Topic
 from aa_forum.tests import BaseTestCase

@@ -16,7 +16,6 @@ from django.urls import reverse
 # Alliance Auth
 from allianceauth.tests.auth_utils import AuthUtils
 
-# AA Forum^
 # AA Forum
 from aa_forum.models import PersonalMessage, get_sentinel_user
 from aa_forum.templatetags.aa_forum import personal_message_unread_count

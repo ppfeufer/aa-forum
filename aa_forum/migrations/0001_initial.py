@@ -5,7 +5,6 @@ import django.db.models.deletion
 from django.conf import settings
 from django.db import migrations, models
 
-# AA Forum^
 # AA Forum
 import aa_forum.models
 

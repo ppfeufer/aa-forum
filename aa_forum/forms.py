@@ -14,7 +14,6 @@ from django.utils.translation import gettext_lazy as _
 # CKEditor
 from django_ckeditor_5.widgets import CKEditor5Widget
 
-# AA Forum^
 # AA Forum
 from aa_forum.app_settings import discord_messaging_proxy_available
 from aa_forum.helper.forms import message_empty

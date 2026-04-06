@@ -11,7 +11,6 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.forms import Form
 from django.utils.translation import gettext_lazy
 
-# AA Forum^
 # AA Forum
 from aa_forum.helper.text import string_cleanup, strip_html_tags
 

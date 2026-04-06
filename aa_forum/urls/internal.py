@@ -5,7 +5,6 @@ Internal URLs for the AA Forum app.
 # Django
 from django.urls import path
 
-# AA Forum^
 # AA Forum
 from aa_forum.views import admin, forum, personal_messages, profile, search, widgets
 
