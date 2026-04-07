@@ -42,6 +42,12 @@ Section Order:
 
 <!-- Your changes go here -->
 
+## [2.14.5] - 2026-04-07
+
+### Changed
+
+- Translations updated
+
 ## [2.14.4] - 2026-03-03
 
 ### Changed
@@ -1737,6 +1743,7 @@ python manage.py migrate aa_forum
 [2.14.2]: https://github.com/ppfeufer/aa-forum/compare/v2.14.1...v2.14.2 "v2.14.2"
 [2.14.3]: https://github.com/ppfeufer/aa-forum/compare/v2.14.2...v2.14.3 "v2.14.3"
 [2.14.4]: https://github.com/ppfeufer/aa-forum/compare/v2.14.3...v2.14.4 "v2.14.4"
+[2.14.5]: https://github.com/ppfeufer/aa-forum/compare/v2.14.4...v2.14.5 "v2.14.5"
 [2.2.0]: https://github.com/ppfeufer/aa-forum/compare/v2.1.1...v2.2.0 "v2.2.0"
 [2.2.1]: https://github.com/ppfeufer/aa-forum/compare/v2.2.0...v2.2.1 "v2.2.1"
 [2.3.0]: https://github.com/ppfeufer/aa-forum/compare/v2.2.1...v2.3.0 "v2.3.0"
@@ -1755,7 +1762,7 @@ python manage.py migrate aa_forum
 [aa-discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
 [admin board options]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/admin-board-options.jpg "Admin Board Options"
 [discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy "discordproxy"
-[in development]: https://github.com/ppfeufer/aa-forum/compare/v2.14.4...HEAD "In Development"
+[in development]: https://github.com/ppfeufer/aa-forum/compare/v2.14.5...HEAD "In Development"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [new feature: announcement boards]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/feature-announcement-board.jpg "New Feature: Announcement Boards"
 [new feature: support for aa-timezones]: https://user-images.githubusercontent.com/2989985/195106607-8caf39c1-7343-404b-a926-e3253558b1ce.png "New Feature: Support for aa-timezones"
