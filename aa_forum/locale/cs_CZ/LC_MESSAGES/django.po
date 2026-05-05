@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Peter Pfeufer <info@ppfeufer.de>, 2024.
+# Peter Pfeufer <info@ppfeufer.de>, 2024, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2026-04-07 17:39+0200\n"
-"PO-Revision-Date: 2024-07-16 04:03+0000\n"
+"POT-Creation-Date: 2026-05-05 15:14+0200\n"
+"PO-Revision-Date: 2026-05-02 19:23+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Czech <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/cs/>\n"
 "Language: cs_CZ\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.17.1\n"
 
 #: aa_forum/__init__.py:10 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -586,7 +586,7 @@ msgstr "Připoj se k našemu týmu překladatelů!"
 
 #: aa_forum/templates/aa_forum/partials/form/required-field-hint.html:6
 msgid "Fields marked with an asterisk (*) are mandatory"
-msgstr ""
+msgstr "Pole označená hvězdičkou (*) jsou povinná."
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board-index.html:27
 msgid "No topics have been started in this board …"
