@@ -12,7 +12,7 @@ from django.urls import reverse
 # AA Forum
 from aa_forum.models import Board, Category
 from aa_forum.tests import BaseTestCase
-from aa_forum.tests.utils import create_fake_user
+from aa_forum.tests.utils import create_fake_user, random_id
 
 VIEWS_PATH = "aa_forum.views.admin"
 
@@ -33,7 +33,7 @@ class TestAdminViews(BaseTestCase):
 
         super().setUpClass()
         cls.user = create_fake_user(
-            character_id=1001,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             permissions=["aa_forum.basic_access", "aa_forum.manage_forum"],
         )

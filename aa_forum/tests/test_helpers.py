@@ -21,7 +21,7 @@ from aa_forum.helper.text import get_first_image_url_from_text, string_cleanup
 from aa_forum.helper.user import get_main_character_from_user
 from aa_forum.models import get_sentinel_user
 from aa_forum.tests import BaseTestCase
-from aa_forum.tests.utils import create_eve_character, create_fake_user
+from aa_forum.tests.utils import create_eve_character, create_fake_user, random_id
 
 
 @patch("aa_forum.helper.forms.messages")
@@ -200,7 +200,7 @@ class TestHelperEveImages(BaseTestCase):
 
     def setUp(self) -> None:
         self.user_1001 = create_fake_user(
-            character_id=1001,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             permissions=["aa_forum.basic_access"],
         )
@@ -261,11 +261,11 @@ class TestGetMainCharacterFromUser(BaseTestCase):
         cls.group = Group.objects.create(name="Enterprise Crew")
 
         cls.user_main_character = create_fake_user(
-            character_id=1001, character_name="William T. Riker"
+            character_id=random_id(), character_name="William T. Riker"
         )
 
         cls.character_without_profile = create_eve_character(
-            character_id=1003, character_name="Christopher Pike"
+            character_id=random_id(), character_name="Christopher Pike"
         )
 
     def test_get_main_character_from_user_should_return_character_name(self):

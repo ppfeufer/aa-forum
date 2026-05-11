@@ -8,7 +8,7 @@ from django.contrib.auth.models import Group
 # AA Forum
 from aa_forum.models import Board, Category, Topic
 from aa_forum.tests import BaseTestCase
-from aa_forum.tests.utils import create_fake_message, create_fake_user
+from aa_forum.tests.utils import create_fake_message, create_fake_user, random_id
 
 
 class TestBoard(BaseTestCase):
@@ -37,7 +37,9 @@ class TestBoard(BaseTestCase):
         :rtype:
         """
 
-        self.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
+        self.user = create_fake_user(
+            character_id=random_id(), character_name="Bruce Wayne"
+        )
 
     def test_should_return_board_with_no_groups(self):
         """
@@ -120,7 +122,9 @@ class TestTopic(BaseTestCase):
         :rtype:
         """
 
-        self.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
+        self.user = create_fake_user(
+            character_id=random_id(), character_name="Bruce Wayne"
+        )
         self.board = Board.objects.create(name="Physics", category=self.category)
 
     def test_should_return_topic_normally_1(self):

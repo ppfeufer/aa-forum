@@ -8,7 +8,7 @@ from django.contrib.auth.models import Group
 # AA Forum
 from aa_forum.models import Board, Category
 from aa_forum.tests import BaseTestCase
-from aa_forum.tests.utils import create_fake_user
+from aa_forum.tests.utils import create_fake_user, random_id
 
 MODELS_PATH = "aa_forum.models"
 
@@ -28,7 +28,9 @@ class TestBoard(BaseTestCase):
         """
 
         super().setUpClass()
-        cls.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
+        cls.user = create_fake_user(
+            character_id=random_id(), character_name="Bruce Wayne"
+        )
         cls.group = Group.objects.create(name="Superhero")
 
     def setUp(self) -> None:

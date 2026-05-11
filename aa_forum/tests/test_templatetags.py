@@ -20,7 +20,7 @@ from allianceauth.tests.auth_utils import AuthUtils
 from aa_forum.models import PersonalMessage, get_sentinel_user
 from aa_forum.templatetags.aa_forum import personal_message_unread_count
 from aa_forum.tests import BaseTestCase
-from aa_forum.tests.utils import create_fake_user, render_template
+from aa_forum.tests.utils import create_fake_user, random_id, render_template
 
 
 class TestMainCharacterName(BaseTestCase):
@@ -49,7 +49,7 @@ class TestMainCharacterName(BaseTestCase):
         """
 
         # given
-        user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
+        user = create_fake_user(character_id=random_id(), character_name="Bruce Wayne")
         context = {"user": user}
 
         # when
@@ -138,14 +138,16 @@ class TestMainCharacterId(BaseTestCase):
         """
 
         # given
-        user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
+        user = create_fake_user(character_id=random_id(), character_name="Bruce Wayne")
         context = {"user": user}
 
         # when
         result = render_template(string=self.template, context=context)
 
         # then
-        self.assertEqual(first=result, second="1001")
+        self.assertEqual(
+            first=result, second=str(user.profile.main_character.character_id)
+        )
 
     def test_should_contain_dummy_id_for_users_without_main(self):
         """
@@ -230,7 +232,7 @@ class TestMainCharacterCorporationName(BaseTestCase):
 
         # given
         user = create_fake_user(
-            character_id=1001,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             corporation_id=2001,
             corporation_name="Wayne Tech Inc.",
@@ -328,7 +330,7 @@ class TestMainCorporationId(BaseTestCase):
 
         # given
         user = create_fake_user(
-            character_id=1001,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             corporation_id=2001,
             corporation_name="Wayne Tech Inc.",
@@ -425,7 +427,7 @@ class TestMainCharacterAllianceName(BaseTestCase):
 
         # given
         user = create_fake_user(
-            character_id=1001,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             corporation_id=2001,
             corporation_name="Wayne Tech Inc.",
@@ -551,7 +553,7 @@ class TestMainAllianceId(BaseTestCase):
 
         # given
         user = create_fake_user(
-            character_id=1001,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             corporation_id=2001,
             corporation_name="Wayne Tech Inc.",
@@ -703,7 +705,7 @@ class TestForumTemplateVariables(BaseTestCase):
         """
 
         user = create_fake_user(
-            character_id=1001,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             corporation_id=2001,
             corporation_name="Wayne Tech Inc.",
@@ -732,7 +734,7 @@ class TestForumTemplateVariables(BaseTestCase):
 
         # given (creating our personal message)
         user_sender = create_fake_user(
-            character_id=1001,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             corporation_id=2001,
             corporation_name="Wayne Tech Inc.",
@@ -742,7 +744,7 @@ class TestForumTemplateVariables(BaseTestCase):
         )
 
         user_receiver = create_fake_user(
-            character_id=1002,
+            character_id=random_id(),
             character_name="Batman",
             corporation_id=2001,
             corporation_name="Wayne Tech Inc.",
