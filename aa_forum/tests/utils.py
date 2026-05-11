@@ -6,6 +6,7 @@ Helper for our tests
 import datetime as dt
 import random
 import re
+import secrets
 from unittest.mock import patch
 
 # Third Party
@@ -289,7 +290,7 @@ def create_last_message_seen(**kwargs):
     """
 
     if "user" not in kwargs:
-        kwargs["user"] = get_or_create_fake_user(1001, "Bruce Wayne")
+        kwargs["user"] = get_or_create_fake_user(random_id(), "Bruce Wayne")
 
     return LastMessageSeen.objects.create(**kwargs)
 
@@ -305,10 +306,10 @@ def create_personal_message(**kwargs) -> PersonalMessage:
     """
 
     if "sender" not in kwargs:
-        kwargs["sender"] = get_or_create_fake_user(1001, "Bruce Wayne")
+        kwargs["sender"] = get_or_create_fake_user(random_id(), "Bruce Wayne")
 
     if "recipient" not in kwargs:
-        kwargs["recipient"] = get_or_create_fake_user(1011, "Lex Luthor")
+        kwargs["recipient"] = get_or_create_fake_user(random_id(), "Lex Luthor")
 
     if "subject" not in kwargs:
         kwargs["subject"] = fake.sentence()
@@ -373,3 +374,16 @@ def render_template(string, context=None):
     context = Context(dict_=context)
 
     return Template(template_string=string).render(context=context)
+
+
+def random_id(n: int = 26) -> int:
+    """
+    Generate a random ID
+
+    :param n: Length of the ID, optional (default=26 (8 digits in base36))
+    :type n: int
+    :return: A random ID
+    :rtype: int
+    """
+
+    return secrets.randbits(n)

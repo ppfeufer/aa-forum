@@ -10,7 +10,7 @@ from django.urls import reverse
 
 # AA Forum
 from aa_forum.tests import BaseTestCase
-from aa_forum.tests.utils import create_fake_user
+from aa_forum.tests.utils import create_fake_user, random_id
 
 
 class TestHooks(BaseTestCase):
@@ -27,13 +27,13 @@ class TestHooks(BaseTestCase):
         super().setUpClass()
 
         # User cannot access
-        cls.user_1001 = create_fake_user(
-            character_id=1001, character_name="Peter Parker"
+        cls.user_without_access = create_fake_user(
+            character_id=random_id(), character_name="Peter Parker"
         )
 
         # User can access
-        cls.user_1002 = create_fake_user(
-            character_id=1002,
+        cls.user_with_basic_access = create_fake_user(
+            character_id=random_id(),
             character_name="Bruce Wayne",
             permissions=["aa_forum.basic_access"],
         )
@@ -55,7 +55,7 @@ class TestHooks(BaseTestCase):
         :rtype:
         """
 
-        self.client.force_login(user=self.user_1002)
+        self.client.force_login(user=self.user_with_basic_access)
 
         response = self.client.get(path=reverse(viewname="authentication:dashboard"))
 
@@ -71,7 +71,7 @@ class TestHooks(BaseTestCase):
         :rtype:
         """
 
-        self.client.force_login(user=self.user_1001)
+        self.client.force_login(user=self.user_without_access)
 
         response = self.client.get(path=reverse(viewname="authentication:dashboard"))
 

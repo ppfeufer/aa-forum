@@ -14,7 +14,12 @@ from django.urls import reverse
 # AA Forum
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Topic
 from aa_forum.tests import BaseTestCase
-from aa_forum.tests.utils import create_fake_messages, create_fake_user, my_get_setting
+from aa_forum.tests.utils import (
+    create_fake_messages,
+    create_fake_user,
+    my_get_setting,
+    random_id,
+)
 
 VIEWS_PATH = "aa_forum.views.forum"
 
@@ -35,12 +40,12 @@ class TestIndexViews(BaseTestCase):
 
         super().setUpClass()
         cls.user_1001 = create_fake_user(
-            character_id=1001,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             permissions=["aa_forum.basic_access"],
         )
         cls.user_1002 = create_fake_user(
-            character_id=1002,
+            character_id=random_id(),
             character_name="Peter Parker",
             permissions=["aa_forum.basic_access"],
         )
@@ -193,12 +198,12 @@ class TestIndexViewsSpecial(BaseTestCase):
 
         super().setUpClass()
         cls.user_1001 = create_fake_user(
-            character_id=1001,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             permissions=["aa_forum.basic_access"],
         )
         cls.user_1002 = create_fake_user(
-            character_id=1002,
+            character_id=random_id(),
             character_name="Peter Parker",
             permissions=["aa_forum.basic_access"],
         )
@@ -251,17 +256,17 @@ class TestBoardViews(BaseTestCase):
 
         super().setUpClass()
         cls.user_1001 = create_fake_user(
-            character_id=1001,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             permissions=["aa_forum.basic_access"],
         )
         cls.user_1002 = create_fake_user(
-            character_id=1002,
+            character_id=random_id(),
             character_name="Peter Parker",
             permissions=["aa_forum.basic_access"],
         )
         cls.user_1003 = create_fake_user(
-            character_id=1003,
+            character_id=random_id(),
             character_name="Clark Kent",
             permissions=["aa_forum.basic_access", "aa_forum.manage_forum"],
         )
@@ -759,12 +764,12 @@ class TestTopicViews(BaseTestCase):
 
         super().setUpClass()
         cls.user_1001 = create_fake_user(
-            character_id=1001,
+            character_id=random_id(),
             character_name="Bruce Wayne",
             permissions=["aa_forum.basic_access"],
         )
         cls.user_1003 = create_fake_user(
-            character_id=1003,
+            character_id=random_id(),
             character_name="Clark Lent",
             permissions=["aa_forum.basic_access", "aa_forum.manage_forum"],
         )
@@ -772,7 +777,7 @@ class TestTopicViews(BaseTestCase):
         cls.announcement_group = Group.objects.create(name="Justice League")
 
         cls.user_1004 = create_fake_user(
-            character_id=1004,
+            character_id=random_id(),
             character_name="Luke Skywalker",
             permissions=["aa_forum.basic_access"],
         )
@@ -1538,7 +1543,7 @@ class TestTopicViews(BaseTestCase):
 
         # given
         user_without_modify_perms = create_fake_user(
-            character_id=1002,
+            character_id=random_id(),
             character_name="Peter Parker",
             permissions=["aa_forum.basic_access"],
         )

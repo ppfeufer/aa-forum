@@ -33,6 +33,7 @@ from aa_forum.tests.utils import (
     create_setting,
     create_topic,
     my_get_setting,
+    random_id,
 )
 
 MODELS_PATH = "aa_forum.models"
@@ -196,7 +197,9 @@ class TestBoard(BaseTestCase):
 
         super().setUpClass()
 
-        cls.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
+        cls.user = create_fake_user(
+            character_id=random_id(), character_name="Bruce Wayne"
+        )
         cls.group = Group.objects.create(name="Superhero")
 
     def setUp(self) -> None:
@@ -512,7 +515,9 @@ class TestCategory(BaseTestCase):
     def setUpClass(cls) -> None:
         super().setUpClass()
 
-        cls.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
+        cls.user = create_fake_user(
+            character_id=random_id(), character_name="Bruce Wayne"
+        )
 
     def test_model_string_names(self):
         """
@@ -672,7 +677,9 @@ class TestMessage(BaseTestCase):
         """
         super().setUpClass()
 
-        cls.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
+        cls.user = create_fake_user(
+            character_id=random_id(), character_name="Bruce Wayne"
+        )
 
     def setUp(self) -> None:
         """
@@ -1015,7 +1022,9 @@ class TestTopic(BaseTestCase):
 
         super().setUpClass()
 
-        cls.user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
+        cls.user = create_fake_user(
+            character_id=random_id(), character_name="Bruce Wayne"
+        )
 
     def setUp(self) -> None:
         """
@@ -1288,7 +1297,7 @@ class LastMessageSeen(BaseTestCase):
 
         # given
         topic = create_topic(subject="Alpha")
-        user = create_fake_user(character_id=1001, character_name="Bruce Wayne")
+        user = create_fake_user(character_id=random_id(), character_name="Bruce Wayne")
         message_time = dt.datetime(year=2022, month=1, day=12, hour=17, minute=30)
         message = create_last_message_seen(
             topic=topic, user=user, message_time=message_time
