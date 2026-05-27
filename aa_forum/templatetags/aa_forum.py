@@ -22,13 +22,12 @@ from django.utils.translation import gettext_lazy as _
 from allianceauth.services.hooks import get_extension_logger
 
 # AA Forum
-from aa_forum import __title__
 from aa_forum.app_settings import aa_timezones_installed
 from aa_forum.constants import SEARCH_STOPWORDS
 from aa_forum.models import PersonalMessage
-from aa_forum.providers import AppLogger
+from aa_forum.providers.applogger import AppLogger
 
-logger = AppLogger(my_logger=get_extension_logger(__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(__name__))
 
 
 class SetVarNode(template.Node):

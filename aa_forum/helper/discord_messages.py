@@ -36,9 +36,9 @@ from aa_forum.helper.text import (
 )
 from aa_forum.helper.urls import reverse_absolute
 from aa_forum.models import Board, Message, PersonalMessage, Topic
-from aa_forum.providers import AppLogger
+from aa_forum.providers.applogger import AppLogger
 
-logger = AppLogger(get_extension_logger(__name__), __title__)
+logger = AppLogger(get_extension_logger(__name__))
 
 
 def _dhooks_lite_user_agent() -> UserAgent:

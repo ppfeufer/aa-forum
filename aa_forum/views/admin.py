@@ -26,14 +26,13 @@ from django.utils.translation import gettext as _
 from allianceauth.services.hooks import get_extension_logger
 
 # AA Forum
-from aa_forum import __title__
 from aa_forum.constants import DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER
 from aa_forum.forms import EditBoardForm, EditCategoryForm, NewCategoryForm, SettingForm
 from aa_forum.helper.forms import message_form_errors
 from aa_forum.models import Board, Category, Setting
-from aa_forum.providers import AppLogger
+from aa_forum.providers.applogger import AppLogger
 
-logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__))
 
 
 @login_required

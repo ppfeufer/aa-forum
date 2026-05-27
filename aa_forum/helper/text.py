@@ -17,11 +17,10 @@ from django.utils.html import strip_tags
 from allianceauth.services.hooks import get_extension_logger
 
 # AA Forum
-from aa_forum import __title__
 from aa_forum.constants import DISCORD_EMBED_MESSAGE_LENGTH
-from aa_forum.providers import AppLogger
+from aa_forum.providers.applogger import AppLogger
 
-logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__))
 
 
 def verify_image_url(image_url):
