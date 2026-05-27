@@ -17,14 +17,13 @@ from django.utils.translation import gettext as _
 from allianceauth.services.hooks import get_extension_logger
 
 # AA Forum
-from aa_forum import __title__
 from aa_forum.forms import EditMessageForm, EditTopicForm, NewTopicForm
 from aa_forum.helper.discord_messages import send_message_to_discord_webhook
 from aa_forum.helper.pagination import get_paginated_page_object
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Setting, Topic
-from aa_forum.providers import AppLogger
+from aa_forum.providers.applogger import AppLogger
 
-logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__))
 
 
 @login_required

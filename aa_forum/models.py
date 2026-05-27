@@ -27,7 +27,6 @@ from allianceauth.services.hooks import get_extension_logger
 from django_ckeditor_5.fields import CKEditor5Field
 
 # AA Forum
-from aa_forum import __title__
 from aa_forum.constants import (
     DEFAULT_CATEGORY_AND_BOARD_SORT_ORDER,
     INTERNAL_URL_PREFIX,
@@ -40,9 +39,9 @@ from aa_forum.managers import (
     SettingManager,
     TopicManager,
 )
-from aa_forum.providers import AppLogger
+from aa_forum.providers.applogger import AppLogger
 
-logger = AppLogger(my_logger=get_extension_logger(name=__name__), prefix=__title__)
+logger = AppLogger(my_logger=get_extension_logger(name=__name__))
 
 
 def get_sentinel_user() -> User:
