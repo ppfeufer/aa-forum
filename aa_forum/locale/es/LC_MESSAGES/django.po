@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2026-05-05 15:14+0200\n"
+"POT-Creation-Date: 2026-06-02 12:26+0200\n"
 "PO-Revision-Date: 2025-07-29 20:18+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Spanish <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/es/>\n"
@@ -106,7 +106,7 @@ msgstr "Restricciones del tema inicial para los «tablón de anuncios»"
 msgid "Board name"
 msgstr "Nombre del Tablón"
 
-#: aa_forum/forms.py:302 aa_forum/models.py:229
+#: aa_forum/forms.py:302 aa_forum/models.py:228
 msgid "Board description (optional)"
 msgstr "Descripción del Tablero (opcional)"
 
@@ -192,124 +192,124 @@ msgstr ""
 msgid "Error:"
 msgstr ""
 
-#: aa_forum/models.py:126
+#: aa_forum/models.py:125
 msgid "AA-Forum"
 msgstr ""
 
-#: aa_forum/models.py:130
+#: aa_forum/models.py:129
 msgid "Can access the AA-Forum module"
 msgstr ""
 
-#: aa_forum/models.py:133
+#: aa_forum/models.py:132
 msgid "Can manage the AA-Forum module (Category, topics and messages)"
 msgstr ""
 
-#: aa_forum/models.py:180
+#: aa_forum/models.py:179
 msgid "category"
 msgstr ""
 
-#: aa_forum/models.py:181
+#: aa_forum/models.py:180
 msgid "categories"
 msgstr ""
 
-#: aa_forum/models.py:237
+#: aa_forum/models.py:236
 msgid "Discord webhook URL for the channel to post about new topics in this board. (This setting is optional)"
 msgstr ""
 
-#: aa_forum/models.py:244
+#: aa_forum/models.py:243
 #, fuzzy
 #| msgid "When activated every reply to any topic in this board will be posted to the defined Discord channel. (Child boards are excluded) Chose wisely! (Default: NO)"
 msgid "Use this Discord webhook for replies as well? When activated every reply to any topic in this board will be posted to the defined Discord channel. (Child boards are excluded) Chose wisely! (Default: NO)"
 msgstr "Cuando se active, cada respuesta a cualquier tema en este foro se publicará en el canal de Discord definido. (los sub-tablones están excluidos) ¡Elija sabiamente! (Predeterminado: NO)"
 
-#: aa_forum/models.py:262
+#: aa_forum/models.py:261
 #, fuzzy
 #| msgid "This will restrict access to this board to the selected groups. If no groups are selected, everyone who can access the forum can also access this board. (This setting is optional)"
 msgid "This will restrict access to this board to the selected groups. If no groups are selected, everyone who can access the forum can also access this board. (This setting is optional)"
 msgstr "Esto restringirá el acceso a este tablero a los grupos seleccionados. Si no se selecciona ningún grupo, todos los que puedan acceder al foro también podrán acceder a este foro. (Esta configuración es opcional)"
 
-#: aa_forum/models.py:270
+#: aa_forum/models.py:269
 #, fuzzy
 #| msgid "Mark this board as an 'Announcement Board', meaning that only certain selected groups can start new topics. All others who have access to this board will still be able to discuss in the topics though. This setting will not be inherited to child boards. (Default: NO)"
 msgid "Mark this board as an \"Announcement Board\", meaning that only certain selected groups can start new topics. All others who have access to this board will still be able to discuss in the topics though. This setting will not be inherited to child boards. (Default: NO)"
 msgstr "Marque este foro como «Tablero de anuncios», lo que significa que solo ciertos grupos seleccionados pueden iniciar nuevos temas. Sin embargo, todos los demás que tengan acceso a este foro aún podrán discutir los temas. Esta configuración no se heredará en los tableros secundarios. (Predeterminado: NO)"
 
-#: aa_forum/models.py:281
+#: aa_forum/models.py:280
 #, fuzzy
 #| msgid "User in at least one of the selected groups will be able to start topics in 'Announcement Boards'. If no group is selected, only forum admins can do so. This setting will not be inherited to child boards. (Hint: These restrictions only take effect when a board is marked as 'Announcement Board', see checkbox above.)"
 msgid "User in at least one of the selected groups will be able to start topics in \"Announcement Boards\". If no group is selected, only forum admins can do so. This setting will not be inherited to child boards. (Hint: These restrictions only take effect when a board is marked as \"Announcement Board\", see checkbox above.)"
 msgstr "Los usuarios de al menos uno de los grupos seleccionados podrán iniciar temas en los «Tableros de anuncios». Si no se selecciona ningún grupo, sólo los administradores del foro podrán hacerlo. Esta configuración no se heredará en los tableros secundarios. (Sugerencia: estas restricciones solo entran en vigor cuando un tablero está marcado como «Tablero de anuncios», consulte la casilla de verificación arriba.)"
 
-#: aa_forum/models.py:319
+#: aa_forum/models.py:318
 msgid "board"
 msgstr ""
 
-#: aa_forum/models.py:320
+#: aa_forum/models.py:319
 msgid "boards"
 msgstr ""
 
-#: aa_forum/models.py:392
+#: aa_forum/models.py:391
 #, python-brace-format
 msgid "<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href=\"{topic_url}\">{topic_subject}</a></p>"
 msgstr ""
 
-#: aa_forum/models.py:623
+#: aa_forum/models.py:622
 msgid "topic"
 msgstr ""
 
-#: aa_forum/models.py:624
+#: aa_forum/models.py:623
 msgid "topics"
 msgstr ""
 
-#: aa_forum/models.py:803
+#: aa_forum/models.py:802
 msgid "message"
 msgstr ""
 
-#: aa_forum/models.py:804
+#: aa_forum/models.py:803
 msgid "messages"
 msgstr ""
 
-#: aa_forum/models.py:946
+#: aa_forum/models.py:945
 msgid "personal message"
 msgstr ""
 
-#: aa_forum/models.py:947
+#: aa_forum/models.py:946
 msgid "personal messages"
 msgstr ""
 
-#: aa_forum/models.py:1001
+#: aa_forum/models.py:1000
 msgid "Messages per page"
 msgstr ""
 
-#: aa_forum/models.py:1002
+#: aa_forum/models.py:1001
 msgid "Topics per page"
 msgstr ""
 
-#: aa_forum/models.py:1003
+#: aa_forum/models.py:1002
 msgid "User signature length"
 msgstr ""
 
-#: aa_forum/models.py:1009
+#: aa_forum/models.py:1008
 msgid "How many messages per page should be displayed in a forum topic? (Default: 15)"
 msgstr ""
 
-#: aa_forum/models.py:1017
+#: aa_forum/models.py:1016
 msgid "How many topics per page should be displayed in a forum category? (Default: 10)"
 msgstr ""
 
-#: aa_forum/models.py:1025
+#: aa_forum/models.py:1024
 msgid "How long (Number of characters) is a user's signature allowed to be? (Default: 750)"
 msgstr ""
 
-#: aa_forum/models.py:1038
+#: aa_forum/models.py:1037
 msgid "setting"
 msgstr "ajuste"
 
-#: aa_forum/models.py:1039
+#: aa_forum/models.py:1038
 msgid "settings"
 msgstr "ajustes"
 
-#: aa_forum/models.py:1049
+#: aa_forum/models.py:1048
 #: aa_forum/templates/aa_forum/partials/administration/settings-form.html:7
 #: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:19
 #, fuzzy
@@ -317,15 +317,15 @@ msgstr "ajustes"
 msgid "Forum settings"
 msgstr "ajustes"
 
-#: aa_forum/models.py:1076
+#: aa_forum/models.py:1075
 msgid "user profile"
 msgstr ""
 
-#: aa_forum/models.py:1077
+#: aa_forum/models.py:1076
 msgid "user profiles"
 msgstr ""
 
-#: aa_forum/models.py:1087
+#: aa_forum/models.py:1086
 msgid "Forum user profile"
 msgstr ""
 
@@ -614,7 +614,7 @@ msgid "Fields marked with an asterisk (*) are mandatory"
 msgstr "Los campos marcados con un asterisco son obligatorios"
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board-index.html:27
-msgid "No topics have been started in this board …"
+msgid "No topics have been started in this board…"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board.html:31
@@ -897,7 +897,7 @@ msgid "User profile"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/search/search-form.html:13
-msgid "Search …"
+msgid "Search…"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/widgets/unread-topics.html:5
@@ -941,7 +941,7 @@ msgid "Unread Topics"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/view/forum/unread-topics.html:30
-msgid "You have no unread topics …"
+msgid "You have no unread topics…"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/view/personal-messages/inbox.html:7
@@ -976,187 +976,187 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: aa_forum/templates/aa_forum/view/search/results.html:31
-msgid "Nothing found …"
+msgid "Nothing found…"
 msgstr ""
 
-#: aa_forum/templatetags/aa_forum.py:97
+#: aa_forum/templatetags/aa_forum.py:96
 msgid "Timezone conversion"
 msgstr ""
 
-#: aa_forum/views/admin.py:168
+#: aa_forum/views/admin.py:167
 msgid "<h4>Success!</h4><p>Category created.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:211
+#: aa_forum/views/admin.py:210
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Category name changed from \"{category_name_old}\" to \"{category_name_new}\".</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:257
+#: aa_forum/views/admin.py:256
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Category \"{category_name}\" removed.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:376
+#: aa_forum/views/admin.py:375
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{new_board_name}\" created.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:436
+#: aa_forum/views/admin.py:435
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{board_name}\" changed.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:483
+#: aa_forum/views/admin.py:482
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Board \"{board_name}\" removed.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:608
+#: aa_forum/views/admin.py:607
 msgid "<h4>Success!</h4><p>Settings updated.</p>"
 msgstr ""
 
-#: aa_forum/views/admin.py:618 aa_forum/views/personal_messages.py:120
-#: aa_forum/views/personal_messages.py:249 aa_forum/views/profile.py:68
+#: aa_forum/views/admin.py:617 aa_forum/views/personal_messages.py:119
+#: aa_forum/views/personal_messages.py:248 aa_forum/views/profile.py:67
 msgid "<h4>Error!</h4><p>Something went wrong, please check your input.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:227
+#: aa_forum/views/forum.py:226
 msgid "<h4>Error!</h4><p>The board you were trying to visit does either not exist, or you don't have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:288
+#: aa_forum/views/forum.py:287
 msgid "<h4>Error!</h4><p>The category you were trying to post in does not exist.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:315
+#: aa_forum/views/forum.py:314
 msgid "<h4>Error!</h4><p>The board you were trying to post in does either not exist, or you don't have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:335
+#: aa_forum/views/forum.py:334
 msgid "<h4>Error!</h4><p>The board you were trying to post in is an announcement board and you don't have the permissions to start a topic there.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:394
+#: aa_forum/views/forum.py:393
 msgid "<h4>Error!</h4><p>Either subject or message is missing. Please make sure you enter both fields, as both fields are mandatory.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:456 aa_forum/views/forum.py:701
+#: aa_forum/views/forum.py:455 aa_forum/views/forum.py:700
 msgid "<h4>Error!</h4><p>The topic you were trying to view does not exist or you do not have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:558
+#: aa_forum/views/forum.py:557
 msgid "<h4>Error!</h4><p>The topic you were trying to modify does not exist or you do not have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:580
+#: aa_forum/views/forum.py:579
 msgid "<h4>Error!</h4><p>You are not allowed to modify this topic!</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:612
+#: aa_forum/views/forum.py:611
 msgid "<h4>Success!</h4><p>The topic subject has been updated.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:840
+#: aa_forum/views/forum.py:839
 msgid "<h4>Error!</h4><p>The topic you were trying to reply does not exist or you do not have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:917
+#: aa_forum/views/forum.py:916
 msgid "<h4>Error!</h4><p>Message field is mandatory and cannot be empty.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:926
+#: aa_forum/views/forum.py:925
 msgid "<h4>Error!</h4><p>Something went wrong, please try again.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:967
+#: aa_forum/views/forum.py:966
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{current_topic}\" has been unlocked/re-opened.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:981
+#: aa_forum/views/forum.py:980
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{current_topic}\" has been locked/closed.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1025
+#: aa_forum/views/forum.py:1024
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{curent_topic}\" is no longer \"sticky\".</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1040
+#: aa_forum/views/forum.py:1039
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{curent_topic}\" is now \"sticky\".</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1079
+#: aa_forum/views/forum.py:1078
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Topic \"{topic_subject}\" removed.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1123
+#: aa_forum/views/forum.py:1122
 msgid "<h4>Error!</h4><p>The message doesn't exist.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1173
+#: aa_forum/views/forum.py:1172
 msgid "<h4>Error!</h4><p>The message you were trying to modify does either not exist, or you don't have access to it.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1196
+#: aa_forum/views/forum.py:1195
 msgid "<h4>Error!</h4><p>You are not allowed to modify this message!</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1223
+#: aa_forum/views/forum.py:1222
 msgid "<h4>Success!</h4><p>The message has been updated.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1246
+#: aa_forum/views/forum.py:1245
 msgid "<h4>Error!</h4><p>Mandatory form field is empty.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1344
+#: aa_forum/views/forum.py:1343
 msgid "<h4>Error!</h4><p>You are not allowed to delete this message!</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1374
+#: aa_forum/views/forum.py:1373
 msgid "<h4>Success!</h4><p>The message has been deleted.</p>"
 msgstr ""
 
-#: aa_forum/views/forum.py:1399
+#: aa_forum/views/forum.py:1398
 msgid "<h4>Success!</h4><p>The message has been deleted.</p><p>This was the topics opening post, so the topic has been deleted as well.</p>"
 msgstr ""
 
-#: aa_forum/views/personal_messages.py:108
+#: aa_forum/views/personal_messages.py:107
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Message to {recipient_main_char} sent.</p>"
 msgstr ""
 
-#: aa_forum/views/personal_messages.py:200
+#: aa_forum/views/personal_messages.py:199
 msgid "<h4>Error!</h4><p>The message you were trying to reply to does either not exist or you are not the recipient.</p>"
 msgstr ""
 
-#: aa_forum/views/personal_messages.py:237
+#: aa_forum/views/personal_messages.py:236
 #, python-brace-format
 msgid "<h4>Success!</h4><p>Reply to {recipient_main_char} sent.</p>"
 msgstr ""
 
-#: aa_forum/views/personal_messages.py:298
-#: aa_forum/views/personal_messages.py:335
+#: aa_forum/views/personal_messages.py:297
+#: aa_forum/views/personal_messages.py:334
 msgid "<h4>Error!</h4><p>The message you tried to remove does either not exist or is not yours to remove.</p>"
 msgstr ""
 
-#: aa_forum/views/personal_messages.py:314
+#: aa_forum/views/personal_messages.py:313
 msgid "<h4>Success!</h4><p>Message removed from your inbox.</p>"
 msgstr ""
 
-#: aa_forum/views/personal_messages.py:353
+#: aa_forum/views/personal_messages.py:352
 msgid "<h4>Success!</h4><p>Message has been removed from your sent messages.</p>"
 msgstr ""
 
-#: aa_forum/views/personal_messages.py:368
+#: aa_forum/views/personal_messages.py:367
 msgid "<h4>Error!</h4><p>Something went wrong.</p>"
 msgstr ""
 
-#: aa_forum/views/profile.py:58
+#: aa_forum/views/profile.py:57
 msgid "<h4>Success!</h4><p>Profile saved.</p>"
 msgstr ""
