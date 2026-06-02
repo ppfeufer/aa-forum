@@ -351,7 +351,7 @@ def board_new_topic(
             board_slug=current_board.slug,
         )
 
-    # If this is a POST request, we need to process the form data …
+    # If this is a POST request, we need to process the form data…
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
         form = NewTopicForm(data=request.POST)
@@ -1388,7 +1388,7 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
             topic_slug=current_message__topic.slug,
         )
 
-    # If it is the topics opening post …
+    # If it is the topics opening post…
     current_message__topic.delete()
 
     messages.success(

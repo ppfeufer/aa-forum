@@ -93,7 +93,7 @@ def run():
 
                     topic._update_message_references()
 
-            print(f"Updating {board_count} boards …")
+            print(f"Updating {board_count} boards…")
 
             for board in boards:
                 board._update_message_references()

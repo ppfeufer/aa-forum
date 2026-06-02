@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.14.6\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2026-05-27 08:33+0200\n"
+"POT-Creation-Date: 2026-06-02 12:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -643,7 +643,7 @@ msgid "Fields marked with an asterisk (*) are mandatory"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board-index.html:27
-msgid "No topics have been started in this board …"
+msgid "No topics have been started in this board…"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/forum/board/board.html:31
@@ -921,7 +921,7 @@ msgid "User profile"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/search/search-form.html:13
-msgid "Search …"
+msgid "Search…"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/partials/widgets/unread-topics.html:5
@@ -965,7 +965,7 @@ msgid "Unread Topics"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/view/forum/unread-topics.html:30
-msgid "You have no unread topics …"
+msgid "You have no unread topics…"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/view/personal-messages/inbox.html:7
@@ -1000,7 +1000,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: aa_forum/templates/aa_forum/view/search/results.html:31
-msgid "Nothing found …"
+msgid "Nothing found…"
 msgstr ""
 
 #: aa_forum/templatetags/aa_forum.py:96
