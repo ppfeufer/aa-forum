@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
-"Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2026-06-02 12:26+0200\n"
-"PO-Revision-Date: 2026-02-01 14:23+0000\n"
+"Report-Msgid-Bugs-To: https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/\n"
+"POT-Creation-Date: 2026-07-01 14:51+0000\n"
+"PO-Revision-Date: 2026-06-26 17:58+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Japanese <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/ja/>\n"
 "Language: ja\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15.2\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 #: aa_forum/__init__.py:10 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -247,7 +247,7 @@ msgstr "複数の板"
 #: aa_forum/models.py:391
 #, python-brace-format
 msgid "<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href=\"{topic_url}\">{topic_subject}</a></p>"
-msgstr "<h4>警告！</h4><p>この掲示板に全く同じテーマのトピックが既に存在します</p><p>こちらをご覧ください: <a href=\"{topic_url}\">{self._topic.subject}</a></p>"
+msgstr "<h4>警告！</h4><p>この掲示板に全く同じテーマのトピックが既に存在します.</p><p>こちらをご覧ください: <a href=\"{topic_url}\">{topic_subject}</a></p>"
 
 #: aa_forum/models.py:622
 msgid "topic"
