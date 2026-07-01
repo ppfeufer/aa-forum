@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
-"Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2026-06-02 12:26+0200\n"
-"PO-Revision-Date: 2026-06-02 10:36+0000\n"
+"Report-Msgid-Bugs-To: https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/\n"
+"POT-Creation-Date: 2026-07-01 14:51+0000\n"
+"PO-Revision-Date: 2026-06-26 17:58+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Russian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/ru/>\n"
 "Language: ru\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : (n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 2026.5\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 #: aa_forum/__init__.py:10 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -242,10 +242,9 @@ msgid "boards"
 msgstr "доски"
 
 #: aa_forum/models.py:391
-#, fuzzy, python-brace-format
-#| msgid "<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href=\"{self.topic_url}\">{self._topic.subject}</a></p>"
+#, python-brace-format
 msgid "<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href=\"{topic_url}\">{topic_subject}</a></p>"
-msgstr "<h4>Предупреждение!</h4><p>На доске уже есть тема с таким же названием.</p><p>См.: <a href=\"{self.topic_url}\">{self._topic.subject}</a></p>"
+msgstr "<h4>Предупреждение!</h4><p>На доске уже есть тема с таким же названием.</p><p>См.: <a href=\"{topic_url}\">{topic_subject}</a></p>"
 
 #: aa_forum/models.py:622
 msgid "topic"
