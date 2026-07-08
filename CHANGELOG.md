@@ -50,7 +50,7 @@ Section Order:
 > **This version needs Alliance Auth v5.2.0 or newer!**
 >
 > Please make sure to update your Alliance Auth instance **before** you install this
-> version, otherwise an update to Alliance Auth will be pulled in unsupervised.
+> version; otherwise, an update to Alliance Auth will be pulled in unsupervised.
 
 ### Added
 
