@@ -2,6 +2,9 @@
 Dashboard widgets
 """
 
+# Standard Library
+from http import HTTPStatus
+
 # Django
 from django.contrib.auth.decorators import permission_required
 from django.core.handlers.wsgi import WSGIRequest
@@ -56,4 +59,4 @@ def ajax_unread_topics(request: WSGIRequest) -> HttpResponse:
             request=request,
         )
 
-    return HttpResponse(status=204)
+    return HttpResponse(status=HTTPStatus.NO_CONTENT)

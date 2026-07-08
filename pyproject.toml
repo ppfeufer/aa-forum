@@ -49,6 +49,7 @@ optional-dependencies.tests-allianceauth-latest = [
     "aa-timezones",
     "allianceauth-discordbot",
     "coverage",
+    "discordproxy",
     "django-testdata",
     "django-webtest",
     "faker",

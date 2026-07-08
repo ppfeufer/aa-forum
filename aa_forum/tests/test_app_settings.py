@@ -2,6 +2,10 @@
 Test for app_settings.py
 """
 
+# Standard Library
+import importlib
+from unittest.mock import patch
+
 # Django
 from django.test import modify_settings, override_settings
 
@@ -11,6 +15,7 @@ from aa_forum.app_settings import (
     allianceauth_discordbot_installed,
     debug_enabled,
     discord_messaging_proxy_available,
+    discordproxy_installed,
 )
 from aa_forum.tests import BaseTestCase
 
@@ -102,3 +107,54 @@ class TestDebugCheck(BaseTestCase):
         """
 
         self.assertFalse(debug_enabled())
+
+
+class TestDiscordProxyInstalled(BaseTestCase):
+    """
+    Test discordproxy_installed function
+    """
+
+    @patch("discordproxy.client.DiscordClient")
+    def test_returns_true_when_discordclient_imported_successfully(
+        self, mock_discord_client
+    ):
+        """
+        Test returns true when discordclient import successfully
+
+        :param mock_discord_client:
+        :type mock_discord_client:
+        :return:
+        :rtype:
+        """
+
+        result = discordproxy_installed()
+        self.assertTrue(result)
+
+    @patch("builtins.__import__")
+    def test_returns_false_when_discordclient_import_fails(self, mock_import):
+        """
+        Test returns false when discordclient import fails
+
+        :param mock_import:
+        :type mock_import:
+        :return:
+        :rtype:
+        """
+
+        # Make the mocked __import__ raise ModuleNotFoundError only for
+        # imports that target the discordproxy package. This avoids breaking
+        # unrelated imports (coverage, test infrastructure) while still
+        # simulating that discordproxy cannot be imported.
+        # Capture the original import implementation from importlib so we
+        # don't end up calling the mocked `__import__` and recursing.
+        real_import = importlib.__import__
+
+        def selective_import(name, globals=None, locals=None, fromlist=(), level=0):
+            if isinstance(name, str) and name.startswith("discordproxy"):
+                raise ModuleNotFoundError
+            return real_import(name, globals, locals, fromlist, level)
+
+        mock_import.side_effect = selective_import
+
+        result = discordproxy_installed()
+        self.assertFalse(result)
