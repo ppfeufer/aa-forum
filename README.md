@@ -104,16 +104,6 @@ these kinds of changes. For your own sanity, and mine :-)
 
 ## Installation<a name="installation"></a>
 
-> [!NOTE]
->
-> **AA Forum >= 2.0.0 needs at least Alliance Auth v4!**
->
-> Please make sure to update your Alliance Auth instance _before_ you install this
-> module or update to the latest version, otherwise an update to Alliance Auth will
-> be pulled in unsupervised.
->
-> The last version of AA Forum that supports Alliance Auth v3 is `1.19.5`.
-
 **Important**: Please make sure you meet all preconditions before you proceed:
 
 - AA Forum is a plugin for Alliance Auth. If you don't have Alliance Auth running
@@ -129,7 +119,7 @@ Make sure you're in the virtual environment (venv) of your Alliance Auth
 installation Then install the latest release directly from PyPi.
 
 ```shell
-pip install aa-forum==3.0.0
+pip install aa-forum==3.1.0
 ```
 
 ### Step 2: Configure Alliance Auth<a name="step-2-configure-alliance-auth"></a>
