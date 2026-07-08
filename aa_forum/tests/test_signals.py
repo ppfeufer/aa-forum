@@ -2,8 +2,8 @@
 Test signals for the aa_forum app
 """
 
-# Django
-from django.contrib.auth.models import Group
+# Alliance Auth
+from allianceauth.groupmanagement.models import Group
 
 # AA Forum
 from aa_forum.models import Board, Category

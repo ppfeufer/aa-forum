@@ -7,9 +7,11 @@ from http import HTTPStatus
 from unittest.mock import patch
 
 # Django
-from django.contrib.auth.models import Group
 from django.contrib.messages import get_messages
 from django.urls import reverse
+
+# Alliance Auth
+from allianceauth.groupmanagement.models import Group
 
 # AA Forum
 from aa_forum.models import Board, Category, LastMessageSeen, Message, Topic

@@ -7,11 +7,14 @@ import datetime as dt
 from unittest.mock import patch
 
 # Django
-from django.contrib.auth.models import Group, Permission, User
 from django.contrib.contenttypes.models import ContentType
 from django.db.utils import IntegrityError
 from django.urls import reverse
 from django.utils.timezone import now
+
+# Alliance Auth
+from allianceauth.authentication.models import Permission, User
+from allianceauth.groupmanagement.models import Group
 
 # AA Forum
 from aa_forum.models import (

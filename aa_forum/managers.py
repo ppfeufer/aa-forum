@@ -5,9 +5,11 @@ Managers for AA Forum models
 # pylint: disable=cyclic-import
 
 # Django
-from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Prefetch, Q, QuerySet
+
+# Alliance Auth
+from allianceauth.authentication.models import User
 
 
 class SettingQuerySet(models.QuerySet):

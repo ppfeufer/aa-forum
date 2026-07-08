@@ -15,8 +15,10 @@ from unittest.mock import patch
 from faker import Faker
 
 # Django
-from django.contrib.auth.models import User
 from django.utils.timezone import now
+
+# Alliance Auth
+from allianceauth.authentication.models import User
 
 # AA Forum
 from aa_forum.models import Board, Message, Topic
