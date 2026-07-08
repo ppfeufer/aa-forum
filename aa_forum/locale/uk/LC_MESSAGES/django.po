@@ -2,15 +2,15 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # "H. Peter Pfeufer" <info@ppfeufer.de>, 2023, 2024, 2025, 2026.
-# "Andrii M." <elfleg0las88@gmail.com>, 2023, 2024.
-# s0k0l -_- <salarysalo@gmail.com>, 2025.
+# "Andrii M." <elfleg0las88@gmail.com>, 2023, 2024, 2026.
+# s0k0l -_- <salarysalo@gmail.com>, 2025, 2026.
 # M <skrypets@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2026-06-02 12:26+0200\n"
-"PO-Revision-Date: 2026-06-02 10:36+0000\n"
+"POT-Creation-Date: 2026-07-08 13:31+0200\n"
+"PO-Revision-Date: 2026-07-08 11:40+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: Ukrainian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/uk/>\n"
 "Language: uk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : (n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 2026.5\n"
+"X-Generator: Weblate 2026.7\n"
 
 #: aa_forum/__init__.py:10 aa_forum/templates/aa_forum/base.html:6
 #: aa_forum/templates/aa_forum/base.html:10
@@ -40,146 +40,146 @@ msgstr ""
 msgid "Forum"
 msgstr "Форум"
 
-#: aa_forum/forms.py:43
+#: aa_forum/forms.py:46
 msgid "This field is mandatory"
 msgstr "Це поле обовʼязкове"
 
-#: aa_forum/forms.py:127 aa_forum/forms.py:362 aa_forum/forms.py:568
-#: aa_forum/forms.py:630
+#: aa_forum/forms.py:130 aa_forum/forms.py:365 aa_forum/forms.py:571
+#: aa_forum/forms.py:633
 msgid "Message"
 msgstr "Повідомлення"
 
-#: aa_forum/forms.py:138 aa_forum/forms.py:140 aa_forum/forms.py:187
-#: aa_forum/forms.py:189 aa_forum/forms.py:570
+#: aa_forum/forms.py:141 aa_forum/forms.py:143 aa_forum/forms.py:190
+#: aa_forum/forms.py:192 aa_forum/forms.py:573
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:25
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:25
 msgid "Subject"
 msgstr "Тема"
 
-#: aa_forum/forms.py:154 aa_forum/forms.py:169 aa_forum/forms.py:375
-#: aa_forum/forms.py:390 aa_forum/forms.py:585 aa_forum/forms.py:600
-#: aa_forum/forms.py:643 aa_forum/forms.py:658
+#: aa_forum/forms.py:157 aa_forum/forms.py:172 aa_forum/forms.py:378
+#: aa_forum/forms.py:393 aa_forum/forms.py:588 aa_forum/forms.py:603
+#: aa_forum/forms.py:646 aa_forum/forms.py:661
 msgid "You have forgotten the message!"
 msgstr "Ви забули повідомлення!"
 
-#: aa_forum/forms.py:201 aa_forum/forms.py:212
+#: aa_forum/forms.py:204 aa_forum/forms.py:215
 msgid "Boards"
 msgstr "Дошки"
 
-#: aa_forum/forms.py:203
+#: aa_forum/forms.py:206
 msgid "Boards to be created with this category (One board per line). These boards will have no group restrictions, so you have to add them later where needed."
 msgstr "Борди, які створюються з цією категорією (одна борда на рядок). Ці борди не матимуть обмежень для груп, тобто Вам треба буде додати обмеження згодом."
 
-#: aa_forum/forms.py:225 aa_forum/forms.py:242 aa_forum/forms.py:283
+#: aa_forum/forms.py:228 aa_forum/forms.py:245 aa_forum/forms.py:286
 msgid "Name"
 msgstr "Назва"
 
-#: aa_forum/forms.py:226 aa_forum/forms.py:243
+#: aa_forum/forms.py:229 aa_forum/forms.py:246
 msgid "Category name"
 msgstr "Назва Категорії"
 
-#: aa_forum/forms.py:284
+#: aa_forum/forms.py:287
 msgid "Description"
 msgstr "Опис"
 
-#: aa_forum/forms.py:285
+#: aa_forum/forms.py:288
 msgid "Group restrictions"
 msgstr "Обмеження групи"
 
-#: aa_forum/forms.py:286
+#: aa_forum/forms.py:289
 msgid "Discord webhook (optional)"
 msgstr "Вебхук Діскорда (опціонально)"
 
-#: aa_forum/forms.py:288
+#: aa_forum/forms.py:291
 msgid "Use this Discord webhook for replies as well?"
 msgstr "Використати поточний вебхук для відповідей так само?"
 
-#: aa_forum/forms.py:290
+#: aa_forum/forms.py:293
 msgid "Mark board as \"Announcement Board\""
 msgstr "Відмітити борду як \"Оголошення\""
 
-#: aa_forum/forms.py:292
+#: aa_forum/forms.py:295
 msgid "Start topic restrictions for \"Announcement Boards\""
 msgstr "Увімкнути обмеження борди для \"Оголошень\""
 
-#: aa_forum/forms.py:296
+#: aa_forum/forms.py:299
 msgid "Board name"
 msgstr "Дошка"
 
-#: aa_forum/forms.py:302 aa_forum/models.py:228
+#: aa_forum/forms.py:305 aa_forum/models.py:229
 msgid "Board description (optional)"
 msgstr "Опис дошки"
 
-#: aa_forum/forms.py:325
+#: aa_forum/forms.py:328
 msgid "Close topic"
 msgstr "Закрити тему"
 
-#: aa_forum/forms.py:327
+#: aa_forum/forms.py:330
 msgid "If checked, this topic will be closed after posting this message."
 msgstr "Якщо відмічено, ця тема буде закрита після публікації цього повідомлення."
 
-#: aa_forum/forms.py:333
+#: aa_forum/forms.py:336
 msgid "Reopen topic"
 msgstr "Перевідкрити тему"
 
-#: aa_forum/forms.py:335
+#: aa_forum/forms.py:338
 msgid "If checked, this topic will be reopened after posting this message."
 msgstr "Якщо відмічено, ця тема буде перевідкрита після публікації цього повідомлення."
 
-#: aa_forum/forms.py:415
+#: aa_forum/forms.py:418
 msgid "Your signature will appear below your posts."
 msgstr "Ваш підпис з'явиться пыд Вашими постами."
 
-#: aa_forum/forms.py:416
+#: aa_forum/forms.py:419
 msgid "Your website's title."
 msgstr "Назва Вашого веб-сайту."
 
-#: aa_forum/forms.py:418
+#: aa_forum/forms.py:421
 msgid "Your website's URL. (Don't forget to also set a title for your website, otherwise this field will be ignored.)"
 msgstr "URL Вашого сайту (не забудьте задати назву Вашого веб-сайту, інакше це поле буде ігноруватись)"
 
-#: aa_forum/forms.py:423
+#: aa_forum/forms.py:426
 msgid "Information: There is currently no module installed that can handle Discord direct messages. Have a chat with your IT guys to remedy this."
 msgstr "Інформація: Модуль, який оброблюватиме прямі повідомлення від Діскорду, не встановлено. Обговоріть це з техкомандою для опрацювання цього."
 
-#: aa_forum/forms.py:432
+#: aa_forum/forms.py:435
 msgid "Activating this setting will ad a widget to your dashboard that shows unread topics in the forum."
 msgstr "Активація цього налаштування додасть віджет до Вашого дашборду, що покаже непрочитані теми у форумі."
 
-#: aa_forum/forms.py:438
+#: aa_forum/forms.py:441
 msgid "Signature"
 msgstr "Підпис"
 
-#: aa_forum/forms.py:439
+#: aa_forum/forms.py:442
 msgid "Website title"
 msgstr "Назва сайту"
 
-#: aa_forum/forms.py:440
+#: aa_forum/forms.py:443
 msgid "Website URL"
 msgstr "URL сайту"
 
-#: aa_forum/forms.py:442
+#: aa_forum/forms.py:445
 msgid "PM me on Discord when I get a new personal message"
 msgstr "Написати приватно мені в Діскорд коли з'являться персональні повідомлення"
 
-#: aa_forum/forms.py:445
+#: aa_forum/forms.py:448
 msgid "Show unread topics as widget on the dashboard"
 msgstr "Показувати непрочитані теми як віджет на дашборді"
 
-#: aa_forum/forms.py:451
+#: aa_forum/forms.py:454
 msgid "e.g.: My Homepage"
 msgstr "наприклад: моя сторінка"
 
-#: aa_forum/forms.py:485
+#: aa_forum/forms.py:488
 #, python-brace-format
 msgid "Ensure your signature has at most {max_signature_length} characters. (Currently: {current_signature_length})"
 msgstr "Впевніться, що Ваш підпис має як мінімум {max_signature_length} символів. (Зараз: {current_signature_length})"
 
-#: aa_forum/forms.py:510
+#: aa_forum/forms.py:513
 msgid "This is not a valid URL"
 msgstr "Це не валідний URL"
 
-#: aa_forum/forms.py:569
+#: aa_forum/forms.py:572
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:21
 msgid "Recipient"
 msgstr "Отримувач"
@@ -188,130 +188,130 @@ msgstr "Отримувач"
 msgid "Error:"
 msgstr "Помилка:"
 
-#: aa_forum/models.py:125
+#: aa_forum/models.py:126
 msgid "AA-Forum"
 msgstr "АА-форум"
 
-#: aa_forum/models.py:129
+#: aa_forum/models.py:130
 msgid "Can access the AA-Forum module"
 msgstr "Є доступність модуля АА-форума"
 
-#: aa_forum/models.py:132
+#: aa_forum/models.py:133
 msgid "Can manage the AA-Forum module (Category, topics and messages)"
 msgstr "Є можливість модуля АА-форуму (Категорія, теми та повідомлення)"
 
-#: aa_forum/models.py:179
+#: aa_forum/models.py:180
 msgid "category"
 msgstr "категорія"
 
-#: aa_forum/models.py:180
+#: aa_forum/models.py:181
 msgid "categories"
 msgstr "категорії"
 
-#: aa_forum/models.py:236
+#: aa_forum/models.py:237
 msgid "Discord webhook URL for the channel to post about new topics in this board. (This setting is optional)"
 msgstr "URL вебхука Діскорда для каналу про публікацію нових тем на борді. (опціональне налаштування)"
 
-#: aa_forum/models.py:243
+#: aa_forum/models.py:244
 msgid "Use this Discord webhook for replies as well? When activated every reply to any topic in this board will be posted to the defined Discord channel. (Child boards are excluded) Chose wisely! (Default: NO)"
 msgstr "Використовувати цей вебхук Діскорда також для відповідей? Коли активно, кожна відповідь у кожному топіку в цій борді буде поститись в вказаний канал Діскорду. (За виключенням дочірніх борд). Обирай обережно! (За замовчанням: NO)"
 
-#: aa_forum/models.py:261
+#: aa_forum/models.py:262
 msgid "This will restrict access to this board to the selected groups. If no groups are selected, everyone who can access the forum can also access this board. (This setting is optional)"
 msgstr "Це обмежить доступ до цієї борди до визначених груп. Якщо не обрати групи, усі хто може мати доступ на форум, зможуть отримати доступ до борди. (Це значення опціональне)"
 
-#: aa_forum/models.py:269
+#: aa_forum/models.py:270
 msgid "Mark this board as an \"Announcement Board\", meaning that only certain selected groups can start new topics. All others who have access to this board will still be able to discuss in the topics though. This setting will not be inherited to child boards. (Default: NO)"
 msgstr "Позначити цю борду як \"Оголошення\", що означає можливість тільки обраним групам починати у ній теми. Усі інші, хто матиме доступ до цієї борди, матимуть можливість тільки обговорювання в темах борди. Це значення не успадковується для дочірніх борд. (Занчення за замовчанням: NO)"
 
-#: aa_forum/models.py:280
+#: aa_forum/models.py:281
 msgid "User in at least one of the selected groups will be able to start topics in \"Announcement Boards\". If no group is selected, only forum admins can do so. This setting will not be inherited to child boards. (Hint: These restrictions only take effect when a board is marked as \"Announcement Board\", see checkbox above.)"
 msgstr "користувач в хоча б одній з обраних груп буде мати можливість починати теми на бордах типу \"Оголошення\". Якщо не обрано, уе можуть робити тільки адмністратори форуму. Це значення не наслідується дочірніми бордами. (Нагадування: ці обмеження вступають в дію тільки коли встановлено, що борда є \"Оголошенням\")"
 
-#: aa_forum/models.py:318
+#: aa_forum/models.py:319
 msgid "board"
 msgstr "борда"
 
-#: aa_forum/models.py:319
+#: aa_forum/models.py:320
 msgid "boards"
 msgstr "борди"
 
-#: aa_forum/models.py:391
+#: aa_forum/models.py:392
 #, python-brace-format
 msgid "<h4>Warning!</h4><p>There is already a topic with the exact same subject in this board.</p><p>See here: <a href=\"{topic_url}\">{topic_subject}</a></p>"
 msgstr "<h4>Увага!</h4><p>Вже є тема з такою самою назвою на цій борді.</p><p>Дивись тут: <a href=\"{topic_url}\">{topic_subject}</a></p>"
 
-#: aa_forum/models.py:622
+#: aa_forum/models.py:623
 msgid "topic"
 msgstr "тема"
 
-#: aa_forum/models.py:623
+#: aa_forum/models.py:624
 msgid "topics"
 msgstr "теми"
 
-#: aa_forum/models.py:802
+#: aa_forum/models.py:803
 msgid "message"
 msgstr "повідомлення"
 
-#: aa_forum/models.py:803
+#: aa_forum/models.py:804
 msgid "messages"
 msgstr "повідомлення"
 
-#: aa_forum/models.py:945
+#: aa_forum/models.py:946
 msgid "personal message"
 msgstr "приватне повідомлення"
 
-#: aa_forum/models.py:946
+#: aa_forum/models.py:947
 msgid "personal messages"
 msgstr "приватні повідомлення"
 
-#: aa_forum/models.py:1000
+#: aa_forum/models.py:1001
 msgid "Messages per page"
 msgstr "Повідомлень на сторінку"
 
-#: aa_forum/models.py:1001
+#: aa_forum/models.py:1002
 msgid "Topics per page"
 msgstr "Топіків на сторінку"
 
-#: aa_forum/models.py:1002
+#: aa_forum/models.py:1003
 msgid "User signature length"
 msgstr "Довжина підпису користувача"
 
-#: aa_forum/models.py:1008
+#: aa_forum/models.py:1009
 msgid "How many messages per page should be displayed in a forum topic? (Default: 15)"
 msgstr "Скільки повідомлень на сторінку буде відобрежено в темі форуму? (За замовчанням: 15)"
 
-#: aa_forum/models.py:1016
+#: aa_forum/models.py:1017
 msgid "How many topics per page should be displayed in a forum category? (Default: 10)"
 msgstr "Скільки тем на сторінці буде відображено? (За замовчанням: 10)"
 
-#: aa_forum/models.py:1024
+#: aa_forum/models.py:1025
 msgid "How long (Number of characters) is a user's signature allowed to be? (Default: 750)"
 msgstr "Дозволена довжина (кількість символів) підпису користувача (за замовчанням: 750)"
 
-#: aa_forum/models.py:1037
+#: aa_forum/models.py:1038
 msgid "setting"
 msgstr "налаштування"
 
-#: aa_forum/models.py:1038
+#: aa_forum/models.py:1039
 msgid "settings"
 msgstr "налаштування"
 
-#: aa_forum/models.py:1048
+#: aa_forum/models.py:1049
 #: aa_forum/templates/aa_forum/partials/administration/settings-form.html:7
 #: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:19
 msgid "Forum settings"
 msgstr "Налаштування форуму"
 
-#: aa_forum/models.py:1075
+#: aa_forum/models.py:1076
 msgid "user profile"
 msgstr "профіль користувача"
 
-#: aa_forum/models.py:1076
+#: aa_forum/models.py:1077
 msgid "user profiles"
 msgstr "профілі користувачів"
 
-#: aa_forum/models.py:1086
+#: aa_forum/models.py:1087
 msgid "Forum user profile"
 msgstr "Профіль користувача форуму"
 
