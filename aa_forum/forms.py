@@ -4,12 +4,15 @@ Forms
 
 # Django
 from django import forms
-from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxLengthValidator, URLValidator
 from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
+
+# Alliance Auth
+from allianceauth.authentication.models import User
+from allianceauth.groupmanagement.models import Group
 
 # CKEditor
 from django_ckeditor_5.widgets import CKEditor5Widget

@@ -13,11 +13,11 @@ from unittest.mock import patch
 from faker import Faker
 
 # Django
-from django.contrib.auth.models import User
 from django.template import Context, Template
 from django.utils.timezone import now
 
 # Alliance Auth
+from allianceauth.authentication.models import User
 from allianceauth.eveonline.models import EveCharacter
 from allianceauth.tests.auth_utils import AuthUtils
 

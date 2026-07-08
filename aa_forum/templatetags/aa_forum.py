@@ -11,7 +11,6 @@ from bs4 import BeautifulSoup
 
 # Django
 from django import template
-from django.contrib.auth.models import User
 from django.template.defaulttags import register
 from django.urls import reverse
 from django.utils import formats
@@ -19,6 +18,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 # Alliance Auth
+from allianceauth.authentication.models import User
 from allianceauth.services.hooks import get_extension_logger
 
 # AA Forum

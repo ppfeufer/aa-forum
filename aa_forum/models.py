@@ -11,7 +11,6 @@ import unidecode
 from solo.models import SingletonModel
 
 # Django
-from django.contrib.auth.models import Group, Permission, User
 from django.db import models, transaction
 from django.db.models import Q
 from django.urls import reverse
@@ -21,6 +20,8 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 # Alliance Auth
+from allianceauth.authentication.models import Permission, User
+from allianceauth.groupmanagement.models import Group
 from allianceauth.services.hooks import get_extension_logger
 
 # CKEditor
@@ -97,7 +98,7 @@ def _users_with_permission(
     """
 
     users_qs = (
-        permission.user_set.all()
+        User.objects.filter(pk__in=permission.user_set.values_list("pk", flat=True))
         | User.objects.filter(
             groups__in=list(permission.group_set.values_list("pk", flat=True))
         )
@@ -107,7 +108,7 @@ def _users_with_permission(
     )
 
     if include_superusers:
-        users_qs |= User.objects.filter(is_superuser=True)
+        users_qs = users_qs | User.objects.filter(is_superuser=True)
 
     return users_qs.distinct()
 

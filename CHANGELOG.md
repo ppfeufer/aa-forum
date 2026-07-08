@@ -43,6 +43,22 @@ Section Order:
 
 <!-- Your changes go here -->
 
+> [!IMPORTANT]
+>
+> **This version needs Alliance Auth v5.2.0 or newer!**
+>
+> Please make sure to update your Alliance Auth instance **before** you install this
+> version, otherwise an update to Alliance Auth will be pulled in unsupervised.
+
+### Added
+
+- Support for Python 3.14
+
+### Changed
+
+- Migrated to Alliance Auth proxy models for `Permission`, `User` and `Group`
+- Translations updated
+
 ## [3.0.0] - 2026-06-07
 
 > [!IMPORTANT]

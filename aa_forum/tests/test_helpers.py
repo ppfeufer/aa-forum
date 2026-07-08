@@ -6,11 +6,11 @@ Test for the helpers
 from unittest.mock import patch
 
 # Django
-from django.contrib.auth.models import Group
 from django.test import RequestFactory
 from django.urls import reverse
 
 # Alliance Auth
+from allianceauth.groupmanagement.models import Group
 from allianceauth.tests.auth_utils import AuthUtils
 
 # AA Forum
