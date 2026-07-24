@@ -78,7 +78,7 @@ def index(request: WSGIRequest) -> HttpResponse:
                     ),
                 )
                 .user_has_access(user=request.user)
-                .order_by("order", "id"),
+                .order_by("order", "pk"),
             )
         )
         .prefetch_related(
@@ -96,7 +96,7 @@ def index(request: WSGIRequest) -> HttpResponse:
                 distinct=True,
             ),
         )
-        .order_by("category__order", "category__id", "order", "id")
+        .order_by("category__order", "category__pk", "order", "pk")
     )
 
     categories_map = {}
@@ -186,7 +186,7 @@ def board(
                         ),
                     )
                     .user_has_access(user=request.user)
-                    .order_by("order", "id"),
+                    .order_by("order", "pk"),
                 )
             )
             .prefetch_related(
@@ -768,12 +768,12 @@ def _get_boards_with_unread_topics(request: WSGIRequest):
                 .filter(pk__in=unread_topic_pks)
                 .annotate(num_posts=Count(expression="messages", distinct=True))
                 .annotate(has_unread_messages=~Exists(queryset=has_read_all_messages))
-                .order_by("-is_sticky", "-last_message__time_posted", "-id"),
+                .order_by("-is_sticky", "-last_message__time_posted", "-pk"),
             )
         )
         .filter(topics__in=unread_topic_pks)
         .user_has_access(user=request.user)
-        .order_by("category__order", "category__id", "order", "id")
+        .order_by("category__order", "category__pk", "order", "pk")
         .all()
         .distinct()
     )
