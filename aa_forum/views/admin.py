@@ -53,9 +53,9 @@ def categories_and_boards(request: WSGIRequest) -> HttpResponse:
             queryset=Board.objects.filter(parent_board__isnull=True)
             .prefetch_related("groups")
             .prefetch_related("child_boards")
-            .order_by("order", "id"),
+            .order_by("order", "pk"),
         )
-    ).order_by("order", "id")
+    ).order_by("order", "pk")
 
     groups_queryset = Group.objects.all()
     category_loop = []
