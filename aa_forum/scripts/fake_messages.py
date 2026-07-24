@@ -88,7 +88,7 @@ def run():
                         # Can not bulk create, or we would not get first and last
                         # messages
                         Message.objects.create(
-                            topic_id=topic.id,
+                            topic_id=topic.pk,
                             message=f"<p>{fake.sentence()}</p>",
                             user_created_id=random.choice(user_ids),
                         )

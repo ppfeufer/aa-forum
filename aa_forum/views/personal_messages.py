@@ -405,7 +405,7 @@ def ajax_read_message(request: WSGIRequest, folder: str) -> HttpResponse:
         return HttpResponse(status=HTTPStatus.NO_CONTENT)
 
     # Validate user permissions and get message
-    user_id = request.user.id
+    user_id = request.user.pk
 
     if not (
         (folder == "inbox" and user_id == recipient_id)
