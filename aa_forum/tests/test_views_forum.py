@@ -116,9 +116,9 @@ class TestIndexViews(BaseTestCase):
 
         # then
         self.assertEqual(first=res.status_code, second=HTTPStatus.OK)
-        self.assertContains(response=res, text=f"aa-forum-unread-in-{self.board_1.id}")
+        self.assertContains(response=res, text=f"aa-forum-unread-in-{self.board_1.pk}")
         self.assertNotContains(
-            response=res, text=f"aa-forum-unread-in-{self.board_2.id}"
+            response=res, text=f"aa-forum-unread-in-{self.board_2.pk}"
         )
 
     def test_should_show_new_indicator_when_new_posts_are_made(self):
@@ -142,7 +142,7 @@ class TestIndexViews(BaseTestCase):
 
         # then
         self.assertEqual(first=res.status_code, second=HTTPStatus.OK)
-        self.assertContains(response=res, text=f"aa-forum-unread-in-{self.board_2.id}")
+        self.assertContains(response=res, text=f"aa-forum-unread-in-{self.board_2.pk}")
 
     def test_should_show_counts(self):
         """
@@ -316,7 +316,7 @@ class TestBoardViews(BaseTestCase):
 
         # then
         self.assertEqual(first=res.status_code, second=HTTPStatus.OK)
-        self.assertContains(response=res, text=f"aa-forum-link-new-{self.topic_1.id}")
+        self.assertContains(response=res, text=f"aa-forum-link-new-{self.topic_1.pk}")
 
     def test_should_show_new_indicator_when_seen_first_page_only(self):
         """
@@ -345,7 +345,7 @@ class TestBoardViews(BaseTestCase):
 
         # then
         self.assertEqual(first=res.status_code, second=HTTPStatus.OK)
-        self.assertContains(response=res, text=f"aa-forum-link-new-{self.topic_1.id}")
+        self.assertContains(response=res, text=f"aa-forum-link-new-{self.topic_1.pk}")
 
     def test_should_show_new_indicator_when_seen_second_page_only(self):
         """
@@ -374,7 +374,7 @@ class TestBoardViews(BaseTestCase):
 
         # then
         self.assertEqual(first=res.status_code, second=HTTPStatus.OK)
-        self.assertContains(response=res, text=f"aa-forum-link-new-{self.topic_1.id}")
+        self.assertContains(response=res, text=f"aa-forum-link-new-{self.topic_1.pk}")
 
     def test_should_not_show_new_indicator_when_seen_last_page(self):
         """
@@ -404,7 +404,7 @@ class TestBoardViews(BaseTestCase):
         # then
         self.assertEqual(first=res.status_code, second=HTTPStatus.OK)
         self.assertNotContains(
-            response=res, text=f"aa-forum-link-new-{self.topic_1.id}"
+            response=res, text=f"aa-forum-link-new-{self.topic_1.pk}"
         )
 
     def test_should_show_new_indicator_when_new_posts_are_made(self):
@@ -431,7 +431,7 @@ class TestBoardViews(BaseTestCase):
 
         # then
         self.assertEqual(first=res.status_code, second=HTTPStatus.OK)
-        self.assertContains(response=res, text=f"aa-forum-link-new-{self.topic_2.id}")
+        self.assertContains(response=res, text=f"aa-forum-link-new-{self.topic_2.pk}")
 
     def test_should_delete_topic(self):
         """

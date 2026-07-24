@@ -1333,8 +1333,8 @@ class TestAdminCategoriesAndBoardsUI(WebTest):
         )
 
         # when
-        form = page.forms[f"aa-forum-form-admin-add-board-{category.id}"]
-        form[f"new-board-in-category-{category.id}-name"] = "Board"
+        form = page.forms[f"aa-forum-form-admin-add-board-{category.pk}"]
+        form[f"new-board-in-category-{category.pk}-name"] = "Board"
 
         # Ensure CSRF cookie is present for webtest (Django requires a CSRF cookie
         # in addition to the hidden csrfmiddlewaretoken input). Extract the token

@@ -10,7 +10,7 @@
         {% endif %}
 
         {% if category %}
-            <li>» <a href="{% url 'aa_forum:forum_index' %}#category-{{ category.id }}">{{ category.name }}</a></li>
+            <li>» <a href="{% url 'aa_forum:forum_index' %}#category-{{ category.pk }}">{{ category.name }}</a></li>
 
             {% if board %}
                 {% aa_forum_template_variable category_slug = category.slug %}

@@ -106,7 +106,7 @@ def index(request: WSGIRequest) -> HttpResponse:
 
         if category.pk not in categories_map:
             categories_map[category.pk] = {
-                "id": category.id,
+                "id": category.pk,
                 "name": category.name,
                 "boards_sorted": [],
                 "order": category.order,
@@ -905,7 +905,7 @@ def topic_reply(
                 category_slug=category_slug,
                 board_slug=board_slug,
                 topic_slug=topic_slug,
-                message_id=new_message.id,
+                message_id=new_message.pk,
             )
 
         messages.error(
@@ -1186,7 +1186,7 @@ def message_modify(
 
     # Check if the user actually has the right to edit this message
     if (
-        message_to_modify.user_created_id != request.user.id
+        message_to_modify.user_created_id != request.user.pk
         and not request.user.has_perm(perm="aa_forum.manage_forum")
     ):
         messages.error(
@@ -1334,7 +1334,7 @@ def message_delete(request: WSGIRequest, message_id: int) -> HttpResponseRedirec
 
     # Safety check to make sure the user is allowed to delete this message
     if (
-        current_message.user_created_id != request.user.id
+        current_message.user_created_id != request.user.pk
         and not request.user.has_perm(perm="aa_forum.manage_forum")
     ):
         messages.error(

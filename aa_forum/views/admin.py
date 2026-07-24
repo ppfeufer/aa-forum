@@ -69,7 +69,7 @@ def categories_and_boards(request: WSGIRequest) -> HttpResponse:
                     "board_obj": child_board,
                     "board_forms": {
                         "board_edit_form": EditBoardForm(
-                            prefix="edit-board-" + str(child_board.id),
+                            prefix="edit-board-" + str(child_board.pk),
                             instance=child_board,
                             groups_queryset=groups_queryset,
                         ),
@@ -83,10 +83,10 @@ def categories_and_boards(request: WSGIRequest) -> HttpResponse:
                     "board_obj": board,
                     "board_forms": {
                         "new_child_board_form": EditBoardForm(
-                            prefix="new-child-board-" + str(board.id)
+                            prefix="new-child-board-" + str(board.pk)
                         ),
                         "board_edit_form": EditBoardForm(
-                            prefix="edit-board-" + str(board.id),
+                            prefix="edit-board-" + str(board.pk),
                             instance=board,
                             groups_queryset=groups_queryset,
                         ),
@@ -99,11 +99,11 @@ def categories_and_boards(request: WSGIRequest) -> HttpResponse:
             "category_obj": category,
             "category_forms": {
                 "new_board": EditBoardForm(
-                    prefix="new-board-in-category-" + str(category.id),
+                    prefix="new-board-in-category-" + str(category.pk),
                     groups_queryset=groups_queryset,
                 ),
                 "edit_category": EditCategoryForm(
-                    prefix="edit-category-" + str(category.id), instance=category
+                    prefix="edit-category-" + str(category.pk), instance=category
                 ),
             },
             "boards": boards_data,
