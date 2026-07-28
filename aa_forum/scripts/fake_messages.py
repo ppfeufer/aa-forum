@@ -54,7 +54,7 @@ def run():
     """
 
     fake = Faker()
-    user_ids = list(User.objects.values_list("id", flat=True))
+    user_ids = list(User.objects.values_list("pk", flat=True))
 
     # Add some topics
     boards = Board.objects.all()
