@@ -43,6 +43,8 @@ Section Order:
 
 <!-- Your changes go here -->
 
+## [3.2.0] - 2026-08-03
+
 ### Changed
 
 - Use `pk` instead of `id` when referring to the primary key of a model instance, since `id` is not guaranteed to be the primary key in Django.
@@ -1820,11 +1822,12 @@ python manage.py migrate aa_forum
 [2.9.2]: https://github.com/ppfeufer/aa-forum/compare/v2.9.1...v2.9.2 "v2.9.2"
 [3.0.0]: https://github.com/ppfeufer/aa-forum/compare/v2.15.0...v3.0.0 "v3.0.0"
 [3.1.0]: https://github.com/ppfeufer/aa-forum/compare/v3.0.0...v3.1.0 "v3.1.0"
+[3.2.0]: https://github.com/ppfeufer/aa-forum/compare/v3.1.0...v3.2.0 "v3.2.0"
 [aa time zones]: https://github.com/ppfeufer/aa-timezones "AA Time Zones"
 [aa-discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
 [admin board options]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/admin-board-options.jpg "Admin Board Options"
 [discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy "discordproxy"
-[in development]: https://github.com/ppfeufer/aa-forum/compare/v3.1.0...HEAD "In Development"
+[in development]: https://github.com/ppfeufer/aa-forum/compare/v3.2.0...HEAD "In Development"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [new feature: announcement boards]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/feature-announcement-board.jpg "New Feature: Announcement Boards"
 [new feature: support for aa-timezones]: https://user-images.githubusercontent.com/2989985/195106607-8caf39c1-7343-404b-a926-e3253558b1ce.png "New Feature: Support for aa-timezones"
