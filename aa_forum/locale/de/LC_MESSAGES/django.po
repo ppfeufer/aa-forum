@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2026-07-08 13:31+0200\n"
+"POT-Creation-Date: 2026-08-03 22:25+0200\n"
 "PO-Revision-Date: 2026-07-08 11:39+0000\n"
 "Last-Translator: Peter Pfeufer <info@ppfeufer.de>\n"
 "Language-Team: German <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/de/>\n"
@@ -1131,7 +1131,3 @@ msgstr "<h4>Fehler!</h4><p>Etwas ist schief gelaufen.</p>"
 #: aa_forum/views/profile.py:57
 msgid "<h4>Success!</h4><p>Profile saved.</p>"
 msgstr "<h4>Erfolg!</h4><p>Profil gespeichert.</p>"
-
-#, python-brace-format
-#~ msgid "Forum v{__version__}"
-#~ msgstr "Forum v{__version__}"
