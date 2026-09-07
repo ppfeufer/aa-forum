@@ -424,11 +424,17 @@
         ----------------------------------------------------------------------------- */
         figure.media {
             .oembed-video {
-                aspect-ratio: 16 / 9;
+                &.youtube-video {
+                    aspect-ratio: 16 / 9;
+                }
 
-                > iframe {
+                > iframe.youtube-video {
                     height: 100%;
                     width: 100%;
+                }
+
+                > video {
+                    max-height: 625px;
                 }
             }
         }
