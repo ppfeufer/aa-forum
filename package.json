@@ -1,5 +1,6 @@
 {
-    "name": "aa-forum",
+    "name": "@ppfeufer/aa-forum",
+    "version": "3.3.0",
     "type": "module",
     "devDependencies": {
         "@eslint/js": "^10.0.1",

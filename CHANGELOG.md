@@ -43,6 +43,8 @@ Section Order:
 
 <!-- Your changes go here -->
 
+## [3.3.0] - 2026-09-07
+
 ### Added
 
 - Detection for video links to be transformed into a video element
@@ -50,6 +52,10 @@ Section Order:
     - MP4 video
   - Conditions:
     - The link must be on a line by itself (no other text on the same line)
+
+### Changed
+
+- Translations updated
 
 ## [3.2.0] - 2026-08-03
 
@@ -1831,11 +1837,12 @@ python manage.py migrate aa_forum
 [3.0.0]: https://github.com/ppfeufer/aa-forum/compare/v2.15.0...v3.0.0 "v3.0.0"
 [3.1.0]: https://github.com/ppfeufer/aa-forum/compare/v3.0.0...v3.1.0 "v3.1.0"
 [3.2.0]: https://github.com/ppfeufer/aa-forum/compare/v3.1.0...v3.2.0 "v3.2.0"
+[3.3.0]: /compare/v3.2.0...v3.3.0 "v3.3.0"
 [aa time zones]: https://github.com/ppfeufer/aa-timezones "AA Time Zones"
 [aa-discordbot]: https://github.com/pvyParts/allianceauth-discordbot "AA-Discordbot"
 [admin board options]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/admin-board-options.jpg "Admin Board Options"
 [discordproxy]: https://gitlab.com/ErikKalkoken/discordproxy "discordproxy"
-[in development]: https://github.com/ppfeufer/aa-forum/compare/v3.2.0...HEAD "In Development"
+[in development]: /compare/v3.3.0...HEAD "In Development"
 [keep a changelog]: http://keepachangelog.com/ "Keep a Changelog"
 [new feature: announcement boards]: https://raw.githubusercontent.com/ppfeufer/aa-forum/master/docs/images/feature-announcement-board.jpg "New Feature: Announcement Boards"
 [new feature: support for aa-timezones]: https://user-images.githubusercontent.com/2989985/195106607-8caf39c1-7343-404b-a926-e3253558b1ce.png "New Feature: Support for aa-timezones"
