@@ -43,6 +43,14 @@ Section Order:
 
 <!-- Your changes go here -->
 
+### Added
+
+- Detection for video links to be transformed into a video element
+  - Currently supported:
+    - MP4 video
+  - Conditions:
+    - The link must be on a line by itself (no other text on the same line)
+
 ## [3.2.0] - 2026-08-03
 
 ### Changed
