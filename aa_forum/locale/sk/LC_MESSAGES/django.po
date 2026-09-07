@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum 2.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/ppfeufer/aa-forum/issues\n"
-"POT-Creation-Date: 2026-08-03 22:25+0200\n"
+"POT-Creation-Date: 2026-09-07 22:29+0200\n"
 "PO-Revision-Date: 2026-07-08 11:41+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Slovak <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/sk/>\n"
@@ -335,6 +335,10 @@ msgstr ""
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:75
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:69
 msgid "Delete message"
+msgstr ""
+
+#: aa_forum/templates/aa_forum/base.html:30
+msgid "Your browser does not support the video element."
 msgstr ""
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:3
