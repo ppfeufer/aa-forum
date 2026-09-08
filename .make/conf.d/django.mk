@@ -23,13 +23,14 @@ pot: check-python-venv
 	@django-admin makemessages \
 		--locale en \
 		--keep-pot \
+		--no-wrap \
 		--ignore 'build/*' \
 		--ignore 'node_modules/*' \
 		--ignore 'testauth/*' \
 		--ignore 'runtests.py'
-	@current_app_version=$$(pip show $(GENERAL__APPNAME) | grep 'Version: ' | awk '{print $$NF}'); \
-	sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE) $$current_app_version\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
-	sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(GIT__GIT_REPOSITORY_ISSUES)\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE);
+	@# Update the .pot file with the correct Project-Id-Version and Report-Msgid-Bugs-To headers
+	@sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE)\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE)
+	@sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(WEBLATE__BASE_URL)/projects/$(WEBLATE__PROJECT_SLUG)/$(WEBLATE__COMPONENT_SLUG)/\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE)
 
 # Add a new translation
 .PHONY: add-translation
@@ -39,15 +40,16 @@ add-translation: check-python-venv
 	django-admin makemessages \
 		--locale $$language_code \
 		--keep-pot \
+		--no-wrap \
 		--ignore 'build/*' \
 		--ignore 'node_modules/*' \
 		--ignore 'testauth/*' \
 		--ignore 'runtests.py'; \
-	current_app_version=$$(pip show $(GENERAL__APPNAME) | grep 'Version: ' | awk '{print $$NF}'); \
-	sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE) $$current_app_version\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
-	sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(GIT__GIT_REPOSITORY_ISSUES)\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
-	sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE) $$current_app_version\\\n\"" $(DJANGO__TRANSLATION_DIRECTORY)/$$language_code/$(DJANGO__TRANSLATION_FILE_RELATIVE_PATH); \
-	sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(GIT__GIT_REPOSITORY_ISSUES)\\\n\"" $(DJANGO__TRANSLATION_DIRECTORY)/$$language_code/$(DJANGO__TRANSLATION_FILE_RELATIVE_PATH); \
+	# Update the .pot file and the new translation file with the correct Project-Id-Version and Report-Msgid-Bugs-To headers \
+	sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE)\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
+	sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(WEBLATE__BASE_URL)/projects/$(WEBLATE__PROJECT_SLUG)/$(WEBLATE__COMPONENT_SLUG)/\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
+	sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE)\\\n\"" $(DJANGO__TRANSLATION_DIRECTORY)/$$language_code/$(DJANGO__TRANSLATION_FILE_RELATIVE_PATH); \
+	sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(WEBLATE__BASE_URL)/projects/$(WEBLATE__PROJECT_SLUG)/$(WEBLATE__COMPONENT_SLUG)/\\\n\"" $(DJANGO__TRANSLATION_DIRECTORY)/$$language_code/$(DJANGO__TRANSLATION_FILE_RELATIVE_PATH); \
 	echo "New translation added for $$language_code"; \
 	echo "Please remember to add '--locale $$language_code \' to the 'translations' target in the Makefile";
 
@@ -57,21 +59,22 @@ translations: check-python-venv
 	@echo "Creating or updating translation files"
 	@django-admin makemessages $(django_locales) \
 		--keep-pot \
+		--no-wrap \
 		--ignore 'build/*' \
 		--ignore 'node_modules/*' \
 		--ignore 'testauth/*' \
 		--ignore 'runtests.py'
-	@current_app_version=$$(pip show $(GENERAL__APPNAME) | grep 'Version: ' | awk '{print $$NF}'); \
-	sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE) $$current_app_version\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
-	sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(GIT__GIT_REPOSITORY_ISSUES)\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
-	subdircount=$$(find $(DJANGO__TRANSLATION_DIRECTORY) -mindepth 1 -maxdepth 1 -type d | wc -l); \
+	@# Update the .pot file and all translation files with the correct Project-Id-Version and Report-Msgid-Bugs-To headers
+	@sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE)\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE)
+	@sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(WEBLATE__BASE_URL)/projects/$(WEBLATE__PROJECT_SLUG)/$(WEBLATE__COMPONENT_SLUG)/\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE)
+	@subdircount=$$(find $(DJANGO__TRANSLATION_DIRECTORY) -mindepth 1 -maxdepth 1 -type d | wc -l); \
 	if [[ $$subdircount -gt 1 ]]; then \
 		for path in $(DJANGO__TRANSLATION_DIRECTORY)/*/; do \
 			[ -d "$$path/LC_MESSAGES" ] || continue; \
 			if [[ -f "$$path/$(DJANGO__TRANSLATION_FILE_RELATIVE_PATH)" ]] \
 				then \
-					sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE) $$current_app_version\\\n\"" $$path/$(DJANGO__TRANSLATION_FILE_RELATIVE_PATH); \
-					sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(GIT__GIT_REPOSITORY_ISSUES)\\\n\"" $$path/$(DJANGO__TRANSLATION_FILE_RELATIVE_PATH); \
+					sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE)\\\n\"" $$path/$(DJANGO__TRANSLATION_FILE_RELATIVE_PATH); \
+					sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(WEBLATE__BASE_URL)/projects/$(WEBLATE__PROJECT_SLUG)/$(WEBLATE__COMPONENT_SLUG)/\\\n\"" $$path/$(DJANGO__TRANSLATION_FILE_RELATIVE_PATH); \
 			fi; \
 		done; \
 	fi;
