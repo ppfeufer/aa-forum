@@ -1,4 +1,4 @@
-# Makefile for AA Bulletin Board
+# Makefile
 
 # Specify the shell to be used for executing the commands in this Makefile.
 # In this case, it is set to /bin/bash.
@@ -111,22 +111,22 @@ prepare-release: pot graph-models
 	# Update the version in package.json and rebuild node modules \
 	sed -i -E "\|\"version\"\: |s|\"\: .*|\"\: \"$$new_version\",|g" package.json; \
 	rm -rf node_modules; \
-	rm package-lock.json; \
+#	rm package-lock.json; \
 	npm install; \
 	if [[ $$new_version =~ (alpha|beta) ]]; then \
 		echo "$(TEXT_COLOR_RED)$(TEXT_BOLD)Pre-release$(TEXT_RESET) version detected!"; \
 		git restore $(DJANGO__TRANSLATION_DIRECTORY)/django.pot; \
 	elif [[ $$new_version =~ rc ]]; then \
 		echo "$(TEXT_COLOR_YELLOW)$(TEXT_BOLD)Release Candidate$(TEXT_RESET) version detected!"; \
-		sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE) $$new_version\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
-		sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(GIT__GIT_REPOSITORY_ISSUES)\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
+		sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE)\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
+		sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(WEBLATE__BASE_URL)/projects/$(WEBLATE__PROJECT_SLUG)/$(WEBLATE__COMPONENT_SLUG)/\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
 	else \
 		echo "$(TEXT_BOLD)Release$(TEXT_BOLD_END) version detected."; \
 		sed -i -E "/$(GENERAL__APPNAME)==/s/==.*/==$$new_version/" README.md; \
 		sed -i -E "\|\[in development\]\: |s|\]\: .*|\]\: $(GIT__GIT_REPOSITORY)/compare/v$$new_version...HEAD \"In Development\"|g" CHANGELOG.md; \
 		echo "Updated version in $(TEXT_BOLD)README.md$(TEXT_BOLD_END)"; \
-		sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE) $$new_version\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
-		sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(GIT__GIT_REPOSITORY_ISSUES)\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
+		sed -i "/\"Project-Id-Version: /c\\\"Project-Id-Version: $(GENERAL__APPNAME_VERBOSE)\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
+		sed -i "/\"Report-Msgid-Bugs-To: /c\\\"Report-Msgid-Bugs-To: $(WEBLATE__BASE_URL)/projects/$(WEBLATE__PROJECT_SLUG)/$(WEBLATE__COMPONENT_SLUG)/\\\n\"" $(DJANGO__TRANSLATION_TEMPLATE); \
 	fi;
 
 
