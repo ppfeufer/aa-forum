@@ -4,11 +4,11 @@
 
 {% block page_title %}
     {% translate "Forum" %}
-{% endblock %}
+{% endblock page_title %}
 
 {% block header_nav_brand %}
     {% translate "Forum" %}
-{% endblock %}
+{% endblock header_nav_brand %}
 
 {% block header_nav_collapse_left %}
     {% include "aa_forum/partials/menu.html" %}
@@ -18,7 +18,7 @@
     <li role="presentation" class="nav-item">
         {% include "aa_forum/partials/search/search-form.html" with suffix="menu" %}
     </li>
-{% endblock %}
+{% endblock header_nav_collapse_right %}
 
 {% block content %}
     <div class="aa-forum">
@@ -48,4 +48,4 @@
 
         {% include "aa_forum/bundles/svg/aa-forum-icons.svg" %}
     </div>
-{% endblock %}
+{% endblock content %}

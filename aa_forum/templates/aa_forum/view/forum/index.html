@@ -1,16 +1,15 @@
 {% extends "aa_forum/base.html" %}
 
-{% load static %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block page_title %}
     {% translate "Forum" %}
-{% endblock %}
+{% endblock page_title %}
 
 {% block aa_forum_header %}
     {% include "aa_forum/partials/forum/unread-topic-buttons.html" with position="above-category-list" %}
     {% include "aa_forum/partials/breadcrumb.html" %}
-{% endblock %}
+{% endblock aa_forum_header %}
 
 {% block aa_forum_body %}
     {% include "aa_forum/partials/forum/forum-index.html" %}
@@ -37,12 +36,12 @@
             </span>
         </div>
     </div>
-{% endblock %}
+{% endblock aa_forum_body %}
 
 {% block extra_css %}
     {% include "aa_forum/bundles/aa-forum-css.html" %}
-{% endblock %}
+{% endblock extra_css %}
 
 {% block extra_javascript %}
     {% include "aa_forum/bundles/aa-forum-bootstrap-js.html" %}
-{% endblock %}
+{% endblock extra_javascript %}

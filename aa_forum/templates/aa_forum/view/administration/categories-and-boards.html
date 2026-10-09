@@ -7,7 +7,7 @@
     {% translate "Forum" as app_title %}
 
     {{ page_title|title }} » {{ app_title }}
-{% endblock %}
+{% endblock page_title %}
 
 {% block aa_forum_body %}
     <script>
@@ -15,13 +15,13 @@
     </script>
 
     {% include "aa_forum/partials/administration/categories.html" %}
-{% endblock %}
+{% endblock aa_forum_body %}
 
 {% block extra_css %}
     {% include "bundles/jquery-ui-css.html" %}
     {% include "aa_forum/bundles/sumoselect-css.html" %}
     {% include "aa_forum/bundles/aa-forum-css.html" %}
-{% endblock %}
+{% endblock extra_css %}
 
 {% block extra_javascript %}
     {% include "bundles/jquery-ui-js.html" %}
@@ -29,4 +29,4 @@
     {% include "aa_forum/bundles/aa-forum-js.html" %}
     {% include "aa_forum/bundles/aa-forum-admin-js.html" %}
     {% include "aa_forum/bundles/aa-forum-bootstrap-js.html" %}
-{% endblock %}
+{% endblock extra_javascript %}

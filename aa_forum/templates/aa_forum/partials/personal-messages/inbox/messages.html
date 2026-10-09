@@ -1,6 +1,4 @@
-{% load i18n %}
-{% load evelinks %}
-{% load aa_forum %}
+{% load aa_forum evelinks i18n %}
 
 <div class="col-md-9 mb-3">
     <div class="card card-default mb-3 card-aa-forum-personal-messages-list">
@@ -51,11 +49,11 @@
                             <div class="aa-forum-personal-message-subject">
                                 {{ message.subject }}
 
-    {#                            {% if not message.is_read %}#}
-    {#                                <span class="badge text-bg-warning label label-new-message label-aa-forum-topic-new-message ms-2">#}
-    {#                                    {% translate "New" %}#}
-    {#                                </span>#}
-    {#                            {% endif %}#}
+    {# {% if not message.is_read %} #}
+    {# <span class="badge text-bg-warning label label-new-message label-aa-forum-topic-new-message ms-2"> #}
+    {# {% translate "New" %} #}
+    {# </span> #}
+    {# {% endif %} #}
 
                                 <span class="float-end">
                                     <button

@@ -1,14 +1,13 @@
 {% extends "aa_forum/base.html" %}
 
-{% load static %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block page_title %}
     {% translate "Personal messages (Reply to message)" as page_title %}
     {% translate "Forum" as app_title %}
 
     {{ page_title|title }} » {{ app_title }}
-{% endblock %}
+{% endblock page_title %}
 
 {% block aa_forum_body %}
     <div class="row">
@@ -19,13 +18,13 @@
             {% include "aa_forum/partials/personal-messages/reply-message/message.html" %}
         </div>
     </div>
-{% endblock %}
+{% endblock aa_forum_body %}
 
 {% block extra_css %}
     {% include "aa_forum/bundles/ckeditor5-css.html" %}
     {% include "aa_forum/bundles/aa-forum-css.html" %}
-{% endblock %}
+{% endblock extra_css %}
 
 {% block extra_javascript %}
     {% include "aa_forum/bundles/ckeditor5-js.html" %}
-{% endblock %}
+{% endblock extra_javascript %}
