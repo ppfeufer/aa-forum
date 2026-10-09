@@ -7,14 +7,14 @@
     {% translate "Forum" as app_title %}
 
     {{ page_title|title }} » {{ app_title }}
-{% endblock %}
+{% endblock page_title %}
 
 {% block aa_forum_header %}
     {% include "aa_forum/partials/forum/mark-unread-button.html" with position="above-board-list" %}
 
     {% translate "Unread Topics" as page_title %}
     {% include "aa_forum/partials/breadcrumb.html" with page=page_title %}
-{% endblock %}
+{% endblock aa_forum_header %}
 
 {% block aa_forum_body %}
     {% if boards %}
@@ -32,15 +32,15 @@
             </div>
         </div>
     {% endif %}
-{% endblock %}
+{% endblock aa_forum_body %}
 
 {% block extra_javascript %}
     {% include "aa_forum/bundles/aa-forum-js.html" %}
     {% include "aa_forum/bundles/aa-forum-oembed-js.html" %}
     {% include "aa_forum/bundles/aa-forum-bootstrap-js.html" %}
-{% endblock %}
+{% endblock extra_javascript %}
 
 {% block extra_css %}
     {% include "aa_forum/bundles/ckeditor5-css.html" %}
     {% include "aa_forum/bundles/aa-forum-css.html" %}
-{% endblock %}
+{% endblock extra_css %}

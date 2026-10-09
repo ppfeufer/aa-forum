@@ -4,11 +4,11 @@
 
 {% block page_title %}
     {{ topic.subject }} » {% translate "Forum" %}
-{% endblock %}
+{% endblock page_title %}
 
 {% block aa_forum_header %}
     {% include "aa_forum/partials/breadcrumb.html" with category=topic.board.category board=topic.board topic=topic %}
-{% endblock %}
+{% endblock aa_forum_header %}
 
 {% block aa_forum_body %}
     <div class="card card-default mb-3">
@@ -44,12 +44,12 @@
     {% elif topic.is_locked and perms.aa_forum.manage_forum %}
         {% include "aa_forum/partials/forum/topic/reply.html" %}
     {% endif %}
-{% endblock %}
+{% endblock aa_forum_body %}
 
 {% block extra_css %}
     {% include "aa_forum/bundles/ckeditor5-css.html" %}
     {% include "aa_forum/bundles/aa-forum-css.html" %}
-{% endblock %}
+{% endblock extra_css %}
 
 {% block extra_javascript %}
     {% include "aa_forum/bundles/aa-forum-js.html" %}
@@ -73,4 +73,4 @@
             });
         });
     </script>
-{% endblock %}
+{% endblock extra_javascript %}

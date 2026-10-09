@@ -1,5 +1,4 @@
-{% load i18n %}
-{% load aa_forum %}
+{% load aa_forum i18n %}
 
 <div id="message-{{ message.pk }}" class="card card-default mb-3">
     {% aa_forum_template_variable message_author = message.user_created %}
