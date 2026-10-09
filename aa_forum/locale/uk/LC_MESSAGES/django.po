@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum\n"
 "Report-Msgid-Bugs-To: https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/\n"
-"POT-Creation-Date: 2026-10-06 11:57+0200\n"
+"POT-Creation-Date: 2026-10-09 12:18+0200\n"
 "PO-Revision-Date: 2026-09-16 08:54+0000\n"
 "Last-Translator: s0k0l -_- <salarysalo@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/uk/>\n"
@@ -25,17 +25,17 @@ msgstr ""
 #: aa_forum/templates/aa_forum/view/administration/categories-and-boards.html:7
 #: aa_forum/templates/aa_forum/view/administration/forum-settings.html:7
 #: aa_forum/templates/aa_forum/view/forum/board.html:6
-#: aa_forum/templates/aa_forum/view/forum/index.html:7
+#: aa_forum/templates/aa_forum/view/forum/index.html:6
 #: aa_forum/templates/aa_forum/view/forum/modify-message.html:7
 #: aa_forum/templates/aa_forum/view/forum/modify-topic.html:7
-#: aa_forum/templates/aa_forum/view/forum/new-topic.html:8
+#: aa_forum/templates/aa_forum/view/forum/new-topic.html:7
 #: aa_forum/templates/aa_forum/view/forum/topic.html:6
 #: aa_forum/templates/aa_forum/view/forum/unread-topics.html:7
-#: aa_forum/templates/aa_forum/view/personal-messages/inbox.html:8
-#: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:8
-#: aa_forum/templates/aa_forum/view/personal-messages/reply-message.html:8
-#: aa_forum/templates/aa_forum/view/personal-messages/sent-messages.html:8
-#: aa_forum/templates/aa_forum/view/profile/index.html:8
+#: aa_forum/templates/aa_forum/view/personal-messages/inbox.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/reply-message.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/sent-messages.html:7
+#: aa_forum/templates/aa_forum/view/profile/index.html:7
 #: aa_forum/templates/aa_forum/view/search/results.html:7
 msgid "Forum"
 msgstr "Форум"
@@ -51,8 +51,8 @@ msgstr "Повідомлення"
 
 #: aa_forum/forms.py:141 aa_forum/forms.py:143 aa_forum/forms.py:190
 #: aa_forum/forms.py:192 aa_forum/forms.py:573
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:25
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:25
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:23
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:23
 msgid "Subject"
 msgstr "Тема"
 
@@ -180,7 +180,7 @@ msgid "This is not a valid URL"
 msgstr "Це не валідний URL"
 
 #: aa_forum/forms.py:572
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:21
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:19
 msgid "Recipient"
 msgstr "Отримувач"
 
@@ -298,8 +298,8 @@ msgid "settings"
 msgstr "налаштування"
 
 #: aa_forum/models.py:1049
-#: aa_forum/templates/aa_forum/partials/administration/settings-form.html:7
-#: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:19
+#: aa_forum/templates/aa_forum/partials/administration/settings-form.html:6
+#: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:17
 msgid "Forum settings"
 msgstr "Налаштування форуму"
 
@@ -315,27 +315,27 @@ msgstr "профілі користувачів"
 msgid "Forum user profile"
 msgstr "Профіль користувача форуму"
 
-#: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:21
-#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:31
-#: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/message.html:21
+#: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:20
+#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:30
+#: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/message.html:20
 msgid "on:"
 msgstr "на:"
 
-#: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:30
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:57
-#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:8
-#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:48
+#: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:29
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:55
+#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:6
+#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:46
 msgid "Reply"
 msgstr "Відповідь"
 
-#: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:39
+#: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:38
 #: aa_forum/templates/aa_forum/modals/forum/topic/message-delete.html:3
 #: aa_forum/templates/aa_forum/modals/forum/topic/message-delete.html:8
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:3
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:8
-#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:59
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:75
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:69
+#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:58
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:73
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:67
 msgid "Delete message"
 msgstr "Видалити повідомлення"
 
@@ -345,7 +345,7 @@ msgstr "Твій браузер не підтримує елемент віде�
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:3
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:8
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:23
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:22
 msgid "Delete board"
 msgstr "Видалити борду"
 
@@ -382,7 +382,7 @@ msgstr "Цю дію не можна відмінити!"
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-delete.html:27
 #: aa_forum/templates/aa_forum/modals/forum/topic/message-delete.html:26
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:26
-#: aa_forum/templates/aa_forum/view/forum/new-topic.html:35
+#: aa_forum/templates/aa_forum/view/forum/new-topic.html:34
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -396,7 +396,7 @@ msgstr "Видалити"
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:3
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:8
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:25
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:24
 msgid "Delete category"
 msgstr "Видалити категорію"
 
@@ -414,13 +414,13 @@ msgstr "Змінити статус блокування теми"
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:9
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:37
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:91
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:89
 msgid "Unlock/re-open topic"
 msgstr "Розблокувати/перевідкрити тему"
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:12
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:40
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:101
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:99
 msgid "Lock/close topic"
 msgstr "Заблокувати/закрити тему"
 
@@ -462,7 +462,7 @@ msgstr "Закріпити"
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-delete.html:3
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-delete.html:8
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:122
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:120
 msgid "Delete topic"
 msgstr "Видалити тему"
 
@@ -487,29 +487,29 @@ msgstr "Якщо це повідомлення є найпершим посто�
 msgid "If this message is the beginning of a conversation, all related messages will be removed as well."
 msgstr "Якщо це повідомлення починає розмову, усі пов'язані повідомлення також будуть видалені."
 
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:11
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:10
 msgid "Edit board"
 msgstr "Редагувати борду"
 
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:36
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:35
 msgid "Changing the name of this board does not change its URL part. This will remain the same to not break any possible links into this board."
 msgstr "Зміни у імені борди не змінюють її URL. Вона залишиться така сама щоб не зламати посилання на неї."
 
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:58
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:57
 msgid "Change board"
 msgstr "Змінити борду"
 
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:70
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:69
 msgid "New child board"
 msgstr "Нова дочірня борда"
 
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:77
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:84
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:76
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:83
 msgid "New boards will be added at the bottom of the board list for this category. You can move them via drag and drop to a position of your liking."
 msgstr "Нові борди додаватимуться знизу списку борд у цій категорії. Ви можете рухати їх перегягуванням як бажаєте."
 
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:93
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:97
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:92
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:96
 msgid "Create board"
 msgstr "Створити борду"
 
@@ -517,69 +517,69 @@ msgstr "Створити борду"
 msgid "Here you can create, modify and delete categories and boards. You also can change their order via drag and drop."
 msgstr "Тут Ви можете створювати, модифікувати та видаляти категорії та борди. Також можна змінити порядок перетягуванням."
 
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:13
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:12
 msgid "Edit category"
 msgstr "Редагувати категорію"
 
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:35
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:34
 msgid "Expand/collapse category"
 msgstr "Розгорнути/згорнути категорію"
 
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:53
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:52
 msgid "Changing the name of this category does not change its URL part. This will remain the same to not break any possible links into this category."
 msgstr "Зміна імені цієї категорії не змінить URL. Вона залишиться такою самою, щоб не зламати інші посилання на неї."
 
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:66
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:65
 msgid "Change category"
 msgstr "Змінити категорію"
 
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:77
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:76
 msgid "New board"
 msgstr "Нова борда"
 
-#: aa_forum/templates/aa_forum/partials/administration/new-category.html:7
+#: aa_forum/templates/aa_forum/partials/administration/new-category.html:6
 msgid "Create new category"
 msgstr "Створити нову категорію"
 
-#: aa_forum/templates/aa_forum/partials/administration/new-category.html:16
+#: aa_forum/templates/aa_forum/partials/administration/new-category.html:15
 msgid "New category"
 msgstr "Нова категорія"
 
-#: aa_forum/templates/aa_forum/partials/administration/new-category.html:22
+#: aa_forum/templates/aa_forum/partials/administration/new-category.html:21
 msgid "New categories will be added at the bottom of the category list. You can move them via drag and drop to a position of your liking."
 msgstr "Нові категорії будуть додаватись знизу списку. Ви можете рухати їх перетягуванням."
 
-#: aa_forum/templates/aa_forum/partials/administration/new-category.html:35
+#: aa_forum/templates/aa_forum/partials/administration/new-category.html:34
 msgid "Create category"
 msgstr "Створити категорію"
 
-#: aa_forum/templates/aa_forum/partials/administration/settings-form.html:21
-#: aa_forum/templates/aa_forum/partials/profile/form.html:22
+#: aa_forum/templates/aa_forum/partials/administration/settings-form.html:20
+#: aa_forum/templates/aa_forum/partials/profile/form.html:21
 msgid "Submit"
 msgstr "Відправити"
 
-#: aa_forum/templates/aa_forum/partials/breadcrumb.html:6
-#: aa_forum/templates/aa_forum/partials/menu/menu-user.html:7
+#: aa_forum/templates/aa_forum/partials/breadcrumb.html:5
+#: aa_forum/templates/aa_forum/partials/menu/menu-user.html:5
 msgid "Forum index"
 msgstr "Індекс форуму"
 
-#: aa_forum/templates/aa_forum/partials/breadcrumb.html:27
-#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:51
-#: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:7
+#: aa_forum/templates/aa_forum/partials/breadcrumb.html:26
+#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:50
+#: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:6
 #: aa_forum/templates/aa_forum/view/forum/modify-message.html:6
 msgid "Modify message"
 msgstr "Коригувати Повідомлення"
 
-#: aa_forum/templates/aa_forum/partials/breadcrumb.html:34
-#: aa_forum/templates/aa_forum/view/forum/new-topic.html:7
+#: aa_forum/templates/aa_forum/partials/breadcrumb.html:33
+#: aa_forum/templates/aa_forum/view/forum/new-topic.html:6
 msgid "Start new topic"
 msgstr "Почати нову тему"
 
-#: aa_forum/templates/aa_forum/partials/breadcrumb.html:40
+#: aa_forum/templates/aa_forum/partials/breadcrumb.html:39
 msgid "Search"
 msgstr "Пошук"
 
-#: aa_forum/templates/aa_forum/partials/breadcrumb.html:43
+#: aa_forum/templates/aa_forum/partials/breadcrumb.html:42
 msgid "Search for:"
 msgstr "Шукати:"
 
@@ -599,18 +599,18 @@ msgstr "Поля, позначені зірочкою (*), є обов'язко�
 msgid "No topics have been started in this board…"
 msgstr "У цій борді нема тем…"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:31
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:63
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:28
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:60
 msgid "There are new messages in this board"
 msgstr "Є нові повідомлення на борді"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:34
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:67
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:31
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:31
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:64
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:29
 msgid "New"
 msgstr "Нове"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:45
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:42
 msgid "This board is restricted to the following group:"
 msgid_plural "This board is restricted to the following groups:"
 msgstr[0] "Ця борда обмежена для поточної групи:"
@@ -618,36 +618,36 @@ msgstr[1] "Ця борда обмежена для поточних груп:"
 msgstr[2] "Ця борда обмежена для поточних груп:"
 msgstr[3] "Ця борда обмежена для поточних груп:"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:53
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:50
 msgid "Child boards:"
 msgstr "Дочірні борди:"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:77
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:74
 msgid "Posts"
 msgstr "Пости"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:78
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:75
 msgid "Topics"
 msgstr "Теми"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:82
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:79
 msgid "Unread"
 msgstr "Не прочитане"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:105
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:102
 msgid "Last post:"
 msgstr "Крайній пост:"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:113
-#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:26
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:110
+#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:25
 msgid "Re:"
 msgstr "Щодо:"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:120
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:117
 msgid "posted by:"
 msgstr "автор:"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:121
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:118
 msgid "posted at:"
 msgstr "опубліковано:"
 
@@ -659,18 +659,18 @@ msgstr "Нова тема"
 msgid "You either don't have access to this board, or this board doesn't exist."
 msgstr "Ви не маєте доступу до борди, або вона не існує."
 
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:8
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:10
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:7
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:9
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:5
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/pagination.html:5
 #: aa_forum/templates/aa_forum/partials/search/pagination.html:4
 msgid "Message pagination"
 msgstr "Розбивка по сторінкам"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:13
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:42
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:15
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:44
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:12
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:41
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:14
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:43
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:10
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:39
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/pagination.html:10
@@ -680,12 +680,12 @@ msgstr "Розбивка по сторінкам"
 msgid "First"
 msgstr "Перший"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:20
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:24
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:46
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:22
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:26
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:48
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:19
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:23
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:45
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:21
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:25
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:47
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:17
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:21
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:43
@@ -698,10 +698,10 @@ msgstr "Перший"
 msgid "Previous"
 msgstr "Назад"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:63
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:74
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:65
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:76
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:62
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:73
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:64
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:75
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:60
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:71
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/pagination.html:60
@@ -711,10 +711,10 @@ msgstr "Назад"
 msgid "Next"
 msgstr "Далі"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:69
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:78
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:71
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:80
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:68
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:77
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:70
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:79
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:66
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:75
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/pagination.html:66
@@ -724,36 +724,36 @@ msgstr "Далі"
 msgid "Last"
 msgstr "Останній"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:28
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:26
 msgid "Go to first unread message"
 msgstr "Перейти до непрочитаних повідомлень"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:38
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:36
 msgid "Topic is always on top"
 msgstr "Тема завжди зверху"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:44
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:42
 msgid "Topic is locked"
 msgstr "Тема заблокована"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:48
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:46
 msgid "Started by"
 msgstr "Почато"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:59
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:62
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:57
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:60
 msgid "Replies"
 msgstr "Відовіді"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:69
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:67
 msgid "Last post"
 msgstr "Останнє повідомлення"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:73
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:71
 msgid "Go to last message"
 msgstr "Перейти до крайнього повідомлення"
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:112
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:110
 msgid "Change topics sticky state"
 msgstr "Змінити статус \"закріплений\""
 
@@ -762,35 +762,35 @@ msgstr "Змінити статус \"закріплений\""
 msgid "Mark all topics as read"
 msgstr "Відмітити усі теми як прочитані"
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:39
+#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:38
 msgid "Copy message link to clipboard"
 msgstr "Скопіювати посилання на повідомлення в буфер"
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:87
+#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:86
 msgid "Last modified:"
 msgstr "Модифіковано востаннє:"
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:14
-#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:15
+#: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:13
+#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:13
 msgid "Note: You are not on the last page of this topic and may miss the most recent replies."
 msgstr "Зауваження: Ви не на останній сторінці цієї теми та можете пропустити останні відповіді."
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:27
-#: aa_forum/templates/aa_forum/partials/forum/topic/modify-topic.html:21
+#: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:26
+#: aa_forum/templates/aa_forum/partials/forum/topic/modify-topic.html:20
 msgid "Modify"
 msgstr "Модифікувати"
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/modify-topic.html:7
+#: aa_forum/templates/aa_forum/partials/forum/topic/modify-topic.html:6
 #: aa_forum/templates/aa_forum/view/forum/modify-topic.html:6
 msgid "Modify topic"
 msgstr "Модифікувати тему"
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:21
+#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:19
 msgid "Warning: this topic is locked! Only admins can reply."
 msgstr "Увага: ця тема заблокована! Тільки адміністратори можуть відповідати."
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:44
-#: aa_forum/templates/aa_forum/view/forum/new-topic.html:36
+#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:42
+#: aa_forum/templates/aa_forum/view/forum/new-topic.html:35
 msgid "Clear form"
 msgstr "Очистити форму"
 
@@ -798,77 +798,77 @@ msgstr "Очистити форму"
 msgid "Show all unread topics"
 msgstr "Показати усі непрочитані теми"
 
-#: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:7
+#: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:5
 msgid "Administration"
 msgstr "Адміністрування"
 
-#: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:13
+#: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:11
 msgid "Categories and boards"
 msgstr "Категорії та борди"
 
-#: aa_forum/templates/aa_forum/partials/menu/menu-user.html:13
-#: aa_forum/templates/aa_forum/view/profile/index.html:7
+#: aa_forum/templates/aa_forum/partials/menu/menu-user.html:11
+#: aa_forum/templates/aa_forum/view/profile/index.html:6
 msgid "Profile"
 msgstr "Профіль"
 
-#: aa_forum/templates/aa_forum/partials/menu/menu-user.html:19
-#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:9
+#: aa_forum/templates/aa_forum/partials/menu/menu-user.html:17
+#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:7
 msgid "Messages"
 msgstr "Повідомлення"
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:9
-#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:23
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:7
+#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:21
 msgid "Inbox"
 msgstr "Вхідні"
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:17
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:17
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:15
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:15
 msgid "Date"
 msgstr "Дата"
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:21
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:19
 msgid "Sender"
 msgstr "Відправник"
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:63
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:57
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:61
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:55
 msgid "Read message"
 msgstr "Читати Повідомлення"
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:93
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:91
 msgid "No personal messages"
 msgstr "Нема персональних повідомлень"
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/new-message/form.html:8
+#: aa_forum/templates/aa_forum/partials/personal-messages/new-message/form.html:7
 msgid "New personal message"
 msgstr "Нове персональне повідомлення"
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/new-message/form.html:23
+#: aa_forum/templates/aa_forum/partials/personal-messages/new-message/form.html:22
 msgid "Send message"
 msgstr "Відправити Повідомлення"
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/form.html:8
+#: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/form.html:6
 msgid "Reply to:"
 msgstr "Кому відовідаємо:"
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/form.html:23
+#: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/form.html:21
 msgid "Send reply"
 msgstr "Відправити відповідь"
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:9
-#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:30
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:7
+#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:28
 msgid "Sent messages"
 msgstr "Відправити Повідомлення"
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:87
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:85
 msgid "No personal messages sent"
 msgstr "Не відправлено персональних повідомлень"
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:17
+#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:15
 msgid "New message"
 msgstr "Нове Повідомлення"
 
-#: aa_forum/templates/aa_forum/partials/profile/form.html:7
+#: aa_forum/templates/aa_forum/partials/profile/form.html:6
 msgid "User profile"
 msgstr "Профіль користувача"
 
@@ -888,19 +888,19 @@ msgstr "Адміністрування (Категорії та борди)"
 msgid "Administration (Forum settings)"
 msgstr "Адміністрування (Налаштування форуму)"
 
-#: aa_forum/templates/aa_forum/view/forum/index.html:27
+#: aa_forum/templates/aa_forum/view/forum/index.html:26
 msgid "New posts"
 msgstr "Нові пости"
 
-#: aa_forum/templates/aa_forum/view/forum/index.html:36
+#: aa_forum/templates/aa_forum/view/forum/index.html:35
 msgid "No new posts"
 msgstr "Нема нових постів"
 
-#: aa_forum/templates/aa_forum/view/forum/new-topic.html:21
+#: aa_forum/templates/aa_forum/view/forum/new-topic.html:20
 msgid "Start new topic in"
 msgstr "Почати нову тему -"
 
-#: aa_forum/templates/aa_forum/view/forum/new-topic.html:37
+#: aa_forum/templates/aa_forum/view/forum/new-topic.html:36
 msgid "Start topic"
 msgstr "Початок теми"
 
@@ -920,23 +920,23 @@ msgstr "Непрочитані теми"
 msgid "You have no unread topics…"
 msgstr "У Вас нема непрочитаних тем…"
 
-#: aa_forum/templates/aa_forum/view/personal-messages/inbox.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/inbox.html:6
 msgid "Personal messages (Inbox)"
 msgstr "Персональні повідомлення (Вхідні)"
 
-#: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:6
 msgid "Personal messages (New message)"
 msgstr "Персональні повідомлення (Нове)"
 
-#: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:35
+#: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:34
 msgid "Enter the recipients name"
 msgstr "Введіть імена отримувачів"
 
-#: aa_forum/templates/aa_forum/view/personal-messages/reply-message.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/reply-message.html:6
 msgid "Personal messages (Reply to message)"
 msgstr "Персональні повідомлення (Відповісти на повідомлення)"
 
-#: aa_forum/templates/aa_forum/view/personal-messages/sent-messages.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/sent-messages.html:6
 msgid "Personal messages (Sent messages)"
 msgstr "Персональні повідомлення (Відправлені)"
 
