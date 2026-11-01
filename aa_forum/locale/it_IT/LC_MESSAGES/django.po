@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AA Forum\n"
 "Report-Msgid-Bugs-To: https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/\n"
-"POT-Creation-Date: 2026-10-06 11:57+0200\n"
+"POT-Creation-Date: 2026-10-09 12:18+0200\n"
 "PO-Revision-Date: 2026-07-08 11:39+0000\n"
 "Last-Translator: Automatic translation add-on <noreply-addon-autotranslate@weblate.org>\n"
 "Language-Team: Italian <https://weblate.ppfeufer.de/projects/alliance-auth-apps/aa-forum/it/>\n"
@@ -23,17 +23,17 @@ msgstr ""
 #: aa_forum/templates/aa_forum/view/administration/categories-and-boards.html:7
 #: aa_forum/templates/aa_forum/view/administration/forum-settings.html:7
 #: aa_forum/templates/aa_forum/view/forum/board.html:6
-#: aa_forum/templates/aa_forum/view/forum/index.html:7
+#: aa_forum/templates/aa_forum/view/forum/index.html:6
 #: aa_forum/templates/aa_forum/view/forum/modify-message.html:7
 #: aa_forum/templates/aa_forum/view/forum/modify-topic.html:7
-#: aa_forum/templates/aa_forum/view/forum/new-topic.html:8
+#: aa_forum/templates/aa_forum/view/forum/new-topic.html:7
 #: aa_forum/templates/aa_forum/view/forum/topic.html:6
 #: aa_forum/templates/aa_forum/view/forum/unread-topics.html:7
-#: aa_forum/templates/aa_forum/view/personal-messages/inbox.html:8
-#: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:8
-#: aa_forum/templates/aa_forum/view/personal-messages/reply-message.html:8
-#: aa_forum/templates/aa_forum/view/personal-messages/sent-messages.html:8
-#: aa_forum/templates/aa_forum/view/profile/index.html:8
+#: aa_forum/templates/aa_forum/view/personal-messages/inbox.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/reply-message.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/sent-messages.html:7
+#: aa_forum/templates/aa_forum/view/profile/index.html:7
 #: aa_forum/templates/aa_forum/view/search/results.html:7
 msgid "Forum"
 msgstr "Forum"
@@ -49,8 +49,8 @@ msgstr ""
 
 #: aa_forum/forms.py:141 aa_forum/forms.py:143 aa_forum/forms.py:190
 #: aa_forum/forms.py:192 aa_forum/forms.py:573
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:25
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:25
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:23
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:23
 msgid "Subject"
 msgstr ""
 
@@ -178,7 +178,7 @@ msgid "This is not a valid URL"
 msgstr ""
 
 #: aa_forum/forms.py:572
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:21
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:19
 msgid "Recipient"
 msgstr ""
 
@@ -296,8 +296,8 @@ msgid "settings"
 msgstr ""
 
 #: aa_forum/models.py:1049
-#: aa_forum/templates/aa_forum/partials/administration/settings-form.html:7
-#: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:19
+#: aa_forum/templates/aa_forum/partials/administration/settings-form.html:6
+#: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:17
 msgid "Forum settings"
 msgstr ""
 
@@ -313,27 +313,27 @@ msgstr ""
 msgid "Forum user profile"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:21
-#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:31
-#: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/message.html:21
+#: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:20
+#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:30
+#: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/message.html:20
 msgid "on:"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:30
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:57
-#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:8
-#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:48
+#: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:29
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:55
+#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:6
+#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:46
 msgid "Reply"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:39
+#: aa_forum/templates/aa_forum/ajax-render/personal-messages/message.html:38
 #: aa_forum/templates/aa_forum/modals/forum/topic/message-delete.html:3
 #: aa_forum/templates/aa_forum/modals/forum/topic/message-delete.html:8
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:3
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:8
-#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:59
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:75
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:69
+#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:58
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:73
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:67
 msgid "Delete message"
 msgstr ""
 
@@ -343,7 +343,7 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:3
 #: aa_forum/templates/aa_forum/modals/administration/delete-board.html:8
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:23
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:22
 msgid "Delete board"
 msgstr ""
 
@@ -380,7 +380,7 @@ msgstr ""
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-delete.html:27
 #: aa_forum/templates/aa_forum/modals/forum/topic/message-delete.html:26
 #: aa_forum/templates/aa_forum/modals/personal-messages/message-delete.html:26
-#: aa_forum/templates/aa_forum/view/forum/new-topic.html:35
+#: aa_forum/templates/aa_forum/view/forum/new-topic.html:34
 msgid "Cancel"
 msgstr ""
 
@@ -394,7 +394,7 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:3
 #: aa_forum/templates/aa_forum/modals/administration/delete-category.html:8
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:25
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:24
 msgid "Delete category"
 msgstr ""
 
@@ -412,13 +412,13 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:9
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:37
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:91
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:89
 msgid "Unlock/re-open topic"
 msgstr ""
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:12
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-change-lock-state.html:40
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:101
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:99
 msgid "Lock/close topic"
 msgstr ""
 
@@ -460,7 +460,7 @@ msgstr ""
 
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-delete.html:3
 #: aa_forum/templates/aa_forum/modals/forum/board/topic-delete.html:8
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:122
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:120
 msgid "Delete topic"
 msgstr ""
 
@@ -485,29 +485,29 @@ msgstr ""
 msgid "If this message is the beginning of a conversation, all related messages will be removed as well."
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:11
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:10
 msgid "Edit board"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:36
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:35
 msgid "Changing the name of this board does not change its URL part. This will remain the same to not break any possible links into this board."
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:58
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:57
 msgid "Change board"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:70
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:69
 msgid "New child board"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:77
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:84
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:76
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:83
 msgid "New boards will be added at the bottom of the board list for this category. You can move them via drag and drop to a position of your liking."
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:93
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:97
+#: aa_forum/templates/aa_forum/partials/administration/board-loop.html:92
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:96
 msgid "Create board"
 msgstr ""
 
@@ -515,69 +515,69 @@ msgstr ""
 msgid "Here you can create, modify and delete categories and boards. You also can change their order via drag and drop."
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:13
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:12
 msgid "Edit category"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:35
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:34
 msgid "Expand/collapse category"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:53
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:52
 msgid "Changing the name of this category does not change its URL part. This will remain the same to not break any possible links into this category."
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:66
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:65
 msgid "Change category"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:77
+#: aa_forum/templates/aa_forum/partials/administration/category-loop.html:76
 msgid "New board"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/new-category.html:7
+#: aa_forum/templates/aa_forum/partials/administration/new-category.html:6
 msgid "Create new category"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/new-category.html:16
+#: aa_forum/templates/aa_forum/partials/administration/new-category.html:15
 msgid "New category"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/new-category.html:22
+#: aa_forum/templates/aa_forum/partials/administration/new-category.html:21
 msgid "New categories will be added at the bottom of the category list. You can move them via drag and drop to a position of your liking."
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/new-category.html:35
+#: aa_forum/templates/aa_forum/partials/administration/new-category.html:34
 msgid "Create category"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/administration/settings-form.html:21
-#: aa_forum/templates/aa_forum/partials/profile/form.html:22
+#: aa_forum/templates/aa_forum/partials/administration/settings-form.html:20
+#: aa_forum/templates/aa_forum/partials/profile/form.html:21
 msgid "Submit"
 msgstr "Invia"
 
-#: aa_forum/templates/aa_forum/partials/breadcrumb.html:6
-#: aa_forum/templates/aa_forum/partials/menu/menu-user.html:7
+#: aa_forum/templates/aa_forum/partials/breadcrumb.html:5
+#: aa_forum/templates/aa_forum/partials/menu/menu-user.html:5
 msgid "Forum index"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/breadcrumb.html:27
-#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:51
-#: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:7
+#: aa_forum/templates/aa_forum/partials/breadcrumb.html:26
+#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:50
+#: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:6
 #: aa_forum/templates/aa_forum/view/forum/modify-message.html:6
 msgid "Modify message"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/breadcrumb.html:34
-#: aa_forum/templates/aa_forum/view/forum/new-topic.html:7
+#: aa_forum/templates/aa_forum/partials/breadcrumb.html:33
+#: aa_forum/templates/aa_forum/view/forum/new-topic.html:6
 msgid "Start new topic"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/breadcrumb.html:40
+#: aa_forum/templates/aa_forum/partials/breadcrumb.html:39
 msgid "Search"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/breadcrumb.html:43
+#: aa_forum/templates/aa_forum/partials/breadcrumb.html:42
 msgid "Search for:"
 msgstr ""
 
@@ -597,53 +597,53 @@ msgstr "I campi contrassegnati da un asterisco (*) sono obbligatori"
 msgid "No topics have been started in this board…"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:31
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:63
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:28
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:60
 msgid "There are new messages in this board"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:34
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:67
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:31
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:31
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:64
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:29
 msgid "New"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:45
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:42
 msgid "This board is restricted to the following group:"
 msgid_plural "This board is restricted to the following groups:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:53
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:50
 msgid "Child boards:"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:77
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:74
 msgid "Posts"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:78
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:75
 msgid "Topics"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:82
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:79
 msgid "Unread"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:105
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:102
 msgid "Last post:"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:113
-#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:26
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:110
+#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:25
 msgid "Re:"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:120
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:117
 msgid "posted by:"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/board.html:121
+#: aa_forum/templates/aa_forum/partials/forum/board/board.html:118
 msgid "posted at:"
 msgstr ""
 
@@ -655,18 +655,18 @@ msgstr ""
 msgid "You either don't have access to this board, or this board doesn't exist."
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:8
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:10
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:7
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:9
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:5
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/pagination.html:5
 #: aa_forum/templates/aa_forum/partials/search/pagination.html:4
 msgid "Message pagination"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:13
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:42
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:15
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:44
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:12
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:41
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:14
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:43
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:10
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:39
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/pagination.html:10
@@ -676,12 +676,12 @@ msgstr ""
 msgid "First"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:20
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:24
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:46
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:22
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:26
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:48
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:19
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:23
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:45
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:21
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:25
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:47
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:17
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:21
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:43
@@ -694,10 +694,10 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:63
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:74
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:65
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:76
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:62
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:73
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:64
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:75
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:60
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:71
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/pagination.html:60
@@ -707,10 +707,10 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:69
-#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:78
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:71
-#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:80
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:68
+#: aa_forum/templates/aa_forum/partials/forum/board/pagination.html:77
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:70
+#: aa_forum/templates/aa_forum/partials/forum/topic/pagination.html:79
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:66
 #: aa_forum/templates/aa_forum/partials/personal-messages/inbox/pagination.html:75
 #: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/pagination.html:66
@@ -720,36 +720,36 @@ msgstr ""
 msgid "Last"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:28
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:26
 msgid "Go to first unread message"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:38
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:36
 msgid "Topic is always on top"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:44
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:42
 msgid "Topic is locked"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:48
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:46
 msgid "Started by"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:59
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:62
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:57
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:60
 msgid "Replies"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:69
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:67
 msgid "Last post"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:73
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:71
 msgid "Go to last message"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:112
+#: aa_forum/templates/aa_forum/partials/forum/board/topic.html:110
 msgid "Change topics sticky state"
 msgstr ""
 
@@ -758,35 +758,35 @@ msgstr ""
 msgid "Mark all topics as read"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:39
+#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:38
 msgid "Copy message link to clipboard"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:87
+#: aa_forum/templates/aa_forum/partials/forum/topic/message.html:86
 msgid "Last modified:"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:14
-#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:15
+#: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:13
+#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:13
 msgid "Note: You are not on the last page of this topic and may miss the most recent replies."
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:27
-#: aa_forum/templates/aa_forum/partials/forum/topic/modify-topic.html:21
+#: aa_forum/templates/aa_forum/partials/forum/topic/modify-message.html:26
+#: aa_forum/templates/aa_forum/partials/forum/topic/modify-topic.html:20
 msgid "Modify"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/modify-topic.html:7
+#: aa_forum/templates/aa_forum/partials/forum/topic/modify-topic.html:6
 #: aa_forum/templates/aa_forum/view/forum/modify-topic.html:6
 msgid "Modify topic"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:21
+#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:19
 msgid "Warning: this topic is locked! Only admins can reply."
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:44
-#: aa_forum/templates/aa_forum/view/forum/new-topic.html:36
+#: aa_forum/templates/aa_forum/partials/forum/topic/reply.html:42
+#: aa_forum/templates/aa_forum/view/forum/new-topic.html:35
 msgid "Clear form"
 msgstr ""
 
@@ -794,77 +794,77 @@ msgstr ""
 msgid "Show all unread topics"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:7
+#: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:5
 msgid "Administration"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:13
+#: aa_forum/templates/aa_forum/partials/menu/menu-admin.html:11
 msgid "Categories and boards"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/menu/menu-user.html:13
-#: aa_forum/templates/aa_forum/view/profile/index.html:7
+#: aa_forum/templates/aa_forum/partials/menu/menu-user.html:11
+#: aa_forum/templates/aa_forum/view/profile/index.html:6
 msgid "Profile"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/menu/menu-user.html:19
-#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:9
+#: aa_forum/templates/aa_forum/partials/menu/menu-user.html:17
+#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:7
 msgid "Messages"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:9
-#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:23
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:7
+#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:21
 msgid "Inbox"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:17
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:17
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:15
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:15
 msgid "Date"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:21
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:19
 msgid "Sender"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:63
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:57
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:61
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:55
 msgid "Read message"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:93
+#: aa_forum/templates/aa_forum/partials/personal-messages/inbox/messages.html:91
 msgid "No personal messages"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/new-message/form.html:8
+#: aa_forum/templates/aa_forum/partials/personal-messages/new-message/form.html:7
 msgid "New personal message"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/new-message/form.html:23
+#: aa_forum/templates/aa_forum/partials/personal-messages/new-message/form.html:22
 msgid "Send message"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/form.html:8
+#: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/form.html:6
 msgid "Reply to:"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/form.html:23
+#: aa_forum/templates/aa_forum/partials/personal-messages/reply-message/form.html:21
 msgid "Send reply"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:9
-#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:30
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:7
+#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:28
 msgid "Sent messages"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:87
+#: aa_forum/templates/aa_forum/partials/personal-messages/sent-messages/messages.html:85
 msgid "No personal messages sent"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:17
+#: aa_forum/templates/aa_forum/partials/personal-messages/sidebar.html:15
 msgid "New message"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/partials/profile/form.html:7
+#: aa_forum/templates/aa_forum/partials/profile/form.html:6
 msgid "User profile"
 msgstr ""
 
@@ -884,19 +884,19 @@ msgstr ""
 msgid "Administration (Forum settings)"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/view/forum/index.html:27
+#: aa_forum/templates/aa_forum/view/forum/index.html:26
 msgid "New posts"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/view/forum/index.html:36
+#: aa_forum/templates/aa_forum/view/forum/index.html:35
 msgid "No new posts"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/view/forum/new-topic.html:21
+#: aa_forum/templates/aa_forum/view/forum/new-topic.html:20
 msgid "Start new topic in"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/view/forum/new-topic.html:37
+#: aa_forum/templates/aa_forum/view/forum/new-topic.html:36
 msgid "Start topic"
 msgstr ""
 
@@ -916,23 +916,23 @@ msgstr ""
 msgid "You have no unread topics…"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/view/personal-messages/inbox.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/inbox.html:6
 msgid "Personal messages (Inbox)"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:6
 msgid "Personal messages (New message)"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:35
+#: aa_forum/templates/aa_forum/view/personal-messages/new-message.html:34
 msgid "Enter the recipients name"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/view/personal-messages/reply-message.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/reply-message.html:6
 msgid "Personal messages (Reply to message)"
 msgstr ""
 
-#: aa_forum/templates/aa_forum/view/personal-messages/sent-messages.html:7
+#: aa_forum/templates/aa_forum/view/personal-messages/sent-messages.html:6
 msgid "Personal messages (Sent messages)"
 msgstr ""
 
